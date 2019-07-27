@@ -1,0 +1,2069 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model_cuentas_por_cobrar.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cxc_Catalogo">
+          <Key>
+            <PropertyRef Name="IdCatalogo" />
+          </Key>
+          <Property Name="IdCatalogo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IdCatalogo_tipo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Orden" Type="int" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
+          <Property Name="FechaUltMod" Type="datetime" />
+          <Property Name="nom_pc" Type="varchar" MaxLength="50" />
+          <Property Name="ip" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="cxc_CatalogoTipo">
+          <Key>
+            <PropertyRef Name="IdCatalogo_tipo" />
+          </Key>
+          <Property Name="IdCatalogo_tipo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cxc_cobro">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCobro" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdCobro" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdCobro_a_aplicar" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="cr_Codigo" Type="varchar" MaxLength="10" />
+          <Property Name="IdCobro_tipo" Type="varchar" MaxLength="20" />
+          <Property Name="IdCliente" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="cr_TotalCobro" Type="float" Nullable="false" />
+          <Property Name="cr_fecha" Type="datetime" Nullable="false" />
+          <Property Name="cr_fechaDocu" Type="datetime" Nullable="false" />
+          <Property Name="cr_fechaCobro" Type="datetime" Nullable="false" />
+          <Property Name="cr_observacion" Type="varchar" MaxLength="700" Nullable="false" />
+          <Property Name="cr_Banco" Type="varchar" MaxLength="50" />
+          <Property Name="cr_cuenta" Type="varchar" MaxLength="100" />
+          <Property Name="cr_NumDocumento" Type="varchar" MaxLength="100" />
+          <Property Name="cr_Tarjeta" Type="varchar" MaxLength="50" />
+          <Property Name="cr_propietarioCta" Type="varchar" MaxLength="100" />
+          <Property Name="cr_estado" Type="nvarchar" MaxLength="1" />
+          <Property Name="cr_recibo" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="cr_es_anticipo" Type="char" MaxLength="1" />
+          <Property Name="Fecha_Transac" Type="datetime" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltMod" Type="datetime" />
+          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltAnu" Type="datetime" />
+          <Property Name="nom_pc" Type="varchar" MaxLength="50" />
+          <Property Name="ip" Type="varchar" MaxLength="50" />
+          <Property Name="IdBanco" Type="int" />
+          <Property Name="IdCaja" Type="int" Nullable="false" />
+          <Property Name="MotiAnula" Type="varchar" MaxLength="50" />
+          <Property Name="IdTipoNotaCredito" Type="int" />
+        </EntityType>
+        <EntityType Name="cxc_cobro_det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCobro" />
+            <PropertyRef Name="secuencial" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdCobro" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="secuencial" Type="int" Nullable="false" />
+          <Property Name="dc_TipoDocumento" Type="varchar" MaxLength="20" />
+          <Property Name="IdBodega_Cbte" Type="int" />
+          <Property Name="IdCbte_vta_nota" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="dc_ValorPago" Type="float" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_Transac" Type="datetime" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltMod" Type="datetime" />
+          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltAnu" Type="datetime" />
+          <Property Name="nom_pc" Type="varchar" MaxLength="50" />
+          <Property Name="ip" Type="varchar" MaxLength="50" />
+          <Property Name="estado" Type="varchar" MaxLength="1" />
+          <Property Name="IdCobro_tipo" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cxc_cobro_tipo">
+          <Key>
+            <PropertyRef Name="IdCobro_tipo" />
+          </Key>
+          <Property Name="IdCobro_tipo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="tc_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="tc_abreviatura" Type="varchar" MaxLength="20" />
+          <Property Name="tc_Tomar_Cta_Cble_De" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ESRetenIVA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ESRetenFTE" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="PorcentajeRet" Type="float" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_Transac" Type="datetime" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltMod" Type="datetime" />
+          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltAnu" Type="datetime" />
+          <Property Name="IdMotivo_tipo_cobro" Type="varchar" MaxLength="15" />
+          <Property Name="EsTarjetaCredito" Type="bit" Nullable="false" />
+          <Property Name="SeDeposita" Type="bit" Nullable="false" />
+          <Property Name="PorcentajeDescuento" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cxc_cobro_tipo_motivo">
+          <Key>
+            <PropertyRef Name="IdMotivo_tipo_cobro" />
+          </Key>
+          <Property Name="IdMotivo_tipo_cobro" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="nom_Motivo_tipo_cobro" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cxc_cobro_tipo_Param_conta_x_sucursal">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCobro_tipo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdCobro_tipo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IdCtaCble" Type="varchar" MaxLength="20" />
+          <Property Name="IdCtaCble_Anticipo" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="cxc_cobro_x_ct_cbtecble">
+          <Key>
+            <PropertyRef Name="cbr_IdEmpresa" />
+            <PropertyRef Name="cbr_IdSucursal" />
+            <PropertyRef Name="cbr_IdCobro" />
+            <PropertyRef Name="ct_IdEmpresa" />
+            <PropertyRef Name="ct_IdTipoCbte" />
+            <PropertyRef Name="ct_IdCbteCble" />
+          </Key>
+          <Property Name="cbr_IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="cbr_IdSucursal" Type="int" Nullable="false" />
+          <Property Name="cbr_IdCobro" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ct_IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="ct_IdTipoCbte" Type="int" Nullable="false" />
+          <Property Name="ct_IdCbteCble" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="observacion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="cxc_LiquidacionTarjeta">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdLiquidacion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdLiquidacion" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Lote" Type="varchar" MaxLength="1000" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="IdBanco" Type="int" Nullable="false" />
+          <Property Name="Observacion" Type="varchar(max)" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="Valor" Type="float" Nullable="false" />
+          <Property Name="IdEmpresa_ct" Type="int" />
+          <Property Name="IdTipoCbte_ct" Type="int" />
+          <Property Name="IdCbteCble_ct" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="IdUsuarioCreacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="IdUsuarioModificacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="IdUsuarioAnulacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaAnulacion" Type="datetime" />
+          <Property Name="MotivoAnulacion" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="cxc_LiquidacionTarjeta_x_cxc_cobro">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdLiquidacion" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdLiquidacion" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="Valor" Type="float" Nullable="false" />
+          <Property Name="IdCobro" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cxc_LiquidacionTarjetaDet">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdLiquidacion" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdLiquidacion" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdMotivo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Porcentaje" Type="float" Nullable="false" />
+          <Property Name="Valor" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cxc_MotivoLiquidacionTarjeta">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdMotivo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdMotivo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar(max)" Nullable="false" />
+          <Property Name="ESRetenIVA" Type="bit" Nullable="false" />
+          <Property Name="ESRetenFTE" Type="bit" Nullable="false" />
+          <Property Name="Porcentaje" Type="float" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="IdUsuarioModificacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="IdUsuarioAnulacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaAnulacion" Type="datetime" />
+          <Property Name="MotivoAnulacion" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="cxc_MotivoLiquidacionTarjeta_x_tb_sucursal">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdMotivo" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdMotivo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdCtaCble" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cxc_Parametro">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="pa_IdCaja_x_cobros_x_CXC" Type="int" Nullable="false" />
+          <Property Name="pa_IdTipoMoviCaja_x_Cobros_x_cliente" Type="int" Nullable="false" />
+          <Property Name="pa_IdTipoCbteCble_CxC" Type="int" Nullable="false" />
+          <Property Name="DiasTransaccionesAFuturo" Type="int" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
+          <Property Name="FechaTransac" Type="datetime" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
+          <Property Name="FechaUltMod" Type="datetime" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwcxc_cartera_x_cobrar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwcxc_cartera_x_cobrar">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="vt_tipoDoc" />
+            <PropertyRef Name="IdComprobante" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="vt_fecha" />
+            <PropertyRef Name="TotalxCobrado" />
+            <PropertyRef Name="Bodega" />
+            <PropertyRef Name="vt_fech_venc" />
+            <PropertyRef Name="dc_ValorRetFu" />
+            <PropertyRef Name="dc_ValorRetIva" />
+            <PropertyRef Name="NomCliente" />
+            <PropertyRef Name="em_nombre" />
+            <PropertyRef Name="Estado" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="vt_tipoDoc" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="vt_NunDocumento" Type="varchar" MaxLength="41" />
+          <Property Name="Referencia" Type="varchar(max)" />
+          <Property Name="IdComprobante" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="CodComprobante" Type="varchar" MaxLength="50" />
+          <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="IdCliente" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="vt_fecha" Type="datetime" Nullable="false" />
+          <Property Name="vt_total" Type="float" />
+          <Property Name="Saldo" Type="float" />
+          <Property Name="TotalxCobrado" Type="float" Nullable="false" />
+          <Property Name="Bodega" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="vt_Subtotal" Type="float" />
+          <Property Name="vt_iva" Type="float" />
+          <Property Name="vt_fech_venc" Type="datetime" Nullable="false" />
+          <Property Name="dc_ValorRetFu" Type="float" Nullable="false" />
+          <Property Name="dc_ValorRetIva" Type="float" Nullable="false" />
+          <Property Name="CodCliente" Type="varchar" MaxLength="50" />
+          <Property Name="NomCliente" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="em_nombre" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwcxc_LiquidacionTarjeta' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwcxc_LiquidacionTarjeta">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdLiquidacion" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="IdBanco" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="Valor" />
+            <PropertyRef Name="ba_descripcion" />
+            <PropertyRef Name="Su_Descripcion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdLiquidacion" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Lote" Type="varchar" MaxLength="1000" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="IdBanco" Type="int" Nullable="false" />
+          <Property Name="Observacion" Type="varchar(max)" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="IdEmpresa_ct" Type="int" />
+          <Property Name="IdTipoCbte_ct" Type="int" />
+          <Property Name="IdCbteCble_ct" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Valor" Type="float" Nullable="false" />
+          <Property Name="ba_descripcion" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwcxc_LiquidacionTarjeta_x_cxc_cobro' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwcxc_LiquidacionTarjeta_x_cxc_cobro">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCobro" />
+            <PropertyRef Name="cr_TotalCobro" />
+            <PropertyRef Name="cr_fecha" />
+            <PropertyRef Name="cr_observacion" />
+            <PropertyRef Name="pe_nombreCompleto" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdCobro" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdLiquidacion" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="cr_TotalCobro" Type="float" Nullable="false" />
+          <Property Name="cr_fecha" Type="datetime" Nullable="false" />
+          <Property Name="cr_observacion" Type="varchar" MaxLength="700" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdMotivo" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCtaCble" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdMotivo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdCtaCble" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="pc_Cuenta" Type="varchar" MaxLength="523" />
+          <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwcxc_cobro">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCobro" />
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="cr_fecha" />
+            <PropertyRef Name="cr_TotalCobro" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="cr_observacion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdCobro" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdCliente" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IdCobro_tipo" Type="varchar" MaxLength="20" />
+          <Property Name="cr_fecha" Type="datetime" Nullable="false" />
+          <Property Name="cr_TotalCobro" Type="float" Nullable="false" />
+          <Property Name="cr_estado" Type="nvarchar" MaxLength="1" />
+          <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="cr_observacion" Type="varchar" MaxLength="700" Nullable="false" />
+          <Property Name="cr_NumDocumento" Type="varchar" MaxLength="100" />
+          <Property Name="nom_Motivo_tipo_cobro" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwcxc_cobro_det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCobro" />
+            <PropertyRef Name="secuencial" />
+            <PropertyRef Name="IdCbte_vta_nota" />
+            <PropertyRef Name="dc_ValorPago" />
+            <PropertyRef Name="IdCobro_tipo" />
+            <PropertyRef Name="vt_Subtotal" />
+            <PropertyRef Name="vt_iva" />
+            <PropertyRef Name="vt_total" />
+            <PropertyRef Name="ValorCobrado" />
+            <PropertyRef Name="saldo" />
+            <PropertyRef Name="saldo_sin_cobro" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdCobro" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="secuencial" Type="int" Nullable="false" />
+          <Property Name="dc_TipoDocumento" Type="varchar" MaxLength="20" />
+          <Property Name="IdBodega_Cbte" Type="int" />
+          <Property Name="IdCbte_vta_nota" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="dc_ValorPago" Type="float" Nullable="false" />
+          <Property Name="IdCobro_tipo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="vt_NumFactura" Type="varchar" MaxLength="41" />
+          <Property Name="vt_Observacion" Type="varchar" MaxLength="500" />
+          <Property Name="CodDoc" Type="varchar" MaxLength="20" />
+          <Property Name="vt_Subtotal" Type="float" Nullable="false" />
+          <Property Name="vt_iva" Type="float" Nullable="false" />
+          <Property Name="vt_total" Type="float" Nullable="false" />
+          <Property Name="ValorCobrado" Type="float" Nullable="false" />
+          <Property Name="saldo" Type="float" Nullable="false" />
+          <Property Name="saldo_sin_cobro" Type="float" Nullable="false" />
+          <Property Name="vt_fecha" Type="datetime" />
+          <Property Name="vt_fech_venc" Type="datetime" />
+          <Property Name="IdCliente" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_det_retencion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwcxc_cobro_det_retencion">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCbte_vta_nota" />
+            <PropertyRef Name="IdCobro" />
+            <PropertyRef Name="secuencial" />
+            <PropertyRef Name="IdCobro_tipo" />
+            <PropertyRef Name="dc_ValorPago" />
+            <PropertyRef Name="tc_descripcion" />
+            <PropertyRef Name="PorcentajeRet" />
+            <PropertyRef Name="cr_fecha" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega_Cbte" Type="int" />
+          <Property Name="IdCbte_vta_nota" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="dc_TipoDocumento" Type="varchar" MaxLength="20" />
+          <Property Name="IdCobro" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="secuencial" Type="int" Nullable="false" />
+          <Property Name="IdCobro_tipo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="dc_ValorPago" Type="float" Nullable="false" />
+          <Property Name="tc_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ESRetenIVA" Type="char" MaxLength="1" />
+          <Property Name="ESRetenFTE" Type="char" MaxLength="1" />
+          <Property Name="PorcentajeRet" Type="float" Nullable="false" />
+          <Property Name="cr_NumDocumento" Type="varchar" MaxLength="100" />
+          <Property Name="cr_fecha" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwcxc_cobro_para_retencion">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdCbteVta" />
+            <PropertyRef Name="vt_tipoDoc" />
+            <PropertyRef Name="vt_Subtotal" />
+            <PropertyRef Name="vt_iva" />
+            <PropertyRef Name="vt_total" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="vt_fecha" />
+            <PropertyRef Name="vt_fech_venc" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="IdCbteVta" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="vt_tipoDoc" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="vt_Subtotal" Type="float" Nullable="false" />
+          <Property Name="vt_iva" Type="float" Nullable="false" />
+          <Property Name="vt_total" Type="float" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="vt_fecha" Type="datetime" Nullable="false" />
+          <Property Name="vt_fech_venc" Type="datetime" Nullable="false" />
+          <Property Name="vt_Observacion" Type="varchar(max)" />
+          <Property Name="vt_NumFactura" Type="varchar" MaxLength="71" />
+          <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="IdCliente" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="TieneRetencion" Type="bit" />
+        </EntityType>
+        <Association Name="FK_cxc_Catalogo_cxc_CatalogoTipo">
+          <End Role="cxc_CatalogoTipo" Type="Self.cxc_CatalogoTipo" Multiplicity="1" />
+          <End Role="cxc_Catalogo" Type="Self.cxc_Catalogo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_CatalogoTipo">
+              <PropertyRef Name="IdCatalogo_tipo" />
+            </Principal>
+            <Dependent Role="cxc_Catalogo">
+              <PropertyRef Name="IdCatalogo_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cxc_cobro_cxc_cobro_tipo">
+          <End Role="cxc_cobro_tipo" Type="Self.cxc_cobro_tipo" Multiplicity="0..1" />
+          <End Role="cxc_cobro" Type="Self.cxc_cobro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_cobro_tipo">
+              <PropertyRef Name="IdCobro_tipo" />
+            </Principal>
+            <Dependent Role="cxc_cobro">
+              <PropertyRef Name="IdCobro_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cxc_cobro_det_cxc_cobro">
+          <End Role="cxc_cobro" Type="Self.cxc_cobro" Multiplicity="1" />
+          <End Role="cxc_cobro_det" Type="Self.cxc_cobro_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_cobro">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdCobro" />
+            </Principal>
+            <Dependent Role="cxc_cobro_det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdCobro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cxc_cobro_det_cxc_cobro_tipo">
+          <End Role="cxc_cobro_tipo" Type="Self.cxc_cobro_tipo" Multiplicity="1" />
+          <End Role="cxc_cobro_det" Type="Self.cxc_cobro_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_cobro_tipo">
+              <PropertyRef Name="IdCobro_tipo" />
+            </Principal>
+            <Dependent Role="cxc_cobro_det">
+              <PropertyRef Name="IdCobro_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cxc_cobro_tipo_cxc_cobro_tipo_motivo">
+          <End Role="cxc_cobro_tipo_motivo" Type="Self.cxc_cobro_tipo_motivo" Multiplicity="0..1" />
+          <End Role="cxc_cobro_tipo" Type="Self.cxc_cobro_tipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_cobro_tipo_motivo">
+              <PropertyRef Name="IdMotivo_tipo_cobro" />
+            </Principal>
+            <Dependent Role="cxc_cobro_tipo">
+              <PropertyRef Name="IdMotivo_tipo_cobro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cxc_cobro_tipo_Param_conta_x_sucursal_cxc_cobro_tipo">
+          <End Role="cxc_cobro_tipo" Type="Self.cxc_cobro_tipo" Multiplicity="1" />
+          <End Role="cxc_cobro_tipo_Param_conta_x_sucursal" Type="Self.cxc_cobro_tipo_Param_conta_x_sucursal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_cobro_tipo">
+              <PropertyRef Name="IdCobro_tipo" />
+            </Principal>
+            <Dependent Role="cxc_cobro_tipo_Param_conta_x_sucursal">
+              <PropertyRef Name="IdCobro_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cxc_cobro_x_ct_cbtecble_cxc_cobro">
+          <End Role="cxc_cobro" Type="Self.cxc_cobro" Multiplicity="1" />
+          <End Role="cxc_cobro_x_ct_cbtecble" Type="Self.cxc_cobro_x_ct_cbtecble" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_cobro">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdCobro" />
+            </Principal>
+            <Dependent Role="cxc_cobro_x_ct_cbtecble">
+              <PropertyRef Name="cbr_IdEmpresa" />
+              <PropertyRef Name="cbr_IdSucursal" />
+              <PropertyRef Name="cbr_IdCobro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cxc_LiquidacionTarjeta_x_cxc_cobro_cxc_cobro">
+          <End Role="cxc_cobro" Type="Self.cxc_cobro" Multiplicity="1" />
+          <End Role="cxc_LiquidacionTarjeta_x_cxc_cobro" Type="Self.cxc_LiquidacionTarjeta_x_cxc_cobro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_cobro">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdCobro" />
+            </Principal>
+            <Dependent Role="cxc_LiquidacionTarjeta_x_cxc_cobro">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdCobro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cxc_LiquidacionTarjeta_x_cxc_cobro_cxc_LiquidacionTarjeta">
+          <End Role="cxc_LiquidacionTarjeta" Type="Self.cxc_LiquidacionTarjeta" Multiplicity="1" />
+          <End Role="cxc_LiquidacionTarjeta_x_cxc_cobro" Type="Self.cxc_LiquidacionTarjeta_x_cxc_cobro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_LiquidacionTarjeta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdLiquidacion" />
+            </Principal>
+            <Dependent Role="cxc_LiquidacionTarjeta_x_cxc_cobro">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdLiquidacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cxc_LiquidacionTarjetaDet_cxc_LiquidacionTarjeta">
+          <End Role="cxc_LiquidacionTarjeta" Type="Self.cxc_LiquidacionTarjeta" Multiplicity="1" />
+          <End Role="cxc_LiquidacionTarjetaDet" Type="Self.cxc_LiquidacionTarjetaDet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_LiquidacionTarjeta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdLiquidacion" />
+            </Principal>
+            <Dependent Role="cxc_LiquidacionTarjetaDet">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdLiquidacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cxc_LiquidacionTarjetaDet_cxc_MotivoLiquidacionTarjeta">
+          <End Role="cxc_MotivoLiquidacionTarjeta" Type="Self.cxc_MotivoLiquidacionTarjeta" Multiplicity="1" />
+          <End Role="cxc_LiquidacionTarjetaDet" Type="Self.cxc_LiquidacionTarjetaDet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_MotivoLiquidacionTarjeta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdMotivo" />
+            </Principal>
+            <Dependent Role="cxc_LiquidacionTarjetaDet">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdMotivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cxc_MotivoLiquidacionTarjeta_x_tb_sucursal_cxc_MotivoLiquidacionTarjeta">
+          <End Role="cxc_MotivoLiquidacionTarjeta" Type="Self.cxc_MotivoLiquidacionTarjeta" Multiplicity="1" />
+          <End Role="cxc_MotivoLiquidacionTarjeta_x_tb_sucursal" Type="Self.cxc_MotivoLiquidacionTarjeta_x_tb_sucursal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_MotivoLiquidacionTarjeta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdMotivo" />
+            </Principal>
+            <Dependent Role="cxc_MotivoLiquidacionTarjeta_x_tb_sucursal">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdMotivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Model_cuentas_por_cobrarStoreContainer">
+          <EntitySet Name="cxc_Catalogo" EntityType="Self.cxc_Catalogo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cxc_CatalogoTipo" EntityType="Self.cxc_CatalogoTipo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cxc_cobro" EntityType="Self.cxc_cobro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cxc_cobro_det" EntityType="Self.cxc_cobro_det" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cxc_cobro_tipo" EntityType="Self.cxc_cobro_tipo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cxc_cobro_tipo_motivo" EntityType="Self.cxc_cobro_tipo_motivo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cxc_cobro_tipo_Param_conta_x_sucursal" EntityType="Self.cxc_cobro_tipo_Param_conta_x_sucursal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cxc_cobro_x_ct_cbtecble" EntityType="Self.cxc_cobro_x_ct_cbtecble" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cxc_LiquidacionTarjeta" EntityType="Self.cxc_LiquidacionTarjeta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cxc_LiquidacionTarjeta_x_cxc_cobro" EntityType="Self.cxc_LiquidacionTarjeta_x_cxc_cobro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cxc_LiquidacionTarjetaDet" EntityType="Self.cxc_LiquidacionTarjetaDet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cxc_MotivoLiquidacionTarjeta" EntityType="Self.cxc_MotivoLiquidacionTarjeta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cxc_MotivoLiquidacionTarjeta_x_tb_sucursal" EntityType="Self.cxc_MotivoLiquidacionTarjeta_x_tb_sucursal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cxc_Parametro" EntityType="Self.cxc_Parametro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwcxc_cartera_x_cobrar" EntityType="Self.vwcxc_cartera_x_cobrar" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwcxc_cartera_x_cobrar].[IdEmpresa] AS [IdEmpresa], 
+    [vwcxc_cartera_x_cobrar].[IdSucursal] AS [IdSucursal], 
+    [vwcxc_cartera_x_cobrar].[IdBodega] AS [IdBodega], 
+    [vwcxc_cartera_x_cobrar].[vt_tipoDoc] AS [vt_tipoDoc], 
+    [vwcxc_cartera_x_cobrar].[vt_NunDocumento] AS [vt_NunDocumento], 
+    [vwcxc_cartera_x_cobrar].[Referencia] AS [Referencia], 
+    [vwcxc_cartera_x_cobrar].[IdComprobante] AS [IdComprobante], 
+    [vwcxc_cartera_x_cobrar].[CodComprobante] AS [CodComprobante], 
+    [vwcxc_cartera_x_cobrar].[Su_Descripcion] AS [Su_Descripcion], 
+    [vwcxc_cartera_x_cobrar].[IdCliente] AS [IdCliente], 
+    [vwcxc_cartera_x_cobrar].[vt_fecha] AS [vt_fecha], 
+    [vwcxc_cartera_x_cobrar].[vt_total] AS [vt_total], 
+    [vwcxc_cartera_x_cobrar].[Saldo] AS [Saldo], 
+    [vwcxc_cartera_x_cobrar].[TotalxCobrado] AS [TotalxCobrado], 
+    [vwcxc_cartera_x_cobrar].[Bodega] AS [Bodega], 
+    [vwcxc_cartera_x_cobrar].[vt_Subtotal] AS [vt_Subtotal], 
+    [vwcxc_cartera_x_cobrar].[vt_iva] AS [vt_iva], 
+    [vwcxc_cartera_x_cobrar].[vt_fech_venc] AS [vt_fech_venc], 
+    [vwcxc_cartera_x_cobrar].[dc_ValorRetFu] AS [dc_ValorRetFu], 
+    [vwcxc_cartera_x_cobrar].[dc_ValorRetIva] AS [dc_ValorRetIva], 
+    [vwcxc_cartera_x_cobrar].[CodCliente] AS [CodCliente], 
+    [vwcxc_cartera_x_cobrar].[NomCliente] AS [NomCliente], 
+    [vwcxc_cartera_x_cobrar].[em_nombre] AS [em_nombre], 
+    [vwcxc_cartera_x_cobrar].[Estado] AS [Estado]
+    FROM [dbo].[vwcxc_cartera_x_cobrar] AS [vwcxc_cartera_x_cobrar]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwcxc_LiquidacionTarjeta" EntityType="Self.vwcxc_LiquidacionTarjeta" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwcxc_LiquidacionTarjeta].[IdEmpresa] AS [IdEmpresa], 
+    [vwcxc_LiquidacionTarjeta].[IdSucursal] AS [IdSucursal], 
+    [vwcxc_LiquidacionTarjeta].[IdLiquidacion] AS [IdLiquidacion], 
+    [vwcxc_LiquidacionTarjeta].[Lote] AS [Lote], 
+    [vwcxc_LiquidacionTarjeta].[Fecha] AS [Fecha], 
+    [vwcxc_LiquidacionTarjeta].[IdBanco] AS [IdBanco], 
+    [vwcxc_LiquidacionTarjeta].[Observacion] AS [Observacion], 
+    [vwcxc_LiquidacionTarjeta].[Estado] AS [Estado], 
+    [vwcxc_LiquidacionTarjeta].[IdEmpresa_ct] AS [IdEmpresa_ct], 
+    [vwcxc_LiquidacionTarjeta].[IdTipoCbte_ct] AS [IdTipoCbte_ct], 
+    [vwcxc_LiquidacionTarjeta].[IdCbteCble_ct] AS [IdCbteCble_ct], 
+    [vwcxc_LiquidacionTarjeta].[Valor] AS [Valor], 
+    [vwcxc_LiquidacionTarjeta].[ba_descripcion] AS [ba_descripcion], 
+    [vwcxc_LiquidacionTarjeta].[Su_Descripcion] AS [Su_Descripcion]
+    FROM [dbo].[vwcxc_LiquidacionTarjeta] AS [vwcxc_LiquidacionTarjeta]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwcxc_LiquidacionTarjeta_x_cxc_cobro" EntityType="Self.vwcxc_LiquidacionTarjeta_x_cxc_cobro" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwcxc_LiquidacionTarjeta_x_cxc_cobro].[IdEmpresa] AS [IdEmpresa], 
+    [vwcxc_LiquidacionTarjeta_x_cxc_cobro].[IdSucursal] AS [IdSucursal], 
+    [vwcxc_LiquidacionTarjeta_x_cxc_cobro].[IdCobro] AS [IdCobro], 
+    [vwcxc_LiquidacionTarjeta_x_cxc_cobro].[IdLiquidacion] AS [IdLiquidacion], 
+    [vwcxc_LiquidacionTarjeta_x_cxc_cobro].[cr_TotalCobro] AS [cr_TotalCobro], 
+    [vwcxc_LiquidacionTarjeta_x_cxc_cobro].[cr_fecha] AS [cr_fecha], 
+    [vwcxc_LiquidacionTarjeta_x_cxc_cobro].[cr_observacion] AS [cr_observacion], 
+    [vwcxc_LiquidacionTarjeta_x_cxc_cobro].[pe_nombreCompleto] AS [pe_nombreCompleto]
+    FROM [dbo].[vwcxc_LiquidacionTarjeta_x_cxc_cobro] AS [vwcxc_LiquidacionTarjeta_x_cxc_cobro]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal" EntityType="Self.vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal].[IdEmpresa] AS [IdEmpresa], 
+    [vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal].[IdMotivo] AS [IdMotivo], 
+    [vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal].[Secuencia] AS [Secuencia], 
+    [vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal].[IdSucursal] AS [IdSucursal], 
+    [vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal].[IdCtaCble] AS [IdCtaCble], 
+    [vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal].[pc_Cuenta] AS [pc_Cuenta], 
+    [vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal].[Su_Descripcion] AS [Su_Descripcion]
+    FROM [dbo].[vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal] AS [vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwcxc_cobro" EntityType="Self.vwcxc_cobro" store:Type="Views" store:Schema="web">
+            <DefiningQuery>SELECT 
+    [vwcxc_cobro].[IdEmpresa] AS [IdEmpresa], 
+    [vwcxc_cobro].[IdSucursal] AS [IdSucursal], 
+    [vwcxc_cobro].[IdCobro] AS [IdCobro], 
+    [vwcxc_cobro].[IdCliente] AS [IdCliente], 
+    [vwcxc_cobro].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [vwcxc_cobro].[IdCobro_tipo] AS [IdCobro_tipo], 
+    [vwcxc_cobro].[cr_fecha] AS [cr_fecha], 
+    [vwcxc_cobro].[cr_TotalCobro] AS [cr_TotalCobro], 
+    [vwcxc_cobro].[cr_estado] AS [cr_estado], 
+    [vwcxc_cobro].[Su_Descripcion] AS [Su_Descripcion], 
+    [vwcxc_cobro].[cr_observacion] AS [cr_observacion], 
+    [vwcxc_cobro].[cr_NumDocumento] AS [cr_NumDocumento], 
+    [vwcxc_cobro].[nom_Motivo_tipo_cobro] AS [nom_Motivo_tipo_cobro]
+    FROM [web].[vwcxc_cobro] AS [vwcxc_cobro]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwcxc_cobro_det" EntityType="Self.vwcxc_cobro_det" store:Type="Views" store:Schema="web">
+            <DefiningQuery>SELECT 
+    [vwcxc_cobro_det].[IdEmpresa] AS [IdEmpresa], 
+    [vwcxc_cobro_det].[IdSucursal] AS [IdSucursal], 
+    [vwcxc_cobro_det].[IdCobro] AS [IdCobro], 
+    [vwcxc_cobro_det].[secuencial] AS [secuencial], 
+    [vwcxc_cobro_det].[dc_TipoDocumento] AS [dc_TipoDocumento], 
+    [vwcxc_cobro_det].[IdBodega_Cbte] AS [IdBodega_Cbte], 
+    [vwcxc_cobro_det].[IdCbte_vta_nota] AS [IdCbte_vta_nota], 
+    [vwcxc_cobro_det].[dc_ValorPago] AS [dc_ValorPago], 
+    [vwcxc_cobro_det].[IdCobro_tipo] AS [IdCobro_tipo], 
+    [vwcxc_cobro_det].[vt_NumFactura] AS [vt_NumFactura], 
+    [vwcxc_cobro_det].[vt_Observacion] AS [vt_Observacion], 
+    [vwcxc_cobro_det].[CodDoc] AS [CodDoc], 
+    [vwcxc_cobro_det].[vt_Subtotal] AS [vt_Subtotal], 
+    [vwcxc_cobro_det].[vt_iva] AS [vt_iva], 
+    [vwcxc_cobro_det].[vt_total] AS [vt_total], 
+    [vwcxc_cobro_det].[ValorCobrado] AS [ValorCobrado], 
+    [vwcxc_cobro_det].[saldo] AS [saldo], 
+    [vwcxc_cobro_det].[saldo_sin_cobro] AS [saldo_sin_cobro], 
+    [vwcxc_cobro_det].[vt_fecha] AS [vt_fecha], 
+    [vwcxc_cobro_det].[vt_fech_venc] AS [vt_fech_venc], 
+    [vwcxc_cobro_det].[IdCliente] AS [IdCliente], 
+    [vwcxc_cobro_det].[pe_nombreCompleto] AS [pe_nombreCompleto]
+    FROM [web].[vwcxc_cobro_det] AS [vwcxc_cobro_det]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwcxc_cobro_det_retencion" EntityType="Self.vwcxc_cobro_det_retencion" store:Type="Views" store:Schema="web">
+            <DefiningQuery>SELECT 
+    [vwcxc_cobro_det_retencion].[IdEmpresa] AS [IdEmpresa], 
+    [vwcxc_cobro_det_retencion].[IdSucursal] AS [IdSucursal], 
+    [vwcxc_cobro_det_retencion].[IdBodega_Cbte] AS [IdBodega_Cbte], 
+    [vwcxc_cobro_det_retencion].[IdCbte_vta_nota] AS [IdCbte_vta_nota], 
+    [vwcxc_cobro_det_retencion].[dc_TipoDocumento] AS [dc_TipoDocumento], 
+    [vwcxc_cobro_det_retencion].[IdCobro] AS [IdCobro], 
+    [vwcxc_cobro_det_retencion].[secuencial] AS [secuencial], 
+    [vwcxc_cobro_det_retencion].[IdCobro_tipo] AS [IdCobro_tipo], 
+    [vwcxc_cobro_det_retencion].[dc_ValorPago] AS [dc_ValorPago], 
+    [vwcxc_cobro_det_retencion].[tc_descripcion] AS [tc_descripcion], 
+    [vwcxc_cobro_det_retencion].[ESRetenIVA] AS [ESRetenIVA], 
+    [vwcxc_cobro_det_retencion].[ESRetenFTE] AS [ESRetenFTE], 
+    [vwcxc_cobro_det_retencion].[PorcentajeRet] AS [PorcentajeRet], 
+    [vwcxc_cobro_det_retencion].[cr_NumDocumento] AS [cr_NumDocumento], 
+    [vwcxc_cobro_det_retencion].[cr_fecha] AS [cr_fecha]
+    FROM [web].[vwcxc_cobro_det_retencion] AS [vwcxc_cobro_det_retencion]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwcxc_cobro_para_retencion" EntityType="Self.vwcxc_cobro_para_retencion" store:Type="Views" store:Schema="web">
+            <DefiningQuery>SELECT 
+    [vwcxc_cobro_para_retencion].[IdEmpresa] AS [IdEmpresa], 
+    [vwcxc_cobro_para_retencion].[IdSucursal] AS [IdSucursal], 
+    [vwcxc_cobro_para_retencion].[IdBodega] AS [IdBodega], 
+    [vwcxc_cobro_para_retencion].[IdCbteVta] AS [IdCbteVta], 
+    [vwcxc_cobro_para_retencion].[vt_tipoDoc] AS [vt_tipoDoc], 
+    [vwcxc_cobro_para_retencion].[vt_Subtotal] AS [vt_Subtotal], 
+    [vwcxc_cobro_para_retencion].[vt_iva] AS [vt_iva], 
+    [vwcxc_cobro_para_retencion].[vt_total] AS [vt_total], 
+    [vwcxc_cobro_para_retencion].[Nombres] AS [Nombres], 
+    [vwcxc_cobro_para_retencion].[vt_fecha] AS [vt_fecha], 
+    [vwcxc_cobro_para_retencion].[vt_fech_venc] AS [vt_fech_venc], 
+    [vwcxc_cobro_para_retencion].[vt_Observacion] AS [vt_Observacion], 
+    [vwcxc_cobro_para_retencion].[vt_NumFactura] AS [vt_NumFactura], 
+    [vwcxc_cobro_para_retencion].[Su_Descripcion] AS [Su_Descripcion], 
+    [vwcxc_cobro_para_retencion].[IdCliente] AS [IdCliente], 
+    [vwcxc_cobro_para_retencion].[TieneRetencion] AS [TieneRetencion]
+    FROM [web].[vwcxc_cobro_para_retencion] AS [vwcxc_cobro_para_retencion]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_cxc_Catalogo_cxc_CatalogoTipo" Association="Self.FK_cxc_Catalogo_cxc_CatalogoTipo">
+            <End Role="cxc_CatalogoTipo" EntitySet="cxc_CatalogoTipo" />
+            <End Role="cxc_Catalogo" EntitySet="cxc_Catalogo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cxc_cobro_cxc_cobro_tipo" Association="Self.FK_cxc_cobro_cxc_cobro_tipo">
+            <End Role="cxc_cobro_tipo" EntitySet="cxc_cobro_tipo" />
+            <End Role="cxc_cobro" EntitySet="cxc_cobro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cxc_cobro_det_cxc_cobro" Association="Self.FK_cxc_cobro_det_cxc_cobro">
+            <End Role="cxc_cobro" EntitySet="cxc_cobro" />
+            <End Role="cxc_cobro_det" EntitySet="cxc_cobro_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cxc_cobro_det_cxc_cobro_tipo" Association="Self.FK_cxc_cobro_det_cxc_cobro_tipo">
+            <End Role="cxc_cobro_tipo" EntitySet="cxc_cobro_tipo" />
+            <End Role="cxc_cobro_det" EntitySet="cxc_cobro_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cxc_cobro_tipo_cxc_cobro_tipo_motivo" Association="Self.FK_cxc_cobro_tipo_cxc_cobro_tipo_motivo">
+            <End Role="cxc_cobro_tipo_motivo" EntitySet="cxc_cobro_tipo_motivo" />
+            <End Role="cxc_cobro_tipo" EntitySet="cxc_cobro_tipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cxc_cobro_tipo_Param_conta_x_sucursal_cxc_cobro_tipo" Association="Self.FK_cxc_cobro_tipo_Param_conta_x_sucursal_cxc_cobro_tipo">
+            <End Role="cxc_cobro_tipo" EntitySet="cxc_cobro_tipo" />
+            <End Role="cxc_cobro_tipo_Param_conta_x_sucursal" EntitySet="cxc_cobro_tipo_Param_conta_x_sucursal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cxc_cobro_x_ct_cbtecble_cxc_cobro" Association="Self.FK_cxc_cobro_x_ct_cbtecble_cxc_cobro">
+            <End Role="cxc_cobro" EntitySet="cxc_cobro" />
+            <End Role="cxc_cobro_x_ct_cbtecble" EntitySet="cxc_cobro_x_ct_cbtecble" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cxc_LiquidacionTarjeta_x_cxc_cobro_cxc_cobro" Association="Self.FK_cxc_LiquidacionTarjeta_x_cxc_cobro_cxc_cobro">
+            <End Role="cxc_cobro" EntitySet="cxc_cobro" />
+            <End Role="cxc_LiquidacionTarjeta_x_cxc_cobro" EntitySet="cxc_LiquidacionTarjeta_x_cxc_cobro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cxc_LiquidacionTarjeta_x_cxc_cobro_cxc_LiquidacionTarjeta" Association="Self.FK_cxc_LiquidacionTarjeta_x_cxc_cobro_cxc_LiquidacionTarjeta">
+            <End Role="cxc_LiquidacionTarjeta" EntitySet="cxc_LiquidacionTarjeta" />
+            <End Role="cxc_LiquidacionTarjeta_x_cxc_cobro" EntitySet="cxc_LiquidacionTarjeta_x_cxc_cobro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cxc_LiquidacionTarjetaDet_cxc_LiquidacionTarjeta" Association="Self.FK_cxc_LiquidacionTarjetaDet_cxc_LiquidacionTarjeta">
+            <End Role="cxc_LiquidacionTarjeta" EntitySet="cxc_LiquidacionTarjeta" />
+            <End Role="cxc_LiquidacionTarjetaDet" EntitySet="cxc_LiquidacionTarjetaDet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cxc_LiquidacionTarjetaDet_cxc_MotivoLiquidacionTarjeta" Association="Self.FK_cxc_LiquidacionTarjetaDet_cxc_MotivoLiquidacionTarjeta">
+            <End Role="cxc_MotivoLiquidacionTarjeta" EntitySet="cxc_MotivoLiquidacionTarjeta" />
+            <End Role="cxc_LiquidacionTarjetaDet" EntitySet="cxc_LiquidacionTarjetaDet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cxc_MotivoLiquidacionTarjeta_x_tb_sucursal_cxc_MotivoLiquidacionTarjeta" Association="Self.FK_cxc_MotivoLiquidacionTarjeta_x_tb_sucursal_cxc_MotivoLiquidacionTarjeta">
+            <End Role="cxc_MotivoLiquidacionTarjeta" EntitySet="cxc_MotivoLiquidacionTarjeta" />
+            <End Role="cxc_MotivoLiquidacionTarjeta_x_tb_sucursal" EntitySet="cxc_MotivoLiquidacionTarjeta_x_tb_sucursal" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model_cuentas_por_cobrar" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cxc_Catalogo">
+          <Key>
+            <PropertyRef Name="IdCatalogo" />
+          </Key>
+          <Property Name="IdCatalogo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdCatalogo_tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Orden" Type="Int32" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaUltMod" Type="DateTime" Precision="3" />
+          <Property Name="nom_pc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ip" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cxc_CatalogoTipo" Relationship="Self.FK_cxc_Catalogo_cxc_CatalogoTipo" FromRole="cxc_Catalogo" ToRole="cxc_CatalogoTipo" />
+        </EntityType>
+        <EntityType Name="cxc_CatalogoTipo">
+          <Key>
+            <PropertyRef Name="IdCatalogo_tipo" />
+          </Key>
+          <Property Name="IdCatalogo_tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="cxc_Catalogo" Relationship="Self.FK_cxc_Catalogo_cxc_CatalogoTipo" FromRole="cxc_CatalogoTipo" ToRole="cxc_Catalogo" />
+        </EntityType>
+        <EntityType Name="cxc_cobro">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCobro" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdCobro" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdCobro_a_aplicar" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="cr_Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdCobro_tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdCliente" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="cr_TotalCobro" Type="Double" Nullable="false" />
+          <Property Name="cr_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="cr_fechaDocu" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="cr_fechaCobro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="cr_observacion" Type="String" MaxLength="700" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cr_Banco" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cr_cuenta" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="cr_NumDocumento" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="cr_Tarjeta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cr_propietarioCta" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="cr_estado" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="cr_recibo" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="cr_es_anticipo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="nom_pc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ip" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdBanco" Type="Int32" />
+          <Property Name="IdCaja" Type="Int32" Nullable="false" />
+          <Property Name="MotiAnula" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoNotaCredito" Type="Int32" />
+          <NavigationProperty Name="cxc_cobro_det" Relationship="Self.FK_cxc_cobro_det_cxc_cobro" FromRole="cxc_cobro" ToRole="cxc_cobro_det" />
+          <NavigationProperty Name="cxc_cobro_x_ct_cbtecble" Relationship="Self.FK_cxc_cobro_x_ct_cbtecble_cxc_cobro" FromRole="cxc_cobro" ToRole="cxc_cobro_x_ct_cbtecble" />
+          <NavigationProperty Name="cxc_cobro_tipo" Relationship="Model_cuentas_por_cobrar.FK_cxc_cobro_cxc_cobro_tipo" FromRole="cxc_cobro" ToRole="cxc_cobro_tipo" />
+          <NavigationProperty Name="cxc_LiquidacionTarjeta_x_cxc_cobro" Relationship="Model_cuentas_por_cobrar.FK_cxc_LiquidacionTarjeta_x_cxc_cobro_cxc_cobro" FromRole="cxc_cobro" ToRole="cxc_LiquidacionTarjeta_x_cxc_cobro" />
+        </EntityType>
+        <EntityType Name="cxc_cobro_det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCobro" />
+            <PropertyRef Name="secuencial" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdCobro" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="secuencial" Type="Int32" Nullable="false" />
+          <Property Name="dc_TipoDocumento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdBodega_Cbte" Type="Int32" />
+          <Property Name="IdCbte_vta_nota" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="dc_ValorPago" Type="Double" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="nom_pc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ip" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="IdCobro_tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="cxc_cobro" Relationship="Self.FK_cxc_cobro_det_cxc_cobro" FromRole="cxc_cobro_det" ToRole="cxc_cobro" />
+          <NavigationProperty Name="cxc_cobro_tipo" Relationship="Model_cuentas_por_cobrar.FK_cxc_cobro_det_cxc_cobro_tipo" FromRole="cxc_cobro_det" ToRole="cxc_cobro_tipo" />
+        </EntityType>
+        <EntityType Name="cxc_cobro_tipo_motivo">
+          <Key>
+            <PropertyRef Name="IdMotivo_tipo_cobro" />
+          </Key>
+          <Property Name="IdMotivo_tipo_cobro" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nom_Motivo_tipo_cobro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="cxc_cobro_tipo" Relationship="Model_cuentas_por_cobrar.FK_cxc_cobro_tipo_cxc_cobro_tipo_motivo" FromRole="cxc_cobro_tipo_motivo" ToRole="cxc_cobro_tipo" />
+        </EntityType>
+        <EntityType Name="cxc_cobro_tipo_Param_conta_x_sucursal">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCobro_tipo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdCobro_tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdCtaCble" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble_Anticipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cxc_cobro_tipo" Relationship="Model_cuentas_por_cobrar.FK_cxc_cobro_tipo_Param_conta_x_sucursal_cxc_cobro_tipo" FromRole="cxc_cobro_tipo_Param_conta_x_sucursal" ToRole="cxc_cobro_tipo" />
+        </EntityType>
+        <EntityType Name="cxc_cobro_x_ct_cbtecble">
+          <Key>
+            <PropertyRef Name="cbr_IdEmpresa" />
+            <PropertyRef Name="cbr_IdSucursal" />
+            <PropertyRef Name="cbr_IdCobro" />
+            <PropertyRef Name="ct_IdEmpresa" />
+            <PropertyRef Name="ct_IdTipoCbte" />
+            <PropertyRef Name="ct_IdCbteCble" />
+          </Key>
+          <Property Name="cbr_IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="cbr_IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="cbr_IdCobro" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ct_IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="ct_IdTipoCbte" Type="Int32" Nullable="false" />
+          <Property Name="ct_IdCbteCble" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="observacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cxc_cobro" Relationship="Self.FK_cxc_cobro_x_ct_cbtecble_cxc_cobro" FromRole="cxc_cobro_x_ct_cbtecble" ToRole="cxc_cobro" />
+        </EntityType>
+        <EntityType Name="vwcxc_cobro">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCobro" />
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="cr_fecha" />
+            <PropertyRef Name="cr_TotalCobro" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="cr_observacion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdCobro" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdCliente" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdCobro_tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="cr_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="cr_TotalCobro" Type="Double" Nullable="false" />
+          <Property Name="cr_estado" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cr_observacion" Type="String" MaxLength="700" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cr_NumDocumento" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="nom_Motivo_tipo_cobro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwcxc_cobro_det_retencion">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCbte_vta_nota" />
+            <PropertyRef Name="IdCobro" />
+            <PropertyRef Name="secuencial" />
+            <PropertyRef Name="IdCobro_tipo" />
+            <PropertyRef Name="dc_ValorPago" />
+            <PropertyRef Name="tc_descripcion" />
+            <PropertyRef Name="PorcentajeRet" />
+            <PropertyRef Name="cr_fecha" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega_Cbte" Type="Int32" />
+          <Property Name="IdCbte_vta_nota" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="dc_TipoDocumento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdCobro" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="secuencial" Type="Int32" Nullable="false" />
+          <Property Name="IdCobro_tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dc_ValorPago" Type="Double" Nullable="false" />
+          <Property Name="tc_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ESRetenIVA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ESRetenFTE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="PorcentajeRet" Type="Double" Nullable="false" />
+          <Property Name="cr_NumDocumento" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="cr_fecha" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK_cxc_Catalogo_cxc_CatalogoTipo">
+          <End Role="cxc_CatalogoTipo" Type="Self.cxc_CatalogoTipo" Multiplicity="1" />
+          <End Role="cxc_Catalogo" Type="Self.cxc_Catalogo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_CatalogoTipo">
+              <PropertyRef Name="IdCatalogo_tipo" />
+            </Principal>
+            <Dependent Role="cxc_Catalogo">
+              <PropertyRef Name="IdCatalogo_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cxc_cobro_det_cxc_cobro">
+          <End Role="cxc_cobro" Type="Self.cxc_cobro" Multiplicity="1" />
+          <End Role="cxc_cobro_det" Type="Self.cxc_cobro_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_cobro">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdCobro" />
+            </Principal>
+            <Dependent Role="cxc_cobro_det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdCobro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cxc_cobro_x_ct_cbtecble_cxc_cobro">
+          <End Role="cxc_cobro" Type="Self.cxc_cobro" Multiplicity="1" />
+          <End Role="cxc_cobro_x_ct_cbtecble" Type="Self.cxc_cobro_x_ct_cbtecble" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_cobro">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdCobro" />
+            </Principal>
+            <Dependent Role="cxc_cobro_x_ct_cbtecble">
+              <PropertyRef Name="cbr_IdEmpresa" />
+              <PropertyRef Name="cbr_IdSucursal" />
+              <PropertyRef Name="cbr_IdCobro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities_cuentas_por_cobrar" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cxc_Catalogo" EntityType="Self.cxc_Catalogo" />
+          <EntitySet Name="cxc_CatalogoTipo" EntityType="Self.cxc_CatalogoTipo" />
+          <EntitySet Name="cxc_cobro" EntityType="Self.cxc_cobro" />
+          <EntitySet Name="cxc_cobro_det" EntityType="Self.cxc_cobro_det" />
+          <EntitySet Name="cxc_cobro_tipo_motivo" EntityType="Self.cxc_cobro_tipo_motivo" />
+          <EntitySet Name="cxc_cobro_tipo_Param_conta_x_sucursal" EntityType="Self.cxc_cobro_tipo_Param_conta_x_sucursal" />
+          <EntitySet Name="cxc_cobro_x_ct_cbtecble" EntityType="Self.cxc_cobro_x_ct_cbtecble" />
+          <EntitySet Name="vwcxc_cobro" EntityType="Self.vwcxc_cobro" />
+          <EntitySet Name="vwcxc_cobro_det_retencion" EntityType="Self.vwcxc_cobro_det_retencion" />
+          <AssociationSet Name="FK_cxc_Catalogo_cxc_CatalogoTipo" Association="Self.FK_cxc_Catalogo_cxc_CatalogoTipo">
+            <End Role="cxc_CatalogoTipo" EntitySet="cxc_CatalogoTipo" />
+            <End Role="cxc_Catalogo" EntitySet="cxc_Catalogo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cxc_cobro_det_cxc_cobro" Association="Self.FK_cxc_cobro_det_cxc_cobro">
+            <End Role="cxc_cobro" EntitySet="cxc_cobro" />
+            <End Role="cxc_cobro_det" EntitySet="cxc_cobro_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cxc_cobro_x_ct_cbtecble_cxc_cobro" Association="Self.FK_cxc_cobro_x_ct_cbtecble_cxc_cobro">
+            <End Role="cxc_cobro" EntitySet="cxc_cobro" />
+            <End Role="cxc_cobro_x_ct_cbtecble" EntitySet="cxc_cobro_x_ct_cbtecble" />
+          </AssociationSet>
+          <EntitySet Name="vwcxc_cartera_x_cobrar" EntityType="Model_cuentas_por_cobrar.vwcxc_cartera_x_cobrar" />
+          <EntitySet Name="cxc_Parametro" EntityType="Model_cuentas_por_cobrar.cxc_Parametro" />
+          <EntitySet Name="cxc_cobro_tipo" EntityType="Model_cuentas_por_cobrar.cxc_cobro_tipo" />
+          <AssociationSet Name="FK_cxc_cobro_cxc_cobro_tipo" Association="Model_cuentas_por_cobrar.FK_cxc_cobro_cxc_cobro_tipo">
+            <End Role="cxc_cobro_tipo" EntitySet="cxc_cobro_tipo" />
+            <End Role="cxc_cobro" EntitySet="cxc_cobro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cxc_cobro_det_cxc_cobro_tipo" Association="Model_cuentas_por_cobrar.FK_cxc_cobro_det_cxc_cobro_tipo">
+            <End Role="cxc_cobro_tipo" EntitySet="cxc_cobro_tipo" />
+            <End Role="cxc_cobro_det" EntitySet="cxc_cobro_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cxc_cobro_tipo_cxc_cobro_tipo_motivo" Association="Model_cuentas_por_cobrar.FK_cxc_cobro_tipo_cxc_cobro_tipo_motivo">
+            <End Role="cxc_cobro_tipo_motivo" EntitySet="cxc_cobro_tipo_motivo" />
+            <End Role="cxc_cobro_tipo" EntitySet="cxc_cobro_tipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cxc_cobro_tipo_Param_conta_x_sucursal_cxc_cobro_tipo" Association="Model_cuentas_por_cobrar.FK_cxc_cobro_tipo_Param_conta_x_sucursal_cxc_cobro_tipo">
+            <End Role="cxc_cobro_tipo" EntitySet="cxc_cobro_tipo" />
+            <End Role="cxc_cobro_tipo_Param_conta_x_sucursal" EntitySet="cxc_cobro_tipo_Param_conta_x_sucursal" />
+          </AssociationSet>
+          <EntitySet Name="cxc_MotivoLiquidacionTarjeta" EntityType="Model_cuentas_por_cobrar.cxc_MotivoLiquidacionTarjeta" />
+          <EntitySet Name="cxc_MotivoLiquidacionTarjeta_x_tb_sucursal" EntityType="Model_cuentas_por_cobrar.cxc_MotivoLiquidacionTarjeta_x_tb_sucursal" />
+          <EntitySet Name="vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal" EntityType="Model_cuentas_por_cobrar.vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal" />
+          <AssociationSet Name="FK_cxc_MotivoLiquidacionTarjeta_x_tb_sucursal_cxc_MotivoLiquidacionTarjeta" Association="Model_cuentas_por_cobrar.FK_cxc_MotivoLiquidacionTarjeta_x_tb_sucursal_cxc_MotivoLiquidacionTarjeta">
+            <End Role="cxc_MotivoLiquidacionTarjeta" EntitySet="cxc_MotivoLiquidacionTarjeta" />
+            <End Role="cxc_MotivoLiquidacionTarjeta_x_tb_sucursal" EntitySet="cxc_MotivoLiquidacionTarjeta_x_tb_sucursal" />
+          </AssociationSet>
+          <EntitySet Name="cxc_LiquidacionTarjeta_x_cxc_cobro" EntityType="Model_cuentas_por_cobrar.cxc_LiquidacionTarjeta_x_cxc_cobro" />
+          <EntitySet Name="cxc_LiquidacionTarjetaDet" EntityType="Model_cuentas_por_cobrar.cxc_LiquidacionTarjetaDet" />
+          <AssociationSet Name="FK_cxc_LiquidacionTarjeta_x_cxc_cobro_cxc_cobro" Association="Model_cuentas_por_cobrar.FK_cxc_LiquidacionTarjeta_x_cxc_cobro_cxc_cobro">
+            <End Role="cxc_cobro" EntitySet="cxc_cobro" />
+            <End Role="cxc_LiquidacionTarjeta_x_cxc_cobro" EntitySet="cxc_LiquidacionTarjeta_x_cxc_cobro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cxc_LiquidacionTarjetaDet_cxc_MotivoLiquidacionTarjeta" Association="Model_cuentas_por_cobrar.FK_cxc_LiquidacionTarjetaDet_cxc_MotivoLiquidacionTarjeta">
+            <End Role="cxc_MotivoLiquidacionTarjeta" EntitySet="cxc_MotivoLiquidacionTarjeta" />
+            <End Role="cxc_LiquidacionTarjetaDet" EntitySet="cxc_LiquidacionTarjetaDet" />
+          </AssociationSet>
+          <EntitySet Name="vwcxc_LiquidacionTarjeta_x_cxc_cobro" EntityType="Model_cuentas_por_cobrar.vwcxc_LiquidacionTarjeta_x_cxc_cobro" />
+          <EntitySet Name="cxc_LiquidacionTarjeta" EntityType="Model_cuentas_por_cobrar.cxc_LiquidacionTarjeta" />
+          <AssociationSet Name="FK_cxc_LiquidacionTarjeta_x_cxc_cobro_cxc_LiquidacionTarjeta" Association="Model_cuentas_por_cobrar.FK_cxc_LiquidacionTarjeta_x_cxc_cobro_cxc_LiquidacionTarjeta">
+            <End Role="cxc_LiquidacionTarjeta" EntitySet="cxc_LiquidacionTarjeta" />
+            <End Role="cxc_LiquidacionTarjeta_x_cxc_cobro" EntitySet="cxc_LiquidacionTarjeta_x_cxc_cobro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cxc_LiquidacionTarjetaDet_cxc_LiquidacionTarjeta" Association="Model_cuentas_por_cobrar.FK_cxc_LiquidacionTarjetaDet_cxc_LiquidacionTarjeta">
+            <End Role="cxc_LiquidacionTarjeta" EntitySet="cxc_LiquidacionTarjeta" />
+            <End Role="cxc_LiquidacionTarjetaDet" EntitySet="cxc_LiquidacionTarjetaDet" />
+          </AssociationSet>
+          <EntitySet Name="vwcxc_LiquidacionTarjeta" EntityType="Model_cuentas_por_cobrar.vwcxc_LiquidacionTarjeta" />
+          <EntitySet Name="vwcxc_cobro_det" EntityType="Model_cuentas_por_cobrar.vwcxc_cobro_det" />
+          <EntitySet Name="vwcxc_cobro_para_retencion" EntityType="Model_cuentas_por_cobrar.vwcxc_cobro_para_retencion" />
+          </EntityContainer>
+        <EntityType Name="vwcxc_cartera_x_cobrar">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="vt_tipoDoc" />
+            <PropertyRef Name="IdComprobante" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="vt_fecha" />
+            <PropertyRef Name="TotalxCobrado" />
+            <PropertyRef Name="Bodega" />
+            <PropertyRef Name="vt_fech_venc" />
+            <PropertyRef Name="dc_ValorRetFu" />
+            <PropertyRef Name="dc_ValorRetIva" />
+            <PropertyRef Name="NomCliente" />
+            <PropertyRef Name="em_nombre" />
+            <PropertyRef Name="Estado" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="vt_tipoDoc" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="vt_NunDocumento" Type="String" MaxLength="41" FixedLength="false" Unicode="false" />
+          <Property Name="Referencia" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdComprobante" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="CodComprobante" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdCliente" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="vt_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="vt_total" Type="Double" />
+          <Property Name="Saldo" Type="Double" />
+          <Property Name="TotalxCobrado" Type="Double" Nullable="false" />
+          <Property Name="Bodega" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="vt_Subtotal" Type="Double" />
+          <Property Name="vt_iva" Type="Double" />
+          <Property Name="vt_fech_venc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="dc_ValorRetFu" Type="Double" Nullable="false" />
+          <Property Name="dc_ValorRetIva" Type="Double" Nullable="false" />
+          <Property Name="CodCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NomCliente" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="em_nombre" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="cxc_Parametro">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="pa_IdCaja_x_cobros_x_CXC" Type="Int32" Nullable="false" />
+          <Property Name="pa_IdTipoMoviCaja_x_Cobros_x_cliente" Type="Int32" Nullable="false" />
+          <Property Name="pa_IdTipoCbteCble_CxC" Type="Int32" Nullable="false" />
+          <Property Name="DiasTransaccionesAFuturo" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaTransac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaUltMod" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="cxc_cobro_tipo">
+          <Key>
+            <PropertyRef Name="IdCobro_tipo" />
+          </Key>
+          <Property Name="IdCobro_tipo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="tc_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="tc_abreviatura" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="tc_Tomar_Cta_Cble_De" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ESRetenIVA" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ESRetenFTE" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="PorcentajeRet" Type="Double" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="IdMotivo_tipo_cobro" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="EsTarjetaCredito" Type="Boolean" Nullable="false" />
+          <Property Name="SeDeposita" Type="Boolean" Nullable="false" />
+          <Property Name="PorcentajeDescuento" Type="Double" Nullable="false" />
+          <NavigationProperty Name="cxc_cobro" Relationship="Model_cuentas_por_cobrar.FK_cxc_cobro_cxc_cobro_tipo" FromRole="cxc_cobro_tipo" ToRole="cxc_cobro" />
+          <NavigationProperty Name="cxc_cobro_det" Relationship="Model_cuentas_por_cobrar.FK_cxc_cobro_det_cxc_cobro_tipo" FromRole="cxc_cobro_tipo" ToRole="cxc_cobro_det" />
+          <NavigationProperty Name="cxc_cobro_tipo_motivo" Relationship="Model_cuentas_por_cobrar.FK_cxc_cobro_tipo_cxc_cobro_tipo_motivo" FromRole="cxc_cobro_tipo" ToRole="cxc_cobro_tipo_motivo" />
+          <NavigationProperty Name="cxc_cobro_tipo_Param_conta_x_sucursal" Relationship="Model_cuentas_por_cobrar.FK_cxc_cobro_tipo_Param_conta_x_sucursal_cxc_cobro_tipo" FromRole="cxc_cobro_tipo" ToRole="cxc_cobro_tipo_Param_conta_x_sucursal" />
+        </EntityType>
+        <Association Name="FK_cxc_cobro_cxc_cobro_tipo">
+          <End Type="Model_cuentas_por_cobrar.cxc_cobro_tipo" Role="cxc_cobro_tipo" Multiplicity="0..1" />
+          <End Type="Model_cuentas_por_cobrar.cxc_cobro" Role="cxc_cobro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_cobro_tipo">
+              <PropertyRef Name="IdCobro_tipo" />
+            </Principal>
+            <Dependent Role="cxc_cobro">
+              <PropertyRef Name="IdCobro_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cxc_cobro_det_cxc_cobro_tipo">
+          <End Type="Model_cuentas_por_cobrar.cxc_cobro_tipo" Role="cxc_cobro_tipo" Multiplicity="1" />
+          <End Type="Model_cuentas_por_cobrar.cxc_cobro_det" Role="cxc_cobro_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_cobro_tipo">
+              <PropertyRef Name="IdCobro_tipo" />
+            </Principal>
+            <Dependent Role="cxc_cobro_det">
+              <PropertyRef Name="IdCobro_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cxc_cobro_tipo_cxc_cobro_tipo_motivo">
+          <End Type="Model_cuentas_por_cobrar.cxc_cobro_tipo_motivo" Role="cxc_cobro_tipo_motivo" Multiplicity="0..1" />
+          <End Type="Model_cuentas_por_cobrar.cxc_cobro_tipo" Role="cxc_cobro_tipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_cobro_tipo_motivo">
+              <PropertyRef Name="IdMotivo_tipo_cobro" />
+            </Principal>
+            <Dependent Role="cxc_cobro_tipo">
+              <PropertyRef Name="IdMotivo_tipo_cobro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cxc_cobro_tipo_Param_conta_x_sucursal_cxc_cobro_tipo">
+          <End Type="Model_cuentas_por_cobrar.cxc_cobro_tipo" Role="cxc_cobro_tipo" Multiplicity="1" />
+          <End Type="Model_cuentas_por_cobrar.cxc_cobro_tipo_Param_conta_x_sucursal" Role="cxc_cobro_tipo_Param_conta_x_sucursal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_cobro_tipo">
+              <PropertyRef Name="IdCobro_tipo" />
+            </Principal>
+            <Dependent Role="cxc_cobro_tipo_Param_conta_x_sucursal">
+              <PropertyRef Name="IdCobro_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="cxc_MotivoLiquidacionTarjeta">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdMotivo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdMotivo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ESRetenIVA" Type="Boolean" Nullable="false" />
+          <Property Name="ESRetenFTE" Type="Boolean" Nullable="false" />
+          <Property Name="Porcentaje" Type="Double" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioModificacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioAnulacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cxc_MotivoLiquidacionTarjeta_x_tb_sucursal" Relationship="Model_cuentas_por_cobrar.FK_cxc_MotivoLiquidacionTarjeta_x_tb_sucursal_cxc_MotivoLiquidacionTarjeta" FromRole="cxc_MotivoLiquidacionTarjeta" ToRole="cxc_MotivoLiquidacionTarjeta_x_tb_sucursal" />
+          <NavigationProperty Name="cxc_LiquidacionTarjetaDet" Relationship="Model_cuentas_por_cobrar.FK_cxc_LiquidacionTarjetaDet_cxc_MotivoLiquidacionTarjeta" FromRole="cxc_MotivoLiquidacionTarjeta" ToRole="cxc_LiquidacionTarjetaDet" />
+        </EntityType>
+        <EntityType Name="cxc_MotivoLiquidacionTarjeta_x_tb_sucursal">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdMotivo" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdMotivo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdCtaCble" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cxc_MotivoLiquidacionTarjeta" Relationship="Model_cuentas_por_cobrar.FK_cxc_MotivoLiquidacionTarjeta_x_tb_sucursal_cxc_MotivoLiquidacionTarjeta" FromRole="cxc_MotivoLiquidacionTarjeta_x_tb_sucursal" ToRole="cxc_MotivoLiquidacionTarjeta" />
+        </EntityType>
+        <EntityType Name="vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdMotivo" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCtaCble" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdMotivo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdCtaCble" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="pc_Cuenta" Type="String" MaxLength="523" FixedLength="false" Unicode="false" />
+          <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_cxc_MotivoLiquidacionTarjeta_x_tb_sucursal_cxc_MotivoLiquidacionTarjeta">
+          <End Type="Model_cuentas_por_cobrar.cxc_MotivoLiquidacionTarjeta" Role="cxc_MotivoLiquidacionTarjeta" Multiplicity="1" />
+          <End Type="Model_cuentas_por_cobrar.cxc_MotivoLiquidacionTarjeta_x_tb_sucursal" Role="cxc_MotivoLiquidacionTarjeta_x_tb_sucursal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_MotivoLiquidacionTarjeta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdMotivo" />
+            </Principal>
+            <Dependent Role="cxc_MotivoLiquidacionTarjeta_x_tb_sucursal">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdMotivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="cxc_LiquidacionTarjeta_x_cxc_cobro">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdLiquidacion" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdLiquidacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="Valor" Type="Double" Nullable="false" />
+          <Property Name="IdCobro" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <NavigationProperty Name="cxc_cobro" Relationship="Model_cuentas_por_cobrar.FK_cxc_LiquidacionTarjeta_x_cxc_cobro_cxc_cobro" FromRole="cxc_LiquidacionTarjeta_x_cxc_cobro" ToRole="cxc_cobro" />
+          <NavigationProperty Name="cxc_LiquidacionTarjeta" Relationship="Model_cuentas_por_cobrar.FK_cxc_LiquidacionTarjeta_x_cxc_cobro_cxc_LiquidacionTarjeta" FromRole="cxc_LiquidacionTarjeta_x_cxc_cobro" ToRole="cxc_LiquidacionTarjeta" />
+        </EntityType>
+        <EntityType Name="cxc_LiquidacionTarjetaDet">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdLiquidacion" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdLiquidacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdMotivo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Porcentaje" Type="Double" Nullable="false" />
+          <Property Name="Valor" Type="Double" Nullable="false" />
+          <NavigationProperty Name="cxc_MotivoLiquidacionTarjeta" Relationship="Model_cuentas_por_cobrar.FK_cxc_LiquidacionTarjetaDet_cxc_MotivoLiquidacionTarjeta" FromRole="cxc_LiquidacionTarjetaDet" ToRole="cxc_MotivoLiquidacionTarjeta" />
+          <NavigationProperty Name="cxc_LiquidacionTarjeta" Relationship="Model_cuentas_por_cobrar.FK_cxc_LiquidacionTarjetaDet_cxc_LiquidacionTarjeta" FromRole="cxc_LiquidacionTarjetaDet" ToRole="cxc_LiquidacionTarjeta" />
+        </EntityType>
+        <Association Name="FK_cxc_LiquidacionTarjeta_x_cxc_cobro_cxc_cobro">
+          <End Type="Model_cuentas_por_cobrar.cxc_cobro" Role="cxc_cobro" Multiplicity="1" />
+          <End Type="Model_cuentas_por_cobrar.cxc_LiquidacionTarjeta_x_cxc_cobro" Role="cxc_LiquidacionTarjeta_x_cxc_cobro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_cobro">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdCobro" />
+            </Principal>
+            <Dependent Role="cxc_LiquidacionTarjeta_x_cxc_cobro">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdCobro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cxc_LiquidacionTarjetaDet_cxc_MotivoLiquidacionTarjeta">
+          <End Type="Model_cuentas_por_cobrar.cxc_MotivoLiquidacionTarjeta" Role="cxc_MotivoLiquidacionTarjeta" Multiplicity="1" />
+          <End Type="Model_cuentas_por_cobrar.cxc_LiquidacionTarjetaDet" Role="cxc_LiquidacionTarjetaDet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_MotivoLiquidacionTarjeta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdMotivo" />
+            </Principal>
+            <Dependent Role="cxc_LiquidacionTarjetaDet">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdMotivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vwcxc_LiquidacionTarjeta_x_cxc_cobro">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCobro" />
+            <PropertyRef Name="cr_TotalCobro" />
+            <PropertyRef Name="cr_fecha" />
+            <PropertyRef Name="cr_observacion" />
+            <PropertyRef Name="pe_nombreCompleto" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdCobro" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdLiquidacion" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="cr_TotalCobro" Type="Double" Nullable="false" />
+          <Property Name="cr_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="cr_observacion" Type="String" Nullable="false" MaxLength="700" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="cxc_LiquidacionTarjeta">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdLiquidacion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdLiquidacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Lote" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IdBanco" Type="Int32" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="Valor" Type="Double" Nullable="false" />
+          <Property Name="IdEmpresa_ct" Type="Int32" />
+          <Property Name="IdTipoCbte_ct" Type="Int32" />
+          <Property Name="IdCbteCble_ct" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IdUsuarioCreacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioModificacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioAnulacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cxc_LiquidacionTarjeta_x_cxc_cobro" Relationship="Model_cuentas_por_cobrar.FK_cxc_LiquidacionTarjeta_x_cxc_cobro_cxc_LiquidacionTarjeta" FromRole="cxc_LiquidacionTarjeta" ToRole="cxc_LiquidacionTarjeta_x_cxc_cobro" />
+          <NavigationProperty Name="cxc_LiquidacionTarjetaDet" Relationship="Model_cuentas_por_cobrar.FK_cxc_LiquidacionTarjetaDet_cxc_LiquidacionTarjeta" FromRole="cxc_LiquidacionTarjeta" ToRole="cxc_LiquidacionTarjetaDet" />
+        </EntityType>
+        <Association Name="FK_cxc_LiquidacionTarjeta_x_cxc_cobro_cxc_LiquidacionTarjeta">
+          <End Type="Model_cuentas_por_cobrar.cxc_LiquidacionTarjeta" Role="cxc_LiquidacionTarjeta" Multiplicity="1" />
+          <End Type="Model_cuentas_por_cobrar.cxc_LiquidacionTarjeta_x_cxc_cobro" Role="cxc_LiquidacionTarjeta_x_cxc_cobro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_LiquidacionTarjeta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdLiquidacion" />
+            </Principal>
+            <Dependent Role="cxc_LiquidacionTarjeta_x_cxc_cobro">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdLiquidacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cxc_LiquidacionTarjetaDet_cxc_LiquidacionTarjeta">
+          <End Type="Model_cuentas_por_cobrar.cxc_LiquidacionTarjeta" Role="cxc_LiquidacionTarjeta" Multiplicity="1" />
+          <End Type="Model_cuentas_por_cobrar.cxc_LiquidacionTarjetaDet" Role="cxc_LiquidacionTarjetaDet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc_LiquidacionTarjeta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdLiquidacion" />
+            </Principal>
+            <Dependent Role="cxc_LiquidacionTarjetaDet">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdLiquidacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vwcxc_LiquidacionTarjeta">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdLiquidacion" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="IdBanco" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="Valor" />
+            <PropertyRef Name="ba_descripcion" />
+            <PropertyRef Name="Su_Descripcion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdLiquidacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Lote" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IdBanco" Type="Int32" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="IdEmpresa_ct" Type="Int32" />
+          <Property Name="IdTipoCbte_ct" Type="Int32" />
+          <Property Name="IdCbteCble_ct" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Valor" Type="Double" Nullable="false" />
+          <Property Name="ba_descripcion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwcxc_cobro_det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdCobro" />
+            <PropertyRef Name="secuencial" />
+            <PropertyRef Name="IdCbte_vta_nota" />
+            <PropertyRef Name="dc_ValorPago" />
+            <PropertyRef Name="IdCobro_tipo" />
+            <PropertyRef Name="vt_Subtotal" />
+            <PropertyRef Name="vt_iva" />
+            <PropertyRef Name="vt_total" />
+            <PropertyRef Name="ValorCobrado" />
+            <PropertyRef Name="saldo" />
+            <PropertyRef Name="saldo_sin_cobro" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdCobro" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="secuencial" Type="Int32" Nullable="false" />
+          <Property Name="dc_TipoDocumento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdBodega_Cbte" Type="Int32" />
+          <Property Name="IdCbte_vta_nota" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="dc_ValorPago" Type="Double" Nullable="false" />
+          <Property Name="IdCobro_tipo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="vt_NumFactura" Type="String" MaxLength="41" FixedLength="false" Unicode="false" />
+          <Property Name="vt_Observacion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CodDoc" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="vt_Subtotal" Type="Double" Nullable="false" />
+          <Property Name="vt_iva" Type="Double" Nullable="false" />
+          <Property Name="vt_total" Type="Double" Nullable="false" />
+          <Property Name="ValorCobrado" Type="Double" Nullable="false" />
+          <Property Name="saldo" Type="Double" Nullable="false" />
+          <Property Name="saldo_sin_cobro" Type="Double" Nullable="false" />
+          <Property Name="vt_fecha" Type="DateTime" Precision="3" />
+          <Property Name="vt_fech_venc" Type="DateTime" Precision="3" />
+          <Property Name="IdCliente" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="pe_nombreCompleto" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwcxc_cobro_para_retencion">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdBodega" />
+            <PropertyRef Name="IdCbteVta" />
+            <PropertyRef Name="vt_tipoDoc" />
+            <PropertyRef Name="vt_Subtotal" />
+            <PropertyRef Name="vt_iva" />
+            <PropertyRef Name="vt_total" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="vt_fecha" />
+            <PropertyRef Name="vt_fech_venc" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteVta" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="vt_tipoDoc" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="vt_Subtotal" Type="Double" Nullable="false" />
+          <Property Name="vt_iva" Type="Double" Nullable="false" />
+          <Property Name="vt_total" Type="Double" Nullable="false" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="vt_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="vt_fech_venc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="vt_Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="vt_NumFactura" Type="String" MaxLength="71" FixedLength="false" Unicode="false" />
+          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdCliente" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="TieneRetencion" Type="Boolean" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Model_cuentas_por_cobrarStoreContainer" CdmEntityContainer="Entities_cuentas_por_cobrar">
+          <EntitySetMapping Name="cxc_Catalogo">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_Catalogo">
+              <MappingFragment StoreEntitySet="cxc_Catalogo">
+                <ScalarProperty Name="IdCatalogo" ColumnName="IdCatalogo" />
+                <ScalarProperty Name="IdCatalogo_tipo" ColumnName="IdCatalogo_tipo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="FechaUltMod" ColumnName="FechaUltMod" />
+                <ScalarProperty Name="nom_pc" ColumnName="nom_pc" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cxc_CatalogoTipo">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_CatalogoTipo">
+              <MappingFragment StoreEntitySet="cxc_CatalogoTipo">
+                <ScalarProperty Name="IdCatalogo_tipo" ColumnName="IdCatalogo_tipo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cxc_cobro">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_cobro">
+              <MappingFragment StoreEntitySet="cxc_cobro">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdCobro" ColumnName="IdCobro" />
+                <ScalarProperty Name="IdCobro_a_aplicar" ColumnName="IdCobro_a_aplicar" />
+                <ScalarProperty Name="cr_Codigo" ColumnName="cr_Codigo" />
+                <ScalarProperty Name="IdCobro_tipo" ColumnName="IdCobro_tipo" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="cr_TotalCobro" ColumnName="cr_TotalCobro" />
+                <ScalarProperty Name="cr_fecha" ColumnName="cr_fecha" />
+                <ScalarProperty Name="cr_fechaDocu" ColumnName="cr_fechaDocu" />
+                <ScalarProperty Name="cr_fechaCobro" ColumnName="cr_fechaCobro" />
+                <ScalarProperty Name="cr_observacion" ColumnName="cr_observacion" />
+                <ScalarProperty Name="cr_Banco" ColumnName="cr_Banco" />
+                <ScalarProperty Name="cr_cuenta" ColumnName="cr_cuenta" />
+                <ScalarProperty Name="cr_NumDocumento" ColumnName="cr_NumDocumento" />
+                <ScalarProperty Name="cr_Tarjeta" ColumnName="cr_Tarjeta" />
+                <ScalarProperty Name="cr_propietarioCta" ColumnName="cr_propietarioCta" />
+                <ScalarProperty Name="cr_estado" ColumnName="cr_estado" />
+                <ScalarProperty Name="cr_recibo" ColumnName="cr_recibo" />
+                <ScalarProperty Name="cr_es_anticipo" ColumnName="cr_es_anticipo" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="nom_pc" ColumnName="nom_pc" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
+                <ScalarProperty Name="IdCaja" ColumnName="IdCaja" />
+                <ScalarProperty Name="MotiAnula" ColumnName="MotiAnula" />
+                <ScalarProperty Name="IdTipoNotaCredito" ColumnName="IdTipoNotaCredito" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cxc_cobro_det">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_cobro_det">
+              <MappingFragment StoreEntitySet="cxc_cobro_det">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdCobro" ColumnName="IdCobro" />
+                <ScalarProperty Name="secuencial" ColumnName="secuencial" />
+                <ScalarProperty Name="dc_TipoDocumento" ColumnName="dc_TipoDocumento" />
+                <ScalarProperty Name="IdBodega_Cbte" ColumnName="IdBodega_Cbte" />
+                <ScalarProperty Name="IdCbte_vta_nota" ColumnName="IdCbte_vta_nota" />
+                <ScalarProperty Name="dc_ValorPago" ColumnName="dc_ValorPago" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="nom_pc" ColumnName="nom_pc" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="IdCobro_tipo" ColumnName="IdCobro_tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cxc_cobro_tipo_motivo">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_cobro_tipo_motivo">
+              <MappingFragment StoreEntitySet="cxc_cobro_tipo_motivo">
+                <ScalarProperty Name="IdMotivo_tipo_cobro" ColumnName="IdMotivo_tipo_cobro" />
+                <ScalarProperty Name="nom_Motivo_tipo_cobro" ColumnName="nom_Motivo_tipo_cobro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cxc_cobro_tipo_Param_conta_x_sucursal">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_cobro_tipo_Param_conta_x_sucursal">
+              <MappingFragment StoreEntitySet="cxc_cobro_tipo_Param_conta_x_sucursal">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdCobro_tipo" ColumnName="IdCobro_tipo" />
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="IdCtaCble_Anticipo" ColumnName="IdCtaCble_Anticipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cxc_cobro_x_ct_cbtecble">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_cobro_x_ct_cbtecble">
+              <MappingFragment StoreEntitySet="cxc_cobro_x_ct_cbtecble">
+                <ScalarProperty Name="cbr_IdEmpresa" ColumnName="cbr_IdEmpresa" />
+                <ScalarProperty Name="cbr_IdSucursal" ColumnName="cbr_IdSucursal" />
+                <ScalarProperty Name="cbr_IdCobro" ColumnName="cbr_IdCobro" />
+                <ScalarProperty Name="ct_IdEmpresa" ColumnName="ct_IdEmpresa" />
+                <ScalarProperty Name="ct_IdTipoCbte" ColumnName="ct_IdTipoCbte" />
+                <ScalarProperty Name="ct_IdCbteCble" ColumnName="ct_IdCbteCble" />
+                <ScalarProperty Name="observacion" ColumnName="observacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwcxc_cobro">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_cobro">
+              <MappingFragment StoreEntitySet="vwcxc_cobro">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdCobro" ColumnName="IdCobro" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="IdCobro_tipo" ColumnName="IdCobro_tipo" />
+                <ScalarProperty Name="cr_fecha" ColumnName="cr_fecha" />
+                <ScalarProperty Name="cr_TotalCobro" ColumnName="cr_TotalCobro" />
+                <ScalarProperty Name="cr_estado" ColumnName="cr_estado" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="cr_observacion" ColumnName="cr_observacion" />
+                <ScalarProperty Name="cr_NumDocumento" ColumnName="cr_NumDocumento" />
+                <ScalarProperty Name="nom_Motivo_tipo_cobro" ColumnName="nom_Motivo_tipo_cobro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwcxc_cobro_det_retencion">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_cobro_det_retencion">
+              <MappingFragment StoreEntitySet="vwcxc_cobro_det_retencion">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdBodega_Cbte" ColumnName="IdBodega_Cbte" />
+                <ScalarProperty Name="IdCbte_vta_nota" ColumnName="IdCbte_vta_nota" />
+                <ScalarProperty Name="dc_TipoDocumento" ColumnName="dc_TipoDocumento" />
+                <ScalarProperty Name="IdCobro" ColumnName="IdCobro" />
+                <ScalarProperty Name="secuencial" ColumnName="secuencial" />
+                <ScalarProperty Name="IdCobro_tipo" ColumnName="IdCobro_tipo" />
+                <ScalarProperty Name="dc_ValorPago" ColumnName="dc_ValorPago" />
+                <ScalarProperty Name="tc_descripcion" ColumnName="tc_descripcion" />
+                <ScalarProperty Name="ESRetenIVA" ColumnName="ESRetenIVA" />
+                <ScalarProperty Name="ESRetenFTE" ColumnName="ESRetenFTE" />
+                <ScalarProperty Name="PorcentajeRet" ColumnName="PorcentajeRet" />
+                <ScalarProperty Name="cr_NumDocumento" ColumnName="cr_NumDocumento" />
+                <ScalarProperty Name="cr_fecha" ColumnName="cr_fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwcxc_cartera_x_cobrar">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_cartera_x_cobrar">
+              <MappingFragment StoreEntitySet="vwcxc_cartera_x_cobrar">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="em_nombre" ColumnName="em_nombre" />
+                <ScalarProperty Name="NomCliente" ColumnName="NomCliente" />
+                <ScalarProperty Name="CodCliente" ColumnName="CodCliente" />
+                <ScalarProperty Name="dc_ValorRetIva" ColumnName="dc_ValorRetIva" />
+                <ScalarProperty Name="dc_ValorRetFu" ColumnName="dc_ValorRetFu" />
+                <ScalarProperty Name="vt_fech_venc" ColumnName="vt_fech_venc" />
+                <ScalarProperty Name="vt_iva" ColumnName="vt_iva" />
+                <ScalarProperty Name="vt_Subtotal" ColumnName="vt_Subtotal" />
+                <ScalarProperty Name="Bodega" ColumnName="Bodega" />
+                <ScalarProperty Name="TotalxCobrado" ColumnName="TotalxCobrado" />
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+                <ScalarProperty Name="vt_total" ColumnName="vt_total" />
+                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="CodComprobante" ColumnName="CodComprobante" />
+                <ScalarProperty Name="IdComprobante" ColumnName="IdComprobante" />
+                <ScalarProperty Name="Referencia" ColumnName="Referencia" />
+                <ScalarProperty Name="vt_NunDocumento" ColumnName="vt_NunDocumento" />
+                <ScalarProperty Name="vt_tipoDoc" ColumnName="vt_tipoDoc" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cxc_Parametro">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_Parametro">
+              <MappingFragment StoreEntitySet="cxc_Parametro">
+                <ScalarProperty Name="FechaUltMod" ColumnName="FechaUltMod" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="FechaTransac" ColumnName="FechaTransac" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="DiasTransaccionesAFuturo" ColumnName="DiasTransaccionesAFuturo" />
+                <ScalarProperty Name="pa_IdTipoCbteCble_CxC" ColumnName="pa_IdTipoCbteCble_CxC" />
+                <ScalarProperty Name="pa_IdTipoMoviCaja_x_Cobros_x_cliente" ColumnName="pa_IdTipoMoviCaja_x_Cobros_x_cliente" />
+                <ScalarProperty Name="pa_IdCaja_x_cobros_x_CXC" ColumnName="pa_IdCaja_x_cobros_x_CXC" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cxc_cobro_tipo">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_cobro_tipo">
+              <MappingFragment StoreEntitySet="cxc_cobro_tipo">
+                <ScalarProperty Name="PorcentajeDescuento" ColumnName="PorcentajeDescuento" />
+                <ScalarProperty Name="SeDeposita" ColumnName="SeDeposita" />
+                <ScalarProperty Name="EsTarjetaCredito" ColumnName="EsTarjetaCredito" />
+                <ScalarProperty Name="IdMotivo_tipo_cobro" ColumnName="IdMotivo_tipo_cobro" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="PorcentajeRet" ColumnName="PorcentajeRet" />
+                <ScalarProperty Name="ESRetenFTE" ColumnName="ESRetenFTE" />
+                <ScalarProperty Name="ESRetenIVA" ColumnName="ESRetenIVA" />
+                <ScalarProperty Name="tc_Tomar_Cta_Cble_De" ColumnName="tc_Tomar_Cta_Cble_De" />
+                <ScalarProperty Name="tc_abreviatura" ColumnName="tc_abreviatura" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="tc_descripcion" ColumnName="tc_descripcion" />
+                <ScalarProperty Name="IdCobro_tipo" ColumnName="IdCobro_tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cxc_MotivoLiquidacionTarjeta">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_MotivoLiquidacionTarjeta">
+              <MappingFragment StoreEntitySet="cxc_MotivoLiquidacionTarjeta">
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="IdUsuarioAnulacion" ColumnName="IdUsuarioAnulacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
+                <ScalarProperty Name="ESRetenFTE" ColumnName="ESRetenFTE" />
+                <ScalarProperty Name="ESRetenIVA" ColumnName="ESRetenIVA" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdMotivo" ColumnName="IdMotivo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cxc_MotivoLiquidacionTarjeta_x_tb_sucursal">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_MotivoLiquidacionTarjeta_x_tb_sucursal">
+              <MappingFragment StoreEntitySet="cxc_MotivoLiquidacionTarjeta_x_tb_sucursal">
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdMotivo" ColumnName="IdMotivo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal">
+              <MappingFragment StoreEntitySet="vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal">
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdMotivo" ColumnName="IdMotivo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cxc_LiquidacionTarjeta_x_cxc_cobro">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_LiquidacionTarjeta_x_cxc_cobro">
+              <MappingFragment StoreEntitySet="cxc_LiquidacionTarjeta_x_cxc_cobro">
+                <ScalarProperty Name="IdCobro" ColumnName="IdCobro" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdLiquidacion" ColumnName="IdLiquidacion" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cxc_LiquidacionTarjetaDet">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_LiquidacionTarjetaDet">
+              <MappingFragment StoreEntitySet="cxc_LiquidacionTarjetaDet">
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
+                <ScalarProperty Name="IdMotivo" ColumnName="IdMotivo" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdLiquidacion" ColumnName="IdLiquidacion" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwcxc_LiquidacionTarjeta_x_cxc_cobro">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_LiquidacionTarjeta_x_cxc_cobro">
+              <MappingFragment StoreEntitySet="vwcxc_LiquidacionTarjeta_x_cxc_cobro">
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="cr_observacion" ColumnName="cr_observacion" />
+                <ScalarProperty Name="cr_fecha" ColumnName="cr_fecha" />
+                <ScalarProperty Name="cr_TotalCobro" ColumnName="cr_TotalCobro" />
+                <ScalarProperty Name="IdLiquidacion" ColumnName="IdLiquidacion" />
+                <ScalarProperty Name="IdCobro" ColumnName="IdCobro" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cxc_LiquidacionTarjeta">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_LiquidacionTarjeta">
+              <MappingFragment StoreEntitySet="cxc_LiquidacionTarjeta">
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="IdUsuarioAnulacion" ColumnName="IdUsuarioAnulacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="IdCbteCble_ct" ColumnName="IdCbteCble_ct" />
+                <ScalarProperty Name="IdTipoCbte_ct" ColumnName="IdTipoCbte_ct" />
+                <ScalarProperty Name="IdEmpresa_ct" ColumnName="IdEmpresa_ct" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Lote" ColumnName="Lote" />
+                <ScalarProperty Name="IdLiquidacion" ColumnName="IdLiquidacion" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwcxc_LiquidacionTarjeta">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_LiquidacionTarjeta">
+              <MappingFragment StoreEntitySet="vwcxc_LiquidacionTarjeta">
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="ba_descripcion" ColumnName="ba_descripcion" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="IdCbteCble_ct" ColumnName="IdCbteCble_ct" />
+                <ScalarProperty Name="IdTipoCbte_ct" ColumnName="IdTipoCbte_ct" />
+                <ScalarProperty Name="IdEmpresa_ct" ColumnName="IdEmpresa_ct" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Lote" ColumnName="Lote" />
+                <ScalarProperty Name="IdLiquidacion" ColumnName="IdLiquidacion" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwcxc_cobro_det">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_cobro_det">
+              <MappingFragment StoreEntitySet="vwcxc_cobro_det">
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="vt_fech_venc" ColumnName="vt_fech_venc" />
+                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
+                <ScalarProperty Name="saldo_sin_cobro" ColumnName="saldo_sin_cobro" />
+                <ScalarProperty Name="saldo" ColumnName="saldo" />
+                <ScalarProperty Name="ValorCobrado" ColumnName="ValorCobrado" />
+                <ScalarProperty Name="vt_total" ColumnName="vt_total" />
+                <ScalarProperty Name="vt_iva" ColumnName="vt_iva" />
+                <ScalarProperty Name="vt_Subtotal" ColumnName="vt_Subtotal" />
+                <ScalarProperty Name="CodDoc" ColumnName="CodDoc" />
+                <ScalarProperty Name="vt_Observacion" ColumnName="vt_Observacion" />
+                <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />
+                <ScalarProperty Name="IdCobro_tipo" ColumnName="IdCobro_tipo" />
+                <ScalarProperty Name="dc_ValorPago" ColumnName="dc_ValorPago" />
+                <ScalarProperty Name="IdCbte_vta_nota" ColumnName="IdCbte_vta_nota" />
+                <ScalarProperty Name="IdBodega_Cbte" ColumnName="IdBodega_Cbte" />
+                <ScalarProperty Name="dc_TipoDocumento" ColumnName="dc_TipoDocumento" />
+                <ScalarProperty Name="secuencial" ColumnName="secuencial" />
+                <ScalarProperty Name="IdCobro" ColumnName="IdCobro" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwcxc_cobro_para_retencion">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_cobro_para_retencion">
+              <MappingFragment StoreEntitySet="vwcxc_cobro_para_retencion">
+                <ScalarProperty Name="TieneRetencion" ColumnName="TieneRetencion" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />
+                <ScalarProperty Name="vt_Observacion" ColumnName="vt_Observacion" />
+                <ScalarProperty Name="vt_fech_venc" ColumnName="vt_fech_venc" />
+                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="vt_total" ColumnName="vt_total" />
+                <ScalarProperty Name="vt_iva" ColumnName="vt_iva" />
+                <ScalarProperty Name="vt_Subtotal" ColumnName="vt_Subtotal" />
+                <ScalarProperty Name="vt_tipoDoc" ColumnName="vt_tipoDoc" />
+                <ScalarProperty Name="IdCbteVta" ColumnName="IdCbteVta" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

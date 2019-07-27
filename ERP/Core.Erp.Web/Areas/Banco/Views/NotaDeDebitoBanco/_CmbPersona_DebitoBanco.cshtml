@@ -1,0 +1,29 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdEntidad";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "NotaDeDebitoBanco", Action = "CmbPersona_DebitoBanco", Area = "Banco" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "pe_nombreCompleto";
+        settings.Properties.TextFormatString = " [{0}] {1} {2}";
+        settings.Properties.ValueField = "IdEntidad";
+        settings.Properties.ValueType = typeof(decimal);
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+
+        settings.Properties.Columns.Add("IdEntidad", "ID", 10);
+        settings.Properties.Columns.Add("pe_cedulaRUC", "RUC", 20);
+        settings.Properties.Columns.Add("pe_nombreCompleto", "Persona", 70);
+        settings.Properties.FilterMinLength = 3;
+
+        settings.Properties.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['IdTipo_Persona'] = $('#IdTipo_Persona').val(); }";
+    })
+    .BindList(new Core.Erp.Web.Areas.Banco.Controllers.NotaDeDebitoBancoController().get_list_bajo_demanda, new Core.Erp.Web.Areas.Banco.Controllers.NotaDeDebitoBancoController().get_info_bajo_demanda)
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.Banco.ba_Cbte_Ban_Info) ? "" : (Model == 0 ? "" : Model));
+
+}
+@comboBox.GetHtml()

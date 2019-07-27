@@ -1,0 +1,261 @@
+﻿
+@model Core.Erp.Info.RRHH.ro_Historico_Liquidacion_Vacaciones_Info
+@{
+    ViewBag.Title = "Liquidar solicitud";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Nuevo", "LiquidacionVacaciones", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdSolicitud, new { @id= "IdSolicitud" });
+    @Html.HiddenFor(q => q.IdEmpleado, new { @id = "IdEmpleado" });
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Empleado">Empleado*</label>
+                    @Html.Partial("_CmbEmpleado_vaca", Model.IdEmpleado)
+                    @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Fecha_PriPago">Fecha desde*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.Fecha_Desde, settings =>
+                   {
+                       settings.Name = "Fecha_Desde";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Enabled = false;
+                   }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Fecha_Desde, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+           
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Fecha_PriPago">Fecha hasta*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.Fecha_Hasta, settings =>
+                   {
+                       settings.Name = "Fecha_Hasta";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Enabled = false;
+
+                   }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Fecha_Hasta, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+           
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Fecha_PriPago">Fecha retorno*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.Fecha_Retorno, settings =>
+                   {
+                       settings.Name = "Fecha_Retorno";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Enabled = false;
+
+                   }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Fecha_Retorno, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="Gozadas_Pgadas"></label>
+                        @Html.DevExpress().CheckBoxFor(q => q.Gozadas_Pgadas, settings =>
+                   {
+                       settings.Name = "Gozadas_Pgadas";
+                       settings.Text = "Vacaciones gozadas";
+                       settings.Enabled = false;
+                   }).GetHtml()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Fecha_PriPago">Periodo desde*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.Anio_Desde, settings =>
+                   {
+                       settings.Name = "Anio_Desde";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){get_detalle_vacaciones();}";
+
+                   }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Anio_Desde, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Fecha_PriPago">Periodo hasta*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.Anio_Hasta, settings =>
+                   {
+                       settings.Name = "Anio_Hasta";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){get_detalle_vacaciones();}";
+
+                   }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Anio_Hasta, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Dias_q_Corresponde">Días corresponde</label>
+                    @Html.TextBoxFor(q => q.Dias_q_Corresponde, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.Dias_q_Corresponde, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Dias_a_disfrutar">Días tomados*</label>
+                    @Html.TextBoxFor(q => q.Dias_a_disfrutar, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.Dias_a_disfrutar, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Fecha_Retorno">Días pendientes*</label>
+                    @Html.TextBoxFor(q => q.Dias_pendiente, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.Dias_pendiente, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Observaciones">Observación*</label>
+                    @Html.TextBoxFor(q => q.Observaciones, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Observaciones, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Observaciones">Detalle de vacaciones</label>
+                    @Html.Action("GridViewPartial_vacaciones_liquidadas_det")
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","LiquidacionVacaciones",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script>
+
+    function get_detalle_vacaciones() {
+        var datos = {
+           
+            Anio_Desde: Anio_Desde.GetValue(),
+            Anio_Hasta: Anio_Hasta.GetValue(),
+            IdEmpleado: IdEmpleado.GetValue(),
+            IdSolicitud: $("#IdSolicitud").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_list_vacaciones", "LiquidacionVacaciones", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridView_vacaciones_liquidadas_det.PerformCallback();
+
+            },
+            error: function (error) {
+            }
+        });
+    };
+</script>
+

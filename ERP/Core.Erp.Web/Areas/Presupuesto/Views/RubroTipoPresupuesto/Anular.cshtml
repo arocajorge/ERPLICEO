@@ -1,0 +1,73 @@
+﻿@model Core.Erp.Info.Presupuesto.pre_RubroTipo_Info
+@{
+    ViewBag.Title = "Anular tipo de rubro";
+    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Anular", "RubroTipoPresupuesto", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+    @Html.HiddenFor(q => q.IdEmpresa);
+    @Html.HiddenFor(q => q.IdRubroTipo);
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.Descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdCtaCble">Signo*</label>
+                    @Html.DropDownListFor(q => q.Signo, new SelectList(ViewBag.lst_signo, "Key", "Value"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Signo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdCtaCble">Orden*</label>
+                    @Html.TextBoxFor(q => q.Orden, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Orden, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Descripcion">Motivo de Anulación*</label>
+                    @Html.TextBoxFor(q => q.MotivoAnulacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.MotivoAnulacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "RubroTipoPresupuesto", new { Area ="Presupuesto" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+

@@ -1,0 +1,38 @@
+ 
+ //AGREGAR A CONTROLADOR NUEVO - MODIFICAR - ANULAR
+ #region Validar Session
+            if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
+                return RedirectToAction("Login", new { Area = "", Controller = "Account" });
+            SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
+            SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
+ #endregion
+
+//AGREGAR A LA VISTA NUEVO - MODIFICAR - ANULAR
+@Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+@Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
+//AGREGAR EN EVENTOS CALLBACK DE LAS GRILLAS 1 x GRILLA
+//settings.CallbackRouteValues = new { Controller = "IngresoInventario", Action = "GridViewPartial_inv_det", Area = "Inventario" };
+SessionFixed.IdTransaccionSessionActual = Request.Params["TransaccionFixed"] != null ? Request.Params["TransaccionFixed"].ToString() : SessionFixed.IdTransaccionSessionActual;
+
+//PROPIEDAD PARA EL INFO DE LA CABECERA
+public decimal IdTransaccionSession { get; set; }
+
+//AGREGAR AL FINAL EN GRILLAS QUE UTILICEN SESSION PARA LAS LISTAS, REVISAR QUE YA NO EXISTA
+settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
+
+//AGREGAR EN AJAX 
+IdEmpresa: $("#IdEmpresa").val()
+IdTransaccionSession: $("#IdTransaccionSession").val()
+
+//AGREGAR EN ACTIONRESULT DE GRILLAS PARA AGREGAR, EDITAR O ELIMINAR
+Convert.ToDecimal(SessionFixed.IdTransaccionSessionActual)
+
+//AGREGAR EN FUNCIONES PARA VALIDAR
+i_validar.IdTransaccionSession
+
+//PEGAR EN MODEL DE INVENTARIO
+		public void SetCommandTimeOut(int TimeOut)
+        {
+            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
+        }

@@ -1,0 +1,51 @@
+﻿@model Core.Erp.Info.RRHH.ro_jornada_Info
+@{
+    ViewBag.Title = "Nueva jornada";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Anular", "Jornada", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+    @Html.HiddenFor(q => q.IdEmpresa);
+    @Html.HiddenFor(q => q.IdJornada);
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Descripcion">Codigo</label>
+                    @Html.TextBoxFor(q => q.codigo, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.codigo, "", new { @class = "text-danger"})
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label for="Descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.Descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Jornada", new { Area ="RRHH" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+

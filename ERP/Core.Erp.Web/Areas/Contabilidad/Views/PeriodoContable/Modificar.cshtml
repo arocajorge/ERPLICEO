@@ -1,0 +1,160 @@
+﻿@model Core.Erp.Info.Contabilidad.ct_periodo_Info
+
+@{
+    ViewBag.Title = "Modificar periodo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Modificar", "PeriodoContable", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdPeriodo)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdPeriodo">Periodo</label>
+                    @Html.TextBoxFor(q => q.IdPeriodo, new { @class = "form-control", @id = "IdPeriodo", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdanioFiscal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="pe_mes">Mes</label>
+                    @Html.DropDownListFor(q => q.pe_mes, new SelectList(ViewBag.lst_Mes, "idMes", "smes"), new { @class = "form-control", @id = "smes", @disabled = true })
+                    @Html.ValidationMessageFor(q => q.pe_mes, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdanioFiscal">Año fiscal</label>
+                    @Html.DropDownListFor(q => q.IdanioFiscal, new SelectList(ViewBag.lst_anio_fiscal, "IdanioFiscal", "IdanioFiscal"), new { @class = "form-control", @id = "IdanioFiscal", @disabled = true })
+                    @Html.ValidationMessageFor(q => q.IdanioFiscal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="">Fecha inicial</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.pe_FechaIni, settings =>
+                       {
+                           settings.Name = "pe_FechaIni";
+                           settings.Properties.UseMaskBehavior = true;
+                           settings.Properties.EditFormat = EditFormat.Date;
+                           settings.Properties.EditFormatString = "dd/MM/yyyy";
+                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           //settings.Properties.ClientSideEvents.DateChanged = "function(s,e){actualizar_periodo();}";
+
+                       }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.pe_FechaIni, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="">Fecha final</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.pe_FechaFin, settings =>
+                        {
+                            settings.Name = "pe_FechaFin";
+                            settings.Properties.UseMaskBehavior = true;
+                            settings.Properties.EditFormat = EditFormat.Date;
+                            settings.Properties.EditFormatString = "dd/MM/yyyy";
+                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            //settings.Properties.ClientSideEvents.DateChanged = "function(s,e){actualizar_periodo();}";
+
+                        }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.pe_FechaFin, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.DevExpress().CheckBoxFor(q => q.pe_cerrado_bool,
+                         settings =>
+                         {
+                             settings.Name = "pe_cerrado_bool";
+                             settings.Checked = false;
+                             settings.Text = "Cerrado";
+                         }
+                     ).GetHtml()
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "PeriodoContable", new { Area ="Contabilidad" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+<script>
+    $(function () {
+        //actualizar_periodo();
+
+        $("#pe_mes").change(function () {
+            actualizar_periodo();
+        });
+
+        $("#IdanioFiscal").change(function () {
+            actualizar_periodo();
+        });
+        $("#IdPeriodo").change(function () {
+            actualizar_periodo();
+        });
+    });
+
+    function actualizar_periodo() {
+        var mes = $("#pe_mes").val();
+        var anio = $("#IdanioFiscal").val();
+        var dia_inicio = 1;
+        var pad = "00"
+        var mes_format = pad.substring(0, pad.length-mes.length) + mes;
+
+        var periodo = anio + "-" + mes_format;
+        var fecha_texto_inicio = anio + "/" + mes_format + "/" + dia_inicio;
+
+        //var dia_inicio = Date.parse(fecha_texto_inicio);
+        var fecha_format = new Date(fecha_texto_inicio);
+        var num = fecha_format.getUTCDate();
+        var dia_inicio = anio + "/" + mes_format + "/" + num;
+        var dia_fin = new Date(Date.UTC(anio, mes));
+
+        pe_FechaIni.SetValue(new Date(dia_inicio));
+        pe_FechaFin.SetValue(dia_fin);
+
+        $("#IdPeriodo").val(anio + mes_format);
+    }
+</script>

@@ -1,0 +1,77 @@
+@using System.Web.UI.WebControls;
+
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridViewPartial_facturas_eventos";
+        settings.CallbackRouteValues = new { Controller = "FacturasEventos", Action = "GridViewPartial_facturas_eventos", Fecha_ini = ViewBag.Fecha_ini, Fecha_fin = ViewBag.Fecha_fin};
+        settings.Width = Unit.Percentage(100);
+        settings.KeyFieldName = "cod_fact";
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+        //Configuración click derecho
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.EnableRowMenu = DefaultBoolean.False;
+        //Configuración filtro por columna
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        //Configuración checkbox
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "*";
+            column.FieldName = "seleccionado";
+            column.ColumnType = MVCxGridViewColumnType.CheckBox;
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(2);
+            column.Visible = false;
+        });
+
+        settings.Columns.Add("cod_evento", "Codigo evento").Width = Unit.Percentage(6);
+        settings.Columns.Add("cod_fact", "Codigo fac.").Width = Unit.Percentage(6);
+        settings.Columns.Add("nu_ced_ruc", "Cédula").Width = Unit.Percentage(10);
+        
+        settings.Columns.Add("apellidos", "Apellidos").Width = Unit.Percentage(16);
+        settings.Columns.Add("nombres", "Nombres").Width = Unit.Percentage(16);
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "fecha";
+            column.Caption = "Fecha";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add("v_unit", "P.Unitario").Width = Unit.Percentage(8);
+        settings.Columns.Add("subtotal", "Subtotal").Width = Unit.Percentage(8);
+        settings.Columns.Add("v_iva", "Iva").Width = Unit.Percentage(8);
+        settings.Columns.Add("total", "Total").Width = Unit.Percentage(8);
+
+
+        settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
+        settings.ClientSideEvents.BeginCallback = "OnBeginCallback";
+    });
+}
+@grid.Bind(Model).GetHtml()

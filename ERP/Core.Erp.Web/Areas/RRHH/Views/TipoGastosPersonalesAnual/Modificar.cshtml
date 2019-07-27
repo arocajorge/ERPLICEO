@@ -1,0 +1,74 @@
+﻿@model Core.Erp.Info.RRHH.ro_tipo_gastos_personales_maxim_x_anio_Info
+@{
+    ViewBag.Title = "Modificar tipo de gasto";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Modificar", "TipoGastosPersonalesAnual", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdTipoGasto)
+    @Html.HiddenFor(q => q.IdGasto)
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="nom_tipo_gasto">Tipo de gasto</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdTipoGasto, settings =>
+               {
+                   settings.Name = "IdTipoGasto";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdTipoGasto", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("nom_tipo_gasto", "Descripcion").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdTipoGasto";
+                   settings.Properties.ValueType = typeof(string);
+                   settings.Properties.TextField = "nom_tipo_gasto";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.ReadOnly = true;
+
+               }).BindList(ViewBag.list_tipo_gasto).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdTipoGasto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="AnioFiscal">Año fiscal*</label>
+                    @Html.TextBoxFor(q => q.AnioFiscal, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(m => m.AnioFiscal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Monto_max">Valor maximo deducible*</label>
+                    @Html.TextBoxFor(q => q.Monto_max, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Monto_max, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","TipoGastosPersonalesAnual",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

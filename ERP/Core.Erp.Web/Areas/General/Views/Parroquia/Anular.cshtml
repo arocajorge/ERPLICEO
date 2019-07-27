@@ -1,0 +1,61 @@
+﻿@model Core.Erp.Info.General.tb_parroquia_Info
+@{
+    ViewBag.Title = "Anular Parroquia";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Anular", "Parroquia", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdParroquia)
+    @Html.HiddenFor(q => q.IdCiudad_Canton)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Cod_Parroquia">Código*</label>
+                    @Html.TextBoxFor(q => q.cod_parroquia, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.cod_parroquia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdPais">Ciudad*</label>
+@Html.DropDownListFor(q => q.IdCiudad_Canton, new SelectList(ViewBag.lst_ciudades, "IdCiudad", "Descripcion_ciudad"), new { @class = "form-control", @disabled = "disabled" })
+@Html.ValidationMessageFor(q => q.IdCiudad_Canton, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Descripcion_Parroquia">Descripción*</label>
+                    @Html.TextBoxFor(q => q.nom_parroquia, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.nom_parroquia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Parroquia",new { IdPais = Model.IdPais, IdProvincia = Model.IdProvincia, IdCiudad = Model.IdCiudad_Canton, Area = "General" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

@@ -1,0 +1,59 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridViewPartial_importacion_novedades_det";
+        settings.CallbackRouteValues = new { Controller = "ImportacionNovedades", Action = "GridViewPartial_importacion_novedades_det" };
+
+        settings.Width = Unit.Percentage(100);
+        settings.KeyFieldName = "Secualcial";
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        //Configuración scrolling y pager
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Hidden;
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        settings.Settings.VerticalScrollableHeight = 400;
+        settings.SettingsPager.Visible = true;
+        settings.SettingsPager.PageSize = 10;
+        settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
+        settings.SettingsPager.AlwaysShowPager = true;
+
+        //Configuración filtro por columna
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        //Configuracion exportacion
+        settings.SettingsExport.EnableClientSideExportAPI = true;
+        settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
+        //Evento para pintar de rojo las filas anuladas
+
+        settings.Settings.ShowFooter = true;
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.Columns.Add("Secuancia","ID").Width=Unit.Percentage(5);
+
+
+        settings.Columns.Add("pe_cedulaRuc","Cédula").Width = Unit.Percentage(15);
+        settings.Columns.Add("pe_apellido","Empleado").Width = Unit.Percentage(50);
+        settings.Columns.Add("Valor", "Valor").Width = Unit.Percentage(15);
+        settings.Columns.Add("CantidadHoras", "#Hora").Width = Unit.Percentage(10);
+
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Valor");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Count, "Secuencia");
+
+
+
+    });
+}
+@grid.Bind(Model.detalle).GetHtml()

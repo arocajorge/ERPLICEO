@@ -1,0 +1,132 @@
+﻿@model Core.Erp.Info.RRHH.ro_horario_Info
+@{
+    ViewBag.Title = "Nuevo horario";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Nuevo", "Horario", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.Descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">Hora ingreso*</label>
+                    @Html.TextBoxFor(model => model.HoraIni, new
+                    {
+                        @class = "form-control timepicker-holdOffTime",
+                        type = "time",
+                        step = 1
+                    })
+                    @Html.ValidationMessageFor(m => m.HoraIni, "", new { @class = "text-danger" })
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">Hora salida*</label>
+                    @Html.TextBoxFor(model => model.HoraFin, new
+               {
+                   @class = "form-control timepicker-holdOffTime",
+                   type = "time",
+                   step = 1
+               })
+                    @Html.ValidationMessageFor(m => m.HoraFin, "", new { @class = "text-danger" })
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">Tolerancia ingreso*</label>
+                    @Html.TextBoxFor(q => q.ToleranciaEnt, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ToleranciaEnt, "", new { @class = "text-danger" })
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">Salida lunch*</label>
+                    @Html.TextBoxFor(model => model.SalLunch, new
+               {
+                   @class = "form-control timepicker-holdOffTime",
+                   type = "time",
+                   step = 1
+               })
+                    @Html.ValidationMessageFor(m => m.SalLunch, "", new { @class = "text-danger" })
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">Regreso lunch*</label>
+                    @Html.TextBoxFor(model => model.RegLunch, new
+               {
+                   @class = "form-control timepicker-holdOffTime",
+                   type = "time",
+                   step = 1
+               })
+                    @Html.ValidationMessageFor(m => m.RegLunch, "", new { @class = "text-danger" })
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">Tolerancia regreso lunch*</label>
+                    @Html.TextBoxFor(q => q.ToleranciaEnt, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ToleranciaReg_lunh, "", new { @class = "text-danger" })
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Horario",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+

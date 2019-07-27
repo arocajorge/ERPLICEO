@@ -1,0 +1,12 @@
+﻿@model Core.Erp.Info.RRHH.ro_rubro_acumulados_Info
+
+@{
+    ViewBag.Title = "Anular rubro acumulado";
+    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+

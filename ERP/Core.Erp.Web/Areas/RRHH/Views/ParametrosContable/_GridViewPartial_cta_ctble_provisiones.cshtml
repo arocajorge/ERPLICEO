@@ -1,0 +1,130 @@
+@using System.Web.UI.WebControls;
+@model Core.Erp.Info.RRHH.ro_Parametros_Info
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewPartial_cta_ctble_provisiones";
+        settings.CallbackRouteValues = new { Controller = "ParametrosContable", Action = "GridViewPartial_cta_ctble_provisiones" };
+
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ParametrosContable", Action = "EditingUpdate_provisiones" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+
+        settings.KeyFieldName = "Secuencia";
+
+        //Configuración filtro por columna
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        //Configuración filtro por columna
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "DescripcionDiv";
+            column.Caption = "División";
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "DescripcionArea";
+            column.Caption = "Área";
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "de_descripcion";
+            column.Caption = "Departamento";
+            column.Width = Unit.Percentage(15);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ru_descripcion";
+            column.Caption = "Rubro";
+            column.Width = Unit.Percentage(15);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "pc_Cuenta_prov_debito";
+            column.Caption = "Cuenta Debito";
+            column.Width = Unit.Percentage(20);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdCtaCble_prov_debito";
+            column.Caption = "Cuenta Débito";
+            column.Width = Unit.Percentage(35);
+            column.Visible = false;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbCuenta_provisiones_debito", DataBinder.Eval(c.DataItem, "IdCtaCble_prov_debito"));
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "pc_Cuenta_prov_credito";
+            column.Caption = "Cuenta Crédito";
+            column.Width = Unit.Percentage(20);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdCtaCble_prov_credito";
+            column.Caption = "Cuenta Crédito";
+            column.Width = Unit.Percentage(35);
+            column.Visible = false;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbCuenta_provisiones_credito", DataBinder.Eval(c.DataItem, "IdCtaCble_prov_credito"));
+            });
+        });
+
+
+
+
+
+
+
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model.lst_cta_x_provisiones).GetHtml()

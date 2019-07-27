@@ -1,0 +1,107 @@
+﻿@using System.Web.UI.WebControls;
+@model Core.Erp.Info.Helps.cl_filtros_Info
+@{
+    Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
+    ViewBag.Title = "ROL_010";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+}
+@using (Html.BeginForm("ROL_010", "RRHHReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    <div class="box">
+        <div class="box-header with-border">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+                </div>
+            </div>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdSucursal">Sucursal</label>
+                            @Html.Partial("_CmbSucursal_reportes_RRHH", Model.IdSucursal)
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdTipoNomina">Nómina*</label>
+                            @Html.DropDownListFor(q => q.IdTipoNomina, new SelectList(ViewBag.lst_nomina_tipo, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
+                            @Html.ValidationMessageFor(q => q.IdTipoNomina, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdDivision">División</label>
+                            @Html.Partial("_CmbDivision_reportes", Model.IdDivision)
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdArea">Area</label>
+                            @Html.Partial("_CmbArea_reportes", Model.IdArea)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdCatalogo">Estado</label>
+                            @Html.DropDownListFor(q => q.em_status, new SelectList(ViewBag.lst_EstadoEmpleado, "CodCatalogo", "ca_descripcion"), new { @class = "form-control", @id = "CodCatalogo" })
+                            @Html.ValidationMessageFor(q => q.em_status, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="Ubicacion">Ubicación</label>
+                            @Html.DropDownListFor(q => q.Ubicacion, new SelectList(ViewBag.lst_ubi, "CodCatalogo", "ca_descripcion"), new { @class = "form-control", @id = "CodCatalogo" })
+                            @Html.ValidationMessageFor(q => q.Ubicacion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">@ViewBag.Title</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            @Html.DevExpress().WebDocumentViewer(settings =>
+       {
+           settings.ClientSideEvents.Init = "function(s, e) {s.previewModel.reportPreview.zoom(1);}";
+           settings.MobileMode = false;
+           settings.Name = "webDocumentViewer";
+       }).Bind(ViewBag.Report).GetHtml()
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            [@Session["IdEmpresa"]] @Session["nom_empresa"]
+        </div>
+        <!-- /.box-footer-->
+    </div>
+}

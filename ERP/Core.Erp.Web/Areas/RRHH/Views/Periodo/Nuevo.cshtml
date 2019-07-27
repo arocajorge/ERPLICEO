@@ -1,0 +1,88 @@
+﻿@model Core.Erp.Info.RRHH.ro_periodo_Info
+@{
+    ViewBag.Title = "Nuevo periodo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Nuevo", "Periodo", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="pe_FechaIni">Fecha inicio*</label>
+                    @Html.DevExpress().DateEditFor(q => q.pe_FechaIni, settings =>
+                   {
+                       settings.Name = "pe_FechaIni";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.pe_FechaIni, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="pe_FechaFin">Fecha fin*</label>
+                    @Html.DevExpress().DateEditFor(q => q.pe_FechaFin, settings =>
+                   {
+                       settings.Name = "pe_FechaFin";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.pe_FechaFin, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="ca_descripcion">Región</label>
+                    @Html.DropDownListFor(q => q.Cod_region, new SelectList(ViewBag.lst_region, "Cod_Region", "Nom_region"), "== Seleccione ==", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Cod_region, "", new { @class = "text-danger" })
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="ca_descripcion"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.Carga_Todos_Empleados, settings =>
+               {
+                   settings.Name = "Carga_Todos_Empleados";
+                   settings.Text = "Considerar empleados pasivos";
+
+               }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.Carga_Todos_Empleados, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Periodo",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

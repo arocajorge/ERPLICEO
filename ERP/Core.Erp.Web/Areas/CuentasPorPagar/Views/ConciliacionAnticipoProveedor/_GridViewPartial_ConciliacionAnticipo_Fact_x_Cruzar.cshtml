@@ -1,0 +1,62 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridViewPartial_ConciliacionAnticipo_Fact_x_Cruzar";
+        settings.CallbackRouteValues = new { Controller = "ConciliacionAnticipoProveedor", Action = "GridViewPartial_ConciliacionAnticipo_Fact_x_Cruzar" };
+        settings.Width = Unit.Percentage(100);
+        settings.KeyFieldName = "IdOrdenPago";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        //Configuración checkbox
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+
+        //Configuración click derecho
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.EnableRowMenu = DefaultBoolean.False;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        settings.Columns.Add("IdOrdenPago", "# Orden").Width = Unit.Percentage(10);
+        settings.Columns.Add("IdCbteCble_cxp", "# Cbte").Width = Unit.Percentage(10);
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "Fecha_cxp";
+            column.Caption = "Fecha";
+            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(20);
+            column.FieldName = "MontoAplicado";
+            column.Caption = "Monto";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+            column.EditorProperties().SpinEdit(p =>
+            {
+                p.MinValue = 0;
+                p.DisplayFormatInEditMode = true;
+                p.DisplayFormatString = "N2";
+            });
+        });
+        settings.Columns.Add("Observacion_cxp", "Observacion").Width = Unit.Percentage(40);
+        settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged_Fact";
+        settings.ClientSideEvents.BeginCallback = "OnBeginCallback_Fact";
+    });
+}
+@grid.Bind(Model).GetHtml()

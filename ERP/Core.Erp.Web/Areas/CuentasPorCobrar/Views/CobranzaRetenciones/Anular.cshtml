@@ -1,0 +1,171 @@
+﻿@model Core.Erp.Info.CuentasPorCobrar.cxc_cobro_Info
+@{
+    ViewBag.Title = "Anular retención";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script src="~/Scripts/ScriptsGenerales.js"></script>
+
+<script type="text/javascript">
+    function SetValorRetencion(s,e)
+    {
+        var datos = {
+            IdCobro_tipo: s.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetValorRetencion", "CobranzaRetenciones",new { Area = "CuentasPorCobrar"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var valor = 0;
+                if (data.ESRetenFTE == "S") {
+                    var subtotal = parseFloat($("#vt_Subtotal").val());
+                    var porcentaje = Number(data.PorcentajeRet) / 100;
+                    valor = Number(subtotal) * porcentaje;
+                } else {
+                    var iva = parseFloat($("#vt_Iva").val());
+                    var porcentaje = Number(data.PorcentajeRet) / 100;
+                    valor = Number(iva) * porcentaje;
+                }
+                valor = Number(valor).toFixed(2);
+                GridView_cobranza_ret_det.GetEditor('dc_ValorPago').SetValue(valor);
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/CuentasPorCobrarReportes/CXC_002?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdBodega_Cbte="+@Model.IdBodega+"&IdCbte_vta_nota="+@Model.IdCbteVta+"&dc_TipoDocumento="+'@Model.vt_tipoDoc', '_blank');
+        win.focus();
+    }
+</script>
+
+@using (Html.BeginForm("Anular", "CobranzaRetenciones", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdSucursal)
+    @Html.HiddenFor(q => q.IdCobro)
+    @Html.HiddenFor(q => q.IdCliente)
+    @Html.HiddenFor(q => q.IdBodega)
+    @Html.HiddenFor(q => q.IdCbteVta)
+    @Html.HiddenFor(q => q.vt_tipoDoc)
+
+    if (@ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="cr_NumDocumento"># NumRetención</label>
+                    @Html.TextBoxFor(q => q.cr_NumDocumento, new { @class = "form-control", @id = "cr_NumDocumento" })
+                    @Html.ValidationMessageFor(q => q.cr_NumDocumento, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-offset-6 col-md-2">
+                <div class="form-group">
+                    <label for="cr_fecha">Fecha*</label>
+                    @Html.DevExpress().DateEditFor(q=> q.cr_fecha, settings =>
+                {
+                    settings.Name = "cr_fecha";
+                    settings.Properties.UseMaskBehavior = true;
+                    settings.Properties.EditFormat = EditFormat.Date;
+                    settings.Properties.EditFormatString = "dd/MM/yyyy";
+                    settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.cr_fecha, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="IdImprimir"></label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" title="Imprimir" onclick="Imprimir();">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="vt_NumFactura"># Documento</label>
+                    @Html.TextBoxFor(q => q.vt_NumFactura, new { @class = "form-control", @id = "vt_NumFactura", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="pe_nombreCompleto">Cliente</label>
+                    @Html.TextBoxFor(q => q.pe_nombreCompleto, new { @class = "form-control", @id = "pe_nombreCompleto", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="vt_Subtotal">Subtotal</label>
+                    @Html.TextBoxFor(q => q.vt_Subtotal, new { @class = "form-control", @id = "vt_Subtotal", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="vt_Iva">I.V.A.</label>
+                    @Html.TextBoxFor(q => q.vt_Iva, new { @class = "form-control", @id = "vt_Iva", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="vt_Total">Total</label>
+                    @Html.TextBoxFor(q => q.vt_Total, new { @class = "form-control", @id = "vt_Total", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+
+                @Html.Action("GridViewPartial_cobranza_ret_det")
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "CobranzaRetenciones", new { Area = "CuentasPorCobrar" }, null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

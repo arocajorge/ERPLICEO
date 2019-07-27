@@ -1,0 +1,23 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdSucursal";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "Producto", Action = "CmbSucursal_det", Area = "Inventario" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "Su_Descripcion";
+        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.ValueField = "IdSucursal";
+        settings.Properties.ValueType = typeof(int);
+        settings.Properties.Columns.Add("IdSucursal", "ID", 10);
+        settings.Properties.Columns.Add("Su_Descripcion", "Descripción", 90);
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedSucursalChanged";
+    })
+     .BindList(new Core.Erp.Web.Areas.Inventario.Controllers.ProductoController().get_list_bajo_demanda_sucursal, new Core.Erp.Web.Areas.Inventario.Controllers.ProductoController().get_info_bajo_demanda_sucursal)
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.Inventario.in_Producto_Info) ? "" : (Model == 0 ? "" : Model));
+    }
+@comboBox.GetHtml()

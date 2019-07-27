@@ -1,0 +1,143 @@
+﻿@using System.Web.UI.WebControls
+@model Core.Erp.Info.Contabilidad.ATS.ATS_Info.ats_Info
+@{
+    ViewBag.Title = "Anexo transaccional simplificado";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    var textSeparator = ";";
+    function updateText() {
+        var selectedItems = IntArray.GetSelectedItems();
+        checkComboBox.SetText(getSelectedItemsText(selectedItems));
+    }
+    function synchronizeListBoxValues(dropDown, args) {
+        IntArray.UnselectAll();
+        var texts = dropDown.GetText().split(textSeparator);
+        var values = getValuesByTexts(texts);
+        IntArray.SelectValues(values);
+        updateText(); // for remove non-existing texts
+    }
+    function getSelectedItemsText(items) {
+        var texts = [];
+        for (var i = 0; i < items.length; i++)
+            texts.push(items[i].text);
+        return texts.join(textSeparator);
+    }
+    function getValuesByTexts(texts) {
+        var actualValues = [];
+        var item;
+        for (var i = 0; i < texts.length; i++) {
+            item = IntArray.FindItemByText(texts[i]);
+            if (item != null)
+                actualValues.push(item.value);
+        }
+        return actualValues;
+    }
+</script>
+@using (Html.BeginForm("Nuevo", "ATS", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal</label>
+                    @Html.DevExpress().DropDownEditFor(q => q.IntArray, settings =>
+                       {
+                           settings.Name = "checkComboBox";
+                           settings.Width = Unit.Percentage(100);
+
+                           settings.SetDropDownWindowTemplateContent(c =>
+                           {
+                               @Html.DevExpress().ListBox(listBoxSettings =>
+                               {
+                                   listBoxSettings.Name = "IntArray";
+                                   listBoxSettings.ControlStyle.Border.BorderWidth = 0;
+                                   listBoxSettings.ControlStyle.BorderBottom.BorderWidth = 1;
+
+                                   listBoxSettings.Height = Unit.Pixel(350);
+                                   listBoxSettings.Width = Unit.Percentage(100);
+
+                                   listBoxSettings.Properties.EnableSelectAll = true;
+                                   listBoxSettings.Properties.FilteringSettings.ShowSearchUI = true;
+                                   listBoxSettings.Properties.SelectionMode = ListEditSelectionMode.CheckColumn;
+                                   foreach (var item in ViewBag.lst_sucursal)
+                                   {
+                                       listBoxSettings.Properties.Items.Add(item.Su_Descripcion, item.IdSucursal).Selected = item.Seleccionado;
+                                   }
+                                   listBoxSettings.Properties.ClientSideEvents.SelectedIndexChanged = "updateText";
+                                   listBoxSettings.Properties.ClientSideEvents.Init = "updateText";
+                               }).Render();
+                               ViewContext.Writer.Write("<div style=\"margin: 6px; overflow: hidden;\">");
+                               @Html.DevExpress().Button(buttonSettings =>
+                               {
+                                   buttonSettings.Name = "buttonClose";
+                                   buttonSettings.Text = "Close";
+                                   buttonSettings.Style.Add("float", "right");
+                                   buttonSettings.ClientSideEvents.Click = "function(s, e){ checkComboBox.HideDropDown(); }";
+                                   buttonSettings.Height = 26;
+                               }).Render();
+                               ViewContext.Writer.Write("</div>");
+                           });
+                           settings.Properties.AnimationType = AnimationType.None;
+                           settings.Properties.ClientSideEvents.TextChanged = "synchronizeListBoxValues";
+                           settings.Properties.ClientSideEvents.DropDown = "synchronizeListBoxValues";
+                       }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label for="info_periodo.IdanioFiscal">Periodo*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdPeriodo, settings =>
+               {
+                   settings.Name = "IdPeriodo";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}-{2}";
+                   settings.Properties.Columns.Add("IdanioFiscal", "Año").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+                   settings.Properties.Columns.Add("nom_periodo_combo", "Periodo").Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                   ////Campo ID
+                   settings.Properties.ValueField = "IdPeriodo";
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;                   
+
+                   }).BindList(ViewBag.lst_periodos).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdPeriodo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="info_periodo.IdanioFiscal"></label>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Descargar</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+}

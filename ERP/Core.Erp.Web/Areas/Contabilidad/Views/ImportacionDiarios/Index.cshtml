@@ -1,0 +1,152 @@
+﻿@model Core.Erp.Info.Migraciones.ImportacionDiarios_Info
+@{
+    ViewBag.Title = "Importación de diarios contable";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Index", "ImportacionDiarios", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
+
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="CodCbteCble">Código</label>
+                    @Html.TextBoxFor(q => q.Codigo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Codigo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal*</label>
+                    <div class="form-group">
+                        @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                        @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="IdTipoCbte">Tipo comprobante</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdTipoCbte, settings =>
+               {
+                   settings.Name = "IdTipoCbte";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdTipoCbte", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("tc_TipoCbte", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdTipoCbte";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "tc_TipoCbte";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+               }).BindList(ViewBag.lst_tipo_comprobante).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdTipoCbte, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="">Fecha de comprobante</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.cb_Fecha, settings =>
+                   {
+                       settings.Name = "cb_Fecha";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.cb_Fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="cb_Observacion">Observación</label>
+                    @Html.TextBoxFor(q => q.cb_Observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.cb_Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="IdSucursal">Tipo documento*</label>
+                    <div class="form-group">
+                        @Html.DropDownListFor(q => q.tipo_documento, new SelectList(ViewBag.lst_tipo_movimiento, "Key", "Value"), new { @class = "form-control", @id = "tipo_documento" })
+                        @Html.ValidationMessageFor(q => q.tipo_documento, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary" id="btn_guardar" onclick="buscar_diarios();">Buscar</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                @Html.Action("GridViewPartial_ImportacionDiarios", new { tipo_documento = Model.tipo_documento })
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        @*<a class="btn btn-default" href="@Url.Action("Index", "ImportacionDiarios", new { tipo_documento = Model.tipo_documento, Area = "Contabilidad" }, null)">Cancelar</a>*@
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script type="text/javascript">
+    function buscar_diarios() {
+        var datos = {
+            tipo_documento : $("#tipo_documento").val()
+        }
+        $("#btn_guardar").disabled = true;
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("buscar_diarios", "ImportacionDiarios", new { Area = "Contabilidad" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                GridViewPartial_ImportacionDiarios.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>

@@ -1,0 +1,201 @@
+﻿@using System.Web.UI.WebControls;
+@model Core.Erp.Info.Helps.cl_filtros_Info
+@{
+    Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
+    ViewBag.Title = "ROL_020";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+}
+@using (Html.BeginForm("ROL_020", "RRHHReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdPeriodoSet)
+    <div class="box">
+        <div class="box-header with-border">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+                </div>
+            </div>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdRubro">Sucursal</label>
+                            @Html.Partial("_CmbSucursal_reportes_RRHH", Model.IdSucursal)
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdRubro">Division</label>
+                            @Html.Partial("_CmbDivision_reportes", Model.IdDivision)
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdRubro">Area</label>
+                            @Html.Partial("_CmbArea_reportes", Model.IdArea)
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdNomina_Tipo">Nómina*</label>
+                            @Html.DropDownListFor(q => q.IdNomina, new SelectList(ViewBag.lst_nomina, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
+                            @Html.ValidationMessageFor(q => q.IdNomina, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdNomina_TipoLiqui">Tipo liquidación de nómina*</label>
+                            @Html.DropDownListFor(q => q.IdTipoNomina, new SelectList(ViewBag.lst_nomina_tipo, "IdNomina_TipoLiqui", "DescripcionProcesoNomina"), new { @class = "form-control", @id = "IdNomina_TipoLiqui" })
+                            @Html.ValidationMessageFor(q => q.IdTipoNomina, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="FechaInicio">Periodo*</label>
+                            @Html.DropDownListFor(q => q.IdPeriodo, new SelectList(ViewBag.lst_periodos, "IdPeriodo", "Descripcion"), new { @class = "form-control", @id = "IdPeriodo" })
+                            @Html.ValidationMessageFor(q => q.IdPeriodo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdProceso">Proceso</label>
+                            @Html.DropDownListFor(q => q.IdProceso, new SelectList(ViewBag.lst_proceso, "IdProceso", "NombreProceso"), new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">@ViewBag.Title</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            @Html.DevExpress().WebDocumentViewer(settings =>
+       {
+           settings.ClientSideEvents.Init = "function(s, e) {s.previewModel.reportPreview.zoom(1);}";
+           settings.MobileMode = false;
+           settings.Name = "webDocumentViewer";
+       }).Bind(ViewBag.Report).GetHtml()
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            [@Session["IdEmpresa"]] @Session["nom_empresa"]
+        </div>
+        <!-- /.box-footer-->
+    </div>
+}
+
+
+
+<script>
+    $(function () {
+        cargar_tipo_liquidacion_nomina();
+        cargar_periodos_x_nomina();
+    });
+
+    $("#IdNomina_Tipo").change(function () {
+        cargar_tipo_liquidacion_nomina();
+
+    });
+    $("#IdNomina_TipoLiqui").change(function () {
+        $("#IdPeriodo").empty();
+        cargar_periodos_x_nomina();
+    });
+
+
+    function cargar_tipo_liquidacion_nomina() {
+        $("#IdNomina_TipoLiqui").empty();
+                var datos = {
+                    IdNomina: $("#IdNomina_Tipo").val()
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(datos),
+                    url: '@Url.Action("get_lst_nomina_tipo_liq", "NominaTipoLiquidacion", new { Area = "RRHH" })',
+                    async: false,
+                    bDeferRender: true,
+                    bProcessing: true,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+
+                        $.each(data, function (i, row) {
+                            $("#IdNomina_TipoLiqui").append("<option value=" + row.IdNomina_TipoLiqui + ">" + row.DescripcionProcesoNomina + "</option>");
+                        });
+                        $("#IdNomina_TipoLiqui").val(2);
+                    },
+                    error: function (error) {
+                    }
+                });
+    };
+
+
+    function cargar_periodos_x_nomina() {
+        var IdPeriodoSet = $("#IdPeriodoSet").val();
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdNomina: $("#IdNomina_Tipo").val(),
+            IdNomina_Tipo: $("#IdNomina_TipoLiqui").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_lst_periodo_x_nomina","PeriodosPorNomina", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+                $.each(data, function (i, row) {
+                    $("#IdPeriodo").append("<option value=" + row.IdPeriodo + ">" + row.descripcion + "</option>");
+                });
+
+                $("#IdPeriodo").val(IdPeriodoSet);
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+ 
+</script>

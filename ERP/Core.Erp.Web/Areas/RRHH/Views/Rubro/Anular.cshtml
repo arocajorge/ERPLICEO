@@ -1,0 +1,286 @@
+﻿@model Core.Erp.Info.RRHH.ro_rubro_tipo_Info
+
+@{
+    ViewBag.Title = "Anular rubro";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Anular", "Rubro", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdRubro)
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdTransaccionSession)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="rub_codigo">Código*</label>
+                    @Html.TextBoxFor(q => q.rub_codigo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.rub_codigo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ru_codRolGen">Código reporte*</label>
+                    @Html.TextBoxFor(q => q.ru_codRolGen, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.ru_codRolGen, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ru_orden">Orden*</label>
+                    @Html.TextBoxFor(q => q.ru_orden, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.ru_orden, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ru_tipo">Tipo rubro*</label>
+                    @Html.DropDownListFor(q => q.ru_tipo, new SelectList(ViewBag.lst_tipo_rubro, "CodCatalogo", "ca_descripcion"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.ru_tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ru_tipo">Grupo rol individual*</label>
+                    @Html.DropDownListFor(q => q.rub_grupo, new SelectList(ViewBag.lst_grupo, "CodCatalogo", "ca_descripcion"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.rub_grupo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ru_tipo">Grupo rol general*</label>
+                    @Html.DropDownListFor(q => q.rub_GrupoResumen, new SelectList(ViewBag.lst_grupo_rep_gene, "CodCatalogo", "ca_descripcion"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.rub_GrupoResumen, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ru_descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.ru_descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.ru_descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="NombreCorto">Descripción corta</label>
+                    @Html.TextBoxFor(q => q.NombreCorto, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.NombreCorto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCblePadre">Cuenta contable</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.rub_ctacon, settings =>
+               {
+                   settings.Name = "rub_ctacon";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdCtaCble", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("pc_Cuenta", "Cuenta").Width = System.Web.UI.WebControls.Unit.Percentage(50);
+                   settings.Properties.Columns.Add("pc_Cuenta_padre", "Cuenta padre").Width = System.Web.UI.WebControls.Unit.Percentage(40);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdCtaCble";
+                   settings.Properties.ValueType = typeof(string);
+                   settings.Properties.TextField = "pc_Cuenta";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+               }).BindList(ViewBag.lst_plancuenta).GetHtml()
+                    @Html.ValidationMessageFor(q => q.rub_ctacon, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="Tabs" role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_configuracion" aria-controls="configuracion" role="tab" data-toggle="tab">Configuración</a>
+            </li>
+            <li>
+                <a href="#tab_contabiliza" aria-controls="contabiliza" role="tab" data-toggle="tab" id="link_contabiliza">Contabilización por jornada</a>
+            </li>
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 2em;" id="tab_configuracion">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="se_distribuye"></label>
+                                @Html.DevExpress().CheckBoxFor(q => q.se_distribuye, settings =>
+                                {
+                                    settings.Name = "se_distribuye";
+                                    settings.Text = "Se distribuye";
+
+                                }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.se_distribuye, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="rub_nocontab"></label>
+                                @Html.DevExpress().CheckBoxFor(q => q.rub_nocontab, settings =>
+                               {
+                                   settings.Name = "rub_nocontab";
+                                   settings.Text = "Se contabiliza";
+                               }).GetHtml()
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="rub_concep"></label>
+                                @Html.DevExpress().CheckBoxFor(q => q.rub_concep, settings =>
+                               {
+                                   settings.Name = "rub_concep";
+                                   settings.Text = "Es un concepto";
+
+                               }).GetHtml()
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="rub_aplica_IESS"></label>
+                                @Html.DevExpress().CheckBoxFor(q => q.rub_aplica_IESS, settings =>
+                               {
+                                   settings.Name = "rub_aplica_IESS";
+                                   settings.Text = "Aplica IESS";
+
+                               }).GetHtml()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="rub_AplicaIR"></label>
+                                @Html.DevExpress().CheckBoxFor(q => q.rub_AplicaIR, settings =>
+                                {
+                                    settings.Name = "rub_AplicaIR";
+                                    settings.Text = "Aplica I.R";
+
+                                }).GetHtml()
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="rub_acumula_descuento"></label>
+                                @Html.DevExpress().CheckBoxFor(q => q.rub_acumula_descuento, settings =>
+                                {
+                                    settings.Name = "rub_acumula_descuento";
+                                    settings.Text = "Acumula valor para descuento";
+
+                                }).GetHtml()
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="rub_provision"></label>
+                                @Html.DevExpress().CheckBoxFor(q => q.rub_provision, settings =>
+                               {
+                                   settings.Name = "rub_provision";
+                                   settings.Text = "Se provisiona";
+
+                               }).GetHtml()
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="rub_provision"></label>
+                                @Html.DevExpress().CheckBoxFor(q => q.rub_ContPorEmpleado, settings =>
+                               {
+                                   settings.Name = "rub_ContPorEmpleado";
+                                   settings.Text = "Se contabiliza por empleado";
+
+                               }).GetHtml()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="rub_provision"></label>
+                                @Html.DevExpress().CheckBoxFor(q => q.rub_ContPorJornada, settings =>
+                               {
+                                   settings.Name = "rub_ContPorJornada";
+                                   settings.Text = "Se contabiliza por jornada";
+                                   settings.Properties.ClientSideEvents.CheckedChanged = "function(s,e){mostrar_contabilizar_x_jornada();}";
+                               }).GetHtml()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tab_contabiliza">
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.Action("GridViewPartial_rubros_x_jornada")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Rubro",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+<script type="text/javascript">
+    $(function () {
+        mostrar_contabilizar_x_jornada();
+    })
+
+    function mostrar_contabilizar_x_jornada() {
+        var Contabiliza = rub_ContPorJornada.GetValue();
+
+        if (Contabiliza == true) {
+            $("#link_contabiliza").show();
+            $("#link_contabiliza").click();
+        }
+        else {
+            $("#link_contabiliza").hide();
+        }
+    };
+</script>

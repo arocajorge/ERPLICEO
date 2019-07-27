@@ -1,0 +1,244 @@
+﻿@model Core.Erp.Info.Compras.com_ordencompra_local_Info
+@{
+    ViewBag.Title = "Modificar orden de compra";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success alert-dismissible">
+                    <h4>
+                        <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+                    </h4>
+                </div>
+            </div>
+        </div>
+    }
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script type="text/javascript">
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/CompraReportes/COMP_001?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdOrdenCompra="+@Model.IdOrdenCompra, '_blank');
+        win.focus();
+    }
+
+    function CrearModificarProveedor() {
+        var location = GetPathServer();
+        if(IdProveedor.GetValue() > 0)
+        {
+            var win = window.open(location+ "/CuentasPorPagar/Proveedor/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdProveedor="+IdProveedor.GetValue(), '_blank');
+            win.focus();
+        }else
+        {
+            var win = window.open(location +"/CuentasPorPagar/Proveedor/Nuevo?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
+            win.focus();
+        }
+    }
+</script>
+@using (Html.BeginForm("Modificar", "OrdenCompraLocal", FormMethod.Post, new { @role = "form", @class = "form" }))
+{
+
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdSucursal)
+    @Html.HiddenFor(q => q.IdOrdenCompra)
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdEstadoAprobacion_cat)
+    @Html.HiddenFor(q => q.IdComprador)
+    @Html.HiddenFor(q => q.Tipo)
+    @Html.HiddenFor(q => q.SecuenciaTipo)
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-10 col-md-1">
+                <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                    <i class="fa fa-print"></i>
+                </button>
+            </div>
+            <div class="col-md-1">
+                <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","OrdenCompraLocal",new { Area = "Compras", IdEmpresa = Model.IdEmpresa },null)">
+                    <i class="fa fa-plus"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="IdSucursal">Sucursal*</label>
+                                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @disabled = "disabled" })
+                                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="IdEstadoAprobacion_cat">Estado de aprobación*</label>
+                                    @Html.DropDownListFor(q => q.IdEstadoAprobacion_cat, new SelectList(ViewBag.lst_apro, "IdCatalogocompra", "Nombre"), new { @class = "form-control", @id = "IdEstadoAprobacion_cat", @disabled = "disabled" })
+                                    @Html.ValidationMessageFor(q => q.IdEstadoAprobacion_cat, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="IdEstado_cierre">Estado de cierre*</label>
+                                    @Html.DropDownListFor(q => q.IdEstado_cierre, new SelectList(ViewBag.lst_estado, "IdEstado_cierre", "Descripcion"), new { @class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(q => q.IdEstado_cierre, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="oc_fecha">Fecha*</label>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        @Html.DevExpress().DateEditFor(q => q.oc_fecha, settings =>
+                   {
+                       settings.Name = "oc_fecha";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   }).GetHtml()
+                                        @Html.ValidationMessageFor(q => q.oc_fecha, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="oc_fechaVencimiento">Fecha de entrega*</label>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        @Html.DevExpress().DateEditFor(q => q.oc_fechaVencimiento, settings =>
+                   {
+                       settings.Name = "oc_fechaVencimiento";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   }).GetHtml()
+                                        @Html.ValidationMessageFor(q => q.oc_fechaVencimiento, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="IdProveedor">Proveedor*</label>
+                                    @Html.Partial("_CmbProveedor_COM", Model.IdProveedor)
+                                    @Html.ValidationMessageFor(q => q.IdProveedor, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label for="IdProveedor"></label>
+                                    <button type="button" class="btn btn-primary form-control " onclick="CrearModificarProveedor();">
+                                        <i class="fa fa-external-link-square"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="IdDepartamento">Departamento</label>
+                                    @Html.DropDownListFor(q => q.IdDepartamento, new SelectList(ViewBag.lst_dep, "IdDepartamento", "nom_departamento"), new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(q => q.IdDepartamento, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="IdTerminoPago">Termino pago*</label>
+                                    @Html.DropDownListFor(q => q.IdTerminoPago, new SelectList(ViewBag.lst_termino, "IdTerminoPago", "Descripcion"), new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(q => q.IdTerminoPago, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="oc_plazo">Plazo*</label>
+                                    @Html.TextBoxFor(q => q.oc_plazo, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(q => q.oc_plazo, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="oc_observacion">Observación</label>
+                                    @Html.TextBoxFor(q => q.oc_observacion, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(q => q.oc_observacion, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.Action("GridViewPartial_ordencompralocal_det")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <a class="btn btn-default" href="@Url.Action("Index","OrdenCompraLocal", new { Area = "Compras"  },null)">Cancelar</a>
+                    </div>
+                    @section Scripts {
+                        @Scripts.Render("~/bundles/jqueryval")
+                    }
+}
+<script type="text/javascript">
+
+                function GetInfoProducto(s, e) {
+                    $("#Secuencia").text(0);
+                    var datos = {
+                        IdEmpresa: $("#IdEmpresa").val(),
+                        IdProducto: s.GetValue()
+
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        data: JSON.stringify(datos),
+                        url: '@Url.Action("GetInfoProducto", "OrdenCompraLocal",new { Area = "Compras"})',
+                        async: false,
+                        bDeferRender: true,
+                        bProcessing: true,
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            GridView_ordencompralocal_det.GetEditor('IdCod_Impuesto').SetValue(data.IdCod_Impuesto_Iva);
+                        },
+                        error: function (error) {
+                        }
+                    });
+                }
+</script>

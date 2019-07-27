@@ -1,0 +1,27 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdProveedor";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "OrdenCompraExterior", Action = "CmbProveedor_exterior", Area = "Importacion" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+        settings.Properties.TextField = "info_persona.pe_nombreCompleto";
+        settings.Properties.TextFormatString = "[{0}] [{1}] {2}";
+        settings.Properties.ValueField = "IdProveedor";
+        settings.Properties.ValueType = typeof(decimal);
+        settings.Properties.FilterMinLength = 3;
+
+        settings.Properties.Columns.Add("IdProveedor", "ID", 5);
+        settings.Properties.Columns.Add("info_persona.pe_cedulaRuc", "Cedula", 15);
+        settings.Properties.Columns.Add("info_persona.pe_nombreCompleto", "Provedor", 80);
+    })
+    .BindList(new Core.Erp.Web.Areas.Importacion.Controllers.OrdenCompraExteriorController().get_list_bajo_demanda, new Core.Erp.Web.Areas.Importacion.Controllers.OrdenCompraExteriorController().get_info_bajo_demanda)
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.Importacion.imp_ordencompra_ext_Info) ? "" : (Model == 0 ? "" : Model));
+
+}
+@comboBox.GetHtml()

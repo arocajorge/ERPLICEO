@@ -1,0 +1,268 @@
+﻿@model Core.Erp.Info.RRHH.ro_Acta_Finiquito_Info
+@{
+    ViewBag.Title = "Preliquidación de empleados";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdProveedor">Empleado*</label>
+                    @Html.Partial("_CmbEmpleado_acta", Model.IdEmpleado)
+                    @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdContrato_Tipo">Tipo contrato*</label>
+                    @Html.DropDownListFor(q => q.Contrato_tipo, new SelectList(ViewBag.lst_tipo_contrato, "CodCatalogo", "ca_descripcion"), "== Seleccione ==", new { @class = "form-control", @id = "IdContrato_Tipo" })
+                    @Html.ValidationMessageFor(q => q.Contrato_tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="FechaIngreso">Fecha ingreso*</label>
+                    @Html.DevExpress().DateEditFor(q => q.FechaIngreso, settings =>
+               {
+                   settings.Name = "FechaIngreso";
+                   settings.Properties.UseMaskBehavior = true;
+                   settings.Properties.EditFormat = EditFormat.Date;
+                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                   settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+               }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.FechaIngreso, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="FechaSalida">Fecha salida*</label>
+                    @Html.DevExpress().DateEditFor(q => q.FechaSalida, settings =>
+               {
+                   settings.Name = "FechaSalida";
+                   settings.Properties.UseMaskBehavior = true;
+                   settings.Properties.EditFormat = EditFormat.Date;
+                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                   settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+               }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.FechaSalida, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Observacion">Ultima remuneración*</label>
+                    @Html.TextBoxFor(q => q.UltimaRemuneracion, new { @class = "form-control", @id = "Sueldo" })
+                    @Html.ValidationMessageFor(q => q.UltimaRemuneracion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.DevExpress().CheckBoxFor(q => q.EsMujerEmbarazada, settings =>
+                           {
+                               settings.Name = "EsMujerEmbarazada";
+                               settings.Text = "¿Es mujer embarazada?";
+
+                           }).GetHtml()
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.DevExpress().CheckBoxFor(q => q.EsPorDiscapacidad, settings =>
+                           {
+                               settings.Name = "EsPorDiscapacidad";
+                               settings.Text = "¿Por discapacidad?";
+
+                           }).GetHtml()
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.DevExpress().CheckBoxFor(q => q.EsDirigenteSindical, settings =>
+                           {
+                               settings.Name = "EsDirigenteSindical";
+                               settings.Text = "¿Es dirigente sindical?";
+
+                           }).GetHtml()
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.DevExpress().CheckBoxFor(q => q.EsPorEnfermedadNoProfesional, settings =>
+                           {
+                               settings.Name = "EsPorEnfermedadNoProfesional";
+                               settings.Text = "¿Por enfermedad no profesional?";
+
+                           }).GetHtml()
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdContrato_Tipo">Causa de terminación del contrato*</label>
+                    @Html.DropDownListFor(q => q.IdCausaTerminacion, new SelectList(ViewBag.lst_tipo_terminacion, "CodCatalogo", "ca_descripcion"), "== Seleccione ==", new { @class = "form-control", @id = "idterminacion" })
+                    @Html.ValidationMessageFor(q => q.IdCausaTerminacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Observacion">Observación*</label>
+                    @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="GridViewPartial_liquidacion_empleado_det">Detalle Acta finiquito</label>
+                    @Html.Action("GridViewPartial_liquidacion_empleado_det")
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="button" onclick="Procesar_Liqui()" class="btn btn-primary" id="btnprocesar">Procesar</button>
+        <button type="button" onclick="capturar_info_pantalla()" class="btn btn-default" id="capturar">Imprimir</button>
+        @*<a class="btn btn-default" href="@Url.Action("ROL_021","RRHHReportes",new { Area = "Reportes" },null)" target="_blank">Imprimir</a>*@
+        @*<a class="btn btn-default" href="@Url.Action("Index","PreLiquidacion",new { Area = "RRHH" },null)">Cancelar</a>*@
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+<script>
+    function get_info()
+    {
+        var datos = {
+            IdEmpleado: IdEmpleado.GetValue()            
+        }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("get_info_contato_a_liquidar","Contrato",new { Area = "RRHH"})',
+                async: false,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data == '') {
+                        //No hago nada
+                    } else {
+                        $("#IdContrato_Tipo").val(data.IdContrato_Tipo);
+                        $("#IdContrato").val(data.IdContrato);
+                        var pad = "00"
+                        var mes_ingreso = data.mes_ing.toString();
+                        var mes_salida = data.mes_sal.toString();
+
+                        var mes_ing_format = pad.substring(0, pad.length - mes_ingreso.length) + mes_ingreso;
+                        var mes_sal_format = pad.substring(0, pad.length - mes_salida.length) + mes_salida;
+
+                        var fecha_inicio = data.anio_ing.toString() + "/" + mes_ing_format + "/" + data.dia_in.toString();
+                        var fecha_fin = data.anio_sal.toString() + "/" + mes_sal_format + "/" + data.dia_sal.toString();
+
+                        FechaIngreso.SetValue(new Date(fecha_inicio));
+                        FechaSalida.SetValue(new Date(fecha_fin));
+                        $("#Sueldo").val(data.Sueldo);
+
+                    }
+                },
+                error: function (error) {
+
+                }
+            });
+        }
+
+    function Procesar_Liqui()
+            {
+        var datos = {
+                        IdEmpleado: IdEmpleado.GetValue(),
+                        FechaIngreso: FechaIngreso.GetValue(),
+                        FechaSalida: FechaSalida.GetValue(),
+                        IdEmpleado: IdEmpleado.GetValue(),
+                        UltimaRemuneracion: $("#Sueldo").val(),
+                        idterminacion: $("#idterminacion").val(),
+                        EsMujerEmbarazada: EsMujerEmbarazada.GetValue(),
+                        EsDirigenteSindical: EsDirigenteSindical.GetValue(),
+                        EsPorDiscapacidad: EsPorDiscapacidad.GetValue(),
+                        EsPorEnfermedadNoProfesional: EsPorEnfermedadNoProfesional.GetValue()
+
+                }
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(datos),
+                    url: '@Url.Action("Procesar","ActaFiniquito", new { Area = "RRHH" })',
+                    async: false,
+                    bDeferRender: true,
+                    bProcessing: true,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data)
+                    {
+                        console.log(data);
+                        GridView_liquidacion_empleado_det.PerformCallback();
+
+                    },
+                    error: function (error)
+                    {
+                    }
+                    });
+    };
+
+    function capturar_info_pantalla() {
+        var datos = {
+            FechaIngreso: FechaIngreso.GetValue(),
+            FechaSalida: FechaSalida.GetValue(),
+            IdEmpleado: IdEmpleado.GetValue(),
+            IdContrato_Tipo: $("#IdContrato_Tipo").val(),
+            UltimaRemuneracion: $("#Sueldo").val(),
+            EsMujerEmbarazada: EsMujerEmbarazada.GetValue(),
+            EsPorDiscapacidad: EsPorDiscapacidad.GetValue(),
+            EsDirigenteSindical: EsDirigenteSindical.GetValue(),
+            EsPorEnfermedadNoProfesional: EsPorEnfermedadNoProfesional.GetValue(),
+            IdCausaTerminacion: $("#idterminacion").val(),
+            Observacion: $("#Observacion").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("capturar_info_pantalla", "PreLiquidacion",new { Area = "RRHH"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var win = window.open(window.location.origin +"/Reportes/RRHHReportes/ROL_005?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdActaFiniquito="+@Model.IdActaFiniquito+"&IdTransaccionSession="+@Model.IdTransaccionSession, '_blank');
+                win.focus();
+            },
+            error: function (error) {
+
+            }
+    });
+    }
+</script>

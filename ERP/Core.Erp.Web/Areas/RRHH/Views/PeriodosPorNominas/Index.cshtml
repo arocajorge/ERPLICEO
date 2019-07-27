@@ -1,0 +1,148 @@
+﻿@model Core.Erp.Info.RRHH.ro_periodo_x_ro_Nomina_TipoLiqui_Info
+@{
+    ViewBag.Title = "Periodos por nominas";
+
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    function EditingUpdate(ID) {
+        var datos = {
+            IdPeriodo: ID
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("EditingUpdate", "PeriodosPorNominas",new { Area = "RRHH"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            },
+            error: function (error) {
+            }
+        });
+        GridViewPartial_periodos.PerformCallback();
+        GridViewPartial_periodos_por_nominas.PerformCallback();
+    }
+
+    function guardar() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdNomina_Tipo: $("#IdNomina_Tipo").val(),
+            IdNomina_TipoLiqui: $("#IdNomina_TipoLiqui").val()
+        }
+        $("#btn_guardar").attr("disabled", true);
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("guardar", "PeriodosPorNominas", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                alert("Registros actualizados exitósamente")
+                $("#myform").submit();
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>
+
+@using (Html.BeginForm("Index", "PeriodosPorNominas", FormMethod.Post, new { role = "form", @class = "form", @id = "myform" }))
+{
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id= "IdTransaccionSession" })
+        @Html.HiddenFor(q => q.IdEmpresa)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="FechaInicio">Nómina*</label>
+                    @Html.DropDownListFor(q => q.IdNomina_Tipo, new SelectList(ViewBag.lst_nomina, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
+                    @Html.ValidationMessageFor(q => q.IdNomina_Tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="FechaInicio">Proceso de la nómina*</label>
+                    @Html.DropDownListFor(q => q.IdNomina_TipoLiqui, new SelectList(ViewBag.lst_nomina_tipo, "IdNomina_TipoLiqui", "DescripcionProcesoNomina"), new { @class = "form-control", @id = "IdNomina_TipoLiqui" })
+                    @Html.ValidationMessageFor(q => q.IdNomina_TipoLiqui, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-default" id="btn_buscar">Buscar</button>
+        <button type="button" class="btn btn-primary" id="btn_guardar" onclick="guardar();">Guardar</button>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-md-12">
+                @Html.Action("GridViewPartial_periodos")
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">
+                @Html.Action("GridViewPartial_periodos_por_nominas")
+            </div>
+        </div>
+    </div>
+
+}
+
+    <script>
+        $(function ()
+        {
+            $("#IdNomina_TipoLiqui").empty();
+            cargar_tipo_liquidacion_nomina();
+        });
+        $("#IdNomina_Tipo").change(function () {
+        $("#IdNomina_TipoLiqui").empty();
+             cargar_tipo_liquidacion_nomina();
+
+        });
+
+
+
+        function cargar_tipo_liquidacion_nomina() {
+            var datos = {
+                IdNomina: $("#IdNomina_Tipo").val()
+            }
+
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("get_lst_nomina_tipo_liq", "NominaTipoLiquidacion", new { Area = "RRHH" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                $.each(data, function (i, row) {
+                $("#IdNomina_TipoLiqui").append("<option value=" + row.IdNomina_TipoLiqui + ">" + row.DescripcionProcesoNomina + "</option>");
+                });
+                },
+                error: function (error) {
+                }
+                });
+                };
+    </script>

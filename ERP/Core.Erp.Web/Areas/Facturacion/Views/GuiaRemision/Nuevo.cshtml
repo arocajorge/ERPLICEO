@@ -1,0 +1,564 @@
+﻿@model Core.Erp.Info.Facturacion.fa_guia_remision_Info
+@{
+    ViewBag.Title = "Nueva guia";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+<script type="text/javascript">
+    var selectedIDs;
+    function OnBeginCallback(s, e) {
+        //Pass all selected keys to GridView callback action
+        e.customArgs["selectedIDs"] = selectedIDs;
+        e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
+    }
+    function OnSelectionChanged(s, e) {
+        s.GetSelectedFieldValues("IdCbteVta", GetSelectedFieldValuesCallback);
+    }
+    function GetSelectedFieldValuesCallback(values) {
+        //Capture all selected keys
+        selectedIDs = values.join(',');
+    }
+
+    function seleccionar_aprobacion() {
+        var datos = {
+            Ids: selectedIDs,
+            IdSucursal: $("#IdSucursal").val(),
+            IdPuntoVta: $("#IdPuntoVta").val(),
+            IdTransaccionSession: $('#IdTransaccionSession').val()
+        }
+        $("#btn_guardar").disabled = true;
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("seleccionar_aprobacion","GuiaRemision", new { Area = "Facturacion" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+                $("#myform").submit();
+                GridViewPartial_guias_remision_det.PerformCallback();
+                GridViewPartial_Facturas_x_guia.PerformCallback();
+                selectedIDs = "";
+                $("#OpModal").modal("hide");
+
+            },
+            error: function (error) {
+            }
+        });
+        $("#btn_guardar").disabled = false;
+    }
+
+</script>
+@using (Html.BeginForm("Nuevo", "GuiaRemision", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
+
+    if (ViewBag.error != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.error
+                <a href="@Url.Action("Index","LogError",new  {Area="General"}, null )" class="small-box-footer" target="_blank">Ver detalle error<i class="fa fa-arrow-circle-right"></i></a>
+            </h4>
+        </div>
+
+    }
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="IdSucursal">Sucursal*</label>
+                        @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                        @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="IdPuntoVta">Punto de venta*</label>
+                        @Html.DropDownListFor(q => q.IdPuntoVta, new SelectList(ViewBag.lst_punto_venta, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVta" })
+                        @Html.ValidationMessageFor(q => q.IdPuntoVta, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="IdCliente">Cliente*</label>
+                        @Html.Partial("_CmbCliente_Guia", Model.IdCliente)
+                        @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="IdCliente"></label>
+                        <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","Cliente",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)" target="_blank">+</a>
+                    </div>
+                </div>
+                <div class="col-md-3" id="datos_punto_venta1">
+                    <div class="form-group">
+                        <label for="vt_serie1">Establecimiento*</label>
+                        @Html.TextBoxFor(q => q.Serie1, new { @class = "form-control", @id = "Serie1" })
+                        @Html.ValidationMessageFor(q => q.Serie1, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-3" id="datos_punto_venta2">
+                    <div class="form-group">
+                        <label for="vt_serie2">Pto. Emisión*</label>
+                        @Html.TextBoxFor(q => q.Serie2, new { @class = "form-control", @id = "Serie2" })
+                        @Html.ValidationMessageFor(q => q.Serie2, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6" id="datos_punto_venta3">
+                    <div class="form-group">
+                        <label for="vt_NumFactura"># Documento*</label>
+                        @Html.TextBoxFor(q => q.NumGuia_Preimpresa, new { @class = "form-control", @id = "NumGuia_Preimpresa" })
+                        @Html.ValidationMessageFor(q => q.NumGuia_Preimpresa, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="IdVendedor">Transportista*</label>
+                        @Html.DropDownListFor(q => q.IdTransportista, new SelectList(ViewBag.lst_transportista, "IdTransportista", "Nombre"), new { @class = "form-control", @id = "IdTransportista" })
+                        @Html.ValidationMessageFor(q => q.IdTransportista, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="vt_serie1">Placa*</label>
+                        @Html.TextBoxFor(q => q.placa, new { @class = "form-control", @id = "placa" })
+                        @Html.ValidationMessageFor(q => q.placa, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="gi_fecha">Fecha</label>
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            @Html.DevExpress().DateEditFor(q=> q.gi_fecha, settings =>
+                        {
+                            settings.Name = "gi_fecha";
+                            settings.Properties.UseMaskBehavior = true;
+                            settings.Properties.EditFormat = EditFormat.Date;
+                            settings.Properties.EditFormatString = "dd/MM/yyyy";
+                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.gi_fecha, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="pf_observacion">Dirección origen</label>
+                        @Html.TextBoxFor(q => q.Direccion_Origen, new { @class = "form-control", @id = "Direccion_Origen" })
+                        @Html.ValidationMessageFor(q => q.Direccion_Origen, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="">Inicio traslado</label>
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            @Html.DevExpress().DateEditFor(q=> q.gi_FechaInicioTraslado, settings =>
+                        {
+                            settings.Name = "gi_FechaInicioTraslado";
+                            settings.Properties.UseMaskBehavior = true;
+                            settings.Properties.EditFormat = EditFormat.Date;
+                            settings.Properties.EditFormatString = "dd/MM/yyyy";
+                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.gi_FechaInicioTraslado, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="pf_observacion">Dirección destino</label>
+                        @Html.TextBoxFor(q => q.Direccion_Destino, new { @class = "form-control", @id = "Direccion_Destino" })
+                        @Html.ValidationMessageFor(q => q.Direccion_Destino, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="gi_FechaFinTraslado">Fin traslado</label>
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            @Html.DevExpress().DateEditFor(q=> q.gi_FechaFinTraslado, settings =>
+                        {
+                            settings.Name = "gi_FechaFinTraslado";
+                            settings.Properties.UseMaskBehavior = true;
+                            settings.Properties.EditFormat = EditFormat.Date;
+                            settings.Properties.EditFormatString = "dd/MM/yyyy";
+                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.gi_FechaFinTraslado, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="IdClienteContacto">Motivo de traslado</label>
+                        @Html.DropDownListFor(q => q.IdMotivoTraslado, new SelectList(ViewBag.lst_tipo_traslado, "IdMotivoTraslado", "tr_Descripcion"), new { @class = "form-control", @id = "IdMotivoTraslado" })
+                        @Html.ValidationMessageFor(q => q.IdMotivoTraslado, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="pf_observacion">Observación</label>
+                    @Html.TextAreaFor(q => q.gi_Observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.gi_Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div id="Tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#detalle_guia" aria-controls="informacion_general" role="tab" data-toggle="tab">Detalle guía</a>
+            </li>
+            <li>
+                <a href="#tab_documentos_relacionados" aria-controls="contactos_telefonos" role="tab" data-toggle="tab">Documentos relacionados</a>
+            </li>
+
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="detalle_guia">
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-primary" onclick="MostrarModal()">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Action("GridViewPartial_guias_remision_det")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_documentos_relacionados">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Action("GridViewPartial_Facturas_x_guia")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="OpModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Facturas sin guías</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.Action("GridViewPartial_FacturasSinGuia")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="seleccionar_aprobacion();">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","GuiaRemision",new { Area = "Facturacion" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+
+
+<script>
+
+
+
+    $(function () {
+        CargarPuntosDeVenta();
+        GetUltimoDocumento();
+        get_direccion();
+        get_placa();
+        GetDireccionOrigen();
+
+        $("#IdSucursal").change(function () {
+            CargarPuntosDeVenta();
+            GetUltimoDocumento();
+            GetDireccionOrigen();
+        });
+        $("#IdPuntoVta").change(function () {
+            GetUltimoDocumento();
+        });
+
+        $("#IdTransportista").change(function () {
+            get_placa();
+        });
+    });
+
+    function MostrarModal() {
+        GridViewPartial_FacturasSinGuia.PerformCallback();
+        $("#OpModal").modal("show");
+    }
+
+
+    function CargarFacturas() {
+        var datos = {
+            IdCliente: IdCliente.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("Cargar_facturas", "GuiaRemision",new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function CargarPuntosDeVenta() {
+        $("#IdPuntoVta").empty();
+        var datos = {
+            IdSucursal: $("#IdSucursal").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarPuntosDeVenta", "GuiaRemision",new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdPuntoVta").append("<option value=" + row.IdPuntoVta + ">" + row.nom_PuntoVta + "</option>");
+                    $("#IdPuntoVta").val($("#IdPuntoVta option:first").val());
+                });
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function GetUltimoDocumento() {
+        var datos = {
+            IdSucursal: $("#IdSucursal").val(),
+            IdPuntoVta: $("#IdPuntoVta").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetUltimoDocumento", "GuiaRemision",new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.data_puntovta != null)
+                {
+                    if (data.data_puntovta.EsElectronico == true)
+                    {
+                        $("#datos_punto_venta1").hide();
+                        $("#datos_punto_venta2").hide();
+                        $("#datos_punto_venta3").hide();
+                    }
+                    else
+                    {
+                        $("#datos_punto_venta1").show();
+                        $("#datos_punto_venta2").show();
+                        $("#datos_punto_venta3").show();
+
+                        if (data.data_talonario != null)
+                        {
+                            $("#Serie1").val(data.data_talonario.Establecimiento);
+                            $("#Serie2").val(data.data_talonario.PuntoEmision);
+                            $("#NumGuia_Preimpresa").val(data.data_talonario.NumDocumento);
+                        }
+                    }
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+        function GetDireccionOrigen() {
+        var datos = {
+            IdSucursal: $("#IdSucursal").val(),
+            IdPuntoVta: $("#IdPuntoVta").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_direccion_origen", "GuiaRemision",new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#Direccion_Origen").val(data.Su_Direccion);
+
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function get_placa() {
+        var datos = {
+            IdTransportista: $("#IdTransportista").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("Get_placa", "GuiaRemision",new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#placa").val(data.Placa);
+
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function get_direccion() {
+
+        var datos = {
+            IdCliente: IdCliente.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_direcciones", "GuiaRemision",new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data != null) {
+                    //$("#Direccion_Origen").val(data.Direccion_emp);
+                    $("#Direccion_Destino").val(data.Direccion);
+                }
+            },
+            error: function (error) {
+                alert(error);
+            }
+
+        });
+    }
+
+
+    function cargar_contactos() {
+
+        $("#IdContacto").empty();
+        var codigo = IdCliente.GetValue();
+
+        var datos = {
+            IdCliente: codigo
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("cargar_contactos", "Factura",new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdContacto").append("<option value=" + row.IdContacto + ">" + row.Nombres + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function GetInfoProducto(s, e) {
+        $("#Secuencia").text(0);
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdProducto: s.GetValue()
+
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetInfoProducto", "GuiaRemision",new { Area = "Facturacion"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_guias_remision_det.GetEditor('IdCod_Impuesto').SetValue(data.IdCod_Impuesto_Iva);
+            },
+            error: function (error) {
+            }
+        });
+    };
+</script>
+
+

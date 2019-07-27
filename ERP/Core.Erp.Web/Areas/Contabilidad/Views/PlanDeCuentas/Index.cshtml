@@ -1,0 +1,19 @@
+﻿@using Core.Erp.Web.Helps
+@{
+    ViewBag.Title = "Plan de cuentas";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-primary" href="@Url.Action("Importar","PlanDeCuentas",new { Area = "Contabilidad", IdEmpresa = SessionFixed.IdEmpresa },null)">Importar desde excel</a>
+        </div>
+    </div>
+    @Html.Action("GridViewPartial_plancta")
+}

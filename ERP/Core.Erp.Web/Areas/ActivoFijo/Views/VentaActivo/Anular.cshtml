@@ -1,0 +1,215 @@
+﻿@model Core.Erp.Info.ActivoFijo.Af_Venta_Activo_Info
+@{
+    ViewBag.Title = "Anular venta";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Anular", "VentaActivo", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdVtaActivo)
+    @Html.HiddenFor(q => q.IdCbteCble)
+    @Html.HiddenFor(q => q.IdTipoCbte)
+    @Html.HiddenFor(q => q.IdEmpresa_ct)
+
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Cod_VtaActivo">Código</label>
+                    @Html.TextBoxFor(q => q.Cod_VtaActivo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Cod_VtaActivo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-offset-8 col-md-2">
+                <div class="form-group">
+                    <label for="">Fecha de venta</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.Fecha_Venta, settings =>
+                    {
+                        settings.Name = "Fecha_Venta";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Fecha_Venta, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdActivoFijo">Activo fijo*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdActivoFijo, settings =>
+               {
+                   settings.Name = "IdActivoFijo";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdActivoFijo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("Af_Nombre", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdActivoFijo";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "Af_Nombre";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownButton.Enabled = false;
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.ReadOnly = true;
+               }).BindList(ViewBag.lst_fijo).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdActivoFijo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="ValorActivo">V. activo*</label>
+                    @Html.TextBoxFor(q => q.ValorActivo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.ValorActivo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Valor_Tot_Bajas">V. baja*</label>
+                    @Html.TextBoxFor(q => q.Valor_Tot_Bajas, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Valor_Tot_Bajas, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Valor_Tot_Mejora">V. mejora*</label>
+                    @Html.TextBoxFor(q => q.Valor_Tot_Mejora, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Valor_Tot_Mejora, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Valor_Depre_Acu">V. Depr. Acum.*</label>
+                    @Html.TextBoxFor(q => q.Valor_Depre_Acu, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Valor_Depre_Acu, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Valor_Neto">V. neto*</label>
+                    @Html.TextBoxFor(q => q.Valor_Neto, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Valor_Neto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="Tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_datos" aria-controls="datos" role="tab" data-toggle="tab">Datos generales</a>
+            </li>
+            <li>
+                <a href="#tab_diario" aria-controls="diario" role="tab" data-toggle="tab">Diario contable</a>
+            </li>
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_datos">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="NumComprobante">Número de comprobante</label>
+                                @Html.TextBoxFor(q => q.NumComprobante, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.NumComprobante, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Valor_Venta">V. venta</label>
+                                @Html.TextBoxFor(q => q.Valor_Venta, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.Valor_Venta, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Valor_Perdi_Gana">V. perdida y ganancia</label>
+                                @Html.TextBoxFor(q => q.Valor_Perdi_Gana, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.Valor_Perdi_Gana, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="Concepto_Vta">Observación</label>
+                                @Html.TextBoxFor(q => q.Concepto_Vta, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.Concepto_Vta, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_diario">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Action("GridViewPartial_comprobante_detalle", new { Area = "Contabilidad", Controller = "ComprobanteContable" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="box-footer">
+        @if (ViewBag.MostrarBoton ?? false)
+        {
+            <button type="submit" class="btn btn-danger">Anular</button>
+        }
+        <a class="btn btn-default" href="@Url.Action("Index", "VentaActivo", new { Area = "ActivoFijo" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+<script>
+            function OnSelectedCtaCbleChanged() {
+        GridView_comprobante_detalle.GetEditor("IdGrupoPresupuesto").PerformCallback();
+    }
+    function GrupoComboBox_BeginCallback(s, e) {
+        e.customArgs["pre_IdCtaCble"] = IdCtaCble.GetValue();
+        e.customArgs["pre_fecha"] = moment(cb_Fecha.GetDate()).format('DD/MM/YYYY');
+    }
+</script>

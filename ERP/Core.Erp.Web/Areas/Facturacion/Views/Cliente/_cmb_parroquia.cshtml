@@ -1,0 +1,22 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdParroquia";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "Cliente", Action = "cmb_parroquia", Area = "Facturacion" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.Columns.Add("IdParroquia", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        settings.Properties.Columns.Add("nom_parroquia", "Parroquia").Width = System.Web.UI.WebControls.Unit.Percentage(80);
+        settings.Properties.ValueField = "IdParroquia";
+        settings.Properties.TextFormatString = "[{0}] [{1}]]";
+        settings.Properties.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['fx_IdCiudad'] = IdCiudad.GetValue(); }";
+
+        settings.Properties.ValueType = typeof(string);
+    }).BindList(new Core.Erp.Bus.General.tb_parroquia_Bus().get_list(Model.IdCiudad,false))
+    .Bind(Model.IdParroquia);
+}
+@comboBox.GetHtml()

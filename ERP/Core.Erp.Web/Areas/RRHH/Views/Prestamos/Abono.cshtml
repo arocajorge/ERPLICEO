@@ -1,0 +1,135 @@
+﻿@model Core.Erp.Info.RRHH.ro_prestamo_Info
+
+@{
+    ViewBag.Title = "Abono de prestamo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Abono", "Prestamos", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdPrestamo);
+    @Html.HiddenFor(q => q.IdTransaccionSession,new { @id= "IdTransaccionSession" } );
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" });
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    <label for="IdProveedor">Empleado*</label>
+                    @Html.Partial("_CmbEmpleado_prestamos", Model.IdEmpleado)
+                    @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="IdCtaCblePadre">Rubro*</label>
+                        @Html.Partial("_CmbRubro_Prestamos", Model)
+                        @Html.ValidationMessageFor(q => q.IdRubro, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Valor">Monto solicitado*</label>
+                    @Html.TextBoxFor(q => q.MontoSol, new { @class = "form-control", @id = "MontoSol", @readonly= "readonly" })
+                    @Html.ValidationMessageFor(q => q.MontoSol, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Valor">Saldo Pendiente*</label>
+                    @Html.TextBoxFor(q => q.Valor_pendiente, new { @class = "form-control", @id = "Valor_pendiente", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.Valor_pendiente, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*<div class="col-md-2">
+                <div class="form-group">
+                    <label for="Valor">Valor aplicar*</label>
+                    @Html.TextBoxFor(q => q.Monto_aplicado, new { @class = "form-control", @id = "Monto_aplicado", })
+                    @Html.ValidationMessageFor(q => q.Monto_aplicado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="box-footer">
+                        <button type="button" onclick="Generar();" id="btnconsultar" class="btn btn-primary">Aplicar</button>
+                    </div>
+                </div>
+            </div>*@
+        </div>
+    </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="Valor">Observaciones*</label>
+                            @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-12">
+
+                        <div class="form-group">
+                            <label for="Valor">Detalle prestamos*</label>
+                            @Html.Action("GridViewPartial_prestamos_abono_det")
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a class="btn btn-default" href="@Url.Action("Index","Prestamos",new { Area = "RRHH" },null)">Cancelar</a>
+            </div>
+
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }
+            }
+
+            <script>
+    function Generar()
+            {
+        var datos = {
+                     IdEmpresa: $("#IdEmpresa").val(),
+                     Valor_pendiente: $("#Valor_pendiente").val(),
+                     Monto_aplicado: $("#Monto_aplicado").val(),
+                     IdTransaccionSession: $("#IdTransaccionSession").val()
+                }
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(datos),
+                    url: '@Url.Action("AplicarAbono", "Prestamos", new { Area = "RRHH" })',
+                    async: false,
+                    bDeferRender: true,
+                    bProcessing: true,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data)
+                    {
+
+                        GridViewPartial_prestamos_abono_det.PerformCallback();
+
+                    },
+                    error: function (error)
+                    {
+                    }
+                    });
+};
+            </script>

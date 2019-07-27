@@ -1,0 +1,73 @@
+﻿@model Core.Erp.Info.ActivoFijo.Af_Activo_fijo_Categoria_Info
+@{
+    ViewBag.Title = "Nueva categoría";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Nuevo", "CategoriaAF", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdActivoFijoTipo">Tipo activo*</label>
+                    @Html.HiddenFor(q => q.IdActivoFijoTipo)
+                    @Html.DevExpress().ComboBoxFor(q => q.IdActivoFijoTipo, settings =>
+               {
+                   settings.Name = "IdActivoFijoTipo";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdActivoFijoTipo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("Af_Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdActivoFijoTipo";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "Af_Descripcion";
+                   settings.Properties.NullText = "== Seleccione ==";
+
+                   settings.Properties.DropDownButton.Enabled = false;
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.ReadOnly = true;
+               }).BindList(ViewBag.lst_tipo).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdActivoFijoTipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="CodCategoriaAF">Código</label>
+                    @Html.TextBoxFor(q => q.CodCategoriaAF, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.CodCategoriaAF, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.Descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "CategoriaAF", new { IdActivoFijoTipo = Model.IdActivoFijoTipo, Area ="ActivoFijo" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

@@ -1,0 +1,50 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewPartial_contratos_por_vencer";
+        settings.CallbackRouteValues = new { Controller = "Contrato", Action = "GridViewPartial_contratos_por_vencer", FechaCorte = ViewBag.FechaCorte };
+        settings.KeyFieldName = "IdContrato";
+        settings.Width = Unit.Percentage(100);
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Hidden;
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        settings.Settings.VerticalScrollableHeight = 400;
+        settings.SettingsPager.Visible = true;
+        settings.SettingsPager.PageSize = 10;
+        settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
+        settings.SettingsPager.AlwaysShowPager = true;
+
+
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+
+        settings.SettingsExport.EnableClientSideExportAPI = true;
+        settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
+       
+      
+
+
+        settings.Columns.Add("IdContrato", "ID").Width = Unit.Percentage(5);
+        settings.Columns.Add("NumDocumento", "Nº contrato").Width = Unit.Percentage(10);
+        settings.Columns.Add("Empleado", "Nombres").Width = Unit.Percentage(30);
+        settings.Columns.Add("FechaInicio", "Fecha inicio").Width = Unit.Percentage(10);
+        settings.Columns.Add("FechaFin", "Fecha fin").Width = Unit.Percentage(10);
+        settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(20);
+        settings.Columns.Add("Contrato", "Contrato").Width = Unit.Percentage(15);
+        settings.Columns.Add("EstadoContrato", "Estado").Width = Unit.Percentage(10);
+
+    });
+}
+@grid.Bind(Model).GetHtml()

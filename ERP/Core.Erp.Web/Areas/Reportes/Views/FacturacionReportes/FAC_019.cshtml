@@ -1,0 +1,211 @@
+﻿@using System.Web.UI.WebControls
+@model Core.Erp.Info.Helps.cl_filtros_facturacion_Info
+@{
+    Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
+    ViewBag.Title = "FAC_019";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+}
+<script type="text/javascript">
+    var textSeparator = ";";
+    function updateText() {
+        var selectedItems = IntArray.GetSelectedItems();
+        checkComboBox.SetText(getSelectedItemsText(selectedItems));
+    }
+    function synchronizeListBoxValues(dropDown, args) {
+        IntArray.UnselectAll();
+        var texts = dropDown.GetText().split(textSeparator);
+        var values = getValuesByTexts(texts);
+        IntArray.SelectValues(values);
+        updateText(); // for remove non-existing texts
+    }
+    function getSelectedItemsText(items) {
+        var texts = [];
+        for (var i = 0; i < items.length; i++)
+            texts.push(items[i].text);
+        return texts.join(textSeparator);
+    }
+    function getValuesByTexts(texts) {
+        var actualValues = [];
+        var item;
+        for (var i = 0; i < texts.length; i++) {
+            item = IntArray.FindItemByText(texts[i]);
+            if (item != null)
+                actualValues.push(item.value);
+        }
+        return actualValues;
+    }
+</script>
+
+@using (Html.BeginForm("FAC_019", "FacturacionReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+<div class="box">
+    <div class="box-header with-border">
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+            </div>
+        </div>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+
+    </div>
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="IdSucursal">Sucursal</label>
+                        @Html.DevExpress().DropDownEditFor(q => q.IntArray, settings =>
+                       {
+                           settings.Name = "checkComboBox";
+                           settings.Width = Unit.Percentage(100);
+
+                           settings.SetDropDownWindowTemplateContent(c =>
+                           {
+                               @Html.DevExpress().ListBox(listBoxSettings =>
+                               {
+                                   listBoxSettings.Name = "IntArray";
+                                   listBoxSettings.ControlStyle.Border.BorderWidth = 0;
+                                   listBoxSettings.ControlStyle.BorderBottom.BorderWidth = 1;
+
+                                   listBoxSettings.Height = Unit.Pixel(350);
+                                   listBoxSettings.Width = Unit.Percentage(100);
+
+                                   listBoxSettings.Properties.EnableSelectAll = true;
+                                   listBoxSettings.Properties.FilteringSettings.ShowSearchUI = true;
+                                   listBoxSettings.Properties.SelectionMode = ListEditSelectionMode.CheckColumn;
+                                   foreach (var item in ViewBag.lst_sucursal)
+                                   {
+                                       listBoxSettings.Properties.Items.Add(item.Su_Descripcion, item.IdSucursal).Selected = item.Seleccionado;
+                                   }
+                                   listBoxSettings.Properties.ClientSideEvents.SelectedIndexChanged = "updateText";
+                                   listBoxSettings.Properties.ClientSideEvents.Init = "updateText";
+                               }).Render();
+                               ViewContext.Writer.Write("<div style=\"margin: 6px; overflow: hidden;\">");
+                               @Html.DevExpress().Button(buttonSettings =>
+                               {
+                                   buttonSettings.Name = "buttonClose";
+                                   buttonSettings.Text = "Close";
+                                   buttonSettings.Style.Add("float", "right");
+                                   buttonSettings.ClientSideEvents.Click = "function(s, e){ checkComboBox.HideDropDown(); }";
+                                   buttonSettings.Height = 26;
+                               }).Render();
+                               ViewContext.Writer.Write("</div>");
+                           });
+                           settings.Properties.AnimationType = AnimationType.None;
+                           settings.Properties.ClientSideEvents.TextChanged = "synchronizeListBoxValues";
+                           settings.Properties.ClientSideEvents.DropDown = "synchronizeListBoxValues";
+                       }).GetHtml()
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="IdCliente">Cliente</label>
+                        @Html.Partial("_CmbCliente_Facturacion", Model.IdCliente)
+                        @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger", @id = "IdCliente" })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="">Fecha corte</label>
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            @Html.DevExpress().DateEditFor(q => q.fecha_fin, settings =>
+                       {
+                           settings.Name = "fecha_fin";
+                           settings.Properties.UseMaskBehavior = true;
+                           settings.Properties.EditFormat = EditFormat.Date;
+                           settings.Properties.EditFormatString = "dd/MM/yyyy";
+                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="IdVendedor">Vendedor</label>
+                        @Html.DropDownListFor(q => q.IdVendedor, new SelectList(ViewBag.lst_vendedor, "IdVendedor", "Ve_Vendedor",Model.IdVendedor), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(q => q.IdVendedor, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="checkbox">
+                        <div class="form-group">
+                            @Html.DevExpress().CheckBoxFor(q => q.mostrarSoloVencido,
+                         settings =>
+                         {
+                             settings.Name = "mostrarSoloVencido";
+                             settings.Checked = false;
+                             settings.Text = "Mostrar solo vencido";
+                         }
+                     ).GetHtml()
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="checkbox">
+                        <div class="form-group">
+                            @Html.DevExpress().CheckBoxFor(q => q.mostrarSaldo0,
+                         settings =>
+                         {
+                             settings.Name = "mostrarSaldo0";
+                             settings.Checked = false;
+                             settings.Text = "Mostrar saldo 0";
+                         }
+                     ).GetHtml()
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+</div>
+                
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@ViewBag.Title</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    @Html.DevExpress().WebDocumentViewer(settings =>
+                    {
+                        settings.ClientSideEvents.Init = "function(s, e) {s.previewModel.reportPreview.zoom(1);}";
+                        settings.MobileMode = false;
+                        settings.Name = "webDocumentViewer";
+                    }).Bind(ViewBag.Report).GetHtml()
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    [@Session["IdEmpresa"]] @Session["nom_empresa"]
+                </div>
+                <!-- /.box-footer-->
+            </div>
+            }

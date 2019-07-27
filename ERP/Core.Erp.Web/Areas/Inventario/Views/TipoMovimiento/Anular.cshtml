@@ -1,0 +1,109 @@
+﻿@model Core.Erp.Info.Inventario.in_movi_inven_tipo_Info
+@{
+    ViewBag.Title = "Anular tipo";
+
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Anular", "TipoMovimiento", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa);
+    @Html.HiddenFor(q => q.IdMovi_inven_tipo);
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Codigo">Código</label>
+                    @Html.TextBoxFor(q => q.Codigo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Codigo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdCatalogoAprobacion">Estado aprobación*</label>
+                    @Html.DropDownListFor(q => q.IdCatalogoAprobacion, new SelectList(ViewBag.lst_CatalogoAprobacion, "IdCatalogo", "Nombre"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdCatalogoAprobacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="checkbox">
+                    <label for="Genera_Movi_Inven_bool">
+                        @Html.DevExpress().CheckBoxFor(q => q.Genera_Diario_Contable,
+                         settings =>
+                         {
+                             settings.Name = "Genera_Diario_Contable";
+                             settings.Checked = true;
+                             settings.Text = "Se contabiliza";
+                         }).GetHtml()
+                    </label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="cm_tipo_movi">Signo</label>
+                    @Html.DropDownListFor(q => q.cm_tipo_movi, new SelectList(ViewBag.lst_signo, "Key", "Value"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.cm_tipo_movi, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label for="IdTipoCbte">Tipo comprobante contable</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdTipoCbte, settings =>
+               {
+                   settings.Name = "IdTipoCbte";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdTipoCbte", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("tc_TipoCbte", "Tipo comprobante").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdTipoCbte";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "tc_TipoCbte";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+               }).BindList(ViewBag.lst_tipo_comprobante).GetHtml()
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="cm_descripcionCorta">Descripción corta*</label>
+                    @Html.TextBoxFor(q => q.cm_descripcionCorta, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.cm_descripcionCorta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label for="tm_descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.tm_descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.tm_descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index","TipoMovimiento",new { Area = "Inventario" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

@@ -1,0 +1,66 @@
+@using System.Web.UI.WebControls;
+@model Core.Erp.Info.ActivoFijo.Af_Depreciacion_Info
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridView_depreciacion_det";
+        settings.CallbackRouteValues = new { Controller = "DepreciacionAF", Action = "GridViewPartial_depreciacion_det", IdEmpresa = Model == null ? 0 : Model.IdEmpresa, IdDepreciacion = Model == null ? 0 : Model.IdDepreciacion };
+        settings.KeyFieldName = "Secuencia";
+        settings.Width = Unit.Percentage(100);
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        //Configuración filtro por columna
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "nom_tipo";
+            column.Caption = "Tipo";
+            column.Width = Unit.Percentage(20);
+            column.GroupIndex = 0;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "nom_categoria";
+            column.Caption = "Categoría";
+            column.Width = Unit.Percentage(20);
+            column.GroupIndex = 1;
+        });
+        settings.Columns.Add("Af_Nombre","Activo").Width = Unit.Percentage(30);
+        settings.Columns.Add("Valor_Compra","Valor compra").Width = Unit.Percentage(5);
+        settings.Columns.Add("Valor_Depreciacion","Depreciación").Width = Unit.Percentage(5);
+        settings.Columns.Add("Valor_Depre_Acum","Depr. acumulada").Width = Unit.Percentage(5);
+
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Count, "Af_Nombre").DisplayFormat = "Conteo: {0:##}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Valor_Depreciacion").DisplayFormat = "Total {0:c2}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Valor_Depre_Acum").DisplayFormat = "Depr. Acum. {0:c2}";
+        settings.Settings.ShowFooter = true;
+
+
+        settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Count, "Af_Nombre").DisplayFormat = "Conteo: {0:##}";
+        settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Valor_Depreciacion").DisplayFormat = "Depr. {0:c2}";
+        settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Valor_Depre_Acum").DisplayFormat = "Depr. Acum. {0:c2}";        
+
+        settings.PreRender = (sender, e) =>
+        {
+            MVCxGridView gridView = (MVCxGridView)sender;
+            gridView.ExpandAll();
+        };
+
+        settings.BeforeGetCallbackResult = (sender, e) =>
+        {
+            MVCxGridView gridView = (MVCxGridView)sender;
+            gridView.ExpandAll();
+        };
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
+    });
+}
+@grid.Bind(Model.lst_detalle).GetHtml()

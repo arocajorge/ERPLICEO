@@ -1,0 +1,316 @@
+﻿@model Core.Erp.Info.Banco.ba_Conciliacion_Info
+@{
+    ViewBag.Title = "Modificar conciliación";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+<script type="text/javascript">
+
+    $(function () {
+        //Date picker
+        $('#co_Fecha').datepicker({
+            autoclose: true
+        })
+        $("#co_SaldoBanco_anterior").change(function () {
+            Calcular();
+        });
+        $("#co_SaldoBanco_EstCta").change(function () {
+            Calcular();
+        });
+        GetSaldoContableAnt();
+    });
+
+    function EditingUpdate(ID) {
+        var datos = {
+            IdPk: ID,
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("EditingUpdate", "ConciliacionBanco",new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            },
+            error: function (error) {
+            }
+        });
+        GridView_ConciliacionBanco_det.PerformCallback();
+        GridView_ConciliacionBanco_x_cruzar.PerformCallback();
+    }
+
+    function CargarMovimientos() {
+            var datos = {
+                IdBanco: $("#IdBanco").val(),
+                IdPeriodo: $("#IdPeriodo").val(),
+                IdTransaccionSession: $("#IdTransaccionSession").val()
+            }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarMovimientos", "ConciliacionBanco", new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            },
+            error: function (error) {
+            }
+        });
+        GridView_ConciliacionBanco_det.PerformCallback();
+        GridView_ConciliacionBanco_x_cruzar.PerformCallback();
+    }
+    function Calcular() {
+        var datos = {
+            co_SaldoContable_MesAnt: $("#co_SaldoContable_MesAnt").val(),
+            co_SaldoBanco_anterior: $("#co_SaldoBanco_anterior").val(),
+            co_SaldoBanco_EstCta: $("#co_SaldoBanco_EstCta").val(),
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("Calcular", "ConciliacionBanco", new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#co_totalIng").val(data.co_totalIng);
+                $("#co_totalEgr").val(data.co_totalEgr);
+                $("#co_SaldoConciliado").val(data.co_SaldoConciliado);
+                $("#co_Diferencia").val(data.co_Diferencia);
+            },
+            error: function (error) {
+            }
+        });
+    }
+         function GetSaldoContableAnt() {
+            var datos = {
+                IdBanco: $("#IdBanco").val(),
+                IdPeriodo: $("#IdPeriodo").val()
+            }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetSaldoContableAnt", "ConciliacionBanco", new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#co_SaldoContable_MesAnt").val(data);
+                Calcular();
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>
+
+@using (Html.BeginForm("Modificar", "ConciliacionBanco", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdConciliacion)
+    @Html.HiddenFor(q => q.IdBanco)
+    @Html.HiddenFor(q => q.IdPeriodo)
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdEstado_Concil_Cat">Estado *</label>
+                    @Html.DropDownListFor(q => q.IdEstado_Concil_Cat, new SelectList(ViewBag.lst_estado, "Key", "Value"), new { @id = "IdEstado_Concil_Cat", @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdEstado_Concil_Cat, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdPeriodo">Periodo *</label>
+                    @Html.DropDownListFor(q => q.IdPeriodo, new SelectList(ViewBag.lst_periodo, "IdPeriodo", "nom_periodo_combo"), new { @id = "IdPeriodo", @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.IdPeriodo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-offset-4 col-md-2">
+                <div class="form-group">
+                    <label for="co_Fecha">Fecha*</label>
+                    @Html.DevExpress().DateEditFor(q=> q.co_Fecha, settings =>
+                {
+                    settings.Name = "co_Fecha";
+                    settings.Properties.UseMaskBehavior = true;
+                    settings.Properties.EditFormat = EditFormat.Date;
+                    settings.Properties.EditFormatString = "dd/MM/yyyy";
+                    settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.co_Fecha, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdBanco">Cuenta bancaria:*</label>
+                    @Html.DropDownListFor(q => q.IdBanco, new SelectList(ViewBag.lst_banco_cuenta, "IdBanco", "ba_descripcion"), new { @class = "form-control", @id = "IdBanco", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.IdBanco, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="co_SaldoBanco_anterior">Saldo anterior*</label>
+                    @Html.TextBoxFor(q => q.co_SaldoBanco_anterior, new { @id = "co_SaldoBanco_anterior", @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.co_SaldoBanco_anterior, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="co_SaldoBanco_EstCta">Saldo actual*</label>
+                    @Html.TextBoxFor(q => q.co_SaldoBanco_EstCta, new { @id = "co_SaldoBanco_EstCta", @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.co_SaldoBanco_EstCta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="co_SaldoContable_MesAnt">Saldo contable ant.</label>
+                    @Html.TextBoxFor(q => q.co_SaldoContable_MesAnt, new { @id = "co_SaldoContable_MesAnt", @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.co_SaldoContable_MesAnt, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="co_totalIng">Total ingresos*</label>
+                    @Html.TextBoxFor(q => q.co_totalIng, new { @id = "co_totalIng", @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.co_totalIng, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="co_totalEgr">Total egresos*</label>
+                    @Html.TextBoxFor(q => q.co_totalEgr, new { @id = "co_totalEgr", @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.co_totalEgr, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="co_SaldoConciliado">Total conciliado*</label>
+                    @Html.TextBoxFor(q => q.co_SaldoConciliado, new { @id = "co_SaldoConciliado", @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.co_SaldoConciliado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label for="co_Observacion">Observación</label>
+                    @Html.TextAreaFor(q => q.co_Observacion, new { @id = "co_Observacion", @class = "form-control", @rows = 1 })
+                    @Html.ValidationMessageFor(q => q.co_Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="co_Diferencia">Diferencia*</label>
+                    @Html.TextBoxFor(q => q.co_Diferencia, new { @id = "co_Diferencia", @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.co_Diferencia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="Tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_contables" aria-controls="vales" role="tab" data-toggle="tab">Registros contables</a>
+            </li>
+            <li>
+                <a href="#tab_adicionales" aria-controls="vales" role="tab" data-toggle="tab">Registros adicionales</a>
+            </li>
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_contables">
+
+                <div id="Tabs" role="tabpanel">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active">
+                            <a href="#tab_por_aprobar" aria-controls="vales" role="tab" data-toggle="tab">Por aprobar</a>
+                        </li>
+                        <li>
+                            <a href="#tab_aprobados" aria-controls="vales" role="tab" data-toggle="tab">Aprobados</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" style="padding-top: 20px">
+                        <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_por_aprobar">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-12">
+                                        @Html.Action("GridViewPartial_ConciliacionBanco_x_cruzar")
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_aprobados">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-12">
+                                        @Html.Action("GridViewPartial_ConciliacionBanco_det")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_adicionales">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+
+                            @Html.Action("GridViewPartial_banco_conciliacion_det")
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "ConciliacionBanco", new { Area = "Banco" }, null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

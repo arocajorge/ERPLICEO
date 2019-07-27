@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="6604c889-7ddc-450c-8e55-09de58934924" ChangeDateTime="06/19/2019 04:34:21">
+    <Property Name="ElementName" Value="[dbo].[cp_orden_pago].[IdSolicitudPago]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[cp_orden_pago]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ReferenciaGen" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="897d07ca-68ec-4835-bcf4-b8ed0d392afb" ChangeDateTime="07/15/2019 19:29:37">
+    <Property Name="ElementName" Value="[web].[tb_LogError].[Ubicacion]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[web].[tb_LogError]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Clase" />
+  </Operation>
+</Operations>

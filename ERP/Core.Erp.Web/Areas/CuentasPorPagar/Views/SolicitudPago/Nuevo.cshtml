@@ -1,0 +1,129 @@
+﻿@model Core.Erp.Info.CuentasPorPagar.cp_SolicitudPago_Info
+@{
+    ViewBag.Title = "Nueva solicitud de pago";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+<script type="text/javascript">
+        $(function () {
+            $("#GiradoA").val("");
+        });
+      
+     function CrearModificarProveedor() {
+        if(IdProveedor.GetValue() > 0)
+        {
+            var win = window.open(window.location.origin + "/FixedERP/CuentasPorPagar/Proveedor/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdProveedor="+IdProveedor.GetValue(), '_blank');
+            win.focus();
+        }else
+        {
+            var win = window.open(window.location.origin +"/FixedERP/CuentasPorPagar/Proveedor/Nuevo?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
+            win.focus();
+        }
+    }
+</script>
+
+@using (Html.BeginForm("Nuevo", "SolicitudPago", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdSolicitud)
+
+    
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="IdSucursal">Sucursal*</label>
+                                @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                                @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="Solicitante">Solicitante*</label>
+                                @Html.TextBoxFor(q => q.Solicitante, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.Solicitante, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-offset-4 col-md-2">
+                            <div class="form-group">
+                                <label for="">Fecha*</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    @Html.DevExpress().DateEditFor(q => q.Fecha, settings =>
+                                       {
+                                           settings.Name = "Fecha";
+                                           settings.Properties.UseMaskBehavior = true;
+                                           settings.Properties.EditFormat = EditFormat.Date;
+                                           settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       }).GetHtml()
+                                    @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="IdProveedor">Proveedor*</label>
+                                @Html.Partial("_CmbProveedor_CXP", Model.IdProveedor)
+                                @Html.ValidationMessageFor(q => q.IdProveedor, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label for="IdCliente"></label>
+                                <button type="button" class="btn btn-primary form-control " onclick="CrearModificarProveedor();">
+                                    <i class="fa fa-external-link-square"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="GiradoA">Girado a*</label>
+                                @Html.TextBoxFor(q => q.GiradoA, new { @class = "form-control", @id = "GiradoA" })
+                                @Html.ValidationMessageFor(q => q.GiradoA, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Valor">Valor*</label>
+                                @Html.TextBoxFor(q => q.Valor, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.Valor, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="Concepto">Descripción*</label>
+                                @Html.TextBoxFor(q => q.Concepto, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.Concepto, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+          
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a class="btn btn-default" href="@Url.Action("Index","SolicitudPago",new { Area = "CuentasPorPagar" },null)">Cancelar</a>
+                </div>
+                @section Scripts {
+                    @Scripts.Render("~/bundles/jqueryval")
+                }
+                }

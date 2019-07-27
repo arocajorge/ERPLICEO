@@ -1,0 +1,159 @@
+﻿@model Core.Erp.Info.CuentasPorPagar.ATS.ATS_Info.ats_Info
+@{
+    ViewBag.Title = "Anexo trasnsacciona simplificado";
+    //if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    //{
+    //    Response.Redirect("~/Account/Login");
+    //}
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Nuevo", "ATS", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="info_periodo.IdanioFiscal">Periodo*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.info_periodo.IdanioFiscal, settings =>
+               {
+                   settings.Name = "IdPeriodo";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}-{2}";
+                   settings.Properties.Columns.Add("IdanioFiscal", "Año").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+                   settings.Properties.Columns.Add("pe_FechaIni", "Fecha Inicio").Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                   settings.Properties.Columns.Add("pe_FechaFin", "Fecha fin").Width = System.Web.UI.WebControls.Unit.Percentage(80);
+
+                   ////Campo ID
+                   settings.Properties.ValueField = "IdPeriodo";
+                   //settings.Properties.ValueType = typeof(string);
+                   //settings.Properties.TextField = "Descricpion";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+               }).BindList(ViewBag.lst_persona_tipo).GetHtml()
+                    @Html.ValidationMessageFor(q => q.info_periodo.IdPeriodo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div id="Tabs" role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tb_ventas" aria-controls="informacion" role="tab" data-toggle="tab">Ventas</a>
+            </li>
+            <li>
+                <a href="#tb_compras" aria-controls="AdministracionPreBajas" role="tab" data-toggle="tab">Compras</a>
+            </li>
+            <li>
+                <a href="#tb_importaciones" aria-controls="AdministracionPreBajas" role="tab" data-toggle="tab">Importaciones</a>
+            </li>
+            <li>
+                <a href="#tb_retenciones" aria-controls="AdministracionPreBajas" role="tab" data-toggle="tab">Retenciones</a>
+            </li>
+            <li>
+                <a href="#tb_comprobantes_anulados" aria-controls="AdministracionPreBajas" role="tab" data-toggle="tab">Comprobantes anulados</a>
+            </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content" style="padding-top: 20px">
+
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 2em;" id="tb_ventas">
+
+                @Html.Action("GridViewPartial_ventas")
+
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="tb_compras">
+                @Html.Action("GridViewPartial_compras")
+
+            </div>
+
+
+            <div role="tabpanel" class="tab-pane" id="tb_importaciones">
+
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="tb_retenciones">
+                @Html.Action("GridViewPartial_retenciones")
+
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tb_comprobantes_anulados">
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Empleado", new { Area ="RRHH" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+}
+
+
+<script>
+    $(function () {
+
+
+        $('#fechaingreso').datepicker({
+            autoclose: true
+        });
+        $('#fechasalida').datepicker({
+            autoclose: true
+        });
+
+        $('#pe_fechaNacimiento').datepicker({
+            autoclose: true
+        });
+    });
+
+    $("#pe_cedulaRuc").keyup(function () {
+        validar();
+    });
+    function validar() {
+        var tipo_doc = $("#IdTipoDocumento").val();
+        var cedula = $("#pe_cedulaRuc").val();
+
+        if (tipo_doc == "RUC") {
+            if (cedula.length > 13) {
+                var len = $("#pe_cedulaRuc").val();
+                len = len.substring(0, 13);
+                $("#pe_cedulaRuc").val(len);
+            }
+
+        }
+        else
+            if (tipo_doc == "CED") {
+                if (cedula.length > 10) {
+                    var len = $("#pe_cedulaRuc").val();
+                    len = len.substring(0, 10);
+                    $("#pe_cedulaRuc").val(len);
+                }
+            }
+    }
+
+
+</script>

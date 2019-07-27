@@ -1,0 +1,207 @@
+﻿@model Core.Erp.Info.RRHH.ro_empleado_novedad_Info
+@{
+    ViewBag.Title = ("Modificar novedad" + " con ID #" + @Model.IdNovedad);
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Modificar", "EmpleadoNovedad", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdTransaccionSession)
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdTransaccionSession)    
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdNovedad)
+
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
+
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="IdProveedor">Empleado*</label>
+                @Html.Partial("_CmbEmpleado_novedades", Model.IdEmpleado)
+                @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="Fecha">Fecha Novedad*</label>
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    @Html.DevExpress().DateEditFor(q => q.Fecha, settings =>
+                        {
+                            settings.Name = "Fecha";
+                            settings.Properties.UseMaskBehavior = true;
+                            settings.Properties.EditFormat = EditFormat.Date;
+                            settings.Properties.EditFormatString = "dd/MM/yyyy";
+                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <label for="IdImprimir"></label>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                    <i class="fa fa-print"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <label for="IdNuevo"></label>
+            <div class="form-group">
+                <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","EmpleadoNovedad",new { Area = "RRHH", IdEmpresa = Model.IdEmpresa },null)">
+                    <i class="fa fa-plus"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="IdContrato_Tipo">Nómina*</label>
+                @Html.DropDownListFor(q => q.IdNomina_Tipo, new SelectList(ViewBag.lst_nomina, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
+                @Html.ValidationMessageFor(q => q.IdNomina_Tipo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="IdContrato_Tipo">Tipo liquidación de nómina*</label>
+                @Html.DropDownListFor(q => q.IdNomina_TipoLiqui, new SelectList(ViewBag.lst_nomina_tipo, "IdNomina_TipoLiqui", "DescripcionProcesoNomina"), new { @class = "form-control", @id = "IdNomina_TipoLiqui" })
+                @Html.ValidationMessageFor(q => q.IdNomina_TipoLiqui, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="IdNomina_TipoLiqui">Jornada</label>
+                @Html.Partial("_CmbJornada", Model.IdJornada)
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="cb_Observacion">Observación</label>
+                @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control" })
+                @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="cb_Observacion">Detalle de la novedad</label>
+                @Html.Action("GridViewPartial_empleado_novedad_det", new { IdEmpleado = Model.IdEmpleado, IdNovedad = Model.IdNovedad })
+                @Html.ValidationMessageFor(q => q.lst_novedad_det, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="box-footer">
+    @if (ViewBag.MostrarBoton ?? false)
+    {
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    }
+    <a class="btn btn-default" href="@Url.Action("Index","EmpleadoNovedad",new { Area = "RRHH" },null)">Cancelar</a>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+}
+
+
+<script>
+    $("#IdNomina_Tipo").change(function () {
+        $("#IdNomina_TipoLiqui").empty();
+        cargar_tipo_liquidacion_nomina();
+    });
+
+
+    function setTipoNominaEmpleado() {
+        var datos = {
+            IdEmpresa: $('#IdEmpresa').val(),
+            IdEmpleado: IdEmpleado.GetValue(),
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("getTipoNominaEmpleado", "EmpleadoNovedad", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#IdNomina_Tipo").val(data);
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+    function cargar_tipo_liquidacion_nomina() {
+        var datos = {
+            IdNomina: $("#IdNomina_Tipo").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_lst_nomina_tipo_liq", "NominaTipoLiquidacion", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+                $.each(data, function (i, row) {
+                    $("#IdNomina_TipoLiqui").append("<option value=" + row.IdNomina_TipoLiqui + ">" + row.DescripcionProcesoNomina + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/RRHHReportes/ROL_003?IdEmpleado="+@Model.IdEmpleado+"&IdNovedad="+@Model.IdNovedad, '_blank');
+        win.focus();
+    }
+</script>

@@ -1,0 +1,36 @@
+﻿@model Core.Erp.Info.RRHH.ro_cargo_Info
+@{
+    ViewBag.Title = "Modificar Cargo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Modificar", "Cargo", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdCargo)
+    @Html.HiddenFor(q => q.IdEmpresa)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Nombre">Descripción*</label>
+                    @Html.TextBoxFor(q => q.ca_descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ca_descripcion, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Cargo",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

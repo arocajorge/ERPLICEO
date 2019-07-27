@@ -1,0 +1,414 @@
+﻿@model Core.Erp.Info.Produccion.pro_Fabricacion_Info
+@{
+    ViewBag.Title = "Modificar fabricación";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+<script type="text/javascript">
+        $(function () {
+            //CargarBodegaIngreso();
+            //CargarBodegaEgreso();
+            $("#ing_IdSucursal").change(function () {
+                CargarBodegaIngreso();
+            });
+            $("#egr_IdSucursal").change(function () {
+                CargarBodegaEgreso();
+            });
+        });
+        function OnSelectedProductoChanged(s,e) {
+            GridViewPartial_fabricacion_det_ing.GetEditor("IdUnidadMedida").PerformCallback();
+            SetUnidadMedida(s, e);
+        }
+
+        function UnidadMedidaComboBox_BeginCallback(s, e) {
+            e.customArgs["in_IdProducto"] = IdProducto.GetValue();
+        }
+
+        function SetUnidadMedida(s, e) {
+            var datos = {
+                IdProducto: s.GetValue()
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("SetUnidadMedida", "Producto", new { Area = "Inventario" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    GridViewPartial_fabricacion_det_ing.GetEditor('IdUnidadMedida').SetValue(data.IdUnidadMedida);
+                },
+                error: function (error) {
+                }
+            });
+        };
+        //var selectedIDs;
+        //function OnBeginCallback(s, e) {
+        //    e.customArgs["selectedIDs"] = selectedIDs;
+        //    e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
+        //};
+        //function OnSelectionChanged(s, e) {
+        //    s.GetSelectedFieldValues("Secuencia", GetSelectedFieldValuesCallback);
+        //};
+        //function GetSelectedFieldValuesCallback(values) {
+        //    //Capture all selected keys
+        //    selectedIDs = values.join(',');
+        //};
+
+        function CargarBodegaIngreso() {
+    $("#ing_IdBodega").empty();
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#ing_IdSucursal").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarBodega", "Fabricacion", new { Area = "Produccion" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            $.each(data, function (i, row) {
+                $("#ing_IdBodega").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
+            });
+            },
+            error: function (error) {
+            }
+            });
+        };
+
+     function CargarBodegaEgreso() {
+    $("#egr_IdBodega").empty();
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#egr_IdSucursal").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarBodega", "Fabricacion", new { Area = "Produccion" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            $.each(data, function (i, row) {
+                $("#egr_IdBodega").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
+            });
+            },
+            error: function (error) {
+            }
+            });
+     };
+
+    function ArmarMateriaPrima() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#egr_IdSucursal").val(),
+            IdBodega: $("#egr_IdBodega").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ArmarMateriaPrima", "Fabricacion", new { Area = "Produccion" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            },
+            error: function (error) {
+            }
+        });
+        GridViewPartial_fabricacion_det_egr.PerformCallback();
+    }
+
+
+    @*function MostrarModalFacturas() {
+        BuscarFacturas();
+        $("#ModalFacturas").modal("show");
+    };
+    function BuscarFacturas() {
+        var datos = {
+            FechaIni: FechaIni.GetValue(),
+            FechaFin: FechaFin.GetValue(),
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#egr_IdSucursal").val(),
+            IdBodega: $("#egr_IdBodega").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetProductoFacturadosPorFecha", "Fabricacion", new { Area = "Produccion" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data == false) {
+                    alert("No existen resultados para los filtros aplicados");
+                }
+            },
+            error: function (error) {
+            }
+        });
+        GridViewPartial_fabricacion_det_fac.PerformCallback();
+    };
+
+    function AddFacturas() {
+        var datos = {
+            IDs: selectedIDs,
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("EditingAddNew", "Fabricacion", new { Area = "Produccion" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            },
+            error: function (error) {
+            }
+        });
+        selectedIDs = "";
+        GridViewPartial_fabricacion_det_fac.PerformCallback();
+        GridViewPartial_fabricacion_det_fac.UnselectRows();
+        GridViewPartial_fabricacion_det_ing.PerformCallback();
+        $("#ModalFacturas").modal("hide");
+    };*@
+</script>
+@using (Html.BeginForm("Modificar", "Fabricacion", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdFabricacion)
+    <div class="row">
+        <div class="col-md-3">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="egr_IdSucursal">Sucursal de egreso*</label>
+                    @Html.DropDownListFor(q => q.egr_IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "egr_IdSucursal" })
+                    @Html.ValidationMessageFor(q => q.egr_IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="egr_IdBodega">Bodega de egreso*</label>
+                    @Html.DropDownListFor(q => q.egr_IdBodega, new SelectList(ViewBag.lst_bodega_egr, "IdBodega", "bo_descripcion"), new { @class = "form-control", @id = "egr_IdBodega" })
+                    @Html.ValidationMessageFor(q => q.egr_IdBodega, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ing_IdSucursal">Sucursal de ingreso*</label>
+                    @Html.DropDownListFor(q => q.ing_IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "ing_IdSucursal" })
+                    @Html.ValidationMessageFor(q => q.ing_IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ing_IdBodega">Bodega de ingreso*</label>
+                    @Html.DropDownListFor(q => q.ing_IdBodega, new SelectList(ViewBag.lst_bodega_ing, "IdBodega", "bo_descripcion"), new { @class = "form-control", @id = "ing_IdBodega" })
+                    @Html.ValidationMessageFor(q => q.ing_IdBodega, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="col-md-offset-8 col-md-4">
+                <div class="form-group">
+                    <label for="">Fecha*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.Fecha, settings =>
+                           {
+                               settings.Name = "Fecha";
+                               settings.Properties.UseMaskBehavior = true;
+                               settings.Properties.EditFormat = EditFormat.Date;
+                               settings.Properties.EditFormatString = "dd/MM/yyyy";
+                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*<div class="col-md-6">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for=""></label>
+                    <button type="button" class="btn btn-primary form-control" id="btn_buscar" onclick="MostrarModalFacturas();">
+                        <i class="fa fa-search"></i> Productos facturados
+                    </button>
+                </div>
+            </div>
+
+        </div>*@
+
+    </div>
+   @* <div class="modal fade" id="ModalFacturas" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Facturas</h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Desde*</label>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        @Html.DevExpress().DateEditFor(q => q.FechaIni, settings =>
+                                           {
+                                               settings.Name = "FechaIni";
+                                               settings.Properties.UseMaskBehavior = true;
+                                               settings.Properties.EditFormat = EditFormat.Date;
+                                               settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                           }).GetHtml()
+                                        @Html.ValidationMessageFor(q => q.FechaIni, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Hasta*</label>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        @Html.DevExpress().DateEditFor(q => q.FechaFin, settings =>
+                                           {
+                                               settings.Name = "FechaFin";
+                                               settings.Properties.UseMaskBehavior = true;
+                                               settings.Properties.EditFormat = EditFormat.Date;
+                                               settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                           }).GetHtml()
+                                        @Html.ValidationMessageFor(q => q.FechaFin, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for=""> </label>
+                                    <button type="button" class="btn btn-primary form-control" onclick="BuscarFacturas();">Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    @Html.Action("GridViewPartial_fabricacion_det_fac")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="AddFacturas();">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Observacion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="Tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_producto" aria-controls="vales" role="tab" data-toggle="tab">Producto terminado</a>
+            </li>
+            <li>
+                <a href="#tab_materia" aria-controls="vales" role="tab" data-toggle="tab">Materia prima</a>
+            </li>
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_producto">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            @Html.Action("GridViewPartial_fabricacion_det_ing")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_materia">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            @Html.Action("GridViewPartial_fabricacion_det_egr")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Cerrar"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.Cerrar, settings =>
+               {
+                   settings.Name = "Cerrar";
+                   settings.Text = "Cerrar cambios";
+               }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.Cerrar, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Fabricacion", new { Area = "Produccion" }, null)">Cancelar</a>
+    </div>
+
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }
+}

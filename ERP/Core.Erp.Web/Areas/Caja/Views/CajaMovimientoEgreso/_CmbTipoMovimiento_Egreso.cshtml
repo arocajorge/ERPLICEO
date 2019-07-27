@@ -1,0 +1,29 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdTipoMovi";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "CajaMovimientoEgreso", Action = "CmbTipoMovimiento_Egreso", Area = "Caja" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "tm_descripcion";
+        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.ValueField = "IdTipoMovi";
+        settings.Properties.ValueType = typeof(int);
+        settings.Properties.Columns.Add("IdTipoMovi", "ID", 10);
+        settings.Properties.Columns.Add("tm_descripcion", "Descripción", 90);
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+        settings.Properties.NullText = "== Seleccione ==";
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "armar_diario";
+
+    })
+    .BindList(new Core.Erp.Web.Areas.Caja.Controllers.CajaMovimientoEgresoController().get_list_bajo_demanda_TipoMovimiento_Egreso, new Core.Erp.Web.Areas.Caja.Controllers.CajaMovimientoEgresoController().get_info_bajo_demanda_TipoMovimiento_Egreso)
+    .Bind((Model.GetType() == typeof(Core.Erp.Info.Caja.caj_Caja_Movimiento_Tipo_Info) || Model == 0) ? "" : (Model == null ? "" : Model));
+
+
+}
+@comboBox.GetHtml()

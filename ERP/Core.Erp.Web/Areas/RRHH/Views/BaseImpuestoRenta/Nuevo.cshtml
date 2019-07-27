@@ -1,0 +1,76 @@
+﻿@model Core.Erp.Info.RRHH.ro_tabla_Impu_Renta_Info
+
+@{
+    ViewBag.Title = "Nueva base impuesto renta";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Nuevo", "BaseImpuestoRenta", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">Año fiscal*</label>
+                    @Html.TextBoxFor(q => q.AnioFiscal, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.AnioFiscal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">Fraccion basica*</label>
+                    @Html.TextBoxFor(q => q.FraccionBasica, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.FraccionBasica, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">Exceso hasta*</label>
+                    @Html.TextBoxFor(q => q.ExcesoHasta, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ExcesoHasta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">Impuesto fraccion basica*</label>
+                    @Html.TextBoxFor(q => q.ImpFraccionBasica, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ImpFraccionBasica, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">% impuesto fraccion excedente*</label>
+                    @Html.TextBoxFor(q => q.Por_ImpFraccion_Exce, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Por_ImpFraccion_Exce, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","BaseImpuestoRenta",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

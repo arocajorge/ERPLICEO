@@ -1,0 +1,90 @@
+﻿@model Core.Erp.Info.Contabilidad.ct_parametro_Info
+@{
+    ViewBag.Title = "Parámetro contable";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Index", "ParametroContable", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdTipoCbte_SaldoInicial">Comprobante contable para saldo inicial</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdTipoCbte_SaldoInicial, settings =>
+               {
+                   settings.Name = "IdTipoCbte_SaldoInicial";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdTipoCbte", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("tc_TipoCbte", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdTipoCbte";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "CodTipoCbte";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+               }).BindList(ViewBag.lst_parametrocontable).GetHtml()
+
+                    @Html.ValidationMessageFor(q => q.IdTipoCbte_SaldoInicial, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdTipoCbte_AsientoCierre_Anual">Comprobante contable para cierre anual</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdTipoCbte_AsientoCierre_Anual, settings =>
+               {
+                   settings.Name = "IdTipoCbte_AsientoCierre_Anual";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdTipoCbte", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("tc_TipoCbte", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdTipoCbte";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "CodTipoCbte";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+               }).BindList(ViewBag.lst_parametrocontable).GetHtml()
+
+                    @Html.ValidationMessageFor(q => q.IdTipoCbte_AsientoCierre_Anual, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="DiasTransaccionesAFuturo">Dias máximos para transacciones a futuro</label>
+                    @Html.TextBoxFor(q => q.DiasTransaccionesAFuturo, new { @class = "form-control", @id = "DiasTransaccionesAFuturo" })
+                    @Html.ValidationMessageFor(q => q.DiasTransaccionesAFuturo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="P_Se_Muestra_Todas_las_ctas_en_combos">@Html.CheckBoxFor(q => q.P_Se_Muestra_Todas_las_ctas_en_combos) Mostrar cuentas que no son de movimiento en combos </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","ParametroContable",new { Area = "Contabilidad" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+

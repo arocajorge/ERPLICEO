@@ -1,0 +1,81 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridView_CruceNC_x_cruzar";
+        settings.CallbackRouteValues = new { Controller = "NotaDeCreditoFacturacion", Action = "GridViewPartial_CruceNC_x_cruzar" };
+        settings.KeyFieldName = "secuencial";
+        settings.Width = Unit.Percentage(100);
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        //Configuración checkbox
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+
+        //Configuración click derecho
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.EnableRowMenu = DefaultBoolean.False;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        settings.Columns.Add("IdCbteVta_fac_nd_doc_mod", "ID").Width = Unit.Percentage(10);
+        settings.Columns.Add("vt_tipoDoc", "Tipo").Width = Unit.Percentage(10);
+        settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(20);
+        settings.Columns.Add("vt_NumDocumento", "# Documento").Width = Unit.Percentage(10);
+        settings.Columns.Add("NumDocumento", "# Doc reemplazo").Width = Unit.Percentage(10);
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "vt_fecha";
+            column.Caption = "Fecha";
+            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "vt_Subtotal";
+            column.Caption = "SubTotal";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+            column.Visible = false;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "vt_iva";
+            column.Caption = "I.V.A.";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+            column.Visible = false;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "vt_total";
+            column.Caption = "Total";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "Saldo";
+            column.Caption = "Saldo";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+        });
+        settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
+    });
+}
+@grid.Bind(Model).GetHtml()

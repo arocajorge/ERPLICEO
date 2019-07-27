@@ -1,0 +1,231 @@
+﻿
+@model Core.Erp.Info.RRHH.ro_Solicitud_Vacaciones_x_empleado_Info
+@{
+    ViewBag.Title = "Nueva solicitud";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Nuevo", "Vacaciones", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+
+                <div class="form-group">
+                    <label for="IdProveedor">Empleado*</label>
+                    @Html.Partial("_CmbEmpleado_vacaciones", Model.IdEmpleado)
+                    @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+
+                <div class="form-group">
+                    <label for="IdProveedor">Empleado autoriza*</label>
+                    @Html.Partial("_CmbEmpleado_autoriza_vacaciones", Model.IdEmpleado_aprue)
+                    @Html.ValidationMessageFor(q => q.IdEmpleado_aprue, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Fecha_Desde">Fecha desde*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.Fecha_Desde, settings =>
+                   {
+                       settings.Name = "Fecha_Desde";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.ClientSideEvents.DateChanged = "function(s,e){get_perioos();}";
+
+                   }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Fecha_Desde, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Fecha_Hasta">Fecha hasta*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.Fecha_Hasta, settings =>
+                   {
+                       settings.Name = "Fecha_Hasta";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.ClientSideEvents.DateChanged = "function(s,e){get_perioos();}";
+
+                   }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Fecha_Hasta, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Fecha_Retorno">Fecha retorno*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.Fecha_Retorno, settings =>
+                       {
+                           settings.Name = "Fecha_Retorno";
+                           settings.Properties.UseMaskBehavior = true;
+                           settings.Properties.EditFormat = EditFormat.Date;
+                           settings.Properties.EditFormatString = "dd/MM/yyyy";
+                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Fecha_Retorno, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="Gozadas_Pgadas"></label>
+                        @Html.DevExpress().CheckBoxFor(q => q.Gozadas_Pgadas, settings =>
+                       {
+                           settings.Name = "Gozadas_Pgadas";
+                           settings.Text = "Vacaciones gozadas";
+
+                       }).GetHtml()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Observacion">Observación*</label>
+                    @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+
+                <div class="form-group">
+                    <label for="GridViewPartial_prestamos_det">Detalle vacaciones*</label>
+                    @Html.Action("GridViewPartial_solicitud_vacaciones_det")
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Vacaciones",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+
+<script>
+
+    $(function () {
+        calcular_vacaciones();
+       
+    });
+
+    function calcular_vacaciones()
+            {
+                 var datos = {
+                     IdEmpleado: IdEmpleado.GetValue()
+                }
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(datos),
+                    url: '@Url.Action("calculat_vacaciones", "Vacaciones", new { Area = "RRHH" })',
+                    async: false,
+                    bDeferRender: true,
+                    bProcessing: true,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data)
+                    {
+                        IdVacacion.PerformCallback();
+
+                    },
+                    error: function (error)
+                    {
+                    }
+                    });
+    };
+
+    function get_perioos() {
+        var datos = {
+            FechaDesde:Fecha_Desde.GetValue(),
+            FechaHasta:Fecha_Hasta.GetValue(),
+            IdEmpleado: IdEmpleado.GetValue()
+
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_list_vacaciones", "Vacaciones", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+               GridViewPartial_solicitud_vacaciones_det.PerformCallback();
+
+            },
+            error: function (error) {
+            }
+        });
+    };
+</script>
+
+
+
+

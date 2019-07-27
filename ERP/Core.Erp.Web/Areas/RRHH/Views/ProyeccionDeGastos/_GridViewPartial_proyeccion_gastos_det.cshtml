@@ -1,0 +1,86 @@
+@using System.Web.UI.WebControls;
+@model Core.Erp.Info.RRHH.ro_empleado_proyeccion_gastos_Info
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewPartial_proyeccion_gastos_det";
+        settings.CallbackRouteValues = new { Controller = "ProyeccionDeGastos", Action = "GridViewPartial_proyeccion_gastos_det", IdEmpresa = Model == null ? 0 : Model.IdEmpresa, IdTransaccion = Model == null ? 0 : Model.IdTransaccion };
+        settings.KeyFieldName = "Secuencia";
+        settings.Width = Unit.Percentage(100);
+
+
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "ProyeccionDeGastos", Action = "EditingAddNew", Area = "RRHH" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ProyeccionDeGastos", Action = "EditingUpdate", Area = "RRHH" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ProyeccionDeGastos", Action = "EditingDelete", Area = "RRHH" };
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.Settings.ShowFooter = true;
+
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        //Funcion para inicializar fila al presionar nuevo
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdTipoGasto";
+            column.Caption = "Tipo gasto";
+            column.Width = Unit.Percentage(35);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.Columns.Add("IdTipoGasto", "Código").Width = Unit.Percentage(20);
+                p.Columns.Add("nom_tipo_gasto", "Descripción").Width = Unit.Percentage(70);
+                p.ValueField = "IdTipoGasto";
+
+                p.ValueType = typeof(string);
+                p.DataSource = ViewBag.list_tipo_gasto;
+                p.Width = Unit.Percentage(100);
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Valor";
+            column.Caption = "$Valor";
+            column.Width = Unit.Percentage(15);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+                sp.Width = Unit.Percentage(100);
+
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Observacion";
+            column.Caption = "Descripción";
+            column.Width = Unit.Percentage(30);
+            column.EditorProperties().TextBox(sp =>
+            {
+                sp.Width = Unit.Percentage(100);
+
+            });
+        });
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Valor");
+
+    });
+
+}
+@grid.Bind(Model.list_proyeciones).GetHtml()

@@ -1,0 +1,167 @@
+﻿@model Core.Erp.Info.Inventario.in_devolucion_inven_Info
+@{
+    ViewBag.Title = "Modificar devolución";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+
+    function MostrarModal() {
+        var datos = {
+            Fecha_ini: Fecha_ini.GetDate(),
+            Fecha_fin: Fecha_fin.GetDate(),
+            IdSucursal: $("IdSucursal").val(),
+            signo: $("#dev_signo").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetMovimientos", "DevolucionInventario",new { Area = "Inventario"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+            },
+            error: function (error) {
+            }
+        });
+        GridView_devolucion_det_x_cruzar.PerformCallback();
+        $("#Modal").modal("show");
+    }
+
+    function SetMovimiento(SecuencialID) {
+        var datos = {
+            SecuencialID: SecuencialID
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetMovimiento", "DevolucionInventario",new { Area = "Inventario"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+            },
+            error: function (error) {
+            }
+        });
+        GridView_devolucion_det.PerformCallback();
+        $("#Modal").modal("hide");
+    }
+</script>
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Modificar", "DevolucionInventario", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    <div class="modal fade" id="Modal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Movimientos</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.Action("GridViewPartial_devolucion_det_x_cruzar")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdDev_Inven)
+
+    @Html.HiddenFor(q => q.IdEmpresa_inv)
+    @Html.HiddenFor(q => q.IdSucursal_inv)
+    @Html.HiddenFor(q => q.IdMovi_inven_tipo_inv)
+    @Html.HiddenFor(q => q.IdNumMovi_inv)
+
+    @Html.HiddenFor(q => q.dev_IdEmpresa)
+    @Html.HiddenFor(q => q.dev_IdSucursal)
+    @Html.HiddenFor(q => q.dev_IdMovi_inven_tipo)
+    @Html.HiddenFor(q => q.dev_IdNumMovi)
+
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal*</label>
+                    @Html.DropDownListFor(q => q.IdSucursal_inv, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @id = "IdSucursal_inv", @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.IdSucursal_inv, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="dev_signo">Tipo*</label>
+                    @Html.DropDownListFor(q => q.dev_signo, new SelectList(ViewBag.lst_signo, "Key", "Value"), new { @id = "dev_signo", @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.dev_signo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-offset-2 col-md-2">
+                <div class="form-group">
+                    <label for="">Fecha*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.Fecha, settings =>
+                    {
+                        settings.Name = "Fecha";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="observacion">Observación</label>
+                    @Html.TextAreaFor(q => q.observacion, new { @class = "form-control", @rows = 2 })
+                    @Html.ValidationMessageFor(q => q.observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Action("GridViewPartial_Devolucion_det")
+    <div class="box-footer">
+        @if (ViewBag.MostrarBoton ?? false)
+        {
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        }
+        <a class="btn btn-default" href="@Url.Action("Index", "DevolucionInventario", null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

@@ -1,0 +1,23 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdJornada";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "EmpleadoNovedad", Action = "CmbJornada", Area = "RRHH" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "Descripcion";
+        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.ValueField = "IdJornada";
+        settings.Properties.ValueType = typeof(int);
+        settings.Properties.Columns.Add("IdJornada", "ID", 10);
+        settings.Properties.Columns.Add("Descripcion", "Jornada", 90);
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+    })
+      .BindList(new Core.Erp.Web.Areas.RRHH.Controllers.EmpleadoNovedadController().get_list_bajo_demanda_jornada, new Core.Erp.Web.Areas.RRHH.Controllers.EmpleadoNovedadController().get_info_bajo_demanda_jornada)
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.RRHH.ro_empleado_novedad_Info) ? "" : (Model == 0 ? "" : Model));
+    }
+@comboBox.GetHtml()

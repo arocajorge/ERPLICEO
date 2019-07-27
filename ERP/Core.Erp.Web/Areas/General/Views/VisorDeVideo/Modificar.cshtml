@@ -1,0 +1,66 @@
+﻿@model Core.Erp.Info.General.tb_visor_video_Info
+@{
+    ViewBag.Title = "Modificar video";
+    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Modificar", "VisorDeVideo", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.Cod_video)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="CodVisorDeVideo">Código*</label>
+                    @Html.TextBoxFor(q => q.Cod_video, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(m => m.Cod_video, "", new { @class = "text-danger" })
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Nombre">Nombre*</label>
+                    @Html.TextBoxFor(q => q.Nombre_video, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Nombre_video, "", new { @class = "text-danger" })
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Nombre">Nombre*</label>
+                    @Html.DevExpress().UploadControl(settings =>
+               {
+
+                   settings.Name = "UploadControl";
+                   settings.CallbackRouteValues = new { Controller = "VisorDeVideo", Action = "UploadControlUpload" };
+                   settings.ShowUploadButton = true;
+                   settings.ShowProgressPanel = true;
+               }).GetHtml()
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","VisorDeVideo",new { Area = "General" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

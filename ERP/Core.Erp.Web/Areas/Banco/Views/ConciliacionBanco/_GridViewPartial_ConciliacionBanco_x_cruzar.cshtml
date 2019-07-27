@@ -1,0 +1,103 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridView_ConciliacionBanco_x_cruzar";
+        settings.CallbackRouteValues = new { Controller = "ConciliacionBanco", Action = "GridViewPartial_ConciliacionBanco_x_cruzar" };
+        settings.Width = Unit.Percentage(100);
+        settings.KeyFieldName = "IdPK";
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        //Configuración click derecho
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.RowMenuItemVisibility.NewRow = false;
+        settings.SettingsContextMenu.RowMenuItemVisibility.EditRow = false;
+        settings.SettingsContextMenu.RowMenuItemVisibility.DeleteRow = false;
+
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        //Configuración filtro por columna
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IngEgr";
+            column.Caption = "Tipo";
+            column.Width = Unit.Percentage(20);
+            column.GroupIndex = 0;
+        });
+
+        settings.Columns.Add("tc_TipoCbte", "Tipo Cbte.").Width = Unit.Percentage(20);
+        settings.Columns.Add("cb_Cheque", "# Cheque").Width = Unit.Percentage(10);
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "cb_Fecha";
+            column.Caption = "Fecha";
+            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(40);
+            column.FieldName = "cb_Observacion";
+            column.Caption = "Observación";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "dc_Valor";
+            column.Caption = "Valor";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "*";
+            column.FieldName = "IdPK";
+            column.Width = Unit.Percentage(10);
+            column.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            column.SetDataItemTemplateContent(c =>
+            {
+                Html.DevExpress().Button(settingsBtn =>
+                {
+                    settingsBtn.Name = "btn" + c.KeyValue;
+                    settingsBtn.Text = "Aprobar";
+                    settingsBtn.ClientSideEvents.Click = "function(s, e) {EditingUpdate('" + c.KeyValue + "');}";
+                }).Render();
+            });
+        });
+        settings.Settings.ShowFooter = true;
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "dc_Valor").DisplayFormat = "Total {0:c2}";
+        settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Sum, "dc_Valor").DisplayFormat = "Total conciliado {0:c2}";
+        settings.PreRender = (sender, e) =>
+        {
+            MVCxGridView gridView = (MVCxGridView)sender;
+            gridView.ExpandAll();
+        };
+
+        settings.BeforeGetCallbackResult = (sender, e) =>
+        {
+            MVCxGridView gridView = (MVCxGridView)sender;
+            gridView.ExpandAll();
+        };
+
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
+    });
+}
+@grid.Bind(Model).GetHtml()

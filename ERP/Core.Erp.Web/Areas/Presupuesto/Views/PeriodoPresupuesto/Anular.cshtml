@@ -1,0 +1,131 @@
+﻿@model Core.Erp.Info.Presupuesto.pre_Periodo_Info
+@{
+    ViewBag.Title = "Anular periodo";
+    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Anular", "PeriodoPresupuesto", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+    @Html.HiddenFor(q => q.IdEmpresa);
+    @Html.HiddenFor(q => q.IdPeriodo);
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="DescripcionPeriodo">Descripción*</label>
+                    @Html.TextBoxFor(q => q.DescripcionPeriodo, new { @class = "form-control", id = "DescripcionPeriodo" })
+                    @Html.ValidationMessageFor(q => q.DescripcionPeriodo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="FechaInicio">Fecha de inicio*</label>
+                    @Html.DevExpress().DateEditFor(q => q.FechaInicio, settings =>
+                    {
+                        settings.Name = "FechaInicio";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="FechaFin">Fecha de fin*</label>
+                    @Html.DevExpress().DateEditFor(q => q.FechaFin, settings =>
+                    {
+                        settings.Name = "FechaFin";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.FechaFin, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="FechaFin"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.EstadoCierre, settings =>
+                    {
+                        settings.Name = "EstadoCierre";
+                        settings.Text = "Periodo Cerrado";                       
+                    }).GetHtml()
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Descripcion">Observación</label>
+                    @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Descripcion">Motivo de anulación</label>
+                    @Html.TextBoxFor(q => q.MotivoAnulacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.MotivoAnulacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "PeriodoPresupuesto", new { Area ="Presupuesto" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+<script type="text/javascript">
+    function MostrarDescripcion() {
+        var fecha_inicio = FechaInicio.GetValue();
+        var fecha_fin = FechaFin.GetValue();
+        var pad = "00";
+
+        var dia_inicio = fecha_inicio.getUTCDate();
+        var mes_inicio = fecha_inicio.getUTCMonth() + 1;
+        var anio_inicio = fecha_inicio.getUTCFullYear();
+        var mes_format = pad.substr(0, (pad.length - String(mes_inicio).length)) + mes_inicio;
+        var dia_format = pad.substr(0, (pad.length - String(dia_inicio).length)) + dia_inicio;
+
+        var dia_fin = fecha_fin.getUTCDate();
+        var mes_fin = fecha_fin.getUTCMonth() + 1;
+        var anio_fin = fecha_fin.getUTCFullYear();
+        var mes_fin_format = pad.substr(0, (pad.length - String(mes_fin).length)) + mes_fin;
+        var dia_fin_format = pad.substr(0, (pad.length - String(dia_fin).length)) + dia_fin;
+
+        var desde = anio_inicio + "-" + mes_format + "-" + dia_format;
+        var hasta = anio_fin + "-" + mes_fin_format + "-" + dia_fin_format;
+
+        $("#DescripcionPeriodo").val("Periodo desde: " + desde + " hasta: " + hasta);
+    };
+</script>
+
+

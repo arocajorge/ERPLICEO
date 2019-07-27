@@ -1,0 +1,234 @@
+﻿@model Core.Erp.Info.Inventario.in_transferencia_Info
+@{
+    ViewBag.Title = "Nueva transferencia de inventario";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Nuevo", "TransferenciasInventario", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id= "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdMovi_inven_tipo_SucuOrig)
+    @Html.HiddenFor(q => q.IdMovi_inven_tipo_SucuDest)
+    @Html.HiddenFor(q => q.IdTransaccionSession)
+
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Codigo">Código</label>
+                    @Html.TextBoxFor(q => q.Codigo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Codigo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-offset-6 col-md-3">
+                <div class="form-group">
+                    <label for="tr_fecha">Fecha</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.tr_fecha, settings =>
+                    {
+                        settings.Name = "tr_fecha";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.tr_fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdSucursalOrigen">Sucursal origen*</label>
+                    @Html.DropDownListFor(q => q.IdSucursalOrigen, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursalOrigen" })
+                    @Html.ValidationMessageFor(q => q.IdSucursalOrigen, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdBodegaOrigen">Bodega origen</label>
+                    @Html.DropDownListFor(q => q.IdBodegaOrigen, new SelectList(ViewBag.lst_bodega, "IdBodega", "bo_Descripcion"), new { @class = "form-control", @id = "IdBodegaOrigen" })
+                    @Html.ValidationMessageFor(q => q.IdBodegaOrigen, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdSucursalDest">Sucursal destino*</label>
+                    @Html.DropDownListFor(q => q.IdSucursalDest, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursalDest" })
+                    @Html.ValidationMessageFor(q => q.IdSucursalDest, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdBodegaDest">Bodega destino</label>
+                    @Html.DropDownListFor(q => q.IdBodegaDest, new SelectList(ViewBag.lst_bodega, "IdBodega", "bo_Descripcion"), new { @class = "form-control", @id = "IdBodegaDest" })
+                    @Html.ValidationMessageFor(q => q.IdBodegaDest, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="tr_Observacion">Observación</label>
+                    @Html.TextAreaFor(q => q.tr_Observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.tr_Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.Action("GridViewPartial_transferencias_det")
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","TransferenciasInventario",new { Area = "Inventario" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+
+
+<script type="text/javascript">
+    CargarBodegaOrigen();
+    CargarBodegaDestino();
+
+    $(function () {
+            CargarBodegaOrigen();
+            $("#IdSucursalOrigen").change(function () {
+                CargarBodegaOrigen();
+            });
+
+            CargarBodegaDestino();
+            $("#IdSucursalDest").change(function () {
+                CargarBodegaDestino();
+            });
+    });
+
+    function OnSelectedProductoChanged(s,e) {
+        GridViewPartial_transferencias_det.GetEditor("IdUnidadMedida").PerformCallback();
+        SetUnidadMedida(s, e);
+    }
+
+    function UnidadMedidaComboBox_BeginCallback(s, e) {
+        e.customArgs["in_IdProducto"] = IdProducto.GetValue();        
+    }
+
+    function SetUnidadMedida(s,e ) {
+        var datos = {
+            IdProducto: s.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetUnidadMedida", "Producto", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(s.GetValue());
+                console.log(data.IdUnidadMedida);
+                GridViewPartial_transferencias_det.GetEditor('IdUnidadMedida').SetValue(data.IdUnidadMedida);
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+function CargarBodegaOrigen() {
+    $("#IdBodegaOrigen").empty();
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursalOrigen").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarBodega", "TransferenciasInventario", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            $.each(data, function (i, row) {
+                $("#IdBodegaOrigen").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
+            });
+            },
+            error: function (error) {
+            }
+            });
+    };
+
+
+
+function CargarBodegaDestino() {
+    $("#IdBodegaDest").empty();
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursalDest").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarBodega", "TransferenciasInventario", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            $.each(data, function (i, row) {
+                $("#IdBodegaDest").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
+            });
+            },
+            error: function (error) {
+            }
+            });
+    };
+
+
+</script>

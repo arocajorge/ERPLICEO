@@ -1,0 +1,267 @@
+﻿@model Core.Erp.Info.RRHH.ro_SancionesPorMarcaciones_Info
+@{
+    ViewBag.Title = "Modificar revision de marcaciones";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script type="text/javascript">
+    var selectedIDs;
+
+    function OnBeginCallback(s, e) {
+        //Pass all selected keys to GridView callback action
+        e.customArgs["selectedIDs"] = selectedIDs;
+        e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
+    }
+    function OnSelectionChanged(s, e) {
+        s.GetSelectedFieldValues("Secuencia", GetSelectedFieldValuesCallback);
+
+    }
+    function GetSelectedFieldValuesCallback(values) {
+        //Capture all selected keys
+        selectedIDs = values.join(',');
+    }
+    $(function () {
+       // GridViewPartial_control_marcaciones_det.GetSelectedFieldValues("Secuencia", GridViewPartial_control_marcaciones_det.GetSelectedFieldValuesCallback);
+        function OnSelectionChanged(s, e) {
+            s.GetSelectedFieldValues("Secuencia", GetSelectedFieldValuesCallback);
+
+        }
+    });
+</script>
+@using (Html.BeginForm("Modificar", "ControlDeMarcaciones", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdAjuste , new { @id = "IdAjuste" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdNomina_Tipo">Nómina*</label>
+                    @Html.DropDownListFor(q => q.IdNomina_Tipo, new SelectList(ViewBag.lst_nomina, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
+                    @Html.ValidationMessageFor(q => q.IdNomina_Tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Fecha">Buscar marcaciones desde*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.FechaInicio, settings =>
+                    {
+                        settings.Name = "FechaInicio";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Fecha">Hasta*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.FechaFin, settings =>
+                   {
+                       settings.Name = "FechaFin";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.FechaFin, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdNomina_TipoLiqui">Aplicar descuento en:*</label>
+                    @Html.DropDownListFor(q => q.IdNomina_TipoLiqui, new SelectList(ViewBag.lst_nomina_tipo, "IdNomina_TipoLiqui", "DescripcionProcesoNomina"), new { @class = "form-control", @id = "IdNomina_TipoLiqui" })
+                    @Html.ValidationMessageFor(q => q.IdNomina_TipoLiqui, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Fecha">Fecha para el descuento*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.FechaNovedades, settings =>
+                    {
+                        settings.Name = "FechaNovedades";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.FechaNovedades, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Valor">Observaciones</label>
+                    @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control", @id = "Observacion" })
+                    @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="detalle">Detalle de marcaciones</label>
+                    @Html.Action("GridViewPartial_control_marcaciones_det")
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="box-footer">
+        <button type="button" onclick="Guardar();" class="btn btn-primary" id="btn_aprobar">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","ControlDeMarcaciones",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+
+<script>
+    $(function () {
+        cargar_tipo_liquidacion_nomina();
+    });
+    $("#IdNomina_Tipo").change(function () {
+        cargar_tipo_liquidacion_nomina();
+    });
+    function cargar_tipo_liquidacion_nomina() {
+        $("#IdNomina_TipoLiqui").empty();
+
+                var datos = {
+                    IdNomina: $("#IdNomina_Tipo").val()
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(datos),
+                    url: '@Url.Action("get_lst_nomina_tipo_liq", "NominaTipoLiquidacion", new { Area = "RRHH" })',
+                    async: false,
+                    bDeferRender: true,
+                    bProcessing: true,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+
+                        $.each(data, function (i, row) {
+                            $("#IdNomina_TipoLiqui").append("<option value=" + row.IdNomina_TipoLiqui + ">" + row.DescripcionProcesoNomina + "</option>");
+                        });
+                        $("#IdNomina_TipoLiqui").val(2);
+                    },
+                    error: function (error) {
+                    }
+                });
+    };
+
+
+    function buscar_marcaciones() {
+                var datos = {
+                    FechaInicio: FechaInicio.GetValue(),
+                    FechaFin: FechaFin.GetValue(),
+                    IdNomina_Tipo: $("#IdNomina_Tipo").val(),
+                    IdTransaccionSession: $("#IdTransaccionSession").val(),
+
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(datos),
+                    url: '@Url.Action("get_marcaciones", "ControlDeMarcaciones", new { Area = "RRHH" })',
+                    async: false,
+                    bDeferRender: true,
+                    bProcessing: true,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        GridViewPartial_control_marcaciones_det.PerformCallback();
+                    },
+                    error: function (error) {
+                    }
+                });
+    };
+
+     function Guardar() {
+         var datos = {
+
+             IdEmpresa: $("#IdEmpresa").val(),
+             IdAjuste: $("#IdAjuste").val(),
+            IdNomina_Tipo: $("#IdNomina_Tipo").val(),
+            IdNomina_TipoLiqui: $("#IdNomina_TipoLiqui").val(),
+            FechaInicio: FechaInicio.GetValue(),
+            FechaFin: FechaFin.GetValue(),
+            FechaNovedades: FechaNovedades.GetValue(),
+            Observacion: $("#Observacion").val(),
+            IDs: selectedIDs,
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+
+            }
+        $("#btn_aprobar").attr("disabled", true);
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ModificarMarcaciones", "ControlDeMarcaciones", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+             window.location.href = '@Url.Action("Index", "ControlDeMarcaciones", new { Area = "RRHH" })';
+
+           },
+            error: function (error) {
+            }
+        });
+    }
+
+</script>

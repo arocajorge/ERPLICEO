@@ -1,0 +1,193 @@
+﻿@model Core.Erp.Info.RRHH.ro_rol_Info
+@{
+    ViewBag.Title = "Contabilizar Périodo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml"; if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("ContabilizarPeriodo", "ProcesarRol", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdNomina_Tipo);
+    @Html.HiddenFor(q => q.IdNomina_TipoLiqui);
+    @Html.HiddenFor(q => q.IdPeriodo);
+    @Html.HiddenFor(q => q.IdRol);
+    @Html.HiddenFor(q => q.IdEmpresa);
+    @Html.HiddenFor(q => q.IdSucursal);
+    @Html.HiddenFor(q => q.IdTransaccionSession , new { @id="IdTransaccionSession"});
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal*</label>
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="FechaInicio">Nómina*</label>
+                    @Html.DropDownListFor(q => q.IdNomina_Tipo, new SelectList(ViewBag.lst_nomina, "IdNomina_Tipo", "Descripcion"), "== Seleccione ==", new { @class = "form-control", @disabled = "disabled", @id = "IdNomina_Tipo" })
+                    @Html.ValidationMessageFor(q => q.IdNomina_Tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="FechaInicio">Proceso de la nómina*</label>
+                    @Html.DropDownListFor(q => q.IdNomina_TipoLiqui, new SelectList(ViewBag.lst_nomina_tipo, "IdNomina_TipoLiqui", "DescripcionProcesoNomina"), "== Seleccione ==", new { @class = "form-control", @disabled = "disabled", @id = "IdNomina_TipoLiqui" })
+                    @Html.ValidationMessageFor(q => q.IdNomina_TipoLiqui, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="FechaInicio">Periodo*</label>
+                    @Html.DropDownListFor(q => q.IdPeriodo, new SelectList(ViewBag.lst_periodos, "IdPeriodo", "Descripcion"), "== Seleccione ==", new { @class = "form-control", @disabled = "disabled", @id = "IdPeriodo" })
+                    @Html.ValidationMessageFor(q => q.IdPeriodo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="pe_fechaNacimiento">Fecha contabilización*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.TextBoxFor(q => q.Fechacontabilizacion, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "pe_fechaNacimiento" })
+                        @Html.ValidationMessageFor(q => q.Fechacontabilizacion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="FechaInicio">Detalle diarios contables</label>
+                <div id="Tabs" role="tabpanel">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active">
+                            <a href="#tbl_diario" aria-controls="informacion" role="tab" data-toggle="tab">Diario contable de sueldo por pagar</a>
+                        </li>
+                        <li>
+                            <a href="#tbl_provisiones" aria-controls="AdministracionPreBajas" role="tab" data-toggle="tab">Diario contable de provisiones</a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content" style="padding-top: 20px">
+
+                        <div role="tabpanel" class="tab-pane active" style="margin-left: 2em;" id="tbl_diario">
+                            @Html.Action("GridViewPartial_sueldo_x_pagar")
+                        </div>
+                        <div role="tabpanel" class="tab-pane" style="margin-left: 2em;" id="tbl_provisiones">
+
+                            @Html.Action("GridViewPartial_provisiones")
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Contabilizar</button>
+        <a class="btn btn-default" href="@Url.Action("Index2","ProcesarRol",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+
+<script>
+
+
+    $("#IdNomina_Tipo").change(function () {
+        $("#IdNomina_TipoLiqui").empty();
+        cargar_tipo_liquidacion_nomina();
+
+    });
+
+    $("#IdNomina_TipoLiqui").change(function () {
+        $("#IdPeriodo").empty();
+        cargar_periodos_x_nomina();
+    });
+
+
+
+    function cargar_tipo_liquidacion_nomina() {
+        var datos = {
+            IdNomina: $("#IdNomina_Tipo").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_lst_nomina_tipo_liq","NominaTipoLiquidacion", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+                $.each(data, function (i, row) {
+                    $("#IdNomina_TipoLiqui").append("<option value=" + row.IdNomina_TipoLiqui + ">" + row.DescripcionProcesoNomina + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+    function cargar_periodos_x_nomina() {
+        var datos = {
+            IdNomina: $("#IdNomina_Tipo").val(),
+            IdNomina_Tipo: $("#IdNomina_TipoLiqui").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_lst_periodo_x_nomina","PeriodosPorNomina", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+                $.each(data, function (i, row) {
+                    $("#IdPeriodo").append("<option value=" + row.IdPeriodo + ">" + row.descripcion + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+
+
+</script>

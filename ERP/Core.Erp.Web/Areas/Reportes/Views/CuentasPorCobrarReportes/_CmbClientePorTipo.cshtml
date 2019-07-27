@@ -1,0 +1,29 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdCliente";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Pixel(1200);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
+        settings.CallbackRouteValues = new { Controller = "CuentasPorCobrarReportes", Action = "CmbClientePorTipo", Area = "Reportes" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "pe_nombreCompleto";
+        settings.Properties.TextFormatString = "[{0}] {1} - {2}";
+        settings.Properties.ValueField = "IdEntidad";
+        settings.Properties.ValueType = typeof(decimal);
+        settings.Properties.FilterMinLength = 3;
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+        settings.Properties.AllowNull = true;
+
+        settings.Properties.Columns.Add("IdEntidad", "ID", 5);
+        settings.Properties.Columns.Add("pe_cedulaRuc", "RUC", 10);
+        settings.Properties.Columns.Add("pe_nombreCompleto", "Cliente", 55);
+        settings.Properties.Columns.Add("CodPersona", "Clase", 30);
+        settings.Properties.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['Idtipo_cliente'] =  $('#Idtipo_cliente').val(); }";
+    })
+    .BindList(new Core.Erp.Web.Areas.Reportes.Controllers.CuentasPorCobrarReportesController().get_list_bajo_demanda_cliente_x_tipo, new Core.Erp.Web.Areas.Reportes.Controllers.CuentasPorCobrarReportesController().get_info_bajo_demanda_cliente_x_tipo)
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.Helps.cl_filtros_facturacion_Info) ? "" : (Model == 0 ? "" : Model));
+}
+@comboBox.GetHtml()

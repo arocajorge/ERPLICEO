@@ -1,0 +1,113 @@
+﻿@model Core.Erp.Info.RRHH.ro_rol_Info
+@{
+    ViewBag.Title = "Nuevo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Nuevo", "PagoBenediciosSociales", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="FechaInicio">Nómina*</label>
+                    @Html.DropDownListFor(q => q.IdNomina_Tipo, new SelectList(ViewBag.lst_nomina, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
+                    @Html.ValidationMessageFor(q => q.IdNomina_Tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Anio">Año*</label>
+                    @Html.TextBoxFor(q => q.Anio, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Anio, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="descuento_mensual">Pago</label>
+                        @Html.DevExpress().RadioButtonFor(q => q.decimoIII, settings =>
+                       {
+                           settings.Name = "decimoIII";
+                           settings.GroupName = "beneficio";
+                           settings.Text = "Decimo tercer sueldo";
+                           settings.Properties.ClientSideEvents.CheckedChanged = "function(s, e) {mostar()}";
+                       }).GetHtml()
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="descuento_quincena">Pago</label>
+                        @Html.DevExpress().RadioButtonFor(q => q.decimoIV, settings =>
+                   {
+                       settings.Name = "decimoIV";
+                       settings.GroupName = "beneficio";
+                       settings.Text = "Decimo cuarto sueldo";
+                   }).GetHtml()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal*</label>
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Observacion, "", new { @class = "text-danger" })
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Procesar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","PagoBenediciosSociales",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+
+<script>
+
+
+
+
+    function mostar() {
+
+        if (decimoIII.GetValue()) {
+
+        }
+        else {
+
+        }
+    };
+
+
+
+</script>

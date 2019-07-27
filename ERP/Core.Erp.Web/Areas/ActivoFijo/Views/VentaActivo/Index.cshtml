@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Venta activo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ScriptsGenerales.js"></script>
+@using (Html.BeginForm())
+{
+
+    @Html.Action("GridViewPartial_venta_activo")
+
+}

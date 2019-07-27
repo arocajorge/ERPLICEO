@@ -1,0 +1,30 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdProducto";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "AjusteFisico", Action = "_CmbProducto_AjusteFisico", Area = "Inventario" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "pr_descripcion";
+        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.ValueField = "IdProducto";
+        settings.Properties.ValueType = typeof(decimal);
+
+        settings.Properties.Columns.Add("IdProducto", "ID", 5);
+        settings.Properties.Columns.Add("pr_descripcion", "Producto", 65);
+        settings.Properties.Columns.Add("nom_categoria", "Categoria", 15);
+        settings.Properties.Columns.Add("nom_presentacion", "Presentación", 15);
+
+    })
+
+     .BindList(new Core.Erp.Web.Areas.Inventario.Controllers.AjusteFisicoInventarioController().get_list_bajo_demanda,
+      new Core.Erp.Web.Areas.Inventario.Controllers.AjusteFisicoInventarioController().get_info_bajo_demanda).Bind((Model.GetType() == typeof(Core.Erp.Info.Inventario.in_Ajuste_Info) || Model.GetType() == typeof(List<Core.Erp.Info.Inventario.in_AjusteDet_Info>)) ? "" : (Model == 0 ? "" : Model));
+
+
+}
+@comboBox.GetHtml()
+

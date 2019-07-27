@@ -1,0 +1,95 @@
+﻿@model Core.Erp.Info.RRHH.ro_marcaciones_x_empleado_Info
+@{
+    ViewBag.Title = "Nueva carga de novedades";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Nuevo", "ImportacionMarcaciones", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdTransaccionSession)
+
+<div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="IdCargo">Sucursal*</label>
+                @Html.DevExpress().ComboBoxFor(q => q.IdSucursal, settings =>
+               {
+                   settings.Name = "IdSucursal";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdSucursal", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("Su_descripcion", "Sucursal").Width = System.Web.UI.WebControls.Unit.Percentage(50);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdSucursal";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "Sucursal";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+               }).BindList(ViewBag.lst_sucursal).GetHtml()
+                @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="col-md-12">
+
+            @Html.DevExpress().UploadControl(settings => {
+            settings.Name = "UploadControlFile";
+            settings.CallbackRouteValues = new { Controller = "ImportacionMarcaciones", Action = "UploadControlUpload" };
+            settings.ShowUploadButton = true;
+            settings.ShowProgressPanel = true;
+            settings.NullText = "Click here to browse files...";
+            settings.ClientSideEvents.FileUploadComplete = "function(s, e) { GridViewPartial_importacion_marcaciones_det.PerformCallback({ path: e.callbackData}); }";
+            }).GetHtml()
+
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="detalle">Detalle de la novedad</label>
+                @Html.Action("GridViewPartial_importacion_marcaciones_det")
+                @Html.ValidationMessageFor(q => q.detalle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box-footer">
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a class="btn btn-default" href="@Url.Action("Index","ImportacionNovedades",new { Area = "RRHH" },null)">Cancelar</a>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+}
+
+

@@ -1,0 +1,63 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridView_conciliacion_ingresos";
+        settings.CallbackRouteValues = new { Controller = "ConciliacionCaja", Action = "GridViewPartial_conciliacion_ingresos", Area = "Caja" };
+        settings.Width = Unit.Percentage(100);
+        settings.KeyFieldName = "secuencia";
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        //Configuración click derecho
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.EnableRowMenu = DefaultBoolean.False;
+
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+
+        settings.Columns.Add("IdCbteCble_movcaj", "ID").Width = Unit.Percentage(10);
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(20);
+            column.FieldName = "cm_fecha";
+            column.Caption = "Fecha";
+            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
+        });
+        settings.Columns.Add("cm_observacion", "Observación").Width = Unit.Percentage(40);
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "Total_movi";
+            column.Caption = "Total";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "Total_aplicado";
+            column.Caption = "V. Aplicado";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "valor_disponible";
+            column.Caption = "Saldo";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+        });
+        settings.ClientSideEvents.EndCallback = "Calcular";
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
+    });
+}
+@grid.Bind(Model.lst_det_ing).GetHtml()

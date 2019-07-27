@@ -1,0 +1,235 @@
+﻿@model Core.Erp.Info.CuentasPorPagar.cp_orden_pago_aprobacion_Info
+
+@{
+    ViewBag.Title = "Aprobar órdenes de pago";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Layout/_LayoutConsulta.cshtml";
+}
+<script type="text/javascript">
+    var selectedIDs;
+
+    function OnBeginCallback(s, e) {
+        //Pass all selected keys to GridView callback action
+        e.customArgs["selectedIDs"] = selectedIDs;
+        e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
+    }
+    function OnSelectionChanged(s, e) {
+        s.GetSelectedFieldValues("IdOrdenPago", GetSelectedFieldValuesCallback);
+
+    }
+    function GetSelectedFieldValuesCallback(values) {
+        //Capture all selected keys
+        selectedIDs = values.join(',');
+    }
+</script>
+
+@using (Html.BeginForm("Index", "AprobacionOP", FormMethod.Post, new { @role = "form", @class = "form", @id = "myform" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdUsuarioAprobacion, new { @id = "IdUsuarioAprobacion" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    <div class="box ">
+        <div class="box-header with-border">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+                </div>
+            </div>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdSucursal">Sucursal</label>
+                            <div class="form-group">
+                                @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                                @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>                    
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="">Fecha inicio</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.DevExpress().DateEditFor(q => q.fecha_ini, settings =>
+                                   {
+                                       settings.Name = "fecha_ini";
+                                       settings.Properties.UseMaskBehavior = true;
+                                       settings.Properties.EditFormat = EditFormat.Date;
+                                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.fecha_ini, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="">Fecha fin</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.DevExpress().DateEditFor(q => q.fecha_fin, settings =>
+                               {
+                                   settings.Name = "fecha_fin";
+                                   settings.Properties.UseMaskBehavior = true;
+                                   settings.Properties.EditFormat = EditFormat.Date;
+                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                   settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                               }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class= "col-md-offset-1 col-md-4">
+                        <div class="form-group">
+                            <label for="IdSucursal">Forma de pago</label>
+                            @Html.DevExpress().ComboBoxFor(q => q.IdFormaPago, settings =>
+                            {
+                                settings.Name = "IdFormaPago";
+                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                                settings.Properties.Columns.Add("IdFormaPago", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+                                settings.Properties.Columns.Add("descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                //Campo ID
+                                settings.Properties.ValueField = "IdFormaPago";
+                                settings.Properties.ValueType = typeof(string);
+                                settings.Properties.TextField = "Descripción";
+                                //Boton para seleccionar ningun registro
+                                settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                                settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                            }).BindList(ViewBag.lst_forma_pago).GetHtml()
+                            @Html.ValidationMessageFor(q => q.IdFormaPago, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">@ViewBag.Title</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        @Html.Action("GridViewPartial_AprobacionOP", new { fecha_ini = Model.fecha_ini, fecha_fin = Model.fecha_fin, IdSucursal = Model.IdSucursal })
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="MotivoAprobacion">Observación</label>
+                            @Html.TextAreaFor(q => q.MotivoAprobacion, new { @class = "form-control", @id = "MotivoAprobacion", @rows = 1 })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-success" id="btn_aprobar" onclick="aprobar();">Aprobar</button>
+                            <button type="button" class="btn btn-danger" id="btn_rechazar" onclick="rechazar();">Anular</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            [@Session["IdEmpresa"]] @Session["nom_empresa"]
+        </div>
+        <!-- /.box-footer-->
+    </div>
+}
+<script type="text/javascript">
+     function aprobar() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IDs: selectedIDs,
+            MotivoAprobacion: $("#MotivoAprobacion").val(),
+            IdFormaPago: IdFormaPago.GetValue(),
+            IdUsuarioAprobacion: $("#IdUsuarioAprobacion").val()
+            }
+        $("#btn_aprobar").attr("disabled", true);
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("aprobar", "AprobacionOP", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#MotivoAprobacion").val("");
+                $("#myform").submit();
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function rechazar() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IDs: selectedIDs,
+            MotivoAprobacion: $("#MotivoAprobacion").val(),
+            IdUsuarioAprobacion: $("#IdUsuarioAprobacion").val()
+        }
+        $("#btn_aprobar").attr("disabled", true);
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("rechazar", "AprobacionOP", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#MotivoAprobacion").val("");
+                $("#myform").submit();
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>

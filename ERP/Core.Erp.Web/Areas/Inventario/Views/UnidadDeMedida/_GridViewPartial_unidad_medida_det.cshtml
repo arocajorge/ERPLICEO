@@ -1,0 +1,62 @@
+@using System.Web.UI.WebControls;
+@model Core.Erp.Info.Inventario.in_UnidadMedida_Info
+
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "lst_unidad_medida_equiv";
+        settings.CallbackRouteValues = new { Controller = "UnidadDeMedida", Action = "GridViewPartial_unidad_medida_det", IdUnidadMedida = Model == null ? "" : Model.IdUnidadMedida };
+        settings.Width = Unit.Percentage(100);
+
+        settings.KeyFieldName = "secuencia";
+
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "UnidadDeMedida", Action = "EditingAddNew", Area = "Inventario" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "UnidadDeMedida", Action = "EditingUpdate", Area = "Inventario" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "UnidadDeMedida", Action = "EditingDelete", Area = "Inventario" };
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;        
+
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdUnidadMedida_equiva";
+            column.Caption = "Unidad equivalencia";
+            column.Width = Unit.Percentage(80);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.TextField = "Descripcion";
+                p.ValueField = "IdUnidadMedida";
+                p.ValueType = typeof(string);
+                p.DataSource = ViewBag.lst_unidad_medida;
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "valor_equiv";
+            column.Caption = "Valor equivalencia";
+            column.Width = Unit.Percentage(20);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+            });
+        });
+    });
+}
+@grid.Bind(Model.lst_unidad_medida_equiv).GetHtml()

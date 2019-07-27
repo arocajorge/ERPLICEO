@@ -1,0 +1,138 @@
+﻿@model Core.Erp.Info.Contabilidad.ct_plancta_Info
+@{
+    ViewBag.Title = "Nueva cuenta contable";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Nuevo", "PlanDeCuentas", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa"})
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCblePadre">Cuenta padre</label>
+                    @Html.Partial("_CmbCuenta_PlanCta", Model)
+                    @Html.ValidationMessageFor(q => q.IdCtaCblePadre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdCtaCble">Código cuenta*</label>
+                    @Html.TextBoxFor(q => q.IdCtaCble, new { @class = "form-control", @id = "IdCtaCble" })
+                    @Html.ValidationMessageFor(q => q.IdCtaCble, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="pc_clave_corta">Clave corta</label>
+                    @Html.TextBoxFor(q => q.pc_clave_corta, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.pc_clave_corta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="IdNivelCta">Nivel</label>
+                    @Html.TextBoxFor(q => q.IdNivelCta, new { @class = "form-control", @id = "IdNivelCta" })
+                    @Html.ValidationMessageFor(q => q.IdNivelCta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="pc_EsMovimiento_bool">@Html.CheckBoxFor(q => q.pc_EsMovimiento_bool) Es cuenta de movimiento</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdGrupoCble">Grupo contable</label>
+                    @Html.DropDownListFor(q => q.IdGrupoCble, new SelectList(ViewBag.lst_grupo_contabe, "IdGrupoCble", "gc_GrupoCble"), new { @class = "form-control", @id = "IdGrupoCble" })
+                    @Html.ValidationMessageFor(q => q.IdGrupoCble, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="pc_Naturaleza">Naturaleza</label>
+                    @Html.DropDownListFor(q => q.pc_Naturaleza, new SelectList(ViewBag.lst_naturaleza, "Key", "Value"), new { @class = "form-control", @id = "pc_Naturaleza" })
+                    @Html.ValidationMessageFor(q => q.pc_Naturaleza, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="pc_Cuenta">Cuenta contable*</label>
+                    @Html.TextBoxFor(q => q.pc_Cuenta, new { @class = "form-control", @id = "pc_Cuenta" })
+                    @Html.ValidationMessageFor(q => q.pc_Cuenta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "PlanDeCuentas", new { Area ="Contabilidad" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script>
+    function get_info_nuevo()
+    {
+        var IdCtaCble_padre = IdCtaCblePadre.GetValue();
+        if (IdCtaCble_padre != "") {
+            var datos = {
+                IdEmpresa: $("#IdEmpresa").val(),
+                IdCtaCble_padre: IdCtaCble_padre
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("get_info_nuevo", "PlanDeCuentas",new { Area = "Contabilidad"})',
+                async: false,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data == '') {
+                        //No hago nada
+                    } else {
+                        $("#IdCtaCble").val(data.IdCtaCble);
+                        $("#IdGrupoCble").val(data.IdGrupoCble);
+                        $("#pc_Cuenta").val(data.pc_Cuenta);
+                        if (data.IdNivelCta == 0) {
+                            $("#IdNivelCta").val(1);
+                        }
+                        else {
+                            $("#IdNivelCta").val(data.IdNivelCta);
+                        }
+                        $("#pc_Naturaleza").val(data.pc_Naturaleza);
+                    }
+                },
+                error: function (error) {
+
+                }
+            });
+        }
+    }
+</script>

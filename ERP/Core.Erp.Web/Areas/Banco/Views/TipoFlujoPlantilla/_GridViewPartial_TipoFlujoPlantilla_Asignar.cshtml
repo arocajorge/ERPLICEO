@@ -1,0 +1,75 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridViewPartial_TipoFlujoPlantilla_Asignar";
+        settings.CallbackRouteValues = new { Controller = "TipoFlujoPlantilla", Action = "GridViewPartial_TipoFlujoPlantilla_Asignar" };
+        settings.Width = Unit.Percentage(100);
+        settings.KeyFieldName = "IdPlantilla";
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        //Configuración click derecho
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.RowMenuItemVisibility.NewRow = false;
+        settings.SettingsContextMenu.RowMenuItemVisibility.EditRow = false;
+        settings.SettingsContextMenu.RowMenuItemVisibility.DeleteRow = false;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdPlantilla";
+            column.Caption = "ID";
+            column.Width = Unit.Percentage(10);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(40);
+            column.FieldName = "Descripcion";
+            column.Caption = "Descripción";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "*";
+            column.FieldName = "IdPlantilla";
+            column.Width = Unit.Percentage(20);
+            column.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            column.SetDataItemTemplateContent(c =>
+            {
+                Html.DevExpress().Button(settingsBtn =>
+                {
+                    settingsBtn.Name = "btn" + c.KeyValue;
+                    settingsBtn.Text = "Agregar";
+                    settingsBtn.ClientSideEvents.Click = "function(s, e) {AgregarPlantilla('" + c.KeyValue + "');}";
+                }).Render();
+            });
+        });
+        //settings.PreRender = (sender, e) =>
+        //{
+        //    MVCxGridView gridView = (MVCxGridView)sender;
+        //    gridView.ExpandAll();
+        //};
+
+        //settings.BeforeGetCallbackResult = (sender, e) =>
+        //{
+        //    MVCxGridView gridView = (MVCxGridView)sender;
+        //    gridView.ExpandAll();
+        //};
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
+
+    });
+}
+@grid.Bind(Model).GetHtml()

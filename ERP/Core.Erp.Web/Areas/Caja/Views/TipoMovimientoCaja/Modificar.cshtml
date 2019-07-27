@@ -1,0 +1,70 @@
+﻿ @model Core.Erp.Info.Caja.caj_Caja_Movimiento_Tipo_Info
+@{
+    ViewBag.Title = "Modificar tipo";
+
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Modificar", "TipoMovimientoCaja", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdTipoMovi)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="tm_descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.tm_descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.tm_descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCble">Cuenta contable*</label>
+                    @Html.Partial("_CmbCuenta_Tipo_movimiento", Model)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="tm_Signo">Signo</label>
+                    @Html.DropDownListFor(q => q.tm_Signo, new SelectList(ViewBag.lst_signo, "Key", "Value"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.tm_Signo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-5" id="DivCheck">
+                @Html.DevExpress().CheckBoxFor(q => q.SeDeposita,
+                         settings =>
+                         {
+                             settings.Name = "SeDeposita";
+                             settings.Checked = false;
+                             settings.Text = "Este ingreso se deposita";
+                         }
+                     ).GetHtml()
+                @Html.ValidationMessageFor(q => q.SeDeposita, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","TipoMovimientoCaja",new { Area = "Caja" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

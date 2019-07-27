@@ -1,0 +1,232 @@
+﻿@model Core.Erp.Info.General.tb_sis_reporte_Info
+@{
+    ViewBag.Title = "Nuevo reporte";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Nuevo", "Reporte", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="CodModulo">Módulo*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.CodModulo, settings =>
+               {
+                   settings.Name = "CodModulo";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("CodModulo", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+                   settings.Properties.Columns.Add("Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(40);
+                   settings.Properties.Columns.Add("Nom_Carpeta", "Carpeta").Width = System.Web.UI.WebControls.Unit.Percentage(40);
+                   //Campo ID
+                   settings.Properties.ValueField = "CodModulo";
+                   settings.Properties.ValueType = typeof(string);
+                   settings.Properties.TextField = "Descripcion";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){get_id();}";
+               }).BindList(ViewBag.lst_modulo).GetHtml()
+                    @Html.ValidationMessageFor(q => q.CodModulo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="se_muestra_administrador_reportes">@Html.CheckBoxFor(q => q.se_muestra_administrador_reportes) Se muestra administrador de reportes</label>
+                    </div>
+                    <div class="checkbox">
+                        <label for="rpt_muestra_disenador_reporte">@Html.CheckBoxFor(q => q.rpt_muestra_disenador_reporte) Se muestra diseñador de reportes</label>
+                    </div>
+                    <div class="checkbox">
+                        <label for="estado">@Html.CheckBoxFor(q => q.estado) Estado</label>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-3">
+                <div class="form-group">
+                    <label for="CodReporte">Código*</label>
+                    @Html.TextBoxFor(q => q.CodReporte, new { @class = "form-control", @id = "CodReporte" })
+                    @Html.ValidationMessageFor(q => q.CodReporte, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="nom_reporte">Nombre*</label>
+                    @Html.TextBoxFor(q => q.nom_reporte, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.nom_reporte, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="rpt_vista">Vista*</label>
+                    @Html.TextBoxFor(q => q.rpt_vista, new { @class = "form-control", @id = "rpt_vista" })
+                    @Html.ValidationMessageFor(q => q.rpt_vista, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="rpt_usa_store_procedure">@Html.CheckBoxFor(q => q.rpt_usa_store_procedure, new { @id = "rpt_usa_store_procedure" }) Usa store procedure</label>
+                    @Html.TextBoxFor(q => q.rpt_store_procedure, new { @class = "form-control", @id = "rpt_store_procedure" })
+                    @Html.ValidationMessageFor(q => q.rpt_store_procedure, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <label for="orden">Orden</label>
+                    @Html.TextBoxFor(q => q.orden, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.orden, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="mvc_area">Área*</label>
+                    @Html.TextBoxFor(q => q.mvc_area, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.mvc_area, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="mvc_controlador">Controlador*</label>
+                    @Html.TextBoxFor(q => q.mvc_controlador, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.mvc_controlador, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="mvc_accion">Acción*</label>
+                    @Html.TextBoxFor(q => q.mvc_accion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.mvc_accion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="rpt_clase_info">Clase info*</label>
+                    @Html.TextBoxFor(q => q.rpt_clase_info, new { @class = "form-control", @id = "rpt_clase_info" })
+                    @Html.ValidationMessageFor(q => q.rpt_clase_info, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="rpt_clase_data">Clase data*</label>
+                    @Html.TextBoxFor(q => q.rpt_clase_data, new { @class = "form-control", @id = "rpt_clase_data" })
+                    @Html.ValidationMessageFor(q => q.rpt_clase_data, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="rpt_clase_bus">Clase bus*</label>
+                    @Html.TextBoxFor(q => q.rpt_clase_bus, new { @class = "form-control", @id = "rpt_clase_bus" })
+                    @Html.ValidationMessageFor(q => q.rpt_clase_bus, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="rpt_clase_rpt">Clase rpt*</label>
+                    @Html.TextBoxFor(q => q.rpt_clase_rpt, new { @class = "form-control", @id = "rpt_clase_rpt" })
+                    @Html.ValidationMessageFor(q => q.rpt_clase_rpt, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="observacion">Observación</label>
+                    @Html.TextAreaFor(q => q.observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Reporte",new { Area = "General" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script>
+
+    $("#rpt_usa_store_procedure").change(function () {
+        ocultar_mostrar_div();
+    });
+
+    $("#CodModulo").change(function () {
+        get_id();
+    });
+    function ocultar_mostrar_div() {
+        var procedure = ($("#rpt_usa_store_procedure:checked").val());
+        if (procedure == "true") {
+            $("#rpt_store_procedure").hide();
+        } else {
+            $("#rpt_store_procedure").show();
+        }
+    }
+
+    function get_id() {
+        var codigo = CodModulo.GetValue();
+
+        var datos = {
+            CodModulo: codigo
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_id", "Reporte",new { Area = "General"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#CodReporte").val(codigo+"_"+data);
+                $("#rpt_vista").val("web.VW"+ codigo + "_" + data);
+                $("#rpt_clase_data").val(codigo + "_" + data +"_Data");
+                $("#rpt_clase_info").val(codigo + "_" + data + "_Info");
+                $("#rpt_clase_bus").val(codigo + "_" + data + "_Bus");
+                $("#rpt_clase_rpt").val(codigo + "_" + data + "_Rpt");
+                $("#rpt_store_procedure").val("web.SP" + codigo + "_" + data);
+
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>

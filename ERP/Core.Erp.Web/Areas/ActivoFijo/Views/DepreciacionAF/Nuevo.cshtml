@@ -1,0 +1,137 @@
+﻿@model Core.Erp.Info.ActivoFijo.Af_Depreciacion_Info
+@{
+    ViewBag.Title = "Nueva depreciación";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Nuevo", "DepreciacionAF", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdEmpresa)
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdPeriodo">Periodo*</label>
+                    @Html.DropDownListFor(q => q.IdPeriodo, new SelectList(ViewBag.lst_periodo, "IdPeriodo", "nom_periodo_combo"), new { @class = "form-control", @id = "IdPeriodo" })
+                    @Html.ValidationMessageFor(q => q.IdPeriodo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Cod_Depreciacion">Código</label>
+                    @Html.TextBoxFor(q => q.Cod_Depreciacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Cod_Depreciacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-offset-5 col-md-2">
+                <div class="form-group">
+                    <label for="Fecha_Depreciacion">Fecha*</label>
+                    @Html.DevExpress().DateEditFor(q=> q.Fecha_Depreciacion, settings =>
+                {
+                    settings.Name = "Fecha_Depreciacion";
+                    settings.Properties.UseMaskBehavior = true;
+                    settings.Properties.EditFormat = EditFormat.Date;
+                    settings.Properties.EditFormatString = "dd/MM/yyyy";
+                    settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.Fecha_Depreciacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Descripcion">Observación</label>
+                    @Html.TextAreaFor(q => q.Descripcion, new { @class = "form-control", @rows = 3 })
+                    @Html.ValidationMessageFor(q => q.Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="button" class="btn btn-primary" id="btn_refrescar" onclick="Get_list_activos_a_depreciar();">
+            <i class="fa fa-refresh"></i>
+        </button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "DepreciacionAF", new { Area = "ActivoFijo" }, null)">Cancelar</a>
+    </div>
+
+
+    <div id="Tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_detalle" aria-controls="general" role="tab" data-toggle="tab" id="link_detalle">Detalle</a>
+            </li>
+            <li>
+                <a href="#tab_contable" aria-controls="contable" role="tab" data-toggle="tab">Diario contable</a>
+            </li>
+        </ul>
+
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 2em;" id="tab_detalle">
+                @Html.Action("GridViewPartial_depreciacion_det")
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 2em;" id="tab_contable">
+                @Html.Action("GridViewPartial_comprobante_detalle_readonly", new { Area = "Contabilidad", Controller = "ComprobanteContable" })
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script>
+    $(function () {
+        $("#IdPeriodo").change(function () {
+            Get_list_activos_a_depreciar();
+        });
+
+    });
+    function Get_list_activos_a_depreciar() {
+        $("#link_detalle").click();
+        var periodo = $("#IdPeriodo").val();
+
+        var datos = {
+            IdPeriodo: periodo,
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("Get_list_activos_a_depreciar", "DepreciacionAF", new { Area = "ActivoFijo" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+            },
+            error: function (error) {
+            }
+        });
+        GridView_depreciacion_det.PerformCallback();
+        GridView_comprobante_detalle_readonly.PerformCallback();
+    }
+</script>

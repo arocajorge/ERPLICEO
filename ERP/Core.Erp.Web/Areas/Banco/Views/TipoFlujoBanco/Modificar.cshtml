@@ -1,0 +1,80 @@
+﻿@model Core.Erp.Info.Banco.ba_TipoFlujo_Info
+
+@{
+    ViewBag.Title = "Modificar tipo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Modificar", "TipoFlujoBanco", FormMethod.Post, new { @role = "form", @class = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdTipoFlujo)
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="cod_flujo">Código</label>
+                    @Html.TextBoxFor(q => q.cod_flujo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.cod_flujo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Tipo">Tipo</label>
+                    @Html.DropDownListFor(q => q.Tipo, new SelectList(ViewBag.lst_tip, "Key", "Value"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdTipoFlujoPadre">Tipo flujo</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdTipoFlujoPadre, settings =>
+               {
+                   settings.Name = "IdTipoFlujoPadre";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdTipoFlujo", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+                   settings.Properties.Columns.Add("Descricion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdTipoFlujo";
+                   settings.Properties.ValueType = typeof(decimal);
+                   settings.Properties.TextField = "Descricion";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+               }).BindList(ViewBag.lst_tipo).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdTipoFlujoPadre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Descricion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.Descricion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Descricion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","TipoFlujoBanco", new { Area = "Banco"  },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

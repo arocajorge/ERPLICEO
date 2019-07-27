@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DBSACModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBSAC.dbo.vw_diarios_contables_migracion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vw_diarios_contables_migracion">
+          <Key>
+            <PropertyRef Name="Empresa" />
+            <PropertyRef Name="centro" />
+            <PropertyRef Name="Numero" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="SubCuenta1" />
+            <PropertyRef Name="SubCuenta2" />
+            <PropertyRef Name="TipoMov" />
+            <PropertyRef Name="tipo_documento" />
+          </Key>
+          <Property Name="Empresa" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="centro" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="Numero" Type="int" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="char" MaxLength="10" />
+          <Property Name="Grupo" Type="varchar" MaxLength="2" />
+          <Property Name="SubGrupo" Type="varchar" MaxLength="2" />
+          <Property Name="Cuenta" Type="varchar" MaxLength="3" />
+          <Property Name="SubCuenta" Type="varchar" MaxLength="3" />
+          <Property Name="SubCuenta1" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="SubCuenta2" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="Valor" Type="numeric" Precision="38" Scale="2" />
+          <Property Name="TipoMov" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Glosa" Type="varchar" MaxLength="80" />
+          <Property Name="Detalle" Type="char" MaxLength="80" />
+          <Property Name="tipo_documento" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="IdCtaCble" Type="varchar" MaxLength="10" />
+          <Property Name="dc_ValorDebe" Type="numeric" Precision="38" Scale="2" />
+          <Property Name="dc_ValorHaber" Type="numeric" Precision="38" Scale="2" />
+        </EntityType>
+        <EntityContainer Name="DBSACModelStoreContainer">
+          <EntitySet Name="vw_diarios_contables_migracion" EntityType="Self.vw_diarios_contables_migracion" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_diarios_contables_migracion].[Empresa] AS [Empresa], 
+    [vw_diarios_contables_migracion].[centro] AS [centro], 
+    [vw_diarios_contables_migracion].[Numero] AS [Numero], 
+    [vw_diarios_contables_migracion].[Secuencia] AS [Secuencia], 
+    [vw_diarios_contables_migracion].[Fecha] AS [Fecha], 
+    [vw_diarios_contables_migracion].[Grupo] AS [Grupo], 
+    [vw_diarios_contables_migracion].[SubGrupo] AS [SubGrupo], 
+    [vw_diarios_contables_migracion].[Cuenta] AS [Cuenta], 
+    [vw_diarios_contables_migracion].[SubCuenta] AS [SubCuenta], 
+    [vw_diarios_contables_migracion].[SubCuenta1] AS [SubCuenta1], 
+    [vw_diarios_contables_migracion].[SubCuenta2] AS [SubCuenta2], 
+    [vw_diarios_contables_migracion].[Valor] AS [Valor], 
+    [vw_diarios_contables_migracion].[TipoMov] AS [TipoMov], 
+    [vw_diarios_contables_migracion].[Glosa] AS [Glosa], 
+    [vw_diarios_contables_migracion].[Detalle] AS [Detalle], 
+    [vw_diarios_contables_migracion].[tipo_documento] AS [tipo_documento], 
+    [vw_diarios_contables_migracion].[IdCtaCble] AS [IdCtaCble], 
+    [vw_diarios_contables_migracion].[dc_ValorDebe] AS [dc_ValorDebe], 
+    [vw_diarios_contables_migracion].[dc_ValorHaber] AS [dc_ValorHaber]
+    FROM [dbo].[vw_diarios_contables_migracion] AS [vw_diarios_contables_migracion]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBSACModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DBSACEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="vw_diarios_contables_migracion" EntityType="DBSACModel.vw_diarios_contables_migracion" />
+        </EntityContainer>
+        <EntityType Name="vw_diarios_contables_migracion">
+          <Key>
+            <PropertyRef Name="Empresa" />
+            <PropertyRef Name="centro" />
+            <PropertyRef Name="Numero" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="SubCuenta1" />
+            <PropertyRef Name="SubCuenta2" />
+            <PropertyRef Name="TipoMov" />
+            <PropertyRef Name="tipo_documento" />
+          </Key>
+          <Property Name="Empresa" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="centro" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Numero" Type="Int32" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Grupo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="SubGrupo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Cuenta" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="SubCuenta" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="SubCuenta1" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="SubCuenta2" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Valor" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="TipoMov" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Glosa" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Detalle" Type="String" MaxLength="80" FixedLength="true" Unicode="false" />
+          <Property Name="tipo_documento" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="dc_ValorDebe" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="dc_ValorHaber" Type="Decimal" Precision="38" Scale="2" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBSACModelStoreContainer" CdmEntityContainer="DBSACEntities">
+          <EntitySetMapping Name="vw_diarios_contables_migracion">
+            <EntityTypeMapping TypeName="DBSACModel.vw_diarios_contables_migracion">
+              <MappingFragment StoreEntitySet="vw_diarios_contables_migracion">
+                <ScalarProperty Name="dc_ValorHaber" ColumnName="dc_ValorHaber" />
+                <ScalarProperty Name="dc_ValorDebe" ColumnName="dc_ValorDebe" />
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="tipo_documento" ColumnName="tipo_documento" />
+                <ScalarProperty Name="Detalle" ColumnName="Detalle" />
+                <ScalarProperty Name="Glosa" ColumnName="Glosa" />
+                <ScalarProperty Name="TipoMov" ColumnName="TipoMov" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="SubCuenta2" ColumnName="SubCuenta2" />
+                <ScalarProperty Name="SubCuenta1" ColumnName="SubCuenta1" />
+                <ScalarProperty Name="SubCuenta" ColumnName="SubCuenta" />
+                <ScalarProperty Name="Cuenta" ColumnName="Cuenta" />
+                <ScalarProperty Name="SubGrupo" ColumnName="SubGrupo" />
+                <ScalarProperty Name="Grupo" ColumnName="Grupo" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="centro" ColumnName="centro" />
+                <ScalarProperty Name="Empresa" ColumnName="Empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

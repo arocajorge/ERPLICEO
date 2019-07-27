@@ -1,0 +1,1350 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model_compras.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="com_catalogo">
+          <Key>
+            <PropertyRef Name="IdCatalogocompra" />
+          </Key>
+          <Property Name="IdCatalogocompra" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="IdCatalogocompra_tipo" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="CodCatalogo" Type="varchar" MaxLength="15" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Abrebiatura" Type="varchar" MaxLength="10" />
+          <Property Name="NombreIngles" Type="varchar" MaxLength="50" />
+          <Property Name="Orden" Type="int" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
+          <Property Name="FechaUltMod" Type="datetime" />
+          <Property Name="nom_pc" Type="varchar" MaxLength="50" />
+          <Property Name="ip" Type="varchar" MaxLength="25" />
+          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltAnu" Type="datetime" />
+          <Property Name="MotiAnula" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="com_catalogo_tipo">
+          <Key>
+            <PropertyRef Name="IdCatalogocompra_tipo" />
+          </Key>
+          <Property Name="IdCatalogocompra_tipo" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="com_comprador">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdComprador" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdComprador" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdUsuario_com" Type="varchar" MaxLength="50" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_Transac" Type="datetime" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltMod" Type="datetime" />
+          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltAnu" Type="datetime" />
+          <Property Name="MotiAnula" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="com_departamento">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdDepartamento" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdDepartamento" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="nom_departamento" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="50" />
+          <Property Name="Fecha_Transac" Type="datetime" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="50" />
+          <Property Name="Fecha_UltMod" Type="datetime" />
+          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="50" />
+          <Property Name="Fecha_UltAnu" Type="datetime" />
+          <Property Name="MotiAnula" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="com_estado_cierre">
+          <Key>
+            <PropertyRef Name="IdEstado_cierre" />
+          </Key>
+          <Property Name="IdEstado_cierre" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="estado" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Fecha_Transac" Type="datetime" />
+          <Property Name="Fecha_UltMod" Type="datetime" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="25" />
+          <Property Name="FechaHoraAnul" Type="datetime" />
+          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="25" />
+          <Property Name="MotivoAnulacion" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="com_ordencompra_local">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdOrdenCompra" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdOrdenCompra" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="SecuenciaTipo" Type="int" Nullable="false" />
+          <Property Name="IdProveedor" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdTerminoPago" Type="int" Nullable="false" />
+          <Property Name="oc_plazo" Type="int" Nullable="false" />
+          <Property Name="oc_fecha" Type="datetime" Nullable="false" />
+          <Property Name="oc_observacion" Type="varchar(max)" />
+          <Property Name="Estado" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="IdEstadoAprobacion_cat" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="IdDepartamento" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="oc_fechaVencimiento" Type="datetime" Nullable="false" />
+          <Property Name="IdEstado_cierre" Type="varchar" MaxLength="25" />
+          <Property Name="IdComprador" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdUsuarioAprobacion" Type="varchar" MaxLength="20" />
+          <Property Name="MotivoAprobacion" Type="varchar" MaxLength="1000" />
+          <Property Name="FechaAprobacion" Type="datetime" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="25" />
+          <Property Name="Fecha_Transac" Type="datetime" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="50" />
+          <Property Name="Fecha_UltMod" Type="datetime" />
+          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="50" />
+          <Property Name="Fecha_UltAnu" Type="datetime" />
+          <Property Name="MotivoAnulacion" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="com_ordencompra_local_det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdOrdenCompra" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdOrdenCompra" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="do_Cantidad" Type="float" Nullable="false" />
+          <Property Name="do_precioCompra" Type="float" Nullable="false" />
+          <Property Name="do_porc_des" Type="float" Nullable="false" />
+          <Property Name="do_descuento" Type="float" Nullable="false" />
+          <Property Name="do_precioFinal" Type="float" Nullable="false" />
+          <Property Name="do_subtotal" Type="float" Nullable="false" />
+          <Property Name="do_iva" Type="float" Nullable="false" />
+          <Property Name="do_total" Type="float" Nullable="false" />
+          <Property Name="do_observacion" Type="varchar(max)" />
+          <Property Name="IdPunto_cargo_grupo" Type="int" />
+          <Property Name="IdPunto_cargo" Type="int" />
+          <Property Name="IdUnidadMedida" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Por_Iva" Type="float" Nullable="false" />
+          <Property Name="IdCod_Impuesto" Type="varchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="com_parametro">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdEstadoAprobacion_OC" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="IdMovi_inven_tipo_OC" Type="int" Nullable="false" />
+          <Property Name="IdEstadoAnulacion_OC" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="IdEstado_cierre" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="DiasTransaccionesAFuturo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="com_solicitante">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSolicitante" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSolicitante" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="nom_solicitante" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="estado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="cedula" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdPersona" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_Transac" Type="datetime" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltMod" Type="datetime" />
+          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltAnu" Type="datetime" />
+          <Property Name="MotiAnula" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="com_TerminoPago">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdTerminoPago" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdTerminoPago" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Dias" Type="int" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="50" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="50" />
+          <Property Name="FechaUltMod" Type="datetime" />
+          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="50" />
+          <Property Name="Fecha_UltAnu" Type="datetime" />
+          <Property Name="MotiAnula" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwcom_ordencompra_local' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwcom_ordencompra_local">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdOrdenCompra" />
+            <PropertyRef Name="Tipo" />
+            <PropertyRef Name="SecuenciaTipo" />
+            <PropertyRef Name="oc_fecha" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="IdEstadoAprobacion_cat" />
+            <PropertyRef Name="EstadoAprobacion" />
+            <PropertyRef Name="EstadoCierre" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="oc_plazo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdOrdenCompra" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="SecuenciaTipo" Type="int" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="29" />
+          <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" />
+          <Property Name="oc_fecha" Type="datetime" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Total" Type="float" />
+          <Property Name="IdEstadoAprobacion_cat" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="EstadoAprobacion" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="oc_observacion" Type="varchar(max)" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+          <Property Name="IdEstado_cierre" Type="varchar" MaxLength="25" />
+          <Property Name="EstadoCierre" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="TerminoPago" Type="varchar" MaxLength="500" />
+          <Property Name="oc_plazo" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwcom_ordencompra_local_detPorIngresar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwcom_ordencompra_local_detPorIngresar">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdOrdenCompra" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="Tipo" />
+            <PropertyRef Name="SecuenciaTipo" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="do_Cantidad" />
+            <PropertyRef Name="do_precioFinal" />
+            <PropertyRef Name="CantidadIngresada" />
+            <PropertyRef Name="Saldo" />
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="oc_fecha" />
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdOrdenCompra" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="SecuenciaTipo" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="pr_descripcion" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="do_Cantidad" Type="float" Nullable="false" />
+          <Property Name="do_precioFinal" Type="float" Nullable="false" />
+          <Property Name="CantidadIngresada" Type="float" Nullable="false" />
+          <Property Name="Saldo" Type="float" Nullable="false" />
+          <Property Name="IdUnidadMedida" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="oc_observacion" Type="varchar(max)" />
+          <Property Name="oc_fecha" Type="datetime" Nullable="false" />
+          <Property Name="IdProveedor" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwcom_ordenservicio_detPorIngresar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.web.vwcom_ordencompra_local_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwcom_ordencompra_local_det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdOrdenCompra" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="do_Cantidad" />
+            <PropertyRef Name="do_precioCompra" />
+            <PropertyRef Name="do_porc_des" />
+            <PropertyRef Name="do_descuento" />
+            <PropertyRef Name="do_precioFinal" />
+            <PropertyRef Name="do_subtotal" />
+            <PropertyRef Name="do_iva" />
+            <PropertyRef Name="do_total" />
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="Por_Iva" />
+            <PropertyRef Name="IdCod_Impuesto" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdOrdenCompra" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="do_Cantidad" Type="float" Nullable="false" />
+          <Property Name="do_precioCompra" Type="float" Nullable="false" />
+          <Property Name="do_porc_des" Type="float" Nullable="false" />
+          <Property Name="do_descuento" Type="float" Nullable="false" />
+          <Property Name="do_precioFinal" Type="float" Nullable="false" />
+          <Property Name="do_subtotal" Type="float" Nullable="false" />
+          <Property Name="do_iva" Type="float" Nullable="false" />
+          <Property Name="do_total" Type="float" Nullable="false" />
+          <Property Name="do_observacion" Type="varchar(max)" />
+          <Property Name="IdUnidadMedida" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Por_Iva" Type="float" Nullable="false" />
+          <Property Name="IdCod_Impuesto" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="pr_descripcion" Type="nvarchar" MaxLength="651" />
+        </EntityType>
+        <Association Name="FK_com_catalogo_com_catalogo_tipo">
+          <End Role="com_catalogo_tipo" Type="Self.com_catalogo_tipo" Multiplicity="1" />
+          <End Role="com_catalogo" Type="Self.com_catalogo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_catalogo_tipo">
+              <PropertyRef Name="IdCatalogocompra_tipo" />
+            </Principal>
+            <Dependent Role="com_catalogo">
+              <PropertyRef Name="IdCatalogocompra_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_com_ordencompra_local_com_catalogo">
+          <End Role="com_catalogo" Type="Self.com_catalogo" Multiplicity="1" />
+          <End Role="com_ordencompra_local" Type="Self.com_ordencompra_local" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_catalogo">
+              <PropertyRef Name="IdCatalogocompra" />
+            </Principal>
+            <Dependent Role="com_ordencompra_local">
+              <PropertyRef Name="IdEstadoAprobacion_cat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_com_ordencompra_local_com_comprador">
+          <End Role="com_comprador" Type="Self.com_comprador" Multiplicity="1" />
+          <End Role="com_ordencompra_local" Type="Self.com_ordencompra_local" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_comprador">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdComprador" />
+            </Principal>
+            <Dependent Role="com_ordencompra_local">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdComprador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_com_ordencompra_local_com_departamento">
+          <End Role="com_departamento" Type="Self.com_departamento" Multiplicity="1" />
+          <End Role="com_ordencompra_local" Type="Self.com_ordencompra_local" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_departamento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdDepartamento" />
+            </Principal>
+            <Dependent Role="com_ordencompra_local">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdDepartamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_com_ordencompra_local_com_estado_cierre">
+          <End Role="com_estado_cierre" Type="Self.com_estado_cierre" Multiplicity="0..1" />
+          <End Role="com_ordencompra_local" Type="Self.com_ordencompra_local" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_estado_cierre">
+              <PropertyRef Name="IdEstado_cierre" />
+            </Principal>
+            <Dependent Role="com_ordencompra_local">
+              <PropertyRef Name="IdEstado_cierre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_com_ordencompra_local_com_TerminoPago1">
+          <End Role="com_TerminoPago" Type="Self.com_TerminoPago" Multiplicity="1" />
+          <End Role="com_ordencompra_local" Type="Self.com_ordencompra_local" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_TerminoPago">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdTerminoPago" />
+            </Principal>
+            <Dependent Role="com_ordencompra_local">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdTerminoPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_com_ordencompra_local_det_com_ordencompra_local">
+          <End Role="com_ordencompra_local" Type="Self.com_ordencompra_local" Multiplicity="1" />
+          <End Role="com_ordencompra_local_det" Type="Self.com_ordencompra_local_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_ordencompra_local">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdOrdenCompra" />
+            </Principal>
+            <Dependent Role="com_ordencompra_local_det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdOrdenCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_com_parametro_com_catalogo">
+          <End Role="com_catalogo" Type="Self.com_catalogo" Multiplicity="1" />
+          <End Role="com_parametro" Type="Self.com_parametro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_catalogo">
+              <PropertyRef Name="IdCatalogocompra" />
+            </Principal>
+            <Dependent Role="com_parametro">
+              <PropertyRef Name="IdEstadoAprobacion_OC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_com_parametro_com_catalogo1">
+          <End Role="com_catalogo" Type="Self.com_catalogo" Multiplicity="1" />
+          <End Role="com_parametro" Type="Self.com_parametro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_catalogo">
+              <PropertyRef Name="IdCatalogocompra" />
+            </Principal>
+            <Dependent Role="com_parametro">
+              <PropertyRef Name="IdEstadoAnulacion_OC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_com_parametro_com_estado_cierre">
+          <End Role="com_estado_cierre" Type="Self.com_estado_cierre" Multiplicity="1" />
+          <End Role="com_parametro" Type="Self.com_parametro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_estado_cierre">
+              <PropertyRef Name="IdEstado_cierre" />
+            </Principal>
+            <Dependent Role="com_parametro">
+              <PropertyRef Name="IdEstado_cierre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Model_comprasStoreContainer">
+          <EntitySet Name="com_catalogo" EntityType="Self.com_catalogo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="com_catalogo_tipo" EntityType="Self.com_catalogo_tipo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="com_comprador" EntityType="Self.com_comprador" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="com_departamento" EntityType="Self.com_departamento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="com_estado_cierre" EntityType="Self.com_estado_cierre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="com_ordencompra_local" EntityType="Self.com_ordencompra_local" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="com_ordencompra_local_det" EntityType="Self.com_ordencompra_local_det" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="com_parametro" EntityType="Self.com_parametro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="com_solicitante" EntityType="Self.com_solicitante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="com_TerminoPago" EntityType="Self.com_TerminoPago" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwcom_ordencompra_local" EntityType="Self.vwcom_ordencompra_local" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwcom_ordencompra_local].[IdEmpresa] AS [IdEmpresa], 
+    [vwcom_ordencompra_local].[IdSucursal] AS [IdSucursal], 
+    [vwcom_ordencompra_local].[IdOrdenCompra] AS [IdOrdenCompra], 
+    [vwcom_ordencompra_local].[Tipo] AS [Tipo], 
+    [vwcom_ordencompra_local].[SecuenciaTipo] AS [SecuenciaTipo], 
+    [vwcom_ordencompra_local].[Codigo] AS [Codigo], 
+    [vwcom_ordencompra_local].[Su_Descripcion] AS [Su_Descripcion], 
+    [vwcom_ordencompra_local].[oc_fecha] AS [oc_fecha], 
+    [vwcom_ordencompra_local].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [vwcom_ordencompra_local].[Total] AS [Total], 
+    [vwcom_ordencompra_local].[IdEstadoAprobacion_cat] AS [IdEstadoAprobacion_cat], 
+    [vwcom_ordencompra_local].[EstadoAprobacion] AS [EstadoAprobacion], 
+    [vwcom_ordencompra_local].[oc_observacion] AS [oc_observacion], 
+    [vwcom_ordencompra_local].[Descripcion] AS [Descripcion], 
+    [vwcom_ordencompra_local].[IdEstado_cierre] AS [IdEstado_cierre], 
+    [vwcom_ordencompra_local].[EstadoCierre] AS [EstadoCierre], 
+    [vwcom_ordencompra_local].[Estado] AS [Estado], 
+    [vwcom_ordencompra_local].[TerminoPago] AS [TerminoPago], 
+    [vwcom_ordencompra_local].[oc_plazo] AS [oc_plazo]
+    FROM [dbo].[vwcom_ordencompra_local] AS [vwcom_ordencompra_local]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwcom_ordencompra_local_detPorIngresar" EntityType="Self.vwcom_ordencompra_local_detPorIngresar" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwcom_ordencompra_local_detPorIngresar].[IdEmpresa] AS [IdEmpresa], 
+    [vwcom_ordencompra_local_detPorIngresar].[IdSucursal] AS [IdSucursal], 
+    [vwcom_ordencompra_local_detPorIngresar].[IdOrdenCompra] AS [IdOrdenCompra], 
+    [vwcom_ordencompra_local_detPorIngresar].[Secuencia] AS [Secuencia], 
+    [vwcom_ordencompra_local_detPorIngresar].[Tipo] AS [Tipo], 
+    [vwcom_ordencompra_local_detPorIngresar].[SecuenciaTipo] AS [SecuenciaTipo], 
+    [vwcom_ordencompra_local_detPorIngresar].[IdProducto] AS [IdProducto], 
+    [vwcom_ordencompra_local_detPorIngresar].[pr_descripcion] AS [pr_descripcion], 
+    [vwcom_ordencompra_local_detPorIngresar].[do_Cantidad] AS [do_Cantidad], 
+    [vwcom_ordencompra_local_detPorIngresar].[do_precioFinal] AS [do_precioFinal], 
+    [vwcom_ordencompra_local_detPorIngresar].[CantidadIngresada] AS [CantidadIngresada], 
+    [vwcom_ordencompra_local_detPorIngresar].[Saldo] AS [Saldo], 
+    [vwcom_ordencompra_local_detPorIngresar].[IdUnidadMedida] AS [IdUnidadMedida], 
+    [vwcom_ordencompra_local_detPorIngresar].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [vwcom_ordencompra_local_detPorIngresar].[oc_observacion] AS [oc_observacion], 
+    [vwcom_ordencompra_local_detPorIngresar].[oc_fecha] AS [oc_fecha], 
+    [vwcom_ordencompra_local_detPorIngresar].[IdProveedor] AS [IdProveedor]
+    FROM [dbo].[vwcom_ordencompra_local_detPorIngresar] AS [vwcom_ordencompra_local_detPorIngresar]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwcom_ordencompra_local_det" EntityType="Self.vwcom_ordencompra_local_det" store:Type="Views" store:Schema="web">
+            <DefiningQuery>SELECT 
+    [vwcom_ordencompra_local_det].[IdEmpresa] AS [IdEmpresa], 
+    [vwcom_ordencompra_local_det].[IdSucursal] AS [IdSucursal], 
+    [vwcom_ordencompra_local_det].[IdOrdenCompra] AS [IdOrdenCompra], 
+    [vwcom_ordencompra_local_det].[Secuencia] AS [Secuencia], 
+    [vwcom_ordencompra_local_det].[IdProducto] AS [IdProducto], 
+    [vwcom_ordencompra_local_det].[do_Cantidad] AS [do_Cantidad], 
+    [vwcom_ordencompra_local_det].[do_precioCompra] AS [do_precioCompra], 
+    [vwcom_ordencompra_local_det].[do_porc_des] AS [do_porc_des], 
+    [vwcom_ordencompra_local_det].[do_descuento] AS [do_descuento], 
+    [vwcom_ordencompra_local_det].[do_precioFinal] AS [do_precioFinal], 
+    [vwcom_ordencompra_local_det].[do_subtotal] AS [do_subtotal], 
+    [vwcom_ordencompra_local_det].[do_iva] AS [do_iva], 
+    [vwcom_ordencompra_local_det].[do_total] AS [do_total], 
+    [vwcom_ordencompra_local_det].[do_observacion] AS [do_observacion], 
+    [vwcom_ordencompra_local_det].[IdUnidadMedida] AS [IdUnidadMedida], 
+    [vwcom_ordencompra_local_det].[Por_Iva] AS [Por_Iva], 
+    [vwcom_ordencompra_local_det].[IdCod_Impuesto] AS [IdCod_Impuesto], 
+    [vwcom_ordencompra_local_det].[pr_descripcion] AS [pr_descripcion]
+    FROM [web].[vwcom_ordencompra_local_det] AS [vwcom_ordencompra_local_det]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_com_catalogo_com_catalogo_tipo" Association="Self.FK_com_catalogo_com_catalogo_tipo">
+            <End Role="com_catalogo_tipo" EntitySet="com_catalogo_tipo" />
+            <End Role="com_catalogo" EntitySet="com_catalogo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_com_ordencompra_local_com_catalogo" Association="Self.FK_com_ordencompra_local_com_catalogo">
+            <End Role="com_catalogo" EntitySet="com_catalogo" />
+            <End Role="com_ordencompra_local" EntitySet="com_ordencompra_local" />
+          </AssociationSet>
+          <AssociationSet Name="FK_com_ordencompra_local_com_comprador" Association="Self.FK_com_ordencompra_local_com_comprador">
+            <End Role="com_comprador" EntitySet="com_comprador" />
+            <End Role="com_ordencompra_local" EntitySet="com_ordencompra_local" />
+          </AssociationSet>
+          <AssociationSet Name="FK_com_ordencompra_local_com_departamento" Association="Self.FK_com_ordencompra_local_com_departamento">
+            <End Role="com_departamento" EntitySet="com_departamento" />
+            <End Role="com_ordencompra_local" EntitySet="com_ordencompra_local" />
+          </AssociationSet>
+          <AssociationSet Name="FK_com_ordencompra_local_com_estado_cierre" Association="Self.FK_com_ordencompra_local_com_estado_cierre">
+            <End Role="com_estado_cierre" EntitySet="com_estado_cierre" />
+            <End Role="com_ordencompra_local" EntitySet="com_ordencompra_local" />
+          </AssociationSet>
+          <AssociationSet Name="FK_com_ordencompra_local_com_TerminoPago1" Association="Self.FK_com_ordencompra_local_com_TerminoPago1">
+            <End Role="com_TerminoPago" EntitySet="com_TerminoPago" />
+            <End Role="com_ordencompra_local" EntitySet="com_ordencompra_local" />
+          </AssociationSet>
+          <AssociationSet Name="FK_com_ordencompra_local_det_com_ordencompra_local" Association="Self.FK_com_ordencompra_local_det_com_ordencompra_local">
+            <End Role="com_ordencompra_local" EntitySet="com_ordencompra_local" />
+            <End Role="com_ordencompra_local_det" EntitySet="com_ordencompra_local_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_com_parametro_com_catalogo" Association="Self.FK_com_parametro_com_catalogo">
+            <End Role="com_catalogo" EntitySet="com_catalogo" />
+            <End Role="com_parametro" EntitySet="com_parametro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_com_parametro_com_catalogo1" Association="Self.FK_com_parametro_com_catalogo1">
+            <End Role="com_catalogo" EntitySet="com_catalogo" />
+            <End Role="com_parametro" EntitySet="com_parametro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_com_parametro_com_estado_cierre" Association="Self.FK_com_parametro_com_estado_cierre">
+            <End Role="com_estado_cierre" EntitySet="com_estado_cierre" />
+            <End Role="com_parametro" EntitySet="com_parametro" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model_compras" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="com_catalogo">
+          <Key>
+            <PropertyRef Name="IdCatalogocompra" />
+          </Key>
+          <Property Name="IdCatalogocompra" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdCatalogocompra_tipo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CodCatalogo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Abrebiatura" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NombreIngles" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Orden" Type="Int32" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaUltMod" Type="DateTime" Precision="3" />
+          <Property Name="nom_pc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ip" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="MotiAnula" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="com_catalogo_tipo" Relationship="Self.FK_com_catalogo_com_catalogo_tipo" FromRole="com_catalogo" ToRole="com_catalogo_tipo" />
+          <NavigationProperty Name="com_ordencompra_local" Relationship="Self.FK_com_ordencompra_local_com_catalogo" FromRole="com_catalogo" ToRole="com_ordencompra_local" />
+          <NavigationProperty Name="com_parametro" Relationship="Self.FK_com_parametro_com_catalogo" FromRole="com_catalogo" ToRole="com_parametro" />
+          <NavigationProperty Name="com_parametro1" Relationship="Self.FK_com_parametro_com_catalogo1" FromRole="com_catalogo" ToRole="com_parametro" />
+        </EntityType>
+        <EntityType Name="com_catalogo_tipo">
+          <Key>
+            <PropertyRef Name="IdCatalogocompra_tipo" />
+          </Key>
+          <Property Name="IdCatalogocompra_tipo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="com_catalogo" Relationship="Self.FK_com_catalogo_com_catalogo_tipo" FromRole="com_catalogo_tipo" ToRole="com_catalogo" />
+        </EntityType>
+        <EntityType Name="com_comprador">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdComprador" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdComprador" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdUsuario_com" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="MotiAnula" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="com_ordencompra_local" Relationship="Self.FK_com_ordencompra_local_com_comprador" FromRole="com_comprador" ToRole="com_ordencompra_local" />
+        </EntityType>
+        <EntityType Name="com_departamento">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdDepartamento" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdDepartamento" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="nom_departamento" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="MotiAnula" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="com_ordencompra_local" Relationship="Self.FK_com_ordencompra_local_com_departamento" FromRole="com_departamento" ToRole="com_ordencompra_local" />
+        </EntityType>
+        <EntityType Name="com_estado_cierre">
+          <Key>
+            <PropertyRef Name="IdEstado_cierre" />
+          </Key>
+          <Property Name="IdEstado_cierre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="FechaHoraAnul" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="com_ordencompra_local" Relationship="Self.FK_com_ordencompra_local_com_estado_cierre" FromRole="com_estado_cierre" ToRole="com_ordencompra_local" />
+          <NavigationProperty Name="com_parametro" Relationship="Self.FK_com_parametro_com_estado_cierre" FromRole="com_estado_cierre" ToRole="com_parametro" />
+        </EntityType>
+        <EntityType Name="com_ordencompra_local">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdOrdenCompra" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdOrdenCompra" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Tipo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SecuenciaTipo" Type="Int32" Nullable="false" />
+          <Property Name="IdProveedor" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdTerminoPago" Type="Int32" Nullable="false" />
+          <Property Name="oc_plazo" Type="Int32" Nullable="false" />
+          <Property Name="oc_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="oc_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdEstadoAprobacion_cat" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdDepartamento" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="oc_fechaVencimiento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdEstado_cierre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IdComprador" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdUsuarioAprobacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MotivoAprobacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAprobacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuario" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="com_catalogo" Relationship="Self.FK_com_ordencompra_local_com_catalogo" FromRole="com_ordencompra_local" ToRole="com_catalogo" />
+          <NavigationProperty Name="com_comprador" Relationship="Self.FK_com_ordencompra_local_com_comprador" FromRole="com_ordencompra_local" ToRole="com_comprador" />
+          <NavigationProperty Name="com_departamento" Relationship="Self.FK_com_ordencompra_local_com_departamento" FromRole="com_ordencompra_local" ToRole="com_departamento" />
+          <NavigationProperty Name="com_estado_cierre" Relationship="Self.FK_com_ordencompra_local_com_estado_cierre" FromRole="com_ordencompra_local" ToRole="com_estado_cierre" />
+          <NavigationProperty Name="com_TerminoPago" Relationship="Self.FK_com_ordencompra_local_com_TerminoPago1" FromRole="com_ordencompra_local" ToRole="com_TerminoPago" />
+          <NavigationProperty Name="com_ordencompra_local_det" Relationship="Self.FK_com_ordencompra_local_det_com_ordencompra_local" FromRole="com_ordencompra_local" ToRole="com_ordencompra_local_det" />
+        </EntityType>
+        <EntityType Name="com_ordencompra_local_det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdOrdenCompra" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdOrdenCompra" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="do_Cantidad" Type="Double" Nullable="false" />
+          <Property Name="do_precioCompra" Type="Double" Nullable="false" />
+          <Property Name="do_porc_des" Type="Double" Nullable="false" />
+          <Property Name="do_descuento" Type="Double" Nullable="false" />
+          <Property Name="do_precioFinal" Type="Double" Nullable="false" />
+          <Property Name="do_subtotal" Type="Double" Nullable="false" />
+          <Property Name="do_iva" Type="Double" Nullable="false" />
+          <Property Name="do_total" Type="Double" Nullable="false" />
+          <Property Name="do_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdPunto_cargo_grupo" Type="Int32" />
+          <Property Name="IdPunto_cargo" Type="Int32" />
+          <Property Name="IdUnidadMedida" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Por_Iva" Type="Double" Nullable="false" />
+          <Property Name="IdCod_Impuesto" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="com_ordencompra_local" Relationship="Self.FK_com_ordencompra_local_det_com_ordencompra_local" FromRole="com_ordencompra_local_det" ToRole="com_ordencompra_local" />
+        </EntityType>
+        <EntityType Name="com_parametro">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdEstadoAprobacion_OC" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdMovi_inven_tipo_OC" Type="Int32" Nullable="false" />
+          <Property Name="IdEstadoAnulacion_OC" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdEstado_cierre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DiasTransaccionesAFuturo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="com_catalogo" Relationship="Self.FK_com_parametro_com_catalogo" FromRole="com_parametro" ToRole="com_catalogo" />
+          <NavigationProperty Name="com_catalogo1" Relationship="Self.FK_com_parametro_com_catalogo1" FromRole="com_parametro" ToRole="com_catalogo" />
+          <NavigationProperty Name="com_estado_cierre" Relationship="Self.FK_com_parametro_com_estado_cierre" FromRole="com_parametro" ToRole="com_estado_cierre" />
+        </EntityType>
+        <EntityType Name="com_solicitante">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSolicitante" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSolicitante" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="nom_solicitante" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="cedula" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdPersona" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="MotiAnula" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="com_TerminoPago">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdTerminoPago" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdTerminoPago" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Dias" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaUltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="MotiAnula" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="com_ordencompra_local" Relationship="Self.FK_com_ordencompra_local_com_TerminoPago1" FromRole="com_TerminoPago" ToRole="com_ordencompra_local" />
+        </EntityType>
+        <EntityType Name="vwcom_ordencompra_local">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdOrdenCompra" />
+            <PropertyRef Name="Tipo" />
+            <PropertyRef Name="SecuenciaTipo" />
+            <PropertyRef Name="oc_fecha" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="IdEstadoAprobacion_cat" />
+            <PropertyRef Name="EstadoAprobacion" />
+            <PropertyRef Name="EstadoCierre" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="oc_plazo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdOrdenCompra" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Tipo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SecuenciaTipo" Type="Int32" Nullable="false" />
+          <Property Name="Codigo" Type="String" MaxLength="29" FixedLength="false" Unicode="false" />
+          <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="oc_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="pe_nombreCompleto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Total" Type="Double" />
+          <Property Name="IdEstadoAprobacion_cat" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EstadoAprobacion" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="oc_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdEstado_cierre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="EstadoCierre" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TerminoPago" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="oc_plazo" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vwcom_ordencompra_local_detPorIngresar">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdOrdenCompra" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="Tipo" />
+            <PropertyRef Name="SecuenciaTipo" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="pr_descripcion" />
+            <PropertyRef Name="do_Cantidad" />
+            <PropertyRef Name="do_precioFinal" />
+            <PropertyRef Name="CantidadIngresada" />
+            <PropertyRef Name="Saldo" />
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="oc_fecha" />
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdOrdenCompra" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="Tipo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SecuenciaTipo" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="pr_descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="do_Cantidad" Type="Double" Nullable="false" />
+          <Property Name="do_precioFinal" Type="Double" Nullable="false" />
+          <Property Name="CantidadIngresada" Type="Double" Nullable="false" />
+          <Property Name="Saldo" Type="Double" Nullable="false" />
+          <Property Name="IdUnidadMedida" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="oc_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="oc_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdProveedor" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vwcom_ordencompra_local_det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdOrdenCompra" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="do_Cantidad" />
+            <PropertyRef Name="do_precioCompra" />
+            <PropertyRef Name="do_porc_des" />
+            <PropertyRef Name="do_descuento" />
+            <PropertyRef Name="do_precioFinal" />
+            <PropertyRef Name="do_subtotal" />
+            <PropertyRef Name="do_iva" />
+            <PropertyRef Name="do_total" />
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="Por_Iva" />
+            <PropertyRef Name="IdCod_Impuesto" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdOrdenCompra" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="do_Cantidad" Type="Double" Nullable="false" />
+          <Property Name="do_precioCompra" Type="Double" Nullable="false" />
+          <Property Name="do_porc_des" Type="Double" Nullable="false" />
+          <Property Name="do_descuento" Type="Double" Nullable="false" />
+          <Property Name="do_precioFinal" Type="Double" Nullable="false" />
+          <Property Name="do_subtotal" Type="Double" Nullable="false" />
+          <Property Name="do_iva" Type="Double" Nullable="false" />
+          <Property Name="do_total" Type="Double" Nullable="false" />
+          <Property Name="do_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdUnidadMedida" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Por_Iva" Type="Double" Nullable="false" />
+          <Property Name="IdCod_Impuesto" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pr_descripcion" Type="String" MaxLength="651" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_com_catalogo_com_catalogo_tipo">
+          <End Role="com_catalogo_tipo" Type="Self.com_catalogo_tipo" Multiplicity="1" />
+          <End Role="com_catalogo" Type="Self.com_catalogo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_catalogo_tipo">
+              <PropertyRef Name="IdCatalogocompra_tipo" />
+            </Principal>
+            <Dependent Role="com_catalogo">
+              <PropertyRef Name="IdCatalogocompra_tipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_com_ordencompra_local_com_catalogo">
+          <End Role="com_catalogo" Type="Self.com_catalogo" Multiplicity="1" />
+          <End Role="com_ordencompra_local" Type="Self.com_ordencompra_local" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_catalogo">
+              <PropertyRef Name="IdCatalogocompra" />
+            </Principal>
+            <Dependent Role="com_ordencompra_local">
+              <PropertyRef Name="IdEstadoAprobacion_cat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_com_parametro_com_catalogo">
+          <End Role="com_catalogo" Type="Self.com_catalogo" Multiplicity="1" />
+          <End Role="com_parametro" Type="Self.com_parametro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_catalogo">
+              <PropertyRef Name="IdCatalogocompra" />
+            </Principal>
+            <Dependent Role="com_parametro">
+              <PropertyRef Name="IdEstadoAprobacion_OC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_com_parametro_com_catalogo1">
+          <End Role="com_catalogo" Type="Self.com_catalogo" Multiplicity="1" />
+          <End Role="com_parametro" Type="Self.com_parametro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_catalogo">
+              <PropertyRef Name="IdCatalogocompra" />
+            </Principal>
+            <Dependent Role="com_parametro">
+              <PropertyRef Name="IdEstadoAnulacion_OC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_com_ordencompra_local_com_comprador">
+          <End Role="com_comprador" Type="Self.com_comprador" Multiplicity="1" />
+          <End Role="com_ordencompra_local" Type="Self.com_ordencompra_local" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_comprador">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdComprador" />
+            </Principal>
+            <Dependent Role="com_ordencompra_local">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdComprador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_com_ordencompra_local_com_departamento">
+          <End Role="com_departamento" Type="Self.com_departamento" Multiplicity="1" />
+          <End Role="com_ordencompra_local" Type="Self.com_ordencompra_local" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_departamento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdDepartamento" />
+            </Principal>
+            <Dependent Role="com_ordencompra_local">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdDepartamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_com_ordencompra_local_com_estado_cierre">
+          <End Role="com_estado_cierre" Type="Self.com_estado_cierre" Multiplicity="0..1" />
+          <End Role="com_ordencompra_local" Type="Self.com_ordencompra_local" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_estado_cierre">
+              <PropertyRef Name="IdEstado_cierre" />
+            </Principal>
+            <Dependent Role="com_ordencompra_local">
+              <PropertyRef Name="IdEstado_cierre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_com_parametro_com_estado_cierre">
+          <End Role="com_estado_cierre" Type="Self.com_estado_cierre" Multiplicity="1" />
+          <End Role="com_parametro" Type="Self.com_parametro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_estado_cierre">
+              <PropertyRef Name="IdEstado_cierre" />
+            </Principal>
+            <Dependent Role="com_parametro">
+              <PropertyRef Name="IdEstado_cierre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_com_ordencompra_local_com_TerminoPago1">
+          <End Role="com_TerminoPago" Type="Self.com_TerminoPago" Multiplicity="1" />
+          <End Role="com_ordencompra_local" Type="Self.com_ordencompra_local" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_TerminoPago">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdTerminoPago" />
+            </Principal>
+            <Dependent Role="com_ordencompra_local">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdTerminoPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_com_ordencompra_local_det_com_ordencompra_local">
+          <End Role="com_ordencompra_local" Type="Self.com_ordencompra_local" Multiplicity="1" />
+          <End Role="com_ordencompra_local_det" Type="Self.com_ordencompra_local_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="com_ordencompra_local">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdOrdenCompra" />
+            </Principal>
+            <Dependent Role="com_ordencompra_local_det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdSucursal" />
+              <PropertyRef Name="IdOrdenCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities_compras" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="com_catalogo" EntityType="Self.com_catalogo" />
+          <EntitySet Name="com_catalogo_tipo" EntityType="Self.com_catalogo_tipo" />
+          <EntitySet Name="com_comprador" EntityType="Self.com_comprador" />
+          <EntitySet Name="com_departamento" EntityType="Self.com_departamento" />
+          <EntitySet Name="com_estado_cierre" EntityType="Self.com_estado_cierre" />
+          <EntitySet Name="com_ordencompra_local" EntityType="Self.com_ordencompra_local" />
+          <EntitySet Name="com_ordencompra_local_det" EntityType="Self.com_ordencompra_local_det" />
+          <EntitySet Name="com_parametro" EntityType="Self.com_parametro" />
+          <EntitySet Name="com_solicitante" EntityType="Self.com_solicitante" />
+          <EntitySet Name="com_TerminoPago" EntityType="Self.com_TerminoPago" />
+          <EntitySet Name="vwcom_ordencompra_local" EntityType="Self.vwcom_ordencompra_local" />
+          <EntitySet Name="vwcom_ordencompra_local_detPorIngresar" EntityType="Self.vwcom_ordencompra_local_detPorIngresar" />
+          <EntitySet Name="vwcom_ordencompra_local_det" EntityType="Self.vwcom_ordencompra_local_det" />
+          <AssociationSet Name="FK_com_catalogo_com_catalogo_tipo" Association="Self.FK_com_catalogo_com_catalogo_tipo">
+            <End Role="com_catalogo_tipo" EntitySet="com_catalogo_tipo" />
+            <End Role="com_catalogo" EntitySet="com_catalogo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_com_ordencompra_local_com_catalogo" Association="Self.FK_com_ordencompra_local_com_catalogo">
+            <End Role="com_catalogo" EntitySet="com_catalogo" />
+            <End Role="com_ordencompra_local" EntitySet="com_ordencompra_local" />
+          </AssociationSet>
+          <AssociationSet Name="FK_com_parametro_com_catalogo" Association="Self.FK_com_parametro_com_catalogo">
+            <End Role="com_catalogo" EntitySet="com_catalogo" />
+            <End Role="com_parametro" EntitySet="com_parametro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_com_parametro_com_catalogo1" Association="Self.FK_com_parametro_com_catalogo1">
+            <End Role="com_catalogo" EntitySet="com_catalogo" />
+            <End Role="com_parametro" EntitySet="com_parametro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_com_ordencompra_local_com_comprador" Association="Self.FK_com_ordencompra_local_com_comprador">
+            <End Role="com_comprador" EntitySet="com_comprador" />
+            <End Role="com_ordencompra_local" EntitySet="com_ordencompra_local" />
+          </AssociationSet>
+          <AssociationSet Name="FK_com_ordencompra_local_com_departamento" Association="Self.FK_com_ordencompra_local_com_departamento">
+            <End Role="com_departamento" EntitySet="com_departamento" />
+            <End Role="com_ordencompra_local" EntitySet="com_ordencompra_local" />
+          </AssociationSet>
+          <AssociationSet Name="FK_com_ordencompra_local_com_estado_cierre" Association="Self.FK_com_ordencompra_local_com_estado_cierre">
+            <End Role="com_estado_cierre" EntitySet="com_estado_cierre" />
+            <End Role="com_ordencompra_local" EntitySet="com_ordencompra_local" />
+          </AssociationSet>
+          <AssociationSet Name="FK_com_parametro_com_estado_cierre" Association="Self.FK_com_parametro_com_estado_cierre">
+            <End Role="com_estado_cierre" EntitySet="com_estado_cierre" />
+            <End Role="com_parametro" EntitySet="com_parametro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_com_ordencompra_local_com_TerminoPago1" Association="Self.FK_com_ordencompra_local_com_TerminoPago1">
+            <End Role="com_TerminoPago" EntitySet="com_TerminoPago" />
+            <End Role="com_ordencompra_local" EntitySet="com_ordencompra_local" />
+          </AssociationSet>
+          <AssociationSet Name="FK_com_ordencompra_local_det_com_ordencompra_local" Association="Self.FK_com_ordencompra_local_det_com_ordencompra_local">
+            <End Role="com_ordencompra_local" EntitySet="com_ordencompra_local" />
+            <End Role="com_ordencompra_local_det" EntitySet="com_ordencompra_local_det" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Model_comprasStoreContainer" CdmEntityContainer="Entities_compras">
+          <EntitySetMapping Name="com_catalogo">
+            <EntityTypeMapping TypeName="Model_compras.com_catalogo">
+              <MappingFragment StoreEntitySet="com_catalogo">
+                <ScalarProperty Name="IdCatalogocompra" ColumnName="IdCatalogocompra" />
+                <ScalarProperty Name="IdCatalogocompra_tipo" ColumnName="IdCatalogocompra_tipo" />
+                <ScalarProperty Name="CodCatalogo" ColumnName="CodCatalogo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Abrebiatura" ColumnName="Abrebiatura" />
+                <ScalarProperty Name="NombreIngles" ColumnName="NombreIngles" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="FechaUltMod" ColumnName="FechaUltMod" />
+                <ScalarProperty Name="nom_pc" ColumnName="nom_pc" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="MotiAnula" ColumnName="MotiAnula" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="com_catalogo_tipo">
+            <EntityTypeMapping TypeName="Model_compras.com_catalogo_tipo">
+              <MappingFragment StoreEntitySet="com_catalogo_tipo">
+                <ScalarProperty Name="IdCatalogocompra_tipo" ColumnName="IdCatalogocompra_tipo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="com_comprador">
+            <EntityTypeMapping TypeName="Model_compras.com_comprador">
+              <MappingFragment StoreEntitySet="com_comprador">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdComprador" ColumnName="IdComprador" />
+                <ScalarProperty Name="IdUsuario_com" ColumnName="IdUsuario_com" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="MotiAnula" ColumnName="MotiAnula" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="com_departamento">
+            <EntityTypeMapping TypeName="Model_compras.com_departamento">
+              <MappingFragment StoreEntitySet="com_departamento">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdDepartamento" ColumnName="IdDepartamento" />
+                <ScalarProperty Name="nom_departamento" ColumnName="nom_departamento" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="MotiAnula" ColumnName="MotiAnula" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="com_estado_cierre">
+            <EntityTypeMapping TypeName="Model_compras.com_estado_cierre">
+              <MappingFragment StoreEntitySet="com_estado_cierre">
+                <ScalarProperty Name="IdEstado_cierre" ColumnName="IdEstado_cierre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="FechaHoraAnul" ColumnName="FechaHoraAnul" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="com_ordencompra_local">
+            <EntityTypeMapping TypeName="Model_compras.com_ordencompra_local">
+              <MappingFragment StoreEntitySet="com_ordencompra_local">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="SecuenciaTipo" ColumnName="SecuenciaTipo" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="IdTerminoPago" ColumnName="IdTerminoPago" />
+                <ScalarProperty Name="oc_plazo" ColumnName="oc_plazo" />
+                <ScalarProperty Name="oc_fecha" ColumnName="oc_fecha" />
+                <ScalarProperty Name="oc_observacion" ColumnName="oc_observacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdEstadoAprobacion_cat" ColumnName="IdEstadoAprobacion_cat" />
+                <ScalarProperty Name="IdDepartamento" ColumnName="IdDepartamento" />
+                <ScalarProperty Name="oc_fechaVencimiento" ColumnName="oc_fechaVencimiento" />
+                <ScalarProperty Name="IdEstado_cierre" ColumnName="IdEstado_cierre" />
+                <ScalarProperty Name="IdComprador" ColumnName="IdComprador" />
+                <ScalarProperty Name="IdUsuarioAprobacion" ColumnName="IdUsuarioAprobacion" />
+                <ScalarProperty Name="MotivoAprobacion" ColumnName="MotivoAprobacion" />
+                <ScalarProperty Name="FechaAprobacion" ColumnName="FechaAprobacion" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="com_ordencompra_local_det">
+            <EntityTypeMapping TypeName="Model_compras.com_ordencompra_local_det">
+              <MappingFragment StoreEntitySet="com_ordencompra_local_det">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="do_Cantidad" ColumnName="do_Cantidad" />
+                <ScalarProperty Name="do_precioCompra" ColumnName="do_precioCompra" />
+                <ScalarProperty Name="do_porc_des" ColumnName="do_porc_des" />
+                <ScalarProperty Name="do_descuento" ColumnName="do_descuento" />
+                <ScalarProperty Name="do_precioFinal" ColumnName="do_precioFinal" />
+                <ScalarProperty Name="do_subtotal" ColumnName="do_subtotal" />
+                <ScalarProperty Name="do_iva" ColumnName="do_iva" />
+                <ScalarProperty Name="do_total" ColumnName="do_total" />
+                <ScalarProperty Name="do_observacion" ColumnName="do_observacion" />
+                <ScalarProperty Name="IdPunto_cargo_grupo" ColumnName="IdPunto_cargo_grupo" />
+                <ScalarProperty Name="IdPunto_cargo" ColumnName="IdPunto_cargo" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="Por_Iva" ColumnName="Por_Iva" />
+                <ScalarProperty Name="IdCod_Impuesto" ColumnName="IdCod_Impuesto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="com_parametro">
+            <EntityTypeMapping TypeName="Model_compras.com_parametro">
+              <MappingFragment StoreEntitySet="com_parametro">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdEstadoAprobacion_OC" ColumnName="IdEstadoAprobacion_OC" />
+                <ScalarProperty Name="IdMovi_inven_tipo_OC" ColumnName="IdMovi_inven_tipo_OC" />
+                <ScalarProperty Name="IdEstadoAnulacion_OC" ColumnName="IdEstadoAnulacion_OC" />
+                <ScalarProperty Name="IdEstado_cierre" ColumnName="IdEstado_cierre" />
+                <ScalarProperty Name="DiasTransaccionesAFuturo" ColumnName="DiasTransaccionesAFuturo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="com_solicitante">
+            <EntityTypeMapping TypeName="Model_compras.com_solicitante">
+              <MappingFragment StoreEntitySet="com_solicitante">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSolicitante" ColumnName="IdSolicitante" />
+                <ScalarProperty Name="nom_solicitante" ColumnName="nom_solicitante" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="cedula" ColumnName="cedula" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="MotiAnula" ColumnName="MotiAnula" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="com_TerminoPago">
+            <EntityTypeMapping TypeName="Model_compras.com_TerminoPago">
+              <MappingFragment StoreEntitySet="com_TerminoPago">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdTerminoPago" ColumnName="IdTerminoPago" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Dias" ColumnName="Dias" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="FechaUltMod" ColumnName="FechaUltMod" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="MotiAnula" ColumnName="MotiAnula" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwcom_ordencompra_local">
+            <EntityTypeMapping TypeName="Model_compras.vwcom_ordencompra_local">
+              <MappingFragment StoreEntitySet="vwcom_ordencompra_local">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="SecuenciaTipo" ColumnName="SecuenciaTipo" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="oc_fecha" ColumnName="oc_fecha" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="IdEstadoAprobacion_cat" ColumnName="IdEstadoAprobacion_cat" />
+                <ScalarProperty Name="EstadoAprobacion" ColumnName="EstadoAprobacion" />
+                <ScalarProperty Name="oc_observacion" ColumnName="oc_observacion" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdEstado_cierre" ColumnName="IdEstado_cierre" />
+                <ScalarProperty Name="EstadoCierre" ColumnName="EstadoCierre" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="TerminoPago" ColumnName="TerminoPago" />
+                <ScalarProperty Name="oc_plazo" ColumnName="oc_plazo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwcom_ordencompra_local_detPorIngresar">
+            <EntityTypeMapping TypeName="Model_compras.vwcom_ordencompra_local_detPorIngresar">
+              <MappingFragment StoreEntitySet="vwcom_ordencompra_local_detPorIngresar">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="SecuenciaTipo" ColumnName="SecuenciaTipo" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="do_Cantidad" ColumnName="do_Cantidad" />
+                <ScalarProperty Name="do_precioFinal" ColumnName="do_precioFinal" />
+                <ScalarProperty Name="CantidadIngresada" ColumnName="CantidadIngresada" />
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="oc_observacion" ColumnName="oc_observacion" />
+                <ScalarProperty Name="oc_fecha" ColumnName="oc_fecha" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwcom_ordencompra_local_det">
+            <EntityTypeMapping TypeName="Model_compras.vwcom_ordencompra_local_det">
+              <MappingFragment StoreEntitySet="vwcom_ordencompra_local_det">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="do_Cantidad" ColumnName="do_Cantidad" />
+                <ScalarProperty Name="do_precioCompra" ColumnName="do_precioCompra" />
+                <ScalarProperty Name="do_porc_des" ColumnName="do_porc_des" />
+                <ScalarProperty Name="do_descuento" ColumnName="do_descuento" />
+                <ScalarProperty Name="do_precioFinal" ColumnName="do_precioFinal" />
+                <ScalarProperty Name="do_subtotal" ColumnName="do_subtotal" />
+                <ScalarProperty Name="do_iva" ColumnName="do_iva" />
+                <ScalarProperty Name="do_total" ColumnName="do_total" />
+                <ScalarProperty Name="do_observacion" ColumnName="do_observacion" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="Por_Iva" ColumnName="Por_Iva" />
+                <ScalarProperty Name="IdCod_Impuesto" ColumnName="IdCod_Impuesto" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

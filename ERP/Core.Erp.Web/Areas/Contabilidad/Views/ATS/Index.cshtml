@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Anexo Transaccional simplificado";
+    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+   
+}

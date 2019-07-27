@@ -1,0 +1,69 @@
+﻿@model Core.Erp.Info.SeguridadAcceso.seg_Menu_x_Empresa_Info
+@{
+    ViewBag.Title = "Menú por empresa";
+    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    var selectedIDs;
+
+    function OnBeginCallback(s, e) {
+        //Pass all selected keys to GridView callback action
+        e.customArgs["selectedIDs"] = selectedIDs;
+    }
+    function OnSelectionChanged(s, e) {
+        s.GetSelectedNodeValues("IdMenu", GetSelectedNodeValuesCallback);
+    }
+    function GetSelectedNodeValuesCallback(values) {
+        //Capture all selected keys
+        selectedIDs = values.join(',');
+    }
+    function guardar() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IDs: selectedIDs
+        }
+        $("#btn_guardar").attr("disabled", true);
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("guardar", "MenuPorEmpresa", new { Area = "SeguridadAcceso" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#myform").submit();
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>
+
+@using (Html.BeginForm("Index", "MenuPorEmpresa", FormMethod.Post, new { @role = "form", @class = "form", @id = "myform" }))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdEmpresa">Empresa</label>
+                    @Html.DropDownListFor(q => q.IdEmpresa, new SelectList(ViewBag.lst_empresa, "IdEmpresa", "em_nombre"), new { @class = "form-control", @id = "IdEmpresa" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-default" id="btn_buscar">Buscar</button>
+        <button type="button" class="btn btn-primary" id="btn_guardar" onclick="guardar();">Guardar</button>
+    </div>
+
+
+    @Html.Action("TreeListPartial_menu_x_empresa", new { IdEmpresa = Model.IdEmpresa })
+
+}

@@ -1,0 +1,100 @@
+@using System.Web.UI.WebControls;
+@model Core.Erp.Info.RRHH.ro_participacion_utilidad_Info
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewPartial_utilidades_detalle";
+        settings.CallbackRouteValues = new { Controller = "ParticipacionUtilidad", Action = "GridViewPartial_utilidades_detalle"};
+
+        settings.Width = Unit.Percentage(99);
+
+        settings.KeyFieldName = "IdUtilidad";
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Hidden;
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        settings.Settings.VerticalScrollableHeight = 400;
+        settings.SettingsPager.Visible = true;
+        settings.SettingsPager.PageSize = 10;
+        settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
+        settings.SettingsPager.AlwaysShowPager = true;
+
+
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+
+        settings.SettingsExport.RenderBrick = (sender, e) =>
+        {
+            if (e.RowType == GridViewRowType.Data && e.VisibleIndex % 2 == 0)
+                e.BrickStyle.BackColor = System.Drawing.Color.FromArgb(0xEE, 0xEE, 0xEE);
+        };
+        settings.HtmlRowPrepared = (s, e) =>
+        {
+            if (Convert.ToString(e.GetValue("em_status")) != "EST_ACT")
+            {
+                e.Row.ForeColor = System.Drawing.Color.Red;
+            }
+        };
+
+        settings.Columns.Add("IdEmpleado", "ID").Width = Unit.Percentage(2);
+        settings.Columns.Add("pe_cedulaRuc", "Cédula").Width = Unit.Percentage(5);
+        settings.Columns.Add("pe_nombre", "Nombres").Width = Unit.Percentage(10);
+        settings.Columns.Add("pe_apellido", "Apellidos").Width = Unit.Percentage(10);
+        settings.Columns.Add("ca_descripcion", "Cargo").Width = Unit.Percentage(10);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "em_fechaIngaRol";
+            column.Caption = "Fech. ingreso";
+            column.Width = Unit.Percentage(5);
+            column.PropertiesEdit.DisplayFormatString = "d";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "em_fechaSalida";
+            column.Caption = "Fech. salida";
+            column.Width = Unit.Percentage(5);
+            column.PropertiesEdit.DisplayFormatString = "d";
+        });
+        settings.Columns.Add("CargasFamiliares", "#cargas").Width = Unit.Percentage(5);
+        settings.Columns.Add("DiasTrabajados", "#Días").Width = Unit.Percentage(5);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ValorIndividual";
+            column.Caption = "$ Individual";
+            column.Width = Unit.Percentage(5);
+            column.PropertiesEdit.DisplayFormatString = "c2";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ValorCargaFamiliar";
+            column.Caption = "$ Carga";
+            column.Width = Unit.Percentage(5);
+            column.PropertiesEdit.DisplayFormatString = "c2";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ValorTotal";
+            column.Caption = "$ Total";
+            column.Width = Unit.Percentage(5);
+            column.PropertiesEdit.DisplayFormatString = "c2";
+        });
+
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "ValorIndividual");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "ValorCargaFamiliar");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "ValorTotal");
+
+        settings.Settings.ShowFooter = true;
+    });
+}
+@grid.Bind(Model.detalle).GetHtml()

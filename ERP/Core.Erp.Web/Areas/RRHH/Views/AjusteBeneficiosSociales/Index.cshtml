@@ -1,0 +1,239 @@
+﻿@model Core.Erp.Info.Helps.cl_filtros_Info
+
+@{
+    ViewBag.Title = "Ajuste de beneficios sociales";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Layout/_LayoutConsulta.cshtml";
+}
+
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script type="text/javascript">
+    var selectedIDs;
+
+    function OnBeginCallback(s, e) {
+        //Pass all selected keys to GridView callback action
+        e.customArgs["selectedIDs"] = selectedIDs;
+        e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
+    }
+    function OnSelectionChanged(s, e) {
+        s.GetSelectedFieldValues("Secuencial", GetSelectedFieldValuesCallback);
+
+    }
+    function GetSelectedFieldValuesCallback(values) {
+        //Capture all selected keys
+        selectedIDs = values.join(',');
+    }
+</script>
+
+@Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+@using (Html.BeginForm())
+{
+    <div class="box ">
+        <div class="box-header with-border">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+                </div>
+            </div>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdSucursal">Sucursal*</label>
+                            <div class="form-group">
+                                @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_Sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                                @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdPeriodo">Nómina*</label>
+                            <div class="form-group">
+                                @Html.DropDownListFor(q => q.IdNomina, new SelectList(ViewBag.lst_tipo_nomina, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
+                                @Html.ValidationMessageFor(q => q.IdNomina, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdPeriodo">Rubro*</label>
+                            <div class="form-group">
+                                @Html.DropDownListFor(q => q.IdRubro, new SelectList(ViewBag.lst_Rubro, "Key", "Value"), new { @class = "form-control", @id = "IdRubro" })
+                                @Html.ValidationMessageFor(q => q.IdRubro, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="">Fecha inicio*</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.DevExpress().DateEditFor(q => q.fecha_ini, settings =>
+                                            {
+                                                settings.Name = "fecha_ini";
+                                                settings.Properties.UseMaskBehavior = true;
+                                                settings.Properties.EditFormat = EditFormat.Date;
+                                                settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.fecha_ini, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="">Fecha fin*</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.DevExpress().DateEditFor(q => q.fecha_fin, settings =>
+                                            {
+                                                settings.Name = "fecha_fin";
+                                                settings.Properties.UseMaskBehavior = true;
+                                                settings.Properties.EditFormat = EditFormat.Date;
+                                                settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="IdSucursal">Tipo</label>
+                            <div class="form-group">
+                                @Html.DropDownListFor(q => q.IdSigno, new SelectList(ViewBag.lst_Tipo, "Key", "Value"), new { @class = "form-control", @id = "IdSigno" })
+                                @Html.ValidationMessageFor(q => q.IdSigno, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdSucursal">Valor Ajustado</label>
+                            <div class="form-group">
+                                @Html.TextBoxFor(q => q.Valor, new { @class = "form-control", @id = "Valor" })
+                                @Html.ValidationMessageFor(m => m.Valor, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="IdSucursal">&nbsp;</label>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary form-control" id="btn_actualizar" onclick="ActualizarValores();">Ajustar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="IdSucursal">&nbsp;</label>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-default form-control" id="btn_guardar" onclick="ModificarBD();">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">@ViewBag.Title</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            @Html.Action("GridViewPartial_AjusteBeneficiosSociales", new { FechaIni = Model.fecha_ini, FechaFin = Model.fecha_fin, IdSucursal = Model.IdSucursal, IdNomina_Tipo = Model.IdNomina, IdRubro = Model.IdRubro })
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            [@Session["IdEmpresa"]] @Session["nom_empresa"]
+        </div>
+        <!-- /.box-footer-->
+    </div>
+    }
+
+<script type="text/javascript">
+    function ActualizarValores() {
+        var datos = {
+            IDs: selectedIDs,
+            IdSigno: $("#IdSigno").val(),
+            Valor: $("#Valor").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ActualizarValores", "AjusteBeneficiosSociales", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_AjusteBeneficiosSociales.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function ModificarBD() {
+        var datos = {
+            IDs: selectedIDs,
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ModificarBD", "AjusteBeneficiosSociales", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (modificar) {
+                if(modificar){
+                    alert("Datos guardados correctamente.");
+                    GridViewPartial_AjusteBeneficiosSociales.PerformCallback();
+                }
+                else {
+                    alert("Ha ocurrrido un error al guardar los datos.");
+                    GridViewPartial_AjusteBeneficiosSociales.PerformCallback();
+                }
+                
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>

@@ -1,0 +1,87 @@
+﻿@model Core.Erp.Info.Contabilidad.ct_CentroCosto_Info
+@{
+    ViewBag.Title = "Anular centro de costo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Anular", "CentroCosto", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="IdCentroCostoPadre">Centro de costo padre</label>
+                    @Html.Partial("_CmbPadre_CentroCosto", Model)
+                    @Html.ValidationMessageFor(q => q.IdCentroCostoPadre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdCtaCble">Código*</label>
+                    @Html.TextBoxFor(q => q.IdCentroCosto, new { @class = "form-control", @id = "IdCentroCosto", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdCentroCosto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdNivelCta">Nivel</label>
+                    @Html.DropDownListFor(q => q.IdNivel, new SelectList(ViewBag.lst_centrocosto_nivel, "IdNivel", "nv_Descripcion"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdNivel, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="pc_EsMovimiento_bool">@Html.CheckBoxFor(q => q.EsMovimiento) Es de movimiento</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="pc_Cuenta">Centro de Costo*</label>
+                    @Html.TextBoxFor(q => q.cc_Descripcion, new { @class = "form-control", @id = "cc_Descripcion" })
+                    @Html.ValidationMessageFor(q => q.cc_Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="MotivoAnulacion">Motivo Anulacion</label>
+                    @Html.TextAreaFor(q => q.MotivoAnulacion, new { @class = "form-control", @id = "MotivoAnulacion", @rows = 1 })
+                    @Html.ValidationMessageFor(q => q.MotivoAnulacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "CentroCosto", new { Area ="Contabilidad" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

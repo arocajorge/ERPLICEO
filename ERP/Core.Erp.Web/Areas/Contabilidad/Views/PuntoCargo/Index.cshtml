@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Punto cargo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+
+    @Html.Action("GridViewPartial_punto_cargo", new { IdPunto_cargo_grupo = ViewBag.IdPunto_cargo_grupo })
+    <div class="box-footer">
+        <a class="btn btn-default" href="@Url.Action("Index","PuntoCargoGrupo",new { IdPunto_cargo_grupo = ViewBag.IdPunto_cargo_grupo, Area = "Contabilidad" },null)">Volver</a>
+    </div>
+}

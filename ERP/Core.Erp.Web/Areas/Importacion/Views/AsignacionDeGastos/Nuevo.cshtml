@@ -1,0 +1,142 @@
+﻿@model Core.Erp.Info.Importacion.imp_ordencompra_ext_Info
+@{
+    ViewBag.Title = "Asignacion de gastos";
+    //if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    //{
+    //    Response.Redirect("~/Account/Login");
+    //}
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Nuevo", "AsignacionDeGastos", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdOrdenCompra_ext)
+    @Html.HiddenFor(q => q.IdEmpresa)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdProveedor">Proveedor*</label>
+                    @Html.TextBoxFor(q => q.pe_nombreCompleto, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-md-offset-10 col-med-2">
+                <div class="form-group">
+                    <label for="">Fecha recepcion</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.oe_fecha, settings =>
+                    {
+                        settings.Name = "oe_fecha";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.oe_fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="or_observacion">Observación recepcion de mercaderia</label>
+                    @Html.TextAreaFor(q => q.oe_observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.oe_observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="or_observacion">Detalle de gastos</label>
+                    @Html.Action("GridViewPartial_gastos_asignados", new { Model.IdCtaCble_importacion })
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "AsignacionDeGastos", new { Area ="Importacion" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+<script>
+
+    function EditingNew(ID) {
+        var datos = {
+            secuencia: ID,
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("EditingNew", "AsignacionDeGastos",new { Area = "Importacion"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_gastos_asignados.PerformCallback();
+                GridViewPartial_gastos_por_asignar.PerformCallback("");
+
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function Editingdelete(ID) {
+        var datos = {
+            secuencia: ID,
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("Editingdelete", "AsignacionDeGastos",new { Area = "Importacion"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_gastos_asignados.PerformCallback();
+                GridViewPartial_gastos_por_asignar.PerformCallback("");
+
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>

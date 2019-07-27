@@ -1,0 +1,80 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewPartial_AjusteBeneficiosSociales";
+        settings.CallbackRouteValues = new { Controller = "AjusteBeneficiosSociales", Action = "GridViewPartial_AjusteBeneficiosSociales", FechaInicio = ViewBag.FechaInicio, FechaFin = ViewBag.FechaFin, IdSucursal = ViewBag.IdSucursal, IdNomina_Tipo = ViewBag.IdNomina_Tipo, IdRubro = ViewBag.IdRubro };
+        settings.KeyFieldName = "Secuencial";
+        settings.Width = Unit.Percentage(100);
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        //Configuración checkbox
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        //Configuración scrolling y pager
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Hidden;
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        settings.Settings.VerticalScrollableHeight = 400;
+        settings.SettingsPager.Visible = true;
+        settings.SettingsPager.PageSize = 10;
+        settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
+        settings.SettingsPager.AlwaysShowPager = true;
+        //Configuración filtro por columna
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        //Configuracion exportacion
+        settings.SettingsExport.EnableClientSideExportAPI = true;
+        settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
+        settings.Toolbars.Add(t =>
+        {
+            t.EnableAdaptivity = true;
+            t.Items.Add(GridViewToolbarCommand.ExportToPdf).Text = "Exportar a PDF";
+            t.Items.Add(GridViewToolbarCommand.ExportToXls).Text = "Exportar a XLS";
+            t.Items.Add(GridViewToolbarCommand.ExportToXlsx).Text = "Exportar a XLSX";
+            t.Items.Add(GridViewToolbarCommand.ExportToDocx).Text = "Exportar a DOCX";
+            t.Items.Add(GridViewToolbarCommand.ExportToRtf).Text = "Exportar a RTF";
+            t.Items.Add(GridViewToolbarCommand.ExportToCsv).Text = "Exportar a CSV";
+        });
+        settings.SettingsExport.RenderBrick = (sender, e) =>
+        {
+            if (e.RowType == GridViewRowType.Data && e.VisibleIndex % 2 == 0)
+                e.BrickStyle.BackColor = System.Drawing.Color.FromArgb(0xEE, 0xEE, 0xEE);
+        };
+
+        settings.Columns.Add("Empleado", "Empleado").Width = Unit.Percentage(55);
+        
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "pe_FechaFin";
+            column.Caption = "Fecha";
+            column.Width = Unit.Percentage(15);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add("Valor", "Valor").Width = Unit.Percentage(10);
+        settings.Columns.Add("ValorAjustado", "Valor Ajustado").Width = Unit.Percentage(10);
+
+        settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
+        settings.ClientSideEvents.BeginCallback = "OnBeginCallback";
+
+    });
+}
+@grid.Bind(Model).GetHtml()

@@ -1,0 +1,626 @@
+﻿@model Core.Erp.Info.Facturacion.fa_factura_Info
+@{
+    ViewBag.Title = ("Anular factura" + " con ID #" + @Model.IdCbteVta);
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Anular", "Factura", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.vt_tipoDoc)
+    @Html.HiddenFor(q => q.IdSucursal)
+    @Html.HiddenFor(q => q.IdBodega)
+    @Html.HiddenFor(q => q.IdCbteVta)
+    @Html.HiddenFor(q => q.IdPuntoVta)
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+
+    <div class="modal fade" id="OpModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Lotes disponibles</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.Action("GridViewPartial_LoteFactura")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal*</label>
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdPuntoVta">Punto de venta*</label>
+                    @Html.DropDownListFor(q => q.IdPuntoVta, new SelectList(ViewBag.lst_punto_venta, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVta", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.IdPuntoVta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCliente">Cliente*</label>
+                    @Html.Partial("_CmbCliente_Factura", Model.IdCliente)
+                    @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="DatosCliente">Información adicional</label>
+                    <input class="form-control" type="text" id="DatosCliente" value="" readonly="readonly" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="vt_serie1">Establecimiento*</label>
+                    @Html.TextBoxFor(q => q.vt_serie1, new { @class = "form-control", @id = "vt_serie1", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.vt_serie1, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="vt_serie2">Pto. Emisión*</label>
+                    @Html.TextBoxFor(q => q.vt_serie2, new { @class = "form-control", @id = "vt_serie2", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.vt_serie2, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="vt_NumFactura"># Documento*</label>
+                    @Html.TextBoxFor(q => q.vt_NumFactura, new { @class = "form-control", @id = "vt_NumFactura", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.vt_NumFactura, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="pf_observacion">Observación</label>
+                    @Html.TextBoxFor(q => q.vt_Observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.vt_Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div id="Tabs" role="tabpanel">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active">
+                        <a href="#tab_general" aria-controls="general" role="tab" data-toggle="tab" id="link_general">Datos generales</a>
+                    </li>
+                    <li>
+                        <a href="#tab_cuotas" aria-controls="lote" role="tab" data-toggle="tab" id="link_cuotas">Detalle de cuotas</a>
+                    </li>
+                </ul>
+                <div class="tab-content" style="padding-top: 5px">
+                    <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_general">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdCatalogo_FormaPago">Forma de pago*</label>
+                                @Html.DropDownListFor(q => q.IdCatalogo_FormaPago, new SelectList(ViewBag.lst_formapago, "IdCatalogo", "Nombre"), new { @class = "form-control", @id = "EnumeradorCobro" })
+                                @Html.ValidationMessageFor(q => q.IdCatalogo_FormaPago, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdNivel">Nivel Descuento*</label>
+                                @Html.DropDownListFor(q => q.IdNivel, new SelectList(ViewBag.lst_NivelDescuento, "IdNivel", "Descripcion"), new { @class = "form-control", @id = "IdNivel" })
+                                @Html.ValidationMessageFor(q => q.IdNivel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="IdTerminoPago">Termino pago*</label>
+                                @Html.DropDownListFor(q => q.vt_tipo_venta, new SelectList(ViewBag.lst_pago, "IdTerminoPago", "nom_TerminoPago"), new { @class = "form-control", @id = "vt_tipo_venta" })
+                                @Html.ValidationMessageFor(q => q.vt_tipo_venta, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="IdVendedor">Vendedor*</label>
+                                @Html.DropDownListFor(q => q.IdVendedor, new SelectList(ViewBag.lst_vendedor, "IdVendedor", "Ve_Vendedor"), new { @class = "form-control", @id = "IdVendedor" })
+                                @Html.ValidationMessageFor(q => q.IdVendedor, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="pf_fecha">Fecha*</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    @Html.TextBoxFor(q => q.vt_fecha, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "vt_fecha" })
+                                    @Html.ValidationMessageFor(q => q.vt_fecha, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="pf_plazo">Plazo*</label>
+                                @Html.TextBoxFor(q => q.vt_plazo, new { @class = "form-control", @id = "vt_plazo" })
+                                @Html.ValidationMessageFor(q => q.vt_plazo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="pf_fecha_vcto">Vencimiento*</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    @Html.TextBoxFor(q => q.vt_fech_venc, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "vt_fech_venc" })
+                                    @Html.ValidationMessageFor(q => q.vt_fech_venc, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_cuotas">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="fecha_primera_cuota">Fecha primer cuota</label>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        @Html.TextBoxFor(q => q.fecha_primera_cuota, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "fecha_primera_cuota" })
+                                        @Html.ValidationMessageFor(q => q.fecha_primera_cuota, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Valor abono</label>
+                                    @Html.TextBoxFor(q => q.valor_abono, new { @class = "form-control", @id = "valor_abono" })
+                                </div>
+                            </div>
+                        </div>
+                        @Html.Action("GridViewPartial_factura_cuotas")
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="MotiAnula">Motivo anulación*</label>
+                    @Html.TextAreaFor(q => q.MotivoAnulacion, new { @class = "form-control", @rows = 3 })
+                    @Html.ValidationMessageFor(q => q.MotivoAnulacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="alert alert-warning alert-dismissible" id="divMensaje" hidden>
+                    <h4>
+                        <i class="icon fa fa-warning"></i> <label id="txtMensaje">MENSAJE</label>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                @Html.Action("GridViewPartial_factura_det")
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row" id="DivEfectivo">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="SubtotalSinIVASinDscto">Base sin IVA</label>
+                    @Html.TextBoxFor(q => q.info_resumen.SubtotalSinIVASinDscto, new { @id = "SubtotalSinIVASinDscto", @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="SubtotalIVASinDscto">Base con IVA</label>
+                    @Html.TextBoxFor(q => q.info_resumen.SubtotalIVASinDscto, new { @id = "SubtotalIVASinDscto", @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Descuento">Descuento</label>
+                    @Html.TextBoxFor(q => q.info_resumen.Descuento, new { @id = "Descuento", @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="SubtotalSinIVAConDscto">Subtotal Sin IVA</label>
+                    @Html.TextBoxFor(q => q.info_resumen.SubtotalSinIVAConDscto, new { @id = "SubtotalSinIVAConDscto", @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="SubtotalIVAConDscto">Subtotal Con IVA</label>
+                    @Html.TextBoxFor(q => q.info_resumen.SubtotalIVAConDscto, new { @id = "SubtotalIVAConDscto", @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="ValorIVA">IVA</label>
+                    @Html.TextBoxFor(q => q.info_resumen.ValorIVA, new { @id = "ValorIVA", @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Total">Total</label>
+                    @Html.TextBoxFor(q => q.info_resumen.Total, new { @id = "Total", @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="ValorEfectivo">Efectivo</label>
+                    @Html.TextBoxFor(q => q.info_resumen.ValorEfectivo, new { @id = "ValorEfectivo", @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.info_resumen.ValorEfectivo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Cambio">Cambio</label>
+                    @Html.TextBoxFor(q => q.info_resumen.Cambio, new { @id = "Cambio", @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        @if (ViewBag.MostrarBoton ?? false)
+        {
+            <button type="submit" class="btn btn-danger">Anular</button>
+        } 
+                <a class="btn btn-default" href="@Url.Action("Index","Factura",new { Area = "Facturacion" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script>
+    $(function () {
+        ValidarGrid();
+        Set_NivelDescuento_x_FormaPago();
+        cargar_contactos();
+
+        //Date picker
+        $('#vt_fecha').datepicker({
+            autoclose: true
+        })
+        $('#fecha_primera_cuota').datepicker({
+            autoclose: true
+        })
+        $('#vt_fech_venc').datepicker({
+            autoclose: true
+        })
+        $("#vt_tipo_venta").change(function () {
+            get_info_termino_pago();
+        });
+        $("#vt_plazo").change(function () {
+            cargar_fecha_vencimiento();
+        });
+        $("#vt_fecha").change(function () {
+            cargar_fecha_vencimiento();
+        });
+        $("#IdSucursal").change(function () {
+            CargarPuntosDeVenta();
+            GetUltimoDocumento();
+            Set_NivelDescuento_x_FormaPago();
+        });
+        $("#IdCatalogo_FormaPago").change(function () {
+            Set_NivelDescuento_x_FormaPago();
+        });
+        $("#IdPuntoVta").change(function () {
+            GetUltimoDocumento();
+        });
+        $("#fecha_primera_cuota").change(function () {
+            CargarCuotas();
+        });
+        $("#valor_abono").change(function () {
+            CargarCuotas();
+        });
+        $("#ValorEfectivo").keyup(function () {
+            CalcularCambio();
+        });
+    });
+
+    function MostrarModal() {
+        GridView_LoteFactura.PerformCallback();
+        $("#OpModal").modal("show");
+    }
+
+    function SetLoteDetalle(ID) {
+
+        $.ajax({
+            url: '@Url.Action("ChangeValuePartial", "Factura",new { Area = "Facturacion"})',
+            type: "GET",
+            data: { value: ID },
+            success: function (data) {
+                $('#ajaxDiv').html(data);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert('Request Status: ' + xhr.status + '; Status Text: ' + textStatus + '; Error: ' + errorThrown);
+            }
+        });
+
+        $("#OpModal").modal("hide");
+
+    }
+
+    function SeleccionarLote(s,e) {
+        var datos = {
+            IdSucursal: $("#IdSucursal").val(),
+            IdPuntoVta: $("#IdPuntoVta").val(),
+            IdProducto: s.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetLotesPorProducto", "Factura",new { Area = "Facturacion"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridView_factura_det.GetEditor('IdCod_Impuesto_Iva').SetValue(data.IdCod_Impuesto_Iva);
+                if (data.IdProducto_padre > 0) {
+                    MostrarModal();
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function cargar_fecha_vencimiento() {
+        var vida = Number($("#vt_plazo").val());
+        var from = $("#vt_fecha").val().split("/")
+        var f = new Date(from[2], from[1] - 1, from[0])
+        $('#vt_fech_venc').datepicker("update", moment(f, "DD-MM-YYYY").add(vida, 'days').format("DD/MM/YYYY"));
+    }
+
+        function get_info_termino_pago() {
+        var datos = {
+            IdTerminoPago: $("#vt_tipo_venta").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_info_termino_pago", "Factura",new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#vt_plazo").val(data.Dias_Vct);
+                cargar_fecha_vencimiento();
+            },
+            error: function (error) {
+
+            }
+        });
+    }
+
+
+    function get_info_cliente() {
+        var tipo = IdCliente.GetValue();
+
+        var datos = {
+            IdCliente: tipo,
+            IdSucursal: $("#IdSucursal").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_info_cliente", "Factura",new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#IdVendedor").val(data.IdVendedor);
+                $("#IdFormaPago").val(data.FormaPago);
+                $("#vt_tipo_venta").val(data.IdTipoCredito);
+                get_info_termino_pago();
+            },
+            error: function (error) {
+                alert(error);
+            }
+
+        });
+    }
+
+    function cargar_contactos() {
+        var codigo = IdCliente.GetValue();
+
+        if (codigo > 0)
+        {
+            var datos = {
+                IdCliente: codigo
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("cargar_contactos", "Factura",new { Area = "Facturacion"})',
+                async: false,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $("#DatosCliente").val(data);
+                },
+                error: function (error) {
+                }
+            });
+        }
+        else{
+            $("#DatosCliente").val("");
+        }
+    }
+
+    function CargarPuntosDeVenta() {
+        $("#IdPuntoVta").empty();
+        var datos = {
+            IdSucursal: $("#IdSucursal").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarPuntosDeVenta", "Factura",new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdPuntoVta").append("<option value=" + row.IdPuntoVta + ">" + row.nom_PuntoVta + "</option>");
+                    $("#IdPuntoVta").val(1);
+                });
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+       function GetUltimoDocumento() {
+        var datos = {
+            IdSucursal: $("#IdSucursal").val(),
+            IdPuntoVta: $("#IdPuntoVta").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetUltimoDocumento", "Factura",new { Area = "Facturacion"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#vt_serie1").val(data.Establecimiento);
+                $("#vt_serie2").val(data.PuntoEmision);
+                $("#vt_NumFactura").val(data.NumDocumento);
+            },
+            error: function (error) {
+            }
+        });
+        }
+
+
+function CargarCuotas() {
+            var datos = {
+                FechaPrimerPago: $("#fecha_primera_cuota").val(),
+                    IdTerminoPago: $("#vt_tipo_venta").val(),
+                ValorPrimerPago: $("#valor_abono").val(),
+                IdTransaccionSession: $("#IdTransaccionSession").val()
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("CargarCuotas", "Factura",new { Area = "Facturacion"})',
+                async: false,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                },
+                error: function (error) {
+                }
+            });
+            GridView_factura_cuotas.PerformCallback();
+    }
+function ValidarGrid() {
+        var datos = {
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ValidarGrid", "Factura",new { Area = "Facturacion"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#txtMensaje").text(data.mensaje);
+
+                $("#SubtotalIVASinDscto").val(data.SubtotalIVASinDscto);
+                $("#SubtotalSinIVASinDscto").val(data.SubtotalSinIVASinDscto);
+                $("#Descuento").val(data.Descuento);
+
+                $("#SubtotalIVAConDscto").val(data.SubtotalIVAConDscto);
+                $("#SubtotalSinIVAConDscto").val(data.SubtotalSinIVAConDscto);
+                $("#ValorIVA").val(data.ValorIVA);
+                $("#Total").val(data.Total);
+
+                if (data.mensaje.length > 0) {
+                    $("#divMensaje").show();
+                } else {
+                    $("#divMensaje").hide();
+                }
+                CalcularCambio();
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+
+    function Set_NivelDescuento_x_FormaPago() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val(),
+            IdCatalogo_FormaPago: $("#IdCatalogo_FormaPago").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("Get_NivelDescuento_x_FormaPago", "Factura",new { Area = "Facturacion"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                if (data > 0) {
+                    $('#IdNivel').val(data);
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function CalcularCambio() {
+        var Total = Number($("#Total").val());
+        var Efectivo = Number($("#ValorEfectivo").val());
+        $("#Cambio").val((Efectivo - Total).toFixed(2));
+    }
+</script>

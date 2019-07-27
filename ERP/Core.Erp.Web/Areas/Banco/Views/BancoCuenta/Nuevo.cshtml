@@ -1,0 +1,158 @@
+﻿@model Core.Erp.Info.Banco.ba_Banco_Cuenta_Info
+@{
+    ViewBag.Title = "Nueva cuenta";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Nuevo", "BancoCuenta", FormMethod.Post, new { @role = "form", @class = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdTransaccionSession)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdBanco_Financiero">Banco*</label>
+                    @Html.DropDownListFor(q => q.IdBanco_Financiero, new SelectList(ViewBag.lst_banco, "IdBanco", "ba_descripcion"), new { @class = "form-control", @id = "IdBanco_Financiero" })
+                    @Html.ValidationMessageFor(q => q.IdBanco_Financiero, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ba_Tipo">Tipo de cuenta*</label>
+                    @Html.DropDownListFor(q => q.ba_Tipo, new SelectList(ViewBag.lst_cta, "Key", "Value"), new { @class = "form-control", @id = "ba_Tipo" })
+                    @Html.ValidationMessageFor(q => q.ba_Tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ba_Num_Cuenta">Número de cuenta*</label>
+                    @Html.TextBoxFor(q => q.ba_Num_Cuenta, new { @class = "form-control", @id = "ba_Num_Cuenta" })
+                    @Html.ValidationMessageFor(q => q.ba_Num_Cuenta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ba_num_digito_cheq">Dígitos por cheque*</label>
+                    @Html.TextBoxFor(q => q.ba_num_digito_cheq, new { @class = "form-control", @id = "ba_num_digito_cheq" })
+                    @Html.ValidationMessageFor(q => q.ba_num_digito_cheq, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ba_descripcion">Nombre de la cuenta*</label>
+                    @Html.TextBoxFor(q => q.ba_descripcion, new { @class = "form-control", @id = "ba_descripcion" })
+                    @Html.ValidationMessageFor(q => q.ba_descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCble">Cuenta contable bancos*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdCtaCble, settings =>
+       {
+           settings.Name = "IdCtaCble";
+           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+           settings.Properties.DisplayFormatString = "[{0}] - {1}";
+           settings.Properties.Columns.Add("IdCtaCble", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+           settings.Properties.Columns.Add("pc_cuenta", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(50);
+           //Campo ID
+           settings.Properties.ValueField = "IdCtaCble";
+           settings.Properties.ValueType = typeof(string);
+           settings.Properties.TextField = "pc_cuenta";
+           //Boton para seleccionar ningun registro
+           settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+           settings.Properties.NullText = "== Seleccione ==";
+           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+       }).BindList(ViewBag.lst_cuenta).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdCtaCble, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Imprimir_Solo_el_cheque">Tipo de impresión</label>
+                    @Html.DropDownListFor(q => q.Imprimir_Solo_el_cheque, new SelectList(ViewBag.lst_impresion, "Key", "Value"), new { @class = "form-control", @id = "ba_Tipo" })
+                    @Html.ValidationMessageFor(q => q.Imprimir_Solo_el_cheque, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="EsFlujoObligatorio"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.EsFlujoObligatorio, settings =>
+                           {
+                               settings.Name = "EsFlujoObligatorio";
+                               settings.Text = "Es flujo obligatorio";
+                           }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.EsFlujoObligatorio, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="">Detalle</label>
+                    @Html.Action("GridViewPartial_cuentas_x_sucursal")
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","BancoCuenta", new { Area = "Banco"  },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script>
+
+    $("#IdBanco_Financiero").change(function () {
+        actualizar_nombre_cuenta();
+    });
+    $("#ba_Tipo").change(function () {
+        actualizar_nombre_cuenta();
+    });
+    $("#ba_Num_Cuenta").keyup(function () {
+        actualizar_nombre_cuenta();
+    });
+    actualizar_nombre_cuenta();
+
+
+    function actualizar_nombre_cuenta() {
+
+        var banco = $("#IdBanco_Financiero option:selected").text();
+        var tipo = $("#ba_Tipo").val();
+        var num_cuenta = $("#ba_Num_Cuenta").val();
+
+        var descripcion = banco + ' ' + tipo + ' ' + num_cuenta;
+        $("#ba_descripcion").val(descripcion)
+    }
+</script>

@@ -1,0 +1,91 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridView_archivo_bancario_det";
+        settings.CallbackRouteValues = new { Controller = "ArchivoBancario", Action = "GridViewPartial_archivo_bancario_det" };
+        settings.KeyFieldName = "IdOrdenPago";
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ArchivoBancario", Action = "EditingUpdate", Area = "Banco" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ArchivoBancario", Action = "EditingDelete", Area = "Banco" };
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowNewButtonInHeader = false;
+
+        settings.SettingsContextMenu.Enabled = false;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        
+
+        settings.Settings.ShowFooter = true;
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+        //Funcion para inicializar fila al presionar nuevo
+
+        settings.Columns.Add(column =>
+        {
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "IdOrdenPago";
+            column.Caption = "ID";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "Fecha_Factura";
+            column.Caption = "Fecha";
+            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
+        });
+        /*
+        settings.Columns.Add(column =>
+        {
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "IdTipoPersona";
+            column.Caption = "Tipo persona";
+        });*/
+        settings.Columns.Add(column =>
+        {
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.Width = Unit.Percentage(30);
+            column.FieldName = "Nom_Beneficiario";
+            column.Caption = "Nombre beneficiario";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.Width = Unit.Percentage(30);
+            column.FieldName = "Referencia";
+            column.Caption = "Referencia";
+        });
+
+        
+        settings.Columns.Add(column =>
+        {
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "Valor";
+            column.Caption = "Valor";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+        });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
+        settings.ClientSideEvents.EndCallback = "function(s,e){ GetValor(); }";
+    });
+}
+@grid.Bind(Model).GetHtml()

@@ -1,0 +1,64 @@
+﻿@model Core.Erp.Info.Importacion.imp_partida_arancelaria_Info
+@{
+    ViewBag.Title = "Anular arancel ";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Anular", "PartidaArancelaria", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdArancel)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="CodigoPartidaArancelaria">Código*</label>
+                    @Html.TextBoxFor(q => q.CodigoPartidaArancelaria, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(m => m.CodigoPartidaArancelaria, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="TarifaArancelaria">Tarifa*</label>
+                    @Html.TextBoxFor(q => q.TarifaArancelaria, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.TarifaArancelaria, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ct_descripcion">Descripción*</label>
+                    @Html.TextAreaFor(q => q.Descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Observacion">Observación</label>
+                    @Html.TextAreaFor(q => q.Observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index","PartidaArancelaria",new { Area = "Importacion" },null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

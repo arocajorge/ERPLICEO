@@ -1,0 +1,80 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridViewPartial_importacion_marcaciones_det";
+        settings.CallbackRouteValues = new { Controller = "ImportacionMarcaciones", Action = "GridViewPartial_importacion_marcaciones_det" };
+
+        settings.Width = Unit.Percentage(100);
+        settings.KeyFieldName = "IdRegistro";
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        //Configuración scrolling y pager
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Hidden;
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        settings.Settings.VerticalScrollableHeight = 400;
+        settings.SettingsPager.Visible = true;
+        settings.SettingsPager.PageSize = 10;
+        settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
+        settings.SettingsPager.AlwaysShowPager = true;
+
+        //Configuración filtro por columna
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        //Configuracion exportacion
+        settings.SettingsExport.EnableClientSideExportAPI = true;
+        settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
+        //Evento para pintar de rojo las filas anuladas
+
+        settings.Settings.ShowFooter = true;
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.Columns.Add("IdRegistro","ID").Width=Unit.Percentage(5);
+
+
+        settings.Columns.Add("pe_cedula", "Cédula").Width = Unit.Percentage(10);
+        settings.Columns.Add("pe_NombreCompleato", "Nombres").Width = Unit.Percentage(20);
+        settings.Columns.Add("IdTipoMarcaciones", "Tipo marcación").Width = Unit.Percentage(15);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "es_fechaRegistro";
+            column.Caption = "Fecha";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add("es_Hora", "Hora").Width = Unit.Percentage(5);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "EstadoBool";
+            column.Caption = "Estado";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+            column.EditorProperties().CheckBox(sp =>
+            {
+
+            });
+        });
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Valor");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Count, "Secuencia");
+
+
+
+    });
+}
+@grid.Bind(Model).GetHtml()

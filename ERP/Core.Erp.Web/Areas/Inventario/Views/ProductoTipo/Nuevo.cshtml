@@ -1,0 +1,74 @@
+﻿@model Core.Erp.Info.Inventario.in_ProductoTipo_Info
+@{
+    ViewBag.Title = "Nuevo tipo";
+
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Nuevo", "ProductoTipo", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="tp_descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.tp_descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.tp_descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="checkbox">
+                    <label for="tp_EsCombo_bool">@Html.CheckBoxFor(q => q.tp_EsCombo_bool) Es combo</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="checkbox">
+                    <label for="tp_ManejaInven_bool">@Html.CheckBoxFor(q => q.tp_ManejaInven_bool) Maneja inventario</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="checkbox">
+                    <label for="Aparece_fabricacion">@Html.CheckBoxFor(q => q.Aparece_fabricacion) Es fabricación</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="checkbox">
+                    <label for="Aparece_modu_Compras">@Html.CheckBoxFor(q => q.Aparece_modu_Compras) Aparece módulo compras</label>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="checkbox">
+                    <label for="Aparece_modu_Inventario">@Html.CheckBoxFor(q => q.Aparece_modu_Inventario) Aparece módulo inventario</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="checkbox">
+                    <label for="Aparece_modu_Ventas">@Html.CheckBoxFor(q => q.Aparece_modu_Ventas) Aparece módulo ventas</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","ProductoTipo",new { Area = "Inventario" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

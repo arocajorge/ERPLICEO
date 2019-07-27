@@ -1,0 +1,62 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridViewPartial_conciliacion_caja_movimiento";
+        settings.CallbackRouteValues = new { Controller = "ConciliacionCaja", Action = "GridViewPartial_conciliacion_caja_movimiento" };
+        settings.Width = Unit.Percentage(100);
+        settings.KeyFieldName = "IdCbteCble_movcaja";
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        //Configuración checkbox
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+
+        //Configuración click derecho
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.EnableRowMenu = DefaultBoolean.False;
+
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        settings.Columns.Add("IdCbteCble_movcaja", "# Documento").Width = Unit.Percentage(20);
+        settings.Columns.Add("tm_descripcion", "Descripción").Width = Unit.Percentage(10);
+        settings.Columns.Add(column => {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "fecha";
+            column.Caption = "Fecha";
+            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(40);
+            column.FieldName = "pe_nombreCompleto";
+            column.Caption = "Proveedor";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "valor";
+            column.Caption = "Total";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+        });
+
+        settings.ClientSideEvents.SelectionChanged = "Caja_OnSelectionChanged";
+        settings.ClientSideEvents.BeginCallback = "Caja_OnBeginCallback";
+    });
+}
+@grid.Bind(Model).GetHtml()

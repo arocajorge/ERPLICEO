@@ -1,0 +1,401 @@
+﻿
+@model Core.Erp.Info.CuentasPorPagar.cp_conciliacionAnticipo_Info
+@{
+    /**/
+
+    ViewBag.Title = "Anular conciliación de anticipo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+<script type="text/javascript">
+    var selectedIDs_OP;
+    function OnBeginCallback_OP(s, e) {
+        e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
+        e.customArgs["selectedIDs_OP"] = selectedIDs_OP;
+    }
+    function OnSelectionChanged_OP(s, e) {
+        s.GetSelectedFieldValues("IdOrdenPago", GetSelectedFieldValuesCallback_OP);
+    }
+    function GetSelectedFieldValuesCallback_OP(values) {
+        //Capture all selected keys
+        selectedIDs_OP = values.join(',');
+    }
+
+    var selectedIDs_Fact;
+    function OnBeginCallback_Fact(s, e) {
+        e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
+        e.customArgs["selectedIDs_Fact"] = selectedIDs_Fact;
+    }
+    function OnSelectionChanged_Fact(s, e) {
+        s.GetSelectedFieldValues("IdOrdenPago", GetSelectedFieldValuesCallback_Fact);
+    }
+    function GetSelectedFieldValuesCallback_Fact(values) {
+        //Capture all selected keys
+        selectedIDs_Fact = values.join(',');
+    }
+
+    function MostrarModal_OP() {
+        selectedIDs_OP = "";
+        var datos = {
+            IdTransaccionSession:$("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val(),
+            IdProveedor: IdProveedor.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetList_OP_PorCruzar", "ConciliacionAnticipoProveedor", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                GridViewPartial_ConciliacionAnticipo_OP_x_Cruzar.PerformCallback();
+                GridViewPartial_ConciliacionAnticipo_OP_x_Cruzar.UnselectRows();
+                $("#Modal_OrdenPago").modal("show");
+
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function Add_OP() {
+        var datos = {
+            IDs: selectedIDs_OP,
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("EditingAddNew_OP", "ConciliacionAnticipoProveedor", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (error) {
+            }
+        });
+
+        selectedIDs_OP = "";
+        GridViewPartial_ConciliacionAnticipo_OP_x_Cruzar.PerformCallback();
+        GridViewPartial_ConciliacionAnticipo_OP_x_Cruzar.UnselectRows();
+        GridViewPartial_ConciliacionAnticipo_OP_det.PerformCallback();
+        $("#Modal_OrdenPago").modal("hide");
+    }
+
+    function MostrarModal_Fact() {
+        selectedIDs_Fact = "";
+        var datos = {
+            IdTransaccionSession:$("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val(),
+            IdProveedor: IdProveedor.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetList_Fact_PorCruzar", "ConciliacionAnticipoProveedor", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                GridViewPartial_ConciliacionAnticipo_Fact_x_Cruzar.PerformCallback();
+                GridViewPartial_ConciliacionAnticipo_Fact_x_Cruzar.UnselectRows();
+                $("#Modal_Fact").modal("show");
+
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function Add_Fact() {
+        var datos = {
+            IDs: selectedIDs_Fact,
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("EditingAddNew_Fact", "ConciliacionAnticipoProveedor", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (error) {
+            }
+        });
+
+        selectedIDs_Fact = "";
+        GridViewPartial_ConciliacionAnticipo_Fact_x_Cruzar.PerformCallback();
+        GridViewPartial_ConciliacionAnticipo_Fact_x_Cruzar.UnselectRows();
+        GridViewPartial_ConciliacionAnticipo_Fact_det.PerformCallback();
+
+        $("#Modal_Fact").modal("hide");
+    }
+
+    function CrearModificarProveedor() {
+        var location = GetPathServer();
+        if(IdProveedor.GetValue() > 0)
+        {
+            var win = window.open(location + "/CuentasPorPagar/Proveedor/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdProveedor="+IdProveedor.GetValue(), '_blank');
+            win.focus();
+        }else
+        {
+            var win = window.open(location + "/CuentasPorPagar/Proveedor/Nuevo?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
+            win.focus();
+        }
+    }
+
+</script>
+
+@using (Html.BeginForm("Anular", "ConciliacionAnticipoProveedor", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdConciliacion, new { @id = "IdConciliacion" })
+    @Html.HiddenFor(q => q.IdCbteCble, new { @id = "IdCbteCble" })
+    @Html.HiddenFor(q => q.IdTipoCbte, new { @id = "IdTipoCbte" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    <div class="modal fade" id="Modal_OrdenPago" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Ordenes de pago</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.Action("GridViewPartial_ConciliacionAnticipo_OP_x_Cruzar")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="Add_OP();">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="Modal_Fact" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Facturas por proveedor</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.Action("GridViewPartial_ConciliacionAnticipo_Fact_x_Cruzar")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="Add_Fact();">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal*</label>
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="IdProveedor">Proveedor*</label>
+                    @Html.Partial("_CmbProveedor_readonly", Model.IdProveedor)
+                    @Html.ValidationMessageFor(q => q.IdProveedor, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <label for="IdCliente"></label>
+                    <button type="button" class="btn btn-primary form-control " onclick="CrearModificarProveedor();">
+                        <i class="fa fa-external-link-square"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="co_FechaFactura">Fecha*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.Fecha, settings =>
+                       {
+                           settings.Name = "Fecha";
+                           settings.Properties.UseMaskBehavior = true;
+                           settings.Properties.EditFormat = EditFormat.Date;
+                           settings.Properties.EditFormatString = "dd/MM/yyyy";
+                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="co_observacion">Observación*</label>
+                    @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control", @id = "observacion" })
+                    @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="co_observacion">Motivo de anulación*</label>
+                    @Html.TextBoxFor(q => q.MotivoAnulacion, new { @class = "form-control", @id = "observacion" })
+                    @Html.ValidationMessageFor(q => q.MotivoAnulacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="Tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_orden_pago" aria-controls="informacion_general" role="tab" data-toggle="tab">Anticipo</a>
+            </li>
+            <li>
+                <a href="#tab_factura_proveedor" aria-controls="retencion" role="tab" data-toggle="tab">Facturas de proveedor</a>
+            </li>
+            <li>
+                <a href="#tab_diario_contable" aria-controls="detalle" role="tab" data-toggle="tab">Diario contable</a>
+            </li>
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_orden_pago">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary form-control" id="btn_buscar_op" onclick="MostrarModal_OP();" title="Buscar ordenes de pago">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Action("GridViewPartial_ConciliacionAnticipo_OP_det")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_factura_proveedor">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary form-control" id="btn_buscar_fact" onclick="MostrarModal_Fact();" title="Buscar facturas por proveedor">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Action("GridViewPartial_ConciliacionAnticipo_Fact_det")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_diario_contable">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Action("GridViewPartial_comprobante_detalle", new { Area = "Contabilidad", Controller = "ComprobanteContable" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index","ConciliacionAnticipoProveedor",new { Area = "CuentasPorPagar" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script>
+    function armar_diario() {
+        if (IdProveedor.GetValue() > 0) {
+            var datos = {
+                IdTransaccionSession : $("#IdTransaccionSession").val(),
+                IdEmpresa: $("#IdEmpresa").val(),
+                IdProveedor :  IdProveedor.GetValue()
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("armar_diario", "ConciliacionAnticipoProveedor", new { Area = "CuentasPorPagar" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    console.log(data);
+                    GridView_comprobante_detalle.PerformCallback();
+                },
+                error: function (error) {
+                }
+            });
+        }
+    };
+</script>
+

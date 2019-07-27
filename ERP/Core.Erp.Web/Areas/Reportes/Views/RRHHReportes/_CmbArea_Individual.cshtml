@@ -1,0 +1,24 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdArea";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "RRHHReportes", Action = "CmbArea_Individual", Area = "Reportes" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "Descripcion";
+        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.ValueField = "IdArea";
+        settings.Properties.ValueType = typeof(int);
+        settings.Properties.Columns.Add("IdArea", "ID", 10);
+        settings.Properties.Columns.Add("Descripcion", "Descripcion", 90);
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+
+    })
+     .BindList(new Core.Erp.Web.Areas.Reportes.Controllers.RRHHReportesController().get_list_bajo_demanda_individual, new Core.Erp.Web.Areas.Reportes.Controllers.RRHHReportesController().get_info_bajo_demanda_individual)
+    .Bind((Model.GetType() == typeof(Core.Erp.Info.Helps.cl_filtros_Info) || Model.GetType() == typeof(Core.Erp.Info.RRHH.ro_area_Info) ) || Model == 0 ? "" : Model);
+    }
+@comboBox.GetHtml()

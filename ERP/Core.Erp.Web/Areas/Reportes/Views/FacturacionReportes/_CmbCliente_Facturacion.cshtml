@@ -1,0 +1,31 @@
+﻿
+@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdCliente";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "FacturacionReportes", Action = "CmbCliente_Facturacion", Area = "Reportes" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "pe_nombreCompleto";
+        settings.Properties.TextFormatString = "[{0}] {1} {2}";
+        settings.Properties.ValueField = "IdEntidad";
+        settings.Properties.ValueType = typeof(decimal);
+        settings.Properties.FilterMinLength = 3;
+
+        settings.Properties.Columns.Add("IdEntidad", "ID", 10);
+        settings.Properties.Columns.Add("pe_cedulaRuc", "RUC", 20);
+        settings.Properties.Columns.Add("pe_nombreCompleto", "Cliente", 70);
+
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+        settings.Properties.NullText = "== Seleccione ==";
+        settings.Properties.AllowNull = true;
+    })
+    .BindList(new Core.Erp.Web.Areas.Reportes.Controllers.FacturacionReportesController().get_list_bajo_demanda, new Core.Erp.Web.Areas.Reportes.Controllers.FacturacionReportesController().get_info_bajo_demanda)
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.Helps.cl_filtros_facturacion_Info) ? "" : (Model == 0 ? "" : Model));
+
+}
+@comboBox.GetHtml()

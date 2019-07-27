@@ -1,0 +1,252 @@
+﻿@model Core.Erp.Info.Facturacion.fa_parametro_Info
+@{
+    ViewBag.Title = "Parámetros de facturación";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Index", "ParametrosFacturacion", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+    @Html.HiddenFor(q => q.IdEmpresa)
+        <div id="Tabs" role="tabpanel">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active">
+                    <a href="#tab_parametros" aria-controls="parametros" role="tab" data-toggle="tab">Parámetros de factura</a>
+                </li>
+                <li>
+                    <a href="#tab_nota" aria-controls="nota" role="tab" data-toggle="tab">Nota de crédito / débito</a>
+                </li>
+                <li>
+                    <a href="#tab_cta" aria-controls="cta" role="tab" data-toggle="tab">Cuentas contables</a>
+                </li>
+            </ul>
+            <div class="tab-content" style="padding-top: 20px">
+
+                <div role="tabpanel" class="tab-pane active" style="margin-left: 2em;" id="tab_parametros">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdMovi_inven_tipo_Factura">Tipo movimiento inventario al grabar factura</label>
+                                @Html.DropDownListFor(q => q.IdMovi_inven_tipo_Factura, new SelectList(ViewBag.lst_tipo_movimiento_egr, "IdMovi_inven_tipo", "tm_descripcion"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.IdMovi_inven_tipo_Factura, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdTipoCbteCble_Factura">Tipo cbte. para generar diario factura</label>
+                                @Html.DevExpress().ComboBoxFor(q => q.IdTipoCbteCble_Factura, settings =>
+                                {
+                                    settings.Name = "IdTipoCbteCble_Factura";
+                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                    settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                                    settings.Properties.Columns.Add("IdTipoCbte", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                                    settings.Properties.Columns.Add("tc_TipoCbte", "Tipo").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                                    //Campo ID
+                                    settings.Properties.ValueField = "IdTipoCbte";
+                                    settings.Properties.ValueType = typeof(int);
+                                    settings.Properties.TextField = "tc_TipoCbte";
+                                    //Boton para seleccionar ningun registro
+                                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                                    settings.Properties.NullText = "== Seleccione ==";
+                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                }).BindList(ViewBag.lst_tipo_comprobante).GetHtml()
+                                @Html.ValidationMessageFor(q => q.IdTipoCbteCble_Factura, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="NumeroDeItemFact">Número de items por factura</label>
+                                @Html.TextBoxFor(q => q.NumeroDeItemFact, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.NumeroDeItemFact, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="NumeroDeItemProforma">Número de items por proforma</label>
+                                @Html.TextBoxFor(q => q.NumeroDeItemProforma, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.NumeroDeItemProforma, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdCaja_Default_Factura">Caja predefinida para generar factura</label>
+                                @Html.DropDownListFor(q => q.IdCaja_Default_Factura, new SelectList(ViewBag.lst_caja, "IdCaja", "ca_Descripcion"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.IdCaja_Default_Factura, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="DiasTransaccionesAFuturo">Dias máximos para transacciones a futuro</label>
+                                @Html.TextBoxFor(q => q.DiasTransaccionesAFuturo, new { @class = "form-control", @id = "DiasTransaccionesAFuturo" })
+                                @Html.ValidationMessageFor(q => q.DiasTransaccionesAFuturo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="clave_desbloqueo_precios">Clave para desbloqueo de precios</label>
+                                @Html.TextBoxFor(q => q.clave_desbloqueo_precios, new { @class = "form-control", @id = "DiasTransaccionesAFuturo" })
+                                @Html.ValidationMessageFor(q => q.clave_desbloqueo_precios, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div role="tabpanel" class="tab-pane" style="margin-left: 2em;" id="tab_nota">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdTipoCbteCble_NC">Tipo cbte. para generar nota de crédito</label>
+                                @Html.DevExpress().ComboBoxFor(q => q.IdTipoCbteCble_NC, settings =>
+                                {
+                                    settings.Name = "IdTipoCbteCble_NC";
+                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                    settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                                    settings.Properties.Columns.Add("IdTipoCbte", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                                    settings.Properties.Columns.Add("tc_TipoCbte", "Tipo").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                                    //Campo ID
+                                    settings.Properties.ValueField = "IdTipoCbte";
+                                    settings.Properties.ValueType = typeof(int);
+                                    settings.Properties.TextField = "tc_TipoCbte";
+                                    //Boton para seleccionar ningun registro
+                                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                                    settings.Properties.NullText = "== Seleccione ==";
+                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                }).BindList(ViewBag.lst_tipo_comprobante).GetHtml()
+                                @Html.ValidationMessageFor(q => q.IdTipoCbteCble_NC, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdTipoCbteCble_ND">Tipo cbte. para generar nota de débito</label>
+                                @Html.DevExpress().ComboBoxFor(q => q.IdTipoCbteCble_ND, settings =>
+                                {
+                                    settings.Name = "IdTipoCbteCble_ND";
+                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                    settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                                    settings.Properties.Columns.Add("IdTipoCbte", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                                    settings.Properties.Columns.Add("tc_TipoCbte", "Tipo").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                                    //Campo ID
+                                    settings.Properties.ValueField = "IdTipoCbte";
+                                    settings.Properties.ValueType = typeof(int);
+                                    settings.Properties.TextField = "tc_TipoCbte";
+                                    //Boton para seleccionar ningun registro
+                                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                                    settings.Properties.NullText = "== Seleccione ==";
+                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                }).BindList(ViewBag.lst_tipo_comprobante).GetHtml()
+                                @Html.ValidationMessageFor(q => q.IdTipoCbteCble_ND, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div role="tabpanel" class="tab-pane" style="margin-left: 2em;" id="tab_cta">
+                    <div class="row">
+                        <div class="checkbox">
+                            <label for="pa_Contabiliza_descuento">@Html.CheckBoxFor(q => q.pa_Contabiliza_descuento) Se contabiliza el descuento</label>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdCtaCble_SubTotal_Vtas_x_Default">Cuenta contable default para descuento</label>
+                                @Html.Partial("_CmbCuenta_Param1", Model)
+                                @Html.ValidationMessageFor(q => q.pa_IdCtaCble_descuento, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdCtaCble_SubTotal_Vtas_x_Default">Cuenta contable default para ventas</label>
+                                @Html.Partial("_CmbCuenta_Param2", Model)
+                                @Html.ValidationMessageFor(q => q.IdCtaCble_SubTotal_Vtas_x_Default, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdCtaCble_CXC_Vtas_x_Default">Cuenta contable default para crédito</label>
+                                @Html.Partial("_CmbCuenta_Param3", Model)
+                                @Html.ValidationMessageFor(q => q.IdCtaCble_CXC_Vtas_x_Default, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdCtaCble_IVA">Cuenta contable default para IVA</label>
+                                @Html.Partial("_CmbCuenta_Param4", Model)
+                                @Html.ValidationMessageFor(q => q.IdCtaCble_IVA, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdClienteConsumidorFinal">Cliente consumidor final</label>
+                                @Html.Partial("_CmbCliente_Parametro", Model)
+                                @Html.ValidationMessageFor(q => q.IdClienteConsumidorFinal, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="MontoMaximoConsumidorFinal">Monto máximo consumidor final</label>
+                                @Html.TextBoxFor(q => q.MontoMaximoConsumidorFinal, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.MontoMaximoConsumidorFinal, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

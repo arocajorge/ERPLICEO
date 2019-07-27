@@ -1,0 +1,480 @@
+﻿@using System.Web.UI.WebControls
+@model Core.Erp.Info.Inventario.in_transferencia_Info
+@{
+    ViewBag.Title = "Auditoria de inventario";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script type="text/javascript">
+    var selectedIDs;
+
+    function OnBeginCallback(s, e) {
+        //Pass all selected keys to GridView callback action
+        e.customArgs["selectedIDs"] = selectedIDs;
+        e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
+    }
+    function OnSelectionChanged(s, e) {
+        s.GetSelectedFieldValues("CodMoviInven", GetSelectedFieldValuesCallback);
+
+    }
+    function GetSelectedFieldValuesCallback(values) {
+        //Capture all selected keys
+        selectedIDs = values.join(',');
+    }
+</script>
+<script type="text/javascript">
+    var textSeparator = ";";
+    function updateText() {
+        var selectedItems = IntArray.GetSelectedItems();
+        checkComboBox.SetText(getSelectedItemsText(selectedItems));
+    }
+    function synchronizeListBoxValues(dropDown, args) {
+        IntArray.UnselectAll();
+        var texts = dropDown.GetText().split(textSeparator);
+        var values = getValuesByTexts(texts);
+        IntArray.SelectValues(values);
+        updateText(); // for remove non-existing texts
+    }
+    function getSelectedItemsText(items) {
+        var texts = [];
+        for (var i = 0; i < items.length; i++)
+            texts.push(items[i].text);
+        return texts.join(textSeparator);
+    }
+    function getValuesByTexts(texts) {
+        var actualValues = [];
+        var item;
+        for (var i = 0; i < texts.length; i++) {
+            item = IntArray.FindItemByText(texts[i]);
+            if (item != null)
+                actualValues.push(item.value);
+        }
+        return actualValues;
+    }
+</script>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    <div class="box-body">
+        <div id="Tabs" role="tabpanel">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active">
+                    <a href="#tab_correccion_trans" aria-controls="Correccion" role="tab" data-toggle="tab">Corrección de transferencia</a>
+                </li>
+                <li>
+                    <a href="#tab_mov_x_contabilizar" aria-controls="Movimientos" role="tab" data-toggle="tab">Movimientos por contabilizar</a>
+                </li>
+                <li hidden>
+                    <a href="#tab_recosteo_x_sucursal" aria-controls="Recosteo" role="tab" data-toggle="tab">Recosteo por sucursal</a>
+                </li>
+            </ul>
+            <div class="tab-content" style="padding-top: 20px">
+                <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_correccion_trans">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label for="IdSucursal">Sucursal</label>
+                                    @Html.DevExpress().DropDownEditFor(q => q.IntArray, settings =>
+                       {
+                           settings.Name = "checkComboBox";
+                           settings.Width = Unit.Percentage(100);
+
+                           settings.SetDropDownWindowTemplateContent(c =>
+                           {
+                               @Html.DevExpress().ListBox(listBoxSettings =>
+                               {
+                                   listBoxSettings.Name = "IntArray";
+                                   listBoxSettings.ControlStyle.Border.BorderWidth = 0;
+                                   listBoxSettings.ControlStyle.BorderBottom.BorderWidth = 1;
+
+                                   listBoxSettings.Height = Unit.Pixel(350);
+                                   listBoxSettings.Width = Unit.Percentage(100);
+
+                                   listBoxSettings.Properties.EnableSelectAll = true;
+                                   listBoxSettings.Properties.FilteringSettings.ShowSearchUI = true;
+                                   listBoxSettings.Properties.SelectionMode = ListEditSelectionMode.CheckColumn;
+                                   foreach (var item in ViewBag.lst_sucursal)
+                                   {
+                                       listBoxSettings.Properties.Items.Add(item.Su_Descripcion, item.IdSucursal).Selected = item.Seleccionado;
+                                   }
+                                   listBoxSettings.Properties.ClientSideEvents.SelectedIndexChanged = "updateText";
+                                   listBoxSettings.Properties.ClientSideEvents.Init = "updateText";
+                               }).Render();
+                               ViewContext.Writer.Write("<div style=\"margin: 6px; overflow: hidden;\">");
+                               @Html.DevExpress().Button(buttonSettings =>
+                               {
+                                   buttonSettings.Name = "buttonClose";
+                                   buttonSettings.Text = "Close";
+                                   buttonSettings.Style.Add("float", "right");
+                                   buttonSettings.ClientSideEvents.Click = "function(s, e){ checkComboBox.HideDropDown(); }";
+                                   buttonSettings.Height = 26;
+                               }).Render();
+                               ViewContext.Writer.Write("</div>");
+                           });
+                           settings.Properties.AnimationType = AnimationType.None;
+                           settings.Properties.ClientSideEvents.TextChanged = "synchronizeListBoxValues";
+                           settings.Properties.ClientSideEvents.DropDown = "synchronizeListBoxValues";
+                       }).GetHtml()
+                                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Fecha inicio*</label>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        @Html.DevExpress().DateEditFor(q => q.fecha_correccion_transferencia, settings =>
+                                        {
+                                            settings.Name = "fecha_correccion_transferencia";
+                                            settings.Properties.UseMaskBehavior = true;
+                                            settings.Properties.EditFormat = EditFormat.Date;
+                                            settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                        }).GetHtml()
+                                        @Html.ValidationMessageFor(q => q.fecha_correccion_transferencia, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for=""></label>
+                                    <div class="input-group">
+                                        <button type="button" title="Buscar transferencia"  class="btn btn-primary" id="btn_buscar_transferencia" onclick="BuscarTransferencia();">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                        &nbsp;&nbsp;
+                                        <button type="button" title="Corregir transferencia" class="btn btn-primary" id="btn_corregir_transferencia" onclick="CorregirTransferencia();">
+                                            <i class="fa fa-refresh"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.Action("GridViewPartial_CorreccionTransferencias", new { fecha_ini = Model.fecha_correccion_transferencia })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_mov_x_contabilizar">
+                        <div class="row">
+                            <div class="col-md-12">                                
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="">Fecha inicio*</label>
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            @Html.DevExpress().DateEditFor(q => q.fecha_inicio_mov, settings =>
+                                            {
+                                                settings.Name = "fecha_inicio_mov";
+                                                settings.Properties.UseMaskBehavior = true;
+                                                settings.Properties.EditFormat = EditFormat.Date;
+                                                settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            }).GetHtml()
+                                            @Html.ValidationMessageFor(q => q.fecha_inicio_mov, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="">Fecha fin*</label>
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            @Html.DevExpress().DateEditFor(q => q.fecha_fin_mov, settings =>
+                                            {
+                                                settings.Name = "fecha_fin_mov";
+                                                settings.Properties.UseMaskBehavior = true;
+                                                settings.Properties.EditFormat = EditFormat.Date;
+                                                settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            }).GetHtml()
+                                            @Html.ValidationMessageFor(q => q.fecha_fin_mov, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="IdSucursal">Tipo de Movimiento*</label>
+                                        @Html.DropDownListFor(q => q.TipoMovimiento, new SelectList(ViewBag.lst_tipo_movimiento, "Key", "Value"), new { @class = "form-control", @id = "TipoMovimiento" })
+                                        @Html.ValidationMessageFor(q => q.TipoMovimiento, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for=""></label>
+                                        <div class="input-group">
+                                            <button type="button" title="Buscar movimientos" class="btn btn-primary" id="btn_buscar_movimientos" onclick="BuscarMovimientos();">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                            &nbsp;&nbsp;
+                                            <button type="button" title="Contabilizar" class="btn btn-primary" id="btn_contabilizar" onclick="ContabilizarMovimientos();">
+                                                <i class="fa fa-refresh"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.Action("GridViewPartial_MovimientosSinCont", new {fecha_ini = Model.fecha_inicio_mov, fecha_fin = Model.fecha_inicio_mov, TipoMovimiento = Model.TipoMovimiento })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_recosteo_x_sucursal">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="IdSucursal">Sucursal*</label>
+                                        @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                                        @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="IdBodega">Bodega</label>
+                                        @Html.DropDownListFor(q => q.IdBodega, new SelectList(ViewBag.lst_bodega, "IdBodega", "bo_Descripcion"), new { @class = "form-control", @id = "IdBodega" })
+                                        @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="">Fecha inicio*</label>
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            @Html.DevExpress().DateEditFor(q => q.fecha_recosteo_sucursal, settings =>
+                                        {
+                                            settings.Name = "fecha_recosteo_sucursal";
+                                            settings.Properties.UseMaskBehavior = true;
+                                            settings.Properties.EditFormat = EditFormat.Date;
+                                            settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                        }).GetHtml()
+                                            @Html.ValidationMessageFor(q => q.fecha_recosteo_sucursal, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for=""></label>
+                                        <div class="input-group">
+                                            <button type="button" title="Recostear por sucursal" class="btn btn-primary" id="btn_recosteo_x_sucursal" onclick="Recosteo_x_Sucursal();">
+                                                <i class="fa fa-refresh"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.Action("GridViewPartial_Recosteo_x_Sucursal", new { IdSucursal = Model.IdSucursal, IdBodega = Model.IdBodega, fecha_ini = Model.fecha_recosteo_sucursal })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>            
+    </div>
+}
+
+<script type="text/javascript">
+    $(function () {
+        CargarBodega();
+        $("#IdSucursal").change(function () {
+            CargarBodega();
+        });
+    });
+
+    function BuscarTransferencia() {
+
+        var arreglo = new Array();
+        var selectedItems = IntArray.GetSelectedItems();
+        if (selectedItems.length == 0) {
+            
+        }
+        else {
+            for (var i = 0; i < selectedItems.length; i++) {
+                arreglo[i] = selectedItems[i].value;
+            }            
+        }
+
+        var datos = {            
+            fecha_ini: fecha_correccion_transferencia.GetValue(),
+            IdEmpresa: $("#IdEmpresa").val(),
+            ListaSucursal: arreglo
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("BuscarTransferencia", "AuditoriaInventario", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_CorreccionTransferencias.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function CorregirTransferencia() {
+        var datos = {
+            fecha_ini: fecha_correccion_transferencia.GetValue(),
+            IdEmpresa: $("#IdEmpresa").val()
+            }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CorregirTransferencia", "AuditoriaInventario", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data != "") {
+                    alert(data);
+                }
+
+                GridViewPartial_CorreccionTransferencias.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function CargarBodega() {
+        $("#IdBodega").empty();
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarBodega", "AuditoriaInventario", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdBodega").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+    function Recosteo_x_Sucursal() {
+        var datos = {
+            fecha_ini: fecha_recosteo_sucursal.GetValue(),
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val(),
+            IdBodega: $("#IdBodega").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("Recosteo_x_Sucursal", "AuditoriaInventario", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_Recosteo_x_Sucursal.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function BuscarMovimientos() {
+        var datos = {
+            fecha_ini: fecha_inicio_mov.GetValue(),
+            fecha_fin: fecha_fin_mov.GetValue(),
+            TipoMovimiento: $("#TipoMovimiento").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("BuscarMovimientos", "AuditoriaInventario", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_MovimientosSinCont.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+    }
+    
+    function ContabilizarMovimientos() {
+        var datos = {
+            IDs: selectedIDs,
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ContabilizarMovimientos", "AuditoriaInventario", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                GridViewPartial_MovimientosSinCont.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>

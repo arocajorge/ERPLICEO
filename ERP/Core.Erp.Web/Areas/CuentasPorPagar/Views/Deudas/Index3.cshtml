@@ -1,0 +1,166 @@
+﻿@model Core.Erp.Info.CuentasPorPagar.cp_orden_giro_Info
+<script type="text/javascript">
+
+    
+   
+
+
+
+     var selectedIDs;
+    function OnBeginCallback(s, e) {
+        //Pass all selected keys to GridView callback action
+        e.customArgs["selectedIDs"] = selectedIDs;
+    }
+    function OnSelectionChanged(s, e) {
+        s.GetSelectedFieldValues("SecuencialID", GetSelectedFieldValuesCallback);
+    }
+    function GetSelectedFieldValuesCallback(values) {
+        //Capture all selected keys
+        selectedIDs = values.join(',');
+    }
+
+    function guardar() {
+        var datos = {
+            Ids: selectedIDs
+        }
+        $("#btn_guardar").disabled = true;
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("guardar_aprobacion", "Deudas", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#myform").submit();
+                GridViewPartial_aprobacion_facturas.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+        $("#btn_guardar").disabled = false;
+    }
+
+    function seleccionar_aprobacion() {
+        var datos = {
+            Ids: selectedIDs
+        }
+        $("#btn_guardar").disabled = true;
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("seleccionar_aprobacion","Deudas", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+                $("#myform").submit();
+                GridViewPartial_aprobacion_facturas.PerformCallback();
+                $("#fac_con_saldo").modal("hide");
+
+            },
+            error: function (error) {
+            }
+        });
+        $("#btn_guardar").disabled = false;
+    }
+    function fac_con_saldo()
+    {
+        selectedIDs = "";
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetListOrdenesPorPagar", "Deudas", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                    GridViewPartial_facturas_con_saldos.PerformCallback();
+                    $("#fac_con_saldo").modal("show");
+                    GridViewPartial_facturas_con_saldos.UnselectRows();
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+    function cerrar() {
+        $("#fac_con_saldo").modal("hide");
+    };
+    
+</script>
+
+@{
+    ViewBag.Title = "Aprobación de factura por proveedor";
+    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(q=>q.IdEmpresa, new { @id = "IdEmpresa"})
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-1">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" onclick="fac_con_saldo()" title="Buscar deudas">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>                
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                @Html.Action("GridViewPartial_aprobacion_facturas")
+            </div>
+        </div>
+    </div>
+        
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="guardar()" id="btn_guardar">Guardar</button>
+        </div>
+        }
+
+
+        <div class="modal fade" id="fac_con_saldo" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">Facturas con saldos</h4>
+                    </div>
+                    <div class="modal-body">
+                        @Html.Action("GridViewPartial_facturas_con_saldos")
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="seleccionar_aprobacion();">Aceptar</button>
+                        <button type="button" class="btn btn-default" onclick="cerrar();">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+<script type="text/javascript">
+    
+</script>

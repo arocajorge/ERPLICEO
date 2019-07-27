@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Catálogos";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+
+
+    @Html.Action("GridViewPartial_catalogo_af", new { IdTipoCatalogo = ViewBag.IdTipoCatalogo })
+
+    <div class="box-footer">
+        <a class="btn btn-default" href="@Url.Action("Index","CatalogoTipoAF",new { IdTipoCatalogo = ViewBag.IdTipoCatalogo, Area = "ActivoFijo" },null)">Volver</a>
+    </div>
+
+}

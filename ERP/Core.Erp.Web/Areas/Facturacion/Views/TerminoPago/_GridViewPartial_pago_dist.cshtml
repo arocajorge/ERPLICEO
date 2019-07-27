@@ -1,0 +1,64 @@
+@using System.Web.UI.WebControls;
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridView_pago_dist";
+        settings.CallbackRouteValues = new { Controller = "TerminoPago", Action = "GridViewPartial_pago_dist"};
+        settings.KeyFieldName = "IdTerminoPago";
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "TerminoPago", Action = "EditingAddNew", Area = "Facturacion" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "TerminoPago", Action = "EditingUpdate", Area = "Facturacion" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "TerminoPago", Action = "EditingDelete", Area = "Facturacion" };
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+
+        //Funcion para inicializar fila al presionar nuevo
+        settings.InitNewRow = (s, e) =>
+        {
+            e.NewValues["IdTerminoPago"] = "";
+            e.NewValues["Secuencia"] = 0;
+            e.NewValues["Num_Dias_Vcto"] = 0;
+            e.NewValues["Por_distribucion"] = 0;
+        };
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Num_Dias_Vcto";
+            column.Caption = "Dias vcto*";
+            column.Width = Unit.Percentage(50);
+            column.ColumnType = MVCxGridViewColumnType.TextBox;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Por_distribucion";
+            column.Caption = "Por distribución*";
+            column.Width = Unit.Percentage(50);
+            column.ColumnType = MVCxGridViewColumnType.TextBox;
+        });
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Por_distribucion").DisplayFormat = "{0:n2}";
+        settings.Settings.ShowFooter = true;
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
+
+    });
+}
+@grid.Bind(Model).GetHtml()

@@ -1,0 +1,323 @@
+﻿
+
+@model Core.Erp.Info.RRHH.ro_horario_planificacion_Info
+@{
+    ViewBag.Title = "Nueva planificación";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Nuevo", "HorarioPlanificacion", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id= "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdPlanificacion)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdNomina">Nómina</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdNomina, settings =>
+               {
+                   settings.Name = "IdNomina";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdNomina_Tipo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("Descripcion", "Nómina").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdNomina_Tipo";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "Descripcion";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+               }).BindList(ViewBag.lst_nomina).GetHtml()
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdSucursal, settings =>
+               {
+                   settings.Name = "IdSucursal";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdSucursal", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("Su_Descripcion", "Sucursal").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdSucursal";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "Su_Descripcion";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+               }).BindList(ViewBag.lst_sucursal).GetHtml()
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdDivision">División</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdDivision, settings =>
+               {
+                   settings.Name = "IdDivision";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdDivision", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("Descripcion", "División").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdDivision";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "Descripcion";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+               }).BindList(ViewBag.lst_division).GetHtml()
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdArea">Área</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdArea, settings =>
+               {
+                   settings.Name = "IdArea";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdArea", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("Descripcion", "Área").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdArea";
+                   settings.Properties.ValueType = typeof(decimal);
+                   settings.Properties.TextField = "Descripcion";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+               }).BindList(ViewBag.lst_area).GetHtml()
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdDepartamento">Departamento</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdDepartamento, settings =>
+               {
+                   settings.Name = "IdDepartamento";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdDepartamento", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("de_descripcion", "Departamento").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdDepartamento";
+                   settings.Properties.ValueType = typeof(decimal);
+                   settings.Properties.TextField = "de_descripcion";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+               }).BindList(ViewBag.lst_departamento).GetHtml()
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdCargo">Cargo</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdCargo, settings =>
+               {
+                   settings.Name = "IdCargo";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdCargo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("ca_descripcion", "Cargo").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdCargo";
+                   settings.Properties.ValueType = typeof(decimal);
+                   settings.Properties.TextField = "ca_descripcion";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+               }).BindList(ViewBag.lst_cargo).GetHtml()
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="FechaInicio">Fecha desde*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.FechaInicio, settings =>
+                    {
+                        settings.Name = "FechaInicio";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="FechaFin">Fecha hasta*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.FechaFin, settings =>
+                    {
+                        settings.Name = "FechaFin";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.FechaFin, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdEmpleado">Empleado</label>
+                       @Html.Partial("_CmbEmpleado_Planificacion", Model)
+                       
+                    @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdCargo">Horario</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdHorario, settings =>
+               {
+                   settings.Name = "IdHorario";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdHorario", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("Descripcion", "Horario").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdHorario";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "Descripcion";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+               }).BindList(ViewBag.lst_horario).GetHtml()
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="box-footer">
+                        <label for=""></label>
+                        <button type="button" onclick="Buscar();" id="btnconsultar" class="btn btn-primary">Buscar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="cb_Observacion">Observación</label>
+                    @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="cb_Observacion">Detalle de la planificación</label>
+                        @Html.Action("GridViewPartial_horario_planificacion_det")
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="box-footer">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a class="btn btn-default" href="@Url.Action("Index","HorarioPlanificacion",new { Area = "RRHH", @id="grid"},null)">Cancelar</a>
+        </div>
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+        }
+
+
+        <script>
+            function Buscar() {
+                var datos = {
+                    fi: FechaInicio.GetValue(),
+                    ff: FechaFin.GetValue(),
+                    IdNomina: IdNomina.GetValue(),
+                    IdSucursal: IdSucursal.GetValue(),
+                    IdDivision: IdDivision.GetValue(),
+                    IdArea: IdArea.GetValue(),
+                    IdDepartamento: IdDepartamento.GetValue(),
+                    IdCargo: IdCargo.GetValue(),
+                    IdEmpleado: IdEmpleado.GetValue(),
+                    IdHorario: IdHorario.GetValue(),
+                    IdTransaccionSession: $("#IdTransaccionSession").val()
+
+
+                }
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(datos),
+                    url: '@Url.Action("Consultar", "HorarioPlanificacion", new { Area = "RRHH" })',
+                    async: false,
+                    bDeferRender: true,
+                    bProcessing: true,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+
+                        GridViewPartial_horario_planificacion_det.PerformCallback();
+
+                    },
+                    error: function (error) {
+                    }
+                });
+            };
+        </script>

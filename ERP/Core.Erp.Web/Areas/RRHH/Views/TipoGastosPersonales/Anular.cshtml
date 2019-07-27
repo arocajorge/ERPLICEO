@@ -1,0 +1,46 @@
+﻿@model Core.Erp.Info.RRHH.ro_tipo_gastos_personales_Info
+@{
+    ViewBag.Title = "Anular tipo de gsto";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Anular", "TipoGastosPersonales", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdTipoGasto)
+    @Html.HiddenFor(q => q.nom_tipo_gasto)
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="ca_descripcion">Código*</label>
+                    @Html.TextBoxFor(q => q.IdTipoGasto, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(m => m.IdTipoGasto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">Nombre gasto*</label>
+                    @Html.TextBoxFor(q => q.nom_tipo_gasto, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(m => m.nom_tipo_gasto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index","TipoGatosPersonales",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

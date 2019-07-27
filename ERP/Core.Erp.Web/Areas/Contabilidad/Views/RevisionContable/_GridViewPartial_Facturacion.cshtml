@@ -1,0 +1,83 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridView_Facturacion";
+        settings.CallbackRouteValues = new { Controller = "RevisionContable", Action = "GridViewPartial_Facturacion", Area = "Contabilidad", IdTransaccionSession = ViewBag.IdTransaccionSession};
+        settings.KeyFieldName = "IdSecuencia";
+
+        settings.Width = Unit.Percentage(100);
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        //Configuración click derecho
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.EnableRowMenu = DefaultBoolean.False;
+
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+
+        settings.Columns.Add("IdCbteVta", "ID").Width = Unit.Percentage(5);
+        settings.Columns.Add("Nombres", "Cliente").Width = Unit.Percentage(30);
+        settings.Columns.Add("Referencia", "Referencia").Width = Unit.Percentage(15);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "vt_fecha";
+            column.Caption = "Fecha";
+            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
+            column.Width = Unit.Percentage(10);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "TotalModulo";
+            column.Caption = "Módulo";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(10);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "TotalContabilidad";
+            column.Caption = "Contabilidad";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(10);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Diferencia";
+            column.Caption = "Diferencia";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(10);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "*";
+            column.FieldName = "IdSecuencia";
+            column.Width = Unit.Percentage(10);
+            column.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            column.SetDataItemTemplateContent(c =>
+            {
+                Html.DevExpress().Button(settingsBtn =>
+                {
+                    settingsBtn.Name = "btn" + c.KeyValue;
+                    settingsBtn.Text = "Contabilizar";
+                    settingsBtn.ClientSideEvents.Click = "function(s, e) {ContabilizarFactura('" + c.KeyValue + "');}";
+                }).Render();
+            });
+        });
+    });
+}
+@grid.Bind(Model).GetHtml()

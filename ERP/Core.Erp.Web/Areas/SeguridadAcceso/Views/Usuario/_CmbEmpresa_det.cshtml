@@ -1,0 +1,23 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdEmpresa";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "Usuario", Action = "CmbEmpresa_det", Area = "SeguridadAcceso" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "em_nombre";
+        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.ValueField = "IdEmpresa";
+        settings.Properties.ValueType = typeof(int);
+        settings.Properties.Columns.Add("IdEmpresa", "ID", 10);
+        settings.Properties.Columns.Add("em_nombre", "Descripción", 90);
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedEmpresaChanged";
+    })
+     .BindList(new Core.Erp.Web.Areas.SeguridadAcceso.Controllers.UsuarioController().get_list_bajo_demanda, new Core.Erp.Web.Areas.SeguridadAcceso.Controllers.UsuarioController().get_info_bajo_demanda)
+     .Bind((Model.GetType() == typeof(Core.Erp.Info.SeguridadAcceso.seg_usuario_Info) || Model.GetType() == typeof(List<Core.Erp.Info.SeguridadAcceso.seg_usuario_x_tb_sucursal_Info>)) ? "" : Model);
+}
+@comboBox.GetHtml()

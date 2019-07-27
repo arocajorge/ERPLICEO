@@ -1,0 +1,74 @@
+﻿@model Core.Erp.Info.Caja.caj_Caja_Info
+@{
+    ViewBag.Title = "Modificar caja";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Modificar", "Caja", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdCaja)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="ca_Codigo">Código</label>
+                    @Html.TextBoxFor(q => q.ca_Codigo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.ca_Codigo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal</label>
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ca_Descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.ca_Descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.ca_Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCtaCble">Cuenta contable*</label>
+                    @Html.Partial("_CmbCuenta_Caja", Model)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdUsuario_Responsable">Responsable</label>
+                    @Html.DropDownListFor(q => q.IdUsuario_Responsable, new SelectList(ViewBag.lst_responsable, "IdUsuario", "Nombre"), new { @class = "form-control", @id = "IdUsuario_Responsable" })
+                    @Html.ValidationMessageFor(q => q.IdUsuario_Responsable, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Caja", new { Area ="Caja" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

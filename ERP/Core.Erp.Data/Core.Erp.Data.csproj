@@ -1,0 +1,3254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A52F3B91-B460-4FFB-AA55-A667DC60DB43}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Core.Erp.Data</RootNamespace>
+    <AssemblyName>Core.Erp.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publicar\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Web.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActivoFijo\Af_Activo_fijo_Categoria_Data.cs" />
+    <Compile Include="ActivoFijo\Af_Activo_fijo_Data.cs" />
+    <Compile Include="ActivoFijo\Af_Activo_fijo_tipo_Data.cs" />
+    <Compile Include="ActivoFijo\Af_Area_Data.cs" />
+    <Compile Include="ActivoFijo\Af_CatalogoTipo_Data.cs" />
+    <Compile Include="ActivoFijo\Af_Catalogo_Data.cs" />
+    <Compile Include="ActivoFijo\Af_Departamento_Data.cs" />
+    <Compile Include="ActivoFijo\Af_Depreciacion_Data.cs" />
+    <Compile Include="ActivoFijo\Af_Depreciacion_Det_Data.cs" />
+    <Compile Include="ActivoFijo\Af_Mej_Baj_Activo_Data.cs" />
+    <Compile Include="ActivoFijo\Af_Parametros_Data.cs" />
+    <Compile Include="ActivoFijo\Af_Retiro_Activo_Data.cs" />
+    <Compile Include="ActivoFijo\Af_Venta_Activo_Data.cs" />
+    <Compile Include="Af_Activo_fijo.cs">
+      <DependentUpon>Model_activo_fijo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Af_Activo_fijo_Categoria.cs">
+      <DependentUpon>Model_activo_fijo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Af_Activo_fijo_tipo.cs">
+      <DependentUpon>Model_activo_fijo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Af_Area.cs">
+      <DependentUpon>Model_activo_fijo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Af_Catalogo.cs">
+      <DependentUpon>Model_activo_fijo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Af_CatalogoTipo.cs">
+      <DependentUpon>Model_activo_fijo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Af_Departamento.cs">
+      <DependentUpon>Model_activo_fijo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Af_Depreciacion.cs">
+      <DependentUpon>Model_activo_fijo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Af_Depreciacion_Det.cs">
+      <DependentUpon>Model_activo_fijo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Af_Mej_Baj_Activo.cs">
+      <DependentUpon>Model_activo_fijo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Af_Parametros.cs">
+      <DependentUpon>Model_activo_fijo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Af_Retiro_Activo.cs">
+      <DependentUpon>Model_activo_fijo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Af_Venta_Activo.cs">
+      <DependentUpon>Model_activo_fijo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ATS_compras.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ATS_comprobantes_anulados.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ATS_exportaciones.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ATS_retenciones.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ATS_ventas.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ATS_ventas_eventos.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Banco\ba_Archivo_Transferencia_Data.cs" />
+    <Compile Include="Banco\ba_Archivo_Transferencia_Det_Data.cs" />
+    <Compile Include="Banco\ba_archivo_transferencia_x_ba_tipo_flujo_Data.cs" />
+    <Compile Include="Banco\ba_Banco_Cuenta_Data.cs" />
+    <Compile Include="Banco\ba_Banco_Cuenta_x_tb_sucursal_Data.cs" />
+    <Compile Include="Banco\ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Data.cs" />
+    <Compile Include="Banco\ba_CatalogoTipo_Data.cs" />
+    <Compile Include="Banco\ba_Catalogo_Data.cs" />
+    <Compile Include="Banco\ba_Cbte_Ban_Data.cs" />
+    <Compile Include="Banco\ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_Data.cs" />
+    <Compile Include="Banco\ba_Cbte_Ban_x_ba_TipoFlujo_Data.cs" />
+    <Compile Include="Banco\ba_Conciliacion_Data.cs" />
+    <Compile Include="Banco\ba_Conciliacion_det_Data.cs" />
+    <Compile Include="Banco\ba_Conciliacion_det_IngEgr_Data.cs" />
+    <Compile Include="Banco\ba_parametros_Data.cs" />
+    <Compile Include="Banco\ba_Talonario_cheques_x_banco_Data.cs" />
+    <Compile Include="Banco\ba_TipoFlujo_Data.cs" />
+    <Compile Include="Banco\ba_TipoFlujo_Movimiento_Data.cs" />
+    <Compile Include="Banco\ba_TipoFlujo_PlantillaDet_Data.cs" />
+    <Compile Include="Banco\ba_TipoFlujo_Plantilla_Data.cs" />
+    <Compile Include="Banco\ba_tipo_nota_Data.cs" />
+    <Compile Include="ba_Archivo_Transferencia.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_Archivo_Transferencia_Det.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_archivo_transferencia_x_ba_tipo_flujo.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_Banco_Cuenta.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_Banco_Cuenta_x_tb_sucursal.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_Catalogo.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_CatalogoTipo.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_Cbte_Ban.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_Cbte_Ban_x_ba_TipoFlujo.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_Conciliacion.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_Conciliacion_det.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_Conciliacion_det_IngEgr.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_parametros.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_Talonario_cheques_x_banco.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_TipoFlujo.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_TipoFlujo_Movimiento.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_TipoFlujo_Plantilla.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_TipoFlujo_PlantillaDet.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_tipo_nota.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Caja\caj_Caja_Data.cs" />
+    <Compile Include="Caja\caj_Caja_Movimiento_Data.cs" />
+    <Compile Include="Caja\caj_Caja_Movimiento_det_Data.cs" />
+    <Compile Include="Caja\caj_Caja_Movimiento_Tipo_Data.cs" />
+    <Compile Include="Caja\caj_parametro_Data.cs" />
+    <Compile Include="Caja\cp_conciliacion_Caja_Data.cs" />
+    <Compile Include="Caja\cp_conciliacion_Caja_det_Data.cs" />
+    <Compile Include="Caja\cp_conciliacion_Caja_det_Ing_Caja_Data.cs" />
+    <Compile Include="Caja\cp_conciliacion_Caja_det_x_ValeCaja_Data.cs" />
+    <Compile Include="caj_Caja.cs">
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="caj_Caja_Movimiento.cs">
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="caj_Caja_Movimiento_det.cs">
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="caj_Caja_Movimiento_Tipo.cs">
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="caj_parametro.cs">
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\com_catalogo.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\com_catalogo_tipo.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\com_comprador.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\com_departamento.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\com_estado_cierre.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\com_ordencompra_local.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\com_ordencompra_local_det.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\com_parametro.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\com_solicitante.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\com_TerminoPago.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\Model_compras.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_compras.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\Model_compras.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\Model_compras.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_compras.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\vwcom_ordencompra_local.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\vwcom_ordencompra_local_det.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Base\vwcom_ordencompra_local_detPorIngresar.cs">
+      <DependentUpon>Model_compras.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\com_catalogo_Data.cs" />
+    <Compile Include="Compras\com_catalogo_tipo_Data.cs" />
+    <Compile Include="Compras\com_comprador_Data.cs" />
+    <Compile Include="Compras\com_departamento_Data.cs" />
+    <Compile Include="Compras\com_estado_cierre_Data.cs" />
+    <Compile Include="Compras\com_ordencompra_local_Data.cs" />
+    <Compile Include="Compras\com_ordencompra_local_det_Data.cs" />
+    <Compile Include="Compras\com_parametro_Data.cs" />
+    <Compile Include="Compras\com_TerminoPago_Data.cs" />
+    <Compile Include="Contabilidad\ats_Data.cs" />
+    <Compile Include="Contabilidad\ct_anio_fiscal_Data.cs" />
+    <Compile Include="Contabilidad\ct_anio_fiscal_x_cuenta_utilidad_Data.cs" />
+    <Compile Include="Contabilidad\ct_anio_fiscal_x_tb_sucursal_Data.cs" />
+    <Compile Include="Contabilidad\ct_cbtecble_Data.cs" />
+    <Compile Include="Contabilidad\ct_cbtecble_det_Data.cs" />
+    <Compile Include="Contabilidad\ct_cbtecble_Plantilla_Data.cs" />
+    <Compile Include="Contabilidad\ct_cbtecble_Plantilla_det_Data.cs" />
+    <Compile Include="Contabilidad\ct_cbtecble_tipo_Data.cs" />
+    <Compile Include="Contabilidad\ct_CentroCostoNivel_Data.cs" />
+    <Compile Include="Contabilidad\ct_CentroCosto_Data.cs" />
+    <Compile Include="Contabilidad\ct_CierrePorModuloPorSucursal_Data.cs" />
+    <Compile Include="Contabilidad\ct_grupocble_Data.cs" />
+    <Compile Include="Contabilidad\ct_parametro_Data.cs" />
+    <Compile Include="Contabilidad\ct_periodo_Data.cs" />
+    <Compile Include="Contabilidad\ct_plancta_Data.cs" />
+    <Compile Include="Contabilidad\ct_plancta_nivel_Data.cs" />
+    <Compile Include="Contabilidad\ct_punto_cargo_Data.cs" />
+    <Compile Include="Contabilidad\ct_punto_cargo_grupo_Data.cs" />
+    <Compile Include="Contabilidad\ct_RevisionContable_Data.cs" />
+    <Compile Include="cp_codigo_SRI.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_codigo_SRI_tipo.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_codigo_SRI_x_CtaCble.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_ConciliacionAnticipo.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_ConciliacionAnticipoDetAnt.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_ConciliacionAnticipoDetCXP.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_conciliacion_Caja.cs">
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_conciliacion_Caja_det.cs">
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_conciliacion_Caja_det_Ing_Caja.cs">
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_conciliacion_Caja_det_x_ValeCaja.cs">
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_conciliacion_Caja_ValesNoConciliados.cs">
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_cuotas_x_doc.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_cuotas_x_doc_det.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_nota_DebCre.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_orden_giro.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_orden_giro_det.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_orden_giro_det_ing_x_oc.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_orden_giro_det_ing_x_os.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_orden_giro_pagos_sri.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_orden_giro_x_in_Ing_Egr_Inven.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_orden_pago.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_orden_pago_cancelaciones.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_orden_pago_det.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_orden_pago_estado_aprob.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_orden_pago_formapago.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_orden_pago_tipo.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_orden_pago_tipo_x_empresa.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_pagos_sri.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_pais_sri.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_parametros.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_proveedor.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_proveedor_clase.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_retencion.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_retencion_det.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_retencion_x_ct_cbtecble.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_SolicitudPago.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_SolicitudPagoDet.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_TipoDocumento.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_anio_fiscal.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_anio_fiscal_x_cuenta_utilidad.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_anio_fiscal_x_tb_sucursal.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_cbtecble.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_cbtecble_det.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_cbtecble_Plantilla.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_cbtecble_Plantilla_det.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_cbtecble_Reversado.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_cbtecble_tipo.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_CentroCosto.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_CentroCostoNivel.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_CierrePorModuloPorSucursal.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_grupocble.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_parametro.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_periodo.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_plancta.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_plancta_nivel.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_punto_cargo.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ct_punto_cargo_grupo.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CuentasPorCobrar\cxc_CatalogoTipo_Data.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_Catalogo_Data.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_cobro_Data.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_cobro_det_Data.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_cobro_tipo_Data.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_cobro_tipo_motivo_Data.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_cobro_tipo_Param_conta_x_sucursal_Data.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_LiquidacionTarjetaDet_Data.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_LiquidacionTarjeta_Data.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_LiquidacionTarjeta_x_cxc_cobro_Data.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_MotivoLiquidacionTarjeta_Data.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_MotivoLiquidacionTarjeta_x_tb_sucursal_Data.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_Parametro_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_codigo_SRI_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_codigo_SRI_tipo_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_codigo_SRI_x_CtaCble_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_ConciliacionAnticipoDetAnt_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_ConciliacionAnticipoDetCXP_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_ConciliacionAnticipo_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_nota_DebCre_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_giro_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_giro_det_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_giro_det_ing_x_oc_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_giro_det_ing_x_os_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_giro_pagos_sri_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_pago_cancelaciones_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_pago_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_pago_det_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_pago_estado_aprob_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_pago_formapago_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_pago_tipo_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_pago_tipo_x_empresa_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_pagos_sri_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_pais_sri_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_parametros_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_proveedor_clase_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_proveedor_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_retencion_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_retencion_det_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_retencion_x_ct_cbtecble_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_SolicitudPagoDet_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_SolicitudPago_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_TipoDocumento_Data.cs" />
+    <Compile Include="cxc_Catalogo.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cxc_CatalogoTipo.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cxc_cobro.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cxc_cobro_det.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cxc_cobro_tipo.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cxc_cobro_tipo_motivo.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cxc_cobro_tipo_Param_conta_x_sucursal.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cxc_cobro_x_ct_cbtecble.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cxc_LiquidacionTarjeta.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cxc_LiquidacionTarjetaDet.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cxc_LiquidacionTarjeta_x_cxc_cobro.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cxc_MotivoLiquidacionTarjeta.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cxc_MotivoLiquidacionTarjeta_x_tb_sucursal.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cxc_Parametro.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Factura.cs">
+      <DependentUpon>Model_migraciones.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FacturacionElectronica\TipoComprobante_Data.cs" />
+    <Compile Include="Facturacion\fa_CambioProductoDet_Data.cs" />
+    <Compile Include="Facturacion\fa_CambioProducto_Data.cs" />
+    <Compile Include="Facturacion\fa_catalogo_Data.cs" />
+    <Compile Include="Facturacion\fa_catalogo_tipo_Data.cs" />
+    <Compile Include="Facturacion\fa_cliente_contactos_Data.cs" />
+    <Compile Include="Facturacion\fa_cliente_Data.cs" />
+    <Compile Include="Facturacion\fa_cliente_tipo_Data.cs" />
+    <Compile Include="Facturacion\fa_cliente_x_fa_Vendedor_x_sucursal_Data.cs" />
+    <Compile Include="Facturacion\fa_cuotas_x_doc_Data.cs" />
+    <Compile Include="Facturacion\fa_factura_Data.cs" />
+    <Compile Include="Facturacion\fa_factura_det_Data.cs" />
+    <Compile Include="Facturacion\fa_factura_x_fa_guia_remision_Data.cs" />
+    <Compile Include="Facturacion\fa_formaPago_Data.cs" />
+    <Compile Include="Facturacion\fa_guia_remision_Data.cs" />
+    <Compile Include="Facturacion\fa_guia_remision_det_Data.cs" />
+    <Compile Include="Facturacion\fa_guia_remision_det_x_factura_Data.cs" />
+    <Compile Include="Facturacion\fa_MotivoTraslado_Data.cs" />
+    <Compile Include="Facturacion\fa_NivelDescuento_Data.cs" />
+    <Compile Include="Facturacion\fa_notaCreDeb_Data.cs" />
+    <Compile Include="Facturacion\fa_notaCreDeb_det_Data.cs" />
+    <Compile Include="Facturacion\fa_notaCreDeb_x_fa_factura_NotaDeb_Data.cs" />
+    <Compile Include="Facturacion\fa_parametro_Data.cs" />
+    <Compile Include="Facturacion\fa_proforma_Data.cs" />
+    <Compile Include="Facturacion\fa_proforma_det_Data.cs" />
+    <Compile Include="Facturacion\fa_PuntoVta_Data.cs" />
+    <Compile Include="Facturacion\fa_TerminoPago_Data.cs" />
+    <Compile Include="Facturacion\fa_TerminoPago_Distribucion_Data.cs" />
+    <Compile Include="Facturacion\fa_TipoNota_Data.cs" />
+    <Compile Include="Facturacion\fa_TipoNota_x_Empresa_x_Sucursal_Data.cs" />
+    <Compile Include="Facturacion\fa_Vendedor_Data.cs" />
+    <Compile Include="fa_CambioProducto.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_CambioProductoDet.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_CambioProductoDet_x_in_devolucion_inven.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_catalogo.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_catalogo_tipo.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_cliente.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_cliente_contactos.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_cliente_tipo.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_cliente_x_fa_Vendedor_x_sucursal.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_cuotas_x_doc.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_factura.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_factura_det.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_factura_det_x_in_Ing_Egr_Inven_det.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_factura_resumen.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_factura_x_ct_cbtecble.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_factura_x_cxc_cobro.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_factura_x_fa_guia_remision.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_factura_x_in_Ing_Egr_Inven.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_formaPago.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_guia_remision.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_guia_remision_det.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_guia_remision_det_x_factura.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_MotivoTraslado.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_NivelDescuento.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_notaCreDeb.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_notaCreDeb_det.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_notaCreDeb_x_ct_cbtecble.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_notaCreDeb_x_cxc_cobro.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_notaCreDeb_x_fa_factura_NotaDeb.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_parametro.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_proforma.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_proforma_det.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_PuntoVta.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_TerminoPago.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_TerminoPago_Distribucion.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_TipoNota.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_TipoNota_x_Empresa_x_Sucursal.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fa_Vendedor.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="General\tbl_TransaccionesAutorizadas_Data.cs" />
+    <Compile Include="General\tbl_usuario_ftp_Data.cs" />
+    <Compile Include="General\tb_banco_Data.cs" />
+    <Compile Include="General\tb_banco_procesos_bancarios_x_empresa_Data.cs" />
+    <Compile Include="General\tb_bodega_Data.cs" />
+    <Compile Include="General\tb_CatalogoTipo_Data.cs" />
+    <Compile Include="General\tb_Catalogo_Data.cs" />
+    <Compile Include="General\tb_ciudad_Data.cs" />
+    <Compile Include="General\tb_ColaImpresionDirecta_Data.cs" />
+    <Compile Include="General\tb_comprobantes_sin_autorizacion_Data.cs" />
+    <Compile Include="General\tb_empresa_Data.cs" />
+    <Compile Include="General\tb_FiltroReportes_Data.cs" />
+    <Compile Include="General\tb_LogError_Data.cs" />
+    <Compile Include="General\tb_mes_Data.cs" />
+    <Compile Include="General\tb_modulo_Data.cs" />
+    <Compile Include="General\tb_moneda_Data.cs" />
+    <Compile Include="General\tb_pais_Data.cs" />
+    <Compile Include="General\tb_parametro_Data.cs" />
+    <Compile Include="General\tb_parroquia_Data.cs" />
+    <Compile Include="General\tb_persona_Data.cs" />
+    <Compile Include="General\tb_persona_tipo_Data.cs" />
+    <Compile Include="General\tb_provincia_Data.cs" />
+    <Compile Include="General\tb_region_Data.cs" />
+    <Compile Include="General\tb_sis_Documento_Tipo_Data.cs" />
+    <Compile Include="General\tb_sis_Documento_Tipo_Talonario_Data.cs" />
+    <Compile Include="General\tb_sis_Impuesto_Data.cs" />
+    <Compile Include="General\tb_sis_Impuesto_Tipo_Data.cs" />
+    <Compile Include="General\tb_sis_Impuesto_x_ctacble_Data.cs" />
+    <Compile Include="General\tb_sis_reporte_Data.cs" />
+    <Compile Include="General\tb_sis_reporte_diseno_Data.cs" />
+    <Compile Include="General\tb_sis_reporte_x_seg_usuario_Data.cs" />
+    <Compile Include="General\tb_sis_reporte_x_tb_empresa_Data.cs" />
+    <Compile Include="General\tb_sucursal_Data.cs" />
+    <Compile Include="General\tb_sucursal_FormaPago_x_fa_NivelDescuento_Data.cs" />
+    <Compile Include="General\tb_transportista_Data.cs" />
+    <Compile Include="General\tb_visor_video_Data.cs" />
+    <Compile Include="Helps\FilesHelper_Data.cs" />
+    <Compile Include="Importacion\imp_catalogo_Data.cs" />
+    <Compile Include="Importacion\imp_catalogo_tipo_Data.cs" />
+    <Compile Include="Importacion\imp_gasto_Data.cs" />
+    <Compile Include="Importacion\imp_gasto_x_ct_plancta_Data.cs" />
+    <Compile Include="Importacion\imp_liquidacion_Data.cs" />
+    <Compile Include="Importacion\imp_ordencompra_ext_Data.cs" />
+    <Compile Include="Importacion\imp_ordencompra_ext_det_Data.cs" />
+    <Compile Include="Importacion\imp_orden_compra_ext_ct_cbteble_det_gastos_Data.cs" />
+    <Compile Include="Importacion\imp_orden_compra_ext_recepcion_Data.cs" />
+    <Compile Include="Importacion\imp_parametro_Data.cs" />
+    <Compile Include="Importacion\imp_partida_arancelaria_Data.cs" />
+    <Compile Include="imp_catalogo.cs">
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="imp_catalogo_tipo.cs">
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="imp_gasto.cs">
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="imp_gasto_x_ct_plancta.cs">
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="imp_liquidacion.cs">
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="imp_orden_compra_ext.cs">
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="imp_orden_compra_ext_ct_cbteble_det_gastos.cs">
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="imp_orden_compra_ext_det.cs">
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="imp_orden_compra_ext_recepcion.cs">
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="imp_parametro.cs">
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="imp_partida_arancelaria.cs">
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Inventario\in_AjusteDet_Data.cs" />
+    <Compile Include="Inventario\in_Ajuste_Data.cs" />
+    <Compile Include="Inventario\in_CatalogoTipo_Data.cs" />
+    <Compile Include="Inventario\in_Catalogo_Data.cs" />
+    <Compile Include="Inventario\in_categorias_Data.cs" />
+    <Compile Include="Inventario\in_Consignacion_Data.cs" />
+    <Compile Include="Inventario\in_ConsignacionDet_Data.cs" />
+    <Compile Include="Inventario\in_devolucion_inven_Data.cs" />
+    <Compile Include="Inventario\in_devolucion_inven_det_Data.cs" />
+    <Compile Include="Inventario\in_grupo_Data.cs" />
+    <Compile Include="Inventario\in_Ing_Egr_Inven_Data.cs" />
+    <Compile Include="Inventario\in_Ing_Egr_Inven_det_Data.cs" />
+    <Compile Include="Inventario\in_linea_Data.cs" />
+    <Compile Include="Inventario\in_Marca_Data.cs" />
+    <Compile Include="Inventario\in_Motivo_Inven_Data.cs" />
+    <Compile Include="Inventario\in_movi_inven_tipo_Data.cs" />
+    <Compile Include="Inventario\in_movi_inven_tipo_x_tb_bodega_Data.cs" />
+    <Compile Include="Inventario\in_parametro_Data.cs" />
+    <Compile Include="Inventario\in_presentacion_Data.cs" />
+    <Compile Include="Inventario\in_ProductoTipo_Data.cs" />
+    <Compile Include="Inventario\in_Producto_Composicion_Data.cs" />
+    <Compile Include="Inventario\in_Producto_Data.cs" />
+    <Compile Include="Inventario\in_Producto_x_fa_NivelDescuento_Data.cs" />
+    <Compile Include="Inventario\in_producto_x_tb_bodega_Costo_Historico_Data.cs" />
+    <Compile Include="Inventario\in_producto_x_tb_bodega_Data.cs" />
+    <Compile Include="Inventario\in_subgrupo_Data.cs" />
+    <Compile Include="Inventario\in_transferencia_Data.cs" />
+    <Compile Include="Inventario\in_transferencia_det_Data.cs" />
+    <Compile Include="Inventario\in_UnidadMedida_Data.cs" />
+    <Compile Include="Inventario\in_UnidadMedida_Equiv_conversion_Data.cs" />
+    <Compile Include="in_Ajuste.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_AjusteDet.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_Catalogo.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_CatalogoTipo.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_categorias.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_Consignacion.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_ConsignacionDet.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_devolucion_inven.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_devolucion_inven_det.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_grupo.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_Ing_Egr_Inven.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_Ing_Egr_Inven_det.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_linea.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_Marca.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_Motivo_Inven.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_movi_inve.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_movi_inven_tipo.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_movi_inven_tipo_x_tb_bodega.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_movi_inve_detalle.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_movi_inve_detalle_x_ct_cbtecble_det.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_movi_inve_x_ct_cbteCble.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_parametro.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_presentacion.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_Producto.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_ProductoTipo.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_Producto_Composicion.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_Producto_x_fa_NivelDescuento.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_producto_x_tb_bodega.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_producto_x_tb_bodega_Costo_Historico.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_subgrupo.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_transferencia.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_transferencia_det.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_UnidadMedida.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="in_UnidadMedida_Equiv_conversion.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Migraciones\FacturasEventos_Data.cs" />
+    <Compile Include="Migraciones\ImportacionDiarios_Data.cs" />
+    <Compile Include="Model_activo_fijo.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_activo_fijo.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_activo_fijo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_activo_fijo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_activo_fijo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_activo_fijo.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model_banco.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_banco.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_banco.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_banco.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_banco.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model_caja.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_caja.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_caja.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_caja.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_caja.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model_contabilidad.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_contabilidad.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_contabilidad.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_contabilidad.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_contabilidad.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model_cuentas_por_cobrar.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_cuentas_por_cobrar.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_cuentas_por_cobrar.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_cuentas_por_cobrar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_cuentas_por_cobrar.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model_cuentas_por_pagar.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_cuentas_por_pagar.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_cuentas_por_pagar.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_cuentas_por_pagar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_cuentas_por_pagar.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model_entidades_regulatorias.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_entidades_regulatorias.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_entidades_regulatorias.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_entidades_regulatorias.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_entidades_regulatorias.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_entidades_regulatorias.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model_facturacion.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_facturacion.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_facturacion.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_facturacion.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_facturacion.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model_facturacion_electronica.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_facturacion_electronica.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_facturacion_electronica.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_facturacion_electronica.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_facturacion_electronica.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model_general.Context.cs">
+      <DependentUpon>Model_general.Context.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model_general.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model_general.Designer.cs">
+      <DependentUpon>Model_general.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model_importacion.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_importacion.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_importacion.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_importacion.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_importacion.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model_ImportacionDiarios.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_ImportacionDiarios.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_ImportacionDiarios.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_ImportacionDiarios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_ImportacionDiarios.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_ImportacionDiarios.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model_inventario.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_inventario.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_inventario.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_inventario.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_inventario.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model_migraciones.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_migraciones.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_migraciones.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_migraciones.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_migraciones.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_migraciones.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model_migracion_ats.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_migracion_ats.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_migracion_ats.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_migracion_ats.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_migracion_ats.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_migracion_ats.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model_presupuesto.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_presupuesto.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_presupuesto.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_presupuesto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_presupuesto.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_presupuesto.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model_produccion.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_produccion.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_produccion.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_produccion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_produccion.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_produccion.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model_reportes.Context.cs">
+      <DependentUpon>Model_reportes.Context.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model_reportes.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model_reportes.Designer.cs">
+      <DependentUpon>Model_reportes.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model_rrhh.Context.cs">
+      <DependentUpon>Model_rrhh.Context.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model_rrhh.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model_rrhh.Designer.cs">
+      <DependentUpon>Model_rrhh.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model_seguridad_acceso.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_seguridad_acceso.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_seguridad_acceso.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_seguridad_acceso.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model_seguridad_acceso.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model_seguridad_acceso.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Presupuesto\pre_Periodo_Data.cs" />
+    <Compile Include="Presupuesto\pre_PresupuestoDet_Data.cs" />
+    <Compile Include="Presupuesto\pre_Presupuesto_Data.cs" />
+    <Compile Include="Presupuesto\pre_RubroTipo_Data.cs" />
+    <Compile Include="Presupuesto\pre_rubro_Data.cs" />
+    <Compile Include="pre_Presupuesto.cs">
+      <DependentUpon>Model_presupuesto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="pre_PresupuestoDet.cs">
+      <DependentUpon>Model_presupuesto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="pre_PresupuestoPeriodo.cs">
+      <DependentUpon>Model_presupuesto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="pre_Rubro.cs">
+      <DependentUpon>Model_presupuesto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="pre_RubroTipo.cs">
+      <DependentUpon>Model_presupuesto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Produccion\pro_FabricacionDet_Data.cs" />
+    <Compile Include="Produccion\pro_Fabricacion_Data.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="pro_Fabricacion.cs">
+      <DependentUpon>Model_produccion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="pro_FabricacionDet.cs">
+      <DependentUpon>Model_produccion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\ActivoFijo\ACTF_001_Data.cs" />
+    <Compile Include="Reportes\ActivoFijo\ACTF_002_Data.cs" />
+    <Compile Include="Reportes\ActivoFijo\ACTF_003_Data.cs" />
+    <Compile Include="Reportes\ActivoFijo\ACTF_004_detalle_Data.cs" />
+    <Compile Include="Reportes\ActivoFijo\ACTF_004_resumen_Data.cs" />
+    <Compile Include="Reportes\ActivoFijo\ACTF_005_Data.cs" />
+    <Compile Include="Reportes\ActivoFijo\ACTF_006_Data.cs" />
+    <Compile Include="Reportes\ActivoFijo\ACTF_007_Data.cs" />
+    <Compile Include="Reportes\ActivoFijo\ACTF_008_Data.cs" />
+    <Compile Include="Reportes\Banco\BAN_001_cancelaciones_Data.cs" />
+    <Compile Include="Reportes\Banco\BAN_001_Data.cs" />
+    <Compile Include="Reportes\Banco\BAN_002_cancelaciones_Data.cs" />
+    <Compile Include="Reportes\Banco\BAN_002_Data.cs" />
+    <Compile Include="Reportes\Banco\BAN_003_Data.cs" />
+    <Compile Include="Reportes\Banco\BAN_004_Data.cs" />
+    <Compile Include="Reportes\Banco\BAN_005_Data.cs" />
+    <Compile Include="Reportes\Banco\BAN_006_Data.cs" />
+    <Compile Include="Reportes\Banco\BAN_007_Data.cs" />
+    <Compile Include="Reportes\Banco\BAN_008_Data.cs" />
+    <Compile Include="Reportes\Banco\BAN_009_Data.cs" />
+    <Compile Include="Reportes\Banco\BAN_010_Data.cs" />
+    <Compile Include="Reportes\Banco\BAN_011_Data.cs" />
+    <Compile Include="Reportes\Banco\BAN_012_Data.cs" />
+    <Compile Include="Reportes\Caja\CAJ_001_Data.cs" />
+    <Compile Include="Reportes\Caja\CAJ_002_Data.cs" />
+    <Compile Include="Reportes\Caja\CAJ_002_ingresos_Data.cs" />
+    <Compile Include="Reportes\Caja\CAJ_002_ValesNoConciliados_Data.cs" />
+    <Compile Include="Reportes\Compra\COMP_001_Data.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_001_Data.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_002_Data.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_004_Data.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_003_balances_Data.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_005_Data.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_006_Data.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_001_Data.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_001_diario_Data.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_002_Data.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_002_diario_Data.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_003_Data.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_005_Data.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Data.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Cobros_Data.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Diario_Data.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_008_Data.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_009_Data.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_010_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_001_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_001_detalle_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_002_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_002_diario_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_003_cancelaciones_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_003_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_004_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_005_cancelaciones_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_005_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_006_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_006_diario_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_007_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_008_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_009_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_010_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_011_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_012_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_013_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_014_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_015_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_016_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_001_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_003_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_004_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_005_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_006_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_007_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_008_aplicaciones_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_008_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_009_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_010_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_011_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_012_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_013_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_014_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_015_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_016_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_017_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_018_Data.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_019_Data.cs" />
+    <Compile Include="Reportes\Importacion\IMP_001_Data.cs" />
+    <Compile Include="Reportes\Importacion\IMP_002_Data.cs" />
+    <Compile Include="Reportes\Importacion\IMP_002_gastos_Data.cs" />
+    <Compile Include="Reportes\Importacion\IMP_003_Data.cs" />
+    <Compile Include="Reportes\Inventario\INV_001_Data.cs" />
+    <Compile Include="Reportes\Inventario\INV_004_Data.cs" />
+    <Compile Include="Reportes\Inventario\INV_011_Data.cs" />
+    <Compile Include="Reportes\Inventario\INV_002_Data.cs" />
+    <Compile Include="Reportes\Inventario\INV_003_Data.cs" />
+    <Compile Include="Reportes\Inventario\INV_005_Data.cs" />
+    <Compile Include="Reportes\Inventario\INV_007_Data.cs" />
+    <Compile Include="Reportes\Inventario\INV_010_Data.cs" />
+    <Compile Include="Reportes\Inventario\INV_013_Data.cs" />
+    <Compile Include="Reportes\Inventario\INV_014_Data.cs" />
+    <Compile Include="Reportes\Inventario\INV_015_Data.cs" />
+    <Compile Include="Reportes\Inventario\INV_016_Data.cs" />
+    <Compile Include="Reportes\Inventario\INV_017_Data.cs" />
+    <Compile Include="Reportes\Inventario\INV_018_Data.cs" />
+    <Compile Include="Reportes\Presupuesto\PRE_001_Data.cs" />
+    <Compile Include="Reportes\Produccion\PRO_001_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_001_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_002_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_003_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_004_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_005_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_006_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_007_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_008_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_009_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_010_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_011_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_012_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_013_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_014_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_015_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_016_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_017_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_019_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_018_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_020_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_021_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_022_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_023_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_024_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_025_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_026_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_027_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_028_Data.cs" />
+    <Compile Include="ro_Acta_Finiquito.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_Acta_Finiquito_Detalle.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_archivos_bancos_generacion.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_archivos_bancos_generacion_x_empleado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_area.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_area_x_departamento.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_Capacitaciones_x_Empleado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_cargaFamiliar.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_cargo.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_catalogo.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_catalogoTipo.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_Comprobantes_Contables.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_Config_Param_contable.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_contrato.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_Departamento.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_Division.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_empleado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_EmpleadoFoto.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_EmpleadoNovedadCargaMasiva.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_EmpleadoNovedadCargaMasiva_det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_empleado_Novedad.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_empleado_novedad_det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_empleado_proyeccion_gastos.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_empleado_proyeccion_gastos_det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_empleado_x_division_x_area.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_empleado_x_horario.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_empleado_x_jornada.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_empleado_x_ro_rubro.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_empleado_x_rubro_acumulado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_empleado_x_titulos.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_FormulaHorasRecargo.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_Historico_Liquidacion_Vacaciones.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_Historico_Liquidacion_Vacaciones_Det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_historico_vacaciones_x_empleado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_horario.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_horario_planificacion.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_horario_planificacion_det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_HorasProfesores.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_HorasProfesores_det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_jornada.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_marcaciones_tipo.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_marcaciones_x_empleado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_NominasPagosCheques.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_NominasPagosCheques_det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_Nomina_Tipo.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_Nomina_Tipoliqui.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_nomina_x_horas_extras.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_nomina_x_horas_extras_det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_novedad_x_empleado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_Parametros.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_participacion_utilidad.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_participacion_utilidad_empleado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_periodo.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_periodo_x_ro_Nomina_TipoLiqui.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_permiso_x_empleado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_prestamo.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_prestamo_detalle.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_rdep.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_rdep_det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_rol.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_rol_detalle.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_rol_detalle_x_rubro_acumulado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_rubros_calculados.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_rubro_tipo.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_rubro_tipo_x_jornada.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_SancionesPorMarcaciones.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_SancionesPorMarcaciones_det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_SancionesPorMarcaciones_x_novedad.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_Solicitud_Vacaciones_x_empleado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_SPROL_002.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_tabla_Impu_Renta.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_tipo_gastos_personales.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_tipo_gastos_personales_tabla_valores_x_anio.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_Tipo_Prestamo.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_turno.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RRHH\ro_Acta_Finiquito_Data.cs" />
+    <Compile Include="RRHH\ro_Acta_Finiquito_Detalle_Data.cs" />
+    <Compile Include="RRHH\ro_archivosCSV_Data.cs" />
+    <Compile Include="RRHH\ro_ArchivosIess_Data.cs" />
+    <Compile Include="RRHH\ro_archivos_bancos_generacion_Data.cs" />
+    <Compile Include="RRHH\ro_archivos_bancos_generacion_x_empleado_Data.cs" />
+    <Compile Include="RRHH\ro_area_Data.cs" />
+    <Compile Include="RRHH\ro_area_x_departamento_Data.cs" />
+    <Compile Include="RRHH\ro_Capacitaciones_x_Empleado_Data.cs" />
+    <Compile Include="RRHH\ro_cargaFamiliar_Data.cs" />
+    <Compile Include="RRHH\ro_cargo_Data.cs" />
+    <Compile Include="RRHH\ro_catalogoTipo_Data.cs" />
+    <Compile Include="RRHH\ro_catalogo_Data.cs" />
+    <Compile Include="RRHH\ro_Comprobantes_Contables_Data.cs" />
+    <Compile Include="RRHH\ro_Config_Param_contable_Data.cs" />
+    <Compile Include="RRHH\ro_contrato_Data.cs" />
+    <Compile Include="RRHH\ro_departamento_Data.cs" />
+    <Compile Include="RRHH\ro_division_Data.cs" />
+    <Compile Include="RRHH\ro_EmpleadoFoto_Data.cs" />
+    <Compile Include="RRHH\ro_EmpleadoNovedadCargaMasiva_Data.cs" />
+    <Compile Include="RRHH\ro_EmpleadoNovedadCargaMasiva_det_Data.cs" />
+    <Compile Include="RRHH\ro_empleado_Data.cs" />
+    <Compile Include="RRHH\ro_empleado_novedad_Data.cs" />
+    <Compile Include="RRHH\ro_empleado_novedad_det_Data.cs" />
+    <Compile Include="RRHH\ro_empleado_proyeccion_gastos_det_Data.cs" />
+    <Compile Include="RRHH\ro_empleado_x_division_x_area_Data.cs" />
+    <Compile Include="RRHH\ro_empleado_x_horario_Data.cs" />
+    <Compile Include="RRHH\ro_empleado_proyeccion_gastos_Data.cs" />
+    <Compile Include="RRHH\ro_empleado_x_jornada_Data.cs" />
+    <Compile Include="RRHH\ro_empleado_x_ro_rubro_Data.cs" />
+    <Compile Include="RRHH\ro_empleado_x_rubro_acumulado_Data.cs" />
+    <Compile Include="RRHH\ro_empleado_x_rubro_acumulado_detalle_Data.cs" />
+    <Compile Include="RRHH\ro_empleado_x_titulos_Data.cs" />
+    <Compile Include="RRHH\ro_FormulaHorasRecargo_Data.cs" />
+    <Compile Include="RRHH\ro_Historico_Liquidacion_Vacaciones_Data.cs" />
+    <Compile Include="RRHH\ro_Historico_Liquidacion_Vacaciones_Det_Data.cs" />
+    <Compile Include="RRHH\ro_historico_vacaciones_x_empleado_Data.cs" />
+    <Compile Include="RRHH\ro_horario_Data.cs" />
+    <Compile Include="RRHH\ro_horario_planificacion_Data.cs" />
+    <Compile Include="RRHH\ro_horario_planificacion_det_Data.cs" />
+    <Compile Include="RRHH\ro_HorasProfesores_Data.cs" />
+    <Compile Include="RRHH\ro_HorasProfesores_det_Data.cs" />
+    <Compile Include="RRHH\ro_jornada_Data.cs" />
+    <Compile Include="RRHH\ro_marcaciones_tipo_Data.cs" />
+    <Compile Include="RRHH\ro_marcaciones_x_empleado_Data.cs" />
+    <Compile Include="RRHH\ro_NominasPagosCheques_Data.cs" />
+    <Compile Include="RRHH\ro_NominasPagosCheques_det_Data.cs" />
+    <Compile Include="RRHH\ro_Nomina_Tipoliqui_Data.cs" />
+    <Compile Include="RRHH\ro_nomina_tipo_Data.cs" />
+    <Compile Include="RRHH\ro_nomina_x_horas_extras_Data.cs" />
+    <Compile Include="RRHH\ro_nomina_x_horas_extras_det_Data.cs" />
+    <Compile Include="RRHH\ro_Parametros_Data.cs" />
+    <Compile Include="RRHH\ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar_Data.cs" />
+    <Compile Include="RRHH\ro_participacion_utilidad_Data.cs" />
+    <Compile Include="RRHH\ro_participacion_utilidad_empleado_Data.cs" />
+    <Compile Include="RRHH\ro_periodo_Data.cs" />
+    <Compile Include="RRHH\ro_periodo_x_ro_Nomina_TipoLiqui_Data.cs" />
+    <Compile Include="RRHH\ro_permiso_x_empleado_Data.cs" />
+    <Compile Include="RRHH\ro_prestamo_Data.cs" />
+    <Compile Include="RRHH\ro_prestamo_detalle_Data.cs" />
+    <Compile Include="RRHH\ro_rdep_Data.cs" />
+    <Compile Include="RRHH\ro_rdep_det_Data.cs" />
+    <Compile Include="RRHH\ro_rol_Data.cs" />
+    <Compile Include="RRHH\ro_rol_detalle_Data.cs" />
+    <Compile Include="RRHH\ro_rol_detalle_x_rubro_acumulado_Data.cs" />
+    <Compile Include="RRHH\ro_rubros_calculados_Data.cs" />
+    <Compile Include="RRHH\ro_rubro_tipo_Data.cs" />
+    <Compile Include="RRHH\ro_rubro_tipo_x_jornada_Data.cs" />
+    <Compile Include="RRHH\ro_SancionesPorMarcaciones_Data.cs" />
+    <Compile Include="RRHH\ro_SancionesPorMarcaciones_det_Data.cs" />
+    <Compile Include="RRHH\ro_SancionesPorMarcaciones_x_novedad_Data.cs" />
+    <Compile Include="RRHH\ro_Solicitud_Vacaciones_x_empleado_Data.cs" />
+    <Compile Include="RRHH\ro_tabla_Impu_Renta_Data.cs" />
+    <Compile Include="RRHH\ro_tipo_gastos_personales_Data.cs" />
+    <Compile Include="RRHH\ro_tipo_gastos_personales_maxim_x_anio_Data.cs" />
+    <Compile Include="RRHH\ro_tipo_prestamo_Data.cs" />
+    <Compile Include="RRHH\ro_turno_Data.cs" />
+    <Compile Include="SeguridadAcceso\seg_Menu_Data.cs" />
+    <Compile Include="SeguridadAcceso\seg_Menu_x_Empresa_Data.cs" />
+    <Compile Include="SeguridadAcceso\seg_Menu_x_Empresa_x_Usuario_Data.cs" />
+    <Compile Include="SeguridadAcceso\seg_usuario_Data.cs" />
+    <Compile Include="SeguridadAcceso\seg_Usuario_x_Empresa_Data.cs" />
+    <Compile Include="SeguridadAcceso\seg_usuario_x_tb_sucursal_Data.cs" />
+    <Compile Include="seg_Menu.cs">
+      <DependentUpon>Model_seguridad_acceso.tt</DependentUpon>
+    </Compile>
+    <Compile Include="seg_Menu_x_Empresa.cs">
+      <DependentUpon>Model_seguridad_acceso.tt</DependentUpon>
+    </Compile>
+    <Compile Include="seg_Menu_x_Empresa_x_Usuario.cs">
+      <DependentUpon>Model_seguridad_acceso.tt</DependentUpon>
+    </Compile>
+    <Compile Include="seg_usuario.cs">
+      <DependentUpon>Model_seguridad_acceso.tt</DependentUpon>
+    </Compile>
+    <Compile Include="seg_Usuario_x_Empresa.cs">
+      <DependentUpon>Model_seguridad_acceso.tt</DependentUpon>
+    </Compile>
+    <Compile Include="seg_usuario_x_tb_sis_reporte.cs">
+      <DependentUpon>Model_seguridad_acceso.tt</DependentUpon>
+    </Compile>
+    <Compile Include="seg_usuario_x_tb_sucursal.cs">
+      <DependentUpon>Model_seguridad_acceso.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPACTF_004_detalle_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPACTF_004_resumen_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPACTF_005_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spACTF_activos_a_depreciar_Result.cs">
+      <DependentUpon>Model_activo_fijo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPBAN_004_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPBAN_008_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPBAN_009_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPBAN_011_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPBAN_012_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPCONTA_002_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPCONTA_003_balances_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPCONTA_004_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPCONTA_005_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPCONTA_006_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPCONTA_CierreAnual_Result.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spcp_Get_Data_orden_pago_con_cancelacion_data_Result.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spcp_Get_Data_orden_pago_con_cancelacion_x_pago_Result.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPCXC_005_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPCXC_009_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPCXC_010_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPCXP_007_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPCXP_008_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPCXP_010_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPCXP_015_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPCXP_016_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPFAC_005_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPFAC_010_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPFAC_011_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPFAC_015_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPFAC_016_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPFAC_017_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPFAC_019_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPINV_003_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPINV_004_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPINV_005_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPINV_010_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPINV_016_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPINV_GetStock_Result.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sppro_GetProductoFacturadosPorFecha_Result.cs">
+      <DependentUpon>Model_produccion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPROL_012_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPROL_013_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPROL_015_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPROL_017_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPROL_022_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPROL_023_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPROL_025_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPROL_027_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spROL_DecimosCSV_Result.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spro_nomina_x_pago_utilidad_Result.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_TransaccionesAutorizadas.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_usuario_ftp.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_banco.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_banco_procesos_bancarios_x_empresa.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_bodega.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Catalogo.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_CatalogoTipo.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_ciudad.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_ColaImpresionDirecta.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_dia.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_empresa.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_facturas_eventos.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_FiltroReportes.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_LogError.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_mes.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_modulo.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_moneda.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_pais.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_parametro.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_parroquia.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_persona.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_persona_tipo.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_provincia.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_region.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_sis_Documento_Tipo.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_sis_Documento_Tipo_Talonario.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_sis_Documento_Tipo_x_Empresa.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_sis_Impuesto.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_sis_Impuesto_Tipo.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_sis_Impuesto_x_ctacble.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_sis_reporte.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_sis_reporte_x_seg_usuario.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_sis_reporte_x_tb_empresa.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_sucursal.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_sucursal_FormaPago_x_fa_NivelDescuento.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_transportista.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_visor_video.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWACTF_001.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWACTF_002.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWACTF_003.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWACTF_007.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWACTF_008.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWBAN_001.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWBAN_001_cancelaciones.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWBAN_002.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWBAN_002_cancelaciones.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWBAN_003.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWBAN_005.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWBAN_006.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWBAN_007.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWBAN_010.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwba_Archivo_Transferencia_Det.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwba_Cbte_Ban.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwba_Cbte_Ban_x_ba_TipoFlujo.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwba_Conciliacion.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwba_Conciliacion_det_IngEgr.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwba_Conciliacion_det_IngEgr_x_conciliar.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwba_Talonario_cheques_x_banco_ID.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwba_TipoFlujoPlantillaDet.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwba_TipoFlujo_Movimiento.cs">
+      <DependentUpon>Model_banco.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCAJ_001.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCAJ_002.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCAJ_002_ingresos.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCAJ_002_ValesNoConciliados.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcaj_Caja_Movimiento.cs">
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcaj_Caja_Movimiento_por_conciliar.cs">
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcaj_Caja_Movimiento_ValesNoConciliados.cs">
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcaj_Caja_Movimiento_x_Conciliar.cs">
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCOMP_001.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCONTA_001.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_codigo_SRI.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_ConciliacionAnticipo.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_ConciliacionAnticipoDetAnt.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_ConciliacionAnticipoDetAnt_x_cruzar.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_ConciliacionAnticipoDetCXP.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_conciliacion_Caja_det.cs">
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_conciliacion_Caja_det_x_ValeCaja.cs">
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_nota_DebCre.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_orden_giro.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_orden_giro_det.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_orden_giro_det_ing_x_oc.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_orden_giro_det_ing_x_oc_x_cruzar.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_orden_giro_det_ing_x_os.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_orden_giro_det_ing_x_os_x_cruzar.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_orden_giro_SinRetencion.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_orden_giro_x_pagar.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_orden_pago.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_proveedor_consulta.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_retencion.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_retencion_det.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcp_SolicitudPago.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwct_anio_fiscal_x_cuenta_utilidad.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwct_anio_fiscal_x_tb_sucursal.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwct_anio_fiscal_x_tb_sucursal_SinCierre.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwct_cbtecble.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwct_cbtecble_con_ctacble_acreedora.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwct_cbtecble_det.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwct_cbtecble_Plantilla_det.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwct_CentroCosto.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwct_CierrePorModuloPorSucursal.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwct_periodo.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwct_RevisionContableFacturas.cs">
+      <DependentUpon>Model_contabilidad.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXC_001.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXC_001_diario.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXC_002.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXC_002_diario.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXC_003.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXC_007.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXC_007_Cobros.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXC_007_Diario.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXC_008.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcxc_cartera_x_cobrar.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcxc_cobro.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcxc_cobro_det.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcxc_cobro_det_retencion.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcxc_cobro_para_retencion.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcxc_LiquidacionTarjeta.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcxc_LiquidacionTarjeta_x_cxc_cobro.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal.cs">
+      <DependentUpon>Model_cuentas_por_cobrar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXP_001.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXP_001_detalle.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXP_002.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXP_002_diario.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXP_003.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXP_003_cancelaciones.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXP_004.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXP_005.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXP_005_cancelaciones.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXP_006.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXP_006_diario.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXP_007.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXP_009.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXP_011.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXP_012.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXP_013.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXP_014.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwFacturas_fac_electronica.cs">
+      <DependentUpon>Model_migraciones.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwFacturas_sin_aprobar.cs">
+      <DependentUpon>Model_migraciones.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWFAC_001.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWFAC_003.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWFAC_004.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWFAC_005.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWFAC_006.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWFAC_007.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWFAC_008.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWFAC_008_aplicaciones.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWFAC_009.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWFAC_012.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWFAC_013.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWFAC_014.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWFAC_018.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_CambioProducto.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_CambioProductoDet.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_CambioProductoDet_facturas.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_CambioProductoDet_FacturasConMovimiento.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_cliente_consulta.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_cliente_contactos.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_factura.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_factura_det.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_factura_sin_automatico.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_factura_sin_guia.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_factura_x_fa_guia_remision.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_guia_remision.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_guia_remision_det.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_guia_remision_det1.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_notaCreDeb.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_notaCreDeb_det.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_notaCreDeb_x_fa_factura_NotaDeb.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_proforma.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_proforma_det.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_proforma_det_por_facturar.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfa_PuntoVta.cs">
+      <DependentUpon>Model_facturacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_documentos_peniente_enviar_sri.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_factura.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_factura_detalle.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_factura_impuestos.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_guia_remision.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_guia_remision_detalle.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_guia_remision_x_factura.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_nota_credito.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_nota_credito_detalle.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_nota_credito_impuestos.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_nota_debito.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_nota_debito_detalle.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_nota_debito_impuestos.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_retencion.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwfe_retencion_detalle.cs">
+      <DependentUpon>Model_facturacion_electronica.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWIMP_001.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWIMP_002.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWIMP_002_gastos.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWIMP_003.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwimp_gastos_no_asignados.cs">
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwimp_liquidacion.cs">
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwimp_orden_compra_ext.cs">
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwimp_orden_compra_ext_con_saldo.cs">
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwimp_orden_compra_ext_ct_cbteble_det_gastos.cs">
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwimp_orden_compra_ext_det.cs">
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwimp_orden_compra_ext_por_liquidar.cs">
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwimp_orden_compra_ext_recepcion.cs">
+      <DependentUpon>Model_importacion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWINV_001.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWINV_002.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWINV_007.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWINV_011.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWINV_014.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWINV_015.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWINV_017.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWINV_018.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ajuste.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Consignacion.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_ConsignacionDet.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_devolucion_inven_det.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ing_Egr_InvenPorOrdenCompra.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven_det.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven_det_conversion.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven_det_x_devolver.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven_PorAprobar.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven_PorContabilizar.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven_PorDespachar.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven_PorReversar.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Ing_Egr_Inven_por_devolver.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_movi_inve_x_estado_contabilizacion.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Producto_Composicion.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_producto_hijo_combo.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_producto_padre_combo.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Producto_para_composicion.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Producto_PorSucursal.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Producto_Stock.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_producto_x_tb_bodega.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_producto_x_tb_bodega_Costo_Historico.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_producto_x_tb_bodega_stock_x_lote.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_Transferencias.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_transferencia_x_in_movi_inve_agrupada_para_recosteo.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwin_UnidadMedida_Equiv_conversion.cs">
+      <DependentUpon>Model_inventario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWPRE_001.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwpre_Presupuesto.cs">
+      <DependentUpon>Model_presupuesto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwpre_PresupuestoDet.cs">
+      <DependentUpon>Model_presupuesto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwpre_Rubro.cs">
+      <DependentUpon>Model_presupuesto.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWPRO_001.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwpro_Fabricacion.cs">
+      <DependentUpon>Model_produccion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwpro_FabricacionDet.cs">
+      <DependentUpon>Model_produccion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwrdep_IngrEgr_x_Empleado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_001.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_002.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_002_detallle_prestamos.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_003.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_004.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_005.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_006.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_007.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_008.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_009.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_010.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_011.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_014.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_016.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_018.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_019.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_020.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_021.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_022.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_024.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_026.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWROL_028.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwRo_ActaFiniquito.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_ArchivosIess.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_archivos_bancos_generacion.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_archivos_bancos_generacion_x_empleado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_EmpleadoNovedadCargaMasiva.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_EmpleadoNovedadCargaMasiva_det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_empleados_consulta.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_empleado_combo.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_empleado_datos_generales.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_empleado_Novedad.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_Empleado_Novedades.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_empleado_novedad_det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_empleado_x_division_x_area.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_empleado_x_jornada.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_empleado_x_Proyeccion_Gastos_Personales.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_empleado_x_ro_rubro.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_empleado_x_rubro_acumulado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_empleado_x_rubro_acumulado_detalle.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_empleado_x_titulos.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_Historico_Liquidacion_Vacaciones.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_horario_planificacion_det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_HorasProfesores.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_HorasProfesores_det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_marcaciones_x_empleado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_marcaciones_x_planificacion_horario.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_NominasPagosCheques.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_NominasPagosCheques_det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_nomina_sin_percebir_sueldo.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_nomina_x_horas_extras_aprobadas.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_nomina_x_horas_extras_det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_participacion_utilidad.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_participacion_utilidad_empleado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwRo_Prestamo.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_rdep.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_rol.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_rol_detalle.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwRo_rol_detalle_saldo_por_pagar.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_rol_detalle_x_rubro_acumulado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_rubro_tipo.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_rubro_tipo_x_jornada.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_SancionesPorMarcaciones.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_SancionesPorMarcaciones_det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_SancionesPorMarcaciones_x_novedad.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwRo_Solicitud_Vacaciones.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwseg_Usuario_x_Empresa.cs">
+      <DependentUpon>Model_seguridad_acceso.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwseg_usuario_x_tb_sucursal.cs">
+      <DependentUpon>Model_seguridad_acceso.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwtb_banco_procesos_bancarios_x_empresa.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwtb_bodega_x_sucursal.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwtb_Ciudad.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwtb_ciudad_id.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwtb_comprobantes_no_autorizados.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwtb_pais.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwtb_parroquia.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwtb_provincia.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwtb_TarjetaCredito_x_cp_proveedor.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_diarios_contables_migracion.cs">
+      <DependentUpon>Model_ImportacionDiarios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_importacion_ats_fixed.cs">
+      <DependentUpon>Model_migracion_ats.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="Model_activo_fijo.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_activo_fijo.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="Compras\Base\Model_compras.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_compras.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Compras\Base\Model_compras.edmx.diagram">
+      <DependentUpon>Model_compras.edmx</DependentUpon>
+    </None>
+    <None Include="Model_activo_fijo.edmx.diagram">
+      <DependentUpon>Model_activo_fijo.edmx</DependentUpon>
+    </None>
+    <EntityDeploy Include="Model_banco.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_banco.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model_banco.edmx.diagram">
+      <DependentUpon>Model_banco.edmx</DependentUpon>
+    </None>
+    <EntityDeploy Include="Model_caja.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_caja.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model_caja.edmx.diagram">
+      <DependentUpon>Model_caja.edmx</DependentUpon>
+    </None>
+    <EntityDeploy Include="Model_contabilidad.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_contabilidad.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model_contabilidad.edmx.diagram">
+      <DependentUpon>Model_contabilidad.edmx</DependentUpon>
+    </None>
+    <EntityDeploy Include="Model_cuentas_por_cobrar.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_cuentas_por_cobrar.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model_cuentas_por_cobrar.edmx.diagram">
+      <DependentUpon>Model_cuentas_por_cobrar.edmx</DependentUpon>
+    </None>
+    <EntityDeploy Include="Model_cuentas_por_pagar.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_cuentas_por_pagar.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model_cuentas_por_pagar.edmx.diagram">
+      <DependentUpon>Model_cuentas_por_pagar.edmx</DependentUpon>
+    </None>
+    <EntityDeploy Include="Model_facturacion.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_facturacion.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="Model_entidades_regulatorias.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_entidades_regulatorias.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model_entidades_regulatorias.edmx.diagram">
+      <DependentUpon>Model_entidades_regulatorias.edmx</DependentUpon>
+    </None>
+    <None Include="Model_facturacion.edmx.diagram">
+      <DependentUpon>Model_facturacion.edmx</DependentUpon>
+    </None>
+    <EntityDeploy Include="Model_general.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_general.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="Model_importacion.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_importacion.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="Model_facturacion_electronica.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_facturacion_electronica.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model_facturacion_electronica.edmx.diagram">
+      <DependentUpon>Model_facturacion_electronica.edmx</DependentUpon>
+    </None>
+    <None Include="Model_general.edmx.diagram">
+      <DependentUpon>Model_general.edmx</DependentUpon>
+    </None>
+    <None Include="Model_importacion.edmx.diagram">
+      <DependentUpon>Model_importacion.edmx</DependentUpon>
+    </None>
+    <EntityDeploy Include="Model_inventario.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_inventario.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="Model_ImportacionDiarios.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_ImportacionDiarios.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model_ImportacionDiarios.edmx.diagram">
+      <DependentUpon>Model_ImportacionDiarios.edmx</DependentUpon>
+    </None>
+    <None Include="Model_inventario.edmx.diagram">
+      <DependentUpon>Model_inventario.edmx</DependentUpon>
+    </None>
+    <EntityDeploy Include="Model_reportes.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_reportes.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="Model_rrhh.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_rrhh.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="Model_seguridad_acceso.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_seguridad_acceso.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="Model_presupuesto.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_presupuesto.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="Model_migraciones.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_migraciones.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model_migraciones.edmx.diagram">
+      <DependentUpon>Model_migraciones.edmx</DependentUpon>
+    </None>
+    <EntityDeploy Include="Model_migracion_ats.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_migracion_ats.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model_migracion_ats.edmx.diagram">
+      <DependentUpon>Model_migracion_ats.edmx</DependentUpon>
+    </None>
+    <None Include="Model_presupuesto.edmx.diagram">
+      <DependentUpon>Model_presupuesto.edmx</DependentUpon>
+    </None>
+    <EntityDeploy Include="Model_produccion.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model_produccion.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model_produccion.edmx.diagram">
+      <DependentUpon>Model_produccion.edmx</DependentUpon>
+    </None>
+    <None Include="Model_reportes.edmx.diagram">
+      <DependentUpon>Model_reportes.edmx</DependentUpon>
+    </None>
+    <None Include="Model_rrhh.edmx.diagram">
+      <DependentUpon>Model_rrhh.edmx</DependentUpon>
+    </None>
+    <None Include="Model_seguridad_acceso.edmx.diagram">
+      <DependentUpon>Model_seguridad_acceso.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Compras\Base\Model_compras.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_compras.edmx</DependentUpon>
+      <LastGenOutput>Model_compras.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Compras\Base\Model_compras.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_compras.edmx</DependentUpon>
+      <LastGenOutput>Model_compras.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_activo_fijo.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_activo_fijo.edmx</DependentUpon>
+      <LastGenOutput>Model_activo_fijo.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_activo_fijo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_activo_fijo.edmx</DependentUpon>
+      <LastGenOutput>Model_activo_fijo.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_banco.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_banco.edmx</DependentUpon>
+      <LastGenOutput>Model_banco.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_banco.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_banco.edmx</DependentUpon>
+      <LastGenOutput>Model_banco.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_caja.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_caja.edmx</DependentUpon>
+      <LastGenOutput>Model_caja.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_caja.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_caja.edmx</DependentUpon>
+      <LastGenOutput>Model_caja.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_contabilidad.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_contabilidad.edmx</DependentUpon>
+      <LastGenOutput>Model_contabilidad.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_contabilidad.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_contabilidad.edmx</DependentUpon>
+      <LastGenOutput>Model_contabilidad.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_cuentas_por_cobrar.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_cuentas_por_cobrar.edmx</DependentUpon>
+      <LastGenOutput>Model_cuentas_por_cobrar.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_cuentas_por_cobrar.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_cuentas_por_cobrar.edmx</DependentUpon>
+      <LastGenOutput>Model_cuentas_por_cobrar.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_cuentas_por_pagar.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_cuentas_por_pagar.edmx</DependentUpon>
+      <LastGenOutput>Model_cuentas_por_pagar.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_cuentas_por_pagar.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_cuentas_por_pagar.edmx</DependentUpon>
+      <LastGenOutput>Model_cuentas_por_pagar.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_entidades_regulatorias.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_entidades_regulatorias.edmx</DependentUpon>
+      <LastGenOutput>Model_entidades_regulatorias.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_entidades_regulatorias.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_entidades_regulatorias.edmx</DependentUpon>
+      <LastGenOutput>Model_entidades_regulatorias.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_facturacion.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_facturacion.edmx</DependentUpon>
+      <LastGenOutput>Model_facturacion.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_facturacion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_facturacion.edmx</DependentUpon>
+      <LastGenOutput>Model_facturacion.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_facturacion_electronica.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_facturacion_electronica.edmx</DependentUpon>
+      <LastGenOutput>Model_facturacion_electronica.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_facturacion_electronica.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_facturacion_electronica.edmx</DependentUpon>
+      <LastGenOutput>Model_facturacion_electronica.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_general.Context.tt">
+      <DependentUpon>Model_general.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model_general.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_general.tt">
+      <DependentUpon>Model_general.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model_general.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_importacion.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_importacion.edmx</DependentUpon>
+      <LastGenOutput>Model_importacion.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_importacion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_importacion.edmx</DependentUpon>
+      <LastGenOutput>Model_importacion.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_ImportacionDiarios.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_ImportacionDiarios.edmx</DependentUpon>
+      <LastGenOutput>Model_ImportacionDiarios.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_ImportacionDiarios.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_ImportacionDiarios.edmx</DependentUpon>
+      <LastGenOutput>Model_ImportacionDiarios.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_inventario.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_inventario.edmx</DependentUpon>
+      <LastGenOutput>Model_inventario.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_inventario.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_inventario.edmx</DependentUpon>
+      <LastGenOutput>Model_inventario.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_migraciones.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_migraciones.edmx</DependentUpon>
+      <LastGenOutput>Model_migraciones.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_migraciones.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_migraciones.edmx</DependentUpon>
+      <LastGenOutput>Model_migraciones.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_migracion_ats.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_migracion_ats.edmx</DependentUpon>
+      <LastGenOutput>Model_migracion_ats.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_migracion_ats.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_migracion_ats.edmx</DependentUpon>
+      <LastGenOutput>Model_migracion_ats.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_presupuesto.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_presupuesto.edmx</DependentUpon>
+      <LastGenOutput>Model_presupuesto.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_presupuesto.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_presupuesto.edmx</DependentUpon>
+      <LastGenOutput>Model_presupuesto.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_produccion.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_produccion.edmx</DependentUpon>
+      <LastGenOutput>Model_produccion.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_produccion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_produccion.edmx</DependentUpon>
+      <LastGenOutput>Model_produccion.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_reportes.Context.tt">
+      <DependentUpon>Model_reportes.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model_reportes.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_reportes.tt">
+      <DependentUpon>Model_reportes.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model_reportes.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_rrhh.Context.tt">
+      <DependentUpon>Model_rrhh.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model_rrhh.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_rrhh.tt">
+      <DependentUpon>Model_rrhh.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model_rrhh.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_seguridad_acceso.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_seguridad_acceso.edmx</DependentUpon>
+      <LastGenOutput>Model_seguridad_acceso.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model_seguridad_acceso.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model_seguridad_acceso.edmx</DependentUpon>
+      <LastGenOutput>Model_seguridad_acceso.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core.Erp.Info\Core.Erp.Info.csproj">
+      <Project>{b08cccbc-a2ed-4505-89e2-dccfc4abbd46}</Project>
+      <Name>Core.Erp.Info</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 y x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

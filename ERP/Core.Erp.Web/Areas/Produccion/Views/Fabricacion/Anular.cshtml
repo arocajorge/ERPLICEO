@@ -1,0 +1,161 @@
+﻿@model Core.Erp.Info.Produccion.pro_Fabricacion_Info
+@{
+    ViewBag.Title = "Anular fabricación";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Anular", "Fabricacion", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdFabricacion)
+    <div class="row">
+        <div class="col-md-3">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="egr_IdSucursal">Sucursal de egreso*</label>
+                    @Html.DropDownListFor(q => q.egr_IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "egr_IdSucursal" })
+                    @Html.ValidationMessageFor(q => q.egr_IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="egr_IdBodega">Bodega de egreso*</label>
+                    @Html.DropDownListFor(q => q.egr_IdBodega, new SelectList(ViewBag.lst_bodega_egr, "IdBodega", "bo_descripcion"), new { @class = "form-control", @id = "egr_IdBodega" })
+                    @Html.ValidationMessageFor(q => q.egr_IdBodega, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ing_IdSucursal">Sucursal de ingreso*</label>
+                    @Html.DropDownListFor(q => q.ing_IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "ing_IdSucursal" })
+                    @Html.ValidationMessageFor(q => q.ing_IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ing_IdBodega">Bodega de ingreso*</label>
+                    @Html.DropDownListFor(q => q.ing_IdBodega, new SelectList(ViewBag.lst_bodega_ing, "IdBodega", "bo_descripcion"), new { @class = "form-control", @id = "ing_IdBodega" })
+                    @Html.ValidationMessageFor(q => q.ing_IdBodega, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="col-md-offset-8 col-md-4">
+                <div class="form-group">
+                    <label for="">Fecha*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.Fecha, settings =>
+                           {
+                               settings.Name = "Fecha";
+                               settings.Properties.UseMaskBehavior = true;
+                               settings.Properties.EditFormat = EditFormat.Date;
+                               settings.Properties.EditFormatString = "dd/MM/yyyy";
+                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*<div class="col-md-6">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for=""></label>
+                    <button type="button" class="btn btn-primary form-control" id="btn_buscar" onclick="MostrarModalFacturas();">
+                        <i class="fa fa-search"></i> Productos facturados
+                    </button>
+                </div>
+            </div>
+
+        </div>*@
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Observacion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Materia prima</label>
+                    @Html.Action("GridViewPartial_fabricacion_det_egr")
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Producto terminado</label>
+                    @Html.Action("GridViewPartial_fabricacion_det_ing")
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Fabricacion", new { Area = "Produccion" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+<script type="text/javascript">
+    function OnSelectedProductoChanged(s, e) {
+        GridViewPartial_fabricacion_det_ing.GetEditor("IdUnidadMedida").PerformCallback();
+        SetUnidadMedida(s, e);
+    }
+
+    function UnidadMedidaComboBox_BeginCallback(s, e) {
+        e.customArgs["in_IdProducto"] = IdProducto.GetValue();
+    }
+
+    function SetUnidadMedida(s, e) {
+        var datos = {
+            IdProducto: s.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetUnidadMedida", "Producto", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_fabricacion_det_ing.GetEditor('IdUnidadMedida').SetValue(data.IdUnidadMedida);
+            },
+            error: function (error) {
+            }
+        });
+    };
+</script>

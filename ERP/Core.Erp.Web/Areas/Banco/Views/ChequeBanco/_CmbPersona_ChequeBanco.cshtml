@@ -1,0 +1,30 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdEntidad";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "ChequeBanco", Action = "CmbPersona_ChequeBanco", Area = "Banco" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "pe_nombreCompleto";
+        settings.Properties.TextFormatString = "{2}";
+        settings.Properties.ValueField = "IdEntidad";
+        settings.Properties.ValueType = typeof(decimal);
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+
+        settings.Properties.Columns.Add("IdEntidad", "ID", 10);
+        settings.Properties.Columns.Add("pe_cedulaRUC", "RUC", 20);
+        settings.Properties.Columns.Add("pe_nombreCompleto", "Persona", 70);
+        settings.Properties.FilterMinLength = 3;
+
+        settings.Properties.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['IdTipoPersona'] = $('#IdTipo_Persona').val(); }";
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e) {$('#cb_giradoA').val(s.GetText()); vaciar_detalles();}";
+    })
+    .BindList(new Core.Erp.Web.Areas.Banco.Controllers.ChequeBancoController().get_list_bajo_demanda, new Core.Erp.Web.Areas.Banco.Controllers.ChequeBancoController().get_info_bajo_demanda)
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.Banco.ba_Cbte_Ban_Info) ? "" : (Model == 0 ? "" : Model));
+
+}
+@comboBox.GetHtml()

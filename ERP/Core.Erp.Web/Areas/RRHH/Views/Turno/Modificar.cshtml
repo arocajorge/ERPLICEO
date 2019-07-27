@@ -1,0 +1,112 @@
+﻿@model Core.Erp.Info.RRHH.ro_turno_Info
+@{
+    ViewBag.Title = "Modificar turno";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Modificar", "Turno", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdTurno)
+    @Html.HiddenFor(q => q.IdEmpresa)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Nombre">Descripción*</label>
+                    @Html.TextBoxFor(q => q.tu_descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.tu_descripcion, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="NumDocumento">Lunes</label>
+                    @Html.EditorFor(q => q.Lunes, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Lunes, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="NumDocumento">Martes</label>
+                    @Html.EditorFor(q => q.Martes, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Martes, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="NumDocumento">Miércoles</label>
+                    @Html.EditorFor(q => q.Miercoles, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Miercoles, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="NumDocumento">Jueves</label>
+                    @Html.EditorFor(q => q.Jueves, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Jueves, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="NumDocumento">Viernes</label>
+                    @Html.EditorFor(q => q.Viernes, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Viernes, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="NumDocumento">Sábado</label>
+                    @Html.EditorFor(q => q.Sabado, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Sabado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="NumDocumento">Domingo</label>
+                    @Html.EditorFor(q => q.Domingo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Domingo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Cargo",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

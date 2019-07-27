@@ -1,0 +1,89 @@
+﻿@model Core.Erp.Info.Banco.ba_parametros_Info
+@{
+    ViewBag.Title = "Parámetros de banco";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Index", "ParametroBanco", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="CiudadDefaultParaCrearCheques">Ciudad por defecto para los cheques </label>
+                    @Html.DevExpress().ComboBoxFor(q => q.CiudadDefaultParaCrearCheques, settings =>
+               {
+                   settings.Name = "CiudadDefaultParaCrearCheques";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdCiudad", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("Descripcion_Ciudad", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdCiudad";
+                   settings.Properties.ValueType = typeof(string);
+                   settings.Properties.TextField = "Descripcion_Ciudad";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+               }).BindList(ViewBag.lst_ciudad).GetHtml()
+                    @Html.ValidationMessageFor(q => q.CiudadDefaultParaCrearCheques, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="DiasTransaccionesAFuturo">Dias máximos para transacciones a futuro</label>
+                    @Html.TextBoxFor(q => q.DiasTransaccionesAFuturo, new { @class = "form-control", @id = "DiasTransaccionesAFuturo" })
+                    @Html.ValidationMessageFor(q => q.DiasTransaccionesAFuturo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="CantidadChequesAlerta">Cantidad cheques alerta</label>
+                    @Html.TextBoxFor(q => q.CantidadChequesAlerta, new { @class = "form-control", @id = "DiasTransaccionesAFuturo" })
+                    @Html.ValidationMessageFor(q => q.CantidadChequesAlerta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="es_AcreditaHorasExtras"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.PermitirSobreGiro, settings =>
+                           {
+                               settings.Name = "PermitirSobreGiro";
+                               settings.Text = "Permitir SobreGiro";
+
+                           }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.PermitirSobreGiro, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="es_AcreditaHorasExtras"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.ValidarSoloCuentasArchivo, settings =>
+                           {
+                               settings.Name = "ValidarSoloCuentasArchivo";
+                               settings.Text = "Validar solo cuentas archivo";
+
+                           }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.ValidarSoloCuentasArchivo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

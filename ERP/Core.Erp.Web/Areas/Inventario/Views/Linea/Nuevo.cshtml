@@ -1,0 +1,75 @@
+﻿@model Core.Erp.Info.Inventario.in_linea_Info
+@{
+    ViewBag.Title = "Nueva línea";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Nuevo", "Linea", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="cod_linea">Código</label>
+                    @Html.TextBoxFor(q => q.cod_linea, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.cod_linea, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCategoria">Categoría*</label>
+                    @Html.HiddenFor(q => q.IdCategoria)
+                    @Html.DevExpress().ComboBoxFor(q => q.IdCategoria, settings =>
+               {
+                   settings.Name = "IdCategoria";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdCategoria", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("ca_Categoria", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdCategoria";
+                   settings.Properties.ValueType = typeof(string);
+                   settings.Properties.TextField = "ca_Categoria";
+                   settings.Properties.NullText = "== Seleccione ==";
+
+                   settings.Properties.DropDownButton.Enabled = false;
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.ReadOnly = true;
+               }).BindList(ViewBag.lst_categorias).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdCategoria, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="nom_linea">Descripción*</label>
+                    @Html.TextBoxFor(q => q.nom_linea, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.nom_linea, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Linea", new {IdEmpresa = Model.IdEmpresa, IdCategoria = Model.IdCategoria, Area ="Inventario" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

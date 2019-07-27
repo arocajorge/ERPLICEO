@@ -1,0 +1,90 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewPartial_Usuario_x_Sucursal";
+        settings.CallbackRouteValues = new { Controller = "Usuario", Action = "GridViewPartial_Usuario_x_Sucursal" };
+        settings.KeyFieldName = "Secuencia";
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Usuario", Action = "EditingAddNew", Area = "SeguridadAcceso" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Usuario", Action = "EditingUpdate", Area = "SeguridadAcceso" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Usuario", Action = "EditingDelete", Area = "SeguridadAcceso" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "em_nombre";
+            column.Caption = "Empresa";
+            column.Width = Unit.Percentage(40);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdEmpresa";
+            column.Caption = "Empresa";
+            column.Width = Unit.Percentage(40);
+            column.Visible = false;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbEmpresa_det", DataBinder.Eval(c.DataItem, "IdEmpresa"));
+            });
+        });
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Su_Descripcion";
+            column.Caption = "Sucursal";
+            column.Width = Unit.Percentage(40);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdString";
+            column.Caption = "Sucursal";
+            column.Width = Unit.Percentage(40);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.Visible = false;
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.CallbackRouteValues = new { Controller = "Usuario", Action = "CargarSucursal", Area = "SeguridadAcceso" };
+                p.ValueField = "IdString";
+                p.TextField = "Su_Descripcion";
+                p.TextFormatString = "{0}";
+                p.Columns.Add("Su_Descripcion", "Sucursal");
+                p.ValueType = typeof(string);
+                p.BindList(ViewBag.lst_sucursal);
+                p.ClientSideEvents.BeginCallback = "SucursalComboBox_BeginCallback";
+                p.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+            });
+        });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
+    });
+}
+@grid.Bind(Model).GetHtml()

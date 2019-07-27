@@ -1,0 +1,27 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdTipoFlujo";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "ChequeBanco", Action = "CmbFlujo_Cheque", Area = "Banco" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "Descricion";
+        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.ValueField = "IdTipoFlujo";
+        settings.Properties.ValueType = typeof(decimal);
+
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+        settings.Properties.AllowNull = true;
+
+        settings.Properties.Columns.Add("IdTipoFlujo", "ID", 10);
+        settings.Properties.Columns.Add("Descricion", "Descripción", 20);
+    })
+    .BindList(new Core.Erp.Web.Areas.Banco.Controllers.ChequeBancoController().get_list_bajo_demandaFlujo, new Core.Erp.Web.Areas.Banco.Controllers.ChequeBancoController().get_info_bajo_demandaFlujo)
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.Banco.ba_Cbte_Ban_Info) ? "" : Model);
+
+}
+@comboBox.GetHtml()

@@ -1,0 +1,141 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridView_conciliacion_caja";
+        settings.CallbackRouteValues = new { Controller = "ConciliacionCaja", Action = "GridViewPartial_conciliacion_caja", fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin, IdEmpresa = ViewBag.IdEmpresa, IdCaja = ViewBag.IdCaja };
+        settings.Width = Unit.Percentage(100);
+        settings.KeyFieldName = "IdConciliacion_Caja";
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+        //Configuración scrolling y pager
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Hidden;
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        settings.Settings.VerticalScrollableHeight = 400;
+        settings.SettingsPager.Visible = true;
+        settings.SettingsPager.PageSize = 10;
+        settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
+        settings.SettingsPager.AlwaysShowPager = true;
+        //Configuración filtro por columna
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        //Configuracion exportacion
+        settings.SettingsExport.EnableClientSideExportAPI = true;
+        settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
+        settings.Toolbars.Add(t =>
+        {
+            t.EnableAdaptivity = true;
+            t.Items.Add(GridViewToolbarCommand.ExportToPdf).Text = "Exportar a PDF";
+            t.Items.Add(GridViewToolbarCommand.ExportToXls).Text = "Exportar a XLS";
+            t.Items.Add(GridViewToolbarCommand.ExportToXlsx).Text = "Exportar a XLSX";
+            t.Items.Add(GridViewToolbarCommand.ExportToDocx).Text = "Exportar a DOCX";
+            t.Items.Add(GridViewToolbarCommand.ExportToRtf).Text = "Exportar a RTF";
+            t.Items.Add(GridViewToolbarCommand.ExportToCsv).Text = "Exportar a CSV";
+        });
+        settings.SettingsExport.RenderBrick = (sender, e) =>
+        {
+            if (e.RowType == GridViewRowType.Data && e.VisibleIndex % 2 == 0)
+                e.BrickStyle.BackColor = System.Drawing.Color.FromArgb(0xEE, 0xEE, 0xEE);
+        };
+        //Evento para pintar de rojo las filas anuladas
+        settings.HtmlRowPrepared = (s, e) =>
+        {
+            if (Convert.ToString(e.GetValue("IdEstadoCierre")) == "EST_CIE_CER")
+            {
+                e.Row.ForeColor = System.Drawing.Color.Blue;
+            }
+        };
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "#";
+            c.SetDataItemTemplateContent(tc =>
+            {
+                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "IdEstadoCierre")) == "EST_CIE_ABI")
+                {
+                    ViewContext.Writer.Write(
+                    Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdConciliacion_caja = DataBinder.Eval(tc.DataItem, "IdConciliacion_caja")})
+                    );
+                }
+            });
+            c.SetHeaderTemplateContent(tc =>
+            {
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = ViewBag.IdEmpresa }).ToHtmlString()
+                );
+            });
+            c.Settings.AllowDragDrop = DefaultBoolean.False;
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.Width = Unit.Pixel(100);
+        });
+
+        settings.Columns.Add("IdConciliacion_Caja","ID").Width = Unit.Percentage(5);
+        settings.Columns.Add("SecuenciaCaja", "#Secuencia").Width = System.Web.UI.WebControls.Unit.Percentage(6);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Fecha_ini";
+            column.Caption = "Desde";
+            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
+            column.Width = Unit.Percentage(10);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Fecha_fin";
+            column.Caption = "Hasta";
+            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
+            column.Width = Unit.Percentage(10);
+        });
+        settings.Columns.Add("IdEstadoCierre","Estado").Width = Unit.Percentage(10);
+        settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(30);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Ingresos";
+            column.Caption = "Ingresos";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(8);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Total_fact_vale";
+            column.Caption = "Total egresos";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(8);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Dif_x_pagar_o_cobrar";
+            column.Caption = "Diferencia";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(8);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.SetDataItemTemplateContent(c =>
+            {
+                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("CAJ_002", "CajaReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdConciliacionCaja = DataBinder.Eval(c.DataItem, "IdConciliacion_caja").ToString()}, Request.Url.Scheme) + "');\"></span>");
+            });
+            column.Width = Unit.Percentage(5);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "OP";
+            column.SetDataItemTemplateContent(c =>
+            {
+                if (DataBinder.Eval(c.DataItem, "IdOrdenPago_op") != null)
+                {
+                    ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("CXP_004", "CuentasPorPagarReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa_op").ToString(), IdOrdenPago = DataBinder.Eval(c.DataItem, "IdOrdenPago_op") }, Request.Url.Scheme) + "');\"></span>");
+                }
+            });
+            column.Width = Unit.Percentage(5);
+        });
+    });
+}
+@grid.Bind(Model).GetHtml()

@@ -1,0 +1,53 @@
+﻿@model Core.Erp.Info.General.tb_parametro_Info
+@{
+    ViewBag.Title = "Parámetros generales";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Index", "ParametrosGeneral", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="">Impuesto*</label>
+                    @Html.DropDownListFor(q => q.IdCod_Impuesto, new SelectList(ViewBag.lst_imp, "IdCod_Impuesto", "nom_impuesto"), new { @class = "form-control", })
+                    @Html.ValidationMessageFor(q => q.IdCod_Impuesto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Porcentaje">Porcentaje*</label>
+                    @Html.TextBoxFor(q => q.Porcentaje, new { @class = "form-control", @id = "DiasTransaccionesAFuturo" })
+                    @Html.ValidationMessageFor(q => q.Porcentaje, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="EsMultiSucursal"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.EsMultiSucursal, settings =>
+                           {
+                               settings.Name = "EsMultiSucursal";
+                               settings.Text = "Es multisucursal";
+
+                           }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.EsMultiSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

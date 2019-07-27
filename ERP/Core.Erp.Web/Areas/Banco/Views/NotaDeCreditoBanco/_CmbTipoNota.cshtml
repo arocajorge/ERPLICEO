@@ -1,0 +1,24 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdTipoNota";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "NotaDeCreditoBanco", Action = "CmbTipoNota", Area = "Banco" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "Descripcion";
+        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.ValueField = "IdTipoNota";
+        settings.Properties.ValueType = typeof(int);
+        settings.Properties.Columns.Add("IdTipoNota", "ID", 10);
+        settings.Properties.Columns.Add("Descripcion", "Descripción", 90);
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){armar_diario();}";
+    })
+      .BindList(new Core.Erp.Web.Areas.Banco.Controllers.NotaDeCreditoBancoController().get_list_bajo_TipoNota, new Core.Erp.Web.Areas.Banco.Controllers.NotaDeCreditoBancoController().get_info_bajo_demanda_TipoNota)
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.Banco.ba_Cbte_Ban_Info) ? "" : (Model == 0 ? "" : Model));
+    }
+@comboBox.GetHtml()

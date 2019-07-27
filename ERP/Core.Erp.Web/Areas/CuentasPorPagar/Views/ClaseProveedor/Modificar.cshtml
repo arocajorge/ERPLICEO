@@ -1,0 +1,81 @@
+﻿@model Core.Erp.Info.CuentasPorPagar.cp_proveedor_clase_Info
+@{
+    ViewBag.Title = "Modificar clase";
+
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Modificar", "ClaseProveedor", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdClaseProveedor)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="cod_clase_proveedor">Código*</label>
+                    @Html.TextBoxFor(q => q.cod_clase_proveedor, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.cod_clase_proveedor, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="descripcion_clas_prove">Descripción*</label>
+                    @Html.TextBoxFor(q => q.descripcion_clas_prove, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.descripcion_clas_prove, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCtaCble_CXP">Cta. Cble. CXP*</label>
+                    @Html.Partial("_CmbCtaCbleCXP_Proveedor", Model.IdCtaCble_CXP)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_CXP, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCtaCble_Gasto">Cta. Cble. Gasto</label>
+                    @Html.Partial("_CmbCtaCbleGasto_Proveedor", Model.IdCtaCble_gasto)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_gasto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCtaCble_Anticipo">Cta. Cble. Anticipo</label>
+                    @Html.Partial("_CmbCtaCbleAnticipo_Proveedor", Model.IdCtaCble_Anticipo)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_Anticipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","ClaseProveedor",new { Area = "CuentasPorPagar" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

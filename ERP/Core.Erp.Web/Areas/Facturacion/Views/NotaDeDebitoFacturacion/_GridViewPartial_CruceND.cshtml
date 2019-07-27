@@ -1,0 +1,98 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridView_CruceND";
+        settings.CallbackRouteValues = new { Controller = "NotaDeDebitoFacturacion", Action = "GridViewPartial_CruceND" };
+        settings.KeyFieldName = "secuencial";
+        settings.Width = Unit.Percentage(100);
+
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "NotaDeDebitoFacturacion", Action = "EditingUpdateFactura", Area = "Facturacion" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "NotaDeDebitoFacturacion", Action = "EditingDeleteFactura", Area = "Facturacion" };
+
+        settings.SettingsPager.PageSize = 3;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsContextMenu.RowMenuItemVisibility.NewRow = false;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+
+        //Configuración click derecho
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.EnableRowMenu = DefaultBoolean.True;
+
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(20);
+            column.FieldName = "vt_NumDocumento";
+            column.Caption = "# Documento";
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(20);
+            column.FieldName = "NumDocumento";
+            column.Caption = "# Doc reemplazo";
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "vt_total";
+            column.Caption = "Total";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "Saldo";
+            column.Caption = "Saldo";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "Valor_Aplicado";
+            column.Caption = "V. aplicado";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+            column.EditorProperties().SpinEdit(p =>
+            {
+                p.MinValue = 0;
+                p.DisplayFormatInEditMode = true;
+                p.DisplayFormatString = "N2";
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "Saldo_final";
+            column.Caption = "Saldo";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
+    });
+}
+@grid.Bind(Model).GetHtml()

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="75468987e1ca480f9e58b2252babd183" Name="Diagram1">
+        <EntityTypeShape EntityType="Model_activo_fijo.Af_CatalogoTipo" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_activo_fijo.Af_Depreciacion" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_activo_fijo.Af_Depreciacion_Det" Width="2.25" PointX="5.875" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_activo_fijo.Af_Mej_Baj_Activo" Width="1.5" PointX="7.5" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_activo_fijo.Af_Retiro_Activo" Width="1.5" PointX="7.5" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_activo_fijo.Af_Venta_Activo" Width="1.5" PointX="7.5" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_activo_fijo.Af_Parametros" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_activo_fijo.Af_Activo_fijo_Categoria" Width="1.5" PointX="6" PointY="15.375" />
+        <EntityTypeShape EntityType="Model_activo_fijo.Af_Activo_fijo_tipo" Width="1.5" PointX="0.75" PointY="14.375" />
+        <AssociationConnector Association="Model_activo_fijo.FK_Af_Activo_fijo_Categoria_Af_Activo_fijo_tipo" />
+        <EntityTypeShape EntityType="Model_activo_fijo.Af_Catalogo" Width="1.5" PointX="8" PointY="0.75" />
+        <AssociationConnector Association="Model_activo_fijo.FK_Af_Catalogo_Af_CatalogoTipo" />
+        <EntityTypeShape EntityType="Model_activo_fijo.Af_Activo_fijo" Width="1.5" PointX="10.25" PointY="5" />
+        <EntityTypeShape EntityType="Model_activo_fijo.Af_Area" Width="1.5" PointX="8" PointY="34.875" />
+        <EntityTypeShape EntityType="Model_activo_fijo.Af_Departamento" Width="1.5" PointX="8" PointY="30.625" />
+        <AssociationConnector Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Activo_fijo_Categoria" />
+        <AssociationConnector Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Activo_fijo_tipo" />
+        <AssociationConnector Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Area" />
+        <AssociationConnector Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo5" />
+        <AssociationConnector Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo6" />
+        <AssociationConnector Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo7" />
+        <AssociationConnector Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo8" />
+        <AssociationConnector Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo9" />
+        <AssociationConnector Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Departamento" />
+        <AssociationConnector Association="Model_activo_fijo.FK_Af_Depreciacion_Det_Af_Activo_fijo" />
+        <AssociationConnector Association="Model_activo_fijo.FK_Af_Mej_Baj_Activo_Af_Activo_fijo" />
+        <AssociationConnector Association="Model_activo_fijo.FK_Af_Retiro_Activo_Af_Activo_fijo" />
+        <AssociationConnector Association="Model_activo_fijo.FK_Af_Venta_Activo_Af_Activo_fijo" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

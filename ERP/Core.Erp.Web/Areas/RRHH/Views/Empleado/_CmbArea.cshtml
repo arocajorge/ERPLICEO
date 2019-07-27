@@ -1,0 +1,24 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdArea";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "Empleado", Action = "CmbArea", Area = "RRHH" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "Descripcion";
+        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.ValueField = "IdArea";
+        settings.Properties.ValueType = typeof(int);
+        settings.Properties.Columns.Add("IdArea", "ID", 10);
+        settings.Properties.Columns.Add("Descripcion", "Descripcion", 90);
+        settings.Properties.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['IdDivision'] =  IdDivision.GetValue(); }";
+
+    })
+     .BindList(new Core.Erp.Web.Areas.RRHH.Controllers.EmpleadoController().get_list_bajo_demanda_area, new Core.Erp.Web.Areas.RRHH.Controllers.EmpleadoController().get_info_bajo_demanda_area)
+    .Bind((Model.GetType() == typeof(Core.Erp.Info.RRHH.ro_empleado_Info) || Model.GetType() == typeof(Core.Erp.Info.RRHH.ro_area_Info) ) ? "" : Model);
+    }
+@comboBox.GetHtml()

@@ -1,0 +1,27 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdTipoFlujo";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "NotaDeCreditoBanco", Action = "CmbFlujo_NotaCredito", Area = "Banco" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "Descricion";
+        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.ValueField = "IdTipoFlujo";
+        settings.Properties.ValueType = typeof(decimal);
+
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+        settings.Properties.AllowNull = true;
+
+        settings.Properties.Columns.Add("IdTipoFlujo", "ID", 10);
+        settings.Properties.Columns.Add("Descricion", "Descripción", 20);
+    })
+    .BindList(new Core.Erp.Web.Areas.Banco.Controllers.NotaDeCreditoBancoController().get_list_bajo_demandaFlujo_NC, new Core.Erp.Web.Areas.Banco.Controllers.NotaDeCreditoBancoController().get_info_bajo_demandaFlujo_NC)
+    .Bind((Model.GetType() == typeof(Core.Erp.Info.Banco.ba_Cbte_Ban_Info) || Model.GetType() == typeof(Core.Erp.Info.Banco.ba_Cbte_Ban_x_ba_TipoFlujo_Info) || Model.GetType() == typeof(List<Core.Erp.Info.Banco.ba_Cbte_Ban_x_ba_TipoFlujo_Info>)) ? "" : Model);
+
+}
+@comboBox.GetHtml()

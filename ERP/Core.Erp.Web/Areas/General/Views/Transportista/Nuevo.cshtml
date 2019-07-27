@@ -1,0 +1,54 @@
+﻿@model Core.Erp.Info.General.tb_transportista_Info
+@{
+    ViewBag.Title = "Nuevo transportista";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Nuevo", "Transportista", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="cedula">Cédula*</label>
+                    @Html.TextBoxFor(q => q.Cedula, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Placa, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Placa">Placa*</label>
+                    @Html.TextBoxFor(q => q.Placa, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Placa, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Nombre">Nombre*</label>
+                    @Html.TextBoxFor(q => q.Nombre, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Transportista",new { Area = "General" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+

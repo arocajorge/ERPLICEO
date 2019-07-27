@@ -1,0 +1,333 @@
+﻿@model Core.Erp.Info.CuentasPorPagar.cp_retencion_Info
+@{
+    ViewBag.Title = ("Anular retención" + " con ID #" + @Model.IdRetencion);
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    if (@ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Anular", "Retencion", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdRetencion)
+    @Html.HiddenFor(q => q.IdPuntoVta, new { @id = "IdPuntoVta" })
+    @Html.HiddenFor(q => q.ct_IdCbteCble)
+    @Html.HiddenFor(q => q.ct_IdTipoCbte)
+    @Html.HiddenFor(q => q.info_comprobante.IdTipoCbte)
+    @Html.HiddenFor(q => q.info_comprobante.IdCbteCble)
+    @Html.HiddenFor(q => q.co_serie)
+    @Html.HiddenFor(q => q.co_factura)
+    @Html.HiddenFor(q => q.co_valoriva)
+    @Html.HiddenFor(q => q.co_subtotal_iva)
+    @Html.HiddenFor(q => q.co_subtotal_siniva)
+    @Html.HiddenFor(q => q.co_baseImponible)
+    @Html.HiddenFor(q => q.IdSucursal, new { @id = "IdSucursal" })
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="co_observacion">Proveedor</label>
+                    @Html.TextBoxFor(q => q.pe_razonSocial, new { @class = "form-control", @id = "pe_razonSocial", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.pe_razonSocial, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="IdOrden_giro_Tipo">Tipo documento*</label>
+                    @Html.TextBoxFor(q => q.Descripcion, new { @class = "form-control", @id = "Descripcion", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="co_serie">Serie*</label>
+                    @Html.TextBoxFor(q => q.co_serie, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.co_serie, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="co_factura">Numero documento*</label>
+                    @Html.TextBoxFor(q => q.co_factura, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.co_factura, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="co_subtotal_iva">Base IVA</label>
+                    @Html.TextBoxFor(q => q.co_subtotal_iva, new { @class = "form-control", @id = "co_subtotal_iva", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.co_subtotal_iva, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="co_subtotal_siniva">Base cero</label>
+                    @Html.TextBoxFor(q => q.co_subtotal_siniva, new { @class = "form-control", @id = "co_subtotal_siniva", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.co_subtotal_siniva, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="co_valoriva">Iva</label>
+                    @Html.TextBoxFor(q => q.co_valoriva, new { @class = "form-control", @id = "co_valoriva", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.co_valoriva, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="co_total">Total</label>
+                    @Html.TextBoxFor(q => q.co_baseImponible, new { @class = "form-control", @id = "co_baseImponible", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.co_baseImponible, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label for="co_observacion">Observación*</label>
+                    @Html.TextBoxFor(q => q.observacion, new { @class = "form-control", @id = "observacion" })
+                    @Html.ValidationMessageFor(q => q.observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Fecha">Fecha retencion*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.fecha, settings =>
+                    {
+                        settings.Name = "fecha";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="Tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_detalle" aria-controls="detalle" role="tab" data-toggle="tab">Detalle retención</a>
+            </li>
+            <li>
+                <a href="#tab_diario_contable" aria-controls="diario_contable" role="tab" data-toggle="tab">Diario contable</a>
+            </li>
+
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_detalle">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="IdPuntoVta">Punto de venta*</label>
+                                @Html.DropDownListFor(q => q.IdPuntoVta, new SelectList(ViewBag.lst_punto_venta, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVta", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(q => q.IdPuntoVta, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-2" id="datos_punto_venta1">
+                            <div class="form-group">
+                                <label for="vt_serie1">Establecimiento*</label>
+                                @Html.TextBoxFor(q => q.serie1, new { @class = "form-control", @id = "serie1", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(q => q.serie1, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2" id="datos_punto_venta2">
+                            <div class="form-group">
+                                <label for="vt_serie2">Pto. Emisión*</label>
+                                @Html.TextBoxFor(q => q.serie2, new { @class = "form-control", @id = "serie2", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(q => q.serie2, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2" id="datos_punto_venta3">
+                            <div class="form-group">
+                                <label for="vt_NumFactura"># Documento*</label>
+                                @Html.TextBoxFor(q => q.NumRetencion, new { @class = "form-control", @id = "NumRetencion", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(q => q.NumRetencion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="co_observacion">Detalle retención*</label>
+
+
+                                @Html.Action("GridViewPartial_retencion_det")
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_diario_contable">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="co_observacion">Diario contable*</label>
+
+                                @Html.Action("GridViewPartial_retencio_dc")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="box-footer">
+    @if (ViewBag.MostrarBoton ?? false)
+    {
+        <button type="submit" class="btn btn-danger">Anular</button>
+    }
+        <a class="btn btn-default" href="@Url.Action("Index","Retencion",new { Area = "CuentasPorPagar" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+<script>
+    $(function () {
+        actualizar_periodo();
+        CargarPuntosDeVenta();
+        
+
+        $("#pe_mes").change(function () {
+            actualizar_periodo();
+        });
+
+        $("#IdanioFiscal").change(function () {
+            actualizar_periodo();
+        });
+        $("#IdPeriodo").change(function () {
+            actualizar_periodo();
+        });
+    });
+
+    function actualizar_periodo() {
+        var mes = $("#pe_mes").val();
+        var anio = $("#IdanioFiscal").val();
+        var dia_inicio = 1;
+        var pad = "00"
+        var mes_format = pad.substring(0, pad.length-mes.length) + mes;
+
+        var periodo = anio + "-" + mes_format;
+        var fecha_texto_inicio = anio + "/" + mes_format + "/" + dia_inicio;
+
+        //var dia_inicio = Date.parse(fecha_texto_inicio);
+        var fecha_format = new Date(fecha_texto_inicio);
+        var num = fecha_format.getUTCDate();
+        var dia_inicio = anio + "/" + mes_format + "/" + num;
+        var dia_fin = new Date(Date.UTC(anio, mes));
+
+        pe_FechaIni.SetValue(new Date(dia_inicio));
+        pe_FechaFin.SetValue(dia_fin);
+
+        $("#IdPeriodo").val(anio + mes_format);
+    }
+
+    function CargarPuntosDeVenta() {
+        $("#IdPuntoVta").empty();
+        var datos = {
+            IdSucursal: $("#IdSucursal").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarPuntosDeVenta", "Retencion",new { Area = "CuentasPorPagar" })',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (i, row) {
+                    $("#IdPuntoVta").append("<option value=" + row.IdPuntoVta + ">" + row.nom_PuntoVta + "</option>");
+                    $("#IdPuntoVta").val($("#IdPuntoVta option:first").val());
+                });
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function GetUltimoDocumento() {
+        var datos = {
+            IdSucursal: $("#IdSucursal").val(),
+            IdPuntoVta: $("#IdPuntoVta").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetUltimoDocumento", "Retencion",new { Area = "CuentasPorPagar" })',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.data_puntovta != null) {
+                    if (data.data_puntovta.EsElectronico == true) {
+                        $("#datos_punto_venta1").hide();
+                        $("#datos_punto_venta2").hide();
+                        $("#datos_punto_venta3").hide();
+                    }
+                    else {
+                        $("#datos_punto_venta1").show();
+                        $("#datos_punto_venta2").show();
+                        $("#datos_punto_venta3").show();
+
+                        if (data.data_talonario != null) {
+                            $("#serie1").val(data.data_talonario.Establecimiento);
+                            $("#serie2").val(data.data_talonario.PuntoEmision);
+                            $("#NumRetencion").val(data.data_talonario.NumDocumento);
+                        }
+                    }
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>
+

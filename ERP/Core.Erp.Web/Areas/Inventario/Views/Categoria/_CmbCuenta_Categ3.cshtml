@@ -1,0 +1,30 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdCtaCtble_Inve";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "Categoria", Action = "CmbCuenta_Categ3", Area = "Inventario" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "pc_Cuenta";
+        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.ValueField = "IdCtaCble";
+        settings.Properties.ValueType = typeof(string);
+        settings.Properties.Columns.Add("IdCtaCble", "ID", 10);
+        settings.Properties.Columns.Add("pc_Cuenta", "Cuenta contable", 40);
+        settings.Properties.Columns.Add("IdCtaCblePadre", "ID Padre", 10);
+        settings.Properties.Columns.Add("pc_Cuenta_padre", "Cuenta padre", 40);
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.Properties.FilterMinLength = 3;
+
+    })
+    .BindList(new Core.Erp.Web.Areas.Inventario.Controllers.CategoriaController().get_list_bajo_demanda, new Core.Erp.Web.Areas.Inventario.Controllers.CategoriaController().get_info_bajo_demanda)
+    .Bind(Model.IdCtaCtble_Inve);
+
+
+}
+@comboBox.GetHtml()

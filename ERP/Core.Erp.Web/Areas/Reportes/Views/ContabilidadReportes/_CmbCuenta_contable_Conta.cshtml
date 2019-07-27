@@ -1,0 +1,27 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdCtaCble";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Pixel(1200);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "ContabilidadReportes", Action = "CmbCuenta_contable_Conta", Area = "Reportes" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "pc_Cuenta";
+        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.ValueField = "IdCtaCble";
+        settings.Properties.ValueType = typeof(string);
+        settings.Properties.Columns.Add("IdCtaCble", "ID", 10);
+        settings.Properties.Columns.Add("pc_Cuenta", "Cuenta", 40);
+        settings.Properties.Columns.Add("IdCtaCblePadre", "ID Padre", 10);
+        settings.Properties.Columns.Add("pc_Cuenta_padre", "Cuenta padre", 40);
+        settings.Properties.FilterMinLength = 3;
+
+    })
+    .BindList(new Core.Erp.Web.Areas.Reportes.Controllers.ContabilidadReportesController().get_list_bajo_demanda_cta, new Core.Erp.Web.Areas.Reportes.Controllers.ContabilidadReportesController().get_info_bajo_demanda_cta)
+    .Bind(Model.IdCtaCble);
+
+}
+@comboBox.GetHtml()

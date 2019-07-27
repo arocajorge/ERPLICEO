@@ -1,0 +1,73 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridView_aprobacion_despacho";
+        settings.CallbackRouteValues = new { Controller = "AprobacionDespacho", Action = "GridViewPartial_aprobacion_despacho", Area = "Inventario", IdSucursal = ViewBag.IdSucursal, IdBodega = ViewBag.IdBodega };
+        settings.KeyFieldName = "SecuencialID";
+        settings.Width = Unit.Percentage(100);
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        //Configuración click derecho
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.EnableRowMenu = DefaultBoolean.False;
+
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+        settings.Columns.Add("nom_bodega", "Bodega").Width = System.Web.UI.WebControls.Unit.Percentage(15);
+        settings.Columns.Add("IdNumMovi", "# Movimiento").Width = System.Web.UI.WebControls.Unit.Percentage(5);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "cm_fecha";
+            column.Caption = "Fecha";
+            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(8);
+        });
+        settings.Columns.Add("tm_descripcion", "Tipo").Width = System.Web.UI.WebControls.Unit.Percentage(12);
+        settings.Columns.Add("cm_observacion", "Observación").Width = System.Web.UI.WebControls.Unit.Percentage(22);
+        settings.Columns.Add("Desc_mov_inv", "Motivo").Width = System.Web.UI.WebControls.Unit.Percentage(12);
+        settings.Columns.Add(column =>
+        {
+            column.SetDataItemTemplateContent(c =>
+            {
+                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("INV_002", "InventarioReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdSucursal = DataBinder.Eval(c.DataItem, "IdSucursal"), IdMovi_inven_tipo = DataBinder.Eval(c.DataItem, "IdMovi_inven_tipo"), IdNumMovi = DataBinder.Eval(c.DataItem, "IdNumMovi") }, Request.Url.Scheme) + "');\"></span>");
+            });
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+        });
+
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "";
+            column.FieldName = "";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            column.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            column.SetDataItemTemplateContent(p =>
+            {
+                Html.DevExpress().Button(settingsBtn =>
+                {
+                    settingsBtn.Name = "btn" + p.KeyValue;
+                    settingsBtn.Text = "Despachar";
+                    settingsBtn.ClientSideEvents.Click = "function(s, e) {DespacharMovimiento('" + p.KeyValue + "');}";
+                }).Render();
+            });
+        });
+
+
+    });
+}
+@grid.Bind(Model).GetHtml()

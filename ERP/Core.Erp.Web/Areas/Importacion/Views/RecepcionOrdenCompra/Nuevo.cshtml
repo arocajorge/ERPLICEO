@@ -1,0 +1,132 @@
+﻿@model Core.Erp.Info.Importacion.imp_orden_compra_ext_recepcion_Info
+@{
+    ViewBag.Title = "Recepcion de ordenes de compra";
+    //if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    //{
+    //    Response.Redirect("~/Account/Login");
+    //}
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Nuevo", "RecepcionOrdenCompra", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdOrdenCompraExt)
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdTransaccionSession)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdOrdenCompraExt">Id Orden compra</label>
+                    @Html.TextBoxFor(q => q.IdOrdenCompraExt, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.IdOrdenCompraExt, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdCatalogo_via">Tipo de embarque*</label>
+                    @Html.DropDownListFor(q => q.IdCatalogo_via, new SelectList(ViewBag.lst_catalogos, "IdCatalogo", "ca_descripcion"), new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.IdCatalogo_via, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-offset-10 col-med-2">
+                <div class="form-group">
+                    <label for="">Fecha O.C</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.oe_fecha, settings =>
+                    {
+                        settings.Name = "oe_fecha";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Enabled = false;
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.oe_fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdProveedor">Proveedor*</label>
+                    @Html.TextBoxFor(q => q.pe_nombreCompleto, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="col-md-offset-10 col-med-2">
+                <div class="form-group">
+                    <label for="">Fecha recepcion</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.or_fecha, settings =>
+                    {
+                        settings.Name = "or_fecha";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.or_fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="or_observacion">Observación recepcion de mercaderia</label>
+                    @Html.TextAreaFor(q => q.or_observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.oe_observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCble_importacion">Detalle de orden de compra</label>
+                    @Html.Action("GridViewPartial_recepcion_oc_ext_det")
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "RecepcionOrdenCompra", new { Area ="Importacion" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+

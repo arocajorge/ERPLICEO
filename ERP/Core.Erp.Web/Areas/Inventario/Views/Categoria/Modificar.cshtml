@@ -1,0 +1,89 @@
+﻿@model Core.Erp.Info.Inventario.in_categorias_Info
+@{
+    ViewBag.Title = "Modificar categoría";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Modificar", "Categoria", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdCategoria">ID*</label>
+                    @Html.TextBoxFor(q => q.IdCategoria, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdCategoria, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="cod_categoria">Código</label>
+                    @Html.TextBoxFor(q => q.cod_categoria, new { @class = "form-control", })
+                    @Html.ValidationMessageFor(q => q.cod_categoria, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_Categoria">Descripción*</label>
+                    @Html.TextBoxFor(q => q.ca_Categoria, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.ca_Categoria, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCble_venta">Cuenta contable vta</label>
+                    @Html.Partial("_CmbCuenta_Categ1", Model)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_venta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCtble_Costo">Cuenta contable costo</label>
+                    @Html.Partial("_CmbCuenta_Categ2", Model)
+                    @Html.ValidationMessageFor(q => q.IdCtaCtble_Costo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCtble_Inve">Cuenta contable inv</label>
+                    @Html.Partial("_CmbCuenta_Categ3", Model)
+                    @Html.ValidationMessageFor(q => q.IdCtaCtble_Inve, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Categoria", new { Area ="Inventario" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

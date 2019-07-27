@@ -1,0 +1,193 @@
+﻿@model Core.Erp.Info.General.tb_sis_Documento_Tipo_Talonario_Info
+@{
+    ViewBag.Title = "Modificar talonario";
+
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Modificar", "TipoDocumentoTalonario", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.Establecimiento)
+    @Html.HiddenFor(q => q.Documentofinal)
+    @Html.HiddenFor(q => q.NumDocumento)
+    @Html.HiddenFor(q => q.CodDocumentoTipo)
+    @Html.HiddenFor(q => q.IdSucursal)
+    @Html.HiddenFor(q => q.Cantidad)
+    @Html.HiddenFor(q => q.PuntoEmision)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="CodDocumentoTipo">Tipo Documento*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.CodDocumentoTipo, settings =>
+               {
+                   settings.Name = "CodDocumentoTipo";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("CodDocumentoTipo", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("descripcion", "Descripcion").Width = System.Web.UI.WebControls.Unit.Percentage(50);
+                   //Campo ID
+                   settings.Properties.ValueField = "CodDocumentoTipo";
+                   settings.Properties.ValueType = typeof(string);
+                   settings.Properties.TextField = "descripcion";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.ReadOnly = true;
+                   settings.Properties.DropDownButton.Enabled = false;
+               }).BindList(ViewBag.lst_talonario).GetHtml()
+                    @Html.ValidationMessageFor(q => q.CodDocumentoTipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdSucursal, settings =>
+               {
+                   settings.Name = "IdSucursal";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdSucursal", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("Su_Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdSucursal";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "Su_Descripcion";
+                   settings.Properties.NullText = "== Seleccione ==";
+
+                   settings.ReadOnly = true;
+                   settings.Properties.DropDownButton.Enabled = false;
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+               }).BindList(ViewBag.lst_sucursal).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Establecimiento">Establecimiento*</label>
+                    @Html.TextBoxFor(q => q.Establecimiento, new { @class = "form-control", @id = "Establecimiento", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.Establecimiento, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="PuntoEmision">Punto de Emisión*</label>
+                    @Html.TextBoxFor(q => q.PuntoEmision, new { @class = "form-control", @id = "PuntoEmision", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.PuntoEmision, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="NumDocumento">Documento inicial*</label>
+                    @Html.TextBoxFor(q => q.NumDocumento, new { @class = "form-control", @id = "NumDocumento", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.NumDocumento, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="Usado">@Html.CheckBoxFor(q => q.Usado) Usado</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="es_Documento_Electronico_bool">@Html.CheckBoxFor(q => q.es_Documento_Electronico, new { @id = "es_Documento_Electronico_bool" }) Es documento electronico</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="div_autorizacion">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="NumAutorizacion">Numero de autorización</label>
+                    @Html.TextBoxFor(q => q.NumAutorizacion, new { @class = "form-control", @id = "NumAutorizacion" })
+                    @Html.ValidationMessageFor(m => m.NumAutorizacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="">Fecha de caducidad</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.FechaCaducidad, settings =>
+                           {
+                               settings.Name = "FechaCaducidad";
+                               settings.Properties.UseMaskBehavior = true;
+                               settings.Properties.EditFormat = EditFormat.Date;
+                               settings.Properties.EditFormatString = "dd/MM/yyyy";
+                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.FechaCaducidad, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "TipoDocumentoTalonario", new { Area ="General" }, null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+}
+
+<script>
+    $(function () {
+
+        $("#es_Documento_Electronico").change(function () {
+            ocultar_mostrar_div_autorizacion();
+        });
+        $("#NumAutorizacion").change(function () {
+            ocultar_mostrar_div_autorizacion();
+        });
+        $("#FechaCaducidad").change(function () {
+            ocultar_mostrar_div_autorizacion();
+        });
+
+        ocultar_mostrar_div_autorizacion();
+
+        $("#es_Documento_Electronico_bool").change(function () {
+            ocultar_mostrar_div_autorizacion();
+        });
+    })
+
+    function ocultar_mostrar_div_autorizacion() {
+        var doc_electronico = ($("#es_Documento_Electronico_bool:checked").val());
+
+        if (doc_electronico == "true") {
+            $("#div_autorizacion").hide();
+        } else {
+            $("#div_autorizacion").show();
+        }
+    }
+</script>

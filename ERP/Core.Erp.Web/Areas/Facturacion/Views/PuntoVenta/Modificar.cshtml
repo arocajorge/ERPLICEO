@@ -1,0 +1,159 @@
+﻿@model Core.Erp.Info.Facturacion.fa_PuntoVta_Info
+@{
+    ViewBag.Title = "Modificar punto";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Modificar", "PuntoVenta", FormMethod.Post, new { @class = "form", @rolw = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdPuntoVta)
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdCaja">Tipo documento*</label>
+                    @Html.DropDownListFor(q => q.codDocumentoTipo, new SelectList(ViewBag.lst_doc, "CodDocumentoTipo", "descripcion"), new { @class = "form-control", @id = "NivelPrecio" })
+                    @Html.ValidationMessageFor(q => q.codDocumentoTipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="cod_PuntoVta">Código*</label>
+                    @Html.TextBoxFor(q => q.cod_PuntoVta, new { @class = "form-control", @id = "pr_codigo" })
+                    @Html.ValidationMessageFor(q => q.cod_PuntoVta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal*</label>
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdBodega">Bodega*</label>
+                    @Html.DropDownListFor(q => q.IdBodega, new SelectList(ViewBag.lst_bodega, "IdBodega", "bo_Descripcion"), new { @class = "form-control", @id = "IdBodega" })
+                    @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="nom_PuntoVta">Descripción*</label>
+                    @Html.TextBoxFor(q => q.nom_PuntoVta, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.nom_PuntoVta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdCaja">Caja*</label>
+                    @Html.DropDownListFor(q => q.IdCaja, new SelectList(ViewBag.lst_caja, "IdCaja", "ca_Descripcion"), new { @class = "form-control", @id = "NivelPrecio" })
+                    @Html.ValidationMessageFor(q => q.IdCaja, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IPImpresora">Código reporte</label>
+                    @Html.TextBoxFor(q => q.IPImpresora, new { @class = "form-control", @id = "pr_codigo" })
+                    @Html.ValidationMessageFor(q => q.IPImpresora, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="NumCopias"># Copias</label>
+                    @Html.TextBoxFor(q => q.NumCopias, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.NumCopias, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.DevExpress().CheckBoxFor(q => q.CobroAutomatico,
+                         settings =>
+                         {
+                             settings.Name = "CobroAutomatico";
+                             settings.Checked = false;
+                             settings.Text = "Realiza cobro automático al momento de la venta";
+                         }
+                     ).GetHtml()
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.DevExpress().CheckBoxFor(q => q.EsElectronico,
+                         settings =>
+                         {
+                             settings.Name = "EsElectronico";
+                             settings.Checked = false;
+                             settings.Text = "Es electrónico";
+                         }
+                     ).GetHtml()
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "PuntoVenta", new {   Area = "Facturacion" }, null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script>
+    $(function () {
+        cargar_bodega();
+    });
+
+    $("#IdSucursal").change(function () {
+        cargar_bodega();
+    });
+
+    function cargar_bodega() {
+        $("#IdBodega").empty();
+
+        var sucursal = $("#IdSucursal").val();
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: sucursal
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("cargar_bodega", "PuntoVenta", new { Area = "Facturacion" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdBodega").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    };
+</script>

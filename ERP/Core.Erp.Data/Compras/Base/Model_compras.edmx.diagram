@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9438bb8abb224b4ebf7c2007646bebf5" Name="Diagram1">
+        <EntityTypeShape EntityType="Model_compras.com_catalogo" Width="1.5" PointX="3.75" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_compras.com_catalogo_tipo" Width="1.5" PointX="1.5" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_compras.com_comprador" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_compras.com_departamento" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_compras.com_estado_cierre" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_compras.com_ordencompra_local" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_compras.com_ordencompra_local_det" Width="1.5" PointX="5.25" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_compras.com_parametro" Width="1.5" PointX="6" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_compras.com_solicitante" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_compras.com_TerminoPago" Width="1.5" PointX="0.75" PointY="21.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_compras.vwcom_ordencompra_local" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_compras.vwcom_ordencompra_local_detPorIngresar" Width="1.5" PointX="8.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_compras.vwcom_ordencompra_local_det" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="Model_compras.FK_com_catalogo_com_catalogo_tipo" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_com_catalogo" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_compras.FK_com_parametro_com_catalogo" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_compras.FK_com_parametro_com_catalogo1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_com_comprador" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_com_departamento" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_com_estado_cierre" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_compras.FK_com_parametro_com_estado_cierre" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_com_TerminoPago1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model_compras.FK_com_ordencompra_local_det_com_ordencompra_local" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

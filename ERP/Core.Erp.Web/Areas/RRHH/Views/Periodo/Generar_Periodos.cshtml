@@ -1,0 +1,47 @@
+﻿@model Core.Erp.Info.RRHH.ro_periodo_Info
+@{
+    ViewBag.Title = "Generar periodo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Generar_Periodos", "Periodo", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">Tipo periodo</label>
+                    @Html.DropDownListFor(q => q.CodCatalogo, new SelectList(ViewBag.lista_catalogo, "CodCatalogo", "ca_descripcion"), "== Seleccione ==", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Cod_region, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">Año*</label>
+                    @Html.TextBoxFor(q => q.pe_anio, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.pe_anio, "", new { @class = "text-danger" })
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Periodo",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

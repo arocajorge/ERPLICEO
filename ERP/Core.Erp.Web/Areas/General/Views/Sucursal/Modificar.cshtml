@@ -1,0 +1,155 @@
+﻿@model Core.Erp.Info.General.tb_sucursal_Info
+@{
+    ViewBag.Title = "Modificar sucursal";
+
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Modificar", "Sucursal", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdSucursal)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="codigo">Código</label>
+                    @Html.TextBoxFor(q => q.codigo, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Su_CodigoEstablecimiento">Establecimiento</label>
+                    @Html.TextBoxFor(q => q.Su_CodigoEstablecimiento, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="checkbox">
+                        @Html.DevExpress().CheckBoxFor(q => q.Es_establecimiento, settings =>
+                            {
+                                settings.Name = "Es_establecimiento";
+                                settings.Text = "Es establecimiento ";
+
+                            }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Es_establecimiento, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCtaCble_cxp">Cuenta contable por pagar</label>
+                    @Html.Partial("_CmbCuenta_Sucursal", Model)
+                    @Html.ValidationMessageFor(m => m.IdCtaCble_cxp, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCtaCble_vtaIVA0">Cuenta contable Iva 0</label>
+                    @Html.Partial("_CmbCuenta_Sucursal_IVA0", Model)
+                    @Html.ValidationMessageFor(m => m.IdCtaCble_vtaIVA0, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCtaCble_vtaIVA">Cuenta contable Iva</label>
+                    @Html.Partial("_CmbCuenta_Sucursal_IVA", Model)
+                    @Html.ValidationMessageFor(m => m.IdCtaCble_vtaIVA, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="Tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_datos_generales" aria-controls="informacion_general" role="tab" data-toggle="tab">Datos generales</a>
+            </li>
+
+            <li>
+                <a href="#tab_niveles_descuento" aria-controls="niveles_descuento" role="tab" data-toggle="tab">Niveles de descuento</a>
+            </li>
+
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_datos_generales">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="Su_Descripcion">Descripción*</label>
+                                @Html.TextBoxFor(q => q.Su_Descripcion, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Su_Descripcion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="Su_Ruc">Ruc</label>
+                                @Html.TextBoxFor(q => q.Su_Ruc, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Su_Ruc, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label for="Su_Telefonos">Teléfonos</label>
+                                @Html.TextBoxFor(q => q.Su_Telefonos, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Su_Telefonos, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="Su_JefeSucursal">Jefe de sucursal</label>
+                                @Html.TextBoxFor(q => q.Su_JefeSucursal, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Su_JefeSucursal, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="Su_Direccion">Dirección</label>
+                                @Html.TextAreaFor(m => m.Su_Direccion, new { @class = "form-control", @rows = 3 })
+                                @Html.ValidationMessageFor(m => m.Su_Direccion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_niveles_descuento">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Action("GridViewPartial_Sucursal_x_NivelDescuento")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Sucursal",new { Area = "General" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

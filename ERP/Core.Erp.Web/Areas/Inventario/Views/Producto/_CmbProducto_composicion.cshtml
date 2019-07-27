@@ -1,0 +1,32 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+
+        settings.Name = "IdProductoHijo";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "Producto", Action = "CmbProducto_composicion", Area = "Inventario" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "pr_descripcion";
+        settings.Properties.TextFormatString = "[{1}] {2}";
+        settings.Properties.ValueField = "IdProducto";
+        settings.Properties.ValueType = typeof(decimal);
+        settings.Properties.FilterMinLength = 3;
+
+        settings.Properties.Columns.Add("IdProducto", "ID", 5);
+        settings.Properties.Columns.Add("pr_descripcion", "Producto", 65);
+        settings.Properties.Columns.Add("nom_categoria", "Categoria", 15);
+        settings.Properties.Columns.Add("nom_presentacion", "Presentación", 15);
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedProductoChanged";
+
+
+    })
+    .BindList(new Core.Erp.Web.Areas.Inventario.Controllers.ProductoController().get_list_bajo_demandaComposicion,
+    new Core.Erp.Web.Areas.Inventario.Controllers.ProductoController().get_info_bajo_demanda)
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.Inventario.in_Producto_Info) ? "" : (Model == 0 ? "" : Model));
+}
+@comboBox.GetHtml()
+

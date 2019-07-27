@@ -1,0 +1,28 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdProducto";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "Deudas", Action = "CmbProducto_deudas", Area = "CuentasPorPagar" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "pr_descripcion";
+        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.ValueField = "IdProducto";
+        settings.Properties.ValueType = typeof(decimal);
+        settings.Properties.FilterMinLength = 3;
+
+        settings.Properties.Columns.Add("IdProducto", "ID", 5);
+        settings.Properties.Columns.Add("pr_descripcion", "Producto", 65);
+        settings.Properties.Columns.Add("nom_categoria", "Categoria", 15);
+        settings.Properties.Columns.Add("nom_presentacion", "Presentación", 15);
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "GetInfo_Producto";
+
+    })
+    .BindList(new Core.Erp.Web.Areas.CuentasPorPagar.Controllers.DeudasController().get_list_bajo_demanda_producto,
+    new Core.Erp.Web.Areas.CuentasPorPagar.Controllers.DeudasController().get_info_bajo_demanda_producto).Bind(Model.GetType() == typeof(Core.Erp.Info.CuentasPorPagar.cp_orden_giro_Info) ? "" : Model);
+}
+@comboBox.GetHtml()

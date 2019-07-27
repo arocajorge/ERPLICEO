@@ -1,0 +1,253 @@
+﻿@model Core.Erp.Info.CuentasPorPagar.cp_parametros_Info
+@{
+    ViewBag.Title = "Parámetros de cuentas por pagar";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Index", "ParametrosCXP", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdTipoCbte_AsientoSueldoXPagar">Tipo comprobante para facturas*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.pa_TipoCbte_OG, settings =>
+                   {
+                       settings.Name = "pa_TipoCbte_OG";
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                       settings.Properties.Columns.Add("CodTipoCbte", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                       settings.Properties.Columns.Add("tc_TipoCbte", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+                       //Campo ID
+                       settings.Properties.ValueField = "IdTipoCbte";
+                       settings.Properties.ValueType = typeof(int);
+                       settings.Properties.TextField = "tc_TipoCbte";
+                       //Boton para seleccionar ningun registro
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                       settings.Properties.NullText = "== Seleccione ==";
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                   }).BindList(ViewBag.lst_tipo_comprobante).GetHtml()
+                    @Html.ValidationMessageFor(q => q.pa_TipoCbte_OG, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdTipoCbte_AsientoSueldoXPagar">Tipo comprobante para conciliación de anticipos*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.pa_TipoCbte_para_conci_x_antcipo, settings =>
+                   {
+                       settings.Name = "pa_TipoCbte_para_conci_x_antcipo";
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                       settings.Properties.Columns.Add("CodTipoCbte", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                       settings.Properties.Columns.Add("tc_TipoCbte", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+                       //Campo ID
+                       settings.Properties.ValueField = "IdTipoCbte";
+                       settings.Properties.ValueType = typeof(int);
+                       settings.Properties.TextField = "tc_TipoCbte";
+                       //Boton para seleccionar ningun registro
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                       settings.Properties.NullText = "== Seleccione ==";
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                   }).BindList(ViewBag.lst_tipo_comprobante).GetHtml()
+                    @Html.ValidationMessageFor(q => q.pa_TipoCbte_para_conci_x_antcipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCblePadre">Cuenta contable deudora</label>
+                    @Html.Partial("_CmbCuenta_Param1", Model)
+                    @Html.ValidationMessageFor(q => q.pa_ctacble_deudora, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="pa_ctacble_iva">Cuenta contable iva</label>
+                    @Html.Partial("_CmbCuenta_Param2", Model)
+                    @Html.ValidationMessageFor(q => q.pa_ctacble_iva, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="pa_ctacble_Proveedores_default">Cuenta contable por default a proveedores</label>
+                    @Html.Partial("_CmbCuenta_Param3", Model)
+                    @Html.ValidationMessageFor(q => q.pa_ctacble_Proveedores_default, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="pa_TipoCbte_NC">Tipo comprobante para NC*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.pa_TipoCbte_NC, settings =>
+                   {
+                       settings.Name = "pa_TipoCbte_NC";
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                       settings.Properties.Columns.Add("CodTipoCbte", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                       settings.Properties.Columns.Add("tc_TipoCbte", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+                       //Campo ID
+                       settings.Properties.ValueField = "IdTipoCbte";
+                       settings.Properties.ValueType = typeof(int);
+                       settings.Properties.TextField = "tc_TipoCbte";
+                       //Boton para seleccionar ningun registro
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                       settings.Properties.NullText = "== Seleccione ==";
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                   }).BindList(ViewBag.lst_tipo_comprobante).GetHtml()
+                    @Html.ValidationMessageFor(q => q.pa_TipoCbte_NC, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="pa_TipoCbte_ND">Tipo comprobante para ND*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.pa_TipoCbte_ND, settings =>
+                   {
+                       settings.Name = "pa_TipoCbte_ND";
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                       settings.Properties.Columns.Add("CodTipoCbte", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                       settings.Properties.Columns.Add("tc_TipoCbte", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+                       //Campo ID
+                       settings.Properties.ValueField = "IdTipoCbte";
+                       settings.Properties.ValueType = typeof(int);
+                       settings.Properties.TextField = "tc_TipoCbte";
+                       //Boton para seleccionar ningun registro
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                       settings.Properties.NullText = "== Seleccione ==";
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                   }).BindList(ViewBag.lst_tipo_comprobante).GetHtml()
+                    @Html.ValidationMessageFor(q => q.pa_TipoCbte_ND, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="pa_TipoCbte_NC">Tipo comprobante para retención a la fuente*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.pa_IdTipoCbte_x_Retencion, settings =>
+                   {
+                       settings.Name = "pa_IdTipoCbte_x_Retencion";
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                       settings.Properties.Columns.Add("CodTipoCbte", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                       settings.Properties.Columns.Add("tc_TipoCbte", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+                       //Campo ID
+                       settings.Properties.ValueField = "IdTipoCbte";
+                       settings.Properties.ValueType = typeof(int);
+                       settings.Properties.TextField = "tc_TipoCbte";
+                       //Boton para seleccionar ningun registro
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                       settings.Properties.NullText = "== Seleccione ==";
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                   }).BindList(ViewBag.lst_tipo_comprobante).GetHtml()
+                    @Html.ValidationMessageFor(q => q.pa_IdTipoCbte_x_Retencion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="pa_ctacble_Proveedores_default">Cuenta contable por default retención a la fuente</label>
+                    @Html.Partial("_CmbCuenta_Param5", Model)
+                    @Html.ValidationMessageFor(q => q.pa_ctacble_x_RetFte_default, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="pa_ctacble_x_RetIva_default">Cuenta contable por default retención iva</label>
+                    @Html.Partial("_CmbCuenta_Param4", Model)
+                    @Html.ValidationMessageFor(q => q.pa_ctacble_x_RetIva_default, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="DiasTransaccionesAFuturo">Dias máximos para transacciones a futuro</label>
+                    @Html.TextBoxFor(q => q.DiasTransaccionesAFuturo, new { @class = "form-control", @id = "DiasTransaccionesAFuturo" })
+                    @Html.ValidationMessageFor(q => q.DiasTransaccionesAFuturo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+
+}

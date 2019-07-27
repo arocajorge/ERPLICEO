@@ -1,0 +1,559 @@
+﻿@using System.Web.UI.WebControls;
+
+@model Core.Erp.Info.ActivoFijo.Af_Activo_fijo_Info
+@{
+    ViewBag.Title = "Modificar activo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Modificar", "ActivoFijo", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+
+    @Html.HiddenFor(q => q.IdEmpresa);
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" });
+    @Html.HiddenFor(q => q.Estado_Proceso);
+    @Html.HiddenFor(q => q.IdActivoFijo, new { @id = "IdActivoFijo" });
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="CodActivoFijo">Código</label>
+                    @Html.TextBoxFor(q => q.CodActivoFijo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.CodActivoFijo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Af_Codigo_Barra">Código de barra</label>
+                    @Html.TextBoxFor(q => q.Af_Codigo_Barra, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Af_Codigo_Barra, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Estado_Proceso">Estado de proceso</label>
+                    @Html.DropDownListFor(q => q.Estado_Proceso, new SelectList(ViewBag.lst_estado, "IdCatalogo", "Descripcion"), new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.Estado_Proceso, "", new { @class = "text-danger", @id = "pe_cedulaRuc" })
+                </div>
+            </div>
+            <div class="col-md-offset-3 col-md-2">
+                <div class="form-group">
+                    <label for="Af_fecha_compra">Fecha de compra</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.Af_fecha_compra, settings =>
+                   {
+                       settings.Name = "Af_fecha_compra";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.ClientSideEvents.DateChanged = "function(s,e){calcular_fechas();}";
+
+                   }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Af_fecha_compra, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal</label>
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdDepartamento">Area</label>
+                    @Html.DropDownListFor(q => q.IdArea, new SelectList(ViewBag.lst_area, "IdArea", "Descripcion"), new { @class = "form-control", @id = "IdArea" })
+                    @Html.ValidationMessageFor(q => q.IdArea, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdDepartamento">Departamento</label>
+                    @Html.DropDownListFor(q => q.IdDepartamento, new SelectList(ViewBag.lst_departamento, "IdDepartamento", "Descripcion"), new { @class = "form-control", @id = "IdDepartamento" })
+                    @Html.ValidationMessageFor(q => q.IdDepartamento, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdActijoFijoTipo">Tipo activo*</label>
+                    @Html.DropDownListFor(q => q.IdActivoFijoTipo, new SelectList(ViewBag.lst_tipo, "IdActivoFijoTipo", "Af_Descripcion"), new { @class = "form-control", @id = "IdActivoFijoTipo" })
+                    @Html.ValidationMessageFor(q => q.IdActivoFijoTipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCategoriaAF">Categoría*</label>
+                    @Html.DropDownListFor(q => q.IdCategoriaAF, new SelectList(ViewBag.lst_categoria, "IdCategoriaAF", "Descripcion"), new { @class = "form-control", @id = "IdCategoriaAF" })
+                    @Html.ValidationMessageFor(q => q.IdCategoriaAF, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label for="Af_Nombre">Nombre*</label>
+                    @Html.TextBoxFor(q => q.Af_Nombre, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Af_Nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Af_Nombre">Cantidad*</label>
+                    @Html.TextBoxFor(q => q.Cantidad, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Cantidad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Af_observacion">Observación</label>
+                    @Html.TextBoxFor(q => q.Af_observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Af_observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="Tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_configuracion" aria-controls="configuracion" role="tab" data-toggle="tab">Configuración del activo</a>
+            </li>
+            <li>
+                <a href="#tab_caracteristicas" aria-controls="caracteristicas" role="tab" data-toggle="tab">Características del activo</a>
+            </li>
+            <li>
+                <a href="#tab_encargado" aria-controls="encargado" role="tab" data-toggle="tab">Encargado</a>
+            </li>
+            <li>
+                <a href="#tab_imagen" aria-controls="imagen" role="tab" data-toggle="tab">Imagen</a>
+            </li>
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_configuracion">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Af_Vida_Util">Vida útil</label>
+                                @Html.TextBoxFor(q => q.Af_Vida_Util, new { @class = "form-control", @id = "Af_Vida_Util" })
+                                @Html.ValidationMessageFor(q => q.CodActivoFijo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Af_Meses_depreciar">Meses a depreciar</label>
+                                @Html.TextBoxFor(q => q.Af_Meses_depreciar, new { @class = "form-control", @id = "Af_Meses_depreciar" })
+                                @Html.ValidationMessageFor(q => q.Af_Meses_depreciar, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Af_porcentaje_deprec">Porcentaje de depreciación</label>
+                                @Html.TextBoxFor(q => q.Af_porcentaje_deprec, new { @class = "form-control", @id = "Af_porcentaje_deprec" })
+                                @Html.ValidationMessageFor(q => q.Af_porcentaje_deprec, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Af_fecha_ini_depre">Fecha inicio depreciación</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    @Html.DevExpress().DateEditFor(q => q.Af_fecha_ini_depre, settings =>
+                               {
+                                   settings.Name = "Af_fecha_ini_depre";
+                                   settings.Properties.UseMaskBehavior = true;
+                                   settings.Properties.EditFormat = EditFormat.Date;
+                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                   settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                               }).GetHtml()
+                                    @Html.ValidationMessageFor(q => q.Af_fecha_ini_depre, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Af_fecha_fin_depre">Fecha fin depreciación</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    @Html.DevExpress().DateEditFor(q => q.Af_fecha_fin_depre, settings =>
+                               {
+                                   settings.Name = "Af_fecha_fin_depre";
+                                   settings.Properties.UseMaskBehavior = true;
+                                   settings.Properties.EditFormat = EditFormat.Date;
+                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                   settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                               }).GetHtml()
+                                    @Html.ValidationMessageFor(q => q.Af_fecha_fin_depre, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Af_costo_compra">Costo de compra</label>
+                                @Html.TextBoxFor(q => q.Af_costo_compra, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.Af_costo_compra, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Af_ValorSalvamento">Valor salvamento</label>
+                                @Html.TextBoxFor(q => q.Af_ValorSalvamento, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.Af_ValorSalvamento, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Af_Depreciacion_acum">Depreciación acumulada</label>
+                                @Html.TextBoxFor(q => q.Af_Depreciacion_acum, new { @class = "form-control", @id = "Af_Meses_depreciar" })
+                                @Html.ValidationMessageFor(q => q.Af_Depreciacion_acum, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_caracteristicas">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="IdCatalogo_Marca">Marca</label>
+                                @Html.DropDownListFor(q => q.IdCatalogo_Marca, new SelectList(ViewBag.lst_marca, "IdCatalogo", "Descripcion"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.IdCatalogo_Marca, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="IdCatalogo_Modelo">Modelo</label>
+                                @Html.DropDownListFor(q => q.IdCatalogo_Modelo, new SelectList(ViewBag.lst_modelo, "IdCatalogo", "Descripcion"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.IdCatalogo_Modelo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="IdCatalogo_Color">Color</label>
+                                @Html.DropDownListFor(q => q.IdCatalogo_Color, new SelectList(ViewBag.lst_color, "IdCatalogo", "Descripcion"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.IdCatalogo_Color, "", new { @class = "text-danger", @id = "pe_cedulaRuc" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="IdTipoCatalogo_Ubicacion">Ubicación</label>
+                                @Html.DropDownListFor(q => q.IdTipoCatalogo_Ubicacion, new SelectList(ViewBag.lst_ubicacion, "IdCatalogo", "Descripcion"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.IdTipoCatalogo_Ubicacion, "", new { @class = "text-danger", @id = "pe_cedulaRuc" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Af_NumPlaca">Número de placa</label>
+                                @Html.TextBoxFor(q => q.Af_NumPlaca, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.Af_NumPlaca, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_encargado">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="IdEmpleadoCustodio">Empleado custodio*</label>
+                                @Html.Partial("_CmbEmpleado_Cus_AF", Model.IdEmpleadoCustodio)
+                                @Html.ValidationMessageFor(q => q.IdEmpleadoCustodio, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="IdEmpleadoEncargado">Empleado encargado*</label>
+                                @Html.Partial("_CmbEmpleado_Enc_AF", Model.IdEmpleadoEncargado)
+                                @Html.ValidationMessageFor(q => q.IdEmpleadoEncargado, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_imagen">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2">
+                            <script type="text/javascript">
+                                function onUploadControlFileUploadComplete(s, e) {
+                                    if (e.isValid)
+                                        // $("#uploadedImage").attr("src", e.callbackData);
+                                        // actualizar_div();
+                                        setElementVisible("uploadedImage", e.isValid);
+                                }
+                                function onImageLoad() {
+                                    var externalDropZone = $("#externalDropZone");
+                                    var uploadedImage = $("#uploadedImage");
+                                    uploadedImage.css({
+                                        left: (externalDropZone.width() - uploadedImage.width()) / 4,
+                                        top: (externalDropZone.height() - uploadedImage.height()) / 4
+                                    });
+                                    setElementVisible("dragZone", false);
+                                }
+                                function setElementVisible(elementId, visible) {
+                                    var el = $("#" + elementId);
+                                    if (visible)
+                                        el.show();
+                                    else
+                                        el.hide();
+                                }
+                            </script>
+
+                            <div class="uploadContainer">
+                                @Html.DevExpress().UploadControl(settings => {
+                               settings.ShowProgressPanel = true;
+                               settings.CallbackRouteValues = new { Controller = "ActivoFijo", Action = "DragAndDropImageUpload" };
+                               settings.Name = "ucDragAndDrop";
+                               settings.UploadMode = UploadControlUploadMode.Auto;
+                               settings.AutoStartUpload = true;
+                               settings.Width = Unit.Percentage(70);
+                               settings.DialogTriggerID = "externalDropZone";
+                               settings.AdvancedModeSettings.EnableDragAndDrop = true;
+                               settings.AdvancedModeSettings.EnableFileList = false;
+                               settings.AdvancedModeSettings.EnableMultiSelect = false;
+                               settings.AdvancedModeSettings.ExternalDropZoneID = "externalDropZone";
+                               settings.AdvancedModeSettings.DropZoneText = "";
+                               settings.ValidationSettings.MaxFileSize = 4194304;
+                               settings.ValidationSettings.AllowedFileExtensions = new string[] { ".jpg", ".jpeg", ".gif", ".png" };
+                               settings.ValidationSettings.ErrorStyle.CssClass = "validationMessage";
+                               settings.ClientSideEvents.FilesUploadStart = "function(s,e){nombre_imagen();}";
+
+                               settings.Styles.DropZone.CssClass = "uploadControlDropZone";
+                               settings.ClientSideEvents.DropZoneEnter = "function(s, e) { if(e.dropZone.id == 'externalDropZone') setElementVisible('dropZone', true); }";
+                               settings.ClientSideEvents.DropZoneLeave = "function(s, e) { if(e.dropZone.id == 'externalDropZone') setElementVisible('dropZone', false); }";
+                               settings.ClientSideEvents.FileUploadComplete = "onUploadControlFileUploadComplete";
+
+
+                           }).GetHtml()
+                            </div>
+                            @Html.DevExpress().BinaryImage(
+                               settings =>
+                               {
+                                   settings.Name = "pr_imagen";
+                                   settings.CallbackRouteValues = new { Controller = "Empresa", Action = "get_imagen" };
+                                   settings.Properties.ImageSizeMode = ImageSizeMode.FitProportional;
+                                   settings.Properties.EnableServerResize = true;
+                               }).Bind((Model.imagen_af).ToArray()).GetHtml()
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "ActivoFijo", new { Area = "ActivoFijo" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap_imagenes_af.css")" />
+
+    }
+}
+<script>
+    $(function () {
+        cargar_categoria();
+        get_info_tipo();
+        calcular_fechas();
+        GetListAreaPorDepartamento();
+    });
+
+    $("#IdActivoFijoTipo").change(function () {
+        cargar_categoria();
+        get_info_tipo();
+        calcular_fechas();
+
+    });
+    $("#IdArea").change(function () {
+        GetListAreaPorDepartamento();
+    });
+
+    function GetListAreaPorDepartamento() {
+        $("#IdDepartamento").empty();
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdArea: $("#IdArea").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetListAreaPorDepartamento", "ActivoFijo",new { Area = "ActivoFijo" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdDepartamento").append("<option value=" + row.IdDepartamento + ">" + row.Descripcion + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function get_info_tipo() {
+        var activo = $("#IdActivoFijoTipo").val();
+        var datos = {
+            IdActivoFijoTipo: activo
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_info_tipo", "ActivoFijo", new { Area = "ActivoFijo" })',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+                $("#Af_Vida_Util").val(data.Af_anio_depreciacion);
+                var anio = Number(data.Af_anio_depreciacion);
+                var meses = anio * 12;
+                $("#Af_Meses_depreciar").val(meses);
+                $("#Af_porcentaje_deprec").val(data.Af_Porcentaje_depre);
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function cargar_categoria() {
+        $("#IdCategoriaAF").empty();
+
+        var activo = $("#IdActivoFijoTipo").val();
+
+        var datos = {
+            IdActivoFijoTipo: activo
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("cargar_categoria", "ActivoFijo", new { Area = "ActivoFijo" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdCategoriaAF").append("<option value=" + row.IdCategoriaAF + ">" + row.Descripcion + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+    function calcular_fechas() {
+        var fecha_inicio = Af_fecha_compra.GetValue();
+        Af_fecha_ini_depre.SetValue(fecha_inicio);
+        var Af_Meses_depreciar = $("#Af_Meses_depreciar").val();
+        var date = new Date(moment(Af_fecha_ini_depre.GetValue(), "DD/MM/YYYY").add(Af_Meses_depreciar, 'month'));
+
+        Af_fecha_fin_depre.SetValue(date);
+
+    };
+
+    function nombre_imagen() {
+        var datos = {
+            IdActivoFijo: $("#IdActivoFijo").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("nombre_imagen", "ActivoFijo", new { Area = "ActivoFijo" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            },
+            error: function (error) {
+            }
+        });
+    }
+    function actualizar_div() {
+        var datos = {
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("actualizar_div", "ActivoFijo", new { Area = "ActivoFijo" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+
+                //$("#uploadedImage").load();
+              //  $("#uploadedImage").attr("src",//Url.Content(Core.Erp.Web.Helps.SessionFixed.NombreImagen));
+
+            },
+            error: function (error) {
+                    }
+                });
+    }
+
+
+</script>

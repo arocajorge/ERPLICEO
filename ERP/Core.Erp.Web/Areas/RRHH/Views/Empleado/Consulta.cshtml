@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Core.Erp.Info.RRHH.ro_empleado_Info>
+@{
+    ViewBag.Title = "Empleado";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+<div class="container">
+    <h4 style=" text-align:center;border-bottom:1px solid #808080">Empleado</h4>
+    @foreach (var item in Model)
+    {
+        <p><label>Name : </label> @item.em_fechaIngaRol</p>
+        <p><label>Email : </label> @item.CodigoSectorial</p>
+        <p><label>Phone : </label> @item.info_persona.pe_cedulaRuc</p>
+        <p><label>Experience : </label> @item.info_persona.pe_celular</p>
+    }
+</div>

@@ -1,0 +1,503 @@
+﻿@model Core.Erp.Info.CuentasPorPagar.cp_proveedor_Info
+@{
+    ViewBag.Title = "Nuevo proveedor";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Nuevo", "Proveedor", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdPersona, new { @id = "IdPersona" })
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="pr_codigo">Código</label>
+                    @Html.TextBoxFor(q => q.pr_codigo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.pr_codigo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="pr_contribuyenteEspecial_bool">@Html.CheckBoxFor(q => q.pr_contribuyenteEspecial_bool) Es contribuyente especial</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="es_empresa_relacionada">@Html.CheckBoxFor(q => q.es_empresa_relacionada) Es empresa relacionada</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="info_persona.pe_Naturaleza">Naturaleza*</label>
+                    @Html.DropDownListFor(q => q.info_persona.pe_Naturaleza, new SelectList(ViewBag.lst_tipo_naturaleza, "CodCatalogo", "ca_descripcion"), new { @class = "form-control", @id = "pe_Naturaleza" })
+                    @Html.ValidationMessageFor(q => q.info_persona.pe_Naturaleza, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="info_persona.IdTipoDocumento">Tipo documento*</label>
+                    @Html.DropDownListFor(q => q.info_persona.IdTipoDocumento, new SelectList(ViewBag.lst_tipo_doc, "CodCatalogo", "ca_descripcion"), new { @class = "form-control", @id = "IdTipoDocumento" })
+                    @Html.ValidationMessageFor(q => q.info_persona.IdTipoDocumento, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="info_persona.pe_cedulaRuc">Número documento*</label>
+                    @Html.TextBoxFor(q => q.info_persona.pe_cedulaRuc, new { @class = "form-control", @id = "pe_cedulaRuc" })
+                    @Html.ValidationMessageFor(q => q.info_persona.pe_cedulaRuc, "", new { @class = "text-danger" })
+                    <label id="error_documento" style="color:red"> <i class="icon fa fa-warning"></i> Número de identificación inválida</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="info_persona.pe_apellido">Apellidos</label>
+                    @Html.TextBoxFor(q => q.info_persona.pe_apellido, new { @class = "form-control", @id = "pe_apellido" })
+                    @Html.ValidationMessageFor(q => q.info_persona.pe_apellido, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="info_persona.pe_nombre">Nombres</label>
+                    @Html.TextBoxFor(q => q.info_persona.pe_nombre, new { @class = "form-control", @id = "pe_nombre" })
+                    @Html.ValidationMessageFor(q => q.info_persona.pe_nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="info_persona.pe_razonSocial">Razón social</label>
+                    @Html.TextBoxFor(q => q.info_persona.pe_razonSocial, new { @class = "form-control", @id = "pe_razonSocial" })
+                    @Html.ValidationMessageFor(q => q.info_persona.pe_razonSocial, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="info_persona.pe_nombreCompleto">Nombre completo</label>
+                    @Html.TextBoxFor(q => q.info_persona.pe_nombreCompleto, new { @class = "form-control", @id = "pe_nombreCompleto" })
+                    @Html.ValidationMessageFor(q => q.info_persona.pe_nombreCompleto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="Tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_informacion_general" aria-controls="informacion_general" role="tab" data-toggle="tab">Información general</a>
+            </li>
+            <li>
+                <a href="#tab_contactos_telefonos" aria-controls="contactos_telefonos" role="tab" data-toggle="tab">Contactos/telefono</a>
+            </li>
+            <li>
+                <a href="#tab_contabilidad" aria-controls="contabilidad" role="tab" data-toggle="tab">Contabilidad</a>
+            </li>
+            <li>
+                <a href="#tab_cuentas" aria-controls="cuentas" role="tab" data-toggle="tab">Cuentas</a>
+            </li>
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_informacion_general">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="IdCiudad">Ciudad*</label>
+                                @Html.DropDownListFor(q => q.IdCiudad, new SelectList(ViewBag.lst_ciudad, "IdCiudad", "Descripcion_Ciudad"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.IdCiudad, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="IdClaseProveedor">Clase proveedor*</label>
+                                @Html.DropDownListFor(q => q.IdClaseProveedor, new SelectList(ViewBag.lst_clase, "IdClaseProveedor", "descripcion_clas_prove"), new { @class = "form-control", @id = "IdClaseProveedor" })
+                                @Html.ValidationMessageFor(q => q.IdClaseProveedor, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="pr_plazo">Plazo</label>
+                                @Html.TextBoxFor(q => q.pr_plazo, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.pr_plazo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_contactos_telefonos">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="pr_telefonos">teléfonos</label>
+                                @Html.TextBoxFor(q => q.pr_telefonos, new { @class = "form-control", @id = "pr_telefonos" })
+                                @Html.ValidationMessageFor(q => q.pr_telefonos, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="pr_correo">Correo</label>
+                                @Html.TextBoxFor(q => q.pr_correo, new { @class = "form-control", @id = "pr_correo" })
+                                @Html.ValidationMessageFor(q => q.pr_correo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="pr_celular">Célular</label>
+                                @Html.TextBoxFor(q => q.pr_celular, new { @class = "form-control", @id = "pr_celular" })
+                                @Html.ValidationMessageFor(q => q.pr_celular, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="pr_direccion">Dirección</label>
+                                @Html.TextBoxFor(q => q.pr_direccion, new { @class = "form-control", @id = "pr_direccion" })
+                                @Html.ValidationMessageFor(q => q.pr_direccion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_contabilidad">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdCtaCble_CXP">Cta. Cble. CXP*</label>
+                                @Html.Partial("_CmbCtaCbleCXP_Proveedor", Model.IdCtaCble_CXP)
+                                @Html.ValidationMessageFor(q => q.IdCtaCble_CXP, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdCtaCble_Gasto">Cta. Cble. Gasto</label>
+                                @Html.Partial("_CmbCtaCbleGasto_Proveedor", Model.IdCtaCble_Gasto)
+                                @Html.ValidationMessageFor(q => q.IdCtaCble_Gasto, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdCtaCble_Anticipo">Cta. Cble. Anticipo</label>
+                                @Html.Partial("_CmbCtaCbleAnticipo_Proveedor", Model.IdCtaCble_Anticipo)
+                                @Html.ValidationMessageFor(q => q.IdCtaCble_Anticipo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_cuentas">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="IdBanco_acreditacion">Banco</label>
+                                @Html.Partial("_CmbBanco_Proveedor", Model.IdBanco_acreditacion)
+                                @Html.ValidationMessageFor(q => q.IdBanco_acreditacion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="IdEstadoCivil">Tipo de cuenta</label>
+                                @Html.DropDownListFor(q => q.IdTipoCta_acreditacion_cat, new SelectList(ViewBag.lst_tipo_cta, "CodCatalogo", "ca_descripcion"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.IdTipoCta_acreditacion_cat, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="num_cta_acreditacion">Número de cuenta</label>
+                                @Html.TextBoxFor(q => q.num_cta_acreditacion, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.num_cta_acreditacion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Proveedor",new { Area = "CuentasPorPagar" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+
+<script>
+    $(function () {
+        $("#error_documento").hide();
+        get_info_clase_proveedor();
+    });
+
+    $("#pe_cedulaRuc").blur(function () {
+        Validar_cedula_ruc();
+    });
+
+    $("#pe_apellido").keyup(function () {
+        actualizar_nombre_completo();
+    });
+    $("#pe_nombre").keyup(function () {
+        actualizar_nombre_completo();
+    });
+    $("#pe_razonSocial").keyup(function () {
+        actualizar_nombre_completo();
+    });
+    $("#pe_cedulaRuc").change(function () {
+        get_info_x_num_cedula();
+    });
+
+    $("#IdClaseProveedor").change(function () {
+        get_info_clase_proveedor();
+    });
+
+    $("#pe_cedulaRuc").keyup(function () {
+        var tipo_doc = $("#IdTipoDocumento").val();
+        var cedula = $("#pe_cedulaRuc").val();
+
+        if (tipo_doc == "RUC") {
+            if (cedula.length > 13) {
+                var len = $("#pe_cedulaRuc").val();
+                len = len.substring(0, 13);
+                $("#pe_cedulaRuc").val(len);
+            }
+
+        }
+        else
+            if (tipo_doc == "CED") {
+                if (cedula.length > 10) {
+                    var len = $("#pe_cedulaRuc").val();
+                    len = len.substring(0,10);
+                    $("#pe_cedulaRuc").val(len);
+                }
+            }
+    });
+
+        function actualizar_nombre_completo() {
+            var apellido = $("#pe_apellido").val();
+            var nombre = $("#pe_nombre").val();
+            var razon_social = $("#pe_razonSocial").val();
+
+            if (razon_social == "") {
+                var nombre_completo = apellido + ' ' + nombre;
+                $("#pe_nombreCompleto").val(nombre_completo)
+            } else {
+                $("#pe_nombreCompleto").val(razon_social)
+            }
+        }
+
+    function get_info_x_num_cedula() {
+        var cedula = $("#pe_cedulaRuc").val();
+        var tipo_doc = $("#IdTipoDocumento").val();
+
+        if (cedula == null) {
+            vaciar_campos_persona();
+            return;
+        }
+
+        if (tipo_doc == "RUC") {
+            if (cedula.length != 13) {
+                alert("El documento de tipo RUC, debe tener una longitud de 13 caracteres");
+
+                $("#pe_cedulaRuc").val("");
+                vaciar_campos_persona();
+                return;
+            }
+        } else
+            if (tipo_doc == "CED") {
+                if (cedula.length != 10) {
+                    alert("El documento de tipo cédula, debe tener una longitud de 10 caracteres");
+                    $("#pe_cedulaRuc").val("");
+                    vaciar_campos_persona();
+                    return;
+                }
+            }
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            pe_cedulaRuc: cedula,
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_info_x_num_cedula", "Proveedor",new { Area = "CuentasPorPagar"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data == "") {
+                    return;
+                }
+
+                if (data.IdProveedor != 0) {
+                    alert("El proveedor ya existe con el ID: " + data.IdProveedor);
+                    window.location.href = '@Url.Action("Index", "Proveedor", new { Area = "CuentasPorPagar" })'
+                }
+                else
+                {
+                    if (data.IdPersona != 0 && data.IdProveedor == 0) {
+                        $("#pe_nombre").val(data.info_persona.pe_nombre);
+                        $("#pe_apellido").val(data.info_persona.pe_apellido);
+                        $("#pe_nombreCompleto").val(data.info_persona.pe_nombreCompleto);
+                        $("#pe_razonSocial").val(data.info_persona.pe_razonSocial);
+
+                        $("#pr_correo").val(data.info_persona.pe_correo);
+                        $("#pr_celular").val(data.info_persona.pe_celular);
+                        $("#pr_telefonos").val(data.info_persona.pe_telfono_Contacto);
+                        $("#pr_direccion").val(data.info_persona.pe_direccion);
+
+                        $("#IdPersona").val(data.IdPersona);
+                    }
+                    else {
+                        vaciar_campos_persona();
+                    }
+                }
+            },
+            error: function (error) {
+                alert(error);
+            }
+        });
+    }
+
+    function vaciar_campos_persona() {
+        $("#pe_nombre").val("");
+        $("#pe_apellido").val("");
+        $("#pe_nombreCompleto").val("");
+        $("#pe_razonSocial").val("");
+        $("#IdPersona").val("0");
+        $("#pr_correo").val("");
+        $("#pr_celular").val("");
+        $("#pr_telefonos").val("");
+        $("#pr_direccion").val("");
+    }
+
+    function get_info_clase_proveedor() {
+        var clase = $("#IdClaseProveedor").val();
+
+        if (clase != null) {
+            var datos = {
+                IdClaseProveedor: clase,
+                IdEmpresa: $("#IdEmpresa").val()
+
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("get_info_clase_proveedor", "Proveedor",new { Area = "CuentasPorPagar"})',
+                async: false,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data.length == 0) {
+                        console.log("NO DATA!")
+                    } else {
+                        $("#IdCtaCble_CXP").val(data.IdCtaCble_CXP);
+                        $("#IdCtaCble_Gasto").val(data.IdCtaCble_Gasto);
+                    }
+                },
+                error: function (error) {
+                    alert(error);
+                }
+            });
+        } else {
+            $("#IdCtaCble_CXP").val(null);
+            $("#IdCtaCble_Gasto").val(null);
+        }
+    }
+
+    function Validar_cedula_ruc() {
+        var datos = {
+            naturaleza: $("#pe_Naturaleza").val(),
+            tipo_documento: $("#IdTipoDocumento").val(),
+            cedula_ruc: $("#pe_cedulaRuc").val(),
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("Validar_cedula_ruc", "Persona", new { Area = "General" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                if (data.isValid == true) {
+                    $("#error_documento").hide();
+                    $("#pe_Naturaleza").val(data.return_naturaleza);
+                }
+                else {
+                    $("#error_documento").show();
+                }
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+</script>

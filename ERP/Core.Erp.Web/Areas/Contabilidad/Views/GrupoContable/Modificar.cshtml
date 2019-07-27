@@ -1,0 +1,68 @@
+﻿@model Core.Erp.Info.Contabilidad.ct_grupocble_Info
+@{
+    ViewBag.Title = "Modificar Grupo ";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Modificar", "GrupoContable", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdGrupoCble)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdGrupoCble">Código*</label>
+                    @Html.TextBoxFor(q => q.IdGrupoCble, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdGrupoCble, "", new { @class = "form", @role = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="gc_estado_financiero">Estado financiero*</label>
+                    @Html.DropDownListFor(q => q.gc_estado_financiero, new SelectList(ViewBag.lst_balances, "Key", "Value"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.gc_estado_financiero, "", new { @class = "form", @role = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="gc_GrupoCble">Descripción*</label>
+                    @Html.TextBoxFor(q => q.gc_GrupoCble, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.gc_GrupoCble, "", new { @class = "form", @role = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="gc_Orden">Orden*</label>
+                    @Html.TextBoxFor(q => q.gc_Orden, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.gc_Orden, "", new { @class = "form", @role = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","GrupoContable",new { Area = "Contabilidad" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+}

@@ -1,0 +1,163 @@
+﻿@model Core.Erp.Info.Banco.ba_Talonario_cheques_x_banco_Info
+
+@{
+    ViewBag.Title = "Nuevo talonario";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Nuevo", "TalonarioChequeBanco", FormMethod.Post, new { @role = "form", @class = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdBanco">Banco*</label>
+                    @Html.DropDownListFor(q => q.IdBanco, new SelectList(ViewBag.lst_banco, "IdBanco", "ba_descripcion"), new { @class = "form-control", @id = "IdBanco" })
+                    @Html.ValidationMessageFor(q => q.IdBanco, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Estado_bool">Número de cheque*</label>
+                    @Html.TextBoxFor(q => q.Num_cheque, new { @class = "form-control", @id = "Num_cheque" })
+                    @Html.ValidationMessageFor(q => q.Num_cheque, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="Estado_bool">@Html.CheckBoxFor(q => q.Estado_bool) Estado</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="Usado">@Html.CheckBoxFor(q => q.Usado) Usado</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Cantidad">Cantidad</label>
+                    @Html.TextBoxFor(q => q.Cantidad, new { @class = "form-control", @id = "Cantidad" })
+                    @Html.ValidationMessageFor(q => q.Cantidad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Documentofinal">Documento final</label>
+                    @Html.TextBoxFor(q => q.Documentofinal, new { @class = "form-control", @id = "Documentofinal" })
+                    @Html.ValidationMessageFor(q => q.Documentofinal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","TalonarioChequeBanco", new { Area = "Banco"  },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script>
+    $(function () {
+
+        get_id();
+        set_documentofinal();
+
+        $("#Num_cheque").change(function () {
+            set_documentofinal();
+        });
+            $("#IdBanco").change(function () {
+                get_id();
+                set_documentofinal();
+            });
+        $("#Cantidad").change(function () {
+                set_documentofinal();
+            });
+        $("#Documentofinal").change(function () {
+                set_documentofinal();
+            });
+
+
+        });
+
+    function get_id(){
+
+        var id = $("#IdBanco").val();
+
+        var datos = {
+            IdBanco: id,
+            IdEmpresa : $("#IdEmpresa").val()
+        }
+    $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_id", "TalonarioChequeBanco", new { Area = "Banco" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+                $("#Num_cheque").val(data);
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+        function set_documentofinal() {
+            var cantidad = Number($("#Cantidad").val());
+            var doc_inicial = Number($("#Num_cheque").val());
+
+            var docfinal = "" + (doc_inicial + cantidad - 1)
+            var docf = "" + (doc_inicial)
+            var id = $("#IdBanco").val();
+            var datos = {
+                IdBanco: id,
+                IdEmpresa: $("#IdEmpresa").val()
+            }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_num_x_bco", "TalonarioChequeBanco", new { Area = "Banco" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var pad = data;
+                var doc = pad.substring(0, pad.length - docfinal.length) + docfinal;
+                var df = pad.substring(0, pad.length - docf.length) + docf;
+
+                $("#Documentofinal").val(doc);
+                $("#Num_cheque").val(df);
+            },
+            error: function (error) {
+            }
+        });
+
+        }
+
+</script>

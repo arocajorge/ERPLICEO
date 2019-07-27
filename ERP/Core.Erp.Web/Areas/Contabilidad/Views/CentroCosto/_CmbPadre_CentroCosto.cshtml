@@ -1,0 +1,28 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdCentroCostoPadre";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "CentroCosto", Action = "CmbPadre_CentroCosto", Area = "Contabilidad" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "cc_Descripcion";
+        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.ValueField = "IdCentroCosto";
+        settings.Properties.ValueType = typeof(string);
+        settings.Properties.Columns.Add("IdCentroCosto", "ID", 10);
+        settings.Properties.Columns.Add("cc_Descripcion", "Centro Costo", 40);
+        settings.Properties.Columns.Add("IdCentroCostoPadre", "ID Padre", 10);
+        settings.Properties.Columns.Add("cc_Descripcion_Padre", "Centro Costo padre", 40);
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e,){get_info_nuevo()}";
+
+    })
+    .BindList(new Core.Erp.Web.Areas.Contabilidad.Controllers.CentroCostoController().get_list_bajo_demanda, new Core.Erp.Web.Areas.Contabilidad.Controllers.CentroCostoController().get_info_bajo_demanda)
+    .Bind(Model.IdCentroCostoPadre);
+
+
+}
+@comboBox.GetHtml()

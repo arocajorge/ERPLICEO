@@ -1,0 +1,432 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model_produccion.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="pro_Fabricacion">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdFabricacion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdFabricacion" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="egr_IdSucursal" Type="int" Nullable="false" />
+          <Property Name="egr_IdBodega" Type="int" Nullable="false" />
+          <Property Name="egr_IdMovi_inven_tipo" Type="int" />
+          <Property Name="egr_IdNumMovi" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ing_IdSucursal" Type="int" Nullable="false" />
+          <Property Name="ing_IdBodega" Type="int" Nullable="false" />
+          <Property Name="ing_IdMovi_inven_tipo" Type="int" />
+          <Property Name="ing_IdNumMovi" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="Observacion" Type="varchar(max)" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="IdUsuarioModificacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="IdUsuarioAnulacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaAnulacion" Type="datetime" />
+          <Property Name="MotivoAnulacion" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="pro_FabricacionDet">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdFabricacion" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdFabricacion" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="Signo" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdUnidadMedida" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Cantidad" Type="float" Nullable="false" />
+          <Property Name="Costo" Type="float" Nullable="false" />
+          <Property Name="RealizaMovimiento" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwpro_Fabricacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwpro_Fabricacion">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdFabricacion" />
+            <PropertyRef Name="egr_IdSucursal" />
+            <PropertyRef Name="egr_IdBodega" />
+            <PropertyRef Name="ing_IdSucursal" />
+            <PropertyRef Name="ing_IdBodega" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="Estado" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdFabricacion" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="egr_IdSucursal" Type="int" Nullable="false" />
+          <Property Name="egr_IdBodega" Type="int" Nullable="false" />
+          <Property Name="egr_IdMovi_inven_tipo" Type="int" />
+          <Property Name="egr_IdNumMovi" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ing_IdSucursal" Type="int" Nullable="false" />
+          <Property Name="ing_IdBodega" Type="int" Nullable="false" />
+          <Property Name="ing_IdMovi_inven_tipo" Type="int" />
+          <Property Name="ing_IdNumMovi" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="Observacion" Type="varchar(max)" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwpro_FabricacionDet' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwpro_FabricacionDet">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdFabricacion" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="Signo" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="Cantidad" />
+            <PropertyRef Name="Costo" />
+            <PropertyRef Name="RealizaMovimiento" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdFabricacion" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="Signo" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdUnidadMedida" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Cantidad" Type="float" Nullable="false" />
+          <Property Name="Costo" Type="float" Nullable="false" />
+          <Property Name="RealizaMovimiento" Type="bit" Nullable="false" />
+          <Property Name="pr_descripcion" Type="nvarchar" MaxLength="500" />
+          <Property Name="tp_ManejaInven" Type="char" MaxLength="1" />
+          <Property Name="se_distribuye" Type="bit" />
+        </EntityType>
+        <Association Name="FK_pro_FabricacionDet_pro_Fabricacion">
+          <End Role="pro_Fabricacion" Type="Self.pro_Fabricacion" Multiplicity="1" />
+          <End Role="pro_FabricacionDet" Type="Self.pro_FabricacionDet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pro_Fabricacion">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdFabricacion" />
+            </Principal>
+            <Dependent Role="pro_FabricacionDet">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdFabricacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sppro_GetProductoFacturadosPorFecha" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdEmpresa" Type="int" Mode="In" />
+          <Parameter Name="IdSucursal" Type="int" Mode="In" />
+          <Parameter Name="IdBodega" Type="int" Mode="In" />
+          <Parameter Name="FechaIni" Type="date" Mode="In" />
+          <Parameter Name="FechaFin" Type="date" Mode="In" />
+        </Function>
+        <EntityContainer Name="Model_produccionStoreContainer">
+          <EntitySet Name="pro_Fabricacion" EntityType="Self.pro_Fabricacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pro_FabricacionDet" EntityType="Self.pro_FabricacionDet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwpro_Fabricacion" EntityType="Self.vwpro_Fabricacion" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwpro_Fabricacion].[IdEmpresa] AS [IdEmpresa], 
+    [vwpro_Fabricacion].[IdFabricacion] AS [IdFabricacion], 
+    [vwpro_Fabricacion].[egr_IdSucursal] AS [egr_IdSucursal], 
+    [vwpro_Fabricacion].[egr_IdBodega] AS [egr_IdBodega], 
+    [vwpro_Fabricacion].[egr_IdMovi_inven_tipo] AS [egr_IdMovi_inven_tipo], 
+    [vwpro_Fabricacion].[egr_IdNumMovi] AS [egr_IdNumMovi], 
+    [vwpro_Fabricacion].[ing_IdSucursal] AS [ing_IdSucursal], 
+    [vwpro_Fabricacion].[ing_IdBodega] AS [ing_IdBodega], 
+    [vwpro_Fabricacion].[ing_IdMovi_inven_tipo] AS [ing_IdMovi_inven_tipo], 
+    [vwpro_Fabricacion].[ing_IdNumMovi] AS [ing_IdNumMovi], 
+    [vwpro_Fabricacion].[Fecha] AS [Fecha], 
+    [vwpro_Fabricacion].[Observacion] AS [Observacion], 
+    [vwpro_Fabricacion].[Estado] AS [Estado], 
+    [vwpro_Fabricacion].[Su_Descripcion] AS [Su_Descripcion]
+    FROM [dbo].[vwpro_Fabricacion] AS [vwpro_Fabricacion]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwpro_FabricacionDet" EntityType="Self.vwpro_FabricacionDet" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwpro_FabricacionDet].[IdEmpresa] AS [IdEmpresa], 
+    [vwpro_FabricacionDet].[IdFabricacion] AS [IdFabricacion], 
+    [vwpro_FabricacionDet].[Secuencia] AS [Secuencia], 
+    [vwpro_FabricacionDet].[Signo] AS [Signo], 
+    [vwpro_FabricacionDet].[IdProducto] AS [IdProducto], 
+    [vwpro_FabricacionDet].[IdUnidadMedida] AS [IdUnidadMedida], 
+    [vwpro_FabricacionDet].[Cantidad] AS [Cantidad], 
+    [vwpro_FabricacionDet].[Costo] AS [Costo], 
+    [vwpro_FabricacionDet].[RealizaMovimiento] AS [RealizaMovimiento], 
+    [vwpro_FabricacionDet].[pr_descripcion] AS [pr_descripcion], 
+    [vwpro_FabricacionDet].[tp_ManejaInven] AS [tp_ManejaInven], 
+    [vwpro_FabricacionDet].[se_distribuye] AS [se_distribuye]
+    FROM [dbo].[vwpro_FabricacionDet] AS [vwpro_FabricacionDet]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_pro_FabricacionDet_pro_Fabricacion" Association="Self.FK_pro_FabricacionDet_pro_Fabricacion">
+            <End Role="pro_Fabricacion" EntitySet="pro_Fabricacion" />
+            <End Role="pro_FabricacionDet" EntitySet="pro_FabricacionDet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model_produccion" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="pro_FabricacionDet">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdFabricacion" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdFabricacion" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="Signo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdProducto" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdUnidadMedida" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cantidad" Type="Double" Nullable="false" />
+          <Property Name="Costo" Type="Double" Nullable="false" />
+          <Property Name="RealizaMovimiento" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="pro_Fabricacion" Relationship="Model_produccion.FK_pro_FabricacionDet_pro_Fabricacion" FromRole="pro_FabricacionDet" ToRole="pro_Fabricacion" />
+        </EntityType>
+        <EntityContainer Name="Entities_produccion" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="pro_FabricacionDet" EntityType="Self.pro_FabricacionDet" />
+          <EntitySet Name="pro_Fabricacion" EntityType="Model_produccion.pro_Fabricacion" />
+          <AssociationSet Name="FK_pro_FabricacionDet_pro_Fabricacion" Association="Model_produccion.FK_pro_FabricacionDet_pro_Fabricacion">
+            <End Role="pro_Fabricacion" EntitySet="pro_Fabricacion" />
+            <End Role="pro_FabricacionDet" EntitySet="pro_FabricacionDet" />
+          </AssociationSet>
+          <FunctionImport Name="sppro_GetProductoFacturadosPorFecha" ReturnType="Collection(Model_produccion.sppro_GetProductoFacturadosPorFecha_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursal" Mode="In" Type="Int32" />
+            <Parameter Name="IdBodega" Mode="In" Type="Int32" />
+            <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="vwpro_Fabricacion" EntityType="Model_produccion.vwpro_Fabricacion" />
+          <EntitySet Name="vwpro_FabricacionDet" EntityType="Model_produccion.vwpro_FabricacionDet" />
+        </EntityContainer>
+        <EntityType Name="pro_Fabricacion">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdFabricacion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdFabricacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="egr_IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="egr_IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="egr_IdMovi_inven_tipo" Type="Int32" />
+          <Property Name="egr_IdNumMovi" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ing_IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="ing_IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="ing_IdMovi_inven_tipo" Type="Int32" />
+          <Property Name="ing_IdNumMovi" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioModificacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioAnulacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="pro_FabricacionDet" Relationship="Model_produccion.FK_pro_FabricacionDet_pro_Fabricacion" FromRole="pro_Fabricacion" ToRole="pro_FabricacionDet" />
+        </EntityType>
+        <Association Name="FK_pro_FabricacionDet_pro_Fabricacion">
+          <End Type="Model_produccion.pro_Fabricacion" Role="pro_Fabricacion" Multiplicity="1" />
+          <End Type="Model_produccion.pro_FabricacionDet" Role="pro_FabricacionDet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pro_Fabricacion">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdFabricacion" />
+            </Principal>
+            <Dependent Role="pro_FabricacionDet">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdFabricacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sppro_GetProductoFacturadosPorFecha_Result">
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="Decimal" Name="IdProducto" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="pr_descripcion" Nullable="true" MaxLength="500" />
+          <Property Type="Double" Name="vt_cantidad" Nullable="false" />
+          <Property Type="DateTime" Name="vt_fecha" Nullable="true" Precision="23" />
+          <Property Type="String" Name="IdUnidadMedida" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="NombreUnidad" Nullable="false" MaxLength="500" />
+          <Property Type="Double" Name="stock" Nullable="false" />
+          <Property Type="Double" Name="CantidadFabricada" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="vwpro_Fabricacion">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdFabricacion" />
+            <PropertyRef Name="egr_IdSucursal" />
+            <PropertyRef Name="egr_IdBodega" />
+            <PropertyRef Name="ing_IdSucursal" />
+            <PropertyRef Name="ing_IdBodega" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="Estado" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdFabricacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="egr_IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="egr_IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="egr_IdMovi_inven_tipo" Type="Int32" />
+          <Property Name="egr_IdNumMovi" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ing_IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="ing_IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="ing_IdMovi_inven_tipo" Type="Int32" />
+          <Property Name="ing_IdNumMovi" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwpro_FabricacionDet">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdFabricacion" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="Signo" />
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="IdUnidadMedida" />
+            <PropertyRef Name="Cantidad" />
+            <PropertyRef Name="Costo" />
+            <PropertyRef Name="RealizaMovimiento" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdFabricacion" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="Signo" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Cantidad" Type="Double" Nullable="false" />
+          <Property Name="Costo" Type="Double" Nullable="false" />
+          <Property Name="RealizaMovimiento" Type="Boolean" Nullable="false" />
+          <Property Name="pr_descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="tp_ManejaInven" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="se_distribuye" Type="Boolean" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Model_produccionStoreContainer" CdmEntityContainer="Entities_produccion">
+          <EntitySetMapping Name="pro_FabricacionDet">
+            <EntityTypeMapping TypeName="Model_produccion.pro_FabricacionDet">
+              <MappingFragment StoreEntitySet="pro_FabricacionDet">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdFabricacion" ColumnName="IdFabricacion" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="Signo" ColumnName="Signo" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Costo" ColumnName="Costo" />
+                <ScalarProperty Name="RealizaMovimiento" ColumnName="RealizaMovimiento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pro_Fabricacion">
+            <EntityTypeMapping TypeName="Model_produccion.pro_Fabricacion">
+              <MappingFragment StoreEntitySet="pro_Fabricacion">
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="IdUsuarioAnulacion" ColumnName="IdUsuarioAnulacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="ing_IdNumMovi" ColumnName="ing_IdNumMovi" />
+                <ScalarProperty Name="ing_IdMovi_inven_tipo" ColumnName="ing_IdMovi_inven_tipo" />
+                <ScalarProperty Name="ing_IdBodega" ColumnName="ing_IdBodega" />
+                <ScalarProperty Name="ing_IdSucursal" ColumnName="ing_IdSucursal" />
+                <ScalarProperty Name="egr_IdNumMovi" ColumnName="egr_IdNumMovi" />
+                <ScalarProperty Name="egr_IdMovi_inven_tipo" ColumnName="egr_IdMovi_inven_tipo" />
+                <ScalarProperty Name="egr_IdBodega" ColumnName="egr_IdBodega" />
+                <ScalarProperty Name="egr_IdSucursal" ColumnName="egr_IdSucursal" />
+                <ScalarProperty Name="IdFabricacion" ColumnName="IdFabricacion" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sppro_GetProductoFacturadosPorFecha" FunctionName="Model_produccion.Store.sppro_GetProductoFacturadosPorFecha">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_produccion.sppro_GetProductoFacturadosPorFecha_Result">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="vt_cantidad" ColumnName="vt_cantidad" />
+                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="NombreUnidad" ColumnName="NombreUnidad" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="CantidadFabricada" ColumnName="CantidadFabricada" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="vwpro_Fabricacion">
+            <EntityTypeMapping TypeName="Model_produccion.vwpro_Fabricacion">
+              <MappingFragment StoreEntitySet="vwpro_Fabricacion">
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="ing_IdNumMovi" ColumnName="ing_IdNumMovi" />
+                <ScalarProperty Name="ing_IdMovi_inven_tipo" ColumnName="ing_IdMovi_inven_tipo" />
+                <ScalarProperty Name="ing_IdBodega" ColumnName="ing_IdBodega" />
+                <ScalarProperty Name="ing_IdSucursal" ColumnName="ing_IdSucursal" />
+                <ScalarProperty Name="egr_IdNumMovi" ColumnName="egr_IdNumMovi" />
+                <ScalarProperty Name="egr_IdMovi_inven_tipo" ColumnName="egr_IdMovi_inven_tipo" />
+                <ScalarProperty Name="egr_IdBodega" ColumnName="egr_IdBodega" />
+                <ScalarProperty Name="egr_IdSucursal" ColumnName="egr_IdSucursal" />
+                <ScalarProperty Name="IdFabricacion" ColumnName="IdFabricacion" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwpro_FabricacionDet">
+            <EntityTypeMapping TypeName="Model_produccion.vwpro_FabricacionDet">
+              <MappingFragment StoreEntitySet="vwpro_FabricacionDet">
+                <ScalarProperty Name="se_distribuye" ColumnName="se_distribuye" />
+                <ScalarProperty Name="tp_ManejaInven" ColumnName="tp_ManejaInven" />
+                <ScalarProperty Name="pr_descripcion" ColumnName="pr_descripcion" />
+                <ScalarProperty Name="RealizaMovimiento" ColumnName="RealizaMovimiento" />
+                <ScalarProperty Name="Costo" ColumnName="Costo" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Signo" ColumnName="Signo" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdFabricacion" ColumnName="IdFabricacion" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,94 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridView_LoteDebitoFacturacion";
+        settings.CallbackRouteValues = new { Controller = "NotaDeDebitoFacturacion", Action = "GridViewPartial_LoteDebitoFacturacion" };
+        settings.Width = Unit.Percentage(100);
+        settings.KeyFieldName = "IdProducto";
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        //Configuración click derecho
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.RowMenuItemVisibility.NewRow = false;
+        settings.SettingsContextMenu.RowMenuItemVisibility.EditRow = false;
+        settings.SettingsContextMenu.RowMenuItemVisibility.DeleteRow = false;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdProducto";
+            column.Caption = "ID";
+            column.Width = Unit.Percentage(5);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(35);
+            column.FieldName = "pr_descripcion";
+            column.Caption = "Producto";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(15);
+            column.FieldName = "lote_num_lote";
+            column.Caption = "Lote";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "lote_fecha_vcto";
+            column.Caption = "Fecha vcto";
+            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
+            column.Width = Unit.Percentage(10);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "stock";
+            column.Caption = "Stock";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(15);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "*";
+            column.FieldName = "IdProducto";
+            column.Width = Unit.Percentage(10);
+            column.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            column.SetDataItemTemplateContent(c =>
+            {
+                Html.DevExpress().Button(settingsBtn =>
+                {
+                    settingsBtn.Name = "btn" + c.KeyValue;
+                    settingsBtn.Text = "Aceptar";
+                    settingsBtn.ClientSideEvents.Click = "function(s, e) {SetLoteDetalle('" + c.KeyValue + "');}";
+                }).Render();
+            });
+        });
+        settings.PreRender = (sender, e) =>
+        {
+            MVCxGridView gridView = (MVCxGridView)sender;
+            gridView.ExpandAll();
+        };
+
+        settings.BeforeGetCallbackResult = (sender, e) =>
+        {
+            MVCxGridView gridView = (MVCxGridView)sender;
+            gridView.ExpandAll();
+        };
+    });
+}
+@grid.Bind(Model).GetHtml()

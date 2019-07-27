@@ -1,0 +1,337 @@
+﻿@model Core.Erp.Info.RRHH.ro_rdep_det_Info
+@{
+    ViewBag.Title = "Modificar RDEP";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Modificar_x_Empleado", "Rdep", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+    @Html.HiddenFor(q => q.IdEmpresa);
+    @Html.HiddenFor(q => q.Id_Rdep);
+    @Html.HiddenFor(q => q.Secuencia);
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdEmpleado">Empleado</label>
+                    @Html.TextBoxFor(q => q.Empleado, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.Empleado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Sueldos y salarios</label>
+                    @Html.TextBoxFor(q => q.Sueldo, new { @class = "form-control", @id= "Sueldo" })
+                    @Html.ValidationMessageFor(q => q.Sueldo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Sobresueldos, comisiones, bonos y otras remuneraciones</label>
+                    @Html.TextBoxFor(q => q.IngresoVarios, new { @class = "form-control", @id = "IngresoVarios" })
+                    @Html.ValidationMessageFor(q => q.IngresoVarios, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Participación de utilidades</label>
+                    @Html.TextBoxFor(q => q.Utilidades, new { @class = "form-control", @id = "Utilidades" })
+                    @Html.ValidationMessageFor(q => q.Utilidades, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Ingresos con otros empleadores</label>
+                    @Html.TextBoxFor(q => q.IngresoPorOtrosEmpleaodres, new { @class = "form-control", @id = "IngresoPorOtrosEmpleaodres" })
+                    @Html.ValidationMessageFor(q => q.IngresoPorOtrosEmpleaodres, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Décimo tercer sueldo</label>
+                    @Html.TextBoxFor(q => q.DecimoTercerSueldo, new { @class = "form-control", @id = "DecimoTercerSueldo" })
+                    @Html.ValidationMessageFor(q => q.DecimoTercerSueldo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Décimo Cuarto sueldo</label>
+                    @Html.TextBoxFor(q => q.DecimoCuartoSueldo, new { @class = "form-control", @id = "DecimoCuartoSueldo" })
+                    @Html.ValidationMessageFor(q => q.DecimoCuartoSueldo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Fondos de reserva</label>
+                    @Html.TextBoxFor(q => q.FondosReserva, new { @class = "form-control", @id = "FondosReserva" })
+                    @Html.ValidationMessageFor(q => q.FondosReserva, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Otros ingresos en relación de dependencia</label>
+                    @Html.TextBoxFor(q => q.OtrosIngresosRelacionDependencia, new { @class = "form-control", @id = "OtrosIngresosRelacionDependencia" })
+                    @Html.ValidationMessageFor(q => q.OtrosIngresosRelacionDependencia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Aporte personal IESS con este empleador</label>
+                    @Html.TextBoxFor(q => q.AportePErsonal, new { @class = "form-control", @id = "AportePErsonal" })
+                    @Html.ValidationMessageFor(q => q.AportePErsonal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Aporte personal IESS con otros empleadores</label>
+                    @Html.TextBoxFor(q => q.IessPorOtrosEmpleadores, new { @class = "form-control", @id = "IessPorOtrosEmpleadores" })
+                    @Html.ValidationMessageFor(q => q.IessPorOtrosEmpleadores, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Gastos Personales Vivienda</label>
+                    @Html.TextBoxFor(q => q.GastoVivienda, new { @class = "form-control", @id = "GastoVivienda" })
+                    @Html.ValidationMessageFor(q => q.GastoVivienda, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Gastos Personales Salud</label>
+                    @Html.TextBoxFor(q => q.GastoSalud, new { @class = "form-control", @id = "GastoSalud" })
+                    @Html.ValidationMessageFor(q => q.GastoSalud, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Gastos Personales Educación</label>
+                    @Html.TextBoxFor(q => q.GastoEucacion, new { @class = "form-control", @id = "GastoEucacion" })
+                    @Html.ValidationMessageFor(q => q.GastoEucacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Gastos Personales Alimentación</label>
+                    @Html.TextBoxFor(q => q.GastoAlimentacion, new { @class = "form-control", @id = "GastoAlimentacion" })
+                    @Html.ValidationMessageFor(q => q.GastoAlimentacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Gastos Personales Vestimenta</label>
+                    @Html.TextBoxFor(q => q.GastoVestimenta, new { @class = "form-control", @id = "GastoVestimenta" })
+                    @Html.ValidationMessageFor(q => q.GastoVestimenta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Exoneración por discapacidad</label>
+                    @Html.TextBoxFor(q => q.ExoneraionPorDiscapacidad, new { @class = "form-control", @id = "ExoneraionPorDiscapacidad" })
+                    @Html.ValidationMessageFor(q => q.ExoneraionPorDiscapacidad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Exoneración por tercera edad</label>
+                    @Html.TextBoxFor(q => q.ExoneracionPorTerceraEdad, new { @class = "form-control", @id = "ExoneracionPorTerceraEdad" })
+                    @Html.ValidationMessageFor(q => q.ExoneracionPorTerceraEdad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Impuesto a la renta asumido por este empleador</label>
+                    @Html.TextBoxFor(q => q.ImpuestoRentaAsumidoPorEsteEmpleador, new { @class = "form-control", @id = "ImpuestoRentaAsumidoPorEsteEmpleador" })
+                    @Html.ValidationMessageFor(q => q.ImpuestoRentaAsumidoPorEsteEmpleador, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Base Imponible Gravada</label>
+                    @Html.TextBoxFor(q => q.BaseImponibleGravada, new { @class = "form-control", @id = "BaseImponibleGravada", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.BaseImponibleGravada, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Impuesto a la renta causado</label>
+                    @Html.TextBoxFor(q => q.ImpuestoRentaCausado, new { @class = "form-control", @id = "ImpuestoRentaCausado" })
+                    @Html.ValidationMessageFor(q => q.ImpuestoRentaCausado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Valor del impuesto retenido y asumido por otros empleadores</label>
+                    @Html.TextBoxFor(q => q.ValorImpuestoPorOtroEmplador, new { @class = "form-control", @id = "ValorImpuestoPorOtroEmplador" })
+                    @Html.ValidationMessageFor(q => q.ValorImpuestoPorOtroEmplador, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Valor del impuesto asumido por este empleador</label>
+                    @Html.TextBoxFor(q => q.ValorImpuestoPorEsteEmplador, new { @class = "form-control", @id = "ValorImpuestoPorEsteEmplador" })
+                    @Html.ValidationMessageFor(q => q.ValorImpuestoPorEsteEmplador, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Valor del impuesto retenido al trabajador por este empleador</label>
+                    @Html.TextBoxFor(q => q.ValorImpuestoRetenidoTrabajador, new { @class = "form-control", @id = "ValorImpuestoRetenidoTrabajador" })
+                    @Html.ValidationMessageFor(q => q.ValorImpuestoRetenidoTrabajador, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Valor">Ingresos gravados por este empleador</label>
+                    @Html.TextBoxFor(q => q.IngresosGravadorPorEsteEmpleador, new { @class = "form-control", @id = "IngresosGravadorPorEsteEmpleador", @readonly="readonly"})
+                    @Html.ValidationMessageFor(q => q.IngresosGravadorPorEsteEmpleador, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Modificar", "Rdep", new { Area ="RRHH" , Model.IdEmpresa, Model.Id_Rdep })">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script type="text/javascript">
+    $("#Sueldo").change(function () {
+        generar_BaseImponibleGravada();
+        generar_IngresosGravadosConEsteEmpleador();
+    });
+
+    $("#IngresoVarios").change(function () {
+        generar_BaseImponibleGravada();
+        generar_IngresosGravadosConEsteEmpleador();
+    });
+
+    $("#IngresoPorOtrosEmpleaodres").change(function () {
+        generar_BaseImponibleGravada();
+        generar_IngresosGravadosConEsteEmpleador();
+    });
+
+    $("#Utilidades").change(function () {
+        generar_BaseImponibleGravada();
+        generar_IngresosGravadosConEsteEmpleador();
+    });
+
+    $("#AportePErsonal").change(function () {
+        generar_BaseImponibleGravada();
+    });
+
+    $("#IessPorOtrosEmpleadores").change(function () {
+        generar_BaseImponibleGravada();
+    });
+
+    $("#GastoVivienda").change(function () {
+        generar_BaseImponibleGravada();
+    });
+
+    $("#GastoSalud").change(function () {
+        generar_BaseImponibleGravada();
+    });
+
+    $("#GastoEucacion").change(function () {
+        generar_BaseImponibleGravada();
+    });
+
+    $("#GastoAlimentacion").change(function () {
+        generar_BaseImponibleGravada();
+    });
+
+    $("#GastoVestimenta").change(function () {
+        generar_BaseImponibleGravada();
+    });
+
+    $("#ExoneraionPorDiscapacidad").change(function () {
+        generar_BaseImponibleGravada();
+    });
+
+    $("#ExoneracionPorTerceraEdad").change(function () {
+        generar_BaseImponibleGravada();
+    });
+
+    $("#ImpuestoRentaAsumidoPorEsteEmpleador").change(function () {
+        generar_BaseImponibleGravada();
+        generar_IngresosGravadosConEsteEmpleador();
+    });
+    
+    function generar_BaseImponibleGravada()
+    {
+        var Suedo = isNaN(parseFloat($("#Sueldo").val())) ? 0 : parseFloat($("#Sueldo").val());
+        var IngresoVarios = isNaN(parseFloat($("#IngresoVarios").val())) ? 0 : parseFloat($("#IngresoVarios").val());
+        var IngresoPorOtrosEmpleaodres = isNaN(parseFloat($("#IngresoPorOtrosEmpleaodres").val())) ? 0 : parseFloat($("#IngresoPorOtrosEmpleaodres").val());
+        var AportePErsonal = isNaN(parseFloat($("#AportePErsonal").val())) ? 0 : parseFloat($("#AportePErsonal").val());
+        var IessPorOtrosEmpleadores = isNaN(parseFloat($("#IessPorOtrosEmpleadores").val())) ? 0 : parseFloat($("#IessPorOtrosEmpleadores").val());
+        var GastoVivienda = isNaN(parseFloat($("#GastoVivienda").val())) ? 0 : parseFloat($("#GastoVivienda").val());
+        var GastoSalud = isNaN(parseFloat($("#GastoSalud").val())) ? 0 : parseFloat($("#GastoSalud").val());
+        var GastoEucacion = isNaN(parseFloat($("#GastoEucacion").val())) ? 0 : parseFloat($("#GastoEucacion").val());
+        var GastoAlimentacion = isNaN(parseFloat($("#GastoAlimentacion").val())) ? 0 : parseFloat($("#GastoAlimentacion").val());
+        var GastoVestimenta = isNaN(parseFloat($("#GastoVestimenta").val())) ? 0 : parseFloat($("#GastoVestimenta").val());
+        var ExoneraionPorDiscapacidad = isNaN(parseFloat($("#ExoneraionPorDiscapacidad").val())) ? 0 : parseFloat($("#ExoneraionPorDiscapacidad").val());
+        var ExoneracionPorTerceraEdad = isNaN(parseFloat($("#ExoneracionPorTerceraEdad").val())) ? 0 : parseFloat($("#ExoneracionPorTerceraEdad").val());
+        var ImpuestoRentaAsumidoPorEsteEmpleador = isNaN(parseFloat($("#ImpuestoRentaAsumidoPorEsteEmpleador").val())) ? 0 : parseFloat($("#ImpuestoRentaAsumidoPorEsteEmpleador").val());
+
+        var BaseImponibleGravada = Suedo + IngresoVarios + IngresoPorOtrosEmpleaodres - AportePErsonal - IessPorOtrosEmpleadores - GastoVivienda - GastoEucacion - GastoAlimentacion - GastoVestimenta - ExoneraionPorDiscapacidad - ExoneracionPorTerceraEdad + ImpuestoRentaAsumidoPorEsteEmpleador;
+            
+        $("#BaseImponibleGravada").val(BaseImponibleGravada);
+    }
+
+    function generar_IngresosGravadosConEsteEmpleador() {
+        var Suedo = isNaN(parseFloat($("#Sueldo").val())) ? 0 : parseFloat($("#Sueldo").val());
+        var IngresoVarios = isNaN(parseFloat($("#IngresoVarios").val())) ? 0 : parseFloat($("#IngresoVarios").val());
+        var Utilidades = isNaN(parseFloat($("#Utilidades").val())) ? 0 : parseFloat($("#Utilidades").val());
+        var ImpuestoRentaAsumidoPorEsteEmpleador = isNaN(parseFloat($("#ImpuestoRentaAsumidoPorEsteEmpleador").val())) ? 0 : parseFloat($("#ImpuestoRentaAsumidoPorEsteEmpleador").val());
+
+        var IngresosGravadorPorEsteEmpleador = Suedo + IngresoVarios + Utilidades + ImpuestoRentaAsumidoPorEsteEmpleador;
+        $("#IngresosGravadorPorEsteEmpleador").val(IngresosGravadorPorEsteEmpleador);
+    }
+</script> 
+

@@ -1,0 +1,77 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridViewPartial_solicitud_vacaciones_det";
+        settings.CallbackRouteValues = new { Controller = "Vacaciones", Action = "GridViewPartial_solicitud_vacaciones_det"};
+
+        settings.Width = Unit.Percentage(100);
+        settings.KeyFieldName = "IdSolicitud";
+
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+        settings.Width = Unit.Percentage(100);
+
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Hidden;
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        settings.Settings.VerticalScrollableHeight = 400;
+        settings.SettingsPager.Visible = true;
+        settings.SettingsPager.PageSize = 10;
+        settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
+        settings.SettingsPager.AlwaysShowPager = true;
+
+
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+
+        settings.SettingsExport.EnableClientSideExportAPI = true;
+        settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
+        
+
+       
+
+        settings.Columns.Add("IdPeriodo_Inicio", "Periodo inicio").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("IdPeriodo_Fin", "Periodo hasta").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "FechaIni";
+            column.Caption = "Fecha inicio";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "FechaFin";
+            column.Caption = "Fecha hasta";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add("DiasGanado", "Días ganado").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        settings.Columns.Add("DiasTomados", "Días gozado").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+
+    });
+}
+@grid.Bind(Model).GetHtml()

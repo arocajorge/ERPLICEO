@@ -1,0 +1,74 @@
+﻿@model Core.Erp.Info.Contabilidad.ct_cbtecble_Plantilla_Info
+@{
+    ViewBag.Title = "Anular plantilla comprobante contable";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Anular", "PlantillaComprobanteContable", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }    
+    @Html.HiddenFor(q => q.IdTransaccionSession);
+    @Html.HiddenFor(q => q.IdEmpresa);
+    @Html.HiddenFor(q => q.IdPlantilla);
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdTipoCbte">Tipo comprobante</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdTipoCbte, settings =>
+                   {
+                       settings.Name = "IdTipoCbte";
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                       settings.Properties.Columns.Add("IdTipoCbte", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                       settings.Properties.Columns.Add("tc_TipoCbte", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                       //Campo ID
+                       settings.Properties.ValueField = "IdTipoCbte";
+                       settings.Properties.ValueType = typeof(int);
+                       settings.Properties.TextField = "tc_TipoCbte";
+                       //Boton para seleccionar ningun registro
+                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                       settings.Properties.NullText = "== Seleccione ==";
+                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   }).BindList(ViewBag.lst_tipo_comprobante).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdTipoCbte, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="cb_Observacion">Observación*</label>
+                    @Html.TextBoxFor(q => q.cb_Observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.cb_Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        @Html.Action("GridViewPartial_ComprobanteContablePlantillaDet")
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "PlantillaComprobanteContable", new { Area ="Contabilidad" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+

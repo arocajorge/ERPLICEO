@@ -1,0 +1,204 @@
+﻿@model Core.Erp.Info.RRHH.ro_prestamo_Info
+
+@{
+    ViewBag.Title = "Nuevo préstamo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Nuevo", "Prestamos", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdPrestamo);
+    @Html.HiddenFor(q => q.IdTransaccionSession);
+    @Html.HiddenFor(q => q.IdEmpresa);
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="IdProveedor">Empleado*</label>
+                    @Html.Partial("_CmbEmpleado_prestamos", Model.IdEmpleado)
+                    @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="IdRubro">Rubro*</label>
+                    @Html.Partial("_CmbRubro_Prestamos", Model)
+                    @Html.ValidationMessageFor(q => q.IdRubro, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    @Html.DevExpress().CheckBoxFor(q => q.GeneraOP, settings =>
+                       {
+                           settings.Name = "GeneraOP";
+                           settings.Text = "Genera O.P";
+                       }).GetHtml()
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Valor">Monto solicitado*</label>
+                    @Html.TextBoxFor(q => q.MontoSol, new { @class = "form-control", @id = "MontoSol" })
+                    @Html.ValidationMessageFor(q => q.MontoSol, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Fecha_PriPago">Fecha primer pago*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.Fecha_PriPago, settings =>
+                    {
+                        settings.Name = "Fecha_PriPago";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Fecha_PriPago, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Valor">Nímero cuotas*</label>
+                    @Html.TextBoxFor(q => q.NumCuotas, new { @class = "form-control", @id = "NumCuotas" })
+                    @Html.ValidationMessageFor(q => q.NumCuotas, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="descuento_mensual">Descuento</label>
+                        @Html.DevExpress().RadioButtonFor(q => q.descuento_mensual, settings =>
+                   {
+                       settings.Name = "descuento_mensual";
+                       settings.GroupName = "formapao";
+                       settings.Text = "Fin de mes";
+
+                   }).GetHtml()
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="descuento_quincena">Descuento</label>
+                        @Html.DevExpress().RadioButtonFor(q => q.descuento_quincena, settings =>
+                   {
+                       settings.Name = "descuento_quincena";
+                       settings.GroupName = "formapao";
+                       settings.Text = "Quincena";
+                   }).GetHtml()
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="descuento_men_quin">Descuentos</label>
+                        @Html.DevExpress().RadioButtonFor(q => q.descuento_men_quin, settings =>
+                           {
+                               settings.Name = "descuento_men_quin";
+                               settings.GroupName = "formapao";
+                               settings.Text = "Quincena y fin de mes";
+
+                           }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Valor">Observaciones*</label>
+                    @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+
+                <div class="form-group">
+                    <label for="GridViewPartial_prestamos_det">Detalle prestamos*</label>
+                    @Html.Action("GridViewPartial_prestamos_det")
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="box-footer">
+        <button type="button" onclick="Generar();" id="btnconsultar" class="btn btn-primary">Generar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Prestamos",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+
+<script>
+    function Generar()
+            {
+                 var datos = {
+                     MontoSol: $("#MontoSol").val(),
+                     Fecha_PriPago: Fecha_PriPago.GetValue(),
+                     NumCuotas: $("#NumCuotas").val(),
+                     descuento_mensual: descuento_mensual.GetValue(),
+                     descuento_quincena: descuento_quincena.GetValue(),
+                     descuento_men_quin: descuento_men_quin.GetValue()
+                }
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(datos),
+                    url: '@Url.Action("GenerarPrestamo", "Prestamos", new { Area = "RRHH" })',
+                    async: false,
+                    bDeferRender: true,
+                    bProcessing: true,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data)
+                    {
+
+                        GridViewPartial_prestamos_det.PerformCallback();
+
+                    },
+                    error: function (error)
+                    {
+                    }
+                    });
+};
+</script>

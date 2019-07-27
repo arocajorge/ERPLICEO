@@ -1,0 +1,24 @@
+﻿
+@model Core.Erp.Info.Banco.ba_Banco_Cuenta_Info
+@{
+    ViewBag.Title = "Diseño de cheques";
+    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
+}
+
+@using (Html.BeginForm("Disenar", "BancoCuenta", FormMethod.Post, new { @role = "form", @class = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa"})
+    @Html.HiddenFor(q => q.IdBanco, new { @id = "IdBanco" })
+    @Html.HiddenFor(q => q.Imprimir_Solo_el_cheque, new { @id = "Imprimir_Solo_el_cheque" })
+
+    @Html.DevExpress().ReportDesigner(settings =>
+    {
+        settings.Name = "ReportDesigner";
+        settings.ClientSideEvents.BeginCallback = "function(s,e){  e.customArgs['fx_IdBanco'] = $('#IdBanco').val(); }";
+        settings.SaveCallbackRouteValues = new { Controller = "BancoCuenta", Action = "Disenar", Area = "Banco" };
+    }).Bind(Model.ReporteCheque).GetHtml()
+}

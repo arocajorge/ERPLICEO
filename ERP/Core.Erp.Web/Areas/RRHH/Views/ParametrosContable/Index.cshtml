@@ -1,0 +1,375 @@
+﻿@model Core.Erp.Info.RRHH.ro_Parametros_Info
+@{
+    ViewBag.Title = "Parametrización contable";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+<script>
+    function OnSelectedNominaChanged() {
+        GridViewPartial_cta_contable_sueldo_pagar.GetEditor("IdNominaTipo").PerformCallback();
+    }
+    function NominaComboBox_BeginCallback(s, e) {
+        e.customArgs["IdNomina"] = IdNomina.GetValue();
+    }
+</script>
+
+@using (Html.BeginForm("Index", "ParametrosContable", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+
+    @Html.HiddenFor(q => q.IdEmpresa);
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdTipoCbte_AsientoSueldoXPagar">Tipo comprobante*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdTipoCbte_AsientoSueldoXPagar, settings =>
+               {
+                   settings.Name = "IdTipoCbte_AsientoSueldoXPagar";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("CodTipoCbte", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("tc_TipoCbte", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+                   //Campo ID
+                   settings.Properties.ValueField = "IdTipoCbte";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "tc_TipoCbte";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+               }).BindList(ViewBag.lst_comprobante_tipo).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdTipoCbte_AsientoSueldoXPagar, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="Tabs" role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_param_general" aria-controls="param_general" role="tab" data-toggle="tab">Parametros generales</a>
+            </li>
+            <li>
+                <a href="#tab_param_rubros" aria-controls="param_rubros" role="tab" data-toggle="tab">Cta. contable por rubros</a>
+            </li>
+            <li>
+                <a href="#tab_param_provisiones" aria-controls="param_provisiones" role="tab" data-toggle="tab">Cta. contable provisiones</a>
+            </li>
+            <li>
+                <a href="#tab_param_sueldo" aria-controls="param_sueldo" role="tab" data-toggle="tab">Cta. contable sueldo por pagar</a>
+            </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content" style="padding-top: 20px">
+
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 2em;" id="tab_param_general">
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="IdRubro_acta_finiquito">Rubro Acta finiquito*</label>
+                                @Html.DevExpress().ComboBoxFor(q => q.IdRubro_acta_finiquito, settings =>
+                                   {
+                                       settings.Name = "IdRubro_acta_finiquito";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                                       settings.Properties.Columns.Add("ru_codRolGen", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                                       settings.Properties.Columns.Add("ru_descripcion", "Rubro").Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                       settings.Properties.Columns.Add("ru_tipo", "Tipo").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+                                       //Campo ID
+                                       settings.Properties.ValueField = "IdRubro";
+                                       settings.Properties.ValueType = typeof(string);
+                                       settings.Properties.TextField = "ru_descripcion";
+                                       //Boton para seleccionar ningun registro
+                                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                                       settings.Properties.NullText = "== Seleccione ==";
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                                   }).BindList(ViewBag.lst_rubro).GetHtml()
+                                @Html.ValidationMessageFor(q => q.IdRubro_acta_finiquito, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Sueldo_basico">Salario básico*</label>
+                                @Html.TextBoxFor(q => q.Sueldo_basico, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.Sueldo_basico, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Sueldo_basico">% anticipo*</label>
+                                @Html.TextBoxFor(q => q.Porcentaje_anticipo, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.Porcentaje_anticipo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="Porcentaje_aporte_patr">Aporte patronal*</label>
+                                @Html.TextBoxFor(q => q.Porcentaje_aporte_patr, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.Porcentaje_aporte_patr, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="Porcentaje_aporte_patr">Aporte personal*</label>
+                                @Html.TextBoxFor(q => q.Porcentaje_aporte_pers, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.Porcentaje_aporte_pers, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="IdTipo_op">Estado prestamos*</label>
+                                @Html.DevExpress().ComboBoxFor(q => q.EstadoCreacionPrestamos, settings =>
+                                   {
+                                       settings.Name = "EstadoCreacionPrestamos";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                                       settings.Properties.Columns.Add("CodCatalogo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+                                       settings.Properties.Columns.Add("ca_descripcion", "Catalogo").Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                       //Campo ID
+                                       settings.Properties.ValueField = "CodCatalogo";
+                                       settings.Properties.ValueType = typeof(string);
+                                       settings.Properties.TextField = "ca_descripcion";
+                                       //Boton para seleccionar ningun registro
+                                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                   }).BindList(ViewBag.lst_estado_prestamo).GetHtml()
+                                @Html.ValidationMessageFor(q => q.EstadoCreacionPrestamos, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.DevExpress().CheckBoxFor(q => q.genera_op_x_pago, settings =>
+                           {
+                               settings.Name = "genera_op_x_pago";
+                               settings.Text = "Genera op al cerrar la nomina";
+                           }).GetHtml()
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.DevExpress().CheckBoxFor(q => q.Genera_op_x_pago_x_empleao, settings =>
+                           {
+                               settings.Name = "Genera_op_x_pago_x_empleao";
+                               settings.Text = "Genera orden de pago por empleado";
+                           }).GetHtml()
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="IdTipo_op">Tipo orden sueldo por pagar*</label>
+                                @Html.DevExpress().ComboBoxFor(q => q.IdTipo_op_sueldo_por_pagar, settings =>
+                                   {
+                                       settings.Name = "IdTipo_op_sueldo_por_pagar";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                                       settings.Properties.Columns.Add("IdTipo_op", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+                                       settings.Properties.Columns.Add("Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                       //Campo ID
+                                       settings.Properties.ValueField = "IdTipo_op";
+                                       settings.Properties.ValueType = typeof(string);
+                                       settings.Properties.TextField = "Descricpion";
+                                       //Boton para seleccionar ningun registro
+                                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){CargarEstadoAprobacion();}";
+                                   }).BindList(ViewBag.lst_tipo_op).GetHtml()
+                                @Html.ValidationMessageFor(q => q.IdTipo_op_sueldo_por_pagar, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.DevExpress().CheckBoxFor(q => q.Genera_op_por_prestamos, settings =>
+                           {
+                               settings.Name = "Genera_op_por_prestamos";
+                               settings.Text = "Genera OP al generar prestamos";
+                           }).GetHtml()
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="IdTipo_op">Tipo OP para prestamos*</label>
+                                @Html.DevExpress().ComboBoxFor(q => q.IdTipo_op_prestamos, settings =>
+                                   {
+                                       settings.Name = "IdTipo_op_prestamos";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                                       settings.Properties.Columns.Add("IdTipo_op", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+                                       settings.Properties.Columns.Add("Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                       //Campo ID
+                                       settings.Properties.ValueField = "IdTipo_op";
+                                       settings.Properties.ValueType = typeof(string);
+                                       settings.Properties.TextField = "Descricpion";
+                                       //Boton para seleccionar ningun registro
+                                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){CargarEstadoAprobacion();}";
+                                   }).BindList(ViewBag.lst_tipo_op).GetHtml()
+                                @Html.ValidationMessageFor(q => q.IdTipo_op_prestamos, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.DevExpress().CheckBoxFor(q => q.Genera_op_por_acta_finiquito, settings =>
+                           {
+                               settings.Name = "Genera_op_por_acta_finiquito";
+                               settings.Text = "Genera OP al generar acta finiquito";
+                           }).GetHtml()
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="IdTipo_op">Tipo OP para actas finiquito*</label>
+                                @Html.DevExpress().ComboBoxFor(q => q.IdTipo_op_acta_finiquito, settings =>
+                                   {
+                                       settings.Name = "IdTipo_op_acta_finiquito";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                                       settings.Properties.Columns.Add("IdTipo_op", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+                                       settings.Properties.Columns.Add("Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                       //Campo ID
+                                       settings.Properties.ValueField = "IdTipo_op";
+                                       settings.Properties.ValueType = typeof(string);
+                                       settings.Properties.TextField = "Descricpion";
+                                       //Boton para seleccionar ningun registro
+                                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){CargarEstadoAprobacion();}";
+                                   }).BindList(ViewBag.lst_tipo_op).GetHtml()
+                                @Html.ValidationMessageFor(q => q.IdTipo_op_acta_finiquito, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                @Html.DevExpress().CheckBoxFor(q => q.Genera_op_por_liq_vacaciones, settings =>
+                           {
+                               settings.Name = "Genera_op_por_liq_vacaciones";
+                               settings.Text = "Genera OP por liquidacion vacaciones";
+                           }).GetHtml()
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="IdTipo_op">Tipo OP para liquidacion vacaciones*</label>
+                                @Html.DevExpress().ComboBoxFor(q => q.IdTipo_op_vacaciones, settings =>
+                                   {
+                                       settings.Name = "IdTipo_op_vacaciones";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                                       settings.Properties.Columns.Add("IdTipo_op", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+                                       settings.Properties.Columns.Add("Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                       //Campo ID
+                                       settings.Properties.ValueField = "IdTipo_op";
+                                       settings.Properties.ValueType = typeof(string);
+                                       settings.Properties.TextField = "Descricpion";
+                                       //Boton para seleccionar ningun registro
+                                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){CargarEstadoAprobacion();}";
+                                   }).BindList(ViewBag.lst_tipo_op).GetHtml()
+                                @Html.ValidationMessageFor(q => q.IdTipo_op_vacaciones, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="tab_param_rubros">
+
+                @Html.Action("GridViewPartial_cta_ctble_rubros")
+
+
+            </div>
+
+
+            <div role="tabpanel" class="tab-pane" id="tab_param_provisiones">
+
+                @Html.Action("GridViewPartial_cta_ctble_provisiones")
+
+
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="tab_param_sueldo">
+
+                @Html.Action("GridViewPartial_cta_contable_sueldo_pagar")
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Empleado", new { Area ="RRHH" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+}
+

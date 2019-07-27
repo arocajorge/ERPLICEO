@@ -1,0 +1,107 @@
+@using System.Web.UI.WebControls;
+@model Core.Erp.Info.Inventario.in_Producto_Info
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewPartial_producto_composicion";
+        settings.CallbackRouteValues = new { Controller = "Producto", Action = "GridViewPartial_producto_composicion", IdProducto = Model == null ? 0 : Model.IdProducto };
+        settings.KeyFieldName = "secuencia";
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Producto", Action = "EditingAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Producto", Action = "EditingUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Producto", Action = "EditingDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+
+        settings.InitNewRow = (s, e) =>
+        {
+            e.NewValues["IdProductoHijo"] = 0;
+            e.NewValues["Cantidad"] = 0;
+        };
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "pr_descripcion";
+            column.Caption = "Producto";
+            column.Width = Unit.Percentage(60);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdProductoHijo";
+            column.Caption = "Producto";
+            column.Width = Unit.Percentage(30);
+            column.Visible = false;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbProducto_composicion", DataBinder.Eval(c.DataItem, "IdProductoHijo"));
+            });
+        });
+        //settings.Columns.Add(column =>
+        //{
+        //    column.FieldName = "IdUnidadMedida";
+        //    column.Caption = "Unidad de medida";
+        //    column.Width = Unit.Percentage(30);
+        //    column.EditorProperties().ComboBox(p =>
+        //    {
+        //        p.TextField = "Descripcion";
+        //        p.ValueField = "IdUnidadMedida";
+        //        p.ValueType = typeof(string);
+        //        p.DataSource = ViewBag.lst_unidad_medida;
+        //    });
+        //});
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdUnidadMedida";
+            column.Caption = "Unidad de medida";
+            column.Width = Unit.Percentage(20);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.CallbackRouteValues = new { Controller = "Producto", Action = "CargarUnidadMedida", Area = "Inventario" };
+                p.TextField = "Descripcion";
+                p.ValueField = "IdUnidadMedida";
+                p.ValueType = typeof(string);
+                //p.ClientSideEvents.Init = "function(s,e){s.PerformCallback();}";
+                p.BindList(ViewBag.lst_unidad_medida);
+                p.ClientSideEvents.BeginCallback = "UnidadMedidaComboBox_BeginCallback";
+                p.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Cantidad";
+            column.Caption = "Cantidad";
+            column.Width = Unit.Percentage(20);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+            });
+        });
+
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
+    });
+}
+@grid.Bind(Model.lst_producto_composicion).GetHtml()

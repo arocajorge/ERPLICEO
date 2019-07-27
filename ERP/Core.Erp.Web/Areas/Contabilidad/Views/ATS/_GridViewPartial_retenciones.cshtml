@@ -1,0 +1,137 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridViewPartial_retenciones";
+        settings.CallbackRouteValues = new { Controller = "ATS", Action = "GridViewPartial_retenciones", Area = "Contabilidad" };
+        settings.KeyFieldName = "secuencia";
+        settings.Width = Unit.Percentage(100);
+
+        settings.Settings.ShowFooter = true;
+
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+
+
+        settings.Columns.Add("denopr", "Proveedor").Width = Unit.Percentage(25);
+        settings.Columns.Add("co_serie", "Est-ptoemi").Width = Unit.Percentage(10);
+        settings.Columns.Add("co_factura", "Factura.").Width = Unit.Percentage(10);
+        settings.Columns.Add("secRetencion1", "Retencion.").Width = Unit.Percentage(10);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "fechaEmiRet1";
+            column.Caption = "Fecha";
+            column.Width = Unit.Percentage(15);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "valRetBien10";
+            column.Caption = "RtIva10";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "valRetServ20";
+            column.Caption = "RtIva20";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "valorRetBienes";
+            column.Caption = "RtIva30";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "valRetServ50";
+            column.Caption = "RtIva50";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "valorRetServicios";
+            column.Caption = "RtIva70";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "valRetServ100";
+            column.Caption = "RtIva100";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "valRetAir";
+            column.Caption = "RetFte";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+            });
+        });
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "valRetBien10");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "valRetServ20");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "valorRetBienes");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "valRetServ50");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "valorRetServicios");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "valRetServ100");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "valRetAir");
+
+    });
+
+}
+@grid.Bind(Model).GetHtml()

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2c74264947894553a2351c4200dbe223" Name="Diagram1" ZoomLevel="59">
+        <EntityTypeShape EntityType="Model_produccion.pro_FabricacionDet" Width="2" PointX="3.375" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model_produccion.pro_Fabricacion" Width="2.125" PointX="6.375" PointY="1.375" />
+        <AssociationConnector Association="Model_produccion.FK_pro_FabricacionDet_pro_Fabricacion" />
+        <EntityTypeShape EntityType="Model_produccion.vwpro_Fabricacion" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Model_produccion.vwpro_FabricacionDet" Width="1.5" PointX="3.375" PointY="5.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

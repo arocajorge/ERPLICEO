@@ -1,0 +1,38 @@
+﻿CREATE TABLE [EntidadRegulatoria].[ATS_compras] (
+    [IdEmpresa]        INT             NOT NULL,
+    [IdPeriodo]        INT             NOT NULL,
+    [Secuencia]        INT             NOT NULL,
+    [codSustento]      VARCHAR (3)     NOT NULL,
+    [tpIdProv]         VARCHAR (3)     NOT NULL,
+    [idProv]           VARCHAR (15)    NOT NULL,
+    [tipoComprobante]  VARCHAR (5)     NOT NULL,
+    [parteRel]         VARCHAR (5)     NOT NULL,
+    [tipoProv]         VARCHAR (5)     NOT NULL,
+    [denopr]           VARCHAR (500)   NOT NULL,
+    [fechaRegistro]    DATE            NOT NULL,
+    [establecimiento]  VARCHAR (5)     NOT NULL,
+    [puntoEmision]     VARCHAR (5)     NOT NULL,
+    [secuencial]       VARCHAR (12)    NOT NULL,
+    [fechaEmision]     DATE            NOT NULL,
+    [autorizacion]     VARCHAR (60)    NOT NULL,
+    [baseNoGraIva]     NUMERIC (12, 2) NOT NULL,
+    [baseImponible]    NUMERIC (12, 2) NOT NULL,
+    [baseImpGrav]      NUMERIC (12, 2) NOT NULL,
+    [baseImpExe]       NUMERIC (12, 2) NOT NULL,
+    [montoIce]         NUMERIC (12, 2) NOT NULL,
+    [montoIva]         NUMERIC (12, 2) NOT NULL,
+    [pagoLocExt]       VARCHAR (3)     NOT NULL,
+    [denopago]         VARCHAR (500)   NULL,
+    [paisEfecPago]     VARCHAR (5)     NULL,
+    [formaPago]        VARCHAR (500)   NULL,
+    [docModificado]    VARCHAR (5)     NULL,
+    [estabModificado]  VARCHAR (5)     NULL,
+    [ptoEmiModificado] VARCHAR (5)     NULL,
+    [secModificado]    VARCHAR (9)     NULL,
+    [autModificado]    VARCHAR (60)    NULL,
+    [IdSucursal]       INT             NULL,
+    CONSTRAINT [PK_compras] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdPeriodo] ASC, [Secuencia] ASC)
+);
+
+
+

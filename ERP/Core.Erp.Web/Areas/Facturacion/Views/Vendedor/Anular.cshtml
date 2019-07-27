@@ -1,0 +1,66 @@
+﻿@model Core.Erp.Info.Facturacion.fa_Vendedor_Info
+@{
+    ViewBag.Title = "Anular vendedor";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Anular", "Vendedor", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdVendedor)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Codigo">Código</label>
+                    @Html.TextBoxFor(q => q.Codigo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Codigo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="ve_cedula">Cédula</label>
+                    @Html.TextBoxFor(q => q.ve_cedula, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.ve_cedula, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="ve_cedula">% Comisión</label>
+                    @Html.TextBoxFor(q => q.PorComision, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.PorComision, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Ve_Vendedor">Nombre del vendedor*</label>
+                    @Html.TextBoxFor(q => q.Ve_Vendedor, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Ve_Vendedor, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Ve_Vendedor">Nombre interno</label>
+                    @Html.TextBoxFor(q => q.NomInterno, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.NomInterno, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Vendedor", new {  Area ="Facturacion" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

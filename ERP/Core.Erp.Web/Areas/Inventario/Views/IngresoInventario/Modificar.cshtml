@@ -1,0 +1,226 @@
+﻿@model Core.Erp.Info.Inventario.in_Ing_Egr_Inven_Info
+@{
+    ViewBag.Title = ("Modificar ingreso" + " con ID #" + @Model.IdNumMovi);
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Modificar", "IngresoInventario", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdSucursal)
+    @Html.HiddenFor(q => q.IdNumMovi)
+    @Html.HiddenFor(q => q.signo)
+    @Html.HiddenFor(q => q.IdMovi_inven_tipo)
+
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
+
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="CodMoviInven">Código</label>
+                    @Html.TextBoxFor(q => q.CodMoviInven, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.CodMoviInven, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-offset-5 col-md-2">
+                <div class="form-group">
+                    <label for="">Fecha</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.cm_fecha, settings =>
+                    {
+                        settings.Name = "cm_fecha";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.cm_fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="IdImprimir"></label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="IdNuevo"></label>
+                <div class="form-group">
+                    <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","IngresoInventario",new { Area = "Inventario", IdEmpresa = Model.IdEmpresa },null)">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal*</label>
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdBodega">Bodega</label>
+                    @Html.DropDownListFor(q => q.IdBodega, new SelectList(ViewBag.lst_bodega, "IdBodega", "bo_Descripcion"), new { @class = "form-control", @id = "IdBodega" })
+                    @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdMotivo_Inv">Motivo*</label>
+                    @Html.DropDownListFor(q => q.IdMotivo_Inv, new SelectList(ViewBag.lst_motivo, "IdMotivo_Inv", "Desc_mov_inv"), new { @class = "form-control", @id = "IdMotivo_Inv" })
+                    @Html.ValidationMessageFor(q => q.IdMotivo_Inv, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class=" col-md-3">
+                <div class="form-group">
+                    <label for="IdMovi_inven_tipo">Tipo movimiento*</label>
+                    @Html.DropDownListFor(q => q.IdMovi_inven_tipo, new SelectList(ViewBag.lst_tipo, "IdMovi_inven_tipo", "tm_descripcion"), new { @class = "form-control", @id = "IdMovi_inven_tipo", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.IdMovi_inven_tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="cm_observacion">Observación</label>
+                    @Html.TextAreaFor(q => q.cm_observacion, new { @class = "form-control", @rows = 3 })
+                    @Html.ValidationMessageFor(q => q.cm_observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.Action("GridViewPartial_inv_det")
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="box-footer">
+        @if (ViewBag.MostrarBoton ?? false)
+        {
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        }
+
+        <a class="btn btn-default" href="@Url.Action("Index","IngresoInventario",new { Area = "Inventario" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script type="text/javascript">
+    $(function () {
+        $("#IdSucursal").change(function () {
+            CargarBodega();
+        });
+    });
+
+    function OnSelectedProductoChanged(s, e) {
+        GridViewPartial_inv_det.GetEditor("IdUnidadMedida").PerformCallback();
+        SetUnidadMedida(s, e);
+    }
+
+    function UnidadMedidaComboBox_BeginCallback(s, e) {
+        e.customArgs["in_IdProducto"] = IdProducto.GetValue();
+    }
+
+    function SetUnidadMedida(s, e) {
+        var datos = {
+            IdProducto: s.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetUnidadMedida", "Producto", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(s.GetValue());
+                console.log(data.IdUnidadMedida);
+                GridViewPartial_inv_det.GetEditor('IdUnidadMedida').SetValue(data.IdUnidadMedida);
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+    function CargarBodega() {
+        $("#IdBodega").empty();
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarBodega", "IngresoInventario", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdBodega").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
+                });
+            },
+            error: function (error)
+            {
+            }
+        });
+    };
+
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/InventarioReportes/INV_001?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdSucursal="+@Model.IdSucursal+"&IdMovi_inven_tipo="+@Model.IdMovi_inven_tipo+"&IdNumMovi="+@Model.IdNumMovi, '_blank');
+        win.focus();
+    }
+</script>

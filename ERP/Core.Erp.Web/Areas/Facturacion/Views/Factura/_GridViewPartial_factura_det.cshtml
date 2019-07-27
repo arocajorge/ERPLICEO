@@ -1,0 +1,207 @@
+@using System.Web.UI.WebControls;
+@using Core.Erp.Web.Helps;
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridView_factura_det";
+        settings.CallbackRouteValues = new { Controller = "Factura", Action = "GridViewPartial_factura_det", Area = "Facturacion"};
+        settings.KeyFieldName = "Secuencia";
+
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Factura", Action = "EditingAddNew", Area = "Facturacion" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Factura", Action = "EditingUpdate", Area = "Facturacion" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Factura", Action = "EditingDelete", Area = "Facturacion" };
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
+
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+
+        settings.SettingsContextMenu.Enabled = true;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        //Funcion para inicializar fila al presionar nuevo
+        settings.InitNewRow = (s, e) =>
+        {
+            e.NewValues["IdProducto"] = 0;
+            e.NewValues["IdCod_Impuesto_Iva"] = "IVA0";
+            e.NewValues["vt_cantidad"] = "1";
+            e.NewValues["vt_Precio"] = "";
+            e.NewValues["vt_PorDescUnitario"] = "0";
+        };
+        /*
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "*";
+            column.FieldName = "Secuencia";
+            column.Width = Unit.Percentage(5);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            
+            column.SetDataItemTemplateContent(c =>
+            {
+                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-search\" onclick=\"BuscarProducto('" + c.KeyValue + "');\"></span>");
+            });
+    });*/
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "pr_descripcion";
+            column.Caption = "Producto";
+            column.Width = Unit.Percentage(40);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdProducto";
+            column.Caption = "Producto";
+            column.Width = Unit.Percentage(40);
+            column.Visible = false;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                ViewContext.Writer.Write("<div id='ajaxDiv'>");
+                Html.RenderPartial("_CmbProducto_Factura", DataBinder.Eval(c.DataItem, "IdProducto"));
+                ViewContext.Writer.Write("</div>");
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "vt_cantidad";
+            column.Caption = "cantidad";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(7);
+            column.EditorProperties().SpinEdit(q =>
+            {
+                q.MinValue = 0;
+                q.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "vt_Precio";
+            column.Caption = "Precio";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(7);
+            column.EditorProperties().SpinEdit(q =>
+            {
+                q.MinValue = 0;
+                q.Width = Unit.Percentage(100);
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "vt_PorDescUnitario";
+            column.Caption = "% Desc. uni.";
+            column.Width = Unit.Percentage(7);
+            column.EditorProperties().SpinEdit(q =>
+            {
+                q.MinValue = 0;
+                q.Width = Unit.Percentage(100);
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdCod_Impuesto_Iva";
+            column.Caption = "Impuesto";
+            column.Width = Unit.Percentage(60);
+            column.Visible = false;
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.Columns.Add("nom_impuesto", "Descripción").Width = Unit.Percentage(100);
+                p.TextField = "nom_impuesto";
+                p.ValueField = "IdCod_Impuesto";
+                p.ValueType = typeof(string);
+                p.DataSource = ViewBag.lst_impuesto;
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "vt_PrecioFinal";
+            column.Caption = "Precio final";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(7);
+            column.Visible = false;
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "vt_Subtotal";
+            column.Caption = "Subtotal";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(7);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "vt_iva";
+            column.Caption = "I.V.A.";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(7);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "vt_total";
+            column.Caption = "Total";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.Width = Unit.Percentage(7);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "*";
+            column.FieldName = "Secuencia";
+            column.Width = Unit.Percentage(5);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            column.SetDataItemTemplateContent(c =>
+            {
+                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-lock\" onclick=\"MostrarModalPrecios('" +c.KeyValue+ "');\"></span>");
+            });
+        });
+        settings.CellEditorInitialize = (sender, e) =>
+        {
+            if (e.Column.FieldName == "vt_PorDescUnitario" && SessionFixed.EsSuperAdmin != "True")
+            {
+                MVCxGridView g = sender as MVCxGridView;
+                e.Editor.ReadOnly = true;
+            }
+        };
+
+        settings.ClientSideEvents.BeginCallback = "function(s,e){e.customArgs['IdCliente'] = IdCliente.GetValue(); e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); e.customArgs['NivelDescuento'] = $('#IdNivel').val();}";
+        settings.ClientSideEvents.EndCallback = "function(s,e){ CargarCuotas(); ValidarGrid(); if (s.IsEditing()) {var editor = IdProducto;editor.Focus();}}";
+        //if (s.IsEditing()) {var editor = s.GetEditor('IdProducto');editor.Focus();} //Para combos normal
+        //if (s.IsEditing()) {var editor = IdProducto; editor.Focus();} //Para combo bajo demanda como producto
+
+        /*settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_Subtotal").DisplayFormat = "{0:n2}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_iva").DisplayFormat = "{0:n2}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "vt_total").DisplayFormat = "{0:n2}";
+        settings.Settings.ShowFooter = true;*/
+    });
+
+
+}
+@grid.Bind(Model).GetHtml()

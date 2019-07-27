@@ -1,0 +1,25 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdCtaCble_prov_credito";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "ParametrosContable", Action = "CmbCuenta_provisiones_credito", Area = "RRHH" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "pc_Cuenta";
+        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.ValueField = "IdCtaCble";
+        settings.Properties.ValueType = typeof(string);
+        settings.Properties.Columns.Add("IdCtaCble", "ID", 10);
+        settings.Properties.Columns.Add("pc_Cuenta", "Cuenta contable", 40);
+        settings.Properties.Columns.Add("IdCtaCblePadre", "ID Padre", 10);
+        settings.Properties.Columns.Add("pc_Cuenta_padre", "Cuenta padre", 40);
+        settings.Properties.FilterMinLength = 3;
+    })
+     .BindList(new Core.Erp.Web.Areas.RRHH.Controllers.ParametrosContableController().get_list_bajo_demanda_prov_credito, new Core.Erp.Web.Areas.RRHH.Controllers.ParametrosContableController().get_info_bajo_demanda_prov_credito)
+    .Bind((Model.GetType() == typeof(Core.Erp.Info.RRHH.ro_Parametros_Info) || Model.GetType() == typeof(Core.Erp.Info.RRHH.ro_Config_Param_contable_Info) || Model.GetType() == typeof(List<Core.Erp.Info.RRHH.ro_Config_Param_contable_Info>)) ? "" : Model);
+    }
+@comboBox.GetHtml()

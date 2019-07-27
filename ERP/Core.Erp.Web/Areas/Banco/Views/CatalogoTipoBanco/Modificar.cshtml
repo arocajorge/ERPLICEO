@@ -1,0 +1,46 @@
+﻿@model Core.Erp.Info.Banco.ba_CatalogoTipo_Info
+@{
+    ViewBag.Title = "Modificar catálogo ";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Modificar", "CatalogoTipoBanco", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdTipoCatalogo)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdTipoCatalogo">Código*</label>
+                    @Html.TextBoxFor(q => q.IdTipoCatalogo, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.IdTipoCatalogo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="tc_Descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.tc_Descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.tc_Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","CatalogoTipoBanco",new { Area = "Banco" },null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

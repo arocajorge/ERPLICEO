@@ -1,0 +1,45 @@
+﻿@model Core.Erp.Info.CuentasPorPagar.cp_codigo_SRI_tipo_Info
+@{
+    ViewBag.Title = "Modificar tipo código SRI";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Modificar", "TipoCodigoSRI", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdTipoSRI)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdTipoSRI">Código*</label>
+                    @Html.TextBoxFor(q => q.IdTipoSRI, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdTipoSRI, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "TipoCodigoSRI", new { Area = "CuentasPorPagar" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

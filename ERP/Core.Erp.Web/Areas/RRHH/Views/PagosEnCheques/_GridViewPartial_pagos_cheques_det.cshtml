@@ -1,0 +1,141 @@
+
+@using System.Web.UI.WebControls;
+@model Core.Erp.Info.RRHH.ro_NominasPagosCheques_Info
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewPartial_pagos_cheques_det";
+        settings.CallbackRouteValues = new { Controller = "PagosEnCheques", Action = "GridViewPartial_pagos_cheques_det" };
+        settings.KeyFieldName = "IdTransaccion";
+        settings.Width = Unit.Percentage(100);
+
+
+        //settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        //settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ArchivosTransferencias", Action = "EditingUpdate", Area = "RRHH" };
+        //settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ArchivosTransferencias", Action = "EditingDelete", Area = "RRHH" };
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.Settings.ShowFooter = true;
+
+        //settings.SettingsContextMenu.Enabled = true;
+        //settings.SettingsBehavior.EnableCustomizationWindow = true;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+
+
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdEmpleado";
+            column.Caption = "ID";
+            column.Width = Unit.Percentage(5);
+            column.EditorProperties().TextBox(sp =>
+            {
+                sp.Width = Unit.Percentage(100);
+
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "pe_nombreCompleto";
+            column.Caption = "Nombres";
+            column.Width = Unit.Percentage(40);
+            column.EditorProperties().TextBox(sp =>
+            {
+                sp.Width = Unit.Percentage(100);
+
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "em_tipoCta";
+            column.Caption = "Tipo cta.";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().TextBox(sp =>
+            {
+                sp.Width = Unit.Percentage(100);
+
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "em_NumCta";
+            column.Caption = "# cuenta";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().TextBox(sp =>
+            {
+                sp.Width = Unit.Percentage(100);
+
+            });
+        });
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Valor";
+            column.Caption = "Total";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+                sp.Width = Unit.Percentage(100);
+                column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ValorCancelado";
+            column.Caption = "Total cancelado";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+                sp.Width = Unit.Percentage(100);
+                column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Saldo";
+            column.Caption = "Saldo";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+                sp.Width = Unit.Percentage(100);
+                column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+
+            });
+        });
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Valor");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "ValorCancelado");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Saldo");
+
+    });
+
+}
+@grid.Bind(Model.detalle).GetHtml()

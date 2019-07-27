@@ -1,0 +1,87 @@
+﻿@model Core.Erp.Info.Contabilidad.ct_cbtecble_tipo_Info
+@{
+    ViewBag.Title = "Anular tipo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Anular", "TipoComprobante", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdTipoCbte)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="CodTipoCbte">Código*</label>
+                    @Html.TextBoxFor(q => q.CodTipoCbte, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.CodTipoCbte, "", new { @class = "form", @role = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="tc_Nemonico">Nemonico*</label>
+                    @Html.TextBoxFor(q => q.tc_Nemonico, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.tc_Nemonico, "", new { @class = "form", @role = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="tc_TipoCbte">Descripción*</label>
+                    @Html.TextBoxFor(q => q.tc_TipoCbte, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.tc_TipoCbte, "", new { @class = "form", @role = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdTipoCbte_Anul">Tipo comprobante anulación*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdTipoCbte_Anul, settings =>
+                    {
+                        settings.Name = "IdTipoCbte_Anul";
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                        settings.Properties.Columns.Add("IdTipoCbte", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                        settings.Properties.Columns.Add("tc_TipoCbte", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                       //Campo ID
+                       settings.Properties.ValueField = "IdTipoCbte";
+                        settings.Properties.ValueType = typeof(int);
+                        settings.Properties.TextField = "tc_TipoCbte";
+                        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                        settings.Properties.NullText = "== Seleccione ==";
+                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                    }).BindList(ViewBag.lst_tipo).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdTipoCbte_Anul, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="tc_Interno_bool">@Html.CheckBoxFor(q => q.tc_Interno_bool) Este comprobante es usado solo por contabilidad </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index","TipoComprobante",new { Area = "Contabilidad" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

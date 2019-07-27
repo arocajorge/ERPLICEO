@@ -1,0 +1,117 @@
+﻿@model Core.Erp.Info.Banco.ba_Banco_Cuenta_Info
+@{
+    ViewBag.Title = "Importar cuentas bancarias";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script type="text/javascript">
+    function OnFileUploadStart(s, e) {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ActualizarVariablesSession", "BancoCuenta", new { Area = "Banco" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            },
+            error: function (error) {
+            }
+        });        
+    }
+
+    function OnFileUploadComplete(s, e)
+    {
+        GridViewPartial_Banco_importacion.PerformCallback();
+        GridViewPartial_Documento_importacion.PerformCallback();
+    }
+
+</script>
+
+@using (Html.BeginForm("Importar", "BancoCuenta", FormMethod.Post, new { @role = "form", @id = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+    if (ViewBag.error != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.error
+                <a href="@Url.Action("Index","LogError",new  {Area="General"}, null )" class="small-box-footer" target="_blank">Ver detalle error<i class="fa fa-arrow-circle-right"></i></a>
+            </h4>
+        </div>
+
+    }
+    @Html.HiddenFor(q=> q.IdEmpresa, new { @id = "IdEmpresa"})
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                @Html.DevExpress().UploadControl(settings =>
+           {
+               settings.Name = "UploadControlFile";
+               settings.CallbackRouteValues = new { Controller = "BancoCuenta", Action = "UploadControlUpload" };
+               settings.ShowUploadButton = true;
+               settings.ShowProgressPanel = true;
+               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+               settings.NullText = "Selecciona el archivo...";
+               settings.ClientSideEvents.FilesUploadStart = "OnFileUploadStart";
+               settings.ClientSideEvents.FileUploadComplete = "OnFileUploadComplete";
+           }).GetHtml()
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary" title="Guardar">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="Tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_banco" aria-controls="vales" role="tab" data-toggle="tab">Cuentas bancarias</a>
+            </li>
+            <li class="">
+                <a href="#tab_doc" aria-controls="vales" role="tab" data-toggle="tab">Documentos</a>
+            </li>        
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_banco">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            @Html.Action("GridViewPartial_Banco_importacion")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_doc">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            @Html.Action("GridViewPartial_Documento_importacion")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

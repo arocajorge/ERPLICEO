@@ -1,0 +1,375 @@
+﻿@model Core.Erp.Info.CuentasPorCobrar.cxc_cobro_Info
+@{
+    ViewBag.Title = "Nuevo cobro";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+<script type="text/javascript">
+    var selectedIDs;
+    $(function () {
+        GetIdCajaPorSucursal();
+
+        $("#IdCobro_tipo").change(function () {
+            SetCobroTipo();
+        });
+
+        $("#cr_TotalCobro").change(function () {
+            CalcularSaldo();
+        });
+
+        SetCobroTipo();
+        $("#IdSucursal").change(function () {
+            GetIdCajaPorSucursal();
+        });
+        $("#IdCaja").change(function () {
+            GetIdCajaPorSucursal();
+        });
+    })
+
+    function SetCobroTipo() {
+
+        var tipo_cobro = $("#IdCobro_tipo").val();
+
+        $("#div_bancos").hide();
+        $("#div_cheque").hide();
+        if (tipo_cobro == "CHQF" || tipo_cobro == "CHQV") {
+            $("#div_cheque").show();
+        }else
+            if (tipo_cobro == "DEPO") {
+                $("#div_bancos").show();
+            }
+    }
+
+    function OnBeginCallback(s, e) {
+        //Pass all selected keys to GridView callback action
+        e.customArgs["selectedIDs"] = selectedIDs;
+    }
+    function OnSelectionChanged(s, e) {
+        s.GetSelectedFieldValues("secuencia", GetSelectedFieldValuesCallback);
+    }
+    function GetSelectedFieldValuesCallback(values) {
+        //Capture all selected keys
+        selectedIDs = values.join(',');
+    }
+
+    //function MostrarModal() {
+    //    if (Number($("#cr_TotalCobro").val()) == 0) {
+    //        alert("Debe ingresar el total a cobrar");
+    //        return;
+    //    }
+
+    //    selectedIDs = "";
+    //    GridView_cobranza_facturas_x_cruzar.PerformCallback();
+    //    GridView_cobranza_facturas_x_cruzar.UnselectRows();
+    //    $("#FacturasModal").modal("show");
+    //}
+
+    function MostrarModal() {
+        if (Number($("#cr_TotalCobro").val()) == 0)
+        {
+            alert("Debe ingresar el total a cobrar");
+            return;
+        }
+        else
+        {
+            selectedIDs = "";
+            var datos = {
+                IdTransaccionSession: $("#IdTransaccionSession").val(),
+                IdEmpresa: $("#IdEmpresa").val(),
+                IdSucursal: $("#IdSucursal").val(),
+                IdCliente: IdCliente.GetValue()
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("GetListFacturas_PorIngresar", "Cobranza", new { Area = "CuentasPorCobrar" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    console.log(data);
+                    GridView_cobranza_facturas_x_cruzar.PerformCallback();
+                    GridView_cobranza_facturas_x_cruzar.UnselectRows();
+                    $("#FacturasModal").modal("show");
+
+                },
+                error: function (error) {
+                }
+            });
+        }       
+    }
+
+    function GetIdCajaPorSucursal() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetIdCajaPorSucursal", "Cobranza", new { Area = "CuentasPorCobrar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                if (data > 0) {
+                    $('#IdCaja').val(data);
+                }
+            },
+            error: function (error) {
+            }
+        });
+    };
+    function AddFacturas() {
+        var datos = {
+            IDs: selectedIDs,
+            TotalACobrar: $("#cr_TotalCobro").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("EditingAddNewFactura", "Cobranza",new { Area = "CuentasPorCobrar"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#cr_saldo").val(data);
+            },
+            error: function (error) {
+            }
+        });
+        selectedIDs = "";
+        GridView_cobranza_facturas_x_cruzar.PerformCallback();
+        GridView_cobranza_facturas_x_cruzar.UnselectRows();
+        GridView_cobranza_det.PerformCallback();
+        $("#FacturasModal").modal("hide");
+    }
+
+    function CalcularSaldo() {
+
+        var datos = {
+            TotalACobrar: $("#cr_TotalCobro").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CalcularSaldo", "Cobranza",new { Area = "CuentasPorCobrar"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#cr_saldo").val(data);
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+        function VaciarLista() {
+
+            var datos = {
+                IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("VaciarLista", "Cobranza",new { Area = "CuentasPorCobrar"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+            },
+            error: function (error) {
+            }
+        });
+        GridView_cobranza_det.PerformCallback();
+        }
+
+
+
+</script>
+
+
+@using (Html.BeginForm("Nuevo", "Cobranza", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdEmpresa)
+    if (@ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+    <div class="modal fade" id="FacturasModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Facturas</h4>
+                </div>
+                <div class="modal-body">
+
+                    @Html.Action("GridViewPartial_cobranza_facturas_x_cruzar")
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="AddFacturas();">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    @Html.HiddenFor(q => q.IdEmpresa)
+    <div class="row">
+        <div class="col-md-8">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal*</label>
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-11">
+                <div class="form-group">
+                    <label for="IdCliente">Cliente*</label>
+                    @Html.Partial("_CmbCliente_Cobranza", Model.IdEntidad)
+                    @Html.ValidationMessageFor(q => q.IdCliente, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <label for="IdCliente"></label>
+                    <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","Cliente",new { Area = "Facturacion", IdEmpresa = Model.IdEmpresa },null)" target="_blank">+</a>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCobro_tipo">Tipo cobro*</label>
+                    @Html.DropDownListFor(q => q.IdCobro_tipo, new SelectList(ViewBag.lst_cobro_tipo, "IdCobro_tipo", "tc_descripcion"), new { @class = "form-control", @id = "IdCobro_tipo" })
+                    @Html.ValidationMessageFor(q => q.IdCobro_tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="col-md-offset-6 col-md-6">
+                <div class="form-group">
+                    <label for="cr_fecha">Fecha*</label>
+                    @Html.DevExpress().DateEditFor(q=> q.cr_fecha, settings =>
+                {
+                    settings.Name = "cr_fecha";
+                    settings.Properties.UseMaskBehavior = true;
+                    settings.Properties.EditFormat = EditFormat.Date;
+                    settings.Properties.EditFormatString = "dd/MM/yyyy";
+                    settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.cr_fecha, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCaja">Caja*</label>
+                    @Html.DropDownListFor(q => q.IdCaja, new SelectList(ViewBag.lst_caja, "IdCaja", "ca_Descripcion"), new { @class = "form-control", @id = "IdCaja" })
+                    @Html.ValidationMessageFor(q => q.IdCaja, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="cr_TotalCobro">Total*</label>
+                    @Html.TextBoxFor(q => q.cr_TotalCobro, new { @id = "cr_TotalCobro", @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.cr_TotalCobro, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="cr_saldo">Saldo</label>
+                    @Html.TextBoxFor(q => q.cr_saldo, new { @id = "cr_saldo", @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.cr_saldo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="div_cheque" hidden>
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="cr_Banco">Banco*</label>
+                    @Html.DropDownListFor(q => q.cr_Banco, new SelectList(ViewBag.lst_banco, "ba_descripcion", "ba_descripcion"), new { @class = "form-control", @id = "cr_Banco" })
+                    @Html.ValidationMessageFor(q => q.cr_Banco, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="cr_cuenta">Cuenta*</label>
+                    @Html.TextBoxFor(q => q.cr_cuenta, new { @id = "cr_cuenta", @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.cr_cuenta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="cr_NumDocumento"># Cheque*</label>
+                    @Html.TextBoxFor(q => q.cr_NumDocumento, new { @id = "cr_NumDocumento", @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.cr_NumDocumento, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="div_bancos" hidden>
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdBanco">Cuenta bancaria*</label>
+                    @Html.DropDownListFor(q => q.IdBanco, new SelectList(ViewBag.lst_banco_cuenta, "IdBanco", "ba_descripcion"), new { @class = "form-control", @id = "IdBanco" })
+                    @Html.ValidationMessageFor(q => q.IdBanco, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary" title="Buscar facturas" id="btn_buscar" onclick="MostrarModal();">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br />
+
+    @Html.Action("GridViewPartial_cobranza_det")
+
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Cobranza", new { Area = "CuentasPorCobrar" }, null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+

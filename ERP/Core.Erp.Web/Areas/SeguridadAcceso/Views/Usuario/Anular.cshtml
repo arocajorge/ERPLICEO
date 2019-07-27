@@ -1,0 +1,165 @@
+﻿@model Core.Erp.Info.SeguridadAcceso.seg_usuario_Info
+@{
+    ViewBag.Title = "Anular usuario";
+    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script type="text/javascript">
+
+   $(function () {
+        $("#div_admin").hide();
+    })
+    function OnBeginCallback(s, e) {
+        e.customArgs["IdEmpresa"] = IdEmpresa.GetValue();
+    }
+</script>
+@using (Html.BeginForm("Anular", "Usuario", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdUsuario)
+    @Html.HiddenFor(q => q.IdTransaccionSession)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdUsuario">Usuario*</label>
+                    @Html.TextBoxFor(q => q.IdUsuario, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdUsuario, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Nombre">Nombre</label>
+                    @Html.TextBoxFor(q => q.Nombre, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for=""></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.es_super_admin, settings =>
+                           {
+                               settings.Name = "es_super_admin";
+                               settings.Text = "¿Es usuario Administrador?";
+                               settings.Properties.ClientSideEvents.CheckedChanged = "function(s,e){ValidarSuperAdmin();}";
+
+                           }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.es_super_admin, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for=""></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.ExigirDirectivaContrasenia, settings =>
+                           {
+                               settings.Name = "ExigirDirectivaContrasenia";
+                               settings.Text = "Exigir directivas de contraseña";
+
+                           }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.ExigirDirectivaContrasenia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for=""></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.CambiarContraseniaSgtSesion, settings =>
+                           {
+                               settings.Name = "CambiarContraseniaSgtSesion";
+                               settings.Text = "Cambiar contraseña el próximo inicio de sesión";
+
+                           }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.CambiarContraseniaSgtSesion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group" id="div_admin" hidden>
+                    <label for="contrasena_admin">Contraseña Administrador</label>
+                    @Html.TextBoxFor(q => q.contrasena_admin, new { @class = "form-control", @id = "contrasena_admin" })
+                </div>
+            </div>
+        </div>
+    </div>    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdMenu">Menú inicio de sesión</label>
+                    @Html.DropDownListFor(q => q.IdMenu, new SelectList(ViewBag.lst_menu, "IdMenu", "DescripcionMenu_combo", Model.IdMenu == null ? 0 : Model.IdMenu), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdMenu, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<div class="col-md-12">
+        <table class="table table-bordered table-striped dataTable" role="grid">
+            <thead>
+                <tr role="row">
+                    <td width="10%"><strong>*</strong></td>
+                    <td width="90%"><strong>Empresa</strong></td>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    string clase = "";
+                    for (int i = 0; i < Model.lst_usuario_x_empresa.Count; i++)
+                    {
+                        if (i % 2 == 0)
+                        {
+                            clase = "even";
+                        }
+                        else
+                        {
+                            clase = "odd";
+                        }
+                        <tr role="row" class=@clase>
+                            @Html.HiddenFor(q => q.lst_usuario_x_empresa[i].em_nombre)
+                            @Html.HiddenFor(q => q.lst_usuario_x_empresa[i].IdEmpresa)
+                            <td>
+                                @Html.CheckBoxFor(q => q.lst_usuario_x_empresa[i].seleccionado)
+                            </td>
+                            <td>
+                                @Model.lst_usuario_x_empresa[i].em_nombre
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>*@
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.Action("GridViewPartial_Usuario_x_Sucursal")
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Usuario",new { Area = "SeguridadAcceso" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

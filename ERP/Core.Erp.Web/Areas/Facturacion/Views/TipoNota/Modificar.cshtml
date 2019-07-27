@@ -1,0 +1,105 @@
+﻿@model Core.Erp.Info.Facturacion.fa_TipoNota_Info
+@{
+    ViewBag.Title = "Modificar Tipo ";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Modificar", "TipoNota", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+@Html.HiddenFor(q => q.IdTipoNota)
+@Html.HiddenFor(q => q.IdTransaccionSession)
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="CodTipoNota">Código</label>
+                @Html.TextBoxFor(q => q.CodTipoNota, new { @class = "form-control" })
+                @Html.ValidationMessageFor(q => q.CodTipoNota, "", new { @class = "form", @role = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="IdCtaCble">Cuenta contable*</label>
+                @Html.Partial("_CmbCuenta_TipoNota", Model)
+                @Html.ValidationMessageFor(q => q.IdCtaCble, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-3">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="Tipo">Tipo*</label>
+                @Html.DropDownListFor(q => q.Tipo, new SelectList(ViewBag.lst_tipos, "Key", "Value"), new { @class = "form-control", @id = "Tipo" })
+                @Html.ValidationMessageFor(q => q.Tipo, "", new { @class = "form", @role = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3" id="div_movimiento">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for=""></label>
+                @Html.DevExpress().CheckBoxFor(q => q.GeneraMoviInven, settings =>
+               {
+                   settings.Name = "GeneraMoviInven";
+                   settings.Text = "Genera movimiento inventario";
+               }).GetHtml()
+                @Html.ValidationMessageFor(q => q.GeneraMoviInven, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="No_Descripcion">Descripción*</label>
+                @Html.TextBoxFor(q => q.No_Descripcion, new { @class = "form-control" })
+                @Html.ValidationMessageFor(q => q.No_Descripcion, "", new { @class = "form", @role = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box-footer">
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a class="btn btn-default" href="@Url.Action("Index","TipoNota",new { Area = "Facturacion" },null)">Cancelar</a>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+}
+<script>
+    $(function () {
+        ocultar_mostrar_div_movimiento();
+
+        $("#Tipo").change(function () {
+            ocultar_mostrar_div_movimiento();
+        });
+        $("#GeneraMoviInven").change(function () {
+            ocultar_mostrar_div_movimiento();
+        });
+    })
+
+    function ocultar_mostrar_div_movimiento() {
+        var tipo = ($("#Tipo").val());
+        if (tipo == "D") {
+            $("#div_movimiento").hide();
+        } else {
+            $("#div_movimiento").show();
+        }
+    }
+</script>

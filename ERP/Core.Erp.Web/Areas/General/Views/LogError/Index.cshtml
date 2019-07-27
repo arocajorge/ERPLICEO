@@ -1,0 +1,21 @@
+﻿@model Core.Erp.Info.General.tb_sis_log_error_Info
+
+@{
+    ViewBag.Title = "Detalle error";
+    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    if (Model.DescripcionError != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @Model.DescripcionError
+            </h4>
+        </div>
+    }
+
+}
+

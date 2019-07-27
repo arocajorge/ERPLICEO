@@ -1,0 +1,89 @@
+﻿@model Core.Erp.Info.Facturacion.fa_catalogo_Info
+@{
+    ViewBag.Title = "Modificar catálogo ";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Modificar", "CatalogoFacturacion", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdCatalogo_tipo)
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCatalogo_tipo">Tipo catálogo*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdCatalogo_tipo, settings =>
+               {
+                   settings.Name = "IdCatalogo_tipo";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdCatalogo_tipo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdCatalogo_tipo";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "Descripcion";
+                   settings.Properties.NullText = "== Seleccione ==";
+
+                   settings.Properties.DropDownButton.Enabled = false;
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.ReadOnly = true;
+               }).BindList(ViewBag.lst_tipo).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdCatalogo_tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdCatalogo">Código*</label>
+                    @Html.TextBoxFor(q => q.IdCatalogo, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.IdCatalogo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Abrebiatura">Abreviatura</label>
+                    @Html.TextBoxFor(q => q.Abrebiatura, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Abrebiatura, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Orden">Orden</label>
+                    @Html.TextBoxFor(q => q.Orden, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Orden, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Nombre">Descripción*</label>
+                    @Html.TextBoxFor(q => q.Nombre, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","CatalogoFacturacion", new { IdCatalogo_tipo = ViewBag.IdCatalogo_tipo , Area = "Facturacion" },null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

@@ -1,0 +1,82 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridViewPartial_Sucursal_x_NivelDescuento";
+        settings.CallbackRouteValues = new { Controller = "Sucursal", Action = "GridViewPartial_Sucursal_x_NivelDescuento", Area = "General" };
+
+        settings.KeyFieldName = "Secuencia";
+        //settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Sucursal", Action = "EditingAddNew", Area = "General" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Sucursal", Action = "EditingUpdate", Area = "General" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Sucursal", Action = "EditingDelete", Area = "General" };
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+
+        settings.Settings.ShowFooter = true;
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        //Funcion para inicializar fila al presionar nuevo
+        settings.InitNewRow = (s, e) =>
+        {
+
+        };
+
+        settings.Columns.Add(column =>
+        {
+            column.Name = "IdCatalogo";
+            column.FieldName = "IdCatalogo";
+            column.Caption = "Forma de Pago";
+            column.Width = Unit.Percentage(40);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.Columns.Add("Nombre", "Forma de Pago").Width = Unit.Percentage(100);
+                p.TextField = "Nombre";
+                p.ValueField = "IdCatalogo";
+                p.ValueType = typeof(string);
+                p.DataSource = ViewBag.lst_forma_pago;
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Name = "IdNivel";
+            column.FieldName = "IdNivel";
+            column.Caption = "Nivel de descuento";
+            column.Width = Unit.Percentage(40);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.Columns.Add("Descripcion", "Nivel de descuento").Width = Unit.Percentage(100);
+                p.TextField = "Descripcion";
+                p.ValueField = "IdNivel";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.lst_nivel_descuento;
+            });
+        });
+
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
+    });
+
+}
+@grid.Bind(Model).GetHtml()

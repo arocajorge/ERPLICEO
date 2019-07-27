@@ -1,0 +1,107 @@
+﻿@model Core.Erp.Info.SeguridadAcceso.seg_Menu_Info
+@{
+    ViewBag.Title = "Anular menú";
+    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Anular", "Menu", FormMethod.Post, new { @role = "form", @class = "form" }))
+{
+    @Html.HiddenFor(q => q.IdMenu)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdMenuPadre">Menú padre</label>
+                    @Html.DropDownListFor(q => q.IdMenuPadre, new SelectList(ViewBag.lst_menu, "IdMenu", "DescripcionMenu_combo", "0"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdMenuPadre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="DescripcionMenu">Descripción*</label>
+                    @Html.TextBoxFor(q => q.DescripcionMenu, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.DescripcionMenu, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="PosicionMenu">Posición</label>
+                    @Html.TextBoxFor(q => q.PosicionMenu, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.PosicionMenu, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="checkbox">
+                    <label for="Tiene_FormularioAsociado">Tiene formulario asociado @Html.CheckBoxFor(q => q.Tiene_FormularioAsociado)</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="checkbox">
+                    <label for="es_web">@Html.CheckBoxFor(q => q.es_web) Aparece en sistema web</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="checkbox">
+                    <label for="es_desktop">@Html.CheckBoxFor(q => q.es_desktop) Aparece en sistema desktop</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="web_nom_Area">Area</label>
+                    @Html.TextBoxFor(q => q.web_nom_Area, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.web_nom_Area, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="web_nom_Controller">Controlador</label>
+                    @Html.TextBoxFor(q => q.web_nom_Controller, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.web_nom_Controller, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="web_nom_Action">Acción</label>
+                    @Html.TextBoxFor(q => q.web_nom_Action, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.web_nom_Action, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Menu",new { Area = "SeguridadAcceso" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

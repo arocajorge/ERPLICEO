@@ -1,0 +1,264 @@
+﻿
+@model Core.Erp.Info.Helps.cl_filtros_inventario_Info
+@{
+    Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
+    ViewBag.Title = "INV_016";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+}
+@using (Html.BeginForm("INV_016", "InventarioReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q=>q.IdEmpresa, new { @id="IdEmpresa"})
+    <div class="box">
+        <div class="box-header with-border">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+                </div>
+            </div>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdSucursal">Sucursal</label>
+                            @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                            @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for=""></label>
+                            @Html.DevExpress().CheckBoxFor(q => q.no_mostrar_valores_en_0, settings =>
+                           {
+                               settings.Name = "no_mostrar_valores_en_0";
+                               settings.Text = "Mostrar sin venta";
+
+                           }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.no_mostrar_valores_en_0, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="">Fecha inicio*</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.DevExpress().DateEditFor(q => q.fecha_ini, settings =>
+                                 {
+                                     settings.Name = "fecha_ini";
+                                     settings.Properties.UseMaskBehavior = true;
+                                     settings.Properties.EditFormat = EditFormat.Date;
+                                     settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                     settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                     settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                 }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.fecha_ini, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="">Fecha fin*</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.DevExpress().DateEditFor(q => q.fecha_fin, settings =>
+                                 {
+                                     settings.Name = "fecha_fin";
+                                     settings.Properties.UseMaskBehavior = true;
+                                     settings.Properties.EditFormat = EditFormat.Date;
+                                     settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                     settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                     settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                 }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdCategoria">Categoría</label>
+                            @Html.DropDownListFor(q => q.IdCategoria, new SelectList(ViewBag.lst_categoria, "IdCategoria", "ca_Categoria"), new { @class = "form-control", @id = "IdCategoria" })
+                            @Html.ValidationMessageFor(q => q.IdCategoria, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdLinea">Línea</label>
+                            @Html.DropDownListFor(q => q.IdLinea, new SelectList(ViewBag.lst_linea, "IdLinea", "nom_linea"), new { @class = "form-control", @id = "IdLinea" })
+                            @Html.ValidationMessageFor(q => q.IdLinea, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="dGrupo">Grupo</label>
+                            @Html.DropDownListFor(q => q.IdGrupo, new SelectList(ViewBag.lst_grupo, "IdGrupo", "nom_grupo"), new { @class = "form-control", @id = "IdGrupo" })
+                            @Html.ValidationMessageFor(q => q.IdGrupo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdSubGrupo">Subgrupo</label>
+                            @Html.DropDownListFor(q => q.IdSubGrupo, new SelectList(ViewBag.lst_subgrupo, "IdSubgrupo", "nom_subgrupo"), new { @class = "form-control", @id = "IdSubGrupo" })
+                            @Html.ValidationMessageFor(q => q.IdSubGrupo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>                  
+                </div>
+            </div>
+
+            <!-- /.box-body -->
+        </div>
+    </div>
+
+
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">@ViewBag.Title</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            @Html.DevExpress().WebDocumentViewer(settings =>
+       {
+           settings.ClientSideEvents.Init = "function(s, e) {s.previewModel.reportPreview.zoom(1);}";
+           settings.MobileMode = false;
+           settings.Name = "webDocumentViewer";
+       }).Bind(ViewBag.Report).GetHtml()
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            [@Session["IdEmpresa"]] @Session["nom_empresa"]
+        </div>
+        <!-- /.box-footer-->
+    </div>    
+}
+<script>
+    
+    $("#IdCategoria").change(function () {
+        cargar_lineas();
+    });
+
+    $("#IdLinea").change(function () {
+        cargar_grupos();
+    });
+    $("#IdGrupo").change(function () {
+        cargar_subgrupos();
+    });
+
+            function cargar_lineas() {
+            $("#IdLinea").empty();
+
+            var datos = {
+                IdCategoria: $("#IdCategoria").val(),
+                IdEmpresa: $("#IdEmpresa").val()
+            }
+
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("cargar_lineas", "InventarioReportes", new { Area = "Reportes" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $.each(data, function (i, row) {
+                        $("#IdLinea").append("<option value=" + row.IdLinea + ">" + row.nom_linea + "</option>");
+                    });
+                    $("#IdLinea").val("0");
+                    cargar_grupos();
+                },
+                error: function (error) {
+                }
+            });
+        };
+
+
+    function cargar_grupos() {
+        $("#IdGrupo").empty();
+        
+        var datos = {
+            IdCategoria: $("#IdCategoria").val(),
+            IdLinea: $("#IdLinea").val(),
+            IdEmpresa: $("#IdEmpresa").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("cargar_grupos", "InventarioReportes", new { Area = "Reportes" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+                $.each(data, function (i, row) {
+                    $("#IdGrupo").append("<option value=" + row.IdGrupo + ">" + row.nom_grupo + "</option>");
+                });
+                $("#IdGrupo").val("0");
+                cargar_subgrupos();
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+
+    function cargar_subgrupos() {
+        $("#IdSubGrupo").empty();
+        
+        var datos = {
+            IdCategoria: $("#IdCategoria").val(),
+            IdLinea: $("#IdLinea").val(),
+            IdGrupo: $("#IdGrupo").val(),
+            IdEmpresa: $("#IdEmpresa").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("cargar_subgrupos", "InventarioReportes", new { Area = "Reportes" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdSubGrupo").append("<option value=" + row.IdSubgrupo + ">" + row.nom_subgrupo + "</option>");
+                });
+                $("#IdSubGrupo").val("0");
+            },
+            error: function (error) {
+            }
+        });
+    };
+</script>

@@ -1,0 +1,97 @@
+@using System.Web.UI.WebControls;
+
+@{
+    var treeList = Html.DevExpress().TreeList(settings =>
+    {
+        settings.Name = "TreeList_menu";
+        settings.CallbackRouteValues = new { Controller = "Menu", Action = "TreeListPartial_menu" };
+        settings.Width = Unit.Percentage(100);
+        settings.KeyFieldName = "IdMenu";
+        settings.ParentFieldName = "IdMenuPadre";
+
+        settings.Toolbars.Add(t =>
+        {
+            t.EnableAdaptivity = true;
+
+            t.Items.Add(TreeListToolbarCommand.ExportToPdf).Text = "Exportar a PDF";
+            t.Items.Add(TreeListToolbarCommand.ExportToXls).Text = "Exportar a XLS";
+            t.Items.Add(TreeListToolbarCommand.ExportToXlsx).Text = "Exportar a XLSX";
+            t.Items.Add(TreeListToolbarCommand.ExportToDocx).Text = "Exportar a DOCX";
+            t.Items.Add(TreeListToolbarCommand.ExportToRtf).Text = "Exportar a RTF";
+        });
+
+        settings.Columns.Add(
+    column =>
+    {
+        column.FieldName = "DescripcionMenu";
+        column.Caption = "Descripción";
+    }
+);
+
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "#";
+            c.SetDataCellTemplateContent(tc =>
+            {
+                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Habilitado")) == true)
+                {
+                    ViewContext.Writer.Write(
+                Html.ActionLink("Modificar", "Modificar", new { IdMenu = DataBinder.Eval(tc.DataItem, "IdMenu") }) + "&nbsp;" +
+                        Html.ActionLink("Anular", "Anular", new { IdMenu = DataBinder.Eval(tc.DataItem, "IdMenu") },
+                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                    );
+                }
+            });
+            c.Width = Unit.Pixel(150);
+        });
+
+        settings.Columns.Add(
+    column =>
+    {
+        column.FieldName = "PosicionMenu";
+        column.Caption = "Posición";
+    }
+
+);
+        settings.Columns.Add(
+    column =>
+    {
+        column.FieldName = "Habilitado";
+        column.Caption = "Estado";
+        column.ColumnType = MVCxTreeListColumnType.CheckBox;
+    }
+);
+
+        settings.Columns.Add(
+column =>
+{
+    column.FieldName = "es_web";
+    column.Caption = "Web";
+    column.ColumnType = MVCxTreeListColumnType.CheckBox;
+}
+);
+
+        settings.Columns.Add(
+column =>
+{
+    column.FieldName = "es_desktop";
+    column.Caption = "Desktop";
+    column.ColumnType = MVCxTreeListColumnType.CheckBox;
+}
+);
+        settings.Columns.Add(
+    column =>
+    {
+        column.FieldName = "IdMenu";
+        column.Caption = "ID";
+    }
+);
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.GridLines = GridLines.Both;
+        settings.SettingsBehavior.ExpandCollapseAction = TreeListExpandCollapseAction.NodeDblClick;
+        settings.SettingsExport.EnableClientSideExportAPI = true;
+        settings.SettingsExport.Styles.Header.HorizontalAlign = HorizontalAlign.Left;
+    });
+}
+@treeList.Bind(Model).GetHtml()

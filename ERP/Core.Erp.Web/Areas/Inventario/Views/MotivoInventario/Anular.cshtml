@@ -1,0 +1,79 @@
+﻿@model Core.Erp.Info.Inventario.in_Motivo_Inven_Info
+@{
+    ViewBag.Title = "Anular motivo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Anular", "MotivoInventario", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdMotivo_Inv)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Cod_Motivo_Inv">Código</label>
+                    @Html.TextBoxFor(q => q.Cod_Motivo_Inv, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Cod_Motivo_Inv, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="checkbox">
+                        @Html.DevExpress().CheckBoxFor(q => q.Genera_Movi_Inven_bool,
+                         settings =>
+                         {
+                             settings.Name = "Genera_Movi_Inven_bool";
+                             settings.Checked = true;
+                             settings.Text = "Genera movimiento de inventario";
+                         }).GetHtml()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Desc_mov_inv">Descripción*</label>
+                    @Html.TextBoxFor(q => q.Desc_mov_inv, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Desc_mov_inv, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Tipo_Ing_Egr">Donde se muestra este motivo*</label>
+                    @Html.DropDownListFor(q => q.Tipo_Ing_Egr, new SelectList(ViewBag.lst_tipos, "IdCatalogo", "Nombre"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Tipo_Ing_Egr, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="Codigo">Cuenta Contable</label>
+                    @Html.Partial("_CmbCtaCble", Model.IdCtaCble)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "MotivoInventario", new {  Area ="Inventario" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+}

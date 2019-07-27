@@ -1,0 +1,187 @@
+﻿@model Core.Erp.Info.RRHH.ro_empleado_x_ro_rubro_Info
+
+@{
+    ViewBag.Title = "Nuevo rubro fijo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Nuevo", "EmpleadoPorRubro", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdProveedor">Empleado*</label>
+                    @Html.Partial("_CmbEmpleado_rubros_fijos", Model.IdEmpleado)
+                    @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdContrato_Tipo">Nómina*</label>
+                    @Html.DropDownListFor(q => q.IdNomina_Tipo, new SelectList(ViewBag.lst_nomina, "IdNomina_Tipo", "Descripcion"),  new { @class = "form-control", @id = "IdNomina_Tipo" })
+                    @Html.ValidationMessageFor(q => q.IdNomina_Tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdContrato_Tipo">Tipo liquidación de nómina*</label>
+                    @Html.DropDownListFor(q => q.IdNomina_TipoLiqui, new SelectList(ViewBag.lst_nomina_tipo, "IdNomina_TipoLiqui", "DescripcionProcesoNomina"),  new { @class = "form-control", @id = "IdNomina_TipoLiqui" })
+                    @Html.ValidationMessageFor(q => q.IdNomina_TipoLiqui, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdRubro">Rubro*</label>
+                    @Html.Partial("_CmbRubro_EmpxRub", Model.IdRubro)
+                    @Html.ValidationMessageFor(q => q.IdRubro, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Valor">Valor*</label>
+                    @Html.TextBoxFor(q => q.Valor, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Valor, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="rub_concep"></label>
+                        @Html.DevExpress().CheckBoxFor(q => q.es_indifinido, settings =>
+                   {
+                       settings.Name = "es_indifinido";
+                       settings.Text = "Indefinido";
+                       settings.Properties.ClientSideEvents.CheckedChanged = "function(s,e){mostrar_fechas();}";
+
+                   }).GetHtml()
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2" id="col_FechaInicio">
+                <div class="form-group">
+                    <label for="Fecha">Fecha inicio</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.FechaInicio, settings =>
+                    {
+                        settings.Name = "FechaInicio";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2" id="col_FechaFin">
+                <div class="form-group">
+                    <label for="Fecha">Fecha fin</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.FechaFin, settings =>
+                    {
+                        settings.Name = "FechaFin";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.FechaFin, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","EmpleadoPorRubro",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+<script>
+
+    cargar_tipo_liquidacion_nomina();
+
+    $("#IdNomina_Tipo").change(function () {
+        
+           $("#IdNomina_TipoLiqui").empty();
+             cargar_tipo_liquidacion_nomina();
+
+        });
+        function cargar_tipo_liquidacion_nomina() {
+            var datos = {
+                IdNomina: $("#IdNomina_Tipo").val()
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("get_lst_nomina_tipo_liq", "NominaTipoLiquidacion", new { Area = "RRHH" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                    $.each(data, function (i, row) {
+                        $("#IdNomina_TipoLiqui").append("<option value=" + row.IdNomina_TipoLiqui + ">" + row.DescripcionProcesoNomina + "</option>");
+                    });
+                    $("#IdNomina_TipoLiqui").val(2);
+                },
+                error: function (error) {
+                }
+            });
+        };
+
+ 
+    function mostrar_fechas() {
+        if (!es_indifinido.GetValue()) {
+            $("#col_FechaFin").show();
+            $("#col_FechaInicio").show();
+
+        }
+        else {
+            $("#col_FechaFin").hide();
+            $("#col_FechaInicio").hide();
+        }
+    };
+
+   
+
+</script>

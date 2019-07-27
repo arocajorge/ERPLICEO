@@ -1,0 +1,296 @@
+﻿@model Core.Erp.Info.Banco.ba_Cbte_Ban_Info
+@{
+    ViewBag.Title = "Nuevo crédito";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+}
+
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+
+@using (Html.BeginForm("Nuevo", "NotaDeCreditoBanco", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
+
+    <div class="modal fade" id="PlantillaModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Plantilla tipo de flujo</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.Action("GridViewPartial_TipoFlujoPlantilla_Asignar", new { Area = "Banco", Controller = "TipoFlujoPlantilla" })
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal:*</label>
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="IdTipoNota">Tipo de nota:*</label>
+                    @Html.Partial("_CmbTipoNota", Model.IdTipoNota)
+                    @Html.ValidationMessageFor(q => q.IdTipoNota, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-offset-2 col-md-2">
+                <div class="form-group">
+                    <label for="cb_Fecha">Fecha:*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.cb_Fecha, settings =>
+                        {
+                            settings.Name = "cb_Fecha";
+                            settings.Properties.UseMaskBehavior = true;
+                            settings.Properties.EditFormat = EditFormat.Date;
+                            settings.Properties.EditFormatString = "dd/MM/yyyy";
+                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.cb_Fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdBanco">Cuenta bancaria:*</label>
+                    @Html.DropDownListFor(q => q.IdBanco, new SelectList(ViewBag.lst_banco_cuenta, "IdBanco", "ba_descripcion"), new { @class = "form-control", @id = "IdBanco" })
+                    @Html.ValidationMessageFor(q => q.IdBanco, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="cb_Valor">Valor</label>
+                    @Html.TextBoxFor(q => q.cb_Valor, new { @id = "cb_Valor", @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="cb_Observacion">Observación</label>
+                    @Html.TextAreaFor(q => q.cb_Observacion, new { @id = "cb_Observacion", @class = "form-control", @rows = 2 })
+                    @Html.ValidationMessageFor(q => q.cb_Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="Tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_diario" aria-controls="vales" role="tab" data-toggle="tab">Diario</a>
+            </li>
+            <li>
+                <a href="#tab_flujo" aria-controls="vales" role="tab" data-toggle="tab">Flujo</a>
+            </li>
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_diario">
+                @Html.Action("GridViewPartial_comprobante_detalle", new { Area = "Contabilidad", Controller = "ComprobanteContable" })
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_flujo">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-primary" id="btn_buscar_plantilla" onclick="MostrarModalPlantilla();">
+                            <i class="fa fa-search" title="Plantilla Tipo de Flujo"></i>
+                        </button>
+                    </div>
+                </div>
+                <br />
+                @Html.Action("GridViewPartial_flujo_det", new { Area = "Banco", Controller = "TipoFlujoBanco" })
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "NotaDeCreditoBanco", new { Area = "Banco" }, null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script>
+    $(function () {
+        $("#IdSucursal").change(function () {
+            GetListBancoPorSucursal();
+            armar_diario();
+        });
+        $("#IdBanco").change(function () {
+            armar_diario();
+        });
+
+        $("#cb_Valor").change(function () {
+            armar_diario();
+            actualizarGridDetFlujo();
+        });
+        armar_diario();
+        actualizarGridDetFlujo();
+    })    
+    
+    function MostrarModalPlantilla() {
+        $("#PlantillaModal").modal("show");
+    }
+
+    function AgregarPlantilla(IdPlantilla) {
+        var datos = {
+            Valor : $("#cb_Valor").val(),
+            IdPlantillaTipoFlujo: IdPlantilla,
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("cargar_PlantillaTipoFlujo", "TipoFlujoPlantilla",new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridView_flujo_det.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+
+        $("#PlantillaModal").modal("hide");
+        
+    }
+
+    function actualizarGridDetFlujo() {
+        var datos = {
+            Valor: $("#cb_Valor").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("actualizarGridDetFlujo", "TipoFlujoBanco",new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridView_flujo_det.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function CalcularPorcentaje()
+    {
+        var valor = GridView_flujo_det.GetEditor('Valor').GetValue();
+        var ValorTotal = $("#cb_Valor").val();
+        var PorcentajeSet = (valor * 100) / ValorTotal
+
+        GridView_flujo_det.GetEditor('Porcentaje').SetValue(PorcentajeSet);
+    }
+
+    function CalcularValor() {
+        var porcentaje = GridView_flujo_det.GetEditor('Porcentaje').GetValue();
+        var ValorTotal = $("#cb_Valor").val();
+        var ValorSet = (ValorTotal * porcentaje) / 100
+
+        GridView_flujo_det.GetEditor('Valor').SetValue(ValorSet);
+    }
+
+function GetListBancoPorSucursal() {
+        $("#IdBanco").empty();
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetListBancoPorSucursal", "BancoCuenta",new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdBanco").append("<option value=" + row.IdBanco + ">" + row.ba_descripcion+ "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+}
+
+    function OnSelectedCtaCbleChanged() {
+        GridView_comprobante_detalle.GetEditor("IdGrupoPresupuesto").PerformCallback();
+    }
+
+    function GrupoComboBox_BeginCallback(s, e) {
+        e.customArgs["pre_IdCtaCble"] = IdCtaCble.GetValue();
+        e.customArgs["pre_fecha"] = moment(cb_Fecha.GetDate()).format('DD/MM/YYYY');
+    }
+
+    function armar_diario() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdBanco: $("#IdBanco").val(),
+            IdTipoNota: IdTipoNota.GetValue(),
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            Valor: $("#cb_Valor").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("armar_diario", "NotaDeCreditoBanco",new { Area = "Banco"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            },
+            error: function (error) {
+            }
+        });
+        GridView_comprobante_detalle.PerformCallback();
+    }
+</script>

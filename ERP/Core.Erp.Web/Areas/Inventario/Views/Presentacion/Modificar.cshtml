@@ -1,0 +1,44 @@
+﻿@model Core.Erp.Info.Inventario.in_presentacion_Info
+@{
+    ViewBag.Title = "Modificar presentación";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Modificar", "Presentacion", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q=>q.IdEmpresa)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdPresentacion">Código*</label>
+                    @Html.TextBoxFor(q => q.IdPresentacion, new { @class = "form-control", @readonly ="readonly"})
+                    @Html.ValidationMessageFor(q => q.IdPresentacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="nom_presentacion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.nom_presentacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.nom_presentacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Presentacion", new { Area = "Inventario"  },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

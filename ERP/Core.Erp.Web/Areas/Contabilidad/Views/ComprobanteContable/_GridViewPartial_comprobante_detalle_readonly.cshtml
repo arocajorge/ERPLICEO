@@ -1,0 +1,87 @@
+﻿@using System.Web.UI.WebControls;
+@model Core.Erp.Info.Contabilidad.ct_cbtecble_Info
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridView_comprobante_detalle_readonly";
+        settings.CallbackRouteValues = new { Controller = "ComprobanteContable", Action = "GridViewPartial_comprobante_detalle_readonly", Area = "Contabilidad", IdTipoCbte = Model == null ? 0 : Model.IdTipoCbte, IdCbteCble = Model == null ? 0 : Model.IdCbteCble };
+        settings.KeyFieldName = "secuencia";
+        settings.Width = Unit.Percentage(100);
+
+        settings.CommandColumn.Visible = false;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        //Funcion para inicializar fila al presionar nuevo
+        settings.InitNewRow = (s, e) =>
+        {
+            e.NewValues["IdCtaCble"] = null;
+            e.NewValues["dc_Valor_debe"] = 0;
+            e.NewValues["dc_Valor_haber"] = 0;
+            e.NewValues["dc_para_conciliar"] = false;
+        };
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdCtaCble";
+            column.Caption = "Cuenta contable";
+            column.Width = Unit.Percentage(60);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.Columns.Add("IdCtaCble", "Código").Width = Unit.Percentage(30);
+                p.Columns.Add("pc_Cuenta", "Cuenta").Width = Unit.Percentage(70);
+                p.ValueField = "IdCtaCble";
+                p.ValueType = typeof(string);
+                p.DataSource = ViewBag.lst_cuentas;
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "dc_Valor_debe";
+            column.Caption = "Debe";
+            column.Width = Unit.Percentage(15);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "dc_Valor_haber";
+            column.Caption = "Haber";
+            column.Width = Unit.Percentage(15);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "dc_para_conciliar";
+            column.Caption = "Se concilia";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().CheckBox(sp =>
+            {
+
+            });
+        });
+
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "dc_Valor_debe").DisplayFormat = "Debe {0:c2}";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "dc_Valor_haber").DisplayFormat = "Haber {0:c2}";
+        settings.Settings.ShowFooter = true;
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
+    });
+
+}
+@grid.Bind(Model.lst_ct_cbtecble_det).GetHtml()

@@ -1,0 +1,300 @@
+﻿@model Core.Erp.Info.Importacion.imp_ordencompra_ext_Info
+@{
+    ViewBag.Title = "Anular Orden compra";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Anular", "OrdenCompraExterior", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdOrdenCompra_ext)
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdTransaccionSession)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="CodMoviInven">Código</label>
+                    @Html.TextBoxFor(q => q.oe_codigo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.oe_codigo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="rub_grupo">Tipo de embarque*</label>
+                    @Html.DropDownListFor(q => q.IdCatalogo_via, new SelectList(ViewBag.lst_catalogos, "IdCatalogo", "ca_descripcion"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdCatalogo_via, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-offset-10 col-med-2">
+                <div class="form-group">
+                    <label for="">Fecha O.C*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.oe_fecha, settings =>
+                    {
+                        settings.Name = "oe_fecha";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.oe_fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="IdProveedor">Proveedor*</label>
+                    @Html.Partial("_CmbProveedor_exterior", Model.IdProveedor)
+                    @Html.ValidationMessageFor(q => q.IdProveedor, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-offset-10 col-med-2">
+                <div class="form-group">
+                    <label for="">Fecha embarque</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.oe_fecha_embarque, settings =>
+                    {
+                        settings.Name = "oe_fecha_embarque";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.oe_fecha_embarque, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="IdCtaCble_importacion">Cuenta contable*</label>
+                    @Html.Partial("_CmbCuenta_contable", Model)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_importacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-offset-10 col-med-2">
+                <div class="form-group">
+                    <label for="">Fecha llegada</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.oe_fecha_llegada, settings =>
+                    {
+                        settings.Name = "oe_fecha_llegada";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.oe_fecha_llegada, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="IdCtaCble_importacion">Observación*</label>
+                    @Html.TextAreaFor(q => q.oe_observacion, new { @class = "form-control", @rows = 2 })
+                    @Html.ValidationMessageFor(q => q.oe_observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-offset-10 col-med-2">
+                <div class="form-group">
+                    <label for="">Fecha desanualización</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.oe_fecha_desaduanizacion, settings =>
+                    {
+                        settings.Name = "oe_fecha_desaduanizacion";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.oe_fecha_desaduanizacion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="Tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_detalle" aria-controls="informacion_items" role="tab" data-toggle="tab">Detalle de items</a>
+            </li>
+            <li>
+                <a href="#tab_otros" aria-controls="otros" role="tab" data-toggle="tab">Datos adicionales</a>
+            </li>
+
+
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_detalle">
+                @Html.Action("GridViewPartial_orden_compra_ext_det")
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_otros">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="IdPais_embarque">País de embarque*</label>
+                                @Html.DevExpress().ComboBoxFor(q => q.IdPais_embarque, settings =>
+                               {
+                                   settings.Name = "IdPais_embarque";
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   settings.Properties.DisplayFormatString = "[{0}] - {2}";
+                                   settings.Properties.Columns.Add("IdPais", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                                   settings.Properties.Columns.Add("CodPais", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                                   settings.Properties.Columns.Add("Nombre", "País").Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                   //Campo ID
+                                   settings.Properties.ValueField = "IdPais";
+                                   settings.Properties.ValueType = typeof(string);
+                                   settings.Properties.TextField = "Nombre";
+                                   //Boton para seleccionar ningun registro
+                                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                                   settings.Properties.NullText = "== Seleccione ==";
+                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                               }).BindList(ViewBag.lst_paises).GetHtml()
+                                @Html.ValidationMessageFor(q => q.IdPais_embarque, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="IdPais_origen">País destino</label>
+                                @Html.DevExpress().ComboBoxFor(q => q.IdPais_origen, settings =>
+                               {
+                                   settings.Name = "IdPais_origen";
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   settings.Properties.DisplayFormatString = "[{0}] - {2}";
+                                   settings.Properties.Columns.Add("IdPais", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                                   settings.Properties.Columns.Add("CodPais", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                                   settings.Properties.Columns.Add("Nombre", "País").Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                   //Campo ID
+                                   settings.Properties.ValueField = "IdPais";
+                                   settings.Properties.ValueType = typeof(string);
+                                   settings.Properties.TextField = "Nombre";
+                                   //Boton para seleccionar ningun registro
+                                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                                   settings.Properties.NullText = "== Seleccione ==";
+                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                               }).BindList(ViewBag.lst_paises).GetHtml()
+                                @Html.ValidationMessageFor(q => q.IdPais_origen, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="IdCiudad_destino">Ciudad destino</label>
+                                @Html.DevExpress().ComboBoxFor(q => q.IdCiudad_destino, settings =>
+                               {
+                                   settings.Name = "IdCiudad_destino";
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   settings.Properties.DisplayFormatString = "[{0}] - {2}";
+                                   settings.Properties.Columns.Add("IdCiudad", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                                   settings.Properties.Columns.Add("Cod_Ciudad", "Código").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                                   settings.Properties.Columns.Add("Descripcion_Ciudad", "Ciudad").Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                   //Campo ID
+                                   settings.Properties.ValueField = "IdCiudad";
+                                   settings.Properties.ValueType = typeof(string);
+                                   settings.Properties.TextField = "Descripcion_Ciudad";
+                                   //Boton para seleccionar ningun registro
+                                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                                   settings.Properties.NullText = "== Seleccione ==";
+                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                               }).BindList(ViewBag.lst_ciudades).GetHtml()
+                                @Html.ValidationMessageFor(q => q.IdCiudad_destino, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="rub_grupo">Forma de pago*</label>
+                                @Html.DropDownListFor(q => q.IdCatalogo_forma_pago, new SelectList(ViewBag.lst_forma_pago, "IdCatalogo", "ca_descripcion"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.IdCatalogo_forma_pago, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="rub_grupo">Moneda origen*</label>
+                                @Html.DropDownListFor(q => q.IdMoneda_origen, new SelectList(ViewBag.lst_monedas, "IdMoneda", "im_descripcion"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.IdMoneda_origen, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="rub_grupo">Moneda local*</label>
+                                @Html.DropDownListFor(q => q.IdMoneda_destino, new SelectList(ViewBag.lst_monedas, "IdMoneda", "im_descripcion"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.IdMoneda_destino, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "OrdenCompraExterior", new { Area ="Importacion" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

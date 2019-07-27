@@ -1,0 +1,232 @@
+﻿@model Core.Erp.Info.General.tb_empresa_Info
+@{
+    ViewBag.Title = "Modificar empresa";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Modificar", "Empresa", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+
+    <div id="Tabs" role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tb_general" aria-controls="informacion" role="tab" data-toggle="tab">Datos generales</a>
+            </li>
+            <li>
+                <a href="#tb_info_laboral" aria-controls="AdministracionPreBajas" role="tab" data-toggle="tab">Logo</a>
+            </li>
+
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content" style="padding-top: 20px">
+
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 2em;" id="tb_general">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="ContribuyenteEspecial">Código</label>
+                                @Html.TextBoxFor(q => q.codigo, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.codigo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="ContribuyenteEspecial"># contribuyente especial*</label>
+                                @Html.TextBoxFor(q => q.ContribuyenteEspecial, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.ContribuyenteEspecial, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Fecha inicio contable*</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    @Html.DevExpress().DateEditFor(q => q.em_fechaInicioContable, settings =>
+                           {
+                               settings.Name = "em_fechaInicioContable";
+                               settings.Properties.UseMaskBehavior = true;
+                               settings.Properties.EditFormat = EditFormat.Date;
+                               settings.Properties.EditFormatString = "dd/MM/yyyy";
+                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           }).GetHtml()
+                                    @Html.ValidationMessageFor(q => q.em_fechaInicioContable, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="em_ruc">Ruc*</label>
+                                @Html.TextBoxFor(q => q.em_ruc, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.em_ruc, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="cod_entidad_dinardap">Código Dinardap</label>
+                                @Html.TextBoxFor(q => q.cod_entidad_dinardap, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.cod_entidad_dinardap, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="em_nombre">Nombre*</label>
+                                @Html.TextBoxFor(q => q.em_nombre, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.em_nombre, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="RazonSocial">Razón social*</label>
+                                @Html.TextBoxFor(q => q.RazonSocial, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.RazonSocial, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="NombreComercial">Nombre comercial*</label>
+                                @Html.TextBoxFor(q => q.NombreComercial, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.NombreComercial, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="em_direccion">Dirección* </label>
+                                @Html.TextAreaFor(q => q.em_direccion, new { @class = "form-control", @rows = "3" })
+                                @Html.ValidationMessageFor(q => q.em_direccion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="em_gerente">Gerente</label>
+                                @Html.TextBoxFor(q => q.em_gerente, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.em_gerente, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="em_contador">Contador</label>
+                                @Html.TextBoxFor(q => q.em_contador, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.em_contador, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="em_rucContador">RUC Contador</label>
+                                @Html.TextBoxFor(q => q.em_rucContador, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.em_rucContador, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="em_telefonos">Teléfonos</label>
+                                @Html.TextBoxFor(q => q.em_telefonos, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.em_telefonos, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="em_Email">Email</label>
+                                @Html.TextBoxFor(q => q.em_Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.em_Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tb_info_laboral">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="codigo">Logo</label>
+                                @Html.DevExpress().BinaryImage(
+                                    settings =>
+                                    {
+                                        settings.Name = "pr_imagen";
+                                        settings.CallbackRouteValues = new { Controller = "Empresa", Action = "get_imagen" };
+                                    }).Bind((Model.em_logo).ToArray()).GetHtml()
+
+
+                                @Html.DevExpress().UploadControl(settings =>
+                                {
+
+                                    settings.Name = "UploadControl";
+                                    settings.CallbackRouteValues = new { Controller = "Empresa", Action = "UploadControlUpload" };
+                                    settings.ShowUploadButton = true;
+                                    settings.ShowProgressPanel = true;
+                                }).GetHtml()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Empresa",new { Area = "General" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

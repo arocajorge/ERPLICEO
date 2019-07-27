@@ -1,0 +1,658 @@
+﻿@model Core.Erp.Info.Caja.cp_conciliacion_Caja_Info
+
+@{
+    ViewBag.Title = "Nueva conciliación";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#IdPeriodo").change(function () {
+            GetPeriodo();
+            GetSaldoAnterior();
+            GetIngresos();
+        });
+        $("#IdCaja").change(function () {
+            GetIdCtaCbleCaja();
+            GetSaldoAnterior();
+            GetIngresos();
+        });
+        $("#IdTipoPersona").change(function () {
+            IdEntidad.SetValue(null);
+        });
+
+        $("#IdEstadoCierre").change(function () {
+            MostrarOcultarOP();
+        });
+
+        GetIdCtaCbleCaja();
+        GetSaldoAnterior();
+        GetIngresos();
+        $("#link_op").hide();
+    });
+
+    function MostrarOcultarOP() {
+        var Estado = $("#IdEstadoCierre").val();
+        if (Estado == "EST_CIE_ABI") {
+            $("#link_fact").click();
+            $("#link_op").hide();
+        } else {
+            $("#link_op").show();
+            $("#link_op").click();
+            armar_diario();
+        }
+    }
+
+     function OnSelectedIndexChanged(s, e) {
+        GridView_conciliacion_vales.AutoFilterByColumn("IdPersona", s.GetText());
+    }
+
+    var selectedIDs;
+    function OnBeginCallback(s, e) {
+            //Pass all selected keys to GridView callback action
+        e.customArgs["selectedIDs"] = selectedIDs;
+        e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
+        e.customArgs['IdCajaConciliacion'] = $('#IdCaja').val();
+        }
+    function OnSelectionChanged(s, e) {
+        s.GetSelectedFieldValues("IdCbteCble_Ogiro", GetSelectedFieldValuesCallback);
+        }
+    function GetSelectedFieldValuesCallback(values) {
+            //Capture all selected keys
+            selectedIDs = values.join(',');
+    }
+
+    function MostrarModal() {
+        selectedIDs = "";
+        var datos = {
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdCaja: $("#IdCaja").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetListFacturas_PorIngresar", "ConciliacionCaja", new { Area = "Caja" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                GridView_conciliacion_facturas_x_cruzar.PerformCallback();
+                GridView_conciliacion_facturas_x_cruzar.UnselectRows();
+                $("#FacturasModal").modal("show");
+
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function AddFacturas() {
+
+        var datos = {
+            IDs: selectedIDs,
+            IdTransaccionFixed: $("#IdTransaccionSession").val(),
+            IdCaja: $("#IdCaja").val(),
+            IdEmpresa: $("#IdEmpresa").val(),            
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("EditingAddNewFactura", "ConciliacionCaja",new { Area = "Caja"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            },
+            error: function (error) {
+            }
+        });
+        selectedIDs = "";
+        GridView_conciliacion_facturas_x_cruzar.PerformCallback();
+        GridView_conciliacion_facturas_x_cruzar.UnselectRows();
+        GridView_conciliacion_facturas.PerformCallback();
+        $("#FacturasModal").modal("hide");
+    }
+
+    var selectedCajaIDs;
+    function Caja_OnBeginCallback(s, e) {
+        //Pass all selected keys to GridView callback action
+        e.customArgs["selectedCajaIDs"] = selectedCajaIDs;
+        e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();
+        e.customArgs['IdCajaConciliacion'] = $('#IdCaja').val();
+    }
+    function Caja_OnSelectionChanged(s, e) {
+        s.GetSelectedFieldValues("IdCbteCble_movcaja", Caja_GetSelectedFieldValuesCallback);
+    }
+    function Caja_GetSelectedFieldValuesCallback(values) {
+        //Capture all selected keys
+        selectedCajaIDs = values.join(',');
+        console.log(selectedCajaIDs);
+    }
+
+    function MostrarCajaMovimientoConciliacionModal() {
+        //selectedCajaIDs = "";
+        //GridViewPartial_conciliacion_caja_movimiento.PerformCallback();
+        //GridViewPartial_conciliacion_caja_movimiento.UnselectRows();
+        //$("#CajaMovimientoModal").modal("show");
+        selectedIDs = "";
+        var datos = {
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdCaja: $("#IdCaja").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetListVales_PorIngresar", "ConciliacionCaja", new { Area = "Caja" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                GridViewPartial_conciliacion_caja_movimiento.PerformCallback();
+                GridViewPartial_conciliacion_caja_movimiento.UnselectRows();
+                $("#CajaMovimientoModal").modal("show");
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function AddCajaMovimiento()
+    {
+        var datos = {
+            Ids: selectedCajaIDs,
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("AgregarCajaMovimiento", "ConciliacionCaja",new { Area = "Caja"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            },
+            error: function (error) {
+            }
+        });
+
+        GridViewPartial_conciliacion_caja_movimiento.PerformCallback();
+        GridViewPartial_conciliacion_caja_movimiento.UnselectRows();
+        GridView_conciliacion_vales.PerformCallback();
+        $("#CajaMovimientoModal").modal("hide");
+    }
+
+    function GetSaldoAnterior() {
+        var datos = {
+            FechaCorte: Fecha_ini.GetDate(),
+            IdCtaCble: $("#IdCtaCble").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetSaldoAnterior", "ConciliacionCaja",new { Area = "Caja"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#Saldo_cont_al_periodo").val(data);
+                $("#Saldo_cont_al_periodoR").val(data);
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function GetIdCtaCbleCaja() {
+        var datos = {
+            IdCaja: $("#IdCaja").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetIdCtaCbleCaja", "ConciliacionCaja",new { Area = "Caja"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#IdCtaCble").val(data);
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function GetPeriodo() {
+        var datos = {
+            IdPeriodo: $("#IdPeriodo").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetPeriodo", "ConciliacionCaja",new { Area = "Caja"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.IdEmpresa != 0) {
+                    var d1 = new Date(data.pe_FechaIni.match(/\d+/)[0] * 1);
+                    var d2 = new Date(data.pe_FechaFin.match(/\d+/)[0] * 1);
+                    Fecha_ini.SetValue(d1);
+                    Fecha_fin.SetValue(d2);
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function GetIngresos() {
+        var datos = {
+            FechaFin: Fecha_fin.GetDate(),
+            IdCaja: $("#IdCaja").val(),
+            IdTransaccionFixed: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetIngresos", "ConciliacionCaja",new { Area = "Caja"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            },
+            error: function (error) {
+            }
+        });
+        Calcular();
+        GridView_conciliacion_ingresos.PerformCallback();
+    }
+
+    function Calcular() {
+        var datos = {
+            SaldoContableAnterior: $("#Saldo_cont_al_periodo").val(),
+            IdTransaccionFixed: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("Calcular", "ConciliacionCaja",new { Area = "Caja"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#Ingresos").val(data.Ingresos);
+                $("#IngresosR").val(data.Ingresos);
+                $("#Total_Ing").val(data.Dif_ingresos);
+                $("#Total_IngR").val(data.Dif_ingresos);
+                $("#Total_fondo").val(data.Fondo);
+                $("#Total_fondoR").val(data.Fondo);
+                $("#Total_fact_vale").val(data.Total_fact_vales);
+                $("#Total_fact_valeR").val(data.Total_fact_vales);
+                $("#Dif_x_pagar_o_cobrar").val(data.Diferencia);
+                $("#Dif_x_pagar_o_cobrarR").val(data.Diferencia);
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function armar_diario() {
+        var datos = {
+            IdCtaCble: $("#IdCtaCble").val(),
+            IdTransaccionFixed: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("armar_diario", "ConciliacionCaja",new { Area = "Caja"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            },
+            error: function (error) {
+            }
+
+        });
+        FechaOP.SetDate(new Date());
+        GridView_comprobante_detalle.PerformCallback();
+    }
+</script>
+
+@using (Html.BeginForm("Nuevo", "ConciliacionCaja", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.Saldo_cont_al_periodo, new { @id = "Saldo_cont_al_periodo" })
+    @Html.HiddenFor(q => q.Ingresos, new { @id = "Ingresos" })
+    @Html.HiddenFor(q => q.Total_Ing, new { @id = "Total_Ing" })
+    @Html.HiddenFor(q => q.Total_fondo, new { @id = "Total_fondo" })
+    @Html.HiddenFor(q => q.Total_fact_vale, new { @id = "Total_fact_vale" })
+    @Html.HiddenFor(q => q.Dif_x_pagar_o_cobrar, new { @id = "Dif_x_pagar_o_cobrar" })
+
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    <div class="modal fade" id="FacturasModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Facturas</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.Action("GridViewPartial_conciliacion_facturas_x_cruzar")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="AddFacturas();">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="CajaMovimientoModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Movimientos de caja</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.Action("GridViewPartial_conciliacion_caja_movimiento")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="AddCajaMovimiento();">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdEstadoCierre">Estado *</label>
+                    @Html.DropDownListFor(q => q.IdEstadoCierre, new SelectList(ViewBag.lst_estado, "Key", "Value"), new { @id = "IdEstadoCierre", @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdEstadoCierre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-offset-6 col-md-2">
+                <div class="form-group">
+                    <label for="Fecha_fin">Fecha*</label>
+                    @Html.DevExpress().DateEditFor(q=> q.Fecha, settings =>
+                {
+                    settings.Name = "Fecha";
+                    settings.Properties.UseMaskBehavior = true;
+                    settings.Properties.EditFormat = EditFormat.Date;
+                    settings.Properties.EditFormatString = "dd/MM/yyyy";
+                    settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCaja">Caja *</label>
+                    @Html.DropDownListFor(q => q.IdCaja, new SelectList(ViewBag.lst_caja, "IdCaja", "ca_Descripcion"), new { @id = "IdCaja", @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdCaja, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCtaCble">Cta Cble*</label>
+                    @Html.TextBoxFor(q => q.IdCtaCble, new { @id = "IdCtaCble", @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdCtaCble, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdPeriodo">Periodo*</label>
+                    @Html.DropDownListFor(q => q.IdPeriodo, new SelectList(ViewBag.lst_periodo, "IdPeriodo", "nom_periodo_combo"), new { @id = "IdPeriodo", @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdPeriodo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Fecha_ini">Desde*</label>
+                    @Html.DevExpress().DateEditFor(q => q.Fecha_ini, settings =>
+               {
+                   settings.Name = "Fecha_ini";
+                   settings.Properties.UseMaskBehavior = true;
+                   settings.Properties.EditFormat = EditFormat.Date;
+                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                   settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){GetSaldoAnterior(); Calcular();}";
+                       }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.Fecha_ini, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Fecha_fin">Hasta*</label>
+                    @Html.DevExpress().DateEditFor(q => q.Fecha_fin, settings =>
+                    {
+                        settings.Name = "Fecha_fin";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){GetIngresos(); Calcular();}";
+                    }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.Fecha_fin, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="Observacion">Observación</label>
+                            @Html.TextAreaFor(q => q.Observacion, new { @id = "Observacion", @class = "form-control", @rows = 2 })
+                            @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-offset-1 col-md-4">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Saldo_cont_al_periodo">Saldo contable anterior</label>
+                    @Html.TextBoxFor(q => q.Saldo_cont_al_periodo, new { @id = "Saldo_cont_al_periodoR", @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="form-group">
+                    <label for="Ingresos">Ingresos</label>
+                    @Html.TextBoxFor(q => q.Ingresos, new { @id = "IngresosR", @class = "form-control", @readonly = "readonly" })
+                </div>
+                <hr />
+                <div class="form-group">
+                    <label for="Total_Ing">Diferencia ingresos</label>
+                    @Html.TextBoxFor(q => q.Total_Ing, new { @id = "Total_IngR", @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Total_fondo">Fondo</label>
+                    @Html.TextBoxFor(q => q.Total_fondo, new { @id = "Total_fondoR", @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="form-group">
+                    <label for="Total_fact_vale">Total fact. y vales</label>
+                    @Html.TextBoxFor(q => q.Total_fact_vale, new { @id = "Total_fact_valeR", @class = "form-control", @readonly = "readonly" })
+                </div>
+                <hr />
+                <div class="form-group">
+                    <label for="Dif_x_pagar_o_cobrar">Diferencia</label>
+                    @Html.TextBoxFor(q => q.Dif_x_pagar_o_cobrar, new { @id = "Dif_x_pagar_o_cobrarR", @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="Tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_facturas" aria-controls="facturas" role="tab" data-toggle="tab" id="link_fact">Facturas</a>
+            </li>
+            <li>
+                <a href="#tab_vales" aria-controls="vales" role="tab" data-toggle="tab">Vales</a>
+            </li>
+            <li>
+                <a href="#tab_ingresos" aria-controls="ingresos" role="tab" data-toggle="tab">Ingresos</a>
+            </li>
+            <li>
+                <a href="#tab_op" aria-controls="vales" role="tab" data-toggle="tab" id="link_op">Orden de pago</a>
+            </li>
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_facturas">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-primary" id="btn_buscar_og" onclick="MostrarModal();">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <br />
+                @Html.Action("GridViewPartial_conciliacion_facturas")
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_vales">
+                <div class="row">
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-primary form-control" id="btn_buscar_og" onclick="MostrarCajaMovimientoConciliacionModal();">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <br />
+                @Html.Action("GridViewPartial_conciliacion_vales")
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_ingresos">
+                @Html.Action("GridViewPartial_conciliacion_ingresos")
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_op">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label for="IdTipoFlujo">Flujo</label>
+                            @Html.Partial("_CmbFlujo_ConciliacionCaja", Model.IdTipoFlujo)
+                            @Html.ValidationMessageFor(q => q.IdTipoFlujo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="FechaOP">Hasta*</label>
+                            @Html.DevExpress().DateEditFor(q => q.FechaOP, settings =>
+                            {
+                                settings.Name = "FechaOP";
+                                settings.Properties.UseMaskBehavior = true;
+                                settings.Properties.EditFormat = EditFormat.Date;
+                                settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            }).GetHtml()
+                            @Html.ValidationMessageFor(q => q.FechaOP, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdTipoPersona">Tipo persona*</label>
+                            @Html.DropDownListFor(q => q.IdTipoPersona, new SelectList(ViewBag.lst_tipo_personas, "Key", "Value"), new { @class = "form-control", @id = "IdTipoPersona" })
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label for="IdEntidad">Beneficiario*</label>
+                            @Html.Partial("_CmbPersona_ConciliacionCaja", Model.IdEntidad)
+                            @Html.ValidationMessageFor(q => q.IdEntidad, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="ObservacionOP">Observación</label>
+                            @Html.TextAreaFor(q => q.ObservacionOP, new { @id = "ObservacionOP", @class = "form-control", @rows = 2 })
+                            @Html.ValidationMessageFor(q => q.ObservacionOP, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                @Html.Action("GridViewPartial_comprobante_detalle", new { Area = "Contabilidad", Controller = "ComprobanteContable" })
+
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "ConciliacionCaja", new { Area = "Caja" }, null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+
+<script type="text/javascript">
+    function OnSelectedCtaCbleChanged() {
+        GridView_comprobante_detalle.GetEditor("IdGrupoPresupuesto").PerformCallback();
+    }
+    function GrupoComboBox_BeginCallback(s, e) {
+        e.customArgs["pre_IdCtaCble"] = IdCtaCble.GetValue();
+        e.customArgs["pre_fecha"] = moment(FechaOP.GetDate()).format('DD/MM/YYYY');
+    }
+</script>

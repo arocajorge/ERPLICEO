@@ -1,0 +1,177 @@
+﻿@model Core.Erp.Info.RRHH.ro_permiso_x_empleado_Info
+@{
+    ViewBag.Title = "Nuevo permiso";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Nuevo", "PermisoEmpleado", FormMethod.Post, new { @role = "form", @class = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdPermiso)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdEmpleado">Empleado*</label>
+                    @Html.Partial("_CmbEmpleado_permiso", Model.IdEmpleado)
+                    @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdEmpleadoAprueba">Empleado aprueba</label>
+                    @Html.Partial("_CmbEmpleado_aprueba_permiso", Model.IdEmpleadoAprueba)
+                    @Html.ValidationMessageFor(q => q.IdEmpleadoAprueba, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="TipoPermiso">Tipo permiso*</label>
+                    @Html.DropDownListFor(q => q.TipoPermiso, new SelectList(ViewBag.list_tipo_permiso), new { @class = "form-control", @id = "TipoPermiso" })
+                    @Html.ValidationMessageFor(q => q.TipoPermiso, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="div_tipo">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="DescuentaVacaciones">@Html.CheckBoxFor(q => q.DescuentaVacaciones) Descuenta vacaciones</label>
+                    </div>
+                    <div class="checkbox">
+                        <label for="Recuperable">@Html.CheckBoxFor(q => q.Recuperable) Recuperable</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="FechaInicio">Fecha inicio</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.FechaInicio, settings =>
+                    {
+                        settings.Name = "FechaInicio";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.FechaInicio, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="FechaFin">Fecha fin*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.FechaFin, settings =>
+                    {
+                        settings.Name = "FechaFin";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.FechaFin, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="HoraSalida">Hora de salida</label>
+                    @Html.TextBoxFor(model => model.HoraSalida, new
+               {
+                   @class = "form-control timepicker-holdOffTime",
+                   type = "time",
+                   step = 1
+               })
+                    @Html.ValidationMessageFor(m => m.HoraSalida, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="HoraRegreso">Hora de regreso</label>
+                    @Html.TextBoxFor(model => model.HoraRegreso, new
+               {
+                   @class = "form-control timepicker-holdOffTime",
+                   type = "time",
+                   step = 1
+               })
+                    @Html.ValidationMessageFor(m => m.HoraRegreso, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Asunto">Asunto*</label>
+                    @Html.TextBoxFor(q => q.Asunto, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Asunto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.Descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","PermisoEmpleado",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script>
+    ocultar_mostrar_div();
+
+    $(function () {
+
+        $("#TipoPermiso").change(function () {
+            ocultar_mostrar_div();
+        });
+    });
+
+    function ocultar_mostrar_div() {
+        var tipo_nota = $("#TipoPermiso").val();
+        if (tipo_nota == "PERSONAL") {
+            $("#div_tipo").show();
+        } else {
+            $("#div_tipo").hide();
+        }
+    }
+</script>

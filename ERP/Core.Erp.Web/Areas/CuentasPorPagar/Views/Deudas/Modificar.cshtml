@@ -1,0 +1,1016 @@
+﻿@model Core.Erp.Info.CuentasPorPagar.cp_orden_giro_Info
+@{
+    ViewBag.Title = ("Modificar factura por proveedor" + " con ID #" + @Model.IdCbteCble_Ogiro);
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+                <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+            </h4>
+        </div>
+    }
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script src="~/Scripts/ScriptsGenerales.js"></script>
+<script type="text/javascript">
+    function ImprimirRIDE() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/CuentasporPagarReportes/CXP_013?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdRetencion="+@Model.info_retencion.IdRetencion, '_blank');
+        win.focus();
+    }
+    function AutorizarSRI() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdTipoCbte_Ogiro: $("#IdTipoCbte_Ogiro").val(),
+            IdCbteCble_Ogiro: $("#IdCbteCble_Ogiro").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("AutorizarSRI", "Deudas",new { Area = "CuentasPorPagar"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.length > 0) {
+                    alert("Solicitud de autorización enviada exitósamente, por favor espere a que sea procesada por el SRI para imprimir el RIDE");
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>
+
+@using (Html.BeginForm("Modificar", "Deudas", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdCbteCble_Ogiro, new { @id = "IdCbteCble_Ogiro" })
+    @Html.HiddenFor(q => q.IdTipoCbte_Ogiro, new { @id = "IdTipoCbte_Ogiro" })
+    @Html.HiddenFor(q => q.TieneRetencion, new { @id = "TieneRetencion" })
+    @Html.HiddenFor(q => q.co_fechaOg)
+
+    @Html.HiddenFor(q => q.info_retencion.IdRetencion);
+    @Html.HiddenFor(q => q.info_retencion.IdEmpresa);
+
+    @Html.HiddenFor(q => q.info_retencion.info_comprobante.IdTipoCbte);
+    @Html.HiddenFor(q => q.info_retencion.info_comprobante.IdCbteCble);
+    @Html.HiddenFor(q => q.info_retencion.info_comprobante.IdEmpresa);
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-4 col-md-1">
+                <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="ImprimirRIDE();" title="Imprimir RIDE">
+                    <i class="fa fa-print"></i>  RIDE
+                </button>
+            </div>
+
+            <div class="col-md-1">
+                <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="AutorizarSRI();" title="Autorizar SRI">
+                    <i class="fa fa-send"></i>  SRI
+                </button>
+            </div>
+            <div class="col-md-offset-4 col-md-1">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","Deudas",new { Area = "CuentasPorPagar", IdEmpresa = Model.IdEmpresa },null)">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal*</label>
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursales, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdBodega">Bodega</label>
+                    @Html.DropDownListFor(q => q.IdBodega, new SelectList(ViewBag.lst_bodega, "IdBodega", "bo_Descripcion"), new { @class = "form-control", @id = "IdBodega" })
+                    @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label for="IdProveedor">Proveedor*</label>
+                    @Html.Partial("_CmbProveedor_CXP", Model.IdProveedor)
+                    @Html.ValidationMessageFor(q => q.IdProveedor, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label for="IdCliente"></label>
+                <div class="form-group">                    
+                    <button type="button" class="btn btn-primary form-control" onclick="CrearModificarProveedor();">
+                        <i class="fa fa-external-link-square"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdOrden_giro_Tipo">Sustento tributario*</label>
+                    @Html.DropDownListFor(q => q.IdIden_credito, new SelectList(ViewBag.lst_codigos_sri, "IdCodigo_SRI", "co_descripcion"), new { @class = "form-control", @id = "IdIden_credito" })
+                    @Html.ValidationMessageFor(q => q.IdIden_credito, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="co_observacion">Observación*</label>
+                    @Html.TextBoxFor(q => q.co_observacion, new { @class = "form-control", @id = "observacion" })
+                    @Html.ValidationMessageFor(q => q.co_observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="IdTipoServicio">Tipo de servicio</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdTipoServicio, setting =>
+               {
+                   setting.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   setting.Properties.Items.Add("BIENES", "BIEN");
+                   setting.Properties.Items.Add("SERVICIOS", "SERVI");
+                   setting.Properties.Items.Add("MIXTO", "AMBAS");
+               }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdTipoServicio, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="co_FechaFactura">Fecha*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.co_FechaFactura, settings =>
+                       {
+                           settings.Name = "co_FechaFactura";
+                           settings.Properties.UseMaskBehavior = true;
+                           settings.Properties.EditFormat = EditFormat.Date;
+                           settings.Properties.EditFormatString = "dd/MM/yyyy";
+                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                           settings.Properties.ClientSideEvents.DateChanged = "function(s,e){co_FechaContabilizacion.SetValue(s.GetValue());}";
+                       }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.co_FechaFactura, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="co_FechaContabilizacion">Fecha contabilización*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.co_FechaContabilizacion, settings =>
+                       {
+                           settings.Name = "co_FechaContabilizacion";
+                           settings.Properties.UseMaskBehavior = true;
+                           settings.Properties.EditFormat = EditFormat.Date;
+                           settings.Properties.EditFormatString = "dd/MM/yyyy";
+                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.co_FechaContabilizacion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group" id="DivSucursalCxp">
+                    <label for="IdSucursal_cxp">Sucursal compra*</label>
+                    @Html.DropDownListFor(q => q.IdSucursal_cxp, new SelectList(ViewBag.lst_sucursales_cxp, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal_cxp" })
+                    @Html.ValidationMessageFor(q => q.IdSucursal_cxp, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="co_plazo">Plazo*</label>
+                    @Html.TextBoxFor(q => q.co_plazo, new { @class = "form-control", @id = "co_plazo" })
+                    @Html.ValidationMessageFor(q => q.co_plazo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="co_FechaFactura_vct">Fecha vencimiento*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.co_FechaFactura_vct, settings =>
+                       {
+                           settings.Name = "co_FechaFactura_vct";
+                           settings.Properties.UseMaskBehavior = true;
+                           settings.Properties.EditFormat = EditFormat.Date;
+                           settings.Properties.EditFormatString = "dd/MM/yyyy";
+                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                       }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.co_FechaFactura_vct, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdOrden_giro_Tipo">Tipo documento*</label>
+                    @Html.DropDownListFor(q => q.IdOrden_giro_Tipo, new SelectList(ViewBag.lst_tipo_doc, "CodTipoDocumento", "Descripcion"), new { @class = "form-control", @id = "IdOrden_giro_Tipo" })
+                    @Html.ValidationMessageFor(q => q.IdOrden_giro_Tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="co_serie">Serie*</label>
+                    @Html.TextBoxFor(q => q.co_serie, new { @class = "form-control", @id = "co_serie" })
+                    @Html.ValidationMessageFor(q => q.co_serie, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="co_factura">Documento*</label>
+                    @Html.TextBoxFor(q => q.co_factura, new { @class = "form-control", @id = "co_factura" })
+                    @Html.ValidationMessageFor(q => q.co_factura, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="co_factura">Número autorización*</label>
+                    @Html.TextBoxFor(q => q.Num_Autorizacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Num_Autorizacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="Tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_datos_generales" aria-controls="informacion_general" role="tab" data-toggle="tab">Datos generales</a>
+            </li>
+            <li>
+                <a href="#tab_retencion" aria-controls="retencion" role="tab" data-toggle="tab">Retención</a>
+            </li>
+            <li>
+                <a href="#tab_detalle" aria-controls="detalle" role="tab" data-toggle="tab">Detalle de ingreso</a>
+            </li>
+            <li>
+                <a href="#tab_orden_compra" aria-controls="contabilidad" role="tab" data-toggle="tab">Orden de compra</a>
+            </li> 
+            <li>
+                <a href="#tab_orden_servicio" aria-controls="compra" role="tab" data-toggle="tab">Orden de servicio</a>
+            </li>
+            <li>
+                <a href="#tab_informacion_pago" aria-controls="contabilidad" role="tab" data-toggle="tab">Información adicional</a>
+            </li>
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_datos_generales">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="co_subtotal_iva">Subtotal IVA</label>
+                                @Html.TextBoxFor(q => q.co_subtotal_iva, new { @class = "form-control", @id = "co_subtotal_iva" })
+                                @Html.ValidationMessageFor(q => q.co_subtotal_iva, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="co_subtotal_siniva">Subtotal cero</label>
+                                @Html.TextBoxFor(q => q.co_subtotal_siniva, new { @class = "form-control", @id = "co_subtotal_siniva" })
+                                @Html.ValidationMessageFor(q => q.co_subtotal_siniva, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="co_Por_iva">% Iva</label>
+                                @Html.TextBoxFor(q => q.co_Por_iva, new { @class = "form-control", @id = "co_Por_iva", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(q => q.co_Por_iva, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="co_valoriva">Iva</label>
+                                @Html.TextBoxFor(q => q.co_valoriva, new { @class = "form-control", @id = "co_valoriva" })
+                                @Html.ValidationMessageFor(q => q.co_valoriva, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="co_total">Total</label>
+                                @Html.TextBoxFor(q => q.co_total, new { @class = "form-control", @id = "co_total" })
+                                @Html.ValidationMessageFor(q => q.co_total, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="co_observacion">Diario contable*</label>
+                                @Html.Action("GridViewPartial_deudas_dc")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_retencion">
+                <div id="Tabs" role="tabpanel">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active">
+                            <a href="#tab_retenciones" aria-controls="retenciones" role="tab" data-toggle="tab">Retenciones</a>
+                        </li>
+                        <li>
+                            <a href="#tab_diario" aria-controls="diario" role="tab" data-toggle="tab">Diario contable</a>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content" style="padding-top: 20px">
+                        <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_retenciones">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="IdPuntoVta">Punto de venta*</label>
+                                            @Html.DropDownListFor(q => q.info_retencion.IdPuntoVta, new SelectList(ViewBag.lst_punto_venta, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVta" })
+                                            @Html.ValidationMessageFor(q => q.info_retencion.IdPuntoVta, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2" id="datos_punto_venta1">
+                                        <div class="form-group">
+                                            <label for="vt_serie1">Establecimiento*</label>
+                                            @Html.TextBoxFor(q => q.info_retencion.serie1, new { @class = "form-control", @id = "serie1" })
+                                            @Html.ValidationMessageFor(q => q.info_retencion.serie1, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" id="datos_punto_venta2">
+                                        <div class="form-group">
+                                            <label for="vt_serie2">Pto. Emisión*</label>
+                                            @Html.TextBoxFor(q => q.info_retencion.serie2, new { @class = "form-control", @id = "serie2" })
+                                            @Html.ValidationMessageFor(q => q.info_retencion.serie2, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" id="datos_punto_venta3">
+                                        <div class="form-group">
+                                            <label for="vt_NumFactura"># Documento*</label>
+                                            @Html.TextBoxFor(q => q.info_retencion.NumRetencion, new { @class = "form-control", @id = "NumRetencion" })
+                                            @Html.ValidationMessageFor(q => q.info_retencion.NumRetencion, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Detalle retención*</label>
+                                            @Html.Action("GridViewPartial_retencion_det", new { Area = "CuentasPorPagar", Controller = "Retencion" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div role="tabpanel" class="tab-pane " style="margin-left: 1em;" id="tab_diario">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Diario contable*</label>
+                                            @Html.Action("GridViewPartial_retencio_dc", new { Area = "CuentasPorPagar", Controller = "Retencion" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_detalle">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="co_observacion"></label>
+                                @Html.Action("GridViewPartial_deudas_det")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_orden_compra">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="orden_compra"></label>
+                                @Html.Action("GridViewPartial_ing_inv_oc_det")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_orden_servicio">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="orden_compra"></label>
+                                @Html.Action("GridViewPartial_ing_inv_os_det")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_informacion_pago">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="Tipodoc_a_Modificar">Tipo documento*</label>
+                                @Html.DropDownListFor(q => q.Tipodoc_a_Modificar, new SelectList(ViewBag.lst_doc_tipo, "CodTipoDocumento", "Descripcion"), new { @class = "form-control", @id = "Tipodoc_a_Modificar" })
+                                @Html.ValidationMessageFor(q => q.Tipodoc_a_Modificar, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="estable_a_Modificar">Establecimiento*</label>
+                                @Html.TextBoxFor(q => q.estable_a_Modificar, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.estable_a_Modificar, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="ptoEmi_a_Modificar">Punto emisión*</label>
+                                @Html.TextBoxFor(q => q.ptoEmi_a_Modificar, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.ptoEmi_a_Modificar, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="num_docu_Modificar">Numero documento*</label>
+                                @Html.TextBoxFor(q => q.num_docu_Modificar, new { @class = "form-control", @id = "num_docu_Modificar" })
+                                @Html.ValidationMessageFor(q => q.num_docu_Modificar, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Num_Autorizacion">Autorización*</label>
+                                @Html.TextBoxFor(q => q.aut_doc_Modificar, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.aut_doc_Modificar, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="info_forma_pago.codigo_pago_sri">Forma Pago*</label>
+                                @Html.DevExpress().ComboBoxFor(q => q.info_forma_pago.codigo_pago_sri, settings =>
+                               {
+                                   settings.Name = "info_forma_pago.codigo_pago_sri";
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                                   settings.Properties.Columns.Add("codigo_pago_sri", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                                   settings.Properties.Columns.Add("formas_pago_sri", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+
+
+                                   //Campo ID
+                                   settings.Properties.ValueField = "codigo_pago_sri";
+                                   settings.Properties.ValueType = typeof(string);
+                                   settings.Properties.TextField = "formas_pago_sri";
+                                   //Boton para seleccionar ningun registro
+                                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                               }).BindList(ViewBag.lst_forma_pago).GetHtml()
+                                @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="PagoLocExt">Pago local o exterior</label>
+                                @Html.DropDownListFor(q => q.PagoLocExt, new SelectList(ViewBag.lst_pagos, "Key", "Value"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.PagoLocExt, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="PaisPago">País efectua el pago*</label>
+                                @Html.DropDownListFor(q => q.PaisPago, new SelectList(ViewBag.lst_paises, "Codigo", "Pais"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.PaisPago, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="ConvenioTributacion_bool">@Html.CheckBoxFor(q => q.ConvenioTributacion_bool) Aplica convenio de doble tributación en el pago</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="PagoSujetoRetencion_bool">@Html.CheckBoxFor(q => q.PagoSujetoRetencion_bool) Pago sujeto a retención en aplicación en la norma legal</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+    @if (ViewBag.MostrarBoton ?? false)
+    {
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    }
+        <a class="btn btn-default" href="@Url.Action("Index","Deudas",new { Area = "CuentasPorPagar" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script>
+    ValidarCompraSucursales();
+    GetUltimoDocumento();
+
+    $("#IdSucursal").change(function () {
+        cargar_bodega();
+    });
+
+    $("#IdPuntoVta").change(function () {
+        GetUltimoDocumento();
+    });
+
+    $("#co_subtotal_iva").change(function () {
+        actualizar_valores();
+        armar_diario();
+    });
+    $("#co_subtotal_siniva").change(function () {
+        actualizar_valores();
+        armar_diario();
+    });
+
+    $("#num_docu_Modificar").change(function () {
+        rellenar_ceros_izq();
+    });
+    $("#co_factura").change(function () {
+        rellenar_ceros_izquierda();
+    });
+    $("#IdIden_credito").change(function () {
+        $("#IdOrden_giro_Tipo").empty();
+        $("#cmbTipoDocu_modif").empty();
+        if (IdProveedor.GetValue() == 0) {
+            alert("Seleccione el proveedor");
+        } else {
+            get_list_tipo_doc();
+        }
+    });
+
+    $("#IdIden_credito").change(function () {
+
+        var tipo_doc = $("#IdIden_credito").val();
+
+        if (tipo_doc == "04")
+        {
+            $("#tab_documento_modificado").show();
+        }
+        else
+        {
+            $("#tab_documento_modificado").hide();
+
+        }
+    });
+
+
+    function actualizar_valores() {
+        var base_iva = $("#co_subtotal_iva").val();
+        var base_cero = $("#co_subtotal_siniva").val();
+        var iva = base_iva * 0.12;
+        if (base_iva == "")
+            base_iva = 0;
+        if (base_cero == "")
+            base_cero = 0;
+        if (iva == "")
+            iva = 0;
+        var tot = parseFloat(parseFloat(base_iva) + parseFloat(base_cero) + parseFloat(iva));
+        $('#co_valoriva').val(iva.toFixed(2));
+        if (tot > 0) {
+            $('#co_total').val(tot.toFixed(2));
+            $('#Total_a_pagar').val(tot.toFixed(2));
+
+        }
+        else
+            $('#co_total').val(0.00);
+        if(iva>0)
+            $('#co_Por_iva').val(12);
+        else
+            $('#co_Por_iva').val(0.00);
+    }
+
+
+    function rellenar_ceros_izquierda() {
+        var str = "" + Number($("#co_factura").val());
+        var pad = "000000000";
+        var doc = pad.substring(0, pad.length - str.length) + str;
+
+        $("#co_factura").val(doc);
+    }
+
+    function rellenar_ceros_izq() {
+        var str = "" + Number($("#num_docu_Modificar").val());
+        var pad = "000000000";
+        var doc = pad.substring(0, pad.length - str.length) + str;
+
+        $("#num_docu_Modificar").val(doc);
+    }
+
+    // obtener tipo de documento
+    function get_list_tipo_doc() {
+
+
+        get_info_proveedor();
+        if (IdProveedor.GetValue() > 0 && $("#IdIden_credito").val() != "") {
+            var datos = {
+                IdProveedor:  IdProveedor.GetValue(),
+                codigoSRI: $("#IdIden_credito").val(),
+                IdEmpresa: $("#IdEmpresa").val()
+
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("get_list_tipo_doc", "Deudas", new { Area = "CuentasPorPagar" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $.each(data, function (i, row) {
+                        $("#IdOrden_giro_Tipo").append("<option value=" + row.CodTipoDocumento + ">" + row.Descripcion + "</option>");
+                        $("#cmbTipoDocu_modif").append("<option value=" + row.CodTipoDocumento + ">" + row.Descripcion + "</option>");
+                    });
+                },
+                error: function (error) {
+                }
+            });
+        }
+    };
+    // armar diario contable
+
+    function armar_diario() {
+        if (IdProveedor.GetValue() > 0) {
+            var datos = {
+                IdEmpresa: $("#IdEmpresa").val(),
+                IdProveedor :  IdProveedor.GetValue(),
+                co_subtotal_iva : $("#co_subtotal_iva").val(),
+                co_subtotal_siniva : $("#co_subtotal_siniva").val(),
+                co_valoriva : $("#co_valoriva").val(),
+                co_total : $("#co_total").val(),
+                observacion: $("#observacion").val(),
+                IdTransaccionSession: $("#IdTransaccionSession").val(),
+                IdSucursal_cxp: $("#IdSucursal_cxp").val(),
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("armar_diario", "Deudas", new { Area = "CuentasPorPagar" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $("#co_subtotal_iva").val(data.SubtotalIVA);
+                    $("#co_subtotal_siniva").val(data.Subtotal0);
+                    $("#co_valoriva").val(data.IVA);
+                    $("#co_Por_iva").val(12);
+                    $("#co_total").val(data.Total);
+                    GridViewPartial_deudas_dc.PerformCallback();
+                },
+                error: function (error) {
+                }
+            });
+        }
+    };
+    function get_info_proveedor() {
+
+        if (IdProveedor.GetValue() > 0)  {
+            var datos = {
+                IdEmpresa: $("#IdEmpresa").val(),
+                IdProveedor: IdProveedor.GetValue()
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("get_info", "Proveedor", new { Area = "CuentasPorPagar" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                    $("#co_plazo").val(data.pr_plazo);
+                    var date = moment(co_FechaFactura.GetValue(), "DD-MM-YYYY").add(data.pr_plazo, 'days');
+                    co_FechaFactura_vct.SetValue(new Date(date));
+                },
+                error: function (error) {
+                }
+            });
+            ValidarCompraSucursales();
+        }
+    };
+
+    function ValidarCompraSucursales() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdProveedor: IdProveedor.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ValidarCompraSucursales", "Deudas", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data == "S") {
+                    $("#DivSucursalCxp").show();
+                } else
+                    $("#DivSucursalCxp").hide();
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function cargar_bodega() {
+        $("#IdBodega").empty();
+
+        var sucursal = $("#IdSucursal").val();
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: sucursal
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("cargar_bodega", "InventarioReportes", new { Area = "Reportes" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdBodega").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+    function GetInfo_Producto(s, e) {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdProducto: s.GetValue()
+
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetInfo_Producto", "Deudas",new { Area = "CuentasPorPagar"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridView_deuda_det.GetEditor('IdCod_Impuesto_Iva').SetValue(data.IdCod_Impuesto_Iva);
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+    function armar_diario_retencion() {
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdProveedor: IdProveedor.GetValue(),
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            IdSucursal_cxp: $("#IdSucursal_cxp").val(),
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("armar_diario_retencion", "Retencion", new { Area = "CuentasPorPagar" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_retencio_dc.PerformCallback();
+            },
+            error: function (error) {
+            }
+        });
+
+    };
+    function SetValorRetencion(s, e) {
+        var datos = {
+            IdCodigoSRI: s.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetValorRetencion", "Retencion",new { Area = "CuentasPorPagar"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var valor = 0;
+                if (data.IdTipoSRI == "COD_RET_IVA")
+                {
+                    valor = $("#co_valoriva").val();
+                }
+                else
+                {
+                    valor = parseFloat($("#co_subtotal_iva").val()) + parseFloat($("#co_subtotal_siniva").val());
+                }
+                GridViewPartial_retencion_det.GetEditor('re_baseRetencion').SetValue(valor);
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+
+    function CrearModificarProveedor() {
+        if(IdProveedor.GetValue() > 0)
+        {
+            var win = window.open(window.location.origin + "/FixedERP/CuentasPorPagar/Proveedor/Modificar?IdEmpresa=" +@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdProveedor="+IdProveedor.GetValue(), '_blank');
+            win.focus();
+        }else
+        {
+            var win = window.open(window.location.origin +"/FixedERP/CuentasPorPagar/Proveedor/Nuevo?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa, '_blank');
+            win.focus();
+        }
+    }
+
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/CuentasPorPagarReportes/CXP_001?IdEmpresa="+@Core.Erp.Web.Helps.SessionFixed.IdEmpresa+"&IdTipoCbte_Ogiro="+@Model.IdTipoCbte_Ogiro+"&IdCbteCble_Ogiro="+@Model.IdCbteCble_Ogiro, '_blank');
+        win.focus();
+    }
+
+    function CargarPuntosDeVenta() {
+        $("#IdPuntoVta").empty();
+        var datos = {
+            IdSucursal: $("#IdSucursal").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarPuntosDeVenta", "Retencion",new { Area = "CuentasPorPagar" })',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (i, row) {
+                    $("#IdPuntoVta").append("<option value=" + row.IdPuntoVta + ">" + row.nom_PuntoVta + "</option>");
+                    $("#IdPuntoVta").val($("#IdPuntoVta option:first").val());
+                });
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function GetUltimoDocumento() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val(),
+            IdPuntoVta: $("#IdPuntoVta").val(),
+            TieneRetencion: $("#TieneRetencion").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetUltimoDocumento", "Deudas",new { Area = "CuentasPorPagar" })',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if($("#TieneRetencion").val() == 0)
+                {
+                    $("#IdPuntoVta").attr('readonly', false);
+                    $("#serie1").attr('readonly', false);
+                    $("#serie2").attr('readonly', false);;
+                    $("#NumRetencion").attr('readonly', false);
+
+                    if (data.data_puntovta != null)
+                    {
+                        if (data.data_puntovta.EsElectronico == true)
+                        {
+                            $("#datos_punto_venta1").hide();
+                            $("#datos_punto_venta2").hide();
+                            $("#datos_punto_venta3").hide();
+                        }
+                        else
+                        {
+                            $("#datos_punto_venta1").show();
+                            $("#datos_punto_venta2").show();
+                            $("#datos_punto_venta3").show();
+
+                            if (data.data_talonario != null)
+                            {
+                                $("#serie1").val(data.data_talonario.Establecimiento);
+                                $("#serie2").val(data.data_talonario.PuntoEmision);
+                                $("#NumRetencion").val(data.data_talonario.NumDocumento);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    $("#IdPuntoVta").attr('readonly', true);
+                    $("#serie1").attr('readonly', true);
+                    $("#serie2").attr('readonly', true);;
+                    $("#NumRetencion").attr('readonly', true);
+
+                    $("#datos_punto_venta1").show();
+                    $("#datos_punto_venta2").show();
+                    $("#datos_punto_venta3").show();
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>

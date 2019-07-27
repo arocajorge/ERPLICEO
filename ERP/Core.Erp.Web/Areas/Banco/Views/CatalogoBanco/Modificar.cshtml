@@ -1,0 +1,84 @@
+﻿@model Core.Erp.Info.Banco.ba_Catalogo_Info
+@{
+    ViewBag.Title = "Modificar catálogo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Modificar", "CatalogoBanco", FormMethod.Post, new { @role = "form", @class = "form" }))
+{
+    @Html.HiddenFor(q => q.IdCatalogo)
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdTipoCatalogo">Tipo catálogo*</label>
+                    @Html.HiddenFor(q => q.IdTipoCatalogo)
+                    @Html.DevExpress().ComboBoxFor(q => q.IdTipoCatalogo, settings =>
+               {
+                   settings.Name = "IdTipoCatalogo";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdTipoCatalogo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("tc_Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdTipoCatalogo";
+                   settings.Properties.ValueType = typeof(string);
+                   settings.Properties.TextField = "tc_Descripcion";
+                   settings.Properties.NullText = "== Seleccione ==";
+
+                   settings.Properties.DropDownButton.Enabled = false;
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.ReadOnly = true;
+               }).BindList(ViewBag.lst_tipos).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdTipoCatalogo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="ICatalogo">Código*</label>
+                    @Html.TextBoxFor(q => q.IdCatalogo, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdCatalogo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="ca_orden">Orden</label>
+                    @Html.TextBoxFor(q => q.ca_orden, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.ca_orden, "", new { @class = "form", @role = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ca_descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.ca_descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.ca_descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","CatalogoBanco", new { IdTipoCatalogo = Model.IdTipoCatalogo, Area = "Banco"  },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

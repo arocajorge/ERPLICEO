@@ -1,0 +1,13 @@
+﻿create view web.[VWROL_028] as
+SELECT EntidadRegulatoria.ro_rdep.IdEmpresa, EntidadRegulatoria.ro_rdep.Id_Rdep, EntidadRegulatoria.ro_rdep.IdSucursal, 
+EntidadRegulatoria.ro_rdep.pe_anio, EntidadRegulatoria.ro_rdep.IdNomina_Tipo, EntidadRegulatoria.ro_rdep.Su_CodigoEstablecimiento, EntidadRegulatoria.ro_rdep.Observacion, EntidadRegulatoria.ro_rdep.Estado, 
+EntidadRegulatoria.ro_rdep_det.Secuencia, EntidadRegulatoria.ro_rdep_det.IdEmpleado, EntidadRegulatoria.ro_rdep_det.pe_cedulaRuc, EntidadRegulatoria.ro_rdep_det.pe_nombre, EntidadRegulatoria.ro_rdep_det.pe_apellido, 
+EntidadRegulatoria.ro_rdep_det.Sueldo, EntidadRegulatoria.ro_rdep_det.FondosReserva, EntidadRegulatoria.ro_rdep_det.DecimoTercerSueldo, EntidadRegulatoria.ro_rdep_det.DecimoCuartoSueldo, 
+EntidadRegulatoria.ro_rdep_det.Vacaciones, EntidadRegulatoria.ro_rdep_det.AportePErsonal, EntidadRegulatoria.ro_rdep_det.GastoAlimentacion, EntidadRegulatoria.ro_rdep_det.GastoEucacion, 
+EntidadRegulatoria.ro_rdep_det.GastoSalud, EntidadRegulatoria.ro_rdep_det.GastoVestimenta, EntidadRegulatoria.ro_rdep_det.GastoVivienda, EntidadRegulatoria.ro_rdep_det.Utilidades, EntidadRegulatoria.ro_rdep_det.IngresoVarios, 
+EntidadRegulatoria.ro_rdep_det.IngresoPorOtrosEmpleaodres, EntidadRegulatoria.ro_rdep_det.IessPorOtrosEmpleadores, EntidadRegulatoria.ro_rdep_det.ValorImpuestoPorEsteEmplador, 
+EntidadRegulatoria.ro_rdep_det.ValorImpuestoPorOtroEmplador, EntidadRegulatoria.ro_rdep_det.ExoneraionPorDiscapacidad, EntidadRegulatoria.ro_rdep_det.ExoneracionPorTerceraEdad, 
+EntidadRegulatoria.ro_rdep_det.OtrosIngresosRelacionDependencia, EntidadRegulatoria.ro_rdep_det.ImpuestoRentaCausado, EntidadRegulatoria.ro_rdep_det.ValorImpuestoRetenidoTrabajador, 
+EntidadRegulatoria.ro_rdep_det.ImpuestoRentaAsumidoPorEsteEmpleador, EntidadRegulatoria.ro_rdep_det.BaseImponibleGravada, EntidadRegulatoria.ro_rdep_det.IngresosGravadorPorEsteEmpleador
+FROM            EntidadRegulatoria.ro_rdep INNER JOIN
+EntidadRegulatoria.ro_rdep_det ON EntidadRegulatoria.ro_rdep.IdEmpresa = EntidadRegulatoria.ro_rdep_det.IdEmpresa AND EntidadRegulatoria.ro_rdep.Id_Rdep = EntidadRegulatoria.ro_rdep_det.Id_Rdep

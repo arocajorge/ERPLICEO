@@ -1,0 +1,56 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridView_producto_lst";
+        settings.CallbackRouteValues = new { Controller = "InventarioReportes", Action = "GridViewPartial_producto_lst" };
+        settings.KeyFieldName = "IdProducto";
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "InventarioReportes", Action = "EditingAddNew", Area = "Reportes" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "InventarioReportes", Action = "EditingDelete", Area = "Reportes" };
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        //Funcion para inicializar fila al presionar nuevo
+        settings.InitNewRow = (s, e) =>
+        {
+            e.NewValues["IdProducto"] = " ";
+        };
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "pr_descripcion_combo";
+            column.Caption = "Producto";
+            column.Visible = true;
+            column.Width = Unit.Percentage(90);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdProducto";
+            column.Caption = "Producto";
+            column.Width = Unit.Percentage(90);
+            column.Visible = false;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbProducto_Inventario", DataBinder.Eval(c.DataItem, "IdProducto"));
+            });
+        });
+    });
+}
+@grid.Bind(Model).GetHtml()

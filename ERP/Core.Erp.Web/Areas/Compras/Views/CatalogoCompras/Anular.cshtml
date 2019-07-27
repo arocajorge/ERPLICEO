@@ -1,0 +1,106 @@
+﻿@model Core.Erp.Info.Compras.com_catalogo_Info
+@{
+    ViewBag.Title = "Anular catálogo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Anular", "CatalogoCompras", FormMethod.Post, new { @role = "form", @class = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+
+    @Html.HiddenFor(q => q.IdCatalogocompra)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCatalogo_tipo">Tipo catálogo*</label>
+                    @Html.HiddenFor(q => q.IdCatalogocompra_tipo)
+                    @Html.DevExpress().ComboBoxFor(q => q.IdCatalogocompra_tipo, settings =>
+               {
+                   settings.Name = "IdCatalogocompra_tipo";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdCatalogocompra_tipo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("Descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdCatalogocompra_tipo";
+                   settings.Properties.ValueType = typeof(string);
+                   settings.Properties.TextField = "Descripcion";
+                   settings.Properties.NullText = "== Seleccione ==";
+
+                   settings.Properties.DropDownButton.Enabled = false;
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.ReadOnly = true;
+               }).BindList(ViewBag.lst_tipos).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdCatalogocompra_tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="ICatalogo">ID*</label>
+                    @Html.TextBoxFor(q => q.IdCatalogocompra, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.IdCatalogocompra, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="ICatalogo">Código</label>
+                    @Html.TextBoxFor(q => q.CodCatalogo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.CodCatalogo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Abrebiatura">Abreviatura</label>
+                    @Html.TextBoxFor(q => q.Abrebiatura, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Abrebiatura, "", new { @class = "form", @role = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Orden">Orden</label>
+                    @Html.TextBoxFor(q => q.Orden, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Orden, "", new { @class = "form", @role = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Nombre">Descripción*</label>
+                    @Html.TextBoxFor(q => q.Nombre, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index","CatalogoCompras", new { IdCatalogocompra_tipo = Model.IdCatalogocompra_tipo, Area = "Compras"  },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

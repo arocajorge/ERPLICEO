@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model_migracion_ats.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBLCR.dbo.vw_importacion_ats_fixed' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vw_importacion_ats_fixed">
+          <Key>
+            <PropertyRef Name="cedulaRuc" />
+            <PropertyRef Name="baseImpGrav" />
+            <PropertyRef Name="NoObjIva" />
+            <PropertyRef Name="RUC_LCG" />
+            <PropertyRef Name="fe_factura" />
+          </Key>
+          <Property Name="cedulaRuc" Type="varchar" MaxLength="8000" Nullable="false" />
+          <Property Name="nu_comp" Type="int" />
+          <Property Name="baseImpGrav" Type="int" Nullable="false" />
+          <Property Name="valorBaseIva" Type="float" />
+          <Property Name="NoObjIva" Type="int" Nullable="false" />
+          <Property Name="total" Type="float" />
+          <Property Name="RUC_LCG" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="fe_factura" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="Model_migracion_atsStoreContainer">
+          <EntitySet Name="vw_importacion_ats_fixed" EntityType="Self.vw_importacion_ats_fixed" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_importacion_ats_fixed].[cedulaRuc] AS [cedulaRuc], 
+    [vw_importacion_ats_fixed].[nu_comp] AS [nu_comp], 
+    [vw_importacion_ats_fixed].[baseImpGrav] AS [baseImpGrav], 
+    [vw_importacion_ats_fixed].[valorBaseIva] AS [valorBaseIva], 
+    [vw_importacion_ats_fixed].[NoObjIva] AS [NoObjIva], 
+    [vw_importacion_ats_fixed].[total] AS [total], 
+    [vw_importacion_ats_fixed].[RUC_LCG] AS [RUC_LCG], 
+    [vw_importacion_ats_fixed].[fe_factura] AS [fe_factura]
+    FROM [dbo].[vw_importacion_ats_fixed] AS [vw_importacion_ats_fixed]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model_migracion_ats" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="vw_importacion_ats_fixed">
+          <Key>
+            <PropertyRef Name="cedulaRuc" />
+            <PropertyRef Name="baseImpGrav" />
+            <PropertyRef Name="NoObjIva" />
+            <PropertyRef Name="RUC_LCG" />
+            <PropertyRef Name="fe_factura" />
+          </Key>
+          <Property Name="cedulaRuc" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nu_comp" Type="Int32" />
+          <Property Name="baseImpGrav" Type="Int32" Nullable="false" />
+          <Property Name="valorBaseIva" Type="Double" />
+          <Property Name="NoObjIva" Type="Int32" Nullable="false" />
+          <Property Name="total" Type="Double" />
+          <Property Name="RUC_LCG" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fe_factura" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="Entity_migracion_ats" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="vw_importacion_ats_fixed" EntityType="Self.vw_importacion_ats_fixed" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Model_migracion_atsStoreContainer" CdmEntityContainer="Entity_migracion_ats">
+          <EntitySetMapping Name="vw_importacion_ats_fixed">
+            <EntityTypeMapping TypeName="Model_migracion_ats.vw_importacion_ats_fixed">
+              <MappingFragment StoreEntitySet="vw_importacion_ats_fixed">
+                <ScalarProperty Name="cedulaRuc" ColumnName="cedulaRuc" />
+                <ScalarProperty Name="nu_comp" ColumnName="nu_comp" />
+                <ScalarProperty Name="baseImpGrav" ColumnName="baseImpGrav" />
+                <ScalarProperty Name="valorBaseIva" ColumnName="valorBaseIva" />
+                <ScalarProperty Name="NoObjIva" ColumnName="NoObjIva" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="RUC_LCG" ColumnName="RUC_LCG" />
+                <ScalarProperty Name="fe_factura" ColumnName="fe_factura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

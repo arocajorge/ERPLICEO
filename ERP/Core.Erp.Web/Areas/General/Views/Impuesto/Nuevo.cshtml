@@ -1,0 +1,115 @@
+﻿@model Core.Erp.Info.General.tb_sis_Impuesto_Info
+@{
+    ViewBag.Title = "Impuesto";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Nuevo", "Impuesto", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdTipoImpuesto">Tipo impuesto*</label>
+                    @Html.DropDownListFor(q => q.IdTipoImpuesto, new SelectList(ViewBag.lst_tipo, "IdTipoImpuesto", "nom_tipoImpuesto"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdTipoImpuesto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form">
+                    <label for="IdCod_Impuesto">Código*</label>
+                    @Html.TextBoxFor(q => q.IdCod_Impuesto, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdCod_Impuesto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form">
+                    <label for="nom_impuesto">Nombre*</label>
+                    @Html.TextBoxFor(q => q.nom_impuesto, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.nom_impuesto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form">
+                    <label for="porcentaje">Porcentaje*</label>
+                    @Html.TextBoxFor(q => q.porcentaje, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.porcentaje, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="">@Html.CheckBoxFor(q => q.Usado_en_Compras) Usado en compras</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="">@Html.CheckBoxFor(q => q.Usado_en_Ventas) Usado en ventas</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="info_impuesto_ctacble.IdCtaCble_vta">Cta. Cble Impuesto</label>
+                    @Html.Partial("_CmbCuenta_Cta_Impuesto", Model.IdCtaCble)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="info_impuesto_ctacble.IdCtaCble_vta">Cta. Cble Vta</label>
+                    @Html.Partial("_CmbCuenta_Vta_Impuesto", Model.IdCtaCble_vta)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_vta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Impuesto",new { Area = "General" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

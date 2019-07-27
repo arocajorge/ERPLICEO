@@ -1,0 +1,23 @@
+﻿
+@model Core.Erp.Info.General.tb_sis_reporte_x_tb_empresa_Info
+@{
+    ViewBag.Title = "Diseño de reportes";
+    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
+}
+
+@using (Html.BeginForm("Disenar", "Reporte", FormMethod.Post, new { @role = "form", @class = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa"})
+    @Html.HiddenFor(q => q.CodReporte, new { @id = "CodReporte" })
+
+    @Html.DevExpress().ReportDesigner(settings =>
+    {
+        settings.Name = "ReportDesigner";
+        settings.ClientSideEvents.BeginCallback = "function(s,e){  e.customArgs['fx_CodReporte'] = $('#CodReporte').val(); }";
+        settings.SaveCallbackRouteValues = new { Controller = "Reporte", Action = "Disenar", Area = "General" };
+    }).Bind(Model.ReporteDisenio).GetHtml()
+}

@@ -1,0 +1,516 @@
+﻿@model Core.Erp.Info.Inventario.in_Producto_Info
+@{
+    ViewBag.Title = "Anular producto";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Anular", "Producto", FormMethod.Post, new { @class = "form", @rolw = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdProducto, new  { @id = "IdProducto" })
+    @Html.HiddenFor(q => q.IdTransaccionSession)
+
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
+    if (ViewBag.error != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.error
+                <a href="@Url.Action("Index","LogError",new  {Area="General"}, null )" class="small-box-footer" target="_blank">Ver detalle error<i class="fa fa-arrow-circle-right"></i></a>
+            </h4>
+        </div>
+
+    }
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="pr_codigo">Código*</label>
+                    @Html.TextBoxFor(q => q.pr_codigo, new { @class = "form-control", @id = "pr_codigo" })
+                    @Html.ValidationMessageFor(q => q.pr_codigo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="pr_codigo2">Código 2</label>
+                    @Html.TextBoxFor(q => q.pr_codigo2, new { @class = "form-control", @id = "pr_codigo2" })
+                    @Html.ValidationMessageFor(q => q.pr_codigo2, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="IdProductoTipo">Tipo producto*</label>
+                    @Html.DropDownListFor(q => q.IdProductoTipo, new SelectList(ViewBag.lst_producto_tipo, "IdProductoTipo", "tp_descripcion"), new { @class = "form-control", @id = "IdProductoTipo" })
+                    @Html.ValidationMessageFor(q => q.IdProductoTipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="pr_descripcion">Descripción*</label>
+                            @Html.TextBoxFor(q => q.pr_descripcion, new { @class = "form-control", @id = "pr_descripcion" })
+                            @Html.ValidationMessageFor(q => q.pr_descripcion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="pr_descripcion_2">Descripción 2</label>
+                            @Html.TextBoxFor(q => q.pr_descripcion_2, new { @class = "form-control", @id = "pr_descripcion_2" })
+                            @Html.ValidationMessageFor(q => q.pr_descripcion_2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="pr_motivoAnulacion">Motivo anulación</label>
+                            @Html.TextAreaFor(q => q.pr_motivoAnulacion, new { @class = "form-control", @id = "pr_motivoAnulacion", @rows = 2 })
+                            @Html.ValidationMessageFor(q => q.pr_motivoAnulacion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label for="Aparece_modu_Inventario">@Html.CheckBoxFor(q => q.Aparece_modu_Inventario, new { @id = "Aparece_modu_Inventario" }) Inventario</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label for="Aparece_modu_Ventas">@Html.CheckBoxFor(q => q.Aparece_modu_Ventas, new { @id = "Aparece_modu_Ventas" }) Facturación</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label for="Aparece_modu_Compras">@Html.CheckBoxFor(q => q.Aparece_modu_Compras, new { @id = "Aparece_modu_Compras" }) Compras</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="Tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active">
+                <a href="#tab_general" aria-controls="general" role="tab" data-toggle="tab">Datos generales</a>
+            </li>
+            <li>
+                <a href="#tab_precios" aria-controls="Precios" role="tab" data-toggle="tab" id="link_precios">Precios</a>
+            </li>
+            <li>
+                <a href="#tab_composicion" aria-controls="Composicion" role="tab" data-toggle="tab">Composición</a>
+            </li>
+           
+            <li>
+                <a href="#tab_producto_x_bodega" aria-controls="Imágen" role="tab" data-toggle="tab">Producto por bodega</a>
+            </li>
+        </ul>
+        <div class="tab-content" style="padding-top: 20px">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_general">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="IdCategoria">Categoría*</label>
+                                    @Html.DropDownListFor(q => q.IdCategoria, new SelectList(ViewBag.lst_categoria, "IdCategoria", "ca_Categoria"), new { @class = "form-control", @id = "IdCategoria" })
+                                    @Html.ValidationMessageFor(q => q.IdCategoria, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="IdLinea">Línea*</label>
+                                    @Html.DropDownListFor(q => q.IdLinea, new SelectList(ViewBag.lst_linea, "IdLinea", "nom_linea"), new { @class = "form-control", @id = "IdLinea" })
+                                    @Html.ValidationMessageFor(q => q.IdLinea, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="IdGrupo">Grupo*</label>
+                                    @Html.DropDownListFor(q => q.IdGrupo, new SelectList(ViewBag.lst_grupo, "IdGrupo", "nom_grupo"), new { @class = "form-control", @id = "IdGrupo" })
+                                    @Html.ValidationMessageFor(q => q.IdGrupo, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="IdSubGrupo">Sub grupo*</label>
+                                    @Html.DropDownListFor(q => q.IdSubGrupo, new SelectList(ViewBag.lst_subgrupo, "IdSubgrupo", "nom_subgrupo"), new { @class = "form-control", @id = "IdSubGrupo" })
+                                    @Html.ValidationMessageFor(q => q.IdSubGrupo, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-offset-1 col-md-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="IdMarca">Familia*</label>
+                                    @Html.DropDownListFor(q => q.IdMarca, new SelectList(ViewBag.lst_marca, "IdMarca", "Descripcion"), new { @class = "form-control", @id = "IdMarca" })
+                                    @Html.ValidationMessageFor(q => q.IdMarca, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="IdPresentacion">Presentación*</label>
+                                    @Html.DropDownListFor(q => q.IdPresentacion, new SelectList(ViewBag.lst_presentacion, "IdPresentacion", "nom_presentacion"), new { @class = "form-control", @id = "IdPresentacion" })
+                                    @Html.ValidationMessageFor(q => q.IdPresentacion, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="IdUnidadMedida">Unidad de medida ingresos*</label>
+                                    @Html.DropDownListFor(q => q.IdUnidadMedida, new SelectList(ViewBag.lst_unidad_medida, "IdUnidadMedida", "Descripcion"), new { @class = "form-control", @id = "IdUnidadMedida" })
+                                    @Html.ValidationMessageFor(q => q.IdUnidadMedida, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="IdUnidadMedida_Consumo">Unidad de medida para control kárdex*</label>
+                                    @Html.DropDownListFor(q => q.IdUnidadMedida_Consumo, new SelectList(ViewBag.lst_unidad_medida, "IdUnidadMedida", "Descripcion"), new { @class = "form-control", @id = "IdUnidadMedida_Consumo" })
+                                    @Html.ValidationMessageFor(q => q.IdUnidadMedida_Consumo, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="pr_codigo_barra">Código de barra</label>
+                            @Html.TextBoxFor(q => q.pr_codigo_barra, new { @class = "form-control", @id = "pr_codigo_barra" })
+                            @Html.ValidationMessageFor(q => q.pr_codigo_barra, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-offset-1 col-md-3">
+                        <div class="form-group">
+                            <label for="IdCod_Impuesto_Iva">Impuesto IVA*</label>
+                            @Html.DropDownListFor(q => q.IdCod_Impuesto_Iva, new SelectList(ViewBag.lst_impuesto, "IdCod_Impuesto", "nom_impuesto"), new { @class = "form-control", @id = "IdCod_Impuesto_Iva" })
+                            @Html.ValidationMessageFor(q => q.IdCod_Impuesto_Iva, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <label for="pr_observacion">Observación</label>
+                            @Html.TextAreaFor(q => q.pr_observacion, new { @class = "form-control", @rows = "2", @id = "pr_observacion" })
+                            @Html.ValidationMessageFor(q => q.pr_observacion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_precios">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="precio_1">Precio</label>
+                            @Html.TextBoxFor(q => q.precio_1, new { @class = "form-control", @id = "precio_1" })
+                            @Html.ValidationMessageFor(q => q.precio_1, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.Action("GridViewPartial_producto_x_niveldescuento")
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_composicion">
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.Action("GridViewPartial_producto_composicion")
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_producto_x_bodega">
+                <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_producto_x_bodega">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.Action("GridViewPartial_producto_por_bodega")
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "Producto", new { Area = "Inventario" }, null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script>
+        $(function () {
+
+            get_info_producto_tipo();
+            ValidarTabImagen();
+        });
+        $("#IdProductoTipo").change(function () {
+            get_info_producto_tipo();
+        });
+        $("#IdCategoria").change(function () {
+            cargar_lineas();
+            cargar_grupos();
+            cargar_subgrupos();
+        });
+
+        $("#IdLinea").change(function () {
+            cargar_grupos();
+            cargar_subgrupos();
+        });
+        $("#IdGrupo").change(function () {
+            cargar_subgrupos();
+        });
+        function cargar_lineas() {
+            $("#IdLinea").empty();
+            $("#IdGrupo").empty();
+            $("#IdSubGrupo").empty();
+
+            var categoria = $("#IdCategoria").val();
+
+            var datos = {
+                IdCategoria: categoria
+            }
+
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("cargar_lineas", "Producto", new { Area = "Inventario" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                    $.each(data, function (i, row) {
+                        $("#IdLinea").append("<option value=" + row.IdLinea + ">" + row.nom_linea + "</option>");
+                    });
+                },
+                error: function (error) {
+                }
+            });
+        };
+
+    function cargar_grupos() {
+        $("#IdGrupo").empty();
+        $("#IdSubGrupo").empty();
+
+        var categoria = $("#IdCategoria").val();
+        var linea = $("#IdLinea").val();
+
+        var datos = {
+            IdCategoria: categoria,
+            IdLinea: linea
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("cargar_grupos", "Producto", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+                $.each(data, function (i, row) {
+                    $("#IdGrupo").append("<option value=" + row.IdGrupo + ">" + row.nom_grupo + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    };
+    function cargar_subgrupos() {
+        $("#IdSubGrupo").empty();
+
+        var categoria = $("#IdCategoria").val();
+        var linea = $("#IdLinea").val();
+        var grupo = $("#IdGrupo").val();
+
+        var datos = {
+            IdCategoria: categoria,
+            IdLinea: linea,
+            IdGrupo: grupo
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("cargar_subgrupos", "Producto", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdSubGrupo").append("<option value=" + row.IdSubgrupo + ">" + row.nom_subgrupo + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+    function Round(num, scale) {
+        if (!("" + num).includes("e")) {
+            return +(Math.round(num + "e+" + scale) + "e-" + scale);
+        } else {
+            var arr = ("" + num).split("e");
+            var sig = ""
+            if (+arr[1] + scale > 0) {
+                sig = "+";
+            }
+            return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + scale)) + "e-" + scale);
+        }
+    }
+
+
+    function get_info_producto_tipo() {
+        var tipo = $("#IdProductoTipo").val();
+
+        var datos = {
+            IdProductoTipo: tipo
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_info_producto_tipo", "ProductoTipo",new { Area = "Inventario"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data == '') {
+                    //No hago nada
+                } else {
+                    $("#link_general").click();
+                    if (data.tp_EsCombo == "S") {
+                        $("#link_composicion").show();
+                    }
+                    else {
+                        $("#link_composicion").hide();
+                    }
+                }
+            },
+            error: function (error) {
+
+            }
+        });
+    }
+
+    function ValidarTabImagen() {
+        var ID = IdProducto_padre.GetValue();
+        if (ID > 0) {
+            $("#link_imagen").hide();
+            $("#link_general").click();
+        } else {
+            $("#link_imagen").show();
+            $("#link_general").click();
+        }
+    }
+
+    function OnSelectedSucursalChanged() {
+        GridViewPartial_producto_por_bodega.GetEditor("IdBodega").PerformCallback();
+    }
+    function BodegaComboBox_BeginCallback(s, e) {
+        e.customArgs["IdSucursal"] = IdSucursal.GetValue();
+    }
+
+    function OnSelectedProductoChanged(s, e) {
+        GridViewPartial_producto_composicion.GetEditor("IdUnidadMedida").PerformCallback();
+        SetUnidadMedida(s, e);
+    }
+
+    function UnidadMedidaComboBox_BeginCallback(s, e) {
+        e.customArgs["in_IdProducto"] = IdProductoHijo.GetValue();
+    }
+
+    function SetUnidadMedida(s, e) {
+        var datos = {
+            IdProducto: s.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetUnidadMedida", "Producto", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_producto_composicion.GetEditor('IdUnidadMedida').SetValue(data.IdUnidadMedida);
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+</script>

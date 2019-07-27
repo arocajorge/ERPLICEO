@@ -1,0 +1,183 @@
+﻿@model Core.Erp.Info.Helps.cl_filtros_Info
+@{
+    ViewBag.Title = "Revisión contable";
+    Layout = "~/Views/Layout/_LayoutConsulta.cshtml";
+}
+
+@using (Html.BeginForm("Index", "RevisionContable", FormMethod.Post, new { @role = "form", @class = "form" }))
+{
+
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
+    <div class="box ">
+        <div class="box-header with-border">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+                </div>
+            </div>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="">Fecha inicio*</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.DevExpress().DateEditFor(q=> q.fecha_ini, settings =>
+                            {
+                                settings.Name = "fecha_ini";
+                                settings.Properties.UseMaskBehavior = true;
+                                settings.Properties.EditFormat = EditFormat.Date;
+                                settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.fecha_ini, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="">Fecha fin*</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.DevExpress().DateEditFor(q=> q.fecha_fin, settings =>
+                            {
+                                settings.Name = "fecha_fin";
+                                settings.Properties.UseMaskBehavior = true;
+                                settings.Properties.EditFormat = EditFormat.Date;
+                                settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.fecha_fin, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">@ViewBag.Title</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+
+            <div id="Tabs" role="tabpanel">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active">
+                        <a href="#tab_facturacion" aria-controls="stock" role="tab" data-toggle="tab">Facturación</a>
+                    </li>
+                </ul>
+                <div class="tab-content" style="padding-top: 20px">
+                    <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_facturacion">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-primary form-group" onclick="ContabilizarTodasFacturas();">Contabilizar todo</button>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.Action("GridViewPartial_Facturacion", new { IdTransaccionSession = Model.IdTransaccionSession })
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            [@Session["IdEmpresa"]] @Session["nom_empresa"]
+        </div>
+        <!-- /.box-footer-->
+    </div>
+}
+
+<script type="text/javascript">
+    function ContabilizarFactura(IdSecuencia)
+    {
+        var datos = {
+            IdSecuencia: Number(IdSecuencia),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ContabilizarFactura", "RevisionContable",new { Area = "Contabilidad"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.length > 0) {
+                    alert(data);
+                    GridView_Facturacion.PerformCallback();
+                } else {
+                    alert("No se ha podido contabilizar la factura");
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+    function ContabilizarTodasFacturas()
+    {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val(),
+            FechaIni: fecha_ini.GetDate(),
+            FechaFin: fecha_fin.GetDate()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ContabilizarTodasFacturas", "RevisionContable",new { Area = "Contabilidad"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.length > 0) {
+                    alert(data);
+                    GridView_Facturacion.PerformCallback();
+                } else {
+                    alert("No se ha podido contabilizar las facturas");
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>

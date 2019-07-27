@@ -1,0 +1,127 @@
+﻿@model Core.Erp.Info.General.tb_sis_Impuesto_Info
+@{
+    ViewBag.Title = "Impuesto";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Modificar", "Impuesto", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdCod_Impuesto)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdTipoImpuesto">Tipo impuesto</label>
+                    @Html.HiddenFor(q => q.IdTipoImpuesto)
+                    @Html.DevExpress().ComboBoxFor(q => q.IdTipoImpuesto, settings =>
+               {
+                   settings.Name = "IdTipoImpuesto";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdTipoImpuesto", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("nom_tipoImpuesto", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdTipoImpuesto";
+                   settings.Properties.ValueType = typeof(string);
+                   settings.Properties.TextField = "nom_tipoImpuesto";
+                   settings.Properties.NullText = "== Seleccione ==";
+
+                   settings.Properties.DropDownButton.Enabled = false;
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.ReadOnly = true;
+               }).BindList(ViewBag.lst_tipo).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdTipoImpuesto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form">
+                    <label for="IdCod_Impuesto">Código*</label>
+                    @Html.TextBoxFor(q => q.IdCod_Impuesto, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdCod_Impuesto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form">
+                    <label for="nom_impuesto">Nombre*</label>
+                    @Html.TextBoxFor(q => q.nom_impuesto, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.nom_impuesto, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form">
+                    <label for="porcentaje">Porcentaje</label>
+                    @Html.TextBoxFor(q => q.porcentaje, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.porcentaje, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="">@Html.CheckBoxFor(q => q.Usado_en_Compras) Usado en compras</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="">@Html.CheckBoxFor(q => q.Usado_en_Ventas) Usado en ventas</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Html.HiddenFor(q => q.info_impuesto_ctacble.IdEmpresa_cta)
+    @Html.HiddenFor(q => q.info_impuesto_ctacble.IdCod_Impuesto)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="info_impuesto_ctacble.IdCtaCble_vta">Cta. Cble Impuesto</label>
+                    @Html.Partial("_CmbCuenta_Cta_Impuesto", Model.IdCtaCble)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="info_impuesto_ctacble.IdCtaCble_vta">Cta. Cble Vta</label>
+                    @Html.Partial("_CmbCuenta_Vta_Impuesto", Model.IdCtaCble_vta)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_vta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Impuesto",new { Area = "General" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

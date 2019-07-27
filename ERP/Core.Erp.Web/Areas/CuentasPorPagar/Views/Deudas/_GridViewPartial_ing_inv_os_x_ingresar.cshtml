@@ -1,0 +1,74 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridViewPartial_ing_inv_os_x_ingresar";
+        settings.CallbackRouteValues = new { Controller = "Deudas", Action = "GridViewPartial_ing_inv_os_x_ingresar" };
+        settings.Width = Unit.Percentage(100);
+        settings.KeyFieldName = "IdGeneradoOS";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        //Configuración checkbox
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+
+        //Configuración click derecho
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.EnableRowMenu = DefaultBoolean.False;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(40);
+            column.FieldName = "pr_descripcion";
+            column.Caption = "Producto";
+        });
+        settings.Columns.Add("dm_cantidad", "Cantidad").Width = Unit.Percentage(10);
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "do_precioFinal";
+            column.Caption = "Precio";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "do_subtotal";
+            column.Caption = "SubTotal";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "do_iva";
+            column.Caption = "IVA";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "do_total";
+            column.Caption = "Total";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+        });
+        settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged_OS";
+        settings.ClientSideEvents.BeginCallback = "OnBeginCallback_OS";
+    });
+}
+@grid.Bind(Model).GetHtml()

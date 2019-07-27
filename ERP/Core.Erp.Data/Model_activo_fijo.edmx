@@ -1,0 +1,1593 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model_activo_fijo.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Af_Activo_fijo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdActivoFijo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdActivoFijo" Type="int" Nullable="false" />
+          <Property Name="CodActivoFijo" Type="varchar" MaxLength="50" />
+          <Property Name="Af_Nombre" Type="varchar(max)" Nullable="false" />
+          <Property Name="IdActivoFijoTipo" Type="int" Nullable="false" />
+          <Property Name="IdCategoriaAF" Type="int" Nullable="false" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdDepartamento" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdArea" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdCatalogo_Marca" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="IdCatalogo_Modelo" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="Af_NumSerie" Type="varchar" MaxLength="50" />
+          <Property Name="IdCatalogo_Color" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="IdTipoCatalogo_Ubicacion" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="Af_fecha_compra" Type="datetime" Nullable="false" />
+          <Property Name="Af_fecha_ini_depre" Type="datetime" Nullable="false" />
+          <Property Name="Af_fecha_fin_depre" Type="datetime" Nullable="false" />
+          <Property Name="Af_costo_compra" Type="float" Nullable="false" />
+          <Property Name="Af_Depreciacion_acum" Type="float" Nullable="false" />
+          <Property Name="Af_Vida_Util" Type="int" Nullable="false" />
+          <Property Name="Af_Meses_depreciar" Type="int" Nullable="false" />
+          <Property Name="Af_porcentaje_deprec" Type="float" Nullable="false" />
+          <Property Name="Af_observacion" Type="varchar" MaxLength="5000" />
+          <Property Name="Af_NumPlaca" Type="varchar" MaxLength="50" />
+          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="IdEmpleadoEncargado" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdEmpleadoCustodio" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Af_Codigo_Barra" Type="varchar" MaxLength="50" />
+          <Property Name="Estado_Proceso" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="Af_ValorSalvamento" Type="float" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_Transac" Type="datetime" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltMod" Type="datetime" />
+          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltAnu" Type="datetime" />
+          <Property Name="MotiAnula" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Af_Activo_fijo_Categoria">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdCategoriaAF" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdCategoriaAF" Type="int" Nullable="false" />
+          <Property Name="IdActivoFijoTipo" Type="int" Nullable="false" />
+          <Property Name="cod_tipo" Type="varchar" MaxLength="20" />
+          <Property Name="CodCategoriaAF" Type="varchar" MaxLength="50" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="5000" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_Transac" Type="datetime" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltMod" Type="datetime" />
+          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltAnu" Type="datetime" />
+          <Property Name="MotiAnula" Type="varchar" MaxLength="5000" />
+          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Af_Activo_fijo_tipo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdActivoFijoTipo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdActivoFijoTipo" Type="int" Nullable="false" />
+          <Property Name="CodActivoFijo" Type="varchar" MaxLength="50" />
+          <Property Name="Af_Descripcion" Type="varchar" MaxLength="5000" Nullable="false" />
+          <Property Name="Af_Porcentaje_depre" Type="float" Nullable="false" />
+          <Property Name="Af_anio_depreciacion" Type="int" Nullable="false" />
+          <Property Name="IdCtaCble_Activo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IdCtaCble_Dep_Acum" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IdCtaCble_Gastos_Depre" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Se_Deprecia" Type="bit" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_Transac" Type="datetime" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltMod" Type="datetime" />
+          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltAnu" Type="datetime" />
+          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="MotiAnula" Type="varchar" MaxLength="100" />
+          <Property Name="IdCtaCble_CostoVenta" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IdCtaCble_Mejora" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IdCtaCble_Baja" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IdCtaCble_Retiro" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Af_Area">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdArea" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdArea" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar(max)" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="IdUsuarioModificacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="IdUsuarioAnulacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaAnulacion" Type="datetime" />
+          <Property Name="MotivoAnulacion" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Af_Catalogo">
+          <Key>
+            <PropertyRef Name="IdCatalogo" />
+          </Key>
+          <Property Name="IdCatalogo" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="IdTipoCatalogo" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
+          <Property Name="FechaUltMod" Type="date" />
+          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="25" />
+          <Property Name="Fecha_UltAnu" Type="date" />
+          <Property Name="MotiAnula" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Af_CatalogoTipo">
+          <Key>
+            <PropertyRef Name="IdTipoCatalogo" />
+          </Key>
+          <Property Name="IdTipoCatalogo" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Af_Departamento">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdDepartamento" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdDepartamento" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdArea" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar(max)" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="IdUsuarioModificacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="IdUsuarioAnulacion" Type="varchar" MaxLength="50" />
+          <Property Name="FechaAnulacion" Type="datetime" />
+          <Property Name="MotivoAnulacion" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Af_Depreciacion">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdDepreciacion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdDepreciacion" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Cod_Depreciacion" Type="char" MaxLength="20" />
+          <Property Name="IdPeriodo" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="200" />
+          <Property Name="Fecha_Depreciacion" Type="datetime" Nullable="false" />
+          <Property Name="Num_Act_Depre" Type="int" Nullable="false" />
+          <Property Name="Valor_Tot_Act" Type="float" Nullable="false" />
+          <Property Name="Valor_Tot_Depre" Type="float" Nullable="false" />
+          <Property Name="Valor_Tot_DepreAcum" Type="float" Nullable="false" />
+          <Property Name="Valot_Tot_Importe" Type="float" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_Transac" Type="datetime" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltMod" Type="datetime" />
+          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltAnu" Type="datetime" />
+          <Property Name="MotivoAnula" Type="varchar" MaxLength="100" />
+          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="IdEmpresa_ct" Type="int" />
+          <Property Name="IdTipoCbte" Type="int" />
+          <Property Name="IdCbteCble" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Af_Depreciacion_Det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdDepreciacion" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdDepreciacion" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdActivoFijo" Type="int" Nullable="false" />
+          <Property Name="Concepto" Type="varchar" MaxLength="1000" />
+          <Property Name="Valor_Compra" Type="float" Nullable="false" />
+          <Property Name="Valor_Salvamento" Type="float" Nullable="false" />
+          <Property Name="Vida_Util" Type="int" Nullable="false" />
+          <Property Name="Porc_Depreciacion" Type="float" Nullable="false" />
+          <Property Name="Valor_Depreciacion" Type="float" Nullable="false" />
+          <Property Name="Valor_Depre_Acum" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Af_Mej_Baj_Activo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Id_Mejora_Baja_Activo" />
+            <PropertyRef Name="Id_Tipo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="Id_Mejora_Baja_Activo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Id_Tipo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IdActivoFijo" Type="int" Nullable="false" />
+          <Property Name="Cod_Mej_Baj_Activo" Type="char" MaxLength="20" />
+          <Property Name="ValorActivo" Type="float" Nullable="false" />
+          <Property Name="Valor_Tot_Bajas" Type="float" Nullable="false" />
+          <Property Name="Valor_Tot_Mejora" Type="float" Nullable="false" />
+          <Property Name="Valor_Depre_Acu" Type="float" Nullable="false" />
+          <Property Name="Valor_Neto" Type="float" Nullable="false" />
+          <Property Name="Valor_Mej_Baj_Activo" Type="float" Nullable="false" />
+          <Property Name="Compr_Mej_Baj" Type="varchar" MaxLength="50" />
+          <Property Name="DescripcionTecnica" Type="varchar" MaxLength="500" />
+          <Property Name="Motivo" Type="varchar" MaxLength="500" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_Transac" Type="datetime" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltMod" Type="datetime" />
+          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltAnu" Type="datetime" />
+          <Property Name="MotivoAnula" Type="varchar" MaxLength="100" />
+          <Property Name="nom_pc" Type="varchar" MaxLength="50" />
+          <Property Name="ip" Type="varchar" MaxLength="25" />
+          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="IdEmpresa_ct" Type="int" />
+          <Property Name="IdTipoCbte" Type="int" />
+          <Property Name="IdCbteCble" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Fecha_MejBaj" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Af_Parametros">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdTipoCbte" Type="int" Nullable="false" />
+          <Property Name="IdTipoCbteMejora" Type="int" Nullable="false" />
+          <Property Name="IdTipoCbteBaja" Type="int" Nullable="false" />
+          <Property Name="IdTipoCbteVenta" Type="int" Nullable="false" />
+          <Property Name="IdTipoCbteRetiro" Type="int" Nullable="false" />
+          <Property Name="DiasTransaccionesAFuturo" Type="int" Nullable="false" />
+          <Property Name="ContabilizaDepreciacionPorActivo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Af_Retiro_Activo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdRetiroActivo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdRetiroActivo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Cod_Ret_Activo" Type="char" MaxLength="20" />
+          <Property Name="IdActivoFijo" Type="int" Nullable="false" />
+          <Property Name="ValorActivo" Type="float" Nullable="false" />
+          <Property Name="Valor_Tot_Bajas" Type="float" Nullable="false" />
+          <Property Name="Valor_Tot_Mejora" Type="float" Nullable="false" />
+          <Property Name="Valor_Depre_Acu" Type="float" Nullable="false" />
+          <Property Name="Valor_Neto" Type="float" Nullable="false" />
+          <Property Name="NumComprobante" Type="varchar" MaxLength="50" />
+          <Property Name="Concepto_Retiro" Type="varchar" MaxLength="200" />
+          <Property Name="Fecha_Retiro" Type="datetime" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_Transac" Type="datetime" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltMod" Type="datetime" />
+          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltAnu" Type="datetime" />
+          <Property Name="MotivoAnula" Type="varchar" MaxLength="100" />
+          <Property Name="nom_pc" Type="varchar" MaxLength="50" />
+          <Property Name="ip" Type="varchar" MaxLength="25" />
+          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="IdEmpresa_ct" Type="int" />
+          <Property Name="IdTipoCbte" Type="int" />
+          <Property Name="IdCbteCble" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Af_Venta_Activo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdVtaActivo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdVtaActivo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Cod_VtaActivo" Type="char" MaxLength="20" />
+          <Property Name="IdActivoFijo" Type="int" Nullable="false" />
+          <Property Name="ValorActivo" Type="float" Nullable="false" />
+          <Property Name="Valor_Tot_Bajas" Type="float" Nullable="false" />
+          <Property Name="Valor_Tot_Mejora" Type="float" Nullable="false" />
+          <Property Name="Valor_Depre_Acu" Type="float" Nullable="false" />
+          <Property Name="Valor_Neto" Type="float" Nullable="false" />
+          <Property Name="Valor_Venta" Type="float" Nullable="false" />
+          <Property Name="Valor_Perdi_Gana" Type="float" Nullable="false" />
+          <Property Name="NumComprobante" Type="varchar" MaxLength="50" />
+          <Property Name="Concepto_Vta" Type="varchar" MaxLength="200" />
+          <Property Name="Fecha_Venta" Type="datetime" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_Transac" Type="datetime" />
+          <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltMod" Type="datetime" />
+          <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
+          <Property Name="Fecha_UltAnu" Type="datetime" />
+          <Property Name="MotivoAnula" Type="varchar" MaxLength="100" />
+          <Property Name="nom_pc" Type="varchar" MaxLength="50" />
+          <Property Name="ip" Type="varchar" MaxLength="25" />
+          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="IdEmpresa_ct" Type="int" />
+          <Property Name="IdTipoCbte" Type="int" />
+          <Property Name="IdCbteCble" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <Association Name="FK_Af_Activo_fijo_Af_Activo_fijo_Categoria">
+          <End Role="Af_Activo_fijo_Categoria" Type="Self.Af_Activo_fijo_Categoria" Multiplicity="1" />
+          <End Role="Af_Activo_fijo" Type="Self.Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Activo_fijo_Categoria">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCategoriaAF" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCategoriaAF" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Activo_fijo_Af_Activo_fijo_tipo">
+          <End Role="Af_Activo_fijo_tipo" Type="Self.Af_Activo_fijo_tipo" Multiplicity="1" />
+          <End Role="Af_Activo_fijo" Type="Self.Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Activo_fijo_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijoTipo" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijoTipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Activo_fijo_Af_Area">
+          <End Role="Af_Area" Type="Self.Af_Area" Multiplicity="1" />
+          <End Role="Af_Activo_fijo" Type="Self.Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Area">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdArea" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Activo_fijo_Af_Catalogo5">
+          <End Role="Af_Catalogo" Type="Self.Af_Catalogo" Multiplicity="1" />
+          <End Role="Af_Activo_fijo" Type="Self.Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Catalogo">
+              <PropertyRef Name="IdCatalogo" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="IdCatalogo_Marca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Activo_fijo_Af_Catalogo6">
+          <End Role="Af_Catalogo" Type="Self.Af_Catalogo" Multiplicity="1" />
+          <End Role="Af_Activo_fijo" Type="Self.Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Catalogo">
+              <PropertyRef Name="IdCatalogo" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="IdCatalogo_Modelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Activo_fijo_Af_Catalogo7">
+          <End Role="Af_Catalogo" Type="Self.Af_Catalogo" Multiplicity="1" />
+          <End Role="Af_Activo_fijo" Type="Self.Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Catalogo">
+              <PropertyRef Name="IdCatalogo" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="IdCatalogo_Color" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Activo_fijo_Af_Catalogo8">
+          <End Role="Af_Catalogo" Type="Self.Af_Catalogo" Multiplicity="1" />
+          <End Role="Af_Activo_fijo" Type="Self.Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Catalogo">
+              <PropertyRef Name="IdCatalogo" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="IdTipoCatalogo_Ubicacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Activo_fijo_Af_Catalogo9">
+          <End Role="Af_Catalogo" Type="Self.Af_Catalogo" Multiplicity="1" />
+          <End Role="Af_Activo_fijo" Type="Self.Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Catalogo">
+              <PropertyRef Name="IdCatalogo" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="Estado_Proceso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Activo_fijo_Af_Departamento">
+          <End Role="Af_Departamento" Type="Self.Af_Departamento" Multiplicity="1" />
+          <End Role="Af_Activo_fijo" Type="Self.Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Departamento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdDepartamento" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdDepartamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Activo_fijo_Categoria_Af_Activo_fijo_tipo">
+          <End Role="Af_Activo_fijo_tipo" Type="Self.Af_Activo_fijo_tipo" Multiplicity="1" />
+          <End Role="Af_Activo_fijo_Categoria" Type="Self.Af_Activo_fijo_Categoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Activo_fijo_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijoTipo" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo_Categoria">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijoTipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Catalogo_Af_CatalogoTipo">
+          <End Role="Af_CatalogoTipo" Type="Self.Af_CatalogoTipo" Multiplicity="1" />
+          <End Role="Af_Catalogo" Type="Self.Af_Catalogo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_CatalogoTipo">
+              <PropertyRef Name="IdTipoCatalogo" />
+            </Principal>
+            <Dependent Role="Af_Catalogo">
+              <PropertyRef Name="IdTipoCatalogo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Depreciacion_Det_Af_Activo_fijo">
+          <End Role="Af_Activo_fijo" Type="Self.Af_Activo_fijo" Multiplicity="1" />
+          <End Role="Af_Depreciacion_Det" Type="Self.Af_Depreciacion_Det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Activo_fijo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijo" />
+            </Principal>
+            <Dependent Role="Af_Depreciacion_Det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Mej_Baj_Activo_Af_Activo_fijo">
+          <End Role="Af_Activo_fijo" Type="Self.Af_Activo_fijo" Multiplicity="1" />
+          <End Role="Af_Mej_Baj_Activo" Type="Self.Af_Mej_Baj_Activo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Activo_fijo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijo" />
+            </Principal>
+            <Dependent Role="Af_Mej_Baj_Activo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Retiro_Activo_Af_Activo_fijo">
+          <End Role="Af_Activo_fijo" Type="Self.Af_Activo_fijo" Multiplicity="1" />
+          <End Role="Af_Retiro_Activo" Type="Self.Af_Retiro_Activo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Activo_fijo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijo" />
+            </Principal>
+            <Dependent Role="Af_Retiro_Activo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Venta_Activo_Af_Activo_fijo">
+          <End Role="Af_Activo_fijo" Type="Self.Af_Activo_fijo" Multiplicity="1" />
+          <End Role="Af_Venta_Activo" Type="Self.Af_Venta_Activo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Activo_fijo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijo" />
+            </Principal>
+            <Dependent Role="Af_Venta_Activo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="spACTF_activos_a_depreciar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdEmpresa" Type="int" Mode="In" />
+          <Parameter Name="Fecha_ini" Type="datetime" Mode="In" />
+          <Parameter Name="Fecha_fin" Type="datetime" Mode="In" />
+          <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="Model_activo_fijoStoreContainer">
+          <EntitySet Name="Af_Activo_fijo" EntityType="Self.Af_Activo_fijo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Af_Activo_fijo_Categoria" EntityType="Self.Af_Activo_fijo_Categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Af_Activo_fijo_tipo" EntityType="Self.Af_Activo_fijo_tipo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Af_Area" EntityType="Self.Af_Area" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Af_Catalogo" EntityType="Self.Af_Catalogo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Af_CatalogoTipo" EntityType="Self.Af_CatalogoTipo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Af_Departamento" EntityType="Self.Af_Departamento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Af_Depreciacion" EntityType="Self.Af_Depreciacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Af_Depreciacion_Det" EntityType="Self.Af_Depreciacion_Det" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Af_Mej_Baj_Activo" EntityType="Self.Af_Mej_Baj_Activo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Af_Parametros" EntityType="Self.Af_Parametros" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Af_Retiro_Activo" EntityType="Self.Af_Retiro_Activo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Af_Venta_Activo" EntityType="Self.Af_Venta_Activo" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Activo_fijo_Categoria" Association="Self.FK_Af_Activo_fijo_Af_Activo_fijo_Categoria">
+            <End Role="Af_Activo_fijo_Categoria" EntitySet="Af_Activo_fijo_Categoria" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Activo_fijo_tipo" Association="Self.FK_Af_Activo_fijo_Af_Activo_fijo_tipo">
+            <End Role="Af_Activo_fijo_tipo" EntitySet="Af_Activo_fijo_tipo" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Area" Association="Self.FK_Af_Activo_fijo_Af_Area">
+            <End Role="Af_Area" EntitySet="Af_Area" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Catalogo5" Association="Self.FK_Af_Activo_fijo_Af_Catalogo5">
+            <End Role="Af_Catalogo" EntitySet="Af_Catalogo" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Catalogo6" Association="Self.FK_Af_Activo_fijo_Af_Catalogo6">
+            <End Role="Af_Catalogo" EntitySet="Af_Catalogo" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Catalogo7" Association="Self.FK_Af_Activo_fijo_Af_Catalogo7">
+            <End Role="Af_Catalogo" EntitySet="Af_Catalogo" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Catalogo8" Association="Self.FK_Af_Activo_fijo_Af_Catalogo8">
+            <End Role="Af_Catalogo" EntitySet="Af_Catalogo" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Catalogo9" Association="Self.FK_Af_Activo_fijo_Af_Catalogo9">
+            <End Role="Af_Catalogo" EntitySet="Af_Catalogo" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Departamento" Association="Self.FK_Af_Activo_fijo_Af_Departamento">
+            <End Role="Af_Departamento" EntitySet="Af_Departamento" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Activo_fijo_Categoria_Af_Activo_fijo_tipo" Association="Self.FK_Af_Activo_fijo_Categoria_Af_Activo_fijo_tipo">
+            <End Role="Af_Activo_fijo_tipo" EntitySet="Af_Activo_fijo_tipo" />
+            <End Role="Af_Activo_fijo_Categoria" EntitySet="Af_Activo_fijo_Categoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Catalogo_Af_CatalogoTipo" Association="Self.FK_Af_Catalogo_Af_CatalogoTipo">
+            <End Role="Af_CatalogoTipo" EntitySet="Af_CatalogoTipo" />
+            <End Role="Af_Catalogo" EntitySet="Af_Catalogo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Depreciacion_Det_Af_Activo_fijo" Association="Self.FK_Af_Depreciacion_Det_Af_Activo_fijo">
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+            <End Role="Af_Depreciacion_Det" EntitySet="Af_Depreciacion_Det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Mej_Baj_Activo_Af_Activo_fijo" Association="Self.FK_Af_Mej_Baj_Activo_Af_Activo_fijo">
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+            <End Role="Af_Mej_Baj_Activo" EntitySet="Af_Mej_Baj_Activo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Retiro_Activo_Af_Activo_fijo" Association="Self.FK_Af_Retiro_Activo_Af_Activo_fijo">
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+            <End Role="Af_Retiro_Activo" EntitySet="Af_Retiro_Activo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Venta_Activo_Af_Activo_fijo" Association="Self.FK_Af_Venta_Activo_Af_Activo_fijo">
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+            <End Role="Af_Venta_Activo" EntitySet="Af_Venta_Activo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model_activo_fijo" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Af_CatalogoTipo">
+          <Key>
+            <PropertyRef Name="IdTipoCatalogo" />
+          </Key>
+          <Property Name="IdTipoCatalogo" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Af_Catalogo" Relationship="Model_activo_fijo.FK_Af_Catalogo_Af_CatalogoTipo" FromRole="Af_CatalogoTipo" ToRole="Af_Catalogo" />
+        </EntityType>
+        <EntityType Name="Af_Depreciacion">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdDepreciacion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdDepreciacion" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Cod_Depreciacion" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="IdPeriodo" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Depreciacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Num_Act_Depre" Type="Int32" Nullable="false" />
+          <Property Name="Valor_Tot_Act" Type="Double" Nullable="false" />
+          <Property Name="Valor_Tot_Depre" Type="Double" Nullable="false" />
+          <Property Name="Valor_Tot_DepreAcum" Type="Double" Nullable="false" />
+          <Property Name="Valot_Tot_Importe" Type="Double" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnula" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="IdEmpresa_ct" Type="Int32" />
+          <Property Name="IdTipoCbte" Type="Int32" />
+          <Property Name="IdCbteCble" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Af_Depreciacion_Det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdDepreciacion" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdDepreciacion" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdActivoFijo" Type="Int32" Nullable="false" />
+          <Property Name="Concepto" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Valor_Compra" Type="Double" Nullable="false" />
+          <Property Name="Valor_Salvamento" Type="Double" Nullable="false" />
+          <Property Name="Vida_Util" Type="Int32" Nullable="false" />
+          <Property Name="Porc_Depreciacion" Type="Double" Nullable="false" />
+          <Property Name="Valor_Depreciacion" Type="Double" Nullable="false" />
+          <Property Name="Valor_Depre_Acum" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Af_Activo_fijo" Relationship="Model_activo_fijo.FK_Af_Depreciacion_Det_Af_Activo_fijo" FromRole="Af_Depreciacion_Det" ToRole="Af_Activo_fijo" />
+        </EntityType>
+        <EntityType Name="Af_Mej_Baj_Activo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Id_Mejora_Baja_Activo" />
+            <PropertyRef Name="Id_Tipo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="Id_Mejora_Baja_Activo" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Id_Tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdActivoFijo" Type="Int32" Nullable="false" />
+          <Property Name="Cod_Mej_Baj_Activo" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="ValorActivo" Type="Double" Nullable="false" />
+          <Property Name="Valor_Tot_Bajas" Type="Double" Nullable="false" />
+          <Property Name="Valor_Tot_Mejora" Type="Double" Nullable="false" />
+          <Property Name="Valor_Depre_Acu" Type="Double" Nullable="false" />
+          <Property Name="Valor_Neto" Type="Double" Nullable="false" />
+          <Property Name="Valor_Mej_Baj_Activo" Type="Double" Nullable="false" />
+          <Property Name="Compr_Mej_Baj" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DescripcionTecnica" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Motivo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnula" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="nom_pc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ip" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="IdEmpresa_ct" Type="Int32" />
+          <Property Name="IdTipoCbte" Type="Int32" />
+          <Property Name="IdCbteCble" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Fecha_MejBaj" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Af_Activo_fijo" Relationship="Model_activo_fijo.FK_Af_Mej_Baj_Activo_Af_Activo_fijo" FromRole="Af_Mej_Baj_Activo" ToRole="Af_Activo_fijo" />
+        </EntityType>
+        <EntityType Name="Af_Retiro_Activo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdRetiroActivo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdRetiroActivo" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Cod_Ret_Activo" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="IdActivoFijo" Type="Int32" Nullable="false" />
+          <Property Name="ValorActivo" Type="Double" Nullable="false" />
+          <Property Name="Valor_Tot_Bajas" Type="Double" Nullable="false" />
+          <Property Name="Valor_Tot_Mejora" Type="Double" Nullable="false" />
+          <Property Name="Valor_Depre_Acu" Type="Double" Nullable="false" />
+          <Property Name="Valor_Neto" Type="Double" Nullable="false" />
+          <Property Name="NumComprobante" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Concepto_Retiro" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Retiro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnula" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="nom_pc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ip" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="IdEmpresa_ct" Type="Int32" />
+          <Property Name="IdTipoCbte" Type="Int32" />
+          <Property Name="IdCbteCble" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Af_Activo_fijo" Relationship="Model_activo_fijo.FK_Af_Retiro_Activo_Af_Activo_fijo" FromRole="Af_Retiro_Activo" ToRole="Af_Activo_fijo" />
+        </EntityType>
+        <EntityType Name="Af_Venta_Activo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdVtaActivo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdVtaActivo" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Cod_VtaActivo" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="IdActivoFijo" Type="Int32" Nullable="false" />
+          <Property Name="ValorActivo" Type="Double" Nullable="false" />
+          <Property Name="Valor_Tot_Bajas" Type="Double" Nullable="false" />
+          <Property Name="Valor_Tot_Mejora" Type="Double" Nullable="false" />
+          <Property Name="Valor_Depre_Acu" Type="Double" Nullable="false" />
+          <Property Name="Valor_Neto" Type="Double" Nullable="false" />
+          <Property Name="Valor_Venta" Type="Double" Nullable="false" />
+          <Property Name="Valor_Perdi_Gana" Type="Double" Nullable="false" />
+          <Property Name="NumComprobante" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Concepto_Vta" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Venta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnula" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="nom_pc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ip" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="IdEmpresa_ct" Type="Int32" />
+          <Property Name="IdTipoCbte" Type="Int32" />
+          <Property Name="IdCbteCble" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Af_Activo_fijo" Relationship="Model_activo_fijo.FK_Af_Venta_Activo_Af_Activo_fijo" FromRole="Af_Venta_Activo" ToRole="Af_Activo_fijo" />
+        </EntityType>
+        <EntityContainer Name="Entities_activo_fijo" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Af_CatalogoTipo" EntityType="Self.Af_CatalogoTipo" />
+          <EntitySet Name="Af_Depreciacion" EntityType="Self.Af_Depreciacion" />
+          <EntitySet Name="Af_Depreciacion_Det" EntityType="Self.Af_Depreciacion_Det" />
+          <EntitySet Name="Af_Mej_Baj_Activo" EntityType="Self.Af_Mej_Baj_Activo" />
+          <EntitySet Name="Af_Retiro_Activo" EntityType="Self.Af_Retiro_Activo" />
+          <EntitySet Name="Af_Venta_Activo" EntityType="Self.Af_Venta_Activo" />
+          <FunctionImport Name="spACTF_activos_a_depreciar" ReturnType="Collection(Model_activo_fijo.spACTF_activos_a_depreciar_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="Fecha_ini" Mode="In" Type="DateTime" />
+            <Parameter Name="Fecha_fin" Mode="In" Type="DateTime" />
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Af_Parametros" EntityType="Model_activo_fijo.Af_Parametros" />
+          <EntitySet Name="Af_Activo_fijo_Categoria" EntityType="Model_activo_fijo.Af_Activo_fijo_Categoria" />
+          <EntitySet Name="Af_Activo_fijo_tipo" EntityType="Model_activo_fijo.Af_Activo_fijo_tipo" />
+          <AssociationSet Name="FK_Af_Activo_fijo_Categoria_Af_Activo_fijo_tipo" Association="Model_activo_fijo.FK_Af_Activo_fijo_Categoria_Af_Activo_fijo_tipo">
+            <End Role="Af_Activo_fijo_tipo" EntitySet="Af_Activo_fijo_tipo" />
+            <End Role="Af_Activo_fijo_Categoria" EntitySet="Af_Activo_fijo_Categoria" />
+          </AssociationSet>
+          <EntitySet Name="Af_Catalogo" EntityType="Model_activo_fijo.Af_Catalogo" />
+          <AssociationSet Name="FK_Af_Catalogo_Af_CatalogoTipo" Association="Model_activo_fijo.FK_Af_Catalogo_Af_CatalogoTipo">
+            <End Role="Af_CatalogoTipo" EntitySet="Af_CatalogoTipo" />
+            <End Role="Af_Catalogo" EntitySet="Af_Catalogo" />
+          </AssociationSet>
+          <EntitySet Name="Af_Activo_fijo" EntityType="Model_activo_fijo.Af_Activo_fijo" />
+          <EntitySet Name="Af_Area" EntityType="Model_activo_fijo.Af_Area" />
+          <EntitySet Name="Af_Departamento" EntityType="Model_activo_fijo.Af_Departamento" />
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Activo_fijo_Categoria" Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Activo_fijo_Categoria">
+            <End Role="Af_Activo_fijo_Categoria" EntitySet="Af_Activo_fijo_Categoria" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Activo_fijo_tipo" Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Activo_fijo_tipo">
+            <End Role="Af_Activo_fijo_tipo" EntitySet="Af_Activo_fijo_tipo" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Area" Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Area">
+            <End Role="Af_Area" EntitySet="Af_Area" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Catalogo5" Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo5">
+            <End Role="Af_Catalogo" EntitySet="Af_Catalogo" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Catalogo6" Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo6">
+            <End Role="Af_Catalogo" EntitySet="Af_Catalogo" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Catalogo7" Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo7">
+            <End Role="Af_Catalogo" EntitySet="Af_Catalogo" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Catalogo8" Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo8">
+            <End Role="Af_Catalogo" EntitySet="Af_Catalogo" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Catalogo9" Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo9">
+            <End Role="Af_Catalogo" EntitySet="Af_Catalogo" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Activo_fijo_Af_Departamento" Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Departamento">
+            <End Role="Af_Departamento" EntitySet="Af_Departamento" />
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Depreciacion_Det_Af_Activo_fijo" Association="Model_activo_fijo.FK_Af_Depreciacion_Det_Af_Activo_fijo">
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+            <End Role="Af_Depreciacion_Det" EntitySet="Af_Depreciacion_Det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Mej_Baj_Activo_Af_Activo_fijo" Association="Model_activo_fijo.FK_Af_Mej_Baj_Activo_Af_Activo_fijo">
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+            <End Role="Af_Mej_Baj_Activo" EntitySet="Af_Mej_Baj_Activo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Retiro_Activo_Af_Activo_fijo" Association="Model_activo_fijo.FK_Af_Retiro_Activo_Af_Activo_fijo">
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+            <End Role="Af_Retiro_Activo" EntitySet="Af_Retiro_Activo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Af_Venta_Activo_Af_Activo_fijo" Association="Model_activo_fijo.FK_Af_Venta_Activo_Af_Activo_fijo">
+            <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
+            <End Role="Af_Venta_Activo" EntitySet="Af_Venta_Activo" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="spACTF_activos_a_depreciar_Result">
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="Int32" Name="IdActivoFijo" Nullable="false" />
+          <Property Type="String" Name="CodActivoFijo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Af_Nombre" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="IdUsuario" Nullable="false" MaxLength="25" />
+          <Property Type="Double" Name="Af_costo_compra" Nullable="false" />
+          <Property Type="Double" Name="Af_depreciacion_acum" Nullable="false" />
+          <Property Type="Double" Name="Af_valor_depreciacion" Nullable="false" />
+          <Property Type="Int32" Name="IdActijoFijoTipo" Nullable="true" />
+          <Property Type="String" Name="nom_tipo" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="IdCategoriaAF" Nullable="true" />
+          <Property Type="String" Name="nom_categoria" Nullable="true" MaxLength="500" />
+          <Property Type="Double" Name="Af_porcentaje_deprec" Nullable="true" />
+          <Property Type="Double" Name="Valor_importe" Nullable="false" />
+          <Property Type="String" Name="IdCtaCble_Activo" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="IdCtaCble_Dep_Acum" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="IdCtaCble_Gastos_Depre" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <EntityType Name="Af_Parametros">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbte" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbteMejora" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbteBaja" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbteVenta" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbteRetiro" Type="Int32" Nullable="false" />
+          <Property Name="DiasTransaccionesAFuturo" Type="Int32" Nullable="false" />
+          <Property Name="ContabilizaDepreciacionPorActivo" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Af_Activo_fijo_Categoria">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdCategoriaAF" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdCategoriaAF" Type="Int32" Nullable="false" />
+          <Property Name="IdActivoFijoTipo" Type="Int32" Nullable="false" />
+          <Property Name="cod_tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CodCategoriaAF" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="MotiAnula" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Af_Activo_fijo_tipo" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Categoria_Af_Activo_fijo_tipo" FromRole="Af_Activo_fijo_Categoria" ToRole="Af_Activo_fijo_tipo" />
+          <NavigationProperty Name="Af_Activo_fijo" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Activo_fijo_Categoria" FromRole="Af_Activo_fijo_Categoria" ToRole="Af_Activo_fijo" />
+        </EntityType>
+        <EntityType Name="Af_Activo_fijo_tipo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdActivoFijoTipo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdActivoFijoTipo" Type="Int32" Nullable="false" />
+          <Property Name="CodActivoFijo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Af_Descripcion" Type="String" Nullable="false" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="Af_Porcentaje_depre" Type="Double" Nullable="false" />
+          <Property Name="Af_anio_depreciacion" Type="Int32" Nullable="false" />
+          <Property Name="IdCtaCble_Activo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble_Dep_Acum" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble_Gastos_Depre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Se_Deprecia" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="MotiAnula" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble_CostoVenta" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble_Mejora" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble_Baja" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdCtaCble_Retiro" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Af_Activo_fijo_Categoria" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Categoria_Af_Activo_fijo_tipo" FromRole="Af_Activo_fijo_tipo" ToRole="Af_Activo_fijo_Categoria" />
+          <NavigationProperty Name="Af_Activo_fijo" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Activo_fijo_tipo" FromRole="Af_Activo_fijo_tipo" ToRole="Af_Activo_fijo" />
+        </EntityType>
+        <Association Name="FK_Af_Activo_fijo_Categoria_Af_Activo_fijo_tipo">
+          <End Type="Model_activo_fijo.Af_Activo_fijo_tipo" Role="Af_Activo_fijo_tipo" Multiplicity="1" />
+          <End Type="Model_activo_fijo.Af_Activo_fijo_Categoria" Role="Af_Activo_fijo_Categoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Activo_fijo_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijoTipo" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo_Categoria">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijoTipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Af_Catalogo">
+          <Key>
+            <PropertyRef Name="IdCatalogo" />
+          </Key>
+          <Property Name="IdCatalogo" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoCatalogo" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaUltMod" Type="DateTime" Precision="0" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="0" />
+          <Property Name="MotiAnula" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Af_CatalogoTipo" Relationship="Model_activo_fijo.FK_Af_Catalogo_Af_CatalogoTipo" FromRole="Af_Catalogo" ToRole="Af_CatalogoTipo" />
+          <NavigationProperty Name="Af_Activo_fijo" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo5" FromRole="Af_Catalogo" ToRole="Af_Activo_fijo" />
+          <NavigationProperty Name="Af_Activo_fijo1" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo6" FromRole="Af_Catalogo" ToRole="Af_Activo_fijo" />
+          <NavigationProperty Name="Af_Activo_fijo2" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo7" FromRole="Af_Catalogo" ToRole="Af_Activo_fijo" />
+          <NavigationProperty Name="Af_Activo_fijo3" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo8" FromRole="Af_Catalogo" ToRole="Af_Activo_fijo" />
+          <NavigationProperty Name="Af_Activo_fijo4" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo9" FromRole="Af_Catalogo" ToRole="Af_Activo_fijo" />
+          </EntityType>
+        <Association Name="FK_Af_Catalogo_Af_CatalogoTipo">
+          <End Type="Model_activo_fijo.Af_CatalogoTipo" Role="Af_CatalogoTipo" Multiplicity="1" />
+          <End Type="Model_activo_fijo.Af_Catalogo" Role="Af_Catalogo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_CatalogoTipo">
+              <PropertyRef Name="IdTipoCatalogo" />
+            </Principal>
+            <Dependent Role="Af_Catalogo">
+              <PropertyRef Name="IdTipoCatalogo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Af_Activo_fijo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdActivoFijo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdActivoFijo" Type="Int32" Nullable="false" />
+          <Property Name="CodActivoFijo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Af_Nombre" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdActivoFijoTipo" Type="Int32" Nullable="false" />
+          <Property Name="IdCategoriaAF" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdDepartamento" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdArea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdCatalogo_Marca" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="IdCatalogo_Modelo" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="Af_NumSerie" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdCatalogo_Color" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoCatalogo_Ubicacion" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="Af_fecha_compra" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Af_fecha_ini_depre" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Af_fecha_fin_depre" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Af_costo_compra" Type="Double" Nullable="false" />
+          <Property Name="Af_Depreciacion_acum" Type="Double" Nullable="false" />
+          <Property Name="Af_Vida_Util" Type="Int32" Nullable="false" />
+          <Property Name="Af_Meses_depreciar" Type="Int32" Nullable="false" />
+          <Property Name="Af_porcentaje_deprec" Type="Double" Nullable="false" />
+          <Property Name="Af_observacion" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="Af_NumPlaca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="IdEmpleadoEncargado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdEmpleadoCustodio" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Af_Codigo_Barra" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Estado_Proceso" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="Af_ValorSalvamento" Type="Double" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="MotiAnula" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Af_Activo_fijo_Categoria" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Activo_fijo_Categoria" FromRole="Af_Activo_fijo" ToRole="Af_Activo_fijo_Categoria" />
+          <NavigationProperty Name="Af_Activo_fijo_tipo" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Activo_fijo_tipo" FromRole="Af_Activo_fijo" ToRole="Af_Activo_fijo_tipo" />
+          <NavigationProperty Name="Af_Area" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Area" FromRole="Af_Activo_fijo" ToRole="Af_Area" />
+          <NavigationProperty Name="Af_Catalogo" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo5" FromRole="Af_Activo_fijo" ToRole="Af_Catalogo" />
+          <NavigationProperty Name="Af_Catalogo1" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo6" FromRole="Af_Activo_fijo" ToRole="Af_Catalogo" />
+          <NavigationProperty Name="Af_Catalogo2" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo7" FromRole="Af_Activo_fijo" ToRole="Af_Catalogo" />
+          <NavigationProperty Name="Af_Catalogo3" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo8" FromRole="Af_Activo_fijo" ToRole="Af_Catalogo" />
+          <NavigationProperty Name="Af_Catalogo4" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Catalogo9" FromRole="Af_Activo_fijo" ToRole="Af_Catalogo" />
+          <NavigationProperty Name="Af_Departamento" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Departamento" FromRole="Af_Activo_fijo" ToRole="Af_Departamento" />
+          <NavigationProperty Name="Af_Depreciacion_Det" Relationship="Model_activo_fijo.FK_Af_Depreciacion_Det_Af_Activo_fijo" FromRole="Af_Activo_fijo" ToRole="Af_Depreciacion_Det" />
+          <NavigationProperty Name="Af_Mej_Baj_Activo" Relationship="Model_activo_fijo.FK_Af_Mej_Baj_Activo_Af_Activo_fijo" FromRole="Af_Activo_fijo" ToRole="Af_Mej_Baj_Activo" />
+          <NavigationProperty Name="Af_Retiro_Activo" Relationship="Model_activo_fijo.FK_Af_Retiro_Activo_Af_Activo_fijo" FromRole="Af_Activo_fijo" ToRole="Af_Retiro_Activo" />
+          <NavigationProperty Name="Af_Venta_Activo" Relationship="Model_activo_fijo.FK_Af_Venta_Activo_Af_Activo_fijo" FromRole="Af_Activo_fijo" ToRole="Af_Venta_Activo" />
+        </EntityType>
+        <EntityType Name="Af_Area">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdArea" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdArea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioModificacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioAnulacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Af_Activo_fijo" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Area" FromRole="Af_Area" ToRole="Af_Activo_fijo" />
+        </EntityType>
+        <EntityType Name="Af_Departamento">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdDepartamento" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdDepartamento" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdArea" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioModificacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioAnulacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Af_Activo_fijo" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Departamento" FromRole="Af_Departamento" ToRole="Af_Activo_fijo" />
+        </EntityType>
+        <Association Name="FK_Af_Activo_fijo_Af_Activo_fijo_Categoria">
+          <End Type="Model_activo_fijo.Af_Activo_fijo_Categoria" Role="Af_Activo_fijo_Categoria" Multiplicity="1" />
+          <End Type="Model_activo_fijo.Af_Activo_fijo" Role="Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Activo_fijo_Categoria">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCategoriaAF" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCategoriaAF" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Activo_fijo_Af_Activo_fijo_tipo">
+          <End Type="Model_activo_fijo.Af_Activo_fijo_tipo" Role="Af_Activo_fijo_tipo" Multiplicity="1" />
+          <End Type="Model_activo_fijo.Af_Activo_fijo" Role="Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Activo_fijo_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijoTipo" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijoTipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Activo_fijo_Af_Area">
+          <End Type="Model_activo_fijo.Af_Area" Role="Af_Area" Multiplicity="1" />
+          <End Type="Model_activo_fijo.Af_Activo_fijo" Role="Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Area">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdArea" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Activo_fijo_Af_Catalogo5">
+          <End Type="Model_activo_fijo.Af_Catalogo" Role="Af_Catalogo" Multiplicity="1" />
+          <End Type="Model_activo_fijo.Af_Activo_fijo" Role="Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Catalogo">
+              <PropertyRef Name="IdCatalogo" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="IdCatalogo_Marca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Activo_fijo_Af_Catalogo6">
+          <End Type="Model_activo_fijo.Af_Catalogo" Role="Af_Catalogo" Multiplicity="1" />
+          <End Type="Model_activo_fijo.Af_Activo_fijo" Role="Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Catalogo">
+              <PropertyRef Name="IdCatalogo" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="IdCatalogo_Modelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Activo_fijo_Af_Catalogo7">
+          <End Type="Model_activo_fijo.Af_Catalogo" Role="Af_Catalogo" Multiplicity="1" />
+          <End Type="Model_activo_fijo.Af_Activo_fijo" Role="Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Catalogo">
+              <PropertyRef Name="IdCatalogo" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="IdCatalogo_Color" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Activo_fijo_Af_Catalogo8">
+          <End Type="Model_activo_fijo.Af_Catalogo" Role="Af_Catalogo" Multiplicity="1" />
+          <End Type="Model_activo_fijo.Af_Activo_fijo" Role="Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Catalogo">
+              <PropertyRef Name="IdCatalogo" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="IdTipoCatalogo_Ubicacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Activo_fijo_Af_Catalogo9">
+          <End Type="Model_activo_fijo.Af_Catalogo" Role="Af_Catalogo" Multiplicity="1" />
+          <End Type="Model_activo_fijo.Af_Activo_fijo" Role="Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Catalogo">
+              <PropertyRef Name="IdCatalogo" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="Estado_Proceso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Activo_fijo_Af_Departamento">
+          <End Type="Model_activo_fijo.Af_Departamento" Role="Af_Departamento" Multiplicity="1" />
+          <End Type="Model_activo_fijo.Af_Activo_fijo" Role="Af_Activo_fijo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Departamento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdDepartamento" />
+            </Principal>
+            <Dependent Role="Af_Activo_fijo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdDepartamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Depreciacion_Det_Af_Activo_fijo">
+          <End Type="Model_activo_fijo.Af_Activo_fijo" Role="Af_Activo_fijo" Multiplicity="1" />
+          <End Type="Model_activo_fijo.Af_Depreciacion_Det" Role="Af_Depreciacion_Det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Activo_fijo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijo" />
+            </Principal>
+            <Dependent Role="Af_Depreciacion_Det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Mej_Baj_Activo_Af_Activo_fijo">
+          <End Type="Model_activo_fijo.Af_Activo_fijo" Role="Af_Activo_fijo" Multiplicity="1" />
+          <End Type="Model_activo_fijo.Af_Mej_Baj_Activo" Role="Af_Mej_Baj_Activo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Activo_fijo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijo" />
+            </Principal>
+            <Dependent Role="Af_Mej_Baj_Activo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Retiro_Activo_Af_Activo_fijo">
+          <End Type="Model_activo_fijo.Af_Activo_fijo" Role="Af_Activo_fijo" Multiplicity="1" />
+          <End Type="Model_activo_fijo.Af_Retiro_Activo" Role="Af_Retiro_Activo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Activo_fijo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijo" />
+            </Principal>
+            <Dependent Role="Af_Retiro_Activo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Af_Venta_Activo_Af_Activo_fijo">
+          <End Type="Model_activo_fijo.Af_Activo_fijo" Role="Af_Activo_fijo" Multiplicity="1" />
+          <End Type="Model_activo_fijo.Af_Venta_Activo" Role="Af_Venta_Activo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Af_Activo_fijo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijo" />
+            </Principal>
+            <Dependent Role="Af_Venta_Activo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdActivoFijo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Model_activo_fijoStoreContainer" CdmEntityContainer="Entities_activo_fijo">
+          <EntitySetMapping Name="Af_CatalogoTipo">
+            <EntityTypeMapping TypeName="Model_activo_fijo.Af_CatalogoTipo">
+              <MappingFragment StoreEntitySet="Af_CatalogoTipo">
+                <ScalarProperty Name="IdTipoCatalogo" ColumnName="IdTipoCatalogo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Af_Depreciacion">
+            <EntityTypeMapping TypeName="Model_activo_fijo.Af_Depreciacion">
+              <MappingFragment StoreEntitySet="Af_Depreciacion">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdDepreciacion" ColumnName="IdDepreciacion" />
+                <ScalarProperty Name="Cod_Depreciacion" ColumnName="Cod_Depreciacion" />
+                <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Fecha_Depreciacion" ColumnName="Fecha_Depreciacion" />
+                <ScalarProperty Name="Num_Act_Depre" ColumnName="Num_Act_Depre" />
+                <ScalarProperty Name="Valor_Tot_Act" ColumnName="Valor_Tot_Act" />
+                <ScalarProperty Name="Valor_Tot_Depre" ColumnName="Valor_Tot_Depre" />
+                <ScalarProperty Name="Valor_Tot_DepreAcum" ColumnName="Valor_Tot_DepreAcum" />
+                <ScalarProperty Name="Valot_Tot_Importe" ColumnName="Valot_Tot_Importe" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="MotivoAnula" ColumnName="MotivoAnula" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdEmpresa_ct" ColumnName="IdEmpresa_ct" />
+                <ScalarProperty Name="IdTipoCbte" ColumnName="IdTipoCbte" />
+                <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Af_Depreciacion_Det">
+            <EntityTypeMapping TypeName="Model_activo_fijo.Af_Depreciacion_Det">
+              <MappingFragment StoreEntitySet="Af_Depreciacion_Det">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdDepreciacion" ColumnName="IdDepreciacion" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdActivoFijo" ColumnName="IdActivoFijo" />
+                <ScalarProperty Name="Concepto" ColumnName="Concepto" />
+                <ScalarProperty Name="Valor_Compra" ColumnName="Valor_Compra" />
+                <ScalarProperty Name="Valor_Salvamento" ColumnName="Valor_Salvamento" />
+                <ScalarProperty Name="Vida_Util" ColumnName="Vida_Util" />
+                <ScalarProperty Name="Porc_Depreciacion" ColumnName="Porc_Depreciacion" />
+                <ScalarProperty Name="Valor_Depreciacion" ColumnName="Valor_Depreciacion" />
+                <ScalarProperty Name="Valor_Depre_Acum" ColumnName="Valor_Depre_Acum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Af_Mej_Baj_Activo">
+            <EntityTypeMapping TypeName="Model_activo_fijo.Af_Mej_Baj_Activo">
+              <MappingFragment StoreEntitySet="Af_Mej_Baj_Activo">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="Id_Mejora_Baja_Activo" ColumnName="Id_Mejora_Baja_Activo" />
+                <ScalarProperty Name="Id_Tipo" ColumnName="Id_Tipo" />
+                <ScalarProperty Name="IdActivoFijo" ColumnName="IdActivoFijo" />
+                <ScalarProperty Name="Cod_Mej_Baj_Activo" ColumnName="Cod_Mej_Baj_Activo" />
+                <ScalarProperty Name="ValorActivo" ColumnName="ValorActivo" />
+                <ScalarProperty Name="Valor_Tot_Bajas" ColumnName="Valor_Tot_Bajas" />
+                <ScalarProperty Name="Valor_Tot_Mejora" ColumnName="Valor_Tot_Mejora" />
+                <ScalarProperty Name="Valor_Depre_Acu" ColumnName="Valor_Depre_Acu" />
+                <ScalarProperty Name="Valor_Neto" ColumnName="Valor_Neto" />
+                <ScalarProperty Name="Valor_Mej_Baj_Activo" ColumnName="Valor_Mej_Baj_Activo" />
+                <ScalarProperty Name="Compr_Mej_Baj" ColumnName="Compr_Mej_Baj" />
+                <ScalarProperty Name="DescripcionTecnica" ColumnName="DescripcionTecnica" />
+                <ScalarProperty Name="Motivo" ColumnName="Motivo" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="MotivoAnula" ColumnName="MotivoAnula" />
+                <ScalarProperty Name="nom_pc" ColumnName="nom_pc" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdEmpresa_ct" ColumnName="IdEmpresa_ct" />
+                <ScalarProperty Name="IdTipoCbte" ColumnName="IdTipoCbte" />
+                <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
+                <ScalarProperty Name="Fecha_MejBaj" ColumnName="Fecha_MejBaj" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Af_Retiro_Activo">
+            <EntityTypeMapping TypeName="Model_activo_fijo.Af_Retiro_Activo">
+              <MappingFragment StoreEntitySet="Af_Retiro_Activo">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdRetiroActivo" ColumnName="IdRetiroActivo" />
+                <ScalarProperty Name="Cod_Ret_Activo" ColumnName="Cod_Ret_Activo" />
+                <ScalarProperty Name="IdActivoFijo" ColumnName="IdActivoFijo" />
+                <ScalarProperty Name="ValorActivo" ColumnName="ValorActivo" />
+                <ScalarProperty Name="Valor_Tot_Bajas" ColumnName="Valor_Tot_Bajas" />
+                <ScalarProperty Name="Valor_Tot_Mejora" ColumnName="Valor_Tot_Mejora" />
+                <ScalarProperty Name="Valor_Depre_Acu" ColumnName="Valor_Depre_Acu" />
+                <ScalarProperty Name="Valor_Neto" ColumnName="Valor_Neto" />
+                <ScalarProperty Name="NumComprobante" ColumnName="NumComprobante" />
+                <ScalarProperty Name="Concepto_Retiro" ColumnName="Concepto_Retiro" />
+                <ScalarProperty Name="Fecha_Retiro" ColumnName="Fecha_Retiro" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="MotivoAnula" ColumnName="MotivoAnula" />
+                <ScalarProperty Name="nom_pc" ColumnName="nom_pc" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdEmpresa_ct" ColumnName="IdEmpresa_ct" />
+                <ScalarProperty Name="IdTipoCbte" ColumnName="IdTipoCbte" />
+                <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Af_Venta_Activo">
+            <EntityTypeMapping TypeName="Model_activo_fijo.Af_Venta_Activo">
+              <MappingFragment StoreEntitySet="Af_Venta_Activo">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdVtaActivo" ColumnName="IdVtaActivo" />
+                <ScalarProperty Name="Cod_VtaActivo" ColumnName="Cod_VtaActivo" />
+                <ScalarProperty Name="IdActivoFijo" ColumnName="IdActivoFijo" />
+                <ScalarProperty Name="ValorActivo" ColumnName="ValorActivo" />
+                <ScalarProperty Name="Valor_Tot_Bajas" ColumnName="Valor_Tot_Bajas" />
+                <ScalarProperty Name="Valor_Tot_Mejora" ColumnName="Valor_Tot_Mejora" />
+                <ScalarProperty Name="Valor_Depre_Acu" ColumnName="Valor_Depre_Acu" />
+                <ScalarProperty Name="Valor_Neto" ColumnName="Valor_Neto" />
+                <ScalarProperty Name="Valor_Venta" ColumnName="Valor_Venta" />
+                <ScalarProperty Name="Valor_Perdi_Gana" ColumnName="Valor_Perdi_Gana" />
+                <ScalarProperty Name="NumComprobante" ColumnName="NumComprobante" />
+                <ScalarProperty Name="Concepto_Vta" ColumnName="Concepto_Vta" />
+                <ScalarProperty Name="Fecha_Venta" ColumnName="Fecha_Venta" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="MotivoAnula" ColumnName="MotivoAnula" />
+                <ScalarProperty Name="nom_pc" ColumnName="nom_pc" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdEmpresa_ct" ColumnName="IdEmpresa_ct" />
+                <ScalarProperty Name="IdTipoCbte" ColumnName="IdTipoCbte" />
+                <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spACTF_activos_a_depreciar" FunctionName="Model_activo_fijo.Store.spACTF_activos_a_depreciar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_activo_fijo.spACTF_activos_a_depreciar_Result">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdActivoFijo" ColumnName="IdActivoFijo" />
+                <ScalarProperty Name="CodActivoFijo" ColumnName="CodActivoFijo" />
+                <ScalarProperty Name="Af_Nombre" ColumnName="Af_Nombre" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Af_costo_compra" ColumnName="Af_costo_compra" />
+                <ScalarProperty Name="Af_depreciacion_acum" ColumnName="Af_depreciacion_acum" />
+                <ScalarProperty Name="Af_valor_depreciacion" ColumnName="Af_valor_depreciacion" />
+                <ScalarProperty Name="IdActijoFijoTipo" ColumnName="IdActijoFijoTipo" />
+                <ScalarProperty Name="nom_tipo" ColumnName="nom_tipo" />
+                <ScalarProperty Name="IdCategoriaAF" ColumnName="IdCategoriaAF" />
+                <ScalarProperty Name="nom_categoria" ColumnName="nom_categoria" />
+                <ScalarProperty Name="Af_porcentaje_deprec" ColumnName="Af_porcentaje_deprec" />
+                <ScalarProperty Name="Valor_importe" ColumnName="Valor_importe" />
+                <ScalarProperty Name="IdCtaCble_Activo" ColumnName="IdCtaCble_Activo" />
+                <ScalarProperty Name="IdCtaCble_Dep_Acum" ColumnName="IdCtaCble_Dep_Acum" />
+                <ScalarProperty Name="IdCtaCble_Gastos_Depre" ColumnName="IdCtaCble_Gastos_Depre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Af_Parametros">
+            <EntityTypeMapping TypeName="Model_activo_fijo.Af_Parametros">
+              <MappingFragment StoreEntitySet="Af_Parametros">
+                <ScalarProperty Name="ContabilizaDepreciacionPorActivo" ColumnName="ContabilizaDepreciacionPorActivo" />
+                <ScalarProperty Name="DiasTransaccionesAFuturo" ColumnName="DiasTransaccionesAFuturo" />
+                <ScalarProperty Name="IdTipoCbteRetiro" ColumnName="IdTipoCbteRetiro" />
+                <ScalarProperty Name="IdTipoCbteVenta" ColumnName="IdTipoCbteVenta" />
+                <ScalarProperty Name="IdTipoCbteBaja" ColumnName="IdTipoCbteBaja" />
+                <ScalarProperty Name="IdTipoCbteMejora" ColumnName="IdTipoCbteMejora" />
+                <ScalarProperty Name="IdTipoCbte" ColumnName="IdTipoCbte" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Af_Activo_fijo_Categoria">
+            <EntityTypeMapping TypeName="Model_activo_fijo.Af_Activo_fijo_Categoria">
+              <MappingFragment StoreEntitySet="Af_Activo_fijo_Categoria">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="MotiAnula" ColumnName="MotiAnula" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="CodCategoriaAF" ColumnName="CodCategoriaAF" />
+                <ScalarProperty Name="cod_tipo" ColumnName="cod_tipo" />
+                <ScalarProperty Name="IdActivoFijoTipo" ColumnName="IdActivoFijoTipo" />
+                <ScalarProperty Name="IdCategoriaAF" ColumnName="IdCategoriaAF" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Af_Activo_fijo_tipo">
+            <EntityTypeMapping TypeName="Model_activo_fijo.Af_Activo_fijo_tipo">
+              <MappingFragment StoreEntitySet="Af_Activo_fijo_tipo">
+                <ScalarProperty Name="IdCtaCble_Retiro" ColumnName="IdCtaCble_Retiro" />
+                <ScalarProperty Name="IdCtaCble_Baja" ColumnName="IdCtaCble_Baja" />
+                <ScalarProperty Name="IdCtaCble_Mejora" ColumnName="IdCtaCble_Mejora" />
+                <ScalarProperty Name="IdCtaCble_CostoVenta" ColumnName="IdCtaCble_CostoVenta" />
+                <ScalarProperty Name="MotiAnula" ColumnName="MotiAnula" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Se_Deprecia" ColumnName="Se_Deprecia" />
+                <ScalarProperty Name="IdCtaCble_Gastos_Depre" ColumnName="IdCtaCble_Gastos_Depre" />
+                <ScalarProperty Name="IdCtaCble_Dep_Acum" ColumnName="IdCtaCble_Dep_Acum" />
+                <ScalarProperty Name="IdCtaCble_Activo" ColumnName="IdCtaCble_Activo" />
+                <ScalarProperty Name="Af_anio_depreciacion" ColumnName="Af_anio_depreciacion" />
+                <ScalarProperty Name="Af_Porcentaje_depre" ColumnName="Af_Porcentaje_depre" />
+                <ScalarProperty Name="Af_Descripcion" ColumnName="Af_Descripcion" />
+                <ScalarProperty Name="CodActivoFijo" ColumnName="CodActivoFijo" />
+                <ScalarProperty Name="IdActivoFijoTipo" ColumnName="IdActivoFijoTipo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Af_Catalogo">
+            <EntityTypeMapping TypeName="Model_activo_fijo.Af_Catalogo">
+              <MappingFragment StoreEntitySet="Af_Catalogo">
+                <ScalarProperty Name="MotiAnula" ColumnName="MotiAnula" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="FechaUltMod" ColumnName="FechaUltMod" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdTipoCatalogo" ColumnName="IdTipoCatalogo" />
+                <ScalarProperty Name="IdCatalogo" ColumnName="IdCatalogo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Af_Activo_fijo">
+            <EntityTypeMapping TypeName="Model_activo_fijo.Af_Activo_fijo">
+              <MappingFragment StoreEntitySet="Af_Activo_fijo">
+                <ScalarProperty Name="MotiAnula" ColumnName="MotiAnula" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Af_ValorSalvamento" ColumnName="Af_ValorSalvamento" />
+                <ScalarProperty Name="Estado_Proceso" ColumnName="Estado_Proceso" />
+                <ScalarProperty Name="Af_Codigo_Barra" ColumnName="Af_Codigo_Barra" />
+                <ScalarProperty Name="IdEmpleadoCustodio" ColumnName="IdEmpleadoCustodio" />
+                <ScalarProperty Name="IdEmpleadoEncargado" ColumnName="IdEmpleadoEncargado" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Af_NumPlaca" ColumnName="Af_NumPlaca" />
+                <ScalarProperty Name="Af_observacion" ColumnName="Af_observacion" />
+                <ScalarProperty Name="Af_porcentaje_deprec" ColumnName="Af_porcentaje_deprec" />
+                <ScalarProperty Name="Af_Meses_depreciar" ColumnName="Af_Meses_depreciar" />
+                <ScalarProperty Name="Af_Vida_Util" ColumnName="Af_Vida_Util" />
+                <ScalarProperty Name="Af_Depreciacion_acum" ColumnName="Af_Depreciacion_acum" />
+                <ScalarProperty Name="Af_costo_compra" ColumnName="Af_costo_compra" />
+                <ScalarProperty Name="Af_fecha_fin_depre" ColumnName="Af_fecha_fin_depre" />
+                <ScalarProperty Name="Af_fecha_ini_depre" ColumnName="Af_fecha_ini_depre" />
+                <ScalarProperty Name="Af_fecha_compra" ColumnName="Af_fecha_compra" />
+                <ScalarProperty Name="IdTipoCatalogo_Ubicacion" ColumnName="IdTipoCatalogo_Ubicacion" />
+                <ScalarProperty Name="IdCatalogo_Color" ColumnName="IdCatalogo_Color" />
+                <ScalarProperty Name="Af_NumSerie" ColumnName="Af_NumSerie" />
+                <ScalarProperty Name="IdCatalogo_Modelo" ColumnName="IdCatalogo_Modelo" />
+                <ScalarProperty Name="IdCatalogo_Marca" ColumnName="IdCatalogo_Marca" />
+                <ScalarProperty Name="IdArea" ColumnName="IdArea" />
+                <ScalarProperty Name="IdDepartamento" ColumnName="IdDepartamento" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdCategoriaAF" ColumnName="IdCategoriaAF" />
+                <ScalarProperty Name="IdActivoFijoTipo" ColumnName="IdActivoFijoTipo" />
+                <ScalarProperty Name="Af_Nombre" ColumnName="Af_Nombre" />
+                <ScalarProperty Name="CodActivoFijo" ColumnName="CodActivoFijo" />
+                <ScalarProperty Name="IdActivoFijo" ColumnName="IdActivoFijo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Af_Area">
+            <EntityTypeMapping TypeName="Model_activo_fijo.Af_Area">
+              <MappingFragment StoreEntitySet="Af_Area">
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="IdUsuarioAnulacion" ColumnName="IdUsuarioAnulacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdArea" ColumnName="IdArea" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Af_Departamento">
+            <EntityTypeMapping TypeName="Model_activo_fijo.Af_Departamento">
+              <MappingFragment StoreEntitySet="Af_Departamento">
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="IdUsuarioAnulacion" ColumnName="IdUsuarioAnulacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdArea" ColumnName="IdArea" />
+                <ScalarProperty Name="IdDepartamento" ColumnName="IdDepartamento" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

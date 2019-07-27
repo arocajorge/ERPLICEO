@@ -1,0 +1,119 @@
+@using System.Web.UI.WebControls;
+
+@{ 
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridView_categoria";
+        settings.CallbackRouteValues = new { Controller = "Categoria", Action = "GridViewPartial_categoria" };
+        settings.Width = Unit.Percentage(100);
+        settings.KeyFieldName = "IdCategoria";
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        //Configuración scrolling y pager
+        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Hidden;
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        settings.Settings.VerticalScrollableHeight = 400;
+        settings.SettingsPager.Visible = true;
+        settings.SettingsPager.PageSize = 10;
+        settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
+        settings.SettingsPager.AlwaysShowPager = true;
+        //Configuración filtro por columna
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        //Configuracion exportacion
+        settings.SettingsExport.EnableClientSideExportAPI = true;
+        settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
+        settings.Toolbars.Add(t =>
+        {
+            t.EnableAdaptivity = true;
+            t.Items.Add(GridViewToolbarCommand.ExportToPdf).Text = "Exportar a PDF";
+            t.Items.Add(GridViewToolbarCommand.ExportToXls).Text = "Exportar a XLS";
+            t.Items.Add(GridViewToolbarCommand.ExportToXlsx).Text = "Exportar a XLSX";
+            t.Items.Add(GridViewToolbarCommand.ExportToDocx).Text = "Exportar a DOCX";
+            t.Items.Add(GridViewToolbarCommand.ExportToRtf).Text = "Exportar a RTF";
+            t.Items.Add(GridViewToolbarCommand.ExportToCsv).Text = "Exportar a CSV";
+        });
+        settings.SettingsExport.RenderBrick = (sender, e) =>
+        {
+            if (e.RowType == GridViewRowType.Data && e.VisibleIndex % 2 == 0)
+                e.BrickStyle.BackColor = System.Drawing.Color.FromArgb(0xEE, 0xEE, 0xEE);
+        };
+        //Evento para pintar de rojo las filas anuladas
+        settings.HtmlRowPrepared = (s, e) =>
+        {
+            if (Convert.ToString(e.GetValue("Estado")) == "I")
+            {
+                e.Row.ForeColor = System.Drawing.Color.Red;
+            }
+        };
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "#";
+            c.SetDataItemTemplateContent(tc =>
+            {
+                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
+                {
+                    ViewContext.Writer.Write(
+                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdCategoria = DataBinder.Eval(tc.DataItem, "IdCategoria") }) + "&nbsp;" +
+                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdCategoria = DataBinder.Eval(tc.DataItem, "IdCategoria") },
+                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                    );
+                }
+
+            });
+
+
+            c.SetHeaderTemplateContent(tc =>
+            {
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa  = Core.Erp.Web.Helps.SessionFixed.IdEmpresa}).ToHtmlString()
+                );
+            });
+            c.Settings.AllowDragDrop = DefaultBoolean.False;
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.Width = Unit.Pixel(140);
+        });
+        settings.Columns.Add("IdCategoria", "ID").Width = Unit.Percentage(10);
+        settings.Columns.Add("cod_categoria", "Código").Width = Unit.Percentage(10);
+        settings.Columns.Add("ca_Categoria", "Descripción").Width = Unit.Percentage(50);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "EstadoBool";
+            column.Caption = "Estado";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+            column.EditorProperties().CheckBox(sp =>
+            {
+
+            });
+        }); settings.Columns.Add(column =>
+        {
+            column.Caption = "Línea";
+            column.Width = Unit.Pixel(120);
+            column.SetDataItemTemplateContent(container =>
+            {
+                if (Convert.ToString(DataBinder.Eval(container.DataItem, "Estado")) == "A")
+                {
+                    Html.DevExpress().HyperLink(hyperlink =>
+                    {
+                        var keyValue = DataBinder.Eval(container.DataItem, "IdCategoria");
+                        hyperlink.Properties.Text = "Líneas";
+                        hyperlink.NavigateUrl = Url.Action("Index", "Linea", new { IdEmpresa = DataBinder.Eval(container.DataItem, "IdEmpresa"), IdCategoria = keyValue });
+                    }).Render();
+                }
+            });
+        });
+    });
+}
+    @grid.Bind(Model).GetHtml()

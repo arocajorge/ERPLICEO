@@ -1,0 +1,41 @@
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridView2";
+        settings.CallbackRouteValues = new { Controller = "OrdenPago", Action = "GridView2Partial" };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "OrdenPago", Action = "GridView2PartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "OrdenPago", Action = "GridView2PartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "OrdenPago", Action = "GridView2PartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "IdOrdenPago";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+
+        settings.Columns.Add("IdOrdenPago");
+        settings.Columns.Add("Observacion");
+        settings.Columns.Add("IdTipo_op");
+    });
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

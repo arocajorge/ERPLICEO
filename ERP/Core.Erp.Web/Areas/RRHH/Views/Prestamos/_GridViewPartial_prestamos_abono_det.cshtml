@@ -1,0 +1,136 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewPartial_prestamos_abono_det";
+        settings.CallbackRouteValues = new { Controller = "Prestamos", Action = "GridViewPartial_prestamos_abono_det" };
+        settings.KeyFieldName = "NumCuota";
+        settings.Width = Unit.Percentage(100);
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
+
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Prestamos", Action = "AbonoEditingUpdate", Area = "RRHH" };
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
+        
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowDeleteButton = false;
+
+        settings.SettingsContextMenu.Enabled = false;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        //Funcion para inicializar fila al presionar nuevo
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "NumCuota";
+            column.Caption = "Nº";
+            column.Width = Unit.Percentage(5);
+            column.Visible = true;
+            column.ReadOnly = true;
+            column.EditorProperties().TextBox(sp =>
+            {
+
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "FechaPago";
+            column.Caption = "Fecha descuento";
+            column.Width = Unit.Percentage(10);
+            column.ReadOnly = true;
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "TotalCuota";
+            column.Caption = "$Valor cuota";
+            column.ReadOnly = true;
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+                sp.Width = Unit.Percentage(100);
+                column.PropertiesEdit.DisplayFormatString = "n2";
+
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Observacion_det";
+            column.Caption = "Observación";
+            column.ReadOnly = true;
+            column.Width = Unit.Percentage(30);
+            column.EditorProperties().TextBox(sp =>
+            {
+                sp.Width = Unit.Percentage(100);
+
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdNominaTipoLiqui";
+            column.Caption = "Descuento en:";
+            column.ReadOnly = true;
+            column.Width = Unit.Percentage(25);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.Columns.Add("DescripcionProcesoNomina", "Descripción").Width = Unit.Percentage(70);
+                p.ValueField = "IdNomina_TipoLiqui";
+
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.lst_tipo_nomina;
+                p.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "EstadoPago";
+            column.Caption = "Estado";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.Columns.Add("ca_descripcion", "Descripción").Width = Unit.Percentage(70);
+                p.ValueField = "CodCatalogo";
+
+                p.ValueType = typeof(string);
+                p.DataSource = ViewBag.lst_catalogo;
+                p.Width = Unit.Percentage(100);
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+
+        });
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "TotalCuota");
+
+    });
+}
+    @grid.Bind(Model).GetHtml()

@@ -1,0 +1,100 @@
+﻿@model Core.Erp.Info.RRHH.ro_cargaFamiliar_Info
+
+@{
+    ViewBag.Title = "Nuevo carga ";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    if (ViewBag.mensaje != null)
+    {
+        <h2>@ViewBag.mensaje</h2>
+    }
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Nuevo", "CargaFamiliar", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpleado);
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="em_status">Parentezco*</label>
+                @Html.DropDownListFor(q => q.TipoFamiliar, new SelectList(ViewBag.lst_tipo_familiar, "CodCatalogo", "ca_descripcion"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(q => q.TipoFamiliar, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="em_status">Sexo*</label>
+                @Html.DropDownListFor(q => q.Sexo, new SelectList(ViewBag.lst_sexo, "CodCatalogo", "ca_descripcion"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(q => q.Sexo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="tc_Descripcion">Cédula*</label>
+                @Html.TextBoxFor(q => q.Cedula, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Cedula, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="tc_Descripcion">Nombres*</label>
+                @Html.TextBoxFor(q => q.Nombres, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Nombres, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="pe_fechaNacimiento">Fecha de nacimiento*</label>
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    @Html.DevExpress().DateEditFor(q=> q.FechaNacimiento, settings =>
+                {
+                    settings.Name = "FechaNacimiento";
+                    settings.Properties.UseMaskBehavior = true;
+                    settings.Properties.EditFormat = EditFormat.Date;
+                    settings.Properties.EditFormatString = "dd/MM/yyyy";
+                    settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.FechaNacimiento, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="tc_Descripcion">Capacidades especiales*</label>
+                    @Html.EditorFor(q => q.capacidades_especiales, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.capacidades_especiales, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","CargaFamiliar", new { IdEmpleado = ViewBag.IdEmpleado, Area = "RRHH"},null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

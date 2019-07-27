@@ -1,0 +1,30 @@
+﻿
+@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdEmpleadoCustodio";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "ActivoFijoReportes", Action = "CmbEmpleado_AF2", Area = "Reportes" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "pe_nombreCompleto";
+        settings.Properties.TextFormatString = "[{0}] {1} {2}";
+        settings.Properties.ValueField = "IdEntidad";
+        settings.Properties.ValueType = typeof(decimal);
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+        settings.Properties.NullText = "== Seleccione ==";
+
+        settings.Properties.Columns.Add("IdEntidad", "ID", 10);
+        settings.Properties.Columns.Add("pe_cedulaRuc", "Cédula", 20);
+        settings.Properties.Columns.Add("pe_nombreCompleto", "Empleado", 70);
+        settings.Properties.FilterMinLength = 3;
+
+    })
+    .BindList(new Core.Erp.Web.Areas.Reportes.Controllers.ActivoFijoReportesController().get_list_bajo_demanda_cust, new Core.Erp.Web.Areas.Reportes.Controllers.ActivoFijoReportesController().get_info_bajo_demanda_cust)
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.Helps.cl_filtros_Info) ? "" : (Model == 0 ? "" : Model));
+
+}
+@comboBox.GetHtml()

@@ -1,0 +1,515 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{88B2D2D3-D771-484C-ABF1-699BA4FB801B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Core.Erp.Bus</RootNamespace>
+    <AssemblyName>Core.Erp.Bus</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Web.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActivoFijo\Af_Activo_fijo_Bus.cs" />
+    <Compile Include="ActivoFijo\Af_Activo_fijo_Categoria_Bus.cs" />
+    <Compile Include="ActivoFijo\Af_Activo_fijo_tipo_Bus.cs" />
+    <Compile Include="ActivoFijo\Af_Area_Bus.cs" />
+    <Compile Include="ActivoFijo\Af_CatalogoTipo_Bus.cs" />
+    <Compile Include="ActivoFijo\Af_Catalogo_Bus.cs" />
+    <Compile Include="ActivoFijo\Af_Departamento_Bus.cs" />
+    <Compile Include="ActivoFijo\Af_Depreciacion_Bus.cs" />
+    <Compile Include="ActivoFijo\Af_Depreciacion_Det_Bus.cs" />
+    <Compile Include="ActivoFijo\Af_Mej_Baj_Activo_Bus.cs" />
+    <Compile Include="ActivoFijo\Af_Parametros_Bus.cs" />
+    <Compile Include="ActivoFijo\Af_Retiro_Activo_Bus.cs" />
+    <Compile Include="ActivoFijo\Af_Venta_Activo_Bus.cs" />
+    <Compile Include="Banco\ba_Archivo_Transferencia_Bus.cs" />
+    <Compile Include="Banco\ba_Archivo_Transferencia_Det_Bus.cs" />
+    <Compile Include="Banco\ba_archivo_transferencia_x_ba_tipo_flujo_Bus.cs" />
+    <Compile Include="Banco\ba_Banco_Cuenta_Bus.cs" />
+    <Compile Include="Banco\ba_Banco_Cuenta_x_tb_sucursal_Bus.cs" />
+    <Compile Include="Banco\ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Bus.cs" />
+    <Compile Include="Banco\ba_CatalogoTipo_Bus.cs" />
+    <Compile Include="Banco\ba_Catalogo_Bus.cs" />
+    <Compile Include="Banco\ba_Cbte_Ban_Bus.cs" />
+    <Compile Include="Banco\ba_Cbte_Ban_tipo_x_ct_CbteCble_tipo_Bus.cs" />
+    <Compile Include="Banco\ba_Cbte_Ban_x_ba_TipoFlujo_Bus.cs" />
+    <Compile Include="Banco\ba_Conciliacion_Bus.cs" />
+    <Compile Include="Banco\ba_Conciliacion_det_Bus.cs" />
+    <Compile Include="Banco\ba_Conciliacion_det_IngEgr_Bus.cs" />
+    <Compile Include="Banco\ba_parametros_Bus.cs" />
+    <Compile Include="Banco\ba_Talonario_cheques_x_banco_Bus.cs" />
+    <Compile Include="Banco\ba_TipoFlujo_Bus.cs" />
+    <Compile Include="Banco\ba_TipoFlujo_Movimiento_Bus.cs" />
+    <Compile Include="Banco\ba_TipoFlujo_PlantillaDet_Bus.cs" />
+    <Compile Include="Banco\ba_TipoFlujo_Plantilla_Bus.cs" />
+    <Compile Include="Banco\ba_tipo_nota_Bus.cs" />
+    <Compile Include="Caja\caj_Caja_Bus.cs" />
+    <Compile Include="Caja\caj_Caja_Movimiento_Bus.cs" />
+    <Compile Include="Caja\caj_Caja_Movimiento_det_Bus.cs" />
+    <Compile Include="Caja\caj_Caja_Movimiento_Tipo_Bus.cs" />
+    <Compile Include="Caja\caj_parametro_Bus.cs" />
+    <Compile Include="Caja\cp_conciliacion_Caja_Bus.cs" />
+    <Compile Include="Caja\cp_conciliacion_Caja_det_Bus.cs" />
+    <Compile Include="Caja\cp_conciliacion_Caja_det_Ing_Caja_Bus.cs" />
+    <Compile Include="Caja\cp_conciliacion_Caja_det_x_ValeCaja_Bus.cs" />
+    <Compile Include="Compras\com_catalogo_Bus.cs" />
+    <Compile Include="Compras\com_catalogo_tipo_Bus.cs" />
+    <Compile Include="Compras\com_comprador_Bus.cs" />
+    <Compile Include="Compras\com_departamento_Bus.cs" />
+    <Compile Include="Compras\com_estado_cierre_Bus.cs" />
+    <Compile Include="Compras\com_ordencompra_local_Bus.cs" />
+    <Compile Include="Compras\com_ordencompra_local_det_Bus.cs" />
+    <Compile Include="Compras\com_parametro_Bus.cs" />
+    <Compile Include="Compras\com_TerminoPago_Bus.cs" />
+    <Compile Include="Contabilidad\ats_Bus.cs" />
+    <Compile Include="Contabilidad\ct_anio_fiscal_Bus.cs" />
+    <Compile Include="Contabilidad\ct_anio_fiscal_x_cuenta_utilidad_Bus.cs" />
+    <Compile Include="Contabilidad\ct_anio_fiscal_x_tb_sucursal_Bus.cs" />
+    <Compile Include="Contabilidad\ct_cbtecble_Bus.cs" />
+    <Compile Include="Contabilidad\ct_cbtecble_det_Bus.cs" />
+    <Compile Include="Contabilidad\ct_cbtecble_Plantilla_Bus.cs" />
+    <Compile Include="Contabilidad\ct_cbtecble_Plantilla_det_Bus.cs" />
+    <Compile Include="Contabilidad\ct_cbtecble_tipo_Bus.cs" />
+    <Compile Include="Contabilidad\ct_CentroCostoNivel_Bus.cs" />
+    <Compile Include="Contabilidad\ct_CentroCosto_Bus.cs" />
+    <Compile Include="Contabilidad\ct_CierrePorModuloPorSucursal_Bus.cs" />
+    <Compile Include="Contabilidad\ct_grupocble_Bus.cs" />
+    <Compile Include="Contabilidad\ct_parametro_Bus.cs" />
+    <Compile Include="Contabilidad\ct_periodo_Bus.cs" />
+    <Compile Include="Contabilidad\ct_plancta_Bus.cs" />
+    <Compile Include="Contabilidad\ct_plancta_nivel_Bus.cs" />
+    <Compile Include="Contabilidad\ct_punto_cargo_Bus.cs" />
+    <Compile Include="Contabilidad\ct_punto_cargo_grupo_Bus.cs" />
+    <Compile Include="Contabilidad\ct_RevisionContable_Bus.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_CatalogoTipo_Bus.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_Catalogo_Bus.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_cobro_Bus.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_cobro_det_Bus.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_cobro_tipo_Bus.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_cobro_tipo_motivo_Bus.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_cobro_tipo_Param_conta_x_sucursal_Bus.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_LiquidacionTarjetaDet_Bus.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_LiquidacionTarjeta_Bus.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_LiquidacionTarjeta_x_cxc_cobro_Bus.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_MotivoLiquidacionTarjeta_Bus.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_MotivoLiquidacionTarjeta_x_tb_sucursal_Bus.cs" />
+    <Compile Include="CuentasPorCobrar\cxc_Parametro_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_codigo_SRI_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_codigo_SRI_tipo_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_codigo_SRI_x_CtaCble_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_ConciliacionAnticipoDetAnt_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_ConciliacionAnticipoDetCXP_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_ConciliacionAnticipo_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_nota_DebCre_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_giro_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_giro_det_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_giro_det_ing_x_oc_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_giro_det_ing_x_os_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_giro_pagos_sri_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_pago_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_pago_cancelaciones_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_pago_det_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_pago_estado_aprob_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_pago_formapago_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_pago_tipo_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_orden_pago_tipo_x_empresa_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_pagos_sri_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_pais_sri_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_parametros_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_proveedor_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_proveedor_clase_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_retencion_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_retencion_det_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_retencion_x_ct_cbtecble_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_SolicitudPagoDet_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_SolicitudPago_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_TipoDocumento_Bus.cs" />
+    <Compile Include="FacturacionElectronica\TipoComprobante_Bus.cs" />
+    <Compile Include="Facturacion\fa_CambioProductoDet_Bus.cs" />
+    <Compile Include="Facturacion\fa_CambioProducto_Bus.cs" />
+    <Compile Include="Facturacion\fa_catalogo_Bus.cs" />
+    <Compile Include="Facturacion\fa_catalogo_tipo_Bus.cs" />
+    <Compile Include="Facturacion\fa_cliente_Bus.cs" />
+    <Compile Include="Facturacion\fa_cliente_contactos_Bus.cs" />
+    <Compile Include="Facturacion\fa_cliente_tipo_Bus.cs" />
+    <Compile Include="Facturacion\fa_cliente_x_fa_Vendedor_x_sucursal_Bus.cs" />
+    <Compile Include="Facturacion\fa_cuotas_x_doc_Bus.cs" />
+    <Compile Include="Facturacion\fa_factura_Bus.cs" />
+    <Compile Include="Facturacion\fa_factura_det_Bus.cs" />
+    <Compile Include="Facturacion\fa_factura_x_fa_guia_remision_Bus.cs" />
+    <Compile Include="Facturacion\fa_formaPago_Bus.cs" />
+    <Compile Include="Facturacion\fa_guia_remision_Bus.cs" />
+    <Compile Include="Facturacion\fa_guia_remision_det_Bus.cs" />
+    <Compile Include="Facturacion\fa_guia_remision_det_x_factura_Bus.cs" />
+    <Compile Include="Facturacion\fa_MotivoTraslado_Bus.cs" />
+    <Compile Include="Facturacion\fa_NivelDescuento_Bus.cs" />
+    <Compile Include="Facturacion\fa_notaCreDeb_Bus.cs" />
+    <Compile Include="Facturacion\fa_notaCreDeb_det_Bus.cs" />
+    <Compile Include="Facturacion\fa_notaCreDeb_x_fa_factura_NotaDeb_Bus.cs" />
+    <Compile Include="Facturacion\fa_parametro_Bus.cs" />
+    <Compile Include="Facturacion\fa_proforma_Bus.cs" />
+    <Compile Include="Facturacion\fa_proforma_det_Bus.cs" />
+    <Compile Include="Facturacion\fa_PuntoVta_Bus.cs" />
+    <Compile Include="Facturacion\fa_TerminoPago_Bus.cs" />
+    <Compile Include="Facturacion\fa_TerminoPago_Distribucion_Bus.cs" />
+    <Compile Include="Facturacion\fa_TipoNota_Bus.cs" />
+    <Compile Include="Facturacion\fa_TipoNota_x_Empresa_x_Sucursal_Bus.cs" />
+    <Compile Include="Facturacion\fa_Vendedor_Bus.cs" />
+    <Compile Include="General\tbl_TransaccionesAutorizadas_Bus.cs" />
+    <Compile Include="General\tbl_usuario_ftp_Bus.cs" />
+    <Compile Include="General\tb_banco_Bus.cs" />
+    <Compile Include="General\tb_banco_procesos_bancarios_x_empresa_Bus.cs" />
+    <Compile Include="General\tb_bodega_Bus.cs" />
+    <Compile Include="General\tb_CatalogoTipo_Bus.cs" />
+    <Compile Include="General\tb_Catalogo_Bus.cs" />
+    <Compile Include="General\tb_ciudad_Bus.cs" />
+    <Compile Include="General\tb_ColaImpresionDirecta_Bus.cs" />
+    <Compile Include="General\tb_comprobantes_sin_autorizacion_Bus.cs" />
+    <Compile Include="General\tb_empresa_Bus.cs" />
+    <Compile Include="General\tb_FiltroReportes_Bus.cs" />
+    <Compile Include="General\tb_LogError_Bus.cs" />
+    <Compile Include="General\tb_mes_Bus.cs" />
+    <Compile Include="General\tb_modulo_Bus.cs" />
+    <Compile Include="General\tb_moneda_Bus.cs" />
+    <Compile Include="General\tb_pais_Bus.cs" />
+    <Compile Include="General\tb_parametro_Bus.cs" />
+    <Compile Include="General\tb_parroquia_Bus.cs" />
+    <Compile Include="General\tb_persona_Bus.cs" />
+    <Compile Include="General\tb_persona_tipo_Bus.cs" />
+    <Compile Include="General\tb_provincia_Bus.cs" />
+    <Compile Include="General\tb_region_Bus.cs" />
+    <Compile Include="General\tb_sis_Documento_Tipo_Bus.cs" />
+    <Compile Include="General\tb_sis_Documento_Tipo_Talonario_Bus.cs" />
+    <Compile Include="General\tb_sis_Impuesto_Bus.cs" />
+    <Compile Include="General\tb_sis_Impuesto_Tipo_Bus.cs" />
+    <Compile Include="General\tb_sis_Impuesto_x_ctacble_Bus.cs" />
+    <Compile Include="General\tb_sis_reporte_Bus.cs" />
+    <Compile Include="General\tb_sis_reporte_diseno_Bus.cs" />
+    <Compile Include="General\tb_sis_reporte_x_seg_usuario_Bus.cs" />
+    <Compile Include="General\tb_sis_reporte_x_tb_empresa_Bus.cs" />
+    <Compile Include="General\tb_sucursal_Bus.cs" />
+    <Compile Include="General\tb_sucursal_FormaPago_x_fa_NivelDescuento_Bus.cs" />
+    <Compile Include="General\tb_transportista_Bus.cs" />
+    <Compile Include="General\tb_visor_video_Bus.cs" />
+    <Compile Include="Helps\FilesHelper_Bus.cs" />
+    <Compile Include="Importacion\imp_catalogo_Bus.cs" />
+    <Compile Include="Importacion\imp_catalogo_tipo_Bus.cs" />
+    <Compile Include="Importacion\imp_gasto_Bus.cs" />
+    <Compile Include="Importacion\imp_gasto_x_ct_plancta_Bus.cs" />
+    <Compile Include="Importacion\imp_liquidacion_Bus.cs" />
+    <Compile Include="Importacion\imp_ordencompra_ext_Bus.cs" />
+    <Compile Include="Importacion\imp_ordencompra_ext_det_Bus.cs" />
+    <Compile Include="Importacion\imp_orden_compra_ext_ct_cbteble_det_gastos_Bus.cs" />
+    <Compile Include="Importacion\imp_orden_compra_ext_recepcion_Bus.cs" />
+    <Compile Include="Importacion\imp_parametro_Bus.cs" />
+    <Compile Include="Importacion\imp_partida_arancelaria_Bus.cs" />
+    <Compile Include="Inventario\in_AjusteDet_Bus.cs" />
+    <Compile Include="Inventario\in_Ajuste_Bus.cs" />
+    <Compile Include="Inventario\in_CatalogoTipo_Bus.cs" />
+    <Compile Include="Inventario\in_Catalogo_Bus.cs" />
+    <Compile Include="Inventario\in_categorias_Bus.cs" />
+    <Compile Include="Inventario\in_Consignacion_Bus.cs" />
+    <Compile Include="Inventario\in_ConsignacionDet_Bus.cs" />
+    <Compile Include="Inventario\in_devolucion_inven_Bus.cs" />
+    <Compile Include="Inventario\in_devolucion_inven_det_Bus.cs" />
+    <Compile Include="Inventario\in_grupo_Bus.cs" />
+    <Compile Include="Inventario\in_Ing_Egr_Inven_Bus.cs" />
+    <Compile Include="Inventario\in_Ing_Egr_Inven_det_Bus.cs" />
+    <Compile Include="Inventario\in_linea_Bus.cs" />
+    <Compile Include="Inventario\in_Marca_Bus.cs" />
+    <Compile Include="Inventario\in_Motivo_Inven_Bus.cs" />
+    <Compile Include="Inventario\in_movi_inven_tipo_Bus.cs" />
+    <Compile Include="Inventario\in_movi_inven_tipo_x_tb_bodega_Bus.cs" />
+    <Compile Include="Inventario\in_parametro_Bus.cs" />
+    <Compile Include="Inventario\in_presentacion_Bus.cs" />
+    <Compile Include="Inventario\in_ProductoTipo_Bus.cs" />
+    <Compile Include="Inventario\in_Producto_Bus.cs" />
+    <Compile Include="Inventario\in_Producto_Composicion_Bus.cs" />
+    <Compile Include="Inventario\in_Producto_x_fa_NivelDescuento_Bus.cs" />
+    <Compile Include="Inventario\in_producto_x_tb_bodega_Bus.cs" />
+    <Compile Include="Inventario\in_producto_x_tb_bodega_Costo_Historico_Bus.cs" />
+    <Compile Include="Inventario\in_subgrupo_Bus.cs" />
+    <Compile Include="Inventario\in_transferencia_Bus.cs" />
+    <Compile Include="Inventario\in_transferencia_det_Bus.cs" />
+    <Compile Include="Inventario\in_UnidadMedida_Bus.cs" />
+    <Compile Include="Inventario\in_UnidadMedida_Equiv_conversion_Bus.cs" />
+    <Compile Include="in_AjusteDet_Bus.cs" />
+    <Compile Include="Migraciones\FacturasEventos_Bus.cs" />
+    <Compile Include="Migraciones\ImportacionDiarios_Bus.cs" />
+    <Compile Include="Presupuesto\pre_Periodo_Bus.cs" />
+    <Compile Include="Presupuesto\pre_PresupuestoDet_Bus.cs" />
+    <Compile Include="Presupuesto\pre_Presupuesto_Bus.cs" />
+    <Compile Include="Presupuesto\pre_RubroTipo_Bus.cs" />
+    <Compile Include="Presupuesto\pre_rubro_Bus.cs" />
+    <Compile Include="Produccion\pro_FabricacionDet_Bus.cs" />
+    <Compile Include="Produccion\pro_Fabricacion_Bus.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reportes\ActivoFijo\ACTF_004_detalle_Bus.cs" />
+    <Compile Include="Reportes\ActivoFijo\ACTF_004_resumen_Bus.cs" />
+    <Compile Include="Reportes\ActivoFijo\ACTF_005_Bus.cs" />
+    <Compile Include="Reportes\ActivoFijo\ACTF_006_Bus.cs" />
+    <Compile Include="Reportes\ActivoFijo\ACTF_007_Bus.cs" />
+    <Compile Include="Reportes\ActivoFijo\ACTF_008_Bus.cs" />
+    <Compile Include="Reportes\Banco\BAN_001_Bus.cs" />
+    <Compile Include="Reportes\Banco\BAN_001_cancelaciones_Bus.cs" />
+    <Compile Include="Reportes\Banco\BAN_002_Bus.cs" />
+    <Compile Include="Reportes\Banco\BAN_002_cancelaciones_Bus.cs" />
+    <Compile Include="Reportes\Banco\BAN_003_Bus.cs" />
+    <Compile Include="Reportes\Banco\BAN_004_Bus.cs" />
+    <Compile Include="Reportes\Banco\BAN_005_Bus.cs" />
+    <Compile Include="Reportes\Banco\BAN_006_Bus.cs" />
+    <Compile Include="Reportes\Banco\BAN_007_Bus.cs" />
+    <Compile Include="Reportes\Banco\BAN_008_Bus.cs" />
+    <Compile Include="Reportes\Banco\BAN_009_Bus.cs" />
+    <Compile Include="Reportes\Banco\BAN_010_Bus.cs" />
+    <Compile Include="Reportes\Banco\BAN_011_Bus.cs" />
+    <Compile Include="Reportes\Banco\BAN_012_Bus.cs" />
+    <Compile Include="Reportes\Caja\CAJ_002_Bus.cs" />
+    <Compile Include="Reportes\Caja\CAJ_002_ingresos_Bus.cs" />
+    <Compile Include="Reportes\Caja\CAJ_002_ValesNoConciliados_Bus.cs" />
+    <Compile Include="Reportes\Compra\COMP_001_Bus.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_002_Bus.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_003_balances_Bus.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_004_Bus.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_005_Bus.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_006_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_001_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_001_diario_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_002_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_002_diario_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_003_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_005_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Diario_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Cobros_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_007_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_008_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_009_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorCobrar\CXC_010_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_001_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_001_detalle_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_002_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_002_diario_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_003_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_003_cancelaciones_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_004_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_005_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_005_cancelaciones_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_006_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_006_diario_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_007_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_008_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_009_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_010_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_011_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_012_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_013_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_014_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_015_Bus.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_016_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_001_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_003_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_004_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_005_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_006_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_007_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_008_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_008_aplicaciones_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_009_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_010_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_011_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_012_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_013_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_014_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_015_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_016_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_017_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_018_Bus.cs" />
+    <Compile Include="Reportes\Facturacion\FAC_019_Bus.cs" />
+    <Compile Include="Reportes\Importacion\IMP_001_Bus.cs" />
+    <Compile Include="Reportes\Importacion\IMP_002_Bus.cs" />
+    <Compile Include="Reportes\Importacion\IMP_003_Bus.cs" />
+    <Compile Include="Reportes\Inventario\INV_004_Bus.cs" />
+    <Compile Include="Reportes\Inventario\INV_011_Bus.cs" />
+    <Compile Include="Reportes\Inventario\INV_005_Bus.cs" />
+    <Compile Include="Reportes\Inventario\INV_007_Bus.cs" />
+    <Compile Include="Reportes\Inventario\INV_010_Bus.cs" />
+    <Compile Include="Reportes\Inventario\INV_013_Bus.cs" />
+    <Compile Include="Reportes\Inventario\INV_014_Bus.cs" />
+    <Compile Include="Reportes\Inventario\INV_015_Bus.cs" />
+    <Compile Include="Reportes\Inventario\INV_016_Bus.cs" />
+    <Compile Include="Reportes\Inventario\INV_017_Bus.cs" />
+    <Compile Include="Reportes\Inventario\INV_018_Bus.cs" />
+    <Compile Include="Reportes\Presupuesto\PRE_001_Bus.cs" />
+    <Compile Include="Reportes\Produccion\PRO_001_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_001_Bus.cs" />
+    <Compile Include="Reportes\ActivoFijo\ACTF_001_Bus.cs" />
+    <Compile Include="Reportes\ActivoFijo\ACTF_002_Bus.cs" />
+    <Compile Include="Reportes\ActivoFijo\ACTF_003_Bus.cs" />
+    <Compile Include="Reportes\Caja\CAJ_001_Bus.cs" />
+    <Compile Include="Reportes\Contabilidad\CONTA_001_Bus.cs" />
+    <Compile Include="Reportes\Inventario\INV_003_Bus.cs" />
+    <Compile Include="Reportes\Inventario\INV_001_Bus.cs" />
+    <Compile Include="Reportes\Inventario\INV_002_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_002_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_003_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_004_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_005_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_006_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_007_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_008_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_009_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_010_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_011_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_012_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_013_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_014_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_015_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_016_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_017_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_019_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_018_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_020_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_021_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_022_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_023_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_024_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_025_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_026_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_027_Bus.cs" />
+    <Compile Include="Reportes\RRHH\ROL_028_Bus.cs" />
+    <Compile Include="RRHH\ro_Acta_Finiquito_Bus.cs" />
+    <Compile Include="RRHH\ro_Acta_Finiquito_Detalle_Bus.cs" />
+    <Compile Include="RRHH\ro_archivosCSV_Bus.cs" />
+    <Compile Include="RRHH\ro_ArchivosIess_Bus.cs" />
+    <Compile Include="RRHH\ro_archivos_bancos_generacion_Bus.cs" />
+    <Compile Include="RRHH\ro_archivos_bancos_generacion_x_empleado_Bus.cs" />
+    <Compile Include="RRHH\ro_area_Bus.cs" />
+    <Compile Include="RRHH\ro_area_x_departamento_Bus.cs" />
+    <Compile Include="RRHH\ro_Capacitaciones_x_Empleado_Bus.cs" />
+    <Compile Include="RRHH\ro_cargaFamiliar_Bus.cs" />
+    <Compile Include="RRHH\ro_cargo_Bus.cs" />
+    <Compile Include="RRHH\ro_catalogoTipo_Bus.cs" />
+    <Compile Include="RRHH\ro_catalogo_Bus.cs" />
+    <Compile Include="RRHH\ro_Comprobantes_Contables_Bus.cs" />
+    <Compile Include="RRHH\ro_Config_Param_contable_Bus.cs" />
+    <Compile Include="RRHH\ro_contrato_Bus.cs" />
+    <Compile Include="RRHH\ro_departamento_Bus.cs" />
+    <Compile Include="RRHH\ro_division_Bus.cs" />
+    <Compile Include="RRHH\ro_EmpleadoFoto_Bus.cs" />
+    <Compile Include="RRHH\ro_EmpleadoNovedadCargaMasiva_Bus.cs" />
+    <Compile Include="RRHH\ro_EmpleadoNovedadCargaMasiva_det_Bus.cs" />
+    <Compile Include="RRHH\ro_empleado_Bus.cs" />
+    <Compile Include="RRHH\ro_empleado_novedad_Bus.cs" />
+    <Compile Include="RRHH\ro_empleado_novedad_det_Bus.cs" />
+    <Compile Include="RRHH\ro_empleado_proyeccion_gastos_det_Bus.cs" />
+    <Compile Include="RRHH\ro_empleado_x_division_x_area_Bus.cs" />
+    <Compile Include="RRHH\ro_empleado_x_horario_Bus.cs" />
+    <Compile Include="RRHH\ro_empleado_proyeccion_gastos_Bus.cs" />
+    <Compile Include="RRHH\ro_empleado_x_jornada_Bus.cs" />
+    <Compile Include="RRHH\ro_empleado_x_ro_rubro_Bus.cs" />
+    <Compile Include="RRHH\ro_empleado_x_rubro_acumulado_Bus.cs" />
+    <Compile Include="RRHH\ro_empleado_x_rubro_acumulado_detalle_Bus.cs" />
+    <Compile Include="RRHH\ro_empleado_x_titulos_Bus.cs" />
+    <Compile Include="RRHH\ro_FormulaHorasRecargo_Bus.cs" />
+    <Compile Include="RRHH\ro_Historico_Liquidacion_Vacaciones_Bus.cs" />
+    <Compile Include="RRHH\ro_Historico_Liquidacion_Vacaciones_Det_Bus.cs" />
+    <Compile Include="RRHH\ro_historico_vacaciones_x_empleado_Bus.cs" />
+    <Compile Include="RRHH\ro_horario_Bus.cs" />
+    <Compile Include="RRHH\ro_horario_planificacion_Bus.cs" />
+    <Compile Include="RRHH\ro_horario_planificacion_det_Bus.cs" />
+    <Compile Include="RRHH\ro_HorasProfesores_Bus.cs" />
+    <Compile Include="RRHH\ro_HorasProfesores_det_Bus.cs" />
+    <Compile Include="RRHH\ro_jornada_Bus.cs" />
+    <Compile Include="RRHH\ro_marcaciones_tipo_Bus.cs" />
+    <Compile Include="RRHH\ro_marcaciones_x_empleado_Bus.cs" />
+    <Compile Include="RRHH\ro_NominasPagosCheques_Bus.cs" />
+    <Compile Include="RRHH\ro_NominasPagosCheques_det_Bus.cs" />
+    <Compile Include="RRHH\ro_Nomina_Tipoliqui_Bus.cs" />
+    <Compile Include="RRHH\ro_nomina_tipo_Bus.cs" />
+    <Compile Include="RRHH\ro_nomina_x_horas_extras_Bus.cs" />
+    <Compile Include="RRHH\ro_nomina_x_horas_extras_det_Bus.cs" />
+    <Compile Include="RRHH\ro_Parametros_Bus.cs" />
+    <Compile Include="RRHH\ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar_Bus.cs" />
+    <Compile Include="RRHH\ro_participacion_utilidad_Bus.cs" />
+    <Compile Include="RRHH\ro_participacion_utilidad_empleado_Bus.cs" />
+    <Compile Include="RRHH\ro_periodo_Bus.cs" />
+    <Compile Include="RRHH\ro_periodo_x_ro_Nomina_TipoLiqui_Bus.cs" />
+    <Compile Include="RRHH\ro_permiso_x_empleado_Bus.cs" />
+    <Compile Include="RRHH\ro_prestamo_Bus.cs" />
+    <Compile Include="RRHH\ro_prestamo_detalle_Bus.cs" />
+    <Compile Include="RRHH\ro_rdep_Bus.cs" />
+    <Compile Include="RRHH\ro_rol_Bus.cs" />
+    <Compile Include="RRHH\ro_rol_detalle_Bus.cs" />
+    <Compile Include="RRHH\ro_rol_detalle_x_rubro_acumulado_Bus.cs" />
+    <Compile Include="RRHH\ro_rubros_calculados_Bus.cs" />
+    <Compile Include="RRHH\ro_rubro_tipo_Bus.cs" />
+    <Compile Include="RRHH\ro_rubro_tipo_x_jornada_Bus.cs" />
+    <Compile Include="RRHH\ro_SancionesPorMarcaciones_Bus.cs" />
+    <Compile Include="RRHH\ro_SancionesPorMarcaciones_det_Bus.cs" />
+    <Compile Include="RRHH\ro_SancionesPorMarcaciones_x_novedad_Bus.cs" />
+    <Compile Include="RRHH\ro_Solicitud_Vacaciones_x_empleado_Bus.cs" />
+    <Compile Include="RRHH\ro_tabla_Impu_Renta_Bus.cs" />
+    <Compile Include="RRHH\ro_tipo_gastos_personales_Bus.cs" />
+    <Compile Include="RRHH\ro_tipo_gastos_personales_maxim_x_anio_Bus.cs" />
+    <Compile Include="RRHH\ro_tipo_prestamo_Bus.cs" />
+    <Compile Include="RRHH\ro_turno_Bus.cs" />
+    <Compile Include="SeguridadAcceso\seg_Menu_Bus.cs" />
+    <Compile Include="SeguridadAcceso\seg_Menu_x_Empresa_Bus.cs" />
+    <Compile Include="SeguridadAcceso\seg_Menu_x_Empresa_x_Usuario_Bus.cs" />
+    <Compile Include="SeguridadAcceso\seg_usuario_Bus.cs" />
+    <Compile Include="SeguridadAcceso\seg_Usuario_x_Empresa_Bus.cs" />
+    <Compile Include="SeguridadAcceso\seg_usuario_x_tb_sucursal_Bus.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Core.Erp.Data\Core.Erp.Data.csproj">
+      <Project>{a52f3b91-b460-4ffb-aa55-a667dc60db43}</Project>
+      <Name>Core.Erp.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.Erp.Info\Core.Erp.Info.csproj">
+      <Project>{b08cccbc-a2ed-4505-89e2-dccfc4abbd46}</Project>
+      <Name>Core.Erp.Info</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

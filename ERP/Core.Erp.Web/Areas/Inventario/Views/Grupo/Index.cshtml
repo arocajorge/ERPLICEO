@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Grupos";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+
+    @Html.Action("GridViewPartial_grupo", new { IdEmpresa = ViewBag.IdEmpresa, IdCategoria = ViewBag.IdCategoria, IdLinea = ViewBag.IdLinea })
+
+    <div class="box-footer">
+        <a class="btn btn-default" href="@Url.Action("Index","Linea",new {IdEmpresa = ViewBag.IdEmpresa,IdCategoria = ViewBag.IdCategoria, IdLinea = ViewBag.IdLinea, Area = "Inventario" },null)">Volver</a>
+    </div>
+
+}
+

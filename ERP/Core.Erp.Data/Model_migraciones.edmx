@@ -1,0 +1,405 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Entity_evento.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Facturas">
+          <Key>
+            <PropertyRef Name="cod_fact" />
+            <PropertyRef Name="cod_evento" />
+          </Key>
+          <Property Name="cod_fact" Type="bigint" Nullable="false" />
+          <Property Name="cod_evento" Type="int" Nullable="false" />
+          <Property Name="nu_ced_ruc" Type="char" MaxLength="15" />
+          <Property Name="nu_ced_clte" Type="char" MaxLength="15" />
+          <Property Name="nombres" Type="char" MaxLength="30" />
+          <Property Name="apellidos" Type="char" MaxLength="30" />
+          <Property Name="direccion" Type="varchar" MaxLength="300" />
+          <Property Name="telef" Type="varchar" MaxLength="30" />
+          <Property Name="cant" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="v_unit" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="subtotal" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="v_iva" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="total" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="tipo_pago" Type="varchar" MaxLength="50" />
+          <Property Name="observacion" Type="varchar" MaxLength="300" />
+          <Property Name="bd_est" Type="int" />
+          <Property Name="fecha" Type="datetime" />
+          <Property Name="usuario" Type="varchar" MaxLength="50" />
+          <Property Name="lider" Type="varchar" MaxLength="50" />
+          <Property Name="co_tarjeta" Type="int" />
+          <Property Name="ref" Type="int" />
+          <Property Name="lote" Type="int" />
+          <Property Name="recibos" Type="varchar" MaxLength="50" />
+          <Property Name="co_pago" Type="int" />
+          <Property Name="cod_lide" Type="int" />
+          <Property Name="estado_aprobacion" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBEVENTOS.dbo.vwFacturas_fac_electronica' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwFacturas_fac_electronica">
+          <Key>
+            <PropertyRef Name="cod_fact" />
+            <PropertyRef Name="cod_evento" />
+            <PropertyRef Name="nu_ced" />
+            <PropertyRef Name="co_cod" />
+          </Key>
+          <Property Name="cod_fact" Type="bigint" Nullable="false" />
+          <Property Name="cod_evento" Type="int" Nullable="false" />
+          <Property Name="nu_ced" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="nu_ced_ruc" Type="char" MaxLength="15" />
+          <Property Name="nu_ced_clte" Type="char" MaxLength="15" />
+          <Property Name="nombres" Type="char" MaxLength="30" />
+          <Property Name="apellidos" Type="char" MaxLength="30" />
+          <Property Name="direccion" Type="varchar" MaxLength="300" />
+          <Property Name="telef" Type="varchar" MaxLength="30" />
+          <Property Name="cant" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="v_unit" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="subtotal" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="v_iva" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="total" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="observacion" Type="varchar" MaxLength="300" />
+          <Property Name="bd_est" Type="int" />
+          <Property Name="co_tarjeta" Type="int" />
+          <Property Name="fecha" Type="datetime" />
+          <Property Name="descrip" Type="varchar" MaxLength="50" />
+          <Property Name="estado_aprobacion" Type="varchar" MaxLength="10" />
+          <Property Name="FormasPago" Type="varchar" MaxLength="50" />
+          <Property Name="co_cod" Type="int" Nullable="false" />
+          <Property Name="RazonSocial" Type="int" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="telefonos" Type="varchar" MaxLength="30" />
+          <Property Name="celular" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBEVENTOS.dbo.vwFacturas_sin_aprobar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwFacturas_sin_aprobar">
+          <Key>
+            <PropertyRef Name="cod_fact" />
+            <PropertyRef Name="cod_evento" />
+          </Key>
+          <Property Name="cod_fact" Type="bigint" Nullable="false" />
+          <Property Name="cod_evento" Type="int" Nullable="false" />
+          <Property Name="nu_ced_ruc" Type="char" MaxLength="15" />
+          <Property Name="nu_ced_clte" Type="char" MaxLength="15" />
+          <Property Name="nombres" Type="char" MaxLength="30" />
+          <Property Name="apellidos" Type="char" MaxLength="30" />
+          <Property Name="direccion" Type="varchar" MaxLength="300" />
+          <Property Name="telef" Type="varchar" MaxLength="30" />
+          <Property Name="cant" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="v_unit" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="subtotal" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="v_iva" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="total" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="tipo_pago" Type="varchar" MaxLength="50" />
+          <Property Name="observacion" Type="varchar" MaxLength="300" />
+          <Property Name="bd_est" Type="int" />
+          <Property Name="fecha" Type="date" />
+          <Property Name="usuario" Type="varchar" MaxLength="50" />
+          <Property Name="lider" Type="varchar" MaxLength="50" />
+          <Property Name="co_tarjeta" Type="int" />
+          <Property Name="ref" Type="int" />
+          <Property Name="recibos" Type="varchar" MaxLength="50" />
+          <Property Name="co_pago" Type="int" />
+          <Property Name="cod_lide" Type="int" />
+          <Property Name="lote" Type="int" />
+          <Property Name="estado_aprobacion" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityContainer Name="Entity_eventoStoreContainer">
+          <EntitySet Name="Facturas" EntityType="Self.Facturas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwFacturas_fac_electronica" EntityType="Self.vwFacturas_fac_electronica" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwFacturas_fac_electronica].[cod_fact] AS [cod_fact], 
+    [vwFacturas_fac_electronica].[cod_evento] AS [cod_evento], 
+    [vwFacturas_fac_electronica].[nu_ced] AS [nu_ced], 
+    [vwFacturas_fac_electronica].[nu_ced_ruc] AS [nu_ced_ruc], 
+    [vwFacturas_fac_electronica].[nu_ced_clte] AS [nu_ced_clte], 
+    [vwFacturas_fac_electronica].[nombres] AS [nombres], 
+    [vwFacturas_fac_electronica].[apellidos] AS [apellidos], 
+    [vwFacturas_fac_electronica].[direccion] AS [direccion], 
+    [vwFacturas_fac_electronica].[telef] AS [telef], 
+    [vwFacturas_fac_electronica].[cant] AS [cant], 
+    [vwFacturas_fac_electronica].[v_unit] AS [v_unit], 
+    [vwFacturas_fac_electronica].[subtotal] AS [subtotal], 
+    [vwFacturas_fac_electronica].[v_iva] AS [v_iva], 
+    [vwFacturas_fac_electronica].[total] AS [total], 
+    [vwFacturas_fac_electronica].[observacion] AS [observacion], 
+    [vwFacturas_fac_electronica].[bd_est] AS [bd_est], 
+    [vwFacturas_fac_electronica].[co_tarjeta] AS [co_tarjeta], 
+    [vwFacturas_fac_electronica].[fecha] AS [fecha], 
+    [vwFacturas_fac_electronica].[descrip] AS [descrip], 
+    [vwFacturas_fac_electronica].[estado_aprobacion] AS [estado_aprobacion], 
+    [vwFacturas_fac_electronica].[FormasPago] AS [FormasPago], 
+    [vwFacturas_fac_electronica].[co_cod] AS [co_cod], 
+    [vwFacturas_fac_electronica].[RazonSocial] AS [RazonSocial], 
+    [vwFacturas_fac_electronica].[email] AS [email], 
+    [vwFacturas_fac_electronica].[telefonos] AS [telefonos], 
+    [vwFacturas_fac_electronica].[celular] AS [celular]
+    FROM [dbo].[vwFacturas_fac_electronica] AS [vwFacturas_fac_electronica]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwFacturas_sin_aprobar" EntityType="Self.vwFacturas_sin_aprobar" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwFacturas_sin_aprobar].[cod_fact] AS [cod_fact], 
+    [vwFacturas_sin_aprobar].[cod_evento] AS [cod_evento], 
+    [vwFacturas_sin_aprobar].[nu_ced_ruc] AS [nu_ced_ruc], 
+    [vwFacturas_sin_aprobar].[nu_ced_clte] AS [nu_ced_clte], 
+    [vwFacturas_sin_aprobar].[nombres] AS [nombres], 
+    [vwFacturas_sin_aprobar].[apellidos] AS [apellidos], 
+    [vwFacturas_sin_aprobar].[direccion] AS [direccion], 
+    [vwFacturas_sin_aprobar].[telef] AS [telef], 
+    [vwFacturas_sin_aprobar].[cant] AS [cant], 
+    [vwFacturas_sin_aprobar].[v_unit] AS [v_unit], 
+    [vwFacturas_sin_aprobar].[subtotal] AS [subtotal], 
+    [vwFacturas_sin_aprobar].[v_iva] AS [v_iva], 
+    [vwFacturas_sin_aprobar].[total] AS [total], 
+    [vwFacturas_sin_aprobar].[tipo_pago] AS [tipo_pago], 
+    [vwFacturas_sin_aprobar].[observacion] AS [observacion], 
+    [vwFacturas_sin_aprobar].[bd_est] AS [bd_est], 
+    [vwFacturas_sin_aprobar].[fecha] AS [fecha], 
+    [vwFacturas_sin_aprobar].[usuario] AS [usuario], 
+    [vwFacturas_sin_aprobar].[lider] AS [lider], 
+    [vwFacturas_sin_aprobar].[co_tarjeta] AS [co_tarjeta], 
+    [vwFacturas_sin_aprobar].[ref] AS [ref], 
+    [vwFacturas_sin_aprobar].[recibos] AS [recibos], 
+    [vwFacturas_sin_aprobar].[co_pago] AS [co_pago], 
+    [vwFacturas_sin_aprobar].[cod_lide] AS [cod_lide], 
+    [vwFacturas_sin_aprobar].[lote] AS [lote], 
+    [vwFacturas_sin_aprobar].[estado_aprobacion] AS [estado_aprobacion]
+    FROM [dbo].[vwFacturas_sin_aprobar] AS [vwFacturas_sin_aprobar]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Entity_evento" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entity_Eventos" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Facturas" EntityType="Entity_evento.Factura" />
+          <EntitySet Name="vwFacturas_sin_aprobar" EntityType="Entity_evento.vwFacturas_sin_aprobar" />
+          <EntitySet Name="vwFacturas_fac_electronica" EntityType="Entity_evento.vwFacturas_fac_electronica" />
+        </EntityContainer>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="cod_fact" />
+            <PropertyRef Name="cod_evento" />
+          </Key>
+          <Property Name="cod_fact" Type="Int64" Nullable="false" />
+          <Property Name="cod_evento" Type="Int32" Nullable="false" />
+          <Property Name="nu_ced_ruc" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="nu_ced_clte" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="nombres" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+          <Property Name="apellidos" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+          <Property Name="direccion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="telef" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="cant" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="v_unit" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="subtotal" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="v_iva" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="total" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="tipo_pago" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="observacion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="bd_est" Type="Int32" />
+          <Property Name="fecha" Type="DateTime" Precision="3" />
+          <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="lider" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="co_tarjeta" Type="Int32" />
+          <Property Name="ref" Type="Int32" />
+          <Property Name="lote" Type="Int32" />
+          <Property Name="recibos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado_aprobacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="co_pago" Type="Int32" />
+          <Property Name="cod_lide" Type="Int32" />
+        </EntityType>
+        <EntityType Name="vwFacturas_sin_aprobar">
+          <Key>
+            <PropertyRef Name="cod_fact" />
+            <PropertyRef Name="cod_evento" />
+          </Key>
+          <Property Name="cod_fact" Type="Int64" Nullable="false" />
+          <Property Name="cod_evento" Type="Int32" Nullable="false" />
+          <Property Name="nu_ced_ruc" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="nu_ced_clte" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="nombres" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+          <Property Name="apellidos" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+          <Property Name="direccion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="telef" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="cant" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="v_unit" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="subtotal" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="v_iva" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="total" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="tipo_pago" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="observacion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="bd_est" Type="Int32" />
+          <Property Name="fecha" Type="DateTime" Precision="0" />
+          <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="lider" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="co_tarjeta" Type="Int32" />
+          <Property Name="ref" Type="Int32" />
+          <Property Name="recibos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="co_pago" Type="Int32" />
+          <Property Name="cod_lide" Type="Int32" />
+          <Property Name="lote" Type="Int32" />
+          <Property Name="estado_aprobacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwFacturas_fac_electronica">
+          <Key>
+            <PropertyRef Name="cod_fact" />
+            <PropertyRef Name="cod_evento" />
+            <PropertyRef Name="nu_ced" />
+            <PropertyRef Name="co_cod" />
+          </Key>
+          <Property Name="cod_fact" Type="Int64" Nullable="false" />
+          <Property Name="cod_evento" Type="Int32" Nullable="false" />
+          <Property Name="nu_ced" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="nu_ced_ruc" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="nu_ced_clte" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="nombres" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+          <Property Name="apellidos" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+          <Property Name="direccion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="telef" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="cant" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="v_unit" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="subtotal" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="v_iva" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="total" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="observacion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="bd_est" Type="Int32" />
+          <Property Name="co_tarjeta" Type="Int32" />
+          <Property Name="fecha" Type="DateTime" Precision="3" />
+          <Property Name="descrip" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado_aprobacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FormasPago" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="co_cod" Type="Int32" Nullable="false" />
+          <Property Name="RazonSocial" Type="Int32" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="telefonos" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="celular" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Entity_eventoStoreContainer" CdmEntityContainer="Entity_Eventos">
+          <EntitySetMapping Name="Facturas">
+            <EntityTypeMapping TypeName="Entity_evento.Factura">
+              <MappingFragment StoreEntitySet="Facturas">
+                <ScalarProperty Name="cod_lide" ColumnName="cod_lide" />
+                <ScalarProperty Name="co_pago" ColumnName="co_pago" />
+                <ScalarProperty Name="estado_aprobacion" ColumnName="estado_aprobacion" />
+                <ScalarProperty Name="recibos" ColumnName="recibos" />
+                <ScalarProperty Name="lote" ColumnName="lote" />
+                <ScalarProperty Name="ref" ColumnName="ref" />
+                <ScalarProperty Name="co_tarjeta" ColumnName="co_tarjeta" />
+                <ScalarProperty Name="lider" ColumnName="lider" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="bd_est" ColumnName="bd_est" />
+                <ScalarProperty Name="observacion" ColumnName="observacion" />
+                <ScalarProperty Name="tipo_pago" ColumnName="tipo_pago" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="v_iva" ColumnName="v_iva" />
+                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
+                <ScalarProperty Name="v_unit" ColumnName="v_unit" />
+                <ScalarProperty Name="cant" ColumnName="cant" />
+                <ScalarProperty Name="telef" ColumnName="telef" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="nu_ced_clte" ColumnName="nu_ced_clte" />
+                <ScalarProperty Name="nu_ced_ruc" ColumnName="nu_ced_ruc" />
+                <ScalarProperty Name="cod_evento" ColumnName="cod_evento" />
+                <ScalarProperty Name="cod_fact" ColumnName="cod_fact" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwFacturas_sin_aprobar">
+            <EntityTypeMapping TypeName="Entity_evento.vwFacturas_sin_aprobar">
+              <MappingFragment StoreEntitySet="vwFacturas_sin_aprobar">
+                <ScalarProperty Name="estado_aprobacion" ColumnName="estado_aprobacion" />
+                <ScalarProperty Name="lote" ColumnName="lote" />
+                <ScalarProperty Name="cod_lide" ColumnName="cod_lide" />
+                <ScalarProperty Name="co_pago" ColumnName="co_pago" />
+                <ScalarProperty Name="recibos" ColumnName="recibos" />
+                <ScalarProperty Name="ref" ColumnName="ref" />
+                <ScalarProperty Name="co_tarjeta" ColumnName="co_tarjeta" />
+                <ScalarProperty Name="lider" ColumnName="lider" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="bd_est" ColumnName="bd_est" />
+                <ScalarProperty Name="observacion" ColumnName="observacion" />
+                <ScalarProperty Name="tipo_pago" ColumnName="tipo_pago" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="v_iva" ColumnName="v_iva" />
+                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
+                <ScalarProperty Name="v_unit" ColumnName="v_unit" />
+                <ScalarProperty Name="cant" ColumnName="cant" />
+                <ScalarProperty Name="telef" ColumnName="telef" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="nu_ced_clte" ColumnName="nu_ced_clte" />
+                <ScalarProperty Name="nu_ced_ruc" ColumnName="nu_ced_ruc" />
+                <ScalarProperty Name="cod_evento" ColumnName="cod_evento" />
+                <ScalarProperty Name="cod_fact" ColumnName="cod_fact" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwFacturas_fac_electronica">
+            <EntityTypeMapping TypeName="Entity_evento.vwFacturas_fac_electronica">
+              <MappingFragment StoreEntitySet="vwFacturas_fac_electronica">
+                <ScalarProperty Name="celular" ColumnName="celular" />
+                <ScalarProperty Name="telefonos" ColumnName="telefonos" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="co_cod" ColumnName="co_cod" />
+                <ScalarProperty Name="FormasPago" ColumnName="FormasPago" />
+                <ScalarProperty Name="estado_aprobacion" ColumnName="estado_aprobacion" />
+                <ScalarProperty Name="descrip" ColumnName="descrip" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="co_tarjeta" ColumnName="co_tarjeta" />
+                <ScalarProperty Name="bd_est" ColumnName="bd_est" />
+                <ScalarProperty Name="observacion" ColumnName="observacion" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="v_iva" ColumnName="v_iva" />
+                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
+                <ScalarProperty Name="v_unit" ColumnName="v_unit" />
+                <ScalarProperty Name="cant" ColumnName="cant" />
+                <ScalarProperty Name="telef" ColumnName="telef" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="nu_ced_clte" ColumnName="nu_ced_clte" />
+                <ScalarProperty Name="nu_ced_ruc" ColumnName="nu_ced_ruc" />
+                <ScalarProperty Name="nu_ced" ColumnName="nu_ced" />
+                <ScalarProperty Name="cod_evento" ColumnName="cod_evento" />
+                <ScalarProperty Name="cod_fact" ColumnName="cod_fact" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

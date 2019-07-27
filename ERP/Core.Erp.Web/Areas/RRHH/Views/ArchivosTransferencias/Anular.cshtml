@@ -1,0 +1,264 @@
+﻿@model Core.Erp.Info.RRHH.ro_archivos_bancos_generacion_Info
+@{
+    ViewBag.Title = "Anular archivo de transferencia";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Anular", "ArchivosTransferencias", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdArchivo)
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-offset-9 col-md-1">
+                <label for="IdImprimir"></label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_imprimir" onclick="Imprimir();" title="Imprimir">
+                        <i class="fa fa-print"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="IdImprimirtxt"></label>
+                <div class="form-group">
+                    <a type="button" class="btn btn-primary form-control" title="Descargar" href="@Url.Action("get_archivo","ArchivosTransferencias",new { Area = "RRHH", IdEmpresa = Model.IdEmpresa, IdArchivo =Model.IdArchivo },null)">
+                        <i class="fa fa-download"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="IdNuevo"></label>
+                <div class="form-group">
+                    <a type="button" class="btn btn-primary form-control" title="Nuevo" href="@Url.Action("Nuevo","ArchivosTransferencias",new { Area = "RRHH", IdEmpresa = Model.IdEmpresa },null)">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdNomina_Tipo">Nómina*</label>
+                    @Html.DropDownListFor(q => q.IdNomina, new SelectList(ViewBag.lst_nomina, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
+                    @Html.ValidationMessageFor(q => q.IdNomina, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdNomina_TipoLiqui">Tipo liquidación de nómina*</label>
+                    @Html.DropDownListFor(q => q.IdNominaTipo, new SelectList(ViewBag.lst_nomina_tipo, "IdNomina_TipoLiqui", "DescripcionProcesoNomina"), new { @class = "form-control", @id = "IdNomina_TipoLiqui" })
+                    @Html.ValidationMessageFor(q => q.IdNominaTipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="FechaInicio">Periodo*</label>
+                    @Html.DropDownListFor(q => q.IdPeriodo, new SelectList(ViewBag.lst_periodos, "IdPeriodo", "Descripcion"), new { @class = "form-control", @id = "IdPeriodo" })
+                    @Html.ValidationMessageFor(q => q.IdPeriodo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdBanco">Banco*</label>
+                    @Html.DropDownListFor(q => q.IdCuentaBancaria, new SelectList(ViewBag.lst_cuenta_bancarias, "IdBanco", "ba_descripcion"), new { @class = "form-control", @id = "IdBanco" })
+                    @Html.ValidationMessageFor(q => q.IdCuentaBancaria, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdBanco">Tipo de archivo*</label>
+                    @Html.DropDownListFor(q => q.IdProceso, new SelectList(ViewBag.lst_proceso, "IdProceso", "NombreProceso"), new { @class = "form-control", @id = "IdProceso" })
+                    @Html.ValidationMessageFor(q => q.IdProceso, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="detalle">Detalle del archivo</label>
+                    @Html.Action("GridViewPartial_archivo_transferencia_det")
+                    @Html.ValidationMessageFor(q => q.detalle, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index","ArchivosTransferencias",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+
+<script>
+
+    $(function () {
+        cargar_procesos();
+        cargar_tipo_liquidacion_nomina();
+        cargar_periodos_x_nomina();
+    });
+
+    $("#IdBanco").change(function () {
+        $("#IdProceso").empty();
+        cargar_procesos();
+        cargar_empleados();
+
+    });
+    $("#IdProceso").change(function () {
+        cargar_empleados();
+
+    });
+    $("#IdNomina_TipoLiqui").change(function () {
+        cargar_periodos_x_nomina();
+    });
+    $("#IdPeriodo").change(function () {
+        cargar_empleados();
+    });
+
+    function cargar_procesos() {
+        $("#IdProceso").empty();
+
+                var datos = {
+                    IdBanco: $("#IdBanco").val()
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(datos),
+                    url: '@Url.Action("get_list_procesos", "ProcesosBancariosPorEmpresa", new { Area = "General" })',
+                    async: false,
+                    bDeferRender: true,
+                    bProcessing: true,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+
+                        $.each(data, function (i, row) {
+                            $("#IdProceso").append("<option value=" + row.IdProceso + ">" + row.NombreProceso + "</option>");
+
+                        });
+                    },
+                    error: function (error) {
+                    }
+                });
+    };
+
+
+
+    function cargar_tipo_liquidacion_nomina() {
+        $("#IdNomina_TipoLiqui").empty();
+                var datos = {
+                    IdNomina: $("#IdNomina_Tipo").val()
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(datos),
+                    url: '@Url.Action("get_lst_nomina_tipo_liq", "NominaTipoLiquidacion", new { Area = "RRHH" })',
+                    async: false,
+                    bDeferRender: true,
+                    bProcessing: true,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+
+                        $.each(data, function (i, row) {
+                            $("#IdNomina_TipoLiqui").append("<option value=" + row.IdNomina_TipoLiqui + ">" + row.DescripcionProcesoNomina + "</option>");
+                        });
+                    },
+                    error: function (error) {
+                    }
+                });
+    };
+
+
+    function cargar_periodos_x_nomina() {
+        $("#IdPeriodo").empty();
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdNomina: $("#IdNomina_Tipo").val(),
+            IdNomina_Tipo: $("#IdNomina_TipoLiqui").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_lst_periodo_x_nomina","PeriodosPorNomina", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+                $.each(data, function (i, row) {
+                    $("#IdPeriodo").append("<option value=" + row.IdPeriodo + ">" + row.descripcion + "</option>");
+                });
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+            function cargar_empleados() {
+                var datos = {
+                    IdProceso: $("#IdProceso").val(),
+                    IdNomina_Tipo: $("#IdNomina_Tipo").val(),
+                    IdNomina_TipoLiqui: $("#IdNomina_TipoLiqui").val(),
+                    IdPeriodo: $("#IdPeriodo").val(),
+                    IdTransaccionSession: $("#IdTransaccionSession").val()
+
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(datos),
+                    url: '@Url.Action("CargarEmpleados", "ArchivosTransferencias", new { Area = "RRHH" })',
+                    async: false,
+                    bDeferRender: true,
+                    bProcessing: true,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        GridViewPartial_archivo_transferencia_det.PerformCallback();
+                    },
+                    error: function (error) {
+                    }
+                });
+    };
+
+    function Imprimir() {
+        var location = GetPathServer();
+        var win = window.open(location +"/Reportes/RRHHReportes/ROL_020?IdEmpresa="+@Model.IdEmpresa+"&IdTipoNomina="+@Model.IdNominaTipo+"&IdNomina="+@Model.IdNomina+"&IdPeriodo="+@Model.IdPeriodo+"&IdSucursal="+@Model.IdSucursal+"&IdProceso="+@Model.IdProceso, '_blank');
+        win.focus();
+    }
+  
+
+</script>

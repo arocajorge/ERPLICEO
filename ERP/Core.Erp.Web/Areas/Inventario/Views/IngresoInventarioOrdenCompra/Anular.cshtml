@@ -1,0 +1,207 @@
+﻿@model Core.Erp.Info.Inventario.in_Ing_Egr_Inven_Info
+@{
+    ViewBag.Title = ("Anular ingreso por orden de compra" + " con ID #" + @Model.IdNumMovi);
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Anular", "IngresoInventarioOrdenCompra", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdSucursal)
+    @Html.HiddenFor(q => q.IdBodega)
+    @Html.HiddenFor(q => q.IdResponsable)
+    @Html.HiddenFor(q => q.IdNumMovi)
+    @Html.HiddenFor(q => q.signo)
+    @Html.HiddenFor(q => q.IdMovi_inven_tipo)
+
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="CodMoviInven">Código</label>
+                    @Html.TextBoxFor(q => q.CodMoviInven, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.CodMoviInven, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdProveedor">Proveedor*</label>
+                    @Html.Partial("_CmbProveedor_IngresoOrdenCompra", Model.IdResponsable)
+                    @Html.ValidationMessageFor(q => q.IdResponsable, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <label for="IdProveedor"></label>
+                    <button type="button" class="btn btn-primary form-control " onclick="CrearModificarProveedor();">
+                        <i class="fa fa-external-link-square"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal*</label>
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdBodega">Bodega</label>
+                    @Html.DropDownListFor(q => q.IdBodega, new SelectList(ViewBag.lst_bodega, "IdBodega", "bo_Descripcion"), new { @class = "form-control", @id = "IdBodega" })
+                    @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdMotivo_Inv">Motivo*</label>
+                    @Html.DropDownListFor(q => q.IdMotivo_Inv, new SelectList(ViewBag.lst_motivo, "IdMotivo_Inv", "Desc_mov_inv"), new { @class = "form-control", @id = "IdMotivo_Inv", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdMotivo_Inv, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-offset-1 col-md-2">
+                <div class="form-group">
+                    <label for="">Fecha</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.cm_fecha, settings =>
+                   {
+                       settings.Name = "cm_fecha";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.cm_fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="cm_observacion">Observación</label>
+                    @Html.TextAreaFor(q => q.cm_observacion, new { @class = "form-control", @rows = 3 })
+                    @Html.ValidationMessageFor(q => q.cm_observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.Action("GridViewPartial_inv_det")
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        @if (ViewBag.MostrarBoton ?? false)
+        {
+            <button type="submit" class="btn btn-danger">Anular</button>
+        }
+        <a class="btn btn-default" href="@Url.Action("Index","IngresoInventarioOrdenCompra",new { Area = "Inventario" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+
+<script type="text/javascript">
+
+        $(function () {
+            CargarBodega();
+            $("#IdSucursal").change(function () {
+                CargarBodega();
+            });
+        });
+
+        function OnSelectedProductoChanged(s, e) {
+            GridViewPartial_inv_det.GetEditor("IdUnidadMedida").PerformCallback();
+            SetUnidadMedida(s, e);
+        }
+
+        function UnidadMedidaComboBox_BeginCallback(s, e) {
+            e.customArgs["in_IdProducto"] = IdProducto.GetValue();
+        }
+
+        function SetUnidadMedida(s, e) {
+            var datos = {
+                IdProducto: s.GetValue()
+            }
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("SetUnidadMedida", "Producto", new { Area = "Inventario" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    console.log(s.GetValue());
+                    console.log(data.IdUnidadMedida);
+                    GridViewPartial_inv_det.GetEditor('IdUnidadMedida').SetValue(data.IdUnidadMedida);
+                },
+                error: function (error) {
+                }
+            });
+        };
+
+function CargarBodega() {
+        $("#IdBodega").empty();
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdSucursal: $("#IdSucursal").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarBodega", "IngresoInventario", new { Area = "Inventario" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            $.each(data, function (i, row) {
+            $("#IdBodega").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
+            });
+            },
+            error: function (error) {
+            }
+            });
+};
+
+</script>

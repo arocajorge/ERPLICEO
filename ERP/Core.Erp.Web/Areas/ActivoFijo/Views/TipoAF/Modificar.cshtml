@@ -1,0 +1,132 @@
+﻿@model Core.Erp.Info.ActivoFijo.Af_Activo_fijo_tipo_Info
+@{
+    ViewBag.Title = "Modificar tipo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Modificar", "TipoAF", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdActivoFijoTipo)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="CodActivoFijo">Código</label>
+                    @Html.TextBoxFor(q => q.CodActivoFijo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.CodActivoFijo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Af_Descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.Af_Descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Af_Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="checkbox">
+                    <label for="Se_Deprecia">@Html.CheckBoxFor(q => q.Se_Deprecia) Aplica depreciación</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Af_anio_depreciacion">Años de depreciación</label>
+                    @Html.TextBoxFor(q => q.Af_anio_depreciacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Af_anio_depreciacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Af_Porcentaje_depre">Porcentaje de depreciación</label>
+                    @Html.TextBoxFor(q => q.Af_Porcentaje_depre, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Af_Porcentaje_depre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCble_Activo">Cuenta contable activo*</label>
+                    @Html.Partial("_CmbCuenta_TipoAF1", Model)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_Activo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCble_Dep_Acum">Cuenta contable depreciación acumulada*</label>
+                    @Html.Partial("_CmbCuenta_TipoAF2", Model)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_Dep_Acum, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCble_Gastos_Depre">Cuenta contable gastos de depreciación*</label>
+                    @Html.Partial("_CmbCuenta_TipoAF3", Model)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_Gastos_Depre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCble_CostoVenta">Cuenta contable costo de venta*</label>
+                    @Html.Partial("_CmbCuenta_TipoAF4", Model)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_CostoVenta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCble_Mejora">Cuenta contable mejora*</label>
+                    @Html.Partial("_CmbCuenta_TipoAF5", Model)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_Mejora, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCble_Baja">Cuenta contable baja*</label>
+                    @Html.Partial("_CmbCuenta_TipoAF6", Model)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_Baja, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCble_Retiro">Cuenta contable retiro*</label>
+                    @Html.Partial("_CmbCuenta_TipoAF7", Model)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble_Retiro, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "TipoAF", new { Area ="ActivoFijo" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

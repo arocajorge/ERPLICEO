@@ -1,0 +1,80 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridView_aprobacion_oc";
+        settings.CallbackRouteValues = new { Controller = "AprobacionOC", Action = "GridViewPartial_aprobacion_oc", IdSucursal = ViewBag.IdSucursal, fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin };
+        settings.KeyFieldName = "IdOrdenCompra";
+        settings.Width = Unit.Percentage(100);
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        //Configuración checkbox
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+
+        //Configuración click derecho
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.EnableRowMenu = DefaultBoolean.False;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        settings.Columns.Add("IdOrdenCompra", "ID").Width = Unit.Percentage(5);
+        settings.Columns.Add("Su_Descripcion", "Sucursal").Width = Unit.Percentage(10);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "oc_fecha";
+            column.Caption = "Fecha compra";
+            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
+            column.Width = Unit.Percentage(10);
+        });
+        settings.Columns.Add("pe_nombreCompleto", "Proveedor").Width = Unit.Percentage(30);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Total";
+            column.Caption = "$Valor";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+                sp.Width = Unit.Percentage(100);
+                column.PropertiesEdit.DisplayFormatString = "n2";
+
+            });
+        });
+        settings.Columns.Add("oc_observacion", "Observación").Width = Unit.Percentage(20);
+        settings.Columns.Add("IdEstadoAprobacion_cat", "Estado Aprobación").Width = Unit.Percentage(5);
+
+        settings.Columns.Add(column =>
+        {
+            column.SetDataItemTemplateContent(c =>
+            {
+                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("COMP_001", "CompraReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(),IdSucursal = DataBinder.Eval(c.DataItem, "IdSucursal").ToString(), IdOrdenCompra = DataBinder.Eval(c.DataItem, "IdOrdenCompra").ToString() }, Request.Url.Scheme) + "');\"></span>");
+
+            });
+            column.Width = Unit.Percentage(5);
+        });
+        settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
+        settings.ClientSideEvents.BeginCallback = "OnBeginCallback";
+
+    });
+
+}
+
+@grid.Bind(Model).GetHtml()

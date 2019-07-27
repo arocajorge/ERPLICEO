@@ -1,0 +1,26 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdResponsable";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "EgresoInventario", Action = "CmbPersona_EgresoInv", Area = "Inventario" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "pe_nombreCompleto";
+        settings.Properties.TextFormatString = "{2}";
+        settings.Properties.ValueField = "IdEntidad";
+        settings.Properties.ValueType = typeof(decimal);
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+
+        settings.Properties.Columns.Add("IdEntidad", "ID", 10);
+        settings.Properties.Columns.Add("pe_cedulaRUC", "RUC", 20);
+        settings.Properties.Columns.Add("pe_nombreCompleto", "Persona", 70);
+    })
+    .BindList(new Core.Erp.Web.Areas.Inventario.Controllers.EgresoInventarioController().get_list_bajo_demanda_persona, new Core.Erp.Web.Areas.Inventario.Controllers.EgresoInventarioController().get_info_bajo_demanda_persona)
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.Inventario.in_Ing_Egr_Inven_Info) ? "" : (Model == 0 ? "" : Model));
+
+}
+@comboBox.GetHtml()

@@ -1,0 +1,31 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdCliente";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Pixel(1200);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "Factura", Action = "CmbCliente_Factura", Area = "Facturacion" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "pe_nombreCompleto";
+        settings.Properties.TextFormatString = "[{0}] {1} - {2}";
+        settings.Properties.ValueField = "IdEntidad";
+        settings.Properties.ValueType = typeof(decimal);
+
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+        settings.Properties.AllowNull = true;
+
+        settings.Properties.Columns.Add("IdEntidad", "ID", 5);
+        settings.Properties.Columns.Add("pe_cedulaRuc", "RUC", 10);
+        settings.Properties.Columns.Add("pe_nombreCompleto", "Cliente", 55);
+        settings.Properties.Columns.Add("CodPersona", "Clase", 30);
+        settings.Properties.FilterMinLength = 3;
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){get_info_cliente(); ValidarCliente(); cargar_contactos();}";
+    })
+    .BindList(new Core.Erp.Web.Areas.Facturacion.Controllers.FacturaController().get_list_bajo_demanda, new Core.Erp.Web.Areas.Facturacion.Controllers.FacturaController().get_info_bajo_demanda)
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.Facturacion.fa_factura_Info) ? "" : (Model == 0 ? "" : Model));
+
+}
+@comboBox.GetHtml()

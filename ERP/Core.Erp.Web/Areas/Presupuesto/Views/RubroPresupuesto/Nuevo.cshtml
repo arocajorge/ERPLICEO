@@ -1,0 +1,68 @@
+﻿@model Core.Erp.Info.Presupuesto.pre_rubro_Info
+@{
+    ViewBag.Title = "Nuevo rubro";
+    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Nuevo", "RubroPresupuesto", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+    @Html.HiddenFor(q => q.IdEmpresa);
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.Descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdRubroTipo">Tipo de rubro*</label>
+                    @Html.DropDownListFor(q => q.IdRubroTipo, new SelectList(ViewBag.lst_RubroTipo, "IdRubroTipo", "Descripcion"), new { @class = "form-control", @id = "IdRubroTipo" })
+                    @Html.ValidationMessageFor(q => q.IdRubroTipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @if (Model.AsignaCuentaRubro == true)
+            {
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdCtaCble">Cuenta contable</label>
+                    @Html.Partial("_CmbCuentaContable", Model.IdCtaCble)
+                    @Html.ValidationMessageFor(q => q.IdCtaCble, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            }
+            else
+            {
+                @Html.HiddenFor(q => q.IdCtaCble);
+            }
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "RubroPresupuesto", new { Area ="Presupuesto" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+

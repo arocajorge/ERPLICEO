@@ -1,0 +1,191 @@
+﻿@model Core.Erp.Info.SeguridadAcceso.seg_usuario_Info
+@{
+    ViewBag.Title = "Modificar usuario";
+    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    {
+        //Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script type="text/javascript">
+    function OnBeginCallback(s, e) {
+        e.customArgs["IdEmpresa"] = IdEmpresa.GetValue();
+    }
+</script>
+@using (Html.BeginForm("Modificar", "Usuario", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdUsuario, new { @id = "IdUsuario" })
+    @Html.HiddenFor(q => q.IdTransaccionSession)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdUsuario">Usuario*</label>
+                    @Html.TextBoxFor(q => q.IdUsuario, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdUsuario, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="Nombre">Nombre</label>
+                    @Html.TextBoxFor(q => q.Nombre, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IPMaquina">IP Máquina</label>
+                    @Html.TextBoxFor(q => q.IPMaquina, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IPImpresora">IP Impresora</label>
+                    @Html.TextBoxFor(q => q.IPImpresora, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for=""></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.es_super_admin, settings =>
+                           {
+                               settings.Name = "es_super_admin";
+                               settings.Text = "¿Es usuario Administrador?";
+                               settings.Properties.ClientSideEvents.CheckedChanged = "function(s,e){ValidarSuperAdmin();}";
+
+                           }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.es_super_admin, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for=""></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.ExigirDirectivaContrasenia, settings =>
+                           {
+                               settings.Name = "ExigirDirectivaContrasenia";
+                               settings.Text = "Exigir directivas de contraseña";
+
+                           }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.ExigirDirectivaContrasenia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for=""></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.CambiarContraseniaSgtSesion, settings =>
+                           {
+                               settings.Name = "CambiarContraseniaSgtSesion";
+                               settings.Text = "Cambiar contraseña el próximo inicio de sesión";
+
+                           }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.CambiarContraseniaSgtSesion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="form-group" id="div_admin" hidden>
+                    <label for="contrasena_admin">Contraseña Administrador</label>
+                    @Html.TextBoxFor(q => q.contrasena_admin, new { @class = "form-control", @id = "contrasena_admin" })
+                </div>
+            </div>
+        </div>
+    </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="IdMenu">Menú inicio de sesión</label>
+                                @Html.DropDownListFor(q => q.IdMenu, new SelectList(ViewBag.lst_menu, "IdMenu", "DescripcionMenu_combo", Model.IdMenu == null ? 0 : Model.IdMenu), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(q => q.IdMenu, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Action("GridViewPartial_Usuario_x_Sucursal")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary" id="btn_guardar">Guardar</button>
+                    <a class="btn btn-default" href="@Url.Action("Index","Usuario",new { Area = "SeguridadAcceso" },null)">Cancelar</a>
+                    <button type="button" class="btn btn-danger" onclick="ResetearContrasena();" id="btn_resetear">Resetear contraseña</button>
+                </div>
+                @section Scripts {
+                    @Scripts.Render("~/bundles/jqueryval")
+                }
+}
+<script>
+
+    ValidarSuperAdmin();
+
+    $("#es_super_admin").change(function () {
+        ValidarSuperAdmin();
+    });
+
+    function ValidarSuperAdmin() {
+        var admin = es_super_admin.GetValue();
+        if (admin == true) {
+            $("#div_admin").show();
+        }
+        else {
+            $("#div_admin").hide();
+        }
+    }
+    function ResetearContrasena() {
+        var r = confirm("A continuación se reseteará la contraseña del usuario " + $("#IdUsuario").val() + ", se le asignará la contraseña por defecto: 1234, ¿Desea continuar?");
+        if (r == true) {
+            $("#btn_guardar").attr("disabled", true);
+            $("#btn_resetear").attr("disabled", true);
+            var datos = {
+                IdUsuario: $("#IdUsuario").val()
+            }
+
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("ResetearContrasena", "Usuario",new { Area = "SeguridadAcceso"})',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data = 1) {
+                        alert("Se ha reseteado la contraseña del usuario " + $("#IdUsuario").val() + " exitósamente.");
+                        window.location.href = '@Url.Action("Index", "Usuario", new { Area = "SeguridadAcceso" })'
+                    } else {
+                        alert("No se ha reseteado la contraseña del usuario " + $("#IdUsuario").val());
+                        $("#btn_guardar").attr("disabled", false);
+                        $("#btn_resetear").attr("disabled", false);
+                    }
+                },
+                error: function (error) {
+                }
+            });
+        }
+    }
+    function OnSelectedEmpresaChanged() {
+        GridViewPartial_Usuario_x_Sucursal.GetEditor("IdString").PerformCallback();
+    }
+    function SucursalComboBox_BeginCallback(s, e) {
+        e.customArgs["var_IdEmpresa"] = IdEmpresa.GetValue();
+    }
+</script>

@@ -1,0 +1,82 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridView_devolucion_det_x_cruzar";
+        settings.CallbackRouteValues = new { Controller = "DevolucionInventario", Action = "GridViewPartial_devolucion_det_x_cruzar" };
+        settings.Width = Unit.Percentage(100);
+        settings.KeyFieldName = "SecuencialID";
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        //Configuración click derecho
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.RowMenuItemVisibility.NewRow = false;
+        settings.SettingsContextMenu.RowMenuItemVisibility.EditRow = false;
+        settings.SettingsContextMenu.RowMenuItemVisibility.DeleteRow = false;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(15);
+            column.FieldName = "Su_Descripcion";
+            column.Caption = "Sucursal";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(20);
+            column.FieldName = "tm_descripcion";
+            column.Caption = "Tipo movimiento";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "IdNumMovi";
+            column.Caption = "# Movimiento";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "cm_fecha";
+            column.Caption = "Fecha";
+            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
+            column.Width = Unit.Percentage(10);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Width = Unit.Percentage(30);
+            column.FieldName = "cm_observacion";
+            column.Caption = "Observación";
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "*";
+            column.FieldName = "SecuencialID";
+            column.Width = Unit.Percentage(15);
+            column.UnboundType = DevExpress.Data.UnboundColumnType.String;
+            column.SetDataItemTemplateContent(c =>
+            {
+                Html.DevExpress().Button(settingsBtn =>
+                {
+                    settingsBtn.Name = "btn" + c.KeyValue;
+                    settingsBtn.Text = "Devolver";
+                    settingsBtn.ClientSideEvents.Click = "function(s, e) {SetMovimiento('" + c.KeyValue + "');}";
+                }).Render();
+            });
+        });
+    });
+}
+@grid.Bind(Model).GetHtml()

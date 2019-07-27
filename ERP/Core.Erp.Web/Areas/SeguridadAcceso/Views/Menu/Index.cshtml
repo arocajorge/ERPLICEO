@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Menú";
+    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+            <div class="col-md-12">
+                <a class="btn btn-primary" href="@Url.Action("Nuevo","Menu",new { Area = "SeguridadAcceso" },null)">Nuevo</a>
+            </div>    
+    </div>
+
+    @Html.Action("TreeListPartial_menu")
+}

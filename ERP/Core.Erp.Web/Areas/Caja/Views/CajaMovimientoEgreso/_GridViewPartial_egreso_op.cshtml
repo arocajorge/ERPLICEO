@@ -1,0 +1,79 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridView_egreso_op";
+        settings.CallbackRouteValues = new { Controller = "CajaMovimientoEgreso", Action = "GridViewPartial_egreso_op" };
+        settings.Width = Unit.Percentage(100);
+        settings.KeyFieldName = "IdOrdenPago_op";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "CajaMovimientoEgreso", Action = "EditingUpdate", Area = "Caja" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "CajaMovimientoEgreso", Action = "EditingDelete", Area = "Caja" };
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        //Configuración click derecho
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.RowMenuItemVisibility.NewRow = false;
+        settings.SettingsContextMenu.RowMenuItemVisibility.EditRow = false;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        settings.Columns.Add(column =>
+        {
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "IdOrdenPago_op";
+            column.Caption = "ID";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.Width = Unit.Percentage(20);
+            column.FieldName = "Referencia";
+            column.Caption = "# Documento";
+        });
+        
+        settings.Columns.Add(column => {
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "Fecha_Fa_Prov";
+            column.Caption = "Fecha";
+            column.PropertiesEdit.DisplayFormatString = "{0:dd/MM/yyyy}";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.Width = Unit.Percentage(40);
+            column.FieldName = "pe_nombreCompleto";
+            column.Caption = "Beneficiario";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.Width = Unit.Percentage(10);
+            column.FieldName = "MontoAplicado";
+            column.Caption = "Valor aprobado";
+            column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+        });
+        settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
+        settings.ClientSideEvents.EndCallback = "function(s,e){ armar_diario(); }";
+    });
+}
+@grid.Bind(Model).GetHtml()

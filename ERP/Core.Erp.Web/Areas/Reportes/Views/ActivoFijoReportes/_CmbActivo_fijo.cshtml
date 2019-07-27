@@ -1,0 +1,31 @@
+﻿
+@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdActivoFijo";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "ActivoFijoReportes", Action = "CmbActivo_fijo", Area = "Reportes" };
+
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "Af_Nombre";
+        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.ValueField = "IdActivoFijo";
+        settings.Properties.ValueType = typeof(int);
+        settings.Properties.Columns.Add("IdActivoFijo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Properties.Columns.Add("Af_Nombre", "Producto", 80);
+        settings.Properties.FilterMinLength = 3;
+
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+        settings.Properties.NullText = "== Seleccione ==";
+        settings.Properties.AllowNull = true;
+       
+    })
+    .BindList(new Core.Erp.Web.Areas.Reportes.Controllers.ActivoFijoReportesController().get_list_bajo_demanda_af, new Core.Erp.Web.Areas.Reportes.Controllers.ActivoFijoReportesController().get_info_bajo_demanda_af)
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.Helps.cl_filtros_Info) ? "" : (Model == 0 ? "" : Model));
+
+}
+@comboBox.GetHtml()

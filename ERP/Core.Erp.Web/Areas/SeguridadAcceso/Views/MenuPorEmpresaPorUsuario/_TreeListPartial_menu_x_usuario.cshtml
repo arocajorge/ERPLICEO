@@ -1,0 +1,68 @@
+@{
+    var treeList = Html.DevExpress().TreeList(settings => {
+        settings.Name = "TreeList_menu_x_usuario";
+        settings.CallbackRouteValues = new { Controller = "MenuPorEmpresaPorUsuario", Action = "TreeListPartial_menu_x_usuario", IdEmpresa = ViewBag.IdEmpresa, IdUsuario = ViewBag.IdUsuario };
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.KeyFieldName = "IdMenu";
+        settings.ParentFieldName = "info_menu.IdMenuPadre";
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdMenu";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "*";
+            column.FieldName = "seleccionado";
+            column.ColumnType = MVCxTreeListColumnType.CheckBox;
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Menú";
+            column.FieldName = "info_menu.DescripcionMenu";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(90);
+        });
+        
+        settings.SettingsCookies.StoreSelection = true;
+        settings.Settings.GridLines = System.Web.UI.WebControls.GridLines.Both;
+        settings.SettingsPager.Visible = true;
+        settings.SettingsSelection.Enabled = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowFilterRowMenu = true;
+        settings.SettingsSelection.Recursive = true;
+        settings.SettingsSelection.AllowSelectAll = true;
+        settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
+        settings.ClientSideEvents.BeginCallback = "OnBeginCallback";
+        settings.DataBound = (s, e) =>
+        {
+            MVCxTreeList tree = s as MVCxTreeList;
+            string bId = ViewData["selectedIDs"] == null ? "" : ViewData["selectedIDs"].ToString();//I have a bId truly
+            if (tree.Nodes.Count == 0) return;
+            if (tree.Nodes[0] == null) return;
+            if (string.IsNullOrEmpty(bId))
+                return;
+            TreeListNodeIterator iterator = tree.CreateNodeIterator();
+            TreeListNode node = iterator.Current;
+            tree.SelectAll();
+            string[] array = ViewData["selectedIDs"].ToString().Split(',');
+            int index = 0;
+            while (node != null)
+            {
+                if (node["IdMenu"] != null)
+                {
+                    if (!string.IsNullOrEmpty(array.FirstOrDefault(q => q == node["IdMenu"].ToString())))
+                    {
+                        node.Selected = Convert.ToBoolean(node["seleccionado"]);
+                    }
+                    else
+                        node.Selected = false;
+                }
+
+                index++;
+                node = iterator.GetNext();
+            }
+        };
+    });
+}
+@treeList.Bind(Model).GetHtml()

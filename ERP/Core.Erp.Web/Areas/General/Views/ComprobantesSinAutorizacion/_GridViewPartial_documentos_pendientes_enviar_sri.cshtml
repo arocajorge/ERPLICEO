@@ -1,0 +1,70 @@
+@using System.Web.UI.WebControls;
+
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridViewPartial_documentos_pendientes_enviar_sri";
+        settings.CallbackRouteValues = new { Controller = "ComprobantesSinAutorizacion", Action = "GridViewPartial_documentos_pendientes_enviar_sri", Fecha_ini = ViewBag.Fecha_ini, Fecha_fin = ViewBag.Fecha_fin, IdEmpresa = ViewBag.IdEmpresa, IdSucursal = ViewBag.IdSucursal};
+        settings.Width = Unit.Percentage(100);
+        settings.KeyFieldName = "secuencia";
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+        //Configuración click derecho
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+        settings.SettingsContextMenu.EnableRowMenu = DefaultBoolean.False;
+        //Configuración filtro por columna
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+        //Configuración checkbox
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowSelectCheckbox = true;
+        settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.AllPages;
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "*";
+            column.FieldName = "seleccionado";
+            column.ColumnType = MVCxGridViewColumnType.CheckBox;
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(2);
+            column.Visible = false;
+        });
+
+
+        settings.Columns.Add("Tipo_documento", "Tipo").Width = Unit.Percentage(10);
+        settings.Columns.Add("Documento", "Documento").Width = Unit.Percentage(15);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "vt_fecha";
+            column.Caption = "Fecha";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add("pe_nombreCompleto", "Beneficiario").Width = Unit.Percentage(30);
+        settings.Columns.Add("vt_Observacion", "Observación").Width = Unit.Percentage(30);
+
+        settings.ClientSideEvents.SelectionChanged = "OnSelectionChanged";
+        settings.ClientSideEvents.BeginCallback = "OnBeginCallback";
+    });
+}
+@grid.Bind(Model).GetHtml()

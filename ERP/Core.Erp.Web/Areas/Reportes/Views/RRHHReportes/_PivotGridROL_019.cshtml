@@ -1,0 +1,111 @@
+
+@using System;
+@using System.Linq;
+@using System.Collections.Generic;
+@using System.Web.Mvc;
+@using DevExpress.Export;
+@using DevExpress.Utils;
+@using DevExpress.Web.Mvc;
+@using DevExpress.XtraPivotGrid;
+@using DevExpress.XtraPrinting;
+@using System.Collections;
+@using System.Web.UI.WebControls;
+
+@Html.DevExpress().PivotGrid(settings => {
+    settings.Name = "PivotGridROL_019";
+    settings.CallbackRouteValues = new { Controller = "RRHHReportes", Action = "PivotGridROL_019", Idempresa= ViewBag.Idempresa, fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin, IdEmpleado= ViewBag.IdEmpleado };
+
+    settings.Width = Unit.Percentage(100);
+    settings.OptionsView.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    settings.OptionsView.VerticalScrollBarMode = ScrollBarMode.Auto;
+
+
+
+
+
+
+
+    settings.Fields.Add(field => {
+        field.Area = PivotArea.FilterArea;
+        field.FieldName = "Division";
+        field.Caption = "División";
+    });
+    settings.Fields.Add(field => {
+        field.Area = PivotArea.FilterArea;
+        field.FieldName = "Departamento";
+        field.Caption = "Departamento";
+    });
+    settings.Fields.Add(field => {
+        field.Area = PivotArea.FilterArea;
+        field.FieldName = "Cargo";
+        field.Caption = "Cargo";
+    });
+    settings.Fields.Add(field => {
+        field.Area = PivotArea.ColumnArea;
+        field.FieldName = "ru_codRolGen";
+        field.Caption = "Rubro";
+    });
+    settings.Fields.Add(field => {
+        field.Area = PivotArea.FilterArea;
+        field.FieldName = "NominaTipo";
+        field.Caption = "Nómina Tipo";
+    });
+    settings.Fields.Add(field => {
+        field.Area = PivotArea.RowArea;
+        field.FieldName = "Empleado";
+        field.Caption = "Empleado";
+    });
+    settings.Fields.Add(field =>
+    {
+        field.Area = PivotArea.FilterArea;
+        field.FieldName = "Nomina";
+        field.Caption = "Nómina";
+    });
+    settings.Fields.Add(field =>
+    {
+        field.Area = PivotArea.FilterArea;
+        field.FieldName = "Empleado";
+        field.Caption = "Empleado";
+    });
+    settings.Fields.Add(field =>
+    {
+        field.Area = PivotArea.FilterArea;
+        field.FieldName = "Cedula";
+        field.Caption = "Cédula";
+    });
+    settings.Fields.Add(field =>
+    {
+        field.Area = PivotArea.FilterArea;
+        field.FieldName = "Empleado";
+        field.Caption = "Empleado";
+    });
+    settings.Fields.Add(field =>
+    {
+        field.Area = PivotArea.FilterArea;
+        field.FieldName = "ru_tipo";
+        field.Caption = "Tipo Rubro";
+    });
+    settings.Fields.Add(field =>
+    {
+        field.Area = PivotArea.FilterArea;
+        field.FieldName = "pe_FechaIni";
+        field.Caption = "Fecha inicio";
+    });
+    settings.Fields.Add(field =>
+    {
+        field.Area = PivotArea.FilterArea;
+        field.FieldName = "pe_FechaFin";
+        field.Caption = "Fecha fin";
+    });
+    settings.Fields.Add(field =>
+    {
+        field.Area = PivotArea.DataArea;
+        field.FieldName = "Valor";
+        field.Caption = "$ Valor";
+        field.CellFormat.FormatString = "n2";
+
+    });
+
+
+
+}).Bind(Model).GetHtml()

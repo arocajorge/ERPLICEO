@@ -1,0 +1,154 @@
+﻿@model Core.Erp.Info.CuentasPorPagar.cp_codigo_SRI_Info
+@{
+    ViewBag.Title = "Anular Código SRI";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Anular", "CodigoSRI", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdCodigo_SRI)
+    @Html.HiddenFor(q => q.info_codigo_ctacble.IdEmpresa)
+    @Html.HiddenFor(q => q.info_codigo_ctacble.idCodigo_SRI)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdTipoSRI">Tipo código*</label>
+                    @Html.HiddenFor(q => q.IdTipoSRI)
+                    @Html.DevExpress().ComboBoxFor(q => q.IdTipoSRI, settings =>
+               {
+                   settings.Name = "IdTipoSRI";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdTipoSRI", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("descripcion", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdTipoSRI";
+                   settings.Properties.ValueType = typeof(string);
+                   settings.Properties.TextField = "descripcion";
+                   settings.Properties.NullText = "== Seleccione ==";
+
+                   settings.Properties.DropDownButton.Enabled = false;
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.ReadOnly = true;
+               }).BindList(ViewBag.lst_tipo).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdTipoSRI, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="codigoSRI">Código*</label>
+                    @Html.TextBoxFor(q => q.codigoSRI, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.codigoSRI, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="co_codigoBase">Código base*</label>
+                    @Html.TextBoxFor(q => q.co_codigoBase, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.co_codigoBase, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="co_descripcion">Descripción*</label>
+                    @Html.TextBoxFor(q => q.co_descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.co_descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="co_porRetencion">% Retención*</label>
+                    @Html.TextBoxFor(q => q.co_porRetencion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.co_porRetencion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCtaCble">Cuenta contable*</label>
+                    @Html.Partial("_CmbCuenta_Codigo", Model.info_codigo_ctacble.IdCtaCble)
+                    @Html.ValidationMessageFor(q => q.info_codigo_ctacble.IdCtaCble, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="">Fecha vigencia inicio*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.co_f_valides_desde, settings =>
+                    {
+                        settings.Name = "co_f_valides_desde";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.co_f_valides_desde, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="">Fecha vigencia fin*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.co_f_valides_hasta, settings =>
+                    {
+                        settings.Name = "co_f_valides_hasta";
+                        settings.Properties.UseMaskBehavior = true;
+                        settings.Properties.EditFormat = EditFormat.Date;
+                        settings.Properties.EditFormatString = "dd/MM/yyyy";
+                        settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                    }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.co_f_valides_hasta, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index","CodigoSRI", new { IdTipoSRI = ViewBag.IdTipoSRI, Area ="CuentasPorPagar" },null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

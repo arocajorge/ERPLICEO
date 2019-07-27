@@ -1,0 +1,97 @@
+﻿@model Core.Erp.Info.General.tb_sis_reporte_x_seg_usuario_Info
+@{
+    ViewBag.Title = "Asignación de reportes por usuario";
+
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    function EditingUpdate(ID) {
+        var datos = {
+            CodReporte: ID
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("EditingUpdate", "ReportesPorUsuario",new { Area = "General"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+            },
+            error: function (error) {
+            }
+        });
+        GridView_ReportesPorAsignar.PerformCallback();
+        GridView_ReportesAsignados.PerformCallback();
+    }
+
+    function guardar() {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdUsuario: $("#IdUsuario").val(),
+        }
+        $("#btn_guardar").attr("disabled", true);
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("guardar", "ReportesPorUsuario", new { Area = "General" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                alert("Registros actualizados exitósamente")
+                $("#myform").submit();
+            },
+            error: function (error) {
+            }
+        });
+    }
+</script>
+
+@using (Html.BeginForm("Index", "ReportesPorUsuario", FormMethod.Post, new { role = "form", @class = "form", @id = "myform" }))
+{
+    @Html.HiddenFor(q => q.IdTransaccionSession)
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="IdEmpresa">Empresa</label>
+                @Html.DropDownListFor(q => q.IdEmpresa, new SelectList(ViewBag.lst_empresa, "IdEmpresa", "em_nombre"), new { @class = "form-control", @id = "IdEmpresa" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="IdUsuario">Usuario</label>
+                @Html.DropDownListFor(q => q.IdUsuario, new SelectList(ViewBag.lst_usuario, "IdUsuario", "Nombre"), new { @class = "form-control", @id = "IdUsuario" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box-footer">
+    <button type="submit" class="btn btn-default" id="btn_buscar">Buscar</button>
+    <button type="button" class="btn btn-primary" id="btn_guardar" onclick="guardar();">Guardar</button>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="col-md-12">
+            @Html.Action("GridViewPartial_ReportesPorAsignar")
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="col-md-12">
+            @Html.Action("GridViewPartial_ReportesAsignados")
+        </div>
+    </div>
+</div>
+
+}

@@ -1,0 +1,43 @@
+@{
+	var cardView = Html.DevExpress().CardView(settings => {
+        settings.Name = "CardView_rubros";
+        settings.CallbackRouteValues = new { Controller = "ParametrosContable", Action = "CardViewPartial_rubros" };
+
+				settings.SettingsEditing.AddNewCardRouteValues = new { Controller = "ParametrosContable", Action = "CardViewPartial_rubrosAddNew" };
+        settings.SettingsEditing.UpdateCardRouteValues = new { Controller = "ParametrosContable", Action = "CardViewPartial_rubrosUpdate" };
+        settings.SettingsEditing.DeleteCardRouteValues = new { Controller = "ParametrosContable", Action = "CardViewPartial_rubrosDelete" };
+        settings.SettingsEditing.Mode = CardViewEditingMode.EditForm;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+		settings.KeyFieldName = "IdEmpresa";
+
+		settings.SettingsPager.Visible = true;
+				settings.Settings.ShowHeaderPanel = true;
+		settings.Settings.ShowHeaderFilterButton = true;
+				settings.SettingsBehavior.AllowSelectByCardClick = true;
+
+				settings.Columns.Add("IdDivision");
+				settings.Columns.Add("IdArea");
+				settings.Columns.Add("IdDepartamento");
+				settings.Columns.Add("IdRubro");
+				settings.Columns.Add("IdCtaCble");
+				settings.Columns.Add("DebCre");
+
+				settings.CardLayoutProperties.Items.AddCommandItem(i => {
+			i.ShowNewButton = true;
+			i.ShowEditButton = true;
+			i.ShowDeleteButton = true;
+		});
+		settings.CardLayoutProperties.Items.AddEditModeCommandItem();
+						settings.CardLayoutProperties.Items.Add("IdDivision");
+				settings.CardLayoutProperties.Items.Add("IdArea");
+				settings.CardLayoutProperties.Items.Add("IdDepartamento");
+				settings.CardLayoutProperties.Items.Add("IdRubro");
+				settings.CardLayoutProperties.Items.Add("IdCtaCble");
+				settings.CardLayoutProperties.Items.Add("DebCre");
+			});
+		if (ViewData["EditError"] != null){
+        cardView.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@cardView.Bind(Model).GetHtml()

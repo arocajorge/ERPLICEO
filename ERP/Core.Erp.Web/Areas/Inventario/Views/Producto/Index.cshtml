@@ -1,0 +1,23 @@
+﻿@using Core.Erp.Web.Helps
+
+@{
+    ViewBag.Title = "Productos";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-primary" href="@Url.Action("Importar","Producto",new { Area = "Inventario", IdEmpresa = SessionFixed.IdEmpresa },null)">Importar desde excel</a>
+        </div>
+    </div>
+
+    @Html.Action("GridViewPartial_producto")
+
+}

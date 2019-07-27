@@ -1,0 +1,26 @@
+﻿@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdRubro";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "RRHHReportes", Action = "CmbRubro_roles", Area = "Reportes" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "ru_descripcion";
+        settings.Properties.TextFormatString = "{0} {1}";
+        settings.Properties.ValueField = "IdRubro";
+        settings.Properties.ValueType = typeof(string);
+        settings.Properties.Columns.Add("IdRubro", "ID", 5);
+        settings.Properties.Columns.Add("ru_descripcion", "Rubro", 65);
+
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+        //settings.Properties.NullText = "== Seleccione ==";
+        //settings.Properties.AllowNull = true;
+    })
+     .BindList(new Core.Erp.Web.Areas.Reportes.Controllers.RRHHReportesController().get_list_bajo_demanda_rubro, new Core.Erp.Web.Areas.Reportes.Controllers.RRHHReportesController().get_info_bajo_demanda_rubro)
+    .Bind((Model.GetType() == typeof(Core.Erp.Info.Helps.cl_filtros_Info) || Model.GetType() == typeof(Core.Erp.Info.RRHH.ro_rubro_tipo_Info))  ? "" : Model);
+}
+@comboBox.GetHtml()

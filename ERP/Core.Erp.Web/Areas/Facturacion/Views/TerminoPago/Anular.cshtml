@@ -1,0 +1,112 @@
+﻿@model Core.Erp.Info.Facturacion.fa_TerminoPago_Info
+@{
+    ViewBag.Title = "Anular término de pago";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Anular", "TerminoPago", FormMethod.Post, new { @role = "form", @class = "form" }))
+{
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdTerminoPago)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="IdTerminoPago">Código*</label>
+                    @Html.TextBoxFor(q => q.IdTerminoPago, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(q => q.IdTerminoPago, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="nom_TerminoPago">Descripción*</label>
+                    @Html.TextBoxFor(q => q.nom_TerminoPago, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.nom_TerminoPago, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Num_Coutas">Cuotas*</label>
+                    @Html.TextBoxFor(q => q.Num_Coutas, new { @class = "form-control", @id = "Num_Coutas" })
+                    @Html.ValidationMessageFor(q => q.Num_Coutas, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Dias_Vct">Días*</label>
+                    @Html.TextBoxFor(q => q.Dias_Vct, new { @class = "form-control", @id = "Dias_Vct" })
+                    @Html.ValidationMessageFor(q => q.Dias_Vct, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+
+                    @Html.Action("GridViewPartial_pago_dist")
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index", "TerminoPago", new { Area = "Facturacion" }, null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#Num_Coutas").change(function () {
+            CargarCuotas();
+        });
+        $("#Dias_Vct").change(function () {
+            CargarCuotas();
+        });
+    });
+
+    function CargarCuotas() {
+        var datos = {
+            NumeroCuotas: $("#Num_Coutas").val(),
+            DiasVcto: $("#Dias_Vct").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CargarCuotas", "TerminoPago", new { Area = "Facturacion" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+            },
+            error: function (error) {
+            }
+        });
+        GridView_pago_dist.PerformCallback();
+    };
+</script>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bafee54089a34bf29f4b6d680d18f104" Name="Diagram1">
+        <EntityTypeShape EntityType="Model_presupuesto.pre_RubroTipo" Width="1.5" PointX="8.375" PointY="11.875" />
+        <EntityTypeShape EntityType="Model_presupuesto.pre_Rubro" Width="1.5" PointX="10.625" PointY="11.75" />
+        <AssociationConnector Association="Model_presupuesto.FK_pre_Rubro_pre_RubroTipo" />
+        <EntityTypeShape EntityType="Model_presupuesto.vwpre_Rubro" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_presupuesto.pre_PresupuestoPeriodo" Width="1.5" PointX="7.375" PointY="1" />
+        <EntityTypeShape EntityType="Model_presupuesto.pre_Presupuesto" Width="1.5" PointX="10" PointY="5.625" />
+        <EntityTypeShape EntityType="Model_presupuesto.pre_PresupuestoDet" Width="1.5" PointX="13.25" PointY="9.375" />
+        <EntityTypeShape EntityType="Model_presupuesto.vwpre_Presupuesto" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_presupuesto.vwpre_PresupuestoDet" Width="1.5" PointX="2.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Model_presupuesto.VWPRE_001" Width="1.5" PointX="4.75" PointY="4.75" />
+        <AssociationConnector Association="Model_presupuesto.FK_pre_Presupuesto_pre_PresupuestoPeriodo" />
+        <AssociationConnector Association="Model_presupuesto.FK_pre_PresupuestoDet_pre_Presupuesto" />
+        <AssociationConnector Association="Model_presupuesto.FK_pre_Presupuesto_x_grupo_det_pre_rubro" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

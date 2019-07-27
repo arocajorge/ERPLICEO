@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="354dadbccf444b7ea08ee621af3e1af6" Name="Diagram1" ZoomLevel="68">
+        <EntityTypeShape EntityType="Model_facturacion_electronica.tb_facturas_eventos" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_facturacion_electronica.vwfe_factura" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_facturacion_electronica.vwfe_factura_detalle" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_facturacion_electronica.vwfe_factura_impuestos" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_facturacion_electronica.vwfe_guia_remision" Width="1.5" PointX="6.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Model_facturacion_electronica.vwfe_guia_remision_detalle" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_facturacion_electronica.vwfe_guia_remision_x_factura" Width="1.5" PointX="8.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Model_facturacion_electronica.vwfe_nota_credito" Width="1.5" PointX="8.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Model_facturacion_electronica.vwfe_nota_credito_detalle" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Model_facturacion_electronica.vwfe_nota_credito_impuestos" Width="1.5" PointX="2.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Model_facturacion_electronica.vwfe_nota_debito" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_facturacion_electronica.vwfe_nota_debito_detalle" Width="1.5" PointX="10.75" PointY="10.75" />
+        <EntityTypeShape EntityType="Model_facturacion_electronica.vwfe_nota_debito_impuestos" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_facturacion_electronica.vwfe_retencion" Width="1.5" PointX="12.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Model_facturacion_electronica.vwfe_retencion_detalle" Width="1.5" PointX="2.75" PointY="13.75" />
+        <EntityTypeShape EntityType="Model_facturacion_electronica.vwfe_documentos_peniente_enviar_sri" Width="1.5" PointX="13.375" PointY="14.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

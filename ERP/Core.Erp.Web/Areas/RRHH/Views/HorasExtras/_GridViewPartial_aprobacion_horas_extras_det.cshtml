@@ -1,0 +1,112 @@
+@using System.Web.UI.WebControls;
+@model Core.Erp.Info.RRHH.ro_nomina_x_horas_extras_Info
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewPartial_aprobacion_horas_extras_det";
+        settings.CallbackRouteValues = new { Controller = "HorasExtras", Action = "GridViewPartial_aprobacion_horas_extras_det" };
+
+        settings.KeyFieldName = "Secuencia";
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
+
+
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+
+
+        settings.Columns.Add("IdCalendario").Visible = false;
+        settings.Columns.Add("IdEmpleado", "ID emp.").Width = Unit.Percentage(5);
+        settings.Columns.Add("pe_cedulaRuc", "Cédula").Width = Unit.Percentage(5);
+        settings.Columns.Add("pe_nombreCompleto", "Empleado").Width = Unit.Percentage(50);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "FechaRegistro";
+            column.Caption = "Fecha";
+            column.Width = Unit.Percentage(5);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add("time_entrada1", "Ingreso").Width = Unit.Percentage(5);
+        settings.Columns.Add("time_salida1", "Salida").Width = Unit.Percentage(5);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "hora_trabajada";
+            column.Caption = "H. trabajadas";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "n2";
+            column.EditorProperties().TextBox(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "n2";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "hora_extra25";
+            column.Caption = "HE 25";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "n2";
+            column.EditorProperties().TextBox(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "n2";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "hora_extra50";
+            column.Caption = "HE 50";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "n2";
+            column.EditorProperties().TextBox(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "n2";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "hora_extra100";
+            column.Caption = "HE 100";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "n2";
+            column.EditorProperties().TextBox(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "n2";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "hora_extra25");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "hora_extra50");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "hora_extra100");
+        settings.Settings.ShowFooter = true;
+
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model.lst_nomina_horas_extras).GetHtml()

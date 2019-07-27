@@ -1,0 +1,170 @@
+﻿@model Core.Erp.Info.Inventario.in_Ajuste_Info
+@using Core.Erp.Web.Helps
+@{
+    ViewBag.Title = "Nuevo ajuste fisico";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Nuevo", "AjusteFisicoInventario", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdSucursal">Sucursal*</label>
+                    @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdBodega">Bodega*</label>
+                    @Html.DropDownListFor(q => q.IdBodega, new SelectList(ViewBag.lst_bodega, "IdBodega", "bo_Descripcion"), new { @class = "form-control", @id = "IdBodega" })
+                    @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="IdMotivo_Inv">Estado*</label>
+                    @Html.DropDownListFor(q => q.IdCatalogo_Estado, new SelectList(ViewBag.lst_estado, "IdCatalogo", "Nombre"), new { @class = "form-control", @id = "IdCatalogo_Estado" })
+                    @Html.ValidationMessageFor(q => q.IdCatalogo_Estado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="">Fecha</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.Fecha, settings =>
+                   {
+                       settings.Name = "Fecha";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label for="ID"></label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="btn_cargar_detalle" onclick="CargarDetalle();" title="Cargar detalle">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="cm_observacion">Observación</label>
+                    @Html.TextAreaFor(q => q.Observacion, new { @class = "form-control", @rows = 3 })
+                    @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.Action("GridViewPartial_ajuste_fisico_det")
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","AjusteFisicoInventario",new { Area = "Inventario" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+<script type="text/javascript">
+$(function () {
+    CargarBodega();
+    $("#IdSucursal").change(function () {
+        CargarBodega();
+    });
+});
+
+function CargarBodega() {
+$("#IdBodega").empty();
+
+var datos = {
+    IdEmpresa: $("#IdEmpresa").val(),
+    IdSucursal: $("#IdSucursal").val()
+}
+
+$.ajax({
+    type: 'POST',
+    data: JSON.stringify(datos),
+    url: '@Url.Action("CargarBodega", "AjusteFisicoInventario", new { Area = "Inventario" })',
+    async: false,
+    bDeferRender: true,
+    bProcessing: true,
+    dataType: 'json',
+    contentType: 'application/json; charset=utf-8',
+    success: function (data) {
+    $.each(data, function (i, row) {
+        $("#IdBodega").append("<option value=" + row.IdBodega + ">" + row.bo_Descripcion + "</option>");
+    });
+    },
+    error: function (error) {
+    }
+    });
+};
+
+function CargarDetalle() {
+    var datos = {
+        IdTransaccionSession: $("#IdTransaccionSession").val(),
+        Fecha: Fecha.GetDate(),
+        IdEmpresa: $("#IdEmpresa").val(),
+        IdSucursal: $("#IdSucursal").val(),
+        IdBodega: $("#IdBodega").val()        
+    }
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("CargarDetalleAjuste", "AjusteFisicoInventario", new { Area = "Inventario" })',
+        async: false,
+        bDeferRender: true,
+        bProcessing: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (error) {
+        }
+    });
+
+    GridViewPartial_ajuste_fisico_det.PerformCallback();
+}
+</script>

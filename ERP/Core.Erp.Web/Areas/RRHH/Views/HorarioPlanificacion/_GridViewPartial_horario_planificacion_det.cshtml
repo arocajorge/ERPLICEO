@@ -1,0 +1,131 @@
+@using System.Web.UI.WebControls;
+@model Core.Erp.Info.RRHH.ro_horario_planificacion_Info
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewPartial_horario_planificacion_det";
+        settings.CallbackRouteValues = new { Controller = "HorarioPlanificacion", Action = "GridViewPartial_horario_planificacion_det", IdPlanificacion=Model.IdPlanificacion  };
+        settings.KeyFieldName = "Secuencia";
+        settings.Width = Unit.Percentage(100);
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "HorarioPlanificacion", Action = "EditingUpdate", Area = "RRHH" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "HorarioPlanificacion", Action = "EditingDelete", Area = "RRHH" };
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+        settings.Width = Unit.Percentage(100);
+
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "pe_cedulaRuc";
+            column.Caption = "Cédula";
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "pe_nombreCompleto";
+            column.Caption = "Empleado";
+            column.Width = Unit.Percentage(25);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Su_Descripcion";
+            column.Caption = "Sucursal";
+            column.Width = Unit.Percentage(15);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "di_descripcion";
+            column.Caption = "División";
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ar_descripcion";
+            column.Caption = "Área";
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "de_descripcion";
+            column.Caption = "Departamento";
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ca_descripcion";
+            column.Caption = "Cargo";
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "fecha";
+            column.Caption = "Fecha";
+            column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdHorario";
+            column.Caption = "Horario";
+            column.Width = Unit.Percentage(20);
+            column.EditorProperties().ComboBox(p =>
+            {
+                p.Columns.Add("IdHorario", "ID").Width = Unit.Percentage(20);
+                p.Columns.Add("Descripcion", "Descripción").Width = Unit.Percentage(70);
+                p.ValueField = "IdHorario";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.lst_horario;
+                p.Width = Unit.Percentage(100);
+            });
+        });
+
+        settings.ClientSideEvents.BeginCallback = "function(s,e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();}";
+    });
+
+}
+@grid.Bind(Model.lst_planificacion_det).GetHtml()

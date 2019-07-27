@@ -1,0 +1,88 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridViewPartial_compras";
+        settings.CallbackRouteValues = new { Controller = "ATS", Action = "GridViewPartial_compras", Area = "Contabilidad" };
+        settings.KeyFieldName = "secuencia";
+        settings.Width = Unit.Percentage(100);
+
+        settings.Settings.ShowFooter = true;
+
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+
+
+        settings.Columns.Add("denopr", "Proveedor").Width = Unit.Percentage(40);
+        settings.Columns.Add("establecimiento", "Est.").Width = Unit.Percentage(10);
+        settings.Columns.Add("puntoEmision", "PtoEm.").Width = Unit.Percentage(10);
+        settings.Columns.Add("secuencial", "Factura").Width = Unit.Percentage(15);
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "fechaRegistro";
+            column.Caption = "Fecha";
+            column.Width = Unit.Percentage(15);
+            column.PropertiesEdit.DisplayFormatString = "d";
+            column.EditorProperties().DateEdit(sp =>
+            {
+                column.PropertiesEdit.DisplayFormatString = "d";
+                sp.Width = Unit.Percentage(100);
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "baseImponible";
+            column.Caption = "Base 0%";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "baseImpGrav";
+            column.Caption = "Base iva";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "montoIva";
+            column.Caption = "Iva";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+            });
+        });
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "baseImponible");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "baseImpGrav");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "montoIva");
+    });
+
+}
+@grid.Bind(Model).GetHtml()

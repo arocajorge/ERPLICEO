@@ -1,0 +1,147 @@
+﻿@model Core.Erp.Info.RRHH.ro_area_x_departamento_Info
+@{
+    ViewBag.Title = "Nueva asignación";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Nuevo", "DepartamentoPorArea", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdDivision">División*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdDivision, settings =>
+               {
+                   settings.Name = "IdDivision";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdDivision", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("Descripcion", "División").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdDivision";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "Descripcion";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e,){get_areas()}";
+               }).BindList(ViewBag.lst_division).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdDivision, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdArea">Área*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdDivision, settings =>
+               {
+                   settings.Name = "IdArea";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdArea", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("Descripcion", "Área").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdArea";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "Descripcion";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e,){get_id()}";
+               }).BindList(ViewBag.lst_area).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdArea, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdDepartamento">Departamento*</label>
+                    @Html.DevExpress().ComboBoxFor(q => q.IdDepartamento, settings =>
+               {
+                   settings.Name = "IdDepartamento";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdDepartamento", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("de_descripcion", "Departamento").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdDepartamento";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "de_descripcion";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Never;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e,){get_id()}";
+               }).BindList(ViewBag.lst_departamento).GetHtml()
+                    @Html.ValidationMessageFor(q => q.IdDepartamento, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","DepartamentoPorArea",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+
+
+
+
+<script>
+
+
+
+    function get_areas() {
+            var datos = {
+                IdDivision: IdDivision.GetValue()
+            }
+
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(datos),
+                url: '@Url.Action("get_areas","Area", new { Area = "RRHH" })',
+                async: false,
+                bDeferRender: true,
+                bProcessing: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                    $.each(data, function (i, row) {
+                        $("#IdNomina_TipoLiqui").append("<option value=" + row.IdArea + ">" + row.Descripcion + "</option>");
+                    });
+                },
+                error: function (error) {
+                }
+            });
+        };
+
+
+
+
+
+</script>
+

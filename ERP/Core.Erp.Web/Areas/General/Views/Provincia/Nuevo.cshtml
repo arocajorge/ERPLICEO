@@ -1,0 +1,79 @@
+﻿@model Core.Erp.Info.General.tb_provincia_Info
+@{
+    ViewBag.Title = "Nuevo provincia";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Nuevo", "Provincia", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+
+    @Html.HiddenFor(q => q.IdPais)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdProvincia">Código</label>
+                    @Html.TextBoxFor(q => q.IdProvincia, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdProvincia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdPais">País</label>
+                    @Html.DropDownListFor(q => q.IdPais, new SelectList(ViewBag.lst_pais, "IdPais", "Nombre"), new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.IdPais, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Cod_Region">Región*</label>
+                    @Html.DropDownListFor(q => q.Cod_Region, new SelectList(ViewBag.lst_region, "Cod_Region", "Nom_region"), new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(q => q.Cod_Region, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Descripcion_Prov">Descripción*</label>
+                    @Html.TextBoxFor(q => q.Descripcion_Prov, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Descripcion_Prov, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","Provincia", new {IdPais = Model.IdPais, Area = "General" },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

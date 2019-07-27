@@ -1,0 +1,19 @@
+﻿@using System.Web.UI.WebControls;
+@Html.DevExpress().ComboBox(
+    settings =>
+    {
+        settings.Name = "IdPersona";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "ConciliacionCaja", Action = "ComboBoxPartial_persona", Area = "Caja" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.TextField = "pe_nombreCompleto";
+        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.ValueField = "IdPersona";
+        settings.Properties.ValueType = typeof(decimal);
+        settings.Properties.FilterMinLength = 3;
+        settings.Properties.Columns.Add("IdPersona", "ID", 10);
+        settings.Properties.Columns.Add("pe_nombreCompleto", "Persona", 90);
+    }
+).BindList(new Core.Erp.Bus.General.tb_persona_Bus().get_list(false)).Bind(Model.GetType() == typeof(Core.Erp.Info.Caja.cp_conciliacion_Caja_Info) ? "" : (Model.GetType() == typeof(Core.Erp.Info.General.tb_persona_Info) ? "" : (Model == 0 ? "" : Model))).GetHtml()

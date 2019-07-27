@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Menú";
+
+    if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-md-12">    
+    <a class="btn btn-primary" href="@Url.Action("Consulta","ReportesPorUsuario",new { Area = "General" },null)">Reportes</a>
+</div>
+<hr />
+    
+    @Html.DevExpress().TreeView(settings =>
+    {
+        settings.Name = "treeViewMenuInicio";
+        settings.EnableHotTrack = true;
+        var Nodes = new List<Core.Erp.Info.SeguridadAcceso.seg_Menu_x_Empresa_x_Usuario_Info>();
+        Core.Erp.Web.Areas.SeguridadAcceso.Controllers.MenuPorEmpresaPorUsuarioController.CreateTreeViewNodesRecursive(Nodes, settings.Nodes, 0, (Core.Erp.Web.Helps.SessionFixed.IdEmpresa == null ? 0 : Convert.ToInt32(Core.Erp.Web.Helps.SessionFixed.IdEmpresa)), (Core.Erp.Web.Helps.SessionFixed.IdUsuario == null ? "" : Core.Erp.Web.Helps.SessionFixed.IdUsuario.ToString()));
+
+    }).GetHtml()

@@ -9278,7 +9278,6 @@
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_002.cshtml" />
     <Content Include="Areas\Caja\Views\CajaMovimientoIngreso\_CmbPersona_MovimientoIngreso.cshtml" />
     <Content Include="Areas\Caja\Views\CajaMovimientoEgreso\_CmbPersona_MovimientoEgreso.cshtml" />
-    <Content Include="Areas\CuentasPorCobrar\Views\Cobranza\Index_Nuevo.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\Cobranza\Nuevo.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\Cobranza\Modificar.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\Cobranza\Anular.cshtml" />
@@ -10155,7 +10154,6 @@
     <Content Include="Areas\CuentasPorPagar\Views\Deudas\_GridViewPartial_ing_inv_os_x_ingresar.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\Retencion\ComprasSinRetencion.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\Cobranza\Index.cshtml" />
-    <Content Include="Areas\CuentasPorCobrar\Views\Cobranza\_GridViewPartial_cobranza_sinretencion.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\CobranzaRetenciones\_GridViewPartial_cobranza_sinret.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\CobranzaRetenciones\CobrosSinRetencion.cshtml" />
     <Content Include="Areas\CuentasPorCobrar\Views\CobranzaRetenciones\Anular.cshtml" />

@@ -21,7 +21,10 @@ namespace Core.Erp.Data
             : base("name=Entities_reportes")
         {
         }
-    
+        public void SetCommandTimeOut(int TimeOut)
+        {
+            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -100,10 +103,7 @@ namespace Core.Erp.Data
         public DbSet<VWROL_028> VWROL_028 { get; set; }
         public DbSet<VWINV_002> VWINV_002 { get; set; }
         public DbSet<VWROL_010> VWROL_010 { get; set; }
-        public DbSet<VWACTF_008> VWACTF_008 { get; set; }
-        public DbSet<VWFAC_014> VWFAC_014 { get; set; }
         public DbSet<VWCXP_014> VWCXP_014 { get; set; }
-        public DbSet<VWACTF_007> VWACTF_007 { get; set; }
         public DbSet<VWINV_017> VWINV_017 { get; set; }
         public DbSet<VWINV_018> VWINV_018 { get; set; }
         public DbSet<VWCOMP_001> VWCOMP_001 { get; set; }
@@ -123,6 +123,9 @@ namespace Core.Erp.Data
         public DbSet<VWFAC_009> VWFAC_009 { get; set; }
         public DbSet<VWCXP_012> VWCXP_012 { get; set; }
         public DbSet<VWFAC_006> VWFAC_006 { get; set; }
+        public DbSet<VWACTF_007> VWACTF_007 { get; set; }
+        public DbSet<VWACTF_008> VWACTF_008 { get; set; }
+        public DbSet<VWFAC_014> VWFAC_014 { get; set; }
     
         public virtual ObjectResult<SPACTF_004_detalle_Result> SPACTF_004_detalle(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_corte, string idUsuario, Nullable<int> idActivoFijoTipo_ini, Nullable<int> idActivoFijoTipo_fin, Nullable<int> idCategoria_ini, Nullable<int> idCategoria_fin, string estado_Proceso)
         {

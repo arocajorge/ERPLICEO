@@ -1,4 +1,4 @@
-﻿CREATE VIEW web.VWACTF_007
+﻿CREATE VIEW [web].[VWACTF_007]
 AS
 SELECT dbo.Af_Activo_fijo.IdEmpresa, dbo.Af_Activo_fijo.IdActivoFijo, dbo.Af_Activo_fijo.Af_fecha_compra, dbo.Af_Activo_fijo.Af_costo_compra, dbo.Af_Activo_fijo.Estado, dbo.Af_Activo_fijo.Af_observacion, dbo.Af_Activo_fijo.Af_Nombre, 
                   dbo.tb_sucursal.Su_Descripcion, dbo.Af_Activo_fijo_tipo.Af_Descripcion AS NomTipo, dbo.Af_Activo_fijo_Categoria.Descripcion AS NomCategoria, dbo.Af_Departamento.Descripcion AS NomDepartamento, 
@@ -6,13 +6,9 @@ SELECT dbo.Af_Activo_fijo.IdEmpresa, dbo.Af_Activo_fijo.IdActivoFijo, dbo.Af_Act
 FROM     dbo.Af_Activo_fijo INNER JOIN
                   dbo.Af_Activo_fijo_Categoria ON dbo.Af_Activo_fijo.IdEmpresa = dbo.Af_Activo_fijo_Categoria.IdEmpresa AND dbo.Af_Activo_fijo.IdCategoriaAF = dbo.Af_Activo_fijo_Categoria.IdCategoriaAF INNER JOIN
                   dbo.Af_Activo_fijo_tipo ON dbo.Af_Activo_fijo_Categoria.IdEmpresa = dbo.Af_Activo_fijo_tipo.IdEmpresa AND dbo.Af_Activo_fijo_Categoria.IdActivoFijoTipo = dbo.Af_Activo_fijo_tipo.IdActivoFijoTipo INNER JOIN
-                  dbo.Af_Departamento ON dbo.Af_Activo_fijo.IdEmpresa = dbo.Af_Departamento.IdEmpresa AND dbo.Af_Activo_fijo.IdDepartamento = dbo.Af_Departamento.IdDepartamento INNER JOIN
-                  dbo.ro_empleado ON dbo.Af_Activo_fijo.IdEmpresa = dbo.ro_empleado.IdEmpresa AND dbo.Af_Activo_fijo.IdEmpresa = dbo.ro_empleado.IdEmpresa AND 
-                  dbo.Af_Activo_fijo.IdEmpleadoEncargado = dbo.ro_empleado.IdEmpleado INNER JOIN
-                  dbo.ro_empleado AS ro_empleado_1 ON dbo.Af_Activo_fijo.IdEmpresa = ro_empleado_1.IdEmpresa AND dbo.Af_Activo_fijo.IdEmpresa = ro_empleado_1.IdEmpresa AND 
-                  dbo.Af_Activo_fijo.IdEmpleadoCustodio = ro_empleado_1.IdEmpleado INNER JOIN
-                  dbo.tb_persona AS tb_persona_1 ON ro_empleado_1.IdPersona = tb_persona_1.IdPersona INNER JOIN
-                  dbo.tb_persona ON dbo.ro_empleado.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
+                  dbo.Af_Departamento ON dbo.Af_Activo_fijo.IdEmpresa = dbo.Af_Departamento.IdEmpresa AND dbo.Af_Activo_fijo.IdDepartamento = dbo.Af_Departamento.IdDepartamento INNER JOIN                  
+                  dbo.tb_persona AS tb_persona_1 ON Af_Activo_fijo.IdEmpleadoCustodio = tb_persona_1.IdPersona INNER JOIN
+                  dbo.tb_persona ON Af_Activo_fijo.IdEmpleadoEncargado = dbo.tb_persona.IdPersona INNER JOIN
                   dbo.tb_sucursal ON dbo.Af_Activo_fijo.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.Af_Activo_fijo.IdSucursal = dbo.tb_sucursal.IdSucursal
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWACTF_007';

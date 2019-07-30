@@ -17,9 +17,9 @@
         <AssociationConnector Association="Model_activo_fijo.FK_Af_Activo_fijo_Categoria_Af_Activo_fijo_tipo" />
         <EntityTypeShape EntityType="Model_activo_fijo.Af_Catalogo" Width="1.5" PointX="8" PointY="0.75" />
         <AssociationConnector Association="Model_activo_fijo.FK_Af_Catalogo_Af_CatalogoTipo" />
-        <EntityTypeShape EntityType="Model_activo_fijo.Af_Activo_fijo" Width="1.5" PointX="10.25" PointY="5" />
         <EntityTypeShape EntityType="Model_activo_fijo.Af_Area" Width="1.5" PointX="8" PointY="34.875" />
         <EntityTypeShape EntityType="Model_activo_fijo.Af_Departamento" Width="1.5" PointX="8" PointY="30.625" />
+        <EntityTypeShape EntityType="Model_activo_fijo.Af_Activo_fijo" Width="1.5" PointX="10.25" PointY="14.125" />
         <AssociationConnector Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Activo_fijo_Categoria" />
         <AssociationConnector Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Activo_fijo_tipo" />
         <AssociationConnector Association="Model_activo_fijo.FK_Af_Activo_fijo_Af_Area" />

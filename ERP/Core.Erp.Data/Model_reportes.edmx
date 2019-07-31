@@ -1056,6 +1056,7 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWCXC_008' no tiene definida 
             <PropertyRef Name="IdSucursal" />
             <PropertyRef Name="IdBodega" />
             <PropertyRef Name="IdCbteVta" />
+            
             <PropertyRef Name="vt_fecha" />
             <PropertyRef Name="IdCobro" />
             <PropertyRef Name="dc_ValorPago" />
@@ -1071,7 +1072,7 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWCXC_008' no tiene definida 
           <Property Name="IdSucursal" Type="int" Nullable="false" />
           <Property Name="IdBodega" Type="int" Nullable="false" />
           <Property Name="IdCbteVta" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="vt_tipoDoc" Type="varchar" MaxLength="20" />
+          <Property Name="vt_tipoDoc" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="vt_NumFactura" Type="varchar" MaxLength="50" />
           <Property Name="vt_fecha" Type="datetime" Nullable="false" />
           <Property Name="IdCobro" Type="numeric" Precision="18" Scale="0" Nullable="false" />
@@ -1213,7 +1214,7 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWCXP_002' no tiene definida 
           <Property Name="NumRetencion" Type="varchar" MaxLength="20" />
           <Property Name="NAutorizacion" Type="varchar" MaxLength="50" />
           <Property Name="fecha" Type="date" Nullable="false" />
-          <Property Name="observacion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="observacion" Type="varchar(max)" Nullable="false" />
           <Property Name="IdEmpresa_Ogiro" Type="int" />
           <Property Name="IdCbteCble_Ogiro" Type="numeric" Precision="18" Scale="0" />
           <Property Name="IdTipoCbte_Ogiro" Type="int" />
@@ -1463,7 +1464,7 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWCXP_006' no tiene definida 
           <Property Name="NumRetencion" Type="varchar" MaxLength="28" />
           <Property Name="NAutorizacion" Type="varchar" MaxLength="50" />
           <Property Name="fecha" Type="date" Nullable="false" />
-          <Property Name="observacion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="observacion" Type="varchar(max)" Nullable="false" />
           <Property Name="IdEmpresa_Ogiro" Type="int" />
           <Property Name="IdCbteCble_Ogiro" Type="numeric" Precision="18" Scale="0" />
           <Property Name="IdTipoCbte_Ogiro" Type="int" />
@@ -2739,7 +2740,7 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWINV_001' no tiene definida 
           <Property Name="lote_fecha_vcto" Type="datetime" />
           <Property Name="nom_presentacion" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="signo" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="tm_descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="tm_descripcion" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="NomUsuario" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
@@ -2791,7 +2792,7 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWINV_002' no tiene definida 
           <Property Name="lote_fecha_vcto" Type="datetime" />
           <Property Name="nom_presentacion" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="signo" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="tm_descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="tm_descripcion" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="NomUsuario" Type="varchar" MaxLength="50" />
           <Property Name="IdResponsable" Type="numeric" Precision="18" Scale="0" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" />
@@ -2892,7 +2893,7 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWINV_011' no tiene definida 
           <Property Name="lote_fecha_vcto" Type="datetime" />
           <Property Name="nom_presentacion" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="signo" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="tm_descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="tm_descripcion" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="NomUsuario" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
@@ -3049,7 +3050,7 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWINV_017' no tiene definida 
           <Property Name="lote_fecha_vcto" Type="datetime" />
           <Property Name="nom_presentacion" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="signo" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="tm_descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="tm_descripcion" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="NomUsuario" Type="varchar" MaxLength="50" />
           <Property Name="IdResponsable" Type="numeric" Precision="18" Scale="0" />
           <Property Name="IdPersona" Type="numeric" Precision="18" Scale="0" Nullable="false" />
@@ -3098,8 +3099,8 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWINV_018' no tiene definida 
           <Property Name="Observacion" Type="varchar(max)" />
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="bo_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="tm_descripcion_ing" Type="nvarchar" MaxLength="50" />
-          <Property Name="tm_descripcion_egr" Type="nvarchar" MaxLength="50" />
+          <Property Name="tm_descripcion_ing" Type="varchar" MaxLength="200" />
+          <Property Name="tm_descripcion_egr" Type="varchar" MaxLength="200" />
           <Property Name="IdProducto" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="IdUnidadMedida" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="StockSistema" Type="float" Nullable="false" />
@@ -3186,8 +3187,8 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWPRO_001' no tiene definida 
           <Property Name="in_bo_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="eg_Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="eg_bo_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="in_NombreTipo" Type="nvarchar" MaxLength="50" />
-          <Property Name="eg_NombreTipo" Type="nvarchar" MaxLength="50" />
+          <Property Name="in_NombreTipo" Type="varchar" MaxLength="200" />
+          <Property Name="eg_NombreTipo" Type="varchar" MaxLength="200" />
           <Property Name="egr_IdNumMovi" Type="numeric" Precision="18" Scale="0" />
           <Property Name="ing_IdNumMovi" Type="numeric" Precision="18" Scale="0" />
           <Property Name="Signo" Type="varchar" MaxLength="1" Nullable="false" />
@@ -7458,7 +7459,7 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWROL_028' no tiene definida 
           <Property Name="NumRetencion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="NAutorizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="observacion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IdEmpresa_Ogiro" Type="Int32" />
           <Property Name="IdCbteCble_Ogiro" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="IdTipoCbte_Ogiro" Type="Int32" />
@@ -7540,7 +7541,7 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWROL_028' no tiene definida 
           <Property Name="NumRetencion" Type="String" MaxLength="28" FixedLength="false" Unicode="false" />
           <Property Name="NAutorizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="observacion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IdEmpresa_Ogiro" Type="Int32" />
           <Property Name="IdCbteCble_Ogiro" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="IdTipoCbte_Ogiro" Type="Int32" />
@@ -8256,14 +8257,6 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWROL_028' no tiene definida 
             <Parameter Name="IdMarcaIni" Mode="In" Type="Int32" />
             <Parameter Name="IdMarcaFin" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SPCXP_010" ReturnType="Collection(Model_reportes.SPCXP_010_Result)">
-            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
-            <Parameter Name="IdProveedorIni" Mode="In" Type="Decimal" />
-            <Parameter Name="IdProveedorFin" Mode="In" Type="Decimal" />
-            <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
-            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
-            <Parameter Name="MostrarAnulados" Mode="In" Type="Boolean" />
-          </FunctionImport>
           <FunctionImport Name="SPFAC_011" ReturnType="Collection(Model_reportes.SPFAC_011_Result)">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
             <Parameter Name="IdClienteIni" Mode="In" Type="Decimal" />
@@ -8550,17 +8543,6 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWROL_028' no tiene definida 
             <Parameter Name="FechaCorte" Mode="In" Type="DateTime" />
           </FunctionImport>
           <EntitySet Name="VWFAC_018" EntityType="Model_reportes.VWFAC_018" />
-          <FunctionImport Name="SPCXC_010" ReturnType="Collection(Model_reportes.SPCXC_010_Result)">
-            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
-            <Parameter Name="SucursalIni" Mode="In" Type="Int32" />
-            <Parameter Name="SucursalFin" Mode="In" Type="Int32" />
-            <Parameter Name="IdClienteIni" Mode="In" Type="Int32" />
-            <Parameter Name="IdClienteFin" Mode="In" Type="Int32" />
-            <Parameter Name="IdTipoClienteIni" Mode="In" Type="Decimal" />
-            <Parameter Name="IdTipoClienteFin" Mode="In" Type="Decimal" />
-            <Parameter Name="fechaCorte" Mode="In" Type="DateTime" />
-            <Parameter Name="MostrarSoloCarteraVencida" Mode="In" Type="Boolean" />
-          </FunctionImport>
           <EntitySet Name="VWBAN_010" EntityType="Model_reportes.VWBAN_010" />
           <FunctionImport Name="SPCONTA_005" ReturnType="Collection(Model_reportes.SPCONTA_005_Result)">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
@@ -8626,6 +8608,25 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWROL_028' no tiene definida 
           <EntitySet Name="VWACTF_007" EntityType="Model_reportes.VWACTF_007" />
           <EntitySet Name="VWACTF_008" EntityType="Model_reportes.VWACTF_008" />
           <EntitySet Name="VWFAC_014" EntityType="Model_reportes.VWFAC_014" />
+          <FunctionImport Name="SPCXC_010" ReturnType="Collection(Model_reportes.SPCXC_010_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="SucursalIni" Mode="In" Type="Int32" />
+            <Parameter Name="SucursalFin" Mode="In" Type="Int32" />
+            <Parameter Name="IdClienteIni" Mode="In" Type="Int32" />
+            <Parameter Name="IdClienteFin" Mode="In" Type="Int32" />
+            <Parameter Name="IdTipoClienteIni" Mode="In" Type="Decimal" />
+            <Parameter Name="IdTipoClienteFin" Mode="In" Type="Decimal" />
+            <Parameter Name="fechaCorte" Mode="In" Type="DateTime" />
+            <Parameter Name="MostrarSoloCarteraVencida" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPCXP_010" ReturnType="Collection(Model_reportes.SPCXP_010_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdProveedorIni" Mode="In" Type="Decimal" />
+            <Parameter Name="IdProveedorFin" Mode="In" Type="Decimal" />
+            <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="MostrarAnulados" Mode="In" Type="Boolean" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -8791,7 +8792,7 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWROL_028' no tiene definida 
           <Property Name="lote_fecha_vcto" Type="DateTime" Precision="3" />
           <Property Name="nom_presentacion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="signo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="tm_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tm_descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="NomUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="VWINV_011">
@@ -8841,7 +8842,7 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWROL_028' no tiene definida 
           <Property Name="lote_fecha_vcto" Type="DateTime" Precision="3" />
           <Property Name="nom_presentacion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="signo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="tm_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tm_descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="NomUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <ComplexType Name="SPINV_004_Result">
@@ -8858,21 +8859,6 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWROL_028' no tiene definida 
           <Property Type="Int32" Name="IdMarca" Nullable="true" />
           <Property Type="Double" Name="Stock_minimo" Nullable="false" />
           <Property Type="Double" Name="StockActual" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="SPCXP_010_Result">
-          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
-          <Property Type="Decimal" Name="IdProveedor" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="String" Name="pe_nombreCompleto" Nullable="true" MaxLength="200" />
-          <Property Type="DateTime" Name="Fecha" Nullable="true" Precision="23" />
-          <Property Type="String" Name="Estado" Nullable="false" MaxLength="2" />
-          <Property Type="String" Name="Tipo" Nullable="false" MaxLength="250" />
-          <Property Type="String" Name="Referencia" Nullable="true" MaxLength="61" />
-          <Property Type="String" Name="co_observacion" Nullable="true" />
-          <Property Type="Double" Name="Debito" Nullable="true" />
-          <Property Type="Double" Name="Credito" Nullable="false" />
-          <Property Type="Double" Name="Saldo" Nullable="true" />
-          <Property Type="Double" Name="SaldoModulo" Nullable="true" />
-          <Property Type="Int32" Name="Secuencia" Nullable="false" />
         </ComplexType>
         <ComplexType Name="SPFAC_011_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -9196,8 +9182,8 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWROL_028' no tiene definida 
           <Property Name="in_bo_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="eg_Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="eg_bo_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="in_NombreTipo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="eg_NombreTipo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="in_NombreTipo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="eg_NombreTipo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="egr_IdNumMovi" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ing_IdNumMovi" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Signo" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
@@ -10697,7 +10683,7 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWROL_028' no tiene definida 
           <Property Name="IdSucursal" Type="Int32" Nullable="false" />
           <Property Name="IdBodega" Type="Int32" Nullable="false" />
           <Property Name="IdCbteVta" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="vt_tipoDoc" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="vt_tipoDoc" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="vt_NumFactura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="vt_fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IdCobro" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
@@ -11107,7 +11093,7 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWROL_028' no tiene definida 
           <Property Name="lote_fecha_vcto" Type="DateTime" Precision="3" />
           <Property Name="nom_presentacion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="signo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="tm_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tm_descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="NomUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IdResponsable" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="pe_nombreCompleto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
@@ -11407,7 +11393,7 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWROL_028' no tiene definida 
           <Property Name="lote_fecha_vcto" Type="DateTime" Precision="3" />
           <Property Name="nom_presentacion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="signo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="tm_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tm_descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="NomUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IdResponsable" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="IdPersona" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
@@ -11466,8 +11452,8 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWROL_028' no tiene definida 
           <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="bo_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="tm_descripcion_ing" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="tm_descripcion_egr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tm_descripcion_ing" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="tm_descripcion_egr" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="IdProducto" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="IdUnidadMedida" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="StockSistema" Type="Double" Nullable="false" />
@@ -11662,42 +11648,6 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWROL_028' no tiene definida 
           <Property Name="Orden" Type="Int32" Nullable="false" />
           <Property Name="CreDeb" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
         </EntityType>
-        <ComplexType Name="SPCXC_010_Result">
-          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
-          <Property Type="Int32" Name="IdSucursal" Nullable="false" />
-          <Property Type="Int32" Name="IdBodega" Nullable="false" />
-          <Property Type="Decimal" Name="IdCliente" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="String" Name="Codigo" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="IdCbteVta" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="String" Name="CodCbteVta" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="vt_tipoDoc" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="vt_serie1" Nullable="true" MaxLength="3" />
-          <Property Type="String" Name="vt_serie2" Nullable="true" MaxLength="3" />
-          <Property Type="String" Name="vt_NumFactura" Nullable="true" MaxLength="31" />
-          <Property Type="String" Name="Su_Descripcion" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="pe_nombreCompleto" Nullable="true" MaxLength="221" />
-          <Property Type="String" Name="pe_cedulaRuc" Nullable="false" MaxLength="50" />
-          <Property Type="Double" Name="Valor_Original" Nullable="false" />
-          <Property Type="Double" Name="Total_Pagado" Nullable="false" />
-          <Property Type="Double" Name="Valor_x_Vencer" Nullable="false" />
-          <Property Type="Double" Name="Valor_vencido" Nullable="false" />
-          <Property Type="Double" Name="Vencer_30_Dias" Nullable="false" />
-          <Property Type="Double" Name="Vencer_60_Dias" Nullable="false" />
-          <Property Type="Double" Name="Vencer_90_Dias" Nullable="false" />
-          <Property Type="Double" Name="Mayor_a_90Dias" Nullable="false" />
-          <Property Type="DateTime" Name="vt_fech_venc" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="vt_fecha" Nullable="false" Precision="23" />
-          <Property Type="Int32" Name="Idtipo_cliente" Nullable="false" />
-          <Property Type="Int32" Name="Dias_Vencidos" Nullable="true" />
-          <Property Type="Decimal" Name="Saldo" Nullable="false" Precision="10" Scale="2" />
-          <Property Type="String" Name="pe_telefonoOfic" Nullable="true" MaxLength="52" />
-          <Property Type="String" Name="vt_Observacion" Nullable="true" MaxLength="1000" />
-          <Property Type="Decimal" Name="vt_plazo" Nullable="true" Precision="10" Scale="0" />
-          <Property Type="Int32" Name="IdContacto" Nullable="true" />
-          <Property Type="String" Name="NomContacto" Nullable="false" MaxLength="200" />
-          <Property Type="String" Name="TelefonoContacto" Nullable="true" MaxLength="401" />
-          <Property Type="String" Name="Descripcion_tip_cliente" Nullable="false" MaxLength="500" />
-        </ComplexType>
         <EntityType Name="VWBAN_010">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -12554,6 +12504,56 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWROL_028' no tiene definida 
           <Property Name="Nombre_Evento" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="SPCXC_010_Result">
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="Int32" Name="IdSucursal" Nullable="false" />
+          <Property Type="Int32" Name="IdBodega" Nullable="false" />
+          <Property Type="Decimal" Name="IdCliente" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="Codigo" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="IdCbteVta" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="CodCbteVta" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="vt_tipoDoc" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="vt_serie1" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="vt_serie2" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="vt_NumFactura" Nullable="true" MaxLength="31" />
+          <Property Type="String" Name="Su_Descripcion" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="pe_nombreCompleto" Nullable="true" MaxLength="221" />
+          <Property Type="String" Name="pe_cedulaRuc" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="Valor_Original" Nullable="false" />
+          <Property Type="Double" Name="Total_Pagado" Nullable="false" />
+          <Property Type="Double" Name="Valor_x_Vencer" Nullable="false" />
+          <Property Type="Double" Name="Valor_vencido" Nullable="false" />
+          <Property Type="Double" Name="Vencer_30_Dias" Nullable="false" />
+          <Property Type="Double" Name="Vencer_60_Dias" Nullable="false" />
+          <Property Type="Double" Name="Vencer_90_Dias" Nullable="false" />
+          <Property Type="Double" Name="Mayor_a_90Dias" Nullable="false" />
+          <Property Type="DateTime" Name="vt_fech_venc" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="vt_fecha" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="Idtipo_cliente" Nullable="false" />
+          <Property Type="Int32" Name="Dias_Vencidos" Nullable="true" />
+          <Property Type="Decimal" Name="Saldo" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="String" Name="pe_telefonoOfic" Nullable="true" MaxLength="52" />
+          <Property Type="String" Name="vt_Observacion" Nullable="true" />
+          <Property Type="Decimal" Name="vt_plazo" Nullable="true" Precision="10" Scale="0" />
+          <Property Type="String" Name="NomContacto" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="TelefonoContacto" Nullable="true" MaxLength="401" />
+          <Property Type="String" Name="Descripcion_tip_cliente" Nullable="false" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="SPCXP_010_Result">
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="Decimal" Name="IdProveedor" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="pe_nombreCompleto" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="Fecha" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Estado" Nullable="false" MaxLength="2" />
+          <Property Type="String" Name="Tipo" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Referencia" Nullable="true" MaxLength="61" />
+          <Property Type="String" Name="co_observacion" Nullable="true" />
+          <Property Type="Double" Name="Debito" Nullable="true" />
+          <Property Type="Double" Name="Credito" Nullable="false" />
+          <Property Type="Double" Name="Saldo" Nullable="true" />
+          <Property Type="Double" Name="SaldoModulo" Nullable="true" />
+          <Property Type="Int32" Name="Secuencia" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -13440,25 +13440,6 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWROL_028' no tiene definida 
                 <ScalarProperty Name="IdMarca" ColumnName="IdMarca" />
                 <ScalarProperty Name="Stock_minimo" ColumnName="Stock_minimo" />
                 <ScalarProperty Name="StockActual" ColumnName="StockActual" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SPCXP_010" FunctionName="Model_reportes.Store.SPCXP_010">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Model_reportes.SPCXP_010_Result">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
-                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="Referencia" ColumnName="Referencia" />
-                <ScalarProperty Name="co_observacion" ColumnName="co_observacion" />
-                <ScalarProperty Name="Debito" ColumnName="Debito" />
-                <ScalarProperty Name="Credito" ColumnName="Credito" />
-                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
-                <ScalarProperty Name="SaldoModulo" ColumnName="SaldoModulo" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -15690,46 +15671,6 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWROL_028' no tiene definida 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SPCXC_010" FunctionName="Model_reportes.Store.SPCXC_010">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Model_reportes.SPCXC_010_Result">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
-                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="IdCbteVta" ColumnName="IdCbteVta" />
-                <ScalarProperty Name="CodCbteVta" ColumnName="CodCbteVta" />
-                <ScalarProperty Name="vt_tipoDoc" ColumnName="vt_tipoDoc" />
-                <ScalarProperty Name="vt_serie1" ColumnName="vt_serie1" />
-                <ScalarProperty Name="vt_serie2" ColumnName="vt_serie2" />
-                <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />
-                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
-                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
-                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
-                <ScalarProperty Name="Valor_Original" ColumnName="Valor_Original" />
-                <ScalarProperty Name="Total_Pagado" ColumnName="Total_Pagado" />
-                <ScalarProperty Name="Valor_x_Vencer" ColumnName="Valor_x_Vencer" />
-                <ScalarProperty Name="Valor_vencido" ColumnName="Valor_vencido" />
-                <ScalarProperty Name="Vencer_30_Dias" ColumnName="Vencer_30_Dias" />
-                <ScalarProperty Name="Vencer_60_Dias" ColumnName="Vencer_60_Dias" />
-                <ScalarProperty Name="Vencer_90_Dias" ColumnName="Vencer_90_Dias" />
-                <ScalarProperty Name="Mayor_a_90Dias" ColumnName="Mayor_a_90Dias" />
-                <ScalarProperty Name="vt_fech_venc" ColumnName="vt_fech_venc" />
-                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
-                <ScalarProperty Name="Idtipo_cliente" ColumnName="Idtipo_cliente" />
-                <ScalarProperty Name="Dias_Vencidos" ColumnName="Dias_Vencidos" />
-                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
-                <ScalarProperty Name="pe_telefonoOfic" ColumnName="pe_telefonoOfic" />
-                <ScalarProperty Name="vt_Observacion" ColumnName="vt_Observacion" />
-                <ScalarProperty Name="vt_plazo" ColumnName="vt_plazo" />
-                <ScalarProperty Name="IdContacto" ColumnName="IdContacto" />
-                <ScalarProperty Name="NomContacto" ColumnName="NomContacto" />
-                <ScalarProperty Name="TelefonoContacto" ColumnName="TelefonoContacto" />
-                <ScalarProperty Name="Descripcion_tip_cliente" ColumnName="Descripcion_tip_cliente" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="VWBAN_010">
             <EntityTypeMapping TypeName="Model_reportes.VWBAN_010">
               <MappingFragment StoreEntitySet="VWBAN_010">
@@ -16370,6 +16311,64 @@ advertencia 6002: La tabla o vista 'DBERPLICEO.web.VWROL_028' no tiene definida 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SPCXC_010" FunctionName="Model_reportes.Store.SPCXC_010">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_reportes.SPCXC_010_Result">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="IdCbteVta" ColumnName="IdCbteVta" />
+                <ScalarProperty Name="CodCbteVta" ColumnName="CodCbteVta" />
+                <ScalarProperty Name="vt_tipoDoc" ColumnName="vt_tipoDoc" />
+                <ScalarProperty Name="vt_serie1" ColumnName="vt_serie1" />
+                <ScalarProperty Name="vt_serie2" ColumnName="vt_serie2" />
+                <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="Valor_Original" ColumnName="Valor_Original" />
+                <ScalarProperty Name="Total_Pagado" ColumnName="Total_Pagado" />
+                <ScalarProperty Name="Valor_x_Vencer" ColumnName="Valor_x_Vencer" />
+                <ScalarProperty Name="Valor_vencido" ColumnName="Valor_vencido" />
+                <ScalarProperty Name="Vencer_30_Dias" ColumnName="Vencer_30_Dias" />
+                <ScalarProperty Name="Vencer_60_Dias" ColumnName="Vencer_60_Dias" />
+                <ScalarProperty Name="Vencer_90_Dias" ColumnName="Vencer_90_Dias" />
+                <ScalarProperty Name="Mayor_a_90Dias" ColumnName="Mayor_a_90Dias" />
+                <ScalarProperty Name="vt_fech_venc" ColumnName="vt_fech_venc" />
+                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
+                <ScalarProperty Name="Idtipo_cliente" ColumnName="Idtipo_cliente" />
+                <ScalarProperty Name="Dias_Vencidos" ColumnName="Dias_Vencidos" />
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+                <ScalarProperty Name="pe_telefonoOfic" ColumnName="pe_telefonoOfic" />
+                <ScalarProperty Name="vt_Observacion" ColumnName="vt_Observacion" />
+                <ScalarProperty Name="vt_plazo" ColumnName="vt_plazo" />
+                <ScalarProperty Name="NomContacto" ColumnName="NomContacto" />
+                <ScalarProperty Name="TelefonoContacto" ColumnName="TelefonoContacto" />
+                <ScalarProperty Name="Descripcion_tip_cliente" ColumnName="Descripcion_tip_cliente" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPCXP_010" FunctionName="Model_reportes.Store.SPCXP_010">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_reportes.SPCXP_010_Result">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Referencia" ColumnName="Referencia" />
+                <ScalarProperty Name="co_observacion" ColumnName="co_observacion" />
+                <ScalarProperty Name="Debito" ColumnName="Debito" />
+                <ScalarProperty Name="Credito" ColumnName="Credito" />
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+                <ScalarProperty Name="SaldoModulo" ColumnName="SaldoModulo" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

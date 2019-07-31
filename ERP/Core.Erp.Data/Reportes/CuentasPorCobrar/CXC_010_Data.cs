@@ -61,7 +61,6 @@ namespace Core.Erp.Data.Reportes.CuentasPorCobrar
                                  Saldo = q.Saldo,
                                  Total_Pagado = q.Total_Pagado,
                                  TelefonoContacto = q.TelefonoContacto,
-                                 IdContacto = q.IdContacto,
                                  NomContacto = q.NomContacto,
                                  Descripcion_tip_cliente = q.Descripcion_tip_cliente
                              }).ToList();

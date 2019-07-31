@@ -21,10 +21,7 @@ namespace Core.Erp.Data
             : base("name=Entities_reportes")
         {
         }
-        public void SetCommandTimeOut(int TimeOut)
-        {
-            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
-        }
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -420,35 +417,6 @@ namespace Core.Erp.Data
                 new ObjectParameter("IdMarcaFin", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPINV_004_Result>("SPINV_004", idEmpresaParameter, idSucursalIniParameter, idSucursalFinParameter, idBodegaIniParameter, idBodegaFinParameter, idProductoIniParameter, idProductoFinParameter, idMarcaIniParameter, idMarcaFinParameter);
-        }
-    
-        public virtual ObjectResult<SPCXP_010_Result> SPCXP_010(Nullable<int> idEmpresa, Nullable<decimal> idProveedorIni, Nullable<decimal> idProveedorFin, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, Nullable<bool> mostrarAnulados)
-        {
-            var idEmpresaParameter = idEmpresa.HasValue ?
-                new ObjectParameter("IdEmpresa", idEmpresa) :
-                new ObjectParameter("IdEmpresa", typeof(int));
-    
-            var idProveedorIniParameter = idProveedorIni.HasValue ?
-                new ObjectParameter("IdProveedorIni", idProveedorIni) :
-                new ObjectParameter("IdProveedorIni", typeof(decimal));
-    
-            var idProveedorFinParameter = idProveedorFin.HasValue ?
-                new ObjectParameter("IdProveedorFin", idProveedorFin) :
-                new ObjectParameter("IdProveedorFin", typeof(decimal));
-    
-            var fechaIniParameter = fechaIni.HasValue ?
-                new ObjectParameter("FechaIni", fechaIni) :
-                new ObjectParameter("FechaIni", typeof(System.DateTime));
-    
-            var fechaFinParameter = fechaFin.HasValue ?
-                new ObjectParameter("FechaFin", fechaFin) :
-                new ObjectParameter("FechaFin", typeof(System.DateTime));
-    
-            var mostrarAnuladosParameter = mostrarAnulados.HasValue ?
-                new ObjectParameter("MostrarAnulados", mostrarAnulados) :
-                new ObjectParameter("MostrarAnulados", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_010_Result>("SPCXP_010", idEmpresaParameter, idProveedorIniParameter, idProveedorFinParameter, fechaIniParameter, fechaFinParameter, mostrarAnuladosParameter);
         }
     
         public virtual ObjectResult<SPFAC_011_Result> SPFAC_011(Nullable<int> idEmpresa, Nullable<decimal> idClienteIni, Nullable<decimal> idClienteFin, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, Nullable<bool> mostrarAnulados)
@@ -1307,47 +1275,6 @@ namespace Core.Erp.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXC_009_Result>("SPCXC_009", idEmpresaParameter, idClienteParameter, fechaCorteParameter);
         }
     
-        public virtual ObjectResult<SPCXC_010_Result> SPCXC_010(Nullable<int> idEmpresa, Nullable<int> sucursalIni, Nullable<int> sucursalFin, Nullable<int> idClienteIni, Nullable<int> idClienteFin, Nullable<decimal> idTipoClienteIni, Nullable<decimal> idTipoClienteFin, Nullable<System.DateTime> fechaCorte, Nullable<bool> mostrarSoloCarteraVencida)
-        {
-            var idEmpresaParameter = idEmpresa.HasValue ?
-                new ObjectParameter("IdEmpresa", idEmpresa) :
-                new ObjectParameter("IdEmpresa", typeof(int));
-    
-            var sucursalIniParameter = sucursalIni.HasValue ?
-                new ObjectParameter("SucursalIni", sucursalIni) :
-                new ObjectParameter("SucursalIni", typeof(int));
-    
-            var sucursalFinParameter = sucursalFin.HasValue ?
-                new ObjectParameter("SucursalFin", sucursalFin) :
-                new ObjectParameter("SucursalFin", typeof(int));
-    
-            var idClienteIniParameter = idClienteIni.HasValue ?
-                new ObjectParameter("IdClienteIni", idClienteIni) :
-                new ObjectParameter("IdClienteIni", typeof(int));
-    
-            var idClienteFinParameter = idClienteFin.HasValue ?
-                new ObjectParameter("IdClienteFin", idClienteFin) :
-                new ObjectParameter("IdClienteFin", typeof(int));
-    
-            var idTipoClienteIniParameter = idTipoClienteIni.HasValue ?
-                new ObjectParameter("IdTipoClienteIni", idTipoClienteIni) :
-                new ObjectParameter("IdTipoClienteIni", typeof(decimal));
-    
-            var idTipoClienteFinParameter = idTipoClienteFin.HasValue ?
-                new ObjectParameter("IdTipoClienteFin", idTipoClienteFin) :
-                new ObjectParameter("IdTipoClienteFin", typeof(decimal));
-    
-            var fechaCorteParameter = fechaCorte.HasValue ?
-                new ObjectParameter("fechaCorte", fechaCorte) :
-                new ObjectParameter("fechaCorte", typeof(System.DateTime));
-    
-            var mostrarSoloCarteraVencidaParameter = mostrarSoloCarteraVencida.HasValue ?
-                new ObjectParameter("MostrarSoloCarteraVencida", mostrarSoloCarteraVencida) :
-                new ObjectParameter("MostrarSoloCarteraVencida", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXC_010_Result>("SPCXC_010", idEmpresaParameter, sucursalIniParameter, sucursalFinParameter, idClienteIniParameter, idClienteFinParameter, idTipoClienteIniParameter, idTipoClienteFinParameter, fechaCorteParameter, mostrarSoloCarteraVencidaParameter);
-        }
-    
         public virtual ObjectResult<SPCONTA_005_Result> SPCONTA_005(Nullable<int> idEmpresa, Nullable<int> idPunto_cargo_grupo, string idUsuario, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, Nullable<bool> mostrarSaldo0)
         {
             var idEmpresaParameter = idEmpresa.HasValue ?
@@ -1523,6 +1450,76 @@ namespace Core.Erp.Data
                 new ObjectParameter("IdUsuario", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPFAC_019_Result>("SPFAC_019", idEmpresaParameter, idClienteIniParameter, idClienteFinParameter, idVendedorIniParameter, idVendedorFinParameter, fechaCorteParameter, mostrarSoloVencidoParameter, mostrarSaldo0Parameter, idUsuarioParameter);
+        }
+    
+        public virtual ObjectResult<SPCXC_010_Result> SPCXC_010(Nullable<int> idEmpresa, Nullable<int> sucursalIni, Nullable<int> sucursalFin, Nullable<int> idClienteIni, Nullable<int> idClienteFin, Nullable<decimal> idTipoClienteIni, Nullable<decimal> idTipoClienteFin, Nullable<System.DateTime> fechaCorte, Nullable<bool> mostrarSoloCarteraVencida)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var sucursalIniParameter = sucursalIni.HasValue ?
+                new ObjectParameter("SucursalIni", sucursalIni) :
+                new ObjectParameter("SucursalIni", typeof(int));
+    
+            var sucursalFinParameter = sucursalFin.HasValue ?
+                new ObjectParameter("SucursalFin", sucursalFin) :
+                new ObjectParameter("SucursalFin", typeof(int));
+    
+            var idClienteIniParameter = idClienteIni.HasValue ?
+                new ObjectParameter("IdClienteIni", idClienteIni) :
+                new ObjectParameter("IdClienteIni", typeof(int));
+    
+            var idClienteFinParameter = idClienteFin.HasValue ?
+                new ObjectParameter("IdClienteFin", idClienteFin) :
+                new ObjectParameter("IdClienteFin", typeof(int));
+    
+            var idTipoClienteIniParameter = idTipoClienteIni.HasValue ?
+                new ObjectParameter("IdTipoClienteIni", idTipoClienteIni) :
+                new ObjectParameter("IdTipoClienteIni", typeof(decimal));
+    
+            var idTipoClienteFinParameter = idTipoClienteFin.HasValue ?
+                new ObjectParameter("IdTipoClienteFin", idTipoClienteFin) :
+                new ObjectParameter("IdTipoClienteFin", typeof(decimal));
+    
+            var fechaCorteParameter = fechaCorte.HasValue ?
+                new ObjectParameter("fechaCorte", fechaCorte) :
+                new ObjectParameter("fechaCorte", typeof(System.DateTime));
+    
+            var mostrarSoloCarteraVencidaParameter = mostrarSoloCarteraVencida.HasValue ?
+                new ObjectParameter("MostrarSoloCarteraVencida", mostrarSoloCarteraVencida) :
+                new ObjectParameter("MostrarSoloCarteraVencida", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXC_010_Result>("SPCXC_010", idEmpresaParameter, sucursalIniParameter, sucursalFinParameter, idClienteIniParameter, idClienteFinParameter, idTipoClienteIniParameter, idTipoClienteFinParameter, fechaCorteParameter, mostrarSoloCarteraVencidaParameter);
+        }
+    
+        public virtual ObjectResult<SPCXP_010_Result> SPCXP_010(Nullable<int> idEmpresa, Nullable<decimal> idProveedorIni, Nullable<decimal> idProveedorFin, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, Nullable<bool> mostrarAnulados)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idProveedorIniParameter = idProveedorIni.HasValue ?
+                new ObjectParameter("IdProveedorIni", idProveedorIni) :
+                new ObjectParameter("IdProveedorIni", typeof(decimal));
+    
+            var idProveedorFinParameter = idProveedorFin.HasValue ?
+                new ObjectParameter("IdProveedorFin", idProveedorFin) :
+                new ObjectParameter("IdProveedorFin", typeof(decimal));
+    
+            var fechaIniParameter = fechaIni.HasValue ?
+                new ObjectParameter("FechaIni", fechaIni) :
+                new ObjectParameter("FechaIni", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            var mostrarAnuladosParameter = mostrarAnulados.HasValue ?
+                new ObjectParameter("MostrarAnulados", mostrarAnulados) :
+                new ObjectParameter("MostrarAnulados", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_010_Result>("SPCXP_010", idEmpresaParameter, idProveedorIniParameter, idProveedorFinParameter, fechaIniParameter, fechaFinParameter, mostrarAnuladosParameter);
         }
     }
 }

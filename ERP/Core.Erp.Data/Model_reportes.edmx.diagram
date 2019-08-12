@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="Model_reportes.VWACTF_001" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWACTF_002" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWACTF_003" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_reportes.VWBAN_001_cancelaciones" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWBAN_002_cancelaciones" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWBAN_007" Width="1.5" PointX="10.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_reportes.VWCXC_001_diario" Width="1.5" PointX="2.75" PointY="12.75" IsExpanded="true" />
@@ -43,7 +42,6 @@
         <EntityTypeShape EntityType="Model_reportes.VWCXP_011" Width="1.5" PointX="9.375" PointY="21.75" />
         <EntityTypeShape EntityType="Model_reportes.VWBAN_005" Width="1.5" PointX="15.75" PointY="10.75" />
         <EntityTypeShape EntityType="Model_reportes.VWBAN_006" Width="1.5" PointX="0.75" PointY="35.75" />
-        <EntityTypeShape EntityType="Model_reportes.VWBAN_001" Width="1.5" PointX="5.375" PointY="10.75" />
         <EntityTypeShape EntityType="Model_reportes.VWBAN_002" Width="1.5" PointX="7.375" PointY="10.75" />
         <EntityTypeShape EntityType="Model_reportes.VWBAN_003" Width="1.5" PointX="33.375" PointY="34.75" />
         <EntityTypeShape EntityType="Model_reportes.VWCXP_004" Width="1.5" PointX="3.375" PointY="35.75" />
@@ -101,6 +99,8 @@
         <EntityTypeShape EntityType="Model_reportes.VWACTF_007" Width="1.5" PointX="17.375" PointY="15.75" />
         <EntityTypeShape EntityType="Model_reportes.VWACTF_008" Width="1.5" PointX="21.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_reportes.VWFAC_014" Width="1.5" PointX="27.375" PointY="6.75" />
+        <EntityTypeShape EntityType="Model_reportes.VWBAN_001" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="Model_reportes.VWBAN_001_cancelaciones" Width="1.5" PointX="2.75" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

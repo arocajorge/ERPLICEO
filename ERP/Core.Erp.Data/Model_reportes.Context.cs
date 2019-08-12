@@ -21,7 +21,10 @@ namespace Core.Erp.Data
             : base("name=Entities_reportes")
         {
         }
-    
+        public void SetCommandTimeOut(int TimeOut)
+        {
+            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -31,7 +34,6 @@ namespace Core.Erp.Data
         public DbSet<VWACTF_001> VWACTF_001 { get; set; }
         public DbSet<VWACTF_002> VWACTF_002 { get; set; }
         public DbSet<VWACTF_003> VWACTF_003 { get; set; }
-        public DbSet<VWBAN_001_cancelaciones> VWBAN_001_cancelaciones { get; set; }
         public DbSet<VWBAN_002_cancelaciones> VWBAN_002_cancelaciones { get; set; }
         public DbSet<VWBAN_007> VWBAN_007 { get; set; }
         public DbSet<VWCXC_001_diario> VWCXC_001_diario { get; set; }
@@ -65,7 +67,6 @@ namespace Core.Erp.Data
         public DbSet<VWCXP_011> VWCXP_011 { get; set; }
         public DbSet<VWBAN_005> VWBAN_005 { get; set; }
         public DbSet<VWBAN_006> VWBAN_006 { get; set; }
-        public DbSet<VWBAN_001> VWBAN_001 { get; set; }
         public DbSet<VWBAN_002> VWBAN_002 { get; set; }
         public DbSet<VWBAN_003> VWBAN_003 { get; set; }
         public DbSet<VWCXP_004> VWCXP_004 { get; set; }
@@ -123,6 +124,8 @@ namespace Core.Erp.Data
         public DbSet<VWACTF_007> VWACTF_007 { get; set; }
         public DbSet<VWACTF_008> VWACTF_008 { get; set; }
         public DbSet<VWFAC_014> VWFAC_014 { get; set; }
+        public DbSet<VWBAN_001> VWBAN_001 { get; set; }
+        public DbSet<VWBAN_001_cancelaciones> VWBAN_001_cancelaciones { get; set; }
     
         public virtual ObjectResult<SPACTF_004_detalle_Result> SPACTF_004_detalle(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_corte, string idUsuario, Nullable<int> idActivoFijoTipo_ini, Nullable<int> idActivoFijoTipo_fin, Nullable<int> idCategoria_ini, Nullable<int> idCategoria_fin, string estado_Proceso)
         {

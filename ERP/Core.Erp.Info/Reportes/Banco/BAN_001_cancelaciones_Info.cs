@@ -20,5 +20,6 @@ namespace Core.Erp.Info.Reportes.Banco
         public int IdEmpresa_pago { get; set; }
         public int IdTipoCbte_pago { get; set; }
         public decimal IdCbteCble_pago { get; set; }
+        public string pe_nombreCompleto { get; set; }
     }
 }

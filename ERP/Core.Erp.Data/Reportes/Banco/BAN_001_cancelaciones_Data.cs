@@ -33,7 +33,8 @@ namespace Core.Erp.Data.Reportes.Banco
                                  IdCbteCble_cxp = q.IdCbteCble_cxp,
                                  Referencia = q.Referencia,
                                  Observacion = q.Observacion,
-                                 MontoAplicado = q.MontoAplicado
+                                 MontoAplicado = q.MontoAplicado,
+                                 pe_nombreCompleto = q.pe_nombreCompleto
                              }).ToList();
                 }
                 return Lista;

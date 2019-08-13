@@ -259,6 +259,25 @@ namespace Core.Erp.Bus.RRHH
                 {
                     foreach (var Suc in lstSucursal)
                     {
+                        if (item.IdDivision == 1 && item.IdArea == 1 &&
+                            item.IdDepartamento == 23 &&
+                            (item.IdRubro == "14"
+                            || item.IdRubro == "19"
+                            || item.IdRubro == "30"
+                            || item.IdRubro == "36"
+                            || item.IdRubro == "70"))
+                        {
+
+                        }
+                        if (item.IdDivision == 1 && item.IdArea == 2 &&
+                            item.IdDepartamento == 10 &&
+                            (item.IdRubro == "14"
+                            || item.IdRubro == "19"
+                            || item.IdRubro == "30"
+                            || item.IdRubro == "70"))
+                        {
+
+                        }
                         double valorTotal = 0;
                         valorTotal = oListro_rol_detalle_Info.Where(v => v.IdDivision == Convert.ToInt32(item.IdDivision)
                                                                     && v.IdArea == item.IdArea

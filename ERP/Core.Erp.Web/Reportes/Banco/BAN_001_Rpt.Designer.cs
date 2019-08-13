@@ -529,7 +529,7 @@
             this.xrTableCell14.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
             this.xrTableCell14.Name = "xrTableCell14";
             this.xrTableCell14.StylePriority.UseFont = false;
-            this.xrTableCell14.Text = "Aprobado por";
+            this.xrTableCell14.Text = "Revisado por";
             this.xrTableCell14.Weight = 1D;
             // 
             // xrTable9
@@ -558,7 +558,7 @@
             this.xrTableCell15.Font = new System.Drawing.Font("Verdana", 8F, System.Drawing.FontStyle.Bold);
             this.xrTableCell15.Name = "xrTableCell15";
             this.xrTableCell15.StylePriority.UseFont = false;
-            this.xrTableCell15.Text = "Recibido por";
+            this.xrTableCell15.Text = "Aprobado por";
             this.xrTableCell15.Weight = 1D;
             // 
             // xrTable5

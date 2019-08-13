@@ -70,7 +70,7 @@
         settings.Columns.Add(column =>
         {
             column.EditFormSettings.Visible = DefaultBoolean.False;
-            column.Width = Unit.Percentage(30);
+            column.Width = Unit.Percentage(20);
             column.FieldName = "Referencia";
             column.Caption = "Referencia";
         });
@@ -83,6 +83,14 @@
             column.FieldName = "Valor";
             column.Caption = "Valor";
             column.PropertiesEdit.DisplayFormatString = "{0:N2}";
+        });
+        settings.Columns.Add(column =>
+        {
+            column.SetDataItemTemplateContent(c =>
+            {
+                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("CXP_004", "CuentasPorPagarReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdOrdenPago = DataBinder.Eval(c.DataItem, "IdOrdenPago").ToString() }, Request.Url.Scheme) + "');\"></span>");
+            });
+            column.Width = Unit.Percentage(5);
         });
         settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val(); }";
         settings.ClientSideEvents.EndCallback = "function(s,e){ GetValor(); }";

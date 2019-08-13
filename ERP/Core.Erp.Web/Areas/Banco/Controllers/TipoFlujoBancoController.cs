@@ -248,13 +248,10 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         public void AddRow(ba_Cbte_Ban_x_ba_TipoFlujo_Info info_det, decimal IdTransaccionSession)
         {
             List<ba_Cbte_Ban_x_ba_TipoFlujo_Info> list = get_list(IdTransaccionSession);
-
-            if (list.Where(q => q.IdTipoFlujo == info_det.IdTipoFlujo).Count() == 0)
-            {
+            
                 info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
                 list.Add(info_det);
-            }
-
+            
             //info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
             //info_det.IdTipocbte = info_det.IdTipocbte;
             //info_det.IdCbteCble = info_det.IdCbteCble;

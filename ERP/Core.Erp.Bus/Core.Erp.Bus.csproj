@@ -297,6 +297,7 @@
     <Compile Include="Reportes\Banco\BAN_010_Bus.cs" />
     <Compile Include="Reportes\Banco\BAN_011_Bus.cs" />
     <Compile Include="Reportes\Banco\BAN_012_Bus.cs" />
+    <Compile Include="Reportes\Banco\BAN_013_Bus.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_Bus.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_ingresos_Bus.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_ValesNoConciliados_Bus.cs" />

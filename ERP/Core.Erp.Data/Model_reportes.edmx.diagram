@@ -101,6 +101,7 @@
         <EntityTypeShape EntityType="Model_reportes.VWFAC_014" Width="1.5" PointX="27.375" PointY="6.75" />
         <EntityTypeShape EntityType="Model_reportes.VWBAN_001" Width="1.5" PointX="0.75" PointY="6.75" />
         <EntityTypeShape EntityType="Model_reportes.VWBAN_001_cancelaciones" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="Model_reportes.VWBAN_013" Width="1.5" PointX="33.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

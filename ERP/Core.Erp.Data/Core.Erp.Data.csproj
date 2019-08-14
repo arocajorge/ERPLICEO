@@ -1297,6 +1297,7 @@
     <Compile Include="Reportes\Banco\BAN_010_Data.cs" />
     <Compile Include="Reportes\Banco\BAN_011_Data.cs" />
     <Compile Include="Reportes\Banco\BAN_012_Data.cs" />
+    <Compile Include="Reportes\Banco\BAN_013_Data.cs" />
     <Compile Include="Reportes\Caja\CAJ_001_Data.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_Data.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_ingresos_Data.cs" />
@@ -2041,6 +2042,9 @@
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="VWBAN_010.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWBAN_013.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="vwba_Archivo_Transferencia_Det.cs">

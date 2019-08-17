@@ -101,7 +101,14 @@
 
             });
         });
-
+        settings.Columns.Add(column =>
+        {
+            column.SetDataItemTemplateContent(c =>
+            {
+                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-download-alt\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("get_archivo","ArchivoBancario",new { Area = "Banco", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa"), IdArchivo = DataBinder.Eval(c.DataItem, "IdArchivo") }, Request.Url.Scheme) + "');\"></span>");
+            });
+            column.Width = Unit.Percentage(5);
+        });
         settings.Columns.Add(column =>
         {
             column.SetDataItemTemplateContent(c =>

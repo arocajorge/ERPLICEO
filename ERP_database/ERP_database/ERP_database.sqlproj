@@ -1162,6 +1162,7 @@
     <Build Include="dbo\Views\vwct_anio_fiscal_x_tb_sucursal.sql" />
     <Build Include="dbo\Tables\ro_rol_detalle_x_jornada.sql" />
     <Build Include="web\Views\VWBAN_013.sql" />
+    <Build Include="dbo\Views\XXXCONCILIACIONVALESDUPLICADOS.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

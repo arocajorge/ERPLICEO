@@ -43,11 +43,11 @@ BEGIN --GENERAR IN_MOVI_INVE
 PRINT 'GENERAR IN_MOVI_INVE'
 INSERT INTO [dbo].[in_movi_inve]           
 ([IdEmpresa]				,[IdSucursal]           ,[IdBodega]							,[IdMovi_inven_tipo]				,[IdNumMovi]
-,[CodMoviInven]				,[cm_tipo]              ,[cm_observacion]					,[cm_fecha]							,[Fecha_Transac]			
+,[CodMoviInven]				,[cm_tipo]              ,[cm_observacion]					,[cm_fecha]										
 ,[Estado]					,[IdMotivo_Inv])
 SELECT        
 det.IdEmpresa				,det.IdSucursal			,det.IdBodega			,det.IdMovi_inven_tipo				,@IdNumMovi_apro
-,cab.CodMoviInven			,cab.signo				,cab.cm_observacion		,cab.cm_fecha						,GETDATE()
+,cab.CodMoviInven			,cab.signo				,cab.cm_observacion		,cab.cm_fecha						
 ,'A'						,cab.IdMotivo_Inv
 FROM            in_Ing_Egr_Inven AS cab INNER JOIN in_Ing_Egr_Inven_det AS det 
 				ON cab.IdEmpresa = det.IdEmpresa AND cab.IdSucursal = det.IdSucursal 
@@ -137,18 +137,24 @@ IF(@signo = '+')
 				,[Secuencia]           ,[fecha]                ,[costo]              ,[Stock_a_la_fecha]          ,[Observacion]
 				,[fecha_trans])
 
-			SELECT D.IdEmpresa, D.IdSucursal, D.IdBodega, D.IdProducto,
+			select d.IdEmpresa, d.IdSucursal, d.IdBodega, d.IdProducto, 
 			CAST(CAST(YEAR(C.cm_fecha)  AS VARCHAR(4))+RIGHT('00'+ CAST(MONTH(C.cm_fecha) AS VARCHAR(2)),2)+RIGHT('00'+ CAST(DAY(C.cm_fecha) AS VARCHAR(2)),2)AS INT),
-			ROW_NUMBER() OVER(ORDER BY D.IdEmpresa) + ISNULL(SEC.SECUENCIA + 1,1), C.cm_fecha, D.mv_costo,0,'',GETDATE()
-			FROM in_Ing_Egr_Inven_det AS D INNER JOIN in_Ing_Egr_Inven AS C
-			ON C.IdEmpresa = D.IdEmpresa AND C.IdSucursal = D.IdSucursal AND C.IdMovi_inven_tipo = D.IdMovi_inven_tipo AND C.IdNumMovi = D.IdNumMovi
-			LEFT JOIN (
+			ROW_NUMBER() OVER(ORDER BY D.IdEmpresa) + ISNULL(SEC.SECUENCIA + 1,1), C.cm_fecha, s.CostoTotal/case when s.CantidadTotal = 0 then 1 else s.CantidadTotal end CostoPromedio,s.CantidadTotal,'',GETDATE()
+			from in_movi_inve_detalle as d inner join 
+			in_movi_inve as c on c.IdEmpresa = d.IdEmpresa and c.IdSucursal  = d.IdSucursal and c.IdBodega = d.IdBodega and c.IdMovi_inven_tipo = d.IdMovi_inven_tipo and c.IdNumMovi = d.IdNumMovi inner join
+			in_Ing_Egr_Inven_det as dm on d.IdEmpresa = dm.IdEmpresa_inv and d.IdSucursal = dm.IdSucursal_inv and d.IdBodega = dm.IdBodega_inv and d.IdMovi_inven_tipo = dm.IdMovi_inven_tipo_inv and d.IdNumMovi = dm.IdNumMovi_inv and d.Secuencia = dm.secuencia_inv
+			left join(
+			select md.IdEmpresa, md.IdSucursal, md.IdBodega, md.IdProducto, ABS(sum(md.dm_cantidad)) CantidadTotal, ABS(sum(md.dm_cantidad * md.mv_costo)) CostoTotal
+			from in_movi_inve_detalle as md
+			group by md.IdEmpresa, md.IdSucursal, md.IdBodega, md.IdProducto
+			) AS S on d.IdEmpresa = s.IdEmpresa and d.IdSucursal = s.IdSucursal and d.IdBodega = s.IdBodega and d.IdProducto = s.IdProducto LEFT JOIN (
 			SELECT F.IdEmpresa, F.IdSucursal, F.IdBodega, F.IdProducto, F.IdFecha, MAX(F.Secuencia)Secuencia
 			FROM in_producto_x_tb_bodega_Costo_Historico AS F
 			WHERE F.IdEmpresa = @IdEmpresa AND F.IdSucursal = @IdSucursal AND F.IdBodega = @IdBodega AND IdFecha = CAST(CAST(YEAR(@Fecha)  AS VARCHAR(4))+RIGHT('00'+ CAST(MONTH(@Fecha) AS VARCHAR(2)),2)+RIGHT('00'+ CAST(DAY(@Fecha) AS VARCHAR(2)),2)AS INT)
 			GROUP BY F.IdEmpresa, F.IdSucursal, F.IdBodega, F.IdProducto, F.IdFecha
 			) SEC ON D.IdEmpresa = SEC.IdEmpresa AND D.IdSucursal = SEC.IdSucursal AND D.IdBodega = SEC.IdBodega AND D.IdProducto = SEC.IdProducto
-			WHERE D.IdEmpresa = @IdEmpresa and D.IdSucursal = @IdSucursal AND D.IdMovi_inven_tipo = @IdMovi_inven_tipo AND D.IdNumMovi = @IdNumMovi
+			WHERE dm.IdEmpresa = @IdEmpresa and dm.IdSucursal = @IdSucursal AND dm.IdMovi_inven_tipo = @IdMovi_inven_tipo AND dm.IdNumMovi = @IdNumMovi
+			group by d.IdEmpresa, d.IdSucursal, d.IdBodega, d.IdProducto, C.cm_fecha,s.CantidadTotal, s.CostoTotal, sec.Secuencia
 	END
 END
 

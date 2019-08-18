@@ -1,4 +1,4 @@
-﻿--EXEC [web].[SPBAN_009] 2,1,'2019/01/31'
+﻿--  EXEC [web].[SPBAN_009] 2,1,'2019/07/28'
 CREATE PROCEDURE [web].[SPBAN_009]
 (
 @IdEmpresa int,

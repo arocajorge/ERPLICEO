@@ -451,9 +451,10 @@ namespace Core.Erp.Bus.RRHH
             try
             {
                 ct_cbtecble_Info info_diario=new ct_cbtecble_Info();
-
+              
                 info_diario.lst_ct_cbtecble_det = (from q in info.lst_sueldo_x_pagar
                                                    where q.IdSucursal == IdSucursal
+                                                   && q.dc_Valor > 0
                                                    group q by new
                                                    {
                                                        q.IdCtaCble
@@ -461,8 +462,22 @@ namespace Core.Erp.Bus.RRHH
                                                    select new ct_cbtecble_det_Info
                                                    {
                                                        IdCtaCble = g.Key.IdCtaCble,
-                                                       dc_Valor = g.Sum(q=> q.dc_Valor)
+                                                       dc_Valor = g.Sum(q => q.dc_Valor)
                                                    }).ToList();
+
+                info_diario.lst_ct_cbtecble_det.AddRange((from q in info.lst_sueldo_x_pagar
+                                                   where q.IdSucursal == IdSucursal
+                                                   && q.dc_Valor < 0
+                                                   group q by new
+                                                   {
+                                                       q.IdCtaCble
+                                                   } into g
+                                                   select new ct_cbtecble_det_Info
+                                                   {
+                                                       IdCtaCble = g.Key.IdCtaCble,
+                                                       dc_Valor = g.Sum(q => q.dc_Valor)
+                                                   }).ToList());
+                info_diario.lst_ct_cbtecble_det.ForEach(q => q.dc_Valor = Math.Round(q.dc_Valor, 2, MidpointRounding.AwayFromZero));
                 info_diario.lst_ct_cbtecble_det = info_diario.lst_ct_cbtecble_det.Where(q => q.dc_Valor != 0).ToList();
                 info_diario.lst_ct_cbtecble_det.ForEach(q => q.dc_Valor = Math.Round(q.dc_Valor, 2, MidpointRounding.AwayFromZero));
                 //info_diario.lst_ct_cbtecble_det = info.lst_sueldo_x_pagar;
@@ -476,8 +491,8 @@ namespace Core.Erp.Bus.RRHH
                 info_diario.IdUsuario = info.UsuarioIngresa;
                 info_diario.cb_FechaTransac = DateTime.Now;
                 info_diario.cb_Estado = "A";
-
-                if (Math.Round(info_diario.lst_ct_cbtecble_det.Sum(q=>q.dc_Valor),2,MidpointRounding.AwayFromZero) != 0)
+                double Descuadre = Math.Round(info_diario.lst_ct_cbtecble_det.Sum(q => q.dc_Valor), 2, MidpointRounding.AwayFromZero);
+                if (Descuadre != 0)
                     return null;
                 
                 return info_diario;
@@ -496,6 +511,7 @@ namespace Core.Erp.Bus.RRHH
                 ct_cbtecble_Info info_diario = new ct_cbtecble_Info();
                 info_diario.lst_ct_cbtecble_det = (from q in info.lst_provisiones
                                                    where q.IdSucursal == IdSucursal
+                                                   && q.dc_Valor > 0
                                                    group q by new
                                                    {
                                                        q.IdCtaCble
@@ -505,6 +521,18 @@ namespace Core.Erp.Bus.RRHH
                                                        IdCtaCble = g.Key.IdCtaCble,
                                                        dc_Valor = g.Sum(q => q.dc_Valor)
                                                    }).ToList();
+                info_diario.lst_ct_cbtecble_det.AddRange((from q in info.lst_provisiones
+                                                   where q.IdSucursal == IdSucursal
+                                                   && q.dc_Valor < 0
+                                                   group q by new
+                                                   {
+                                                       q.IdCtaCble
+                                                   } into g
+                                                   select new ct_cbtecble_det_Info
+                                                   {
+                                                       IdCtaCble = g.Key.IdCtaCble,
+                                                       dc_Valor = g.Sum(q => q.dc_Valor)
+                                                   }).ToList());
 
                 info_diario.lst_ct_cbtecble_det = info_diario.lst_ct_cbtecble_det.Where(q => q.dc_Valor != 0).ToList();
                 info_diario.lst_ct_cbtecble_det.ForEach(q => q.dc_Valor = Math.Round(q.dc_Valor, 2, MidpointRounding.AwayFromZero));

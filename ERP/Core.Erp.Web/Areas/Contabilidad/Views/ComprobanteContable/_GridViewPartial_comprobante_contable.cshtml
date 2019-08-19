@@ -79,9 +79,11 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = Unit.Pixel(150);
         });
-        settings.Columns.Add("Su_Descripcion", "Sucursal").Width = Unit.Percentage(20); 
+        settings.Columns.Add("Su_Descripcion", "Sucursal").Width = Unit.Percentage(10); 
         settings.Columns.Add("tc_TipoCbte", "Tipo").Width = Unit.Percentage(20);
         settings.Columns.Add("IdCbteCble", "ID").Width = Unit.Percentage(10);
+        settings.Columns.Add("cb_Valor", "Valor").Width = Unit.Percentage(10);
+        
         settings.Columns.Add(column =>
         {
             column.FieldName = "cb_Fecha";

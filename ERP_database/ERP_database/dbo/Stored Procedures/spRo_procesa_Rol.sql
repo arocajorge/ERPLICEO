@@ -1,6 +1,7 @@
 ﻿
 
-CREATE PROCEDURE [dbo].[spRo_procesa_Rol] (
+
+ALTER PROCEDURE [dbo].[spRo_procesa_Rol] (
 @IdEmpresa int,
 @IdNomina numeric,
 @IdNominaTipo numeric,
@@ -882,6 +883,15 @@ and emp.IdSucursal = @IdSucursalFin
 
 
 
+
+
+
+
+
+
+
+
+
 ----------------------------------------------------------------------------------------------------------------------------------------------
 -------------IESS POR JORNADA----------------------------------------------------------------------------------------------------------------<
 ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -954,6 +964,15 @@ and emp.IdSucursal = @IdSucursalFin
 and emp.Pago_por_horas=1
 AND rub.ru_tipo='I'
 and rub.rub_aplica_IESS=1
+
+
+and NOT  exists(select acum.IdEmpleado from ro_empleado_x_rubro_acumulado acum 
+where acum.IdEmpresa= @IdEmpresa
+and acum.IdEmpresa=emp.IdEmpresa
+and acum.IdEmpleado=emp.IdEmpleado
+and acum.IdRubro=@IdRubro_Provision)
+
+
 group by novc.IdEmpresa,novc.IdEmpleado, emp.IdSucursal, novc.IdJornada
 )DIII
 
@@ -1098,6 +1117,197 @@ and emp.IdSucursal = @IdSucursalFin
 and ISNULL( emp.em_fechaSalida, @Fi) between @Fi and @Ff
 group by emp.IdEmpresa,emp.IdEmpleado, emp.em_fechaSalida, cont.FechaInicio, cont.FechaFin, emp.em_status, emp.IdSucursal, emp.em_status, emp.em_fechaSalida, emp.em_fechaIngaRol, emp.Pago_por_horas
 
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+-------------PROVISION DECIMO TERCERO POR JORNADA-----------------------------------------------------------------------------------------------------<
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+select @IdRubro_calculado= IdRubro_prov_DIII, @IdRubro_Provision=IdRubro_DIII from ro_rubros_calculados where IdEmpresa=@IdEmpresa-- obteniendo el idrubro desde parametros
+insert into ro_rol_detalle_x_jornada
+(IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro,IdJornada,			Orden,			Valor
+,rub_visible_reporte,	Observacion)
+
+
+SELECT IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro,IdJornada ,			Orden,			sum(Valor)Valor
+,rub_visible_reporte,	Observacion FROM (
+select 
+@IdEmpresa	IdEmpresa			,@IdRol	IdRol			,emp.IdSucursal							,novc.IdEmpleado		,@IdRubro_calculado IdRubro, ISNULL( novc.IdJornada,1)IdJornada		,0 Orden,   sum(nov.Valor)/12 Valor
+,1	rub_visible_reporte					,'PROVISION DECIMO TERCER SUELDO' Observacion		
+FROM   dbo.ro_empleado AS emp INNER JOIN
+dbo.ro_empleado_Novedad AS novc ON emp.IdEmpresa = novc.IdEmpresa AND emp.IdEmpleado = novc.IdEmpleado INNER JOIN
+dbo.ro_empleado_novedad_det AS nov ON novc.IdEmpresa = nov.IdEmpresa AND novc.IdNovedad = nov.IdNovedad AND novc.IdEmpleado = novc.IdEmpleado INNER JOIN
+dbo.ro_rubro_tipo AS rub ON nov.IdEmpresa = rub.IdEmpresa AND nov.IdRubro = rub.IdRubro
+and nov.IdEmpresa=@IdEmpresa
+and emp.IdEmpresa=@IdEmpresa
+and novc.IdNomina_tipo=@IdNomina
+and novc.IdNomina_TipoLiqui=@IdNominaTipo
+and nov.FechaPago between @Fi and @Ff
+and novc.Estado='A'
+and nov.EstadoCobro='PEN'
+and (emp.em_status<>'EST_LIQ')
+and CAST( emp.em_fechaIngaRol as date)<=@Ff
+and ISNULL( emp.em_fechaSalida, @Fi) between @Fi and @Ff
+and emp.IdSucursal = @IdSucursalFin
+and emp.Pago_por_horas=1
+AND rub.ru_tipo='I'
+and rub.rub_aplica_IESS=1
+
+and   exists(select acum.IdEmpleado from ro_empleado_x_rubro_acumulado acum 
+where acum.IdEmpresa= @IdEmpresa
+and acum.IdEmpresa=emp.IdEmpresa
+and acum.IdEmpleado=emp.IdEmpleado
+and acum.IdRubro=@IdRubro_Provision)
+
+group by novc.IdEmpresa,novc.IdEmpleado, emp.IdSucursal, novc.IdJornada
+)DIII
+
+GROUP BY DIII.IdEmpresa,DIII.IdEmpleado,DIII.IdSucursal,DIII.IdJornada,DIII.IdRol,DIII.Observacion,DIII.rub_visible_reporte,DIII.rub_visible_reporte, DIII.IdRubro,DIII.Orden
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+-------------PROVISION FONDO DE RESERVA POR JORNADA----------------------------------------------------------------------------------------------------<
+----------------------------------------------------------------------------------------------------------------------------------------------
+select @IdRubro_calculado= IdRubro_prov_FR,@IdRubro_Provision=IdRubro_fondo_reserva from ro_rubros_calculados where IdEmpresa=@IdEmpresa-- obteniendo el idrubro desde parametros
+insert into ro_rol_detalle_x_jornada
+(IdEmpresa,				IdRol,			IdSucursal,			IdEmpleado,			IdRubro,IdJornada,			Orden,			Valor
+,rub_visible_reporte,	Observacion)
+
+
+select IdEmpresa,				IdRol,			IdSucursal,			IdEmpleado,			IdRubro,IdJornada,			Orden,			sum(Valor)Valor
+,rub_visible_reporte,	Observacion from
+(
+select
+@IdEmpresa	IdEmpresa			,@IdRol	IdRol		,emp.IdSucursal		,novc.IdEmpleado		,@IdRubro_calculado IdRubro,ISNULL( novc.IdJornada,1)IdJornada	,20 Orden			,
+--CASE WHEN emp.Pago_por_horas = 1 then 
+ISNULL( round( (sum(nov.Valor) /30) * dbo.calcular_dias_fondos_reserva(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, ISNULL(EMP.em_fechaSalida,DATEADD(YEAR,50,GETDATE())), cont.FechaAcumulacion)*0.0833 ,2),0)Valor
+--else ISNULL(round( sum(rol_det.Valor)*0.0833 ,2),0) end
+
+
+,1	rub_visible_reporte					,'Provision Fondos de reserva' Observacion	
+FROM            dbo.ro_empleado AS emp INNER JOIN
+                         dbo.ro_empleado_Novedad AS novc ON emp.IdEmpresa = novc.IdEmpresa AND emp.IdEmpleado = novc.IdEmpleado INNER JOIN
+                         dbo.ro_empleado_novedad_det AS nov ON novc.IdEmpresa = nov.IdEmpresa AND novc.IdNovedad = nov.IdNovedad INNER JOIN
+                         dbo.ro_rubro_tipo AS rub ON nov.IdEmpresa = rub.IdEmpresa AND nov.IdRubro = rub.IdRubro
+						 
+						  left join
+						 (
+						 
+select con.IdEmpresa,con.IdEmpleado, case when  sum(Dias) is null then dateadd(year,1,CON.FechaInicio) else DATEADD(DAY,(365 - case when isnull(sum(Dias),0) > 365 then isnull(sum(Dias),0) else isnull(sum(Dias),0) end), CON.FechaInicio ) end FechaAcumulacion
+from ro_contrato as con left join (
+SELECT IdEmpresa, IdEmpleado, DATEDIFF(DAY,FechaInicio,FechaFin)+1 Dias FROM ro_contrato C WHERE C.EstadoContrato = 'ECT_LIQ' ) a 
+on con.IdEmpresa = a.IdEmpresa and con.IdEmpleado = a.IdEmpleado 
+WHERE con.EstadoContrato<>'ECT_LIQ' --and con.IdEmpresa = 5 and con.IdEmpleado = 31
+group by con.IdEmpresa,con.IdEmpleado, con.FechaInicio
+)
+
+as cont on emp.IdEmpresa = cont.IdEmpresa and emp.IdEmpleado = cont.IdEmpleado
+
+
+and nov.IdEmpresa=@IdEmpresa
+and emp.IdEmpresa=@IdEmpresa
+and novc.IdNomina_tipo=@IdNomina
+and novc.IdNomina_TipoLiqui=@IdNominaTipo
+and nov.FechaPago between @Fi and @Ff
+and novc.Estado='A'
+and nov.EstadoCobro='PEN'
+and (emp.em_status<>'EST_LIQ')
+and CAST( emp.em_fechaIngaRol as date)<=@Ff
+and ISNULL( emp.em_fechaSalida, @Fi) between @Fi and @Ff
+and emp.IdSucursal = @IdSucursalFin
+and emp.Pago_por_horas=1
+AND rub.ru_tipo='I'
+and rub.rub_aplica_IESS=1
+and rub.ru_tipo='I' and rub.rub_aplica_IESS=1
+AND CONT.FechaAcumulacion <= @FF
+and   exists(select acum.IdEmpleado from ro_empleado_x_rubro_acumulado acum 
+where acum.IdEmpresa= @IdEmpresa
+and acum.IdEmpresa=emp.IdEmpresa
+and acum.IdEmpleado=emp.IdEmpleado
+and acum.IdRubro=@IdRubro_Provision)
+and CAST( emp.em_fechaIngaRol as date)<=@Ff
+and emp.IdSucursal = @IdSucursalFin
+group by novc.IdEmpresa,novc.IdEmpleado,novc.IdNomina_Tipo,novc.IdNomina_TipoLiqui, emp.IdSucursal, emp.em_fechaIngaRol, emp.em_fechaSalida, emp.em_status,emp.Pago_por_horas,cont.FechaAcumulacion
+,novc.IdJornada
+) fr where fr.Valor>0 
+group by fr.IdEmpleado, fr.IdJornada,fr.Observacion,fr.IdRol, fr.IdRubro, fr.rub_visible_reporte, fr.Orden, fr.IdEmpresa, fr.IdSucursal
+
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+------------- PROVISION DECIMO CUARTO POR JORNADA UNO-----------------------------------------------------------------------------------------------------<
+----------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------
+select @IdRubro_calculado= IdRubro_prov_DIV, @IdRubro_Provision=IdRubro_DIV from ro_rubros_calculados where IdEmpresa=@IdEmpresa-- obteniendo el idrubro desde parametros
+insert into ro_rol_detalle_x_jornada
+(IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro, IdJornada,			Orden,			Valor
+,rub_visible_reporte,	Observacion)
+select
+@IdEmpresa				,@IdRol				,emp.IdSucursal						,emp.IdEmpleado		,@IdRubro_calculado,1	,'51'			,ROUND((@SueldoBasico/360)* 
+dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida),2) *0.5
+,1						,'Provision Decimo cuarto sueldo'	
+FROM  dbo.ro_empleado emp, ro_contrato cont
+where emp.IdEmpresa=cont.IdEmpresa
+and emp.IdEmpleado=cont.IdEmpleado
+and cont.EstadoContrato<>'ECT_LIQ'
+and (emp.em_status<>'EST_LIQ')
+AND cont.IdNomina=@IdNomina
+and emp.IdEmpleado  in(select acum.IdEmpleado from ro_empleado_x_rubro_acumulado acum 
+where acum.IdEmpresa= emp.IdEmpresa
+and acum.IdEmpresa=emp.IdEmpresa
+and acum.IdEmpleado=emp.IdEmpleado
+and acum.IdRubro=@IdRubro_Provision
+and acum.IdEmpresa=@IdEmpresa
+and emp.IdEmpresa=@IdEmpresa)
+AND emp.IdEmpresa=@IdEmpresa
+and CAST( emp.em_fechaIngaRol as date)<=@Ff
+and emp.IdSucursal = @IdSucursalFin
+and ISNULL( emp.em_fechaSalida, @Fi) between @Fi and @Ff
+group by emp.IdEmpresa,emp.IdEmpleado, emp.em_fechaSalida, cont.FechaInicio, cont.FechaFin, emp.em_status, emp.IdSucursal, emp.em_status, emp.em_fechaSalida, emp.em_fechaIngaRol, emp.Pago_por_horas
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+------------- PROVISION DECIMO CUARTO POR JORNADA DOS-----------------------------------------------------------------------------------------------------<
+----------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------
+select @IdRubro_calculado= IdRubro_prov_DIV, @IdRubro_Provision=IdRubro_DIV from ro_rubros_calculados where IdEmpresa=@IdEmpresa-- obteniendo el idrubro desde parametros
+insert into ro_rol_detalle_x_jornada
+(IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro, IdJornada,			Orden,			Valor
+,rub_visible_reporte,	Observacion)
+select
+@IdEmpresa				,@IdRol				,emp.IdSucursal						,emp.IdEmpleado		,@IdRubro_calculado,2	,'51'			,ROUND((@SueldoBasico/360)* 
+dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida),2) *0.5
+,1						,'Provision Decimo cuarto sueldo'	
+FROM  dbo.ro_empleado emp, ro_contrato cont
+where emp.IdEmpresa=cont.IdEmpresa
+and emp.IdEmpleado=cont.IdEmpleado
+and cont.EstadoContrato<>'ECT_LIQ'
+and (emp.em_status<>'EST_LIQ')
+AND cont.IdNomina=@IdNomina
+and emp.IdEmpleado  in(select acum.IdEmpleado from ro_empleado_x_rubro_acumulado acum 
+where acum.IdEmpresa= emp.IdEmpresa
+and acum.IdEmpresa=emp.IdEmpresa
+and acum.IdEmpleado=emp.IdEmpleado
+and acum.IdRubro=@IdRubro_Provision
+and acum.IdEmpresa=@IdEmpresa
+and emp.IdEmpresa=@IdEmpresa)
+AND emp.IdEmpresa=@IdEmpresa
+and CAST( emp.em_fechaIngaRol as date)<=@Ff
+and emp.IdSucursal = @IdSucursalFin
+and ISNULL( emp.em_fechaSalida, @Fi) between @Fi and @Ff
+group by emp.IdEmpresa,emp.IdEmpleado, emp.em_fechaSalida, cont.FechaInicio, cont.FechaFin, emp.em_status, emp.IdSucursal, emp.em_status, emp.em_fechaSalida, emp.em_fechaIngaRol, emp.Pago_por_horas
 
 
 END

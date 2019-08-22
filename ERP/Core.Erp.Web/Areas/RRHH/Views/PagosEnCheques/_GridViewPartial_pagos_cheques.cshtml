@@ -2,7 +2,7 @@
 @{
                 var grid = Html.DevExpress().GridView(settings => {
                     settings.Name = "GridViewPartial_pagos_cheques_det";
-                    settings.CallbackRouteValues = new { Controller = "PagosEnCheques", Action = "GridViewPartial_pagos_cheques_det",  Fecha_ini = ViewBag.fecha_ini, Fecha_fin = ViewBag.fecha_fin, IdSucursal = ViewBag.IdSucursal };
+                    settings.CallbackRouteValues = new { Controller = "PagosEnCheques", Action = "GridViewPartial_pagos_cheques",  Fecha_ini = ViewBag.fecha_ini, Fecha_fin = ViewBag.fecha_fin, IdSucursal = ViewBag.IdSucursal };
 
                     settings.Width = Unit.Percentage(100);
                     settings.KeyFieldName = "IdTransaccion";

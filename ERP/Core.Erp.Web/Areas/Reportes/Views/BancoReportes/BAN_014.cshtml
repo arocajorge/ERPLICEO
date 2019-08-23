@@ -1,17 +1,17 @@
-﻿
-@model Core.Erp.Info.Helps.cl_filtros_activo_Info
+﻿@model Core.Erp.Info.Helps.cl_filtros_banco_Info
 @{
     Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
-    ViewBag.Title = "ACTF_005";
+    ViewBag.Title = "BAN_014";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");
     }
 }
-@using (Html.BeginForm("ACTF_005", "ActivofijoReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("BAN_014", "BancoReportes", FormMethod.Post, new { @class = "form", @role = "form" }))
+
 {
-    @Html.HiddenFor(q=>q.IdEmpresa, new { @id="IdEmpresa"})
-    <div class="box ">
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    <div class="box">
         <div class="box-header with-border">
             <div class="row">
                 <div class="col-md-12">
@@ -26,34 +26,48 @@
                     <i class="fa fa-times"></i>
                 </button>
             </div>
+
         </div>
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="IdActijoFijoTipo">Tipo activo*</label>
-                            @Html.DropDownListFor(q => q.IdActivoFijoTipo, new SelectList(ViewBag.lst_activo, "IdActivoFijoTipo", "Af_Descripcion"), new { @class = "form-control", @id = "IdActivoFijoTipo" })
-                            @Html.ValidationMessageFor(q => q.IdActivoFijoTipo, "", new { @class = "text-danger" })
+                            <label for="IdBanco">Banco</label>
+                            @Html.DropDownListFor(q => q.IdBanco, new SelectList(ViewBag.lst_banco, "IdBanco", "ba_descripcion"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.IdBanco, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="IdCategoriaAF">Categoría*</label>
-                            @Html.DropDownListFor(q => q.IdCategoriaAF, new SelectList(ViewBag.lst_categoria, "IdCategoriaAF", "Descripcion"), new { @class = "form-control", @id = "IdCategoriaAF" })
-                            @Html.ValidationMessageFor(q => q.IdCategoriaAF, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="Estado_Proceso">Estado proceso</label>
-                            @Html.DropDownListFor(q => q.Estado_Proceso, new SelectList(ViewBag.lst_estado, "IdCatalogo", "Descripcion"), new { @class = "form-control" })
-                            @Html.ValidationMessageFor(q => q.IdActivoFijoTipo, "", new { @class = "text-danger" })
+                            <label for="IdPersona">Beneficiario</label>
+                            @Html.Partial("_CmbPersona_Banco", Model)
+                            @Html.ValidationMessageFor(q => q.IdPersona, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="">Fecha corte</label>
+                            <label for="">Fecha inicio</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.DevExpress().DateEditFor(q=> q.fecha_ini, settings =>
+                            {
+                                settings.Name = "fecha_ini";
+                                settings.Properties.UseMaskBehavior = true;
+                                settings.Properties.EditFormat = EditFormat.Date;
+                                settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                            }).GetHtml()
+                                @Html.ValidationMessageFor(q => q.fecha_ini, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="">Fecha fin</label>
                             <div class="input-group date">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
@@ -76,6 +90,7 @@
             <!-- /.box-body -->
         </div>
     </div>
+
     <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">@ViewBag.Title</h3>
@@ -103,36 +118,5 @@
         <!-- /.box-footer-->
     </div>
 }
-    <script>
-        $(function () {
-            $("#IdActivoFijoTipo").change(function () {
-                cargar_categoria();
-            });
-        });
 
-    function cargar_categoria() {
-        $("#IdCategoriaAF").empty();
-        
-        var datos = {
-            IdEmpresa: $("#IdEmpresa").val(),
-            IdActivoFijoTipo: $("#IdActivoFijoTipo").val()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("cargar_categoria", "ActivoFijoReportes", new { Area = "Reportes" })',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $.each(data, function (i, row) {
-                    $("#IdCategoriaAF").append("<option value=" + row.IdCategoriaAF + ">" + row.Descripcion + "</option>");
-                });
-            },
-            error: function (error) {
-            }
-        });
-    };
-    </script>
+

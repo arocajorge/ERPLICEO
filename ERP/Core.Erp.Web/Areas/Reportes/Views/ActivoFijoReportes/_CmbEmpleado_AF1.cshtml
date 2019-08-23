@@ -3,7 +3,7 @@
 @{
     var comboBox = Html.DevExpress().ComboBox(settings =>
     {
-        settings.Name = "IdEmpleadoEncargado";
+        settings.Name = "IdEmpleadoCustodio";
         settings.Width = Unit.Percentage(100);
         settings.Properties.DropDownWidth = Unit.Percentage(100);
         settings.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -24,7 +24,7 @@
 
     })
     .BindList(new Core.Erp.Web.Areas.Reportes.Controllers.ActivoFijoReportesController().get_list_bajo_demanda, new Core.Erp.Web.Areas.Reportes.Controllers.ActivoFijoReportesController().get_info_bajo_demanda)
-    .Bind(Model.GetType() == typeof(Core.Erp.Info.Helps.cl_filtros_Info) ? "" : (Model == 0 ? "" : Model));
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.Helps.cl_filtros_activo_Info) ? "" : (Model == 0 ? "" : Model));
 
 }
 @comboBox.GetHtml()

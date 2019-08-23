@@ -232,11 +232,11 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             });
             ViewBag.lst_banco = lst_banco;
-
+            /*
             tb_persona_Bus bus_persona = new tb_persona_Bus();
             var lst_persona = bus_persona.get_list(false);
             ViewBag.lst_persona = lst_persona;
-
+            */
             ba_Catalogo_Bus bus_catalogo = new ba_Catalogo_Bus();
             var lst_catalogo = bus_catalogo.get_list(Convert.ToString(cl_enumeradores.eTipoCatalogoBanco.EST_CB_BA.ToString()), false);
             lst_catalogo.Add(new Info.Banco.ba_Catalogo_Info
@@ -616,6 +616,59 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdBanco.Value = model.IdBanco;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            ViewBag.Report = report;
+            return View(model);
+        }
+
+        public ActionResult BAN_014()
+        {
+            cl_filtros_banco_Info model = new cl_filtros_banco_Info
+            {
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdPersona = 0
+            };
+            cargar_banco(model.IdEmpresa);
+            BAN_014_Rpt report = new BAN_014_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "BAN_014");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdPersona.Value = model.IdPersona;
+            report.p_IdBanco.Value = model.IdBanco;
+            report.p_FechaIni.Value = model.fecha_ini;
+            report.p_FechaFin.Value = model.fecha_fin;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
+            ViewBag.Report = report;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult BAN_014(cl_filtros_banco_Info model)
+        {
+            cargar_banco(model.IdEmpresa);
+            BAN_014_Rpt report = new BAN_014_Rpt();
+            #region Cargo diseño desde base
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "BAN_014");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                report.LoadLayout(RootReporte);
+            }
+            #endregion
+            report.p_IdEmpresa.Value = model.IdEmpresa;
+            report.p_IdPersona.Value = model.IdPersona == null ? 0 : Convert.ToDecimal(model.IdPersona);
+            report.p_IdBanco.Value = model.IdBanco;
+            report.p_FechaIni.Value = model.fecha_ini;
+            report.p_FechaFin.Value = model.fecha_fin;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             ViewBag.Report = report;

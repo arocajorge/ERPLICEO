@@ -26,10 +26,7 @@ namespace Core.Erp.Data
         {
             throw new UnintentionalCodeFirstException();
         }
-        public void SetCommandTimeOut(int TimeOut)
-        {
-            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
-        }
+    
         public DbSet<ro_SPROL_002> ro_SPROL_002 { get; set; }
         public DbSet<VWACTF_001> VWACTF_001 { get; set; }
         public DbSet<VWACTF_002> VWACTF_002 { get; set; }
@@ -122,11 +119,12 @@ namespace Core.Erp.Data
         public DbSet<VWCXP_012> VWCXP_012 { get; set; }
         public DbSet<VWFAC_006> VWFAC_006 { get; set; }
         public DbSet<VWACTF_007> VWACTF_007 { get; set; }
-        public DbSet<VWACTF_008> VWACTF_008 { get; set; }
         public DbSet<VWFAC_014> VWFAC_014 { get; set; }
         public DbSet<VWBAN_001> VWBAN_001 { get; set; }
         public DbSet<VWBAN_001_cancelaciones> VWBAN_001_cancelaciones { get; set; }
         public DbSet<VWBAN_013> VWBAN_013 { get; set; }
+        public DbSet<VWBAN_014> VWBAN_014 { get; set; }
+        public DbSet<VWACTF_008> VWACTF_008 { get; set; }
     
         public virtual ObjectResult<SPACTF_004_detalle_Result> SPACTF_004_detalle(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_corte, string idUsuario, Nullable<int> idActivoFijoTipo_ini, Nullable<int> idActivoFijoTipo_fin, Nullable<int> idCategoria_ini, Nullable<int> idCategoria_fin, string estado_Proceso)
         {

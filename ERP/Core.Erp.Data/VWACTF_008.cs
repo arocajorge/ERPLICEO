@@ -33,5 +33,10 @@ namespace Core.Erp.Data
         public int Cantidad { get; set; }
         public string NomCategoria { get; set; }
         public string NomTipo { get; set; }
+        public string NomArea { get; set; }
+        public decimal IdArea { get; set; }
+        public string NomModelo { get; set; }
+        public int IdActivoFijoTipo { get; set; }
+        public int IdCategoriaAF { get; set; }
     }
 }

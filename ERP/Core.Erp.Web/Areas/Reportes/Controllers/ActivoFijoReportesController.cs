@@ -15,10 +15,19 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
     [SessionTimeout]
     public class ActivoFijoReportesController : Controller
     {
+        #region Variables
         Af_Activo_fijo_Bus bus_activo = new Af_Activo_fijo_Bus();
+        Af_Area_Bus bus_area = new Af_Area_Bus();
         tb_sis_reporte_x_tb_empresa_Bus bus_rep_x_emp = new tb_sis_reporte_x_tb_empresa_Bus();
         string RootReporte = System.IO.Path.GetTempPath() + "Rpt_Facturacion.repx";
+        Af_Departamento_Bus bus_dep = new Af_Departamento_Bus();
+        Af_Activo_fijo_Categoria_Bus bus_categoria = new Af_Activo_fijo_Categoria_Bus();
+        Af_Catalogo_Bus bus_catalogo = new Af_Catalogo_Bus();
+        Af_Activo_fijo_tipo_Bus bus_tipo = new Af_Activo_fijo_tipo_Bus();
+        tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+        #endregion
 
+        #region Combos bajo demanda
         public ActionResult CmbActivo_fijo()
         {
             int model = new int();
@@ -38,7 +47,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         tb_persona_Bus bus_persona = new tb_persona_Bus();
         public ActionResult CmbEmpleado_AF1()
         {
-            cl_filtros_Info model = new cl_filtros_Info();
+            cl_filtros_activo_Info model = new cl_filtros_activo_Info();
             return PartialView("_CmbEmpleado_AF1", model);
         }
         public List<tb_persona_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
@@ -51,10 +60,12 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         }
         #endregion
 
+        #endregion
+
         #region Metodos ComboBox bajo demanda empleado
         public ActionResult CmbEmpleado_AF2()
         {
-            cl_filtros_Info model = new cl_filtros_Info();
+            cl_filtros_activo_Info model = new cl_filtros_activo_Info();
             return PartialView("_CmbEmpleado_AF2", model);
         }
         public List<tb_persona_Info> get_list_bajo_demanda_cust(ListEditItemsRequestedByFilterConditionEventArgs args)
@@ -67,16 +78,25 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         }
         #endregion
 
-
         #region Json
         public JsonResult cargar_categoria(int IdEmpresa = 0 , int IdActivoFijoTipo = 0)
         {
-            Af_Activo_fijo_Categoria_Bus bus_categoria = new Af_Activo_fijo_Categoria_Bus();
             var resultado = bus_categoria.get_list(IdEmpresa, IdActivoFijoTipo, false);
             resultado.Add(new Af_Activo_fijo_Categoria_Info
             {
                 IdEmpresa = IdEmpresa,
                 IdCategoriaAF = 0,
+                Descripcion = "Todos"
+            });
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult cargar_departamento(int IdEmpresa = 0, int IdArea = 0)
+        {
+            var resultado = bus_dep.GetList(IdEmpresa, IdArea, false);
+            resultado.Add(new Af_Departamento_Info
+            {
+                IdEmpresa = IdEmpresa,
+                IdDepartamento = 0,
                 Descripcion = "Todos"
             });
             return Json(resultado, JsonRequestBehavior.AllowGet);
@@ -141,7 +161,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         }
         public ActionResult ACTF_004()
         {
-            cl_filtros_Info model = new cl_filtros_Info
+            cl_filtros_activo_Info model = new cl_filtros_activo_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 Estado_Proceso = ""
@@ -183,7 +203,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             return View(model);
         }
         [HttpPost]
-        public ActionResult ACTF_004(cl_filtros_Info model)
+        public ActionResult ACTF_004(cl_filtros_activo_Info model)
         {
 
             if (model.mostrar_agrupado)
@@ -216,10 +236,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             }
             return View(model);
         }
-        private void cargar_combos(cl_filtros_Info model)
+        private void cargar_combos(cl_filtros_activo_Info model)
         {
-
-            Af_Activo_fijo_Categoria_Bus bus_categoria = new Af_Activo_fijo_Categoria_Bus();
             var lst_categoria = bus_categoria.get_list(model.IdEmpresa, model.IdActivoFijoTipo, false);
             lst_categoria.Add(new Af_Activo_fijo_Categoria_Info
             {
@@ -229,7 +247,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             });
             ViewBag.lst_categoria = lst_categoria;
 
-            Af_Catalogo_Bus bus_catalogo = new Af_Catalogo_Bus();
+            
             var lst_estado = bus_catalogo.get_list(Convert.ToString(cl_enumeradores.eTipoCatalogoAF.TIP_ESTADO_AF), false);
             lst_estado.Add(new Af_Catalogo_Info
             {
@@ -238,8 +256,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             });
             ViewBag.lst_estado = lst_estado;
             
-            Af_Activo_fijo_tipo_Bus bus_activo = new Af_Activo_fijo_tipo_Bus();
-            var lst_activo = bus_activo.get_list(model.IdEmpresa, false);
+            
+            var lst_activo = bus_tipo.get_list(model.IdEmpresa, false);
             lst_activo.Add(new Af_Activo_fijo_tipo_Info
             {
                 IdEmpresa = model.IdEmpresa,
@@ -247,18 +265,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 Af_Descripcion = "Todos"
             });
             ViewBag.lst_activo = lst_activo;
-
-            Af_Activo_fijo_Bus bus_act = new Af_Activo_fijo_Bus();
-            var lst_act = bus_act.get_list(model.IdEmpresa, false);
-            lst_act.Add(new Af_Activo_fijo_Info
-            {
-                IdEmpresa = model.IdEmpresa,
-                IdActivoFijo = 0,
-                Af_Nombre = "Todos"
-            });
-            ViewBag.lst_act = lst_act;
-
-            tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
+            
             var lst_sucursal= bus_sucursal.get_list(model.IdEmpresa, false);
             lst_sucursal.Add(new tb_sucursal_Info
             {
@@ -268,8 +275,16 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             });
             ViewBag.lst_sucursal = lst_sucursal;
 
-            Af_Departamento_Bus bus_dep = new Af_Departamento_Bus();
-            var lst_dep = bus_dep.GetList(model.IdEmpresa,model.IdAreaAF, false);
+            var lst_area = bus_area.GetList(model.IdEmpresa, false);
+            lst_area.Add(new Af_Area_Info
+            {
+                IdEmpresa = model.IdEmpresa,
+                IdArea = 0,
+                Descripcion = "Todos"
+            });
+            ViewBag.lst_area = lst_area;
+
+            var lst_dep = bus_dep.GetList(model.IdEmpresa,model.IdArea, false);
             lst_dep.Add(new Af_Departamento_Info
             {
                 IdEmpresa = model.IdEmpresa,
@@ -280,7 +295,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         }
         public ActionResult ACTF_005()
         {
-            cl_filtros_Info model = new cl_filtros_Info
+            cl_filtros_activo_Info model = new cl_filtros_activo_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 Estado_Proceso = ""
@@ -307,7 +322,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             return View(model);
         }
         [HttpPost]
-        public ActionResult ACTF_005(cl_filtros_Info model)
+        public ActionResult ACTF_005(cl_filtros_activo_Info model)
         {
             ACTF_005_Rpt report = new ACTF_005_Rpt();
             #region Cargo diseño desde base
@@ -332,7 +347,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
         public ActionResult ACTF_006()
         {
-            cl_filtros_Info model = new cl_filtros_Info
+            cl_filtros_activo_Info model = new cl_filtros_activo_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdActivoFijo = 0
@@ -353,7 +368,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             return View(model);
         }
         [HttpPost]
-        public ActionResult ACTF_006(cl_filtros_Info model)
+        public ActionResult ACTF_006(cl_filtros_activo_Info model)
         {
             ACTF_006_Rpt report = new ACTF_006_Rpt();
             #region Cargo diseño desde base
@@ -387,17 +402,18 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             model.p_IdActivoFijo.Value = IdActivoFijo;
             model.empresa = SessionFixed.NomEmpresa.ToString();
             return View(model);
-
         }
         
         public ActionResult ACTF_008()
         {
-            cl_filtros_Info model = new cl_filtros_Info
+            cl_filtros_activo_Info model = new cl_filtros_activo_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdDepartamento = 0,
-                IdEmpleado =0
+                IdEmpleadoCustodio =0,
+                IdEmpleadoEncargado = 0,
+                mostrar_agrupado = true
             };
             cargar_combos(model);
             ACTF_008_Rpt report = new ACTF_008_Rpt();
@@ -411,16 +427,22 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdArea.Value = model.IdArea;
             report.p_IdDepartamento.Value = model.IdDepartamento;
-            report.p_IdEmpleadoCustodio.Value = model.IdEmpleado;
-            report.p_IdEmpleadoEncargado.Value = model.IdEmpleado;
-            report.usuario = SessionFixed.IdUsuario.ToString();
-            report.empresa = SessionFixed.NomEmpresa.ToString();
+            report.p_IdTipo.Value = model.IdActivoFijoTipo;
+            report.p_IdCategoria.Value = model.IdCategoriaAF;
+            report.p_MontoMin.Value = model.MontoMin;
+            report.p_MontoMax.Value = model.MontoMax;
+            report.p_IdEmpleadoCustodio.Value = model.IdEmpleadoCustodio == null ? 0 : Convert.ToDecimal(model.IdEmpleadoCustodio);
+            report.p_IdEmpleadoEncargado.Value = model.IdEmpleadoEncargado == null ? 0 : Convert.ToDecimal(model.IdEmpleadoEncargado);
+            report.p_AgruparPorCustodio.Value = model.mostrar_agrupado;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
             ViewBag.Report = report;
             return View(model);
         }
         [HttpPost]
-        public ActionResult ACTF_008(cl_filtros_Info model)
+        public ActionResult ACTF_008(cl_filtros_activo_Info model)
         {
             ACTF_008_Rpt report = new ACTF_008_Rpt();
             #region Cargo diseño desde base
@@ -433,11 +455,17 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdArea.Value = model.IdArea;
             report.p_IdDepartamento.Value = model.IdDepartamento;
-            report.p_IdEmpleadoCustodio.Value = model.IdEmpleado;
-            report.p_IdEmpleadoEncargado.Value = model.IdEmpleado;
-            report.usuario = SessionFixed.IdUsuario.ToString();
-            report.empresa = SessionFixed.NomEmpresa.ToString();
+            report.p_IdTipo.Value = model.IdActivoFijoTipo;
+            report.p_IdCategoria.Value = model.IdCategoriaAF;
+            report.p_MontoMin.Value = model.MontoMin;
+            report.p_MontoMax.Value = model.MontoMax;
+            report.p_IdEmpleadoCustodio.Value = model.IdEmpleadoCustodio == null ? 0 : Convert.ToDecimal(model.IdEmpleadoCustodio);
+            report.p_IdEmpleadoEncargado.Value = model.IdEmpleadoEncargado == null ? 0 : Convert.ToDecimal(model.IdEmpleadoEncargado);
+            report.p_AgruparPorCustodio.Value = model.mostrar_agrupado;
+            report.usuario = SessionFixed.IdUsuario;
+            report.empresa = SessionFixed.NomEmpresa;
             cargar_combos(model);
             ViewBag.Report = report;
             return View(model);

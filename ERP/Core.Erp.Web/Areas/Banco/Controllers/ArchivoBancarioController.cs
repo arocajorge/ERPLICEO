@@ -533,8 +533,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 System.IO.File.Delete(rutafile + NombreArchivo + ".txt");                
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(rutafile + NombreArchivo + ".txt", true))
                 {
-                    /*
-                    var ListaA = info.Lst_det.Where(v => v.Valor > 0).GroupBy(q => new { q.num_cta_acreditacion, q.Secuencial_reg_x_proceso, q.pe_cedulaRuc, q.CodigoLegalBanco, q.IdTipoCta_acreditacion_cat, q.IdTipoDocumento, q.Nom_Beneficiario }).Select(q => new
+                    var ListaA = info.Lst_det.Where(v => v.Valor > 0).GroupBy(q => new { q.num_cta_acreditacion, q.Secuencial_reg_x_proceso, q.pe_cedulaRuc, q.CodigoLegalBanco, q.IdTipoCta_acreditacion_cat, q.IdTipoDocumento, q.Nom_Beneficiario, q.pr_correo }).Select(q => new
                     {
                         num_cta_acreditacion = q.Key.num_cta_acreditacion,
                         Secuencial_reg_x_proceso = q.Key.Secuencial_reg_x_proceso,
@@ -543,11 +542,13 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                         IdTipoCta_acreditacion_cat = q.Key.IdTipoCta_acreditacion_cat,
                         IdTipoDocumento = q.Key.IdTipoDocumento,
                         Nom_Beneficiario = q.Key.Nom_Beneficiario,
+                        pr_correo = q.Key.pr_correo,
                         Valor = q.Sum(g=> g.Valor)
                     }).ToList();
-                    */
+                    
                     var banco = bus_banco_cuenta.get_info(info.IdEmpresa, info.IdBanco);
-                    foreach (var item in info.Lst_det.Where(v => v.Valor > 0).ToList())
+                    //foreach (var item in info.Lst_det.Where(v => v.Valor > 0).ToList())
+                    foreach (var item in ListaA)
                     {
                         string linea = "";
                         double valor = Convert.ToDouble(item.Valor);
@@ -573,16 +574,14 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                         linea += "\t";//Telefono
                         linea += "\t";//Localidad
                         var Referencia = string.Empty;
-                        /*
                         foreach (var refe in info.Lst_det.Where(q => q.pe_cedulaRuc == item.pe_cedulaRuc).ToList())
                         {
                             if(!string.IsNullOrEmpty(refe.Referencia))
                                 Referencia += ((string.IsNullOrEmpty(refe.Referencia) ? "" : "/") + refe.Referencia);
                         }
                         linea += (string.IsNullOrEmpty(Referencia) ? "" : (Referencia.Length > 200 ? Referencia.Substring(0, 200) : Referencia.Trim())) + "\t";
-                        */
-                        linea += (string.IsNullOrEmpty(item.Referencia) ? "" : (item.Referencia.Length > 200 ? item.Referencia.Substring(0, 200) : item.Referencia.Trim())) + "\t";
-                        linea += "\t";//Ref adicional
+                        //linea += (string.IsNullOrEmpty(item.Referencia) ? "" : (item.Referencia.Length > 200 ? item.Referencia.Substring(0, 200) : item.Referencia.Trim())) + "\t";
+                        linea += "| "+ (string.IsNullOrEmpty(item.pr_correo) ? "" : (item.pr_correo.Trim().Length > 100 ? item.pr_correo.Trim().Substring(0,100) : item.pr_correo.Trim())) +"\t";//Ref adicional
 
                         file.WriteLine(linea);
                     }

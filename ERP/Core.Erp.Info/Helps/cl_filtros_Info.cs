@@ -22,18 +22,7 @@ namespace Core.Erp.Info.Helps
 
         public int IdTipoCbte { get; set; }
         public decimal IdCbteCble { get; set; }
-
-        #region Filtros activo
-        public int IdActivoFijoTipo { get; set; }
-        public int IdCategoriaAF { get; set; }
-        public string Estado_Proceso { get; set; }
-        public string IdUsuario { get; set; }
-        public DateTime fecha { get; set; }
-        public int IdActivoFijo { get; set; }
-        public decimal IdAreaAF { get; set; }
-
-        #endregion
-
+        
         #region Filtros cuentas por pagar
         public decimal IdProveedor { get; set; }
         public bool mostrar_agrupado { get; set; }
@@ -78,6 +67,38 @@ namespace Core.Erp.Info.Helps
 
     }
 
+    public class cl_filtros_activo_Info
+    {
+        public int IdEmpresa { get; set; }
+        [Required(ErrorMessage = "El campo fecha inicio es obligatorio")]
+        [DataType(DataType.Date, ErrorMessage = "El campo fecha inicio debe ser una fecha en formato dd/MM/yyyy")]
+        public DateTime fecha_ini { get; set; }
+        [Required(ErrorMessage = "El campo fecha fin es obligatorio")]
+        [DataType(DataType.Date, ErrorMessage = "El campo fecha fin debe ser una fecha en formato dd/MM/yyyy")]
+        public int IdSucursal { get; set; }
+        public DateTime fecha_fin { get; set; }
+        public int IdActivoFijoTipo { get; set; }
+        public int IdCategoriaAF { get; set; }
+        public string Estado_Proceso { get; set; }
+        public string IdUsuario { get; set; }
+        public DateTime fecha { get; set; }
+        public int IdActivoFijo { get; set; }
+        public int IdArea { get; set; }
+        public decimal IdDepartamento { get; set; }
+        public decimal? IdEmpleadoEncargado { get; set; }
+        public decimal? IdEmpleadoCustodio { get; set; }
+        public bool mostrar_agrupado { get; set; }
+        public double MontoMin { get; set; }
+        public double MontoMax { get; set; }
+
+        public cl_filtros_activo_Info()
+        {
+            fecha_ini = DateTime.Now.Date.AddMonths(-1);
+            fecha_fin = DateTime.Now.Date;
+            fecha = DateTime.Now.Date;
+            MontoMax = 9999999999;
+        }
+    }
     public class cl_filtros_caja_Info
     {
         public int IdEmpresa { get; set; }

@@ -1,5 +1,5 @@
 ﻿
-@model Core.Erp.Info.Helps.cl_filtros_Info
+@model Core.Erp.Info.Helps.cl_filtros_activo_Info
 @{
     Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
     ViewBag.Title = "ACTF_008";
@@ -33,16 +33,63 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Sucursal</label>
-                            @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control" })
+                            @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursal, "IdSucursal", "Su_Descripcion"), new { @class = "form-control", @id = "IdSucursal" })
                             @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
-                    <div class="col-md-6">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="">Area</label>
+                            @Html.DropDownListFor(q => q.IdArea, new SelectList(ViewBag.lst_area, "IdArea", "Descripcion"), new { @class = "form-control", @id = "IdArea" })
+                            @Html.ValidationMessageFor(q => q.IdArea, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="">Departamento</label>
-                            @Html.DropDownListFor(q => q.IdDepartamento, new SelectList(ViewBag.lst_dep, "IdDepartamento", "Descripcion"), new { @class = "form-control" })
+                            @Html.DropDownListFor(q => q.IdDepartamento, new SelectList(ViewBag.lst_dep, "IdDepartamento", "Descripcion"), new { @class = "form-control", @id = "IdDepartamento" })
                             @Html.ValidationMessageFor(q => q.IdDepartamento, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdActijoFijoTipo">Tipo activo*</label>
+                            @Html.DropDownListFor(q => q.IdActivoFijoTipo, new SelectList(ViewBag.lst_activo, "IdActivoFijoTipo", "Af_Descripcion"), new { @class = "form-control", @id = "IdActivoFijoTipo" })
+                            @Html.ValidationMessageFor(q => q.IdActivoFijoTipo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdCategoriaAF">Categoría*</label>
+                            @Html.DropDownListFor(q => q.IdCategoriaAF, new SelectList(ViewBag.lst_categoria, "IdCategoriaAF", "Descripcion"), new { @class = "form-control", @id = "IdCategoriaAF" })
+                            @Html.ValidationMessageFor(q => q.IdCategoriaAF, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="MontoMin">Monto mínimo*</label>
+                            @Html.TextBoxFor(q => q.MontoMin, new { @class = "form-control", @id = "MontoMin" })
+                            @Html.ValidationMessageFor(q => q.MontoMin, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="MontoMin">Monto máximo*</label>
+                            @Html.TextBoxFor(q => q.MontoMax, new { @class = "form-control", @id = "MontoMax" })
+                            @Html.ValidationMessageFor(q => q.MontoMax, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.DevExpress().CheckBoxFor(q => q.mostrar_agrupado, settings =>
+                           {
+                               settings.Name = "mostrar_agrupado";
+                               settings.Text = "Agrupar por custodio";
+                           }).GetHtml()
                         </div>
                     </div>
                 </div>
@@ -52,16 +99,16 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="IdProductoPadre">Empleado custodio</label>
-                            @Html.Partial("_CmbEmpleado_AF1", Model)
-                            @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
+                            @Html.Partial("_CmbEmpleado_AF1", Model.IdEmpleadoCustodio)
+                            @Html.ValidationMessageFor(q => q.IdEmpleadoCustodio, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
                            <label for="IdProductoPadre">Empleado encargado</label>
-                            @Html.Partial("_CmbEmpleado_AF2", Model)
-                            @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
+                            @Html.Partial("_CmbEmpleado_AF2", Model.IdEmpleadoEncargado)
+                            @Html.ValidationMessageFor(q => q.IdEmpleadoEncargado, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
@@ -92,8 +139,72 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-            [@Session["IdEmpresa"]] @Session["nom_empresa"]
+            [@Core.Erp.Web.Helps.SessionFixed.IdEmpresa] @Core.Erp.Web.Helps.SessionFixed.NomEmpresa
         </div>
         <!-- /.box-footer-->
     </div>    
 }
+
+<script>
+        $(function () {
+            $("#IdActivoFijoTipo").change(function () {
+                cargar_categoria();
+            });
+            $("#IdArea").change(function () {
+                cargar_departamento();
+            });
+        });
+
+    function cargar_categoria() {
+        $("#IdCategoriaAF").empty();
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdActivoFijoTipo: $("#IdActivoFijoTipo").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("cargar_categoria", "ActivoFijoReportes", new { Area = "Reportes" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdCategoriaAF").append("<option value=" + row.IdCategoriaAF + ">" + row.Descripcion + "</option>");
+                });
+                $("#IdCategoriaAF").val("0");
+            },
+            error: function (error) {
+            }
+        });
+    };
+    function cargar_departamento() {
+        $("#IdDepartamento").empty();
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdArea: $("#IdArea").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("cargar_departamento", "ActivoFijoReportes", new { Area = "Reportes" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $.each(data, function (i, row) {
+                    $("#IdDepartamento").append("<option value=" + row.IdDepartamento + ">" + row.Descripcion + "</option>");
+                });
+                $("#IdDepartamento").val("0");
+            },
+            error: function (error) {
+            }
+        });
+    };
+</script>

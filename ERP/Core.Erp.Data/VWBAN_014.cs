@@ -12,7 +12,7 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class VWBAN_013
+    public partial class VWBAN_014
     {
         public int IdEmpresa_pago { get; set; }
         public int IdTipoCbte_pago { get; set; }

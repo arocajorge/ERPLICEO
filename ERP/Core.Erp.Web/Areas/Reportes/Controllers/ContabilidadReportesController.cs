@@ -212,7 +212,6 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
             };
 
-            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             model.IdAnio = model.fecha_fin.Year;
             model.MostrarSaldoAcumulado = false;
             CONTA_003_ER_Rpt report = new CONTA_003_ER_Rpt();
@@ -233,13 +232,14 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             ViewBag.Report = report;
 
             cargar_nivel();
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             return View(model);
         }
         [HttpPost]
         public ActionResult CONTA_003(cl_filtros_contabilidad_Info model)
         {
             model.IdAnio = model.fecha_fin.Year;
-            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            
 
             if (model.balance == "BG")
             {
@@ -300,6 +300,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 ViewBag.Report = report;
             }
             cargar_nivel();
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             return View(model);
         }
 

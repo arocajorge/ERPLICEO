@@ -562,7 +562,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
 
         public JsonResult GetListVales_PorIngresar(decimal IdTransaccionSession = 0, int IdEmpresa = 0, int IdCaja = 0)
         {
-            var model = bus_det.get_list_x_movimientos_caja(IdEmpresa, IdCaja);
+            var model = bus_det.get_list_x_movimientos_caja(IdEmpresa, IdCaja).OrderBy(q=> q.SecuenciaCaja).ToList();
             list_vale_x_ingresar.set_list(model, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
 
             return Json("", JsonRequestBehavior.AllowGet);

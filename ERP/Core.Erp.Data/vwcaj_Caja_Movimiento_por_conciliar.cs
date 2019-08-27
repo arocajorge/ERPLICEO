@@ -27,5 +27,6 @@ namespace Core.Erp.Data
         public string IdTipo_Persona { get; set; }
         public decimal IdEntidad { get; set; }
         public decimal IdPersona { get; set; }
+        public Nullable<decimal> SecuenciaCaja { get; set; }
     }
 }

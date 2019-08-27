@@ -34,6 +34,7 @@ namespace Core.Erp.Info.Caja
         public string tm_descripcion { get; set; }
         public string IdTipo_Persona { get; set; }
         public decimal IdEntidad { get; set; }
+        public decimal? SecuenciaCaja { get; set; }
         #endregion
 
     }

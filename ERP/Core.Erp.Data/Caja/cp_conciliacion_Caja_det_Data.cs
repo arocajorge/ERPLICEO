@@ -129,7 +129,8 @@ namespace Core.Erp.Data.Caja
                                  pe_nombreCompleto = q.pe_nombreCompleto,
                                  IdTipo_Persona = q.IdTipo_Persona,
                                  IdEntidad = q.IdEntidad,
-                                 IdPersona = q.IdPersona
+                                 IdPersona = q.IdPersona,
+                                 SecuenciaCaja = q.SecuenciaCaja
                              }).ToList();
                 }
 

@@ -422,6 +422,9 @@
     <Compile Include="cp_proveedor_clase.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
+    <Compile Include="cp_proveedor_detalle.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
     <Compile Include="cp_retencion.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
@@ -534,6 +537,7 @@
     <Compile Include="CuentasPorPagar\cp_parametros_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_proveedor_clase_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_proveedor_Data.cs" />
+    <Compile Include="CuentasPorPagar\cp_proveedor_detalle_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_retencion_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_retencion_det_Data.cs" />
     <Compile Include="CuentasPorPagar\cp_retencion_x_ct_cbtecble_Data.cs" />

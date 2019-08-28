@@ -1,0 +1,68 @@
+﻿@model Core.Erp.Info.CuentasPorPagar.cp_proveedor_detalle_Info
+@{
+    ViewBag.Title = "Anular cuenta por proveedor";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+
+@using (Html.BeginForm("Anular", "ProveedorDetalle", FormMethod.Post, new { @role = "form", @class = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa)
+    @Html.HiddenFor(q => q.IdProveedor)
+    @Html.HiddenFor(q => q.Secuencia)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="num_cta_acreditacion">Nombres</label>
+                    @Html.TextBoxFor(q => q.NombreAdicional, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.NombreAdicional, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="num_cta_acreditacion">Correo</label>
+                    @Html.TextBoxFor(q => q.pr_correo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.pr_correo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdBanco_acreditacion">Banco</label>
+                    @Html.Partial("_CmbBanco_ProveedorDetalle", Model.IdBanco_acreditacion)
+                    @Html.ValidationMessageFor(q => q.IdBanco_acreditacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="IdEstadoCivil">Tipo de cuenta</label>
+                    @Html.DropDownListFor(q => q.IdTipoCta_acreditacion_cat, new SelectList(ViewBag.lst_tipo_cta, "CodCatalogo", "ca_descripcion"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.IdTipoCta_acreditacion_cat, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="num_cta_acreditacion">Número de cuenta</label>
+                    @Html.TextBoxFor(q => q.num_cta_acreditacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.num_cta_acreditacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
+        <a class="btn btn-default" href="@Url.Action("Index","ProveedorDetalle",new { Area = "CuentasPorPagar", IdProveedor = Model.IdProveedor },null)">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+}

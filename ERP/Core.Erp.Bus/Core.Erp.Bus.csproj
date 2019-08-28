@@ -151,6 +151,7 @@
     <Compile Include="CuentasPorPagar\cp_parametros_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_proveedor_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_proveedor_clase_Bus.cs" />
+    <Compile Include="CuentasPorPagar\cp_proveedor_detalle_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_retencion_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_retencion_det_Bus.cs" />
     <Compile Include="CuentasPorPagar\cp_retencion_x_ct_cbtecble_Bus.cs" />

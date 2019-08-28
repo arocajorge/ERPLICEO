@@ -64,7 +64,6 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                console.log(data);
                 GridViewPartial_ing_inv_oc_x_ingresar.PerformCallback();
                 GridViewPartial_ing_inv_oc_x_ingresar.UnselectRows();
                 $("#OcModal").modal("show");
@@ -91,7 +90,6 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                console.log(data);
             },
             error: function (error) {
             }
@@ -121,7 +119,6 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                console.log(data);
                 GridViewPartial_ing_inv_os_x_ingresar.PerformCallback();
                 GridViewPartial_ing_inv_os_x_ingresar.UnselectRows();
                 $("#OsModal").modal("show");
@@ -148,7 +145,7 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                console.log(data);
+
             },
             error: function (error) {
             }
@@ -213,6 +210,7 @@
     @Html.HiddenFor(q => q.IdTipoCbte_Ogiro, new { @id = "IdTipoCbte_Ogiro" })
     @Html.HiddenFor(q => q.co_fechaOg)
     @Html.HiddenFor(q => q.TieneRetencion, new { @id = "TieneRetencion" })
+    @Html.HiddenFor(q => q.MostrarComboCuentas, new { @id = "MostrarComboCuentas" })
 
     <div class="modal fade" id="OcModal" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -283,6 +281,13 @@
                     <button type="button" class="btn btn-primary form-control " onclick="CrearModificarProveedor();">
                         <i class="fa fa-external-link-square"></i>
                     </button>
+                </div>
+            </div>
+            <div class="col-md-12" id="SecuenciaProveedor_Div">
+                <div class="form-group">
+                    <label for="IdBodega">Cuentas</label>
+                    @Html.DropDownListFor(q => q.SecuenciaProveedor, new SelectList(ViewBag.lst_proveedor_detalle, "Secuencia", "NombreAdicional"), new { @class = "form-control", @id = "SecuenciaProveedor" })
+                    @Html.ValidationMessageFor(q => q.SecuenciaProveedor, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-md-12">
@@ -758,6 +763,7 @@
     ValidarCompraSucursales();
     CargarPuntosDeVenta();
     GetUltimoDocumento();
+    MostrarCuentas();
 
     $("#IdSucursal").change(function () {
         cargar_bodega();
@@ -1087,7 +1093,7 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                console.log(data);
+  
                 $.each(data, function (i, row) {
                     $("#IdPuntoVta").append("<option value=" + row.IdPuntoVta + ">" + row.nom_PuntoVta + "</option>");
                     $("#IdPuntoVta").val($("#IdPuntoVta option:first").val());
@@ -1157,5 +1163,50 @@
             }
         });
     }
+
+    function MostrarProveedorDetalle() {
+        $("#SecuenciaProveedor").empty();
+        var datos = {
+            IdProveedor: IdProveedor.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("MostrarProveedorDetalle", "Deudas",new { Area = "CuentasPorPagar"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data.MostrarComboCuentas);
+                $("#MostrarComboCuentas").val(data.MostrarComboCuentas);
+                if(data.resultado.length > 0)
+                {
+                    $.each(data.resultado, function (i, row) {
+                        $("#SecuenciaProveedor").append("<option value=" + row.Secuencia + ">" + row.NombreAdicional + "</option>");
+                    });
+                }
+                MostrarCuentas();
+
+                
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+    function MostrarCuentas() 
+    {
+        var MostrarCuentas = $("#MostrarComboCuentas").val();
+        console.log(MostrarCuentas);
+        if(MostrarCuentas== 1){
+            $("#SecuenciaProveedor_Div").show();
+        }
+        else{
+            $("#SecuenciaProveedor_Div").hide();
+        }
+    }
+
 </script>
 

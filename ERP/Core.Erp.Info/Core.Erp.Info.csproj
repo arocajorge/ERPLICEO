@@ -176,6 +176,7 @@
     <Compile Include="CuentasPorPagar\cp_pais_sri_Info.cs" />
     <Compile Include="CuentasPorPagar\cp_parametros_Info.cs" />
     <Compile Include="CuentasPorPagar\cp_proveedor_clase_Info.cs" />
+    <Compile Include="CuentasPorPagar\cp_proveedor_detalle_Info.cs" />
     <Compile Include="CuentasPorPagar\cp_proveedor_Info.cs" />
     <Compile Include="CuentasPorPagar\cp_retencion_det_Info.cs" />
     <Compile Include="CuentasPorPagar\cp_retencion_Info.cs" />

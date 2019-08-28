@@ -30,6 +30,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         #region variables
         cp_orden_giro_Bus bus_orden_giro = new cp_orden_giro_Bus();
         cp_proveedor_Bus bus_proveedor = new cp_proveedor_Bus();
+        cp_proveedor_detalle_Bus bus_proveedor_det = new cp_proveedor_detalle_Bus();
         cp_codigo_SRI_x_CtaCble_Bus bus_codigo_sri = new cp_codigo_SRI_x_CtaCble_Bus();
         cp_pagos_sri_Bus bus_forma_paogo = new cp_pagos_sri_Bus();
         cp_pais_sri_Bus bus_pais = new cp_pais_sri_Bus();
@@ -262,6 +263,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             var lst_punto_venta = bus_punto_venta.get_list_x_tipo_doc(model.IdEmpresa, model.IdSucursal, "RETEN");
             ViewBag.lst_punto_venta = lst_punto_venta;
 
+            var lst_proveedor_detalle = bus_proveedor_det.get_list(model.IdEmpresa, model.IdProveedor, false);
+            ViewBag.lst_proveedor_detalle = lst_proveedor_detalle;
         }
 
         private void cargar_combos_consulta()
@@ -307,6 +310,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             cp_orden_giro_Info model = new cp_orden_giro_Info
             {
                 IdEmpresa = IdEmpresa,
+                IdProveedor=0,
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
                 co_FechaFactura = DateTime.Now.Date,
                 co_FechaContabilizacion = DateTime.Now.Date,
@@ -314,7 +318,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 PaisPago = "593",
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdTipoServicio = cl_enumeradores.eTipoServicioCXP.SERVI.ToString(),
-                info_retencion = new cp_retencion_Info()
+                info_retencion = new cp_retencion_Info(),
+                MostrarComboCuentas = 0
             };
 
             model.info_retencion = new cp_retencion_Info();
@@ -984,6 +989,20 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 resultado = new tb_sis_Documento_Tipo_Talonario_Info();
 
             return Json(new { data_puntovta = punto_venta, data_talonario = resultado }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult MostrarProveedorDetalle(decimal IdProveedor = 0)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var resultado = bus_proveedor_det.get_list(IdEmpresa, IdProveedor, false);
+            var MostrarComboCuentas = 1;
+            if (resultado == null)
+            {
+                resultado = new List<cp_proveedor_detalle_Info>();
+                MostrarComboCuentas = 0;
+            }
+                                    
+
+            return Json( new { resultado = resultado, MostrarComboCuentas = MostrarComboCuentas }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

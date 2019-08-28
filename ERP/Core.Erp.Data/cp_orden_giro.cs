@@ -18,10 +18,10 @@ namespace Core.Erp.Data
         {
             this.cp_orden_giro_det = new HashSet<cp_orden_giro_det>();
             this.cp_orden_giro_det_ing_x_oc = new HashSet<cp_orden_giro_det_ing_x_oc>();
+            this.cp_orden_giro_det_ing_x_os = new HashSet<cp_orden_giro_det_ing_x_os>();
             this.cp_orden_giro_pagos_sri = new HashSet<cp_orden_giro_pagos_sri>();
             this.cp_orden_giro_x_in_Ing_Egr_Inven = new HashSet<cp_orden_giro_x_in_Ing_Egr_Inven>();
             this.cp_retencion = new HashSet<cp_retencion>();
-            this.cp_orden_giro_det_ing_x_os = new HashSet<cp_orden_giro_det_ing_x_os>();
         }
     
         public int IdEmpresa { get; set; }
@@ -29,6 +29,7 @@ namespace Core.Erp.Data
         public int IdTipoCbte_Ogiro { get; set; }
         public string IdOrden_giro_Tipo { get; set; }
         public decimal IdProveedor { get; set; }
+        public Nullable<int> SecuenciaProveedor { get; set; }
         public System.DateTime co_fechaOg { get; set; }
         public string co_serie { get; set; }
         public string co_factura { get; set; }
@@ -82,11 +83,12 @@ namespace Core.Erp.Data
         public virtual cp_codigo_SRI cp_codigo_SRI2 { get; set; }
         public virtual cp_pais_sri cp_pais_sri { get; set; }
         public virtual cp_proveedor cp_proveedor { get; set; }
+        public virtual cp_proveedor_detalle cp_proveedor_detalle { get; set; }
         public virtual ICollection<cp_orden_giro_det> cp_orden_giro_det { get; set; }
         public virtual ICollection<cp_orden_giro_det_ing_x_oc> cp_orden_giro_det_ing_x_oc { get; set; }
+        public virtual ICollection<cp_orden_giro_det_ing_x_os> cp_orden_giro_det_ing_x_os { get; set; }
         public virtual ICollection<cp_orden_giro_pagos_sri> cp_orden_giro_pagos_sri { get; set; }
         public virtual ICollection<cp_orden_giro_x_in_Ing_Egr_Inven> cp_orden_giro_x_in_Ing_Egr_Inven { get; set; }
         public virtual ICollection<cp_retencion> cp_retencion { get; set; }
-        public virtual ICollection<cp_orden_giro_det_ing_x_os> cp_orden_giro_det_ing_x_os { get; set; }
     }
 }

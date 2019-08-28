@@ -12,23 +12,24 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class vwcp_SolicitudPago
+    public partial class cp_proveedor_detalle
     {
+        public cp_proveedor_detalle()
+        {
+            this.cp_orden_giro = new HashSet<cp_orden_giro>();
+        }
+    
         public int IdEmpresa { get; set; }
-        public decimal IdSolicitud { get; set; }
-        public int IdSucursal { get; set; }
-        public System.DateTime Fecha { get; set; }
         public decimal IdProveedor { get; set; }
-        public string Concepto { get; set; }
+        public int Secuencia { get; set; }
+        public string NombreAdicional { get; set; }
+        public string IdTipoCta_acreditacion_cat { get; set; }
+        public string num_cta_acreditacion { get; set; }
+        public Nullable<int> IdBanco_acreditacion { get; set; }
+        public string pr_correo { get; set; }
         public bool Estado { get; set; }
-        public double Valor { get; set; }
-        public string Solicitante { get; set; }
-        public string GiradoA { get; set; }
-        public string pr_codigo { get; set; }
-        public string pe_razonSocial { get; set; }
-        public string pe_apellido { get; set; }
-        public string pe_nombre { get; set; }
-        public string pe_nombreCompleto { get; set; }
-        public string IdUsuarioCreacion { get; set; }
+    
+        public virtual cp_proveedor cp_proveedor { get; set; }
+        public virtual ICollection<cp_orden_giro> cp_orden_giro { get; set; }
     }
 }

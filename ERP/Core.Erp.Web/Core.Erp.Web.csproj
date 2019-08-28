@@ -327,6 +327,7 @@
     <Compile Include="Areas\CuentasPorPagar\Controllers\OrdenPagoController.cs" />
     <Compile Include="Areas\CuentasPorPagar\Controllers\ParametrosCXPController.cs" />
     <Compile Include="Areas\CuentasPorPagar\Controllers\ProveedorController.cs" />
+    <Compile Include="Areas\CuentasPorPagar\Controllers\ProveedorDetalleController.cs" />
     <Compile Include="Areas\CuentasPorPagar\Controllers\RetencionController.cs" />
     <Compile Include="Areas\CuentasPorPagar\Controllers\SolicitudPagoController.cs" />
     <Compile Include="Areas\CuentasPorPagar\Controllers\TipoCodigoSRIController.cs" />
@@ -10191,6 +10192,12 @@
     <Content Include="Areas\CuentasPorPagar\Views\TipoOrdenPago\_CmbCuenta_credito_Tipo.cshtml" />
     <Content Include="Areas\Reportes\Views\BancoReportes\BAN_013.cshtml" />
     <Content Include="Areas\Reportes\Views\BancoReportes\BAN_014.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ProveedorDetalle\_GridViewPartial_Cuentas_x_Proveedor.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ProveedorDetalle\Index.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ProveedorDetalle\Nuevo.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ProveedorDetalle\_CmbBanco_ProveedorDetalle.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ProveedorDetalle\Modificar.cshtml" />
+    <Content Include="Areas\CuentasPorPagar\Views\ProveedorDetalle\Anular.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

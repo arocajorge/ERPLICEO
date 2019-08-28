@@ -24,6 +24,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
     {
         #region Variables
         cp_proveedor_Bus bus_proveedor = new cp_proveedor_Bus();
+        cp_proveedor_detalle_Bus bus_proveedor_det = new cp_proveedor_detalle_Bus();
         cp_proveedor_clase_Bus bus_claseproveedor = new cp_proveedor_clase_Bus();
         tb_Catalogo_Bus bus_catalogo = new tb_Catalogo_Bus();
         ct_plancta_Bus bus_cuenta = new ct_plancta_Bus();

@@ -74,7 +74,9 @@ namespace Core.Erp.Info.CuentasPorPagar
         public double Total_Pagado { get; set; }
         public Nullable<double> Saldo_OG { get; set; }
         public int IdBodega { get; set; }
-        
+
+        public Nullable<int> SecuenciaProveedor { get; set; }
+
 
         #region Campos que no existen en la tabla
         public bool ConvenioTributacion_bool { get; set; }
@@ -88,6 +90,7 @@ namespace Core.Erp.Info.CuentasPorPagar
         public cp_orden_giro_pagos_sri_Info info_forma_pago { get; set; }
         public cp_retencion_Info info_retencion { get; set; }
         public int TieneRetencion { get; set; }
+        public int MostrarComboCuentas { get; set; }
         public cp_orden_giro_Info()
 
         {

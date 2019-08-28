@@ -16,7 +16,7 @@
         settings.Properties.ValueType = typeof(decimal);
         settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
         settings.Properties.NullText = "== Seleccione ==";
-        settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){get_list_tipo_doc(); }";
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){get_list_tipo_doc(); MostrarProveedorDetalle();}";
 
         settings.Properties.Columns.Add("IdEntidad", "ID", 10);
         settings.Properties.Columns.Add("pe_cedulaRuc", "RUC", 20);

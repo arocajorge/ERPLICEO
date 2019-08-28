@@ -1,11 +1,10 @@
-@using System.Web.UI.WebControls;
 @{
-    var grid = Html.DevExpress().GridView(settings =>
-    {
-        settings.Name = "GridView_proveedor";
-        settings.CallbackRouteValues = new { Controller = "Proveedor", Action = "GridViewPartial_proveedor" };
-        settings.KeyFieldName = "IdProveedor";
-        settings.Width = Unit.Percentage(100);
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridViewPartial_Cuentas_x_Proveedor";
+        settings.CallbackRouteValues = new { Controller = "Proveedor", Action = "GridViewPartial_Cuentas_x_Proveedor", IdProveedor = ViewBag.IdProveedor };
+        settings.KeyFieldName = "Secuencia";
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
         //Configuración para que la grilla no muestre texto completo
         settings.SettingsBehavior.AllowEllipsisInText = true;
         settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
@@ -51,7 +50,7 @@
         //Evento para pintar de rojo las filas anuladas
         settings.HtmlRowPrepared = (s, e) =>
         {
-            if (Convert.ToString(e.GetValue("pr_estado")) == "I")
+            if (Convert.ToBoolean(e.GetValue("Estado")) == false)
             {
                 e.Row.ForeColor = System.Drawing.Color.Red;
             }
@@ -61,11 +60,11 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "pr_estado")) == "A")
+                if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "Estado")) == true)
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"),  IdProveedor = DataBinder.Eval(tc.DataItem, "IdProveedor") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdProveedor = DataBinder.Eval(tc.DataItem, "IdProveedor") },
+                        Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdProveedor = DataBinder.Eval(tc.DataItem, "IdProveedor"), Secuencia = DataBinder.Eval(tc.DataItem, "Secuencia") }) + "&nbsp;" +
+                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdProveedor = DataBinder.Eval(tc.DataItem, "IdProveedor"), Secuencia = DataBinder.Eval(tc.DataItem, "Secuencia") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
                 }
@@ -73,41 +72,28 @@
             c.SetHeaderTemplateContent(tc =>
             {
                 ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
+                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa, IdProveedor = ViewBag.IdProveedor }).ToHtmlString()
                 );
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;
-            c.Width = Unit.Pixel(150);
+            c.Width = System.Web.UI.WebControls.Unit.Pixel(150);
         });
 
-        settings.Columns.Add("IdProveedor", "Código").Width = Unit.Percentage(10);
-        settings.Columns.Add("info_persona.pe_cedulaRuc", "Cédula/Ruc").Width = Unit.Percentage(20);
-        settings.Columns.Add("descripcion_clas_prove", "Clase proveedor").Width = Unit.Percentage(30);
-        settings.Columns.Add("info_persona.pe_nombreCompleto", "Nombre completo").Width = Unit.Percentage(20);
+        settings.Columns.Add("Secuencia","ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("NombreAdicional", "Nombres").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("IdTipoCta_acreditacion_cat", "Tipo de Cuenta").Width = System.Web.UI.WebControls.Unit.Percentage(40);
+        settings.Columns.Add("num_cta_acreditacion", "# Cuenta").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("IdBanco_acreditacion", "Banco").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("pr_correo", "Correo").Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
-            column.FieldName = "EstadoBool";
+            column.FieldName = "Estado";
             column.Caption = "Estado";
             column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
             column.EditorProperties().CheckBox(sp =>
             {
 
-            });
-        });
-
-        settings.Columns.Add(column =>
-        {
-            column.Caption = "Cuentas";
-            column.Width = Unit.Pixel(100);
-            column.SetDataItemTemplateContent(container =>
-            {
-                Html.DevExpress().HyperLink(hyperlink =>
-                {
-                    var keyValue = DataBinder.Eval(container.DataItem, "IdProveedor");
-                    hyperlink.Properties.Text = "Cuentas";
-                    hyperlink.NavigateUrl = Url.Action("Index", "ProveedorDetalle", new { IdEmpresa = DataBinder.Eval(container.DataItem, "IdEmpresa"), IdProveedor = keyValue });
-                }).Render();
             });
         });
     });

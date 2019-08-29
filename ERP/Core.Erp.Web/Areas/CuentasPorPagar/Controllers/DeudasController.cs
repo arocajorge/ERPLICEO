@@ -445,6 +445,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
             cp_orden_giro_Info model = bus_orden_giro.get_info(IdEmpresa, IdTipoCbte_Ogiro, IdCbteCble_Ogiro);
+            
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             if (model == null)
                 return RedirectToAction("Index");
@@ -478,7 +479,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             ListaDetalleOS.set_list(model.lst_det_os, model.IdTransaccionSession);
 
             cargar_combos(model);
-
+            var lst_det = ViewBag.lst_proveedor_detalle;
+            model.MostrarComboCuentas = ((lst_det != null) ? 1 : 0);
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
 
@@ -635,6 +637,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             #endregion
 
             cargar_combos(model);
+            var lst_det = ViewBag.lst_proveedor_detalle;
+            model.MostrarComboCuentas = ((lst_det != null) ? 1 : 0);
+
             return View(model);
         }
 
@@ -727,6 +732,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         public JsonResult get_list_tipo_doc(int IdEmpresa = 0, decimal IdProveedor = 0, string codigoSRI = "")
         {
             var list_tipo_doc = bus_tipo_documento.get_list(IdEmpresa, IdProveedor, codigoSRI);
+            if (list_tipo_doc == null)
+                list_tipo_doc = new List<cp_TipoDocumento_Info>();
+
             return Json(list_tipo_doc, JsonRequestBehavior.AllowGet);
         }
 
@@ -995,7 +1003,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var resultado = bus_proveedor_det.get_list(IdEmpresa, IdProveedor, false);
             var MostrarComboCuentas = 1;
-            if (resultado == null)
+
+            if (resultado == null || resultado.Count()==0)
             {
                 resultado = new List<cp_proveedor_detalle_Info>();
                 MostrarComboCuentas = 0;

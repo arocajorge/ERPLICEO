@@ -11,7 +11,17 @@
 
 @using (Html.BeginForm("Modificar", "Caja", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
 
+    }
+
+    @Html.HiddenFor(q => q.IdTransaccionSession)
     @Html.HiddenFor(q => q.IdEmpresa)
     @Html.HiddenFor(q => q.IdCaja)
     <div class="row">
@@ -47,18 +57,20 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdCtaCble">Cuenta contable*</label>
                     @Html.Partial("_CmbCuenta_Caja", Model)
                     @Html.ValidationMessageFor(q => q.IdCtaCble, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-6">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
                 <div class="form-group">
-                    <label for="IdUsuario_Responsable">Responsable</label>
-                    @Html.DropDownListFor(q => q.IdUsuario_Responsable, new SelectList(ViewBag.lst_responsable, "IdUsuario", "Nombre"), new { @class = "form-control", @id = "IdUsuario_Responsable" })
-                    @Html.ValidationMessageFor(q => q.IdUsuario_Responsable, "", new { @class = "text-danger" })
+                    @Html.Action("GridViewPartial_caja_usuario")
                 </div>
             </div>
         </div>

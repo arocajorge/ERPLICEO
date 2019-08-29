@@ -52,18 +52,19 @@
           </Key>
           <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Contrasena" Type="varchar(max)" />
-          <Property Name="estado" Type="nvarchar" MaxLength="1" />
+          <Property Name="estado" Type="varchar" MaxLength="50" />
           <Property Name="Fecha_Transaccion" Type="datetime" />
           <Property Name="IdUsuarioUltModi" Type="varchar" MaxLength="20" />
           <Property Name="Fecha_UltMod" Type="datetime" />
           <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
           <Property Name="Fecha_UltAnu" Type="datetime" />
-          <Property Name="MotivoAnulacion" Type="varchar" MaxLength="100" />
-          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="MotivoAnulacion" Type="varchar(max)" />
+          <Property Name="Nombre" Type="varchar(max)" />
           <Property Name="ExigirDirectivaContrasenia" Type="bit" />
           <Property Name="CambiarContraseniaSgtSesion" Type="bit" />
           <Property Name="es_super_admin" Type="bit" Nullable="false" />
           <Property Name="contrasena_admin" Type="varchar(max)" />
+          <Property Name="EsContador" Type="bit" />
           <Property Name="IdMenu" Type="int" />
           <Property Name="IPUsuario" Type="varchar" MaxLength="1000" />
           <Property Name="IPImpresora" Type="varchar" MaxLength="1000" />
@@ -98,7 +99,7 @@
           <Property Name="Observacion" Type="varchar" MaxLength="10" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwseg_Usuario_x_Empresa' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_Usuario_x_Empresa' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwseg_Usuario_x_Empresa">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -114,7 +115,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwseg_Usuario_x_Empresa' no tiene 
           <Property Name="Nombre" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwseg_usuario_x_tb_sucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_usuario_x_tb_sucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwseg_usuario_x_tb_sucursal">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -311,6 +312,9 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwseg_usuario_x_tb_sucursal' no ti
             <End Role="seg_Menu" EntitySet="seg_Menu" />
             <End Role="seg_Menu_x_Empresa" EntitySet="seg_Menu_x_Empresa" />
           </AssociationSet>
+          <EntitySet Name="seg_usuario_x_tb_sucursal" EntityType="Model_seguridad_acceso.seg_usuario_x_tb_sucursal" />
+          <EntitySet Name="vwseg_usuario_x_tb_sucursal" EntityType="Model_seguridad_acceso.vwseg_usuario_x_tb_sucursal" />
+          <EntitySet Name="vwseg_Usuario_x_Empresa" EntityType="Model_seguridad_acceso.vwseg_Usuario_x_Empresa" />
           <EntitySet Name="seg_usuario" EntityType="Model_seguridad_acceso.seg_usuario" />
           <AssociationSet Name="FK_seg_usuario_seg_Menu" Association="Model_seguridad_acceso.FK_seg_usuario_seg_Menu">
             <End Role="seg_Menu" EntitySet="seg_Menu" />
@@ -328,13 +332,10 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwseg_usuario_x_tb_sucursal' no ti
             <End Role="seg_usuario" EntitySet="seg_usuario" />
             <End Role="seg_usuario_x_tb_sis_reporte" EntitySet="seg_usuario_x_tb_sis_reporte" />
           </AssociationSet>
-          <EntitySet Name="seg_usuario_x_tb_sucursal" EntityType="Model_seguridad_acceso.seg_usuario_x_tb_sucursal" />
-          <EntitySet Name="vwseg_usuario_x_tb_sucursal" EntityType="Model_seguridad_acceso.vwseg_usuario_x_tb_sucursal" />
           <AssociationSet Name="FK_seg_usuario_x_tb_sucursal_seg_usuario" Association="Model_seguridad_acceso.FK_seg_usuario_x_tb_sucursal_seg_usuario">
             <End Role="seg_usuario" EntitySet="seg_usuario" />
             <End Role="seg_usuario_x_tb_sucursal" EntitySet="seg_usuario_x_tb_sucursal" />
           </AssociationSet>
-          <EntitySet Name="vwseg_Usuario_x_Empresa" EntityType="Model_seguridad_acceso.vwseg_Usuario_x_Empresa" />
           </EntityContainer>
         <EntityType Name="seg_Menu">
           <Key>
@@ -369,24 +370,65 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwseg_usuario_x_tb_sucursal' no ti
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="seg_usuario_x_tb_sucursal">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+          </Key>
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="seg_usuario" Relationship="Model_seguridad_acceso.FK_seg_usuario_x_tb_sucursal_seg_usuario" FromRole="seg_usuario_x_tb_sucursal" ToRole="seg_usuario" />
+        </EntityType>
+        <EntityType Name="vwseg_usuario_x_tb_sucursal">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="em_nombre" />
+          </Key>
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="em_nombre" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vwseg_Usuario_x_Empresa">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="em_nombre" />
+            <PropertyRef Name="em_ruc" />
+          </Key>
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="em_nombre" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="em_ruc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="seg_usuario">
           <Key>
             <PropertyRef Name="IdUsuario" />
           </Key>
           <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Contrasena" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Fecha_Transaccion" Type="DateTime" Precision="3" />
           <Property Name="IdUsuarioUltModi" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
           <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
-          <Property Name="MotivoAnulacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ExigirDirectivaContrasenia" Type="Boolean" />
           <Property Name="CambiarContraseniaSgtSesion" Type="Boolean" />
           <Property Name="es_super_admin" Type="Boolean" Nullable="false" />
           <Property Name="contrasena_admin" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="EsContador" Type="Boolean" />
           <Property Name="IdMenu" Type="Int32" />
           <Property Name="IPUsuario" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="IPImpresora" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
@@ -444,32 +486,6 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwseg_usuario_x_tb_sucursal' no ti
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="seg_usuario_x_tb_sucursal">
-          <Key>
-            <PropertyRef Name="IdUsuario" />
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-          </Key>
-          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="Observacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="seg_usuario" Relationship="Model_seguridad_acceso.FK_seg_usuario_x_tb_sucursal_seg_usuario" FromRole="seg_usuario_x_tb_sucursal" ToRole="seg_usuario" />
-        </EntityType>
-        <EntityType Name="vwseg_usuario_x_tb_sucursal">
-          <Key>
-            <PropertyRef Name="IdUsuario" />
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="Su_Descripcion" />
-            <PropertyRef Name="em_nombre" />
-          </Key>
-          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="em_nombre" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
-        </EntityType>
         <Association Name="FK_seg_usuario_x_tb_sucursal_seg_usuario">
           <End Type="Model_seguridad_acceso.seg_usuario" Role="seg_usuario" Multiplicity="1" />
           <End Type="Model_seguridad_acceso.seg_usuario_x_tb_sucursal" Role="seg_usuario_x_tb_sucursal" Multiplicity="*" />
@@ -482,20 +498,6 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwseg_usuario_x_tb_sucursal' no ti
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="vwseg_Usuario_x_Empresa">
-          <Key>
-            <PropertyRef Name="IdUsuario" />
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="em_nombre" />
-            <PropertyRef Name="em_ruc" />
-          </Key>
-          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="Observacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="em_nombre" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="em_ruc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -561,29 +563,6 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwseg_usuario_x_tb_sucursal' no ti
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="seg_usuario">
-            <EntityTypeMapping TypeName="Model_seguridad_acceso.seg_usuario">
-              <MappingFragment StoreEntitySet="seg_usuario">
-                <ScalarProperty Name="IPImpresora" ColumnName="IPImpresora" />
-                <ScalarProperty Name="IPUsuario" ColumnName="IPUsuario" />
-                <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
-                <ScalarProperty Name="contrasena_admin" ColumnName="contrasena_admin" />
-                <ScalarProperty Name="es_super_admin" ColumnName="es_super_admin" />
-                <ScalarProperty Name="CambiarContraseniaSgtSesion" ColumnName="CambiarContraseniaSgtSesion" />
-                <ScalarProperty Name="ExigirDirectivaContrasenia" ColumnName="ExigirDirectivaContrasenia" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
-                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
-                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
-                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
-                <ScalarProperty Name="IdUsuarioUltModi" ColumnName="IdUsuarioUltModi" />
-                <ScalarProperty Name="Fecha_Transaccion" ColumnName="Fecha_Transaccion" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="seg_usuario_x_tb_sucursal">
             <EntityTypeMapping TypeName="Model_seguridad_acceso.seg_usuario_x_tb_sucursal">
               <MappingFragment StoreEntitySet="seg_usuario_x_tb_sucursal">
@@ -613,6 +592,30 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwseg_usuario_x_tb_sucursal' no ti
                 <ScalarProperty Name="em_nombre" ColumnName="em_nombre" />
                 <ScalarProperty Name="Observacion" ColumnName="Observacion" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="seg_usuario">
+            <EntityTypeMapping TypeName="Model_seguridad_acceso.seg_usuario">
+              <MappingFragment StoreEntitySet="seg_usuario">
+                <ScalarProperty Name="IPImpresora" ColumnName="IPImpresora" />
+                <ScalarProperty Name="IPUsuario" ColumnName="IPUsuario" />
+                <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
+                <ScalarProperty Name="EsContador" ColumnName="EsContador" />
+                <ScalarProperty Name="contrasena_admin" ColumnName="contrasena_admin" />
+                <ScalarProperty Name="es_super_admin" ColumnName="es_super_admin" />
+                <ScalarProperty Name="CambiarContraseniaSgtSesion" ColumnName="CambiarContraseniaSgtSesion" />
+                <ScalarProperty Name="ExigirDirectivaContrasenia" ColumnName="ExigirDirectivaContrasenia" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltModi" ColumnName="IdUsuarioUltModi" />
+                <ScalarProperty Name="Fecha_Transaccion" ColumnName="Fecha_Transaccion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
               </MappingFragment>
             </EntityTypeMapping>

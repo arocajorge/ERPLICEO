@@ -36,6 +36,7 @@ namespace Core.Erp.Data
         public Nullable<bool> CambiarContraseniaSgtSesion { get; set; }
         public bool es_super_admin { get; set; }
         public string contrasena_admin { get; set; }
+        public Nullable<bool> EsContador { get; set; }
         public Nullable<int> IdMenu { get; set; }
         public string IPUsuario { get; set; }
         public string IPImpresora { get; set; }

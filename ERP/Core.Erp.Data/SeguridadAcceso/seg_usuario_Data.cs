@@ -122,7 +122,8 @@ namespace Core.Erp.Data.SeguridadAcceso
                         CambiarContraseniaSgtSesion = Entity.CambiarContraseniaSgtSesion == null ? false : Convert.ToBoolean(Entity.CambiarContraseniaSgtSesion),
                         IdMenu = Entity.IdMenu,
                         IPImpresora = Entity.IPImpresora,
-                        IPMaquina = Entity.IPUsuario
+                        IPMaquina = Entity.IPUsuario,
+                        EsContador = Entity.EsContador,
                     };
                 }
 
@@ -154,6 +155,7 @@ namespace Core.Erp.Data.SeguridadAcceso
                         IdMenu = info.IdMenu == 0 ? null : info.IdMenu,
                         IPImpresora = info.IPImpresora,
                         IPUsuario = info.IPMaquina,
+                        EsContador = info.EsContador,
 
                         Fecha_Transaccion = info.Fecha_Transaccion
                     };
@@ -219,6 +221,7 @@ namespace Core.Erp.Data.SeguridadAcceso
                     Entity.IdMenu = info.IdMenu == 0 ? null : info.IdMenu;
                     Entity.IPImpresora = info.IPImpresora;
                     Entity.IPUsuario = info.IPMaquina;
+                    Entity.EsContador = info.EsContador;
 
                     var lst = Context.seg_usuario_x_tb_sucursal.Where(q => q.IdUsuario == info.IdUsuario).ToList();
                     Context.seg_usuario_x_tb_sucursal.RemoveRange(lst);

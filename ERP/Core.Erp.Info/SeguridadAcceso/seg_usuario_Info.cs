@@ -29,6 +29,7 @@ namespace Core.Erp.Info.SeguridadAcceso
         public Nullable<int> IdMenu { get; set; }
         public string IPMaquina { get; set; }
         public string IPImpresora { get; set; }
+        public Nullable<bool> EsContador { get; set; }
         public List<seg_Usuario_x_Empresa_Info> lst_usuario_x_empresa { get; set; }
         public List<seg_usuario_x_tb_sucursal_Info> lst_usuario_x_sucursal { get; set; }
     }

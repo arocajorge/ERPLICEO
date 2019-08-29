@@ -9,7 +9,7 @@ namespace Core.Erp.Info.Caja
 {
     public class caj_Caja_Info
     {
-    
+        public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public int IdCaja { get; set; }
         public int IdSucursal { get; set; }
@@ -32,6 +32,8 @@ namespace Core.Erp.Info.Caja
         public string IdUsuarioUltAnu { get; set; }
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string MotivoAnu { get; set; }
+
+        public List<caj_Caja_x_seg_usuario_Info> ListaResponsables { get; set; }
 
     }
 }

@@ -10198,6 +10198,7 @@
     <Content Include="Areas\CuentasPorPagar\Views\ProveedorDetalle\_CmbBanco_ProveedorDetalle.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ProveedorDetalle\Modificar.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ProveedorDetalle\Anular.cshtml" />
+    <Content Include="Areas\Caja\Views\Caja\_GridViewPartial_caja_usuario.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

@@ -80,6 +80,7 @@
     <Compile Include="Caja\caj_Caja_Movimiento_Bus.cs" />
     <Compile Include="Caja\caj_Caja_Movimiento_det_Bus.cs" />
     <Compile Include="Caja\caj_Caja_Movimiento_Tipo_Bus.cs" />
+    <Compile Include="Caja\caj_Caja_x_seg_usuario_Bus.cs" />
     <Compile Include="Caja\caj_parametro_Bus.cs" />
     <Compile Include="Caja\cp_conciliacion_Caja_Bus.cs" />
     <Compile Include="Caja\cp_conciliacion_Caja_det_Bus.cs" />

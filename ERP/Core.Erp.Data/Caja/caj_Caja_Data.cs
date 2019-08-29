@@ -216,6 +216,23 @@ namespace Core.Erp.Data.Caja
                          Fecha_Transac = DateTime.Now
                     };
 
+                    if (info.ListaResponsables != null)
+                    {
+                        int Secuencia = 1;
+
+                        foreach (var item in info.ListaResponsables)
+                        {
+                            Context.caj_Caja_x_seg_usuario.Add(new caj_Caja_x_seg_usuario
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdCaja = info.IdCaja,
+                                Secuencia = Secuencia++,
+                                IdUsuario = item.IdUsuario
+                            });
+
+                        }
+                    }
+
                     Context.caj_Caja.Add(Entity);
                     Context.SaveChanges();
                 }
@@ -248,6 +265,26 @@ namespace Core.Erp.Data.Caja
 
                     Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                     Entity.Fecha_UltMod = info.Fecha_UltMod;
+                   
+                    var lst_Responsables = Context.caj_Caja_x_seg_usuario.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdCaja == info.IdCaja).ToList();
+                    Context.caj_Caja_x_seg_usuario.RemoveRange(lst_Responsables);
+
+                    if (info.ListaResponsables != null)
+                    {
+                        int Secuencia = 1;
+
+                        foreach (var item in info.ListaResponsables)
+                        {
+                            Context.caj_Caja_x_seg_usuario.Add(new caj_Caja_x_seg_usuario
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdCaja = info.IdCaja,
+                                Secuencia = Secuencia++,
+                                IdUsuario= item.IdUsuario
+                            });
+
+                        }
+                    }
                     Context.SaveChanges();
                 }
                 return true;

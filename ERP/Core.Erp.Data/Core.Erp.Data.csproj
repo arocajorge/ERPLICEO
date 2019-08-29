@@ -223,6 +223,7 @@
     <Compile Include="Caja\caj_Caja_Movimiento_Data.cs" />
     <Compile Include="Caja\caj_Caja_Movimiento_det_Data.cs" />
     <Compile Include="Caja\caj_Caja_Movimiento_Tipo_Data.cs" />
+    <Compile Include="Caja\caj_Caja_x_seg_usuario_Data.cs" />
     <Compile Include="Caja\caj_parametro_Data.cs" />
     <Compile Include="Caja\cp_conciliacion_Caja_Data.cs" />
     <Compile Include="Caja\cp_conciliacion_Caja_det_Data.cs" />
@@ -238,6 +239,9 @@
       <DependentUpon>Model_caja.tt</DependentUpon>
     </Compile>
     <Compile Include="caj_Caja_Movimiento_Tipo.cs">
+      <DependentUpon>Model_caja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="caj_Caja_x_seg_usuario.cs">
       <DependentUpon>Model_caja.tt</DependentUpon>
     </Compile>
     <Compile Include="caj_parametro.cs">

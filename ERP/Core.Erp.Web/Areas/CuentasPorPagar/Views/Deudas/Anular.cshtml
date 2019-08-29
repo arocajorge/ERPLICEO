@@ -35,38 +35,68 @@
     @Html.HiddenFor(q => q.info_retencion.info_comprobante.IdTipoCbte);
     @Html.HiddenFor(q => q.info_retencion.info_comprobante.IdCbteCble);
     @Html.HiddenFor(q => q.info_retencion.info_comprobante.IdEmpresa);
-
+    @Html.HiddenFor(q => q.MostrarComboCuentas, new { @id = "MostrarComboCuentas" })
 
     <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-3">
+        <div class="col-md-6">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdSucursal">Sucursal*</label>
                     @Html.DropDownListFor(q => q.IdSucursal, new SelectList(ViewBag.lst_sucursales, "IdSucursal", "Su_descripcion"), new { @class = "form-control", @id = "IdSucursal" })
                     @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdBodega">Bodega</label>
                     @Html.DropDownListFor(q => q.IdBodega, new SelectList(ViewBag.lst_bodega, "IdBodega", "bo_Descripcion"), new { @class = "form-control", @id = "IdBodega" })
                     @Html.ValidationMessageFor(q => q.IdBodega, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdProveedor">Proveedor*</label>
+                    @Html.Partial("_CmbProveedor_CXP", Model.IdProveedor)
+                    @Html.ValidationMessageFor(q => q.IdProveedor, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-12" id="SecuenciaProveedor_Div">
+                <div class="form-group">
+                    <label for="IdBodega">Cuentas</label>
+                    @Html.DropDownListFor(q => q.SecuenciaProveedor, new SelectList(ViewBag.lst_proveedor_detalle, "Secuencia", "NombreAdicional"), new { @class = "form-control", @id = "SecuenciaProveedor" })
+                    @Html.ValidationMessageFor(q => q.SecuenciaProveedor, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdOrden_giro_Tipo">Sustento tributario*</label>
+                    @Html.DropDownListFor(q => q.IdIden_credito, new SelectList(ViewBag.lst_codigos_sri, "IdCodigo_SRI", "co_descripcion"), new { @class = "form-control", @id = "IdIden_credito" })
+                    @Html.ValidationMessageFor(q => q.IdIden_credito, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="co_observacion">Observación*</label>
+                    @Html.TextBoxFor(q => q.co_observacion, new { @class = "form-control", @id = "observacion" })
+                    @Html.ValidationMessageFor(q => q.co_observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="IdTipoServicio">Tipo de servicio</label>
                     @Html.DevExpress().ComboBoxFor(q => q.IdTipoServicio, setting =>
                {
                    setting.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                    setting.Properties.Items.Add("BIENES", "BIEN");
-                   setting.Properties.Items.Add("SERVICIOS","SERVI");
-                   setting.Properties.Items.Add("MIXTO","AMBAS");
+                   setting.Properties.Items.Add("SERVICIOS", "SERVI");
+                   setting.Properties.Items.Add("MIXTO", "AMBAS");
                }).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdTipoServicio, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="co_FechaFactura">Fecha*</label>
                     <div class="input-group date">
@@ -87,7 +117,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="co_FechaContabilizacion">Fecha contabilización*</label>
                     <div class="input-group date">
@@ -107,19 +137,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="IdProveedor">Proveedor*</label>
-                    @Html.Partial("_CmbProveedor_CXP", Model.IdProveedor)
-                    @Html.ValidationMessageFor(q => q.IdProveedor, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
             <div class="col-md-offset-4 col-md-4">
                 <div class="form-group">
                     <label for="co_plazo">Plazo*</label>
@@ -147,17 +164,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="IdOrden_giro_Tipo">Sustento tributario*</label>
-                    @Html.DropDownListFor(q => q.IdIden_credito, new SelectList(ViewBag.lst_codigos_sri, "IdCodigo_SRI", "co_descripcion"), new { @class = "form-control", @id = "IdIden_credito" })
-                    @Html.ValidationMessageFor(q => q.IdIden_credito, "", new { @class = "text-danger" })
-                </div>
-            </div>
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdOrden_giro_Tipo">Tipo documento*</label>
@@ -166,13 +172,10 @@
                 </div>
             </div>
 
-        </div>
-
-        <div class="col-md-6">
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="co_serie">Serie*</label>
-                    @Html.TextBoxFor(q => q.co_serie, new { @class = "form-control" })
+                    @Html.TextBoxFor(q => q.co_serie, new { @class = "form-control", @id = "co_serie" })
                     @Html.ValidationMessageFor(q => q.co_serie, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -190,25 +193,9 @@
                     @Html.ValidationMessageFor(q => q.Num_Autorizacion, "", new { @class = "text-danger" })
                 </div>
             </div>
-
         </div>
     </div>
 
-
-
-
-    <div class="row">
-
-        <div class="col-md-12">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="co_observacion">Observación*</label>
-                    @Html.TextBoxFor(q => q.co_observacion, new { @class = "form-control", @id = "observacion" })
-                    @Html.ValidationMessageFor(q => q.co_observacion, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
         <div id="Tabs" role="tabpanel">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="active">
@@ -523,9 +510,10 @@
         }
         <script>
 
-CargarPuntosDeVenta();
+//CargarPuntosDeVenta();
 
 $(function () {
+    MostrarCuentas();
 
     $("#IdSucursal").change(function () {
         cargar_bodega();
@@ -814,4 +802,45 @@ function CargarPuntosDeVenta() {
         }
     });
 }
-        </script>
+
+function MostrarProveedorDetalle() {
+    $("#SecuenciaProveedor").empty();
+    var datos = {
+        IdProveedor: IdProveedor.GetValue()
+    }
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(datos),
+        url: '@Url.Action("MostrarProveedorDetalle", "Deudas",new { Area = "CuentasPorPagar"})',
+        async: false,
+        bDeferRender: true,
+        bProcessing: true,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            console.log(data.MostrarComboCuentas);
+            $("#MostrarComboCuentas").val(data.MostrarComboCuentas);
+            if (data.resultado.length > 0) {
+                $.each(data.resultado, function (i, row) {
+                    $("#SecuenciaProveedor").append("<option value=" + row.Secuencia + ">" + row.NombreAdicional + "</option>");
+                });
+            }
+            MostrarCuentas();
+
+
+        },
+        error: function (error) {
+        }
+    });
+};
+
+function MostrarCuentas() {
+    var MostrarCuentas = $("#MostrarComboCuentas").val();
+    if (MostrarCuentas == 1) {
+        $("#SecuenciaProveedor_Div").show();
+    }
+    else {
+        $("#SecuenciaProveedor_Div").hide();
+    }
+}
+</script>

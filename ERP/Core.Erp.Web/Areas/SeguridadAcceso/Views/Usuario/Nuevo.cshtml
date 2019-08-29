@@ -64,7 +64,6 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-
             <div class="col-md-3">
                 <div class="form-group">
                     <label for=""></label>
@@ -80,6 +79,17 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
+                    <label for="bo_EsBodega"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.EsContador, settings =>
+                            {
+                                settings.Name = "EsContador";
+                                settings.Text = "Es Contador";
+                            }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.EsContador, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
                     <label for=""></label>
                     @Html.DevExpress().CheckBoxFor(q => q.ExigirDirectivaContrasenia, settings =>
                            {
@@ -90,7 +100,7 @@
                     @Html.ValidationMessageFor(q => q.ExigirDirectivaContrasenia, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for=""></label>
                     @Html.DevExpress().CheckBoxFor(q => q.CambiarContraseniaSgtSesion, settings =>

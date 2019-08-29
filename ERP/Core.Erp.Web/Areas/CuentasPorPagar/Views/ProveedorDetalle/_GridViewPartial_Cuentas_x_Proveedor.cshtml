@@ -1,7 +1,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridViewPartial_Cuentas_x_Proveedor";
-        settings.CallbackRouteValues = new { Controller = "Proveedor", Action = "GridViewPartial_Cuentas_x_Proveedor", IdProveedor = ViewBag.IdProveedor };
+        settings.CallbackRouteValues = new { Controller = "ProveedorDetalle", Action = "GridViewPartial_Cuentas_x_Proveedor", IdEmpresa = ViewBag.IdEmpresa, IdProveedor = ViewBag.IdProveedor };
         settings.KeyFieldName = "Secuencia";
         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
 

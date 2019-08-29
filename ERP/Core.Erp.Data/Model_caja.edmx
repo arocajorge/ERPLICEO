@@ -93,6 +93,17 @@
           <Property Name="MotivoAnulacion" Type="varchar" MaxLength="200" />
           <Property Name="SeDeposita" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="caj_Caja_x_seg_usuario">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdCaja" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdCaja" Type="int" Nullable="false" />
+          <Property Name="Secuencia" Type="int" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="caj_parametro">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -437,6 +448,20 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_conciliacion_Caja_det_x
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_caj_Caja_x_seg_usuario_caj_Caja">
+          <End Role="caj_Caja" Type="Self.caj_Caja" Multiplicity="1" />
+          <End Role="caj_Caja_x_seg_usuario" Type="Self.caj_Caja_x_seg_usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="caj_Caja">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCaja" />
+            </Principal>
+            <Dependent Role="caj_Caja_x_seg_usuario">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCaja" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_cp_conciliacion_Caja_caj_Caja">
           <End Role="caj_Caja" Type="Self.caj_Caja" Multiplicity="1" />
           <End Role="cp_conciliacion_Caja" Type="Self.cp_conciliacion_Caja" Multiplicity="*" />
@@ -560,6 +585,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_conciliacion_Caja_det_x
           <EntitySet Name="caj_Caja_Movimiento" EntityType="Self.caj_Caja_Movimiento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="caj_Caja_Movimiento_det" EntityType="Self.caj_Caja_Movimiento_det" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="caj_Caja_Movimiento_Tipo" EntityType="Self.caj_Caja_Movimiento_Tipo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="caj_Caja_x_seg_usuario" EntityType="Self.caj_Caja_x_seg_usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="caj_parametro" EntityType="Self.caj_parametro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cp_conciliacion_Caja" EntityType="Self.cp_conciliacion_Caja" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cp_conciliacion_Caja_det" EntityType="Self.cp_conciliacion_Caja_det" Schema="dbo" store:Type="Tables" />
@@ -682,6 +708,10 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_conciliacion_Caja_det_x
           <AssociationSet Name="FK_caj_Caja_Movimiento_det_caj_Caja_Movimiento" Association="Self.FK_caj_Caja_Movimiento_det_caj_Caja_Movimiento">
             <End Role="caj_Caja_Movimiento" EntitySet="caj_Caja_Movimiento" />
             <End Role="caj_Caja_Movimiento_det" EntitySet="caj_Caja_Movimiento_det" />
+          </AssociationSet>
+          <AssociationSet Name="FK_caj_Caja_x_seg_usuario_caj_Caja" Association="Self.FK_caj_Caja_x_seg_usuario_caj_Caja">
+            <End Role="caj_Caja" EntitySet="caj_Caja" />
+            <End Role="caj_Caja_x_seg_usuario" EntitySet="caj_Caja_x_seg_usuario" />
           </AssociationSet>
           <AssociationSet Name="FK_cp_conciliacion_Caja_caj_Caja" Association="Self.FK_cp_conciliacion_Caja_caj_Caja">
             <End Role="caj_Caja" EntitySet="caj_Caja" />
@@ -821,6 +851,11 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_conciliacion_Caja_det_x
           </AssociationSet>
           <EntitySet Name="vwcp_conciliacion_Caja_det" EntityType="Model_caja.vwcp_conciliacion_Caja_det" />
           <EntitySet Name="vwcaj_Caja_Movimiento_por_conciliar" EntityType="Model_caja.vwcaj_Caja_Movimiento_por_conciliar" />
+          <EntitySet Name="caj_Caja_x_seg_usuario" EntityType="Model_caja.caj_Caja_x_seg_usuario" />
+          <AssociationSet Name="FK_caj_Caja_x_seg_usuario_caj_Caja" Association="Model_caja.FK_caj_Caja_x_seg_usuario_caj_Caja">
+            <End Role="caj_Caja" EntitySet="caj_Caja" />
+            <End Role="caj_Caja_x_seg_usuario" EntitySet="caj_Caja_x_seg_usuario" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="vwcp_conciliacion_Caja_det_x_ValeCaja">
           <Key>
@@ -1021,6 +1056,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_conciliacion_Caja_det_x
           <Property Name="MotivoAnu" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="caj_Caja_Movimiento" Relationship="Model_caja.FK_caj_Caja_Movimiento_caj_Caja" FromRole="caj_Caja" ToRole="caj_Caja_Movimiento" />
           <NavigationProperty Name="cp_conciliacion_Caja" Relationship="Model_caja.FK_cp_conciliacion_Caja_caj_Caja" FromRole="caj_Caja" ToRole="cp_conciliacion_Caja" />
+          <NavigationProperty Name="caj_Caja_x_seg_usuario" Relationship="Model_caja.FK_caj_Caja_x_seg_usuario_caj_Caja" FromRole="caj_Caja" ToRole="caj_Caja_x_seg_usuario" />
         </EntityType>
         <Association Name="FK_caj_Caja_Movimiento_caj_Caja">
           <End Type="Model_caja.caj_Caja" Role="caj_Caja" Multiplicity="1" />
@@ -1342,6 +1378,32 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_conciliacion_Caja_det_x
           <Property Name="IdPersona" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="SecuenciaCaja" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
+        <EntityType Name="caj_Caja_x_seg_usuario">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdCaja" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdCaja" Type="Int32" Nullable="false" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="caj_Caja" Relationship="Model_caja.FK_caj_Caja_x_seg_usuario_caj_Caja" FromRole="caj_Caja_x_seg_usuario" ToRole="caj_Caja" />
+        </EntityType>
+        <Association Name="FK_caj_Caja_x_seg_usuario_caj_Caja">
+          <End Type="Model_caja.caj_Caja" Role="caj_Caja" Multiplicity="1" />
+          <End Type="Model_caja.caj_Caja_x_seg_usuario" Role="caj_Caja_x_seg_usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="caj_Caja">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCaja" />
+            </Principal>
+            <Dependent Role="caj_Caja_x_seg_usuario">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdCaja" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1655,6 +1717,16 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_conciliacion_Caja_det_x
                 <ScalarProperty Name="IdCaja" ColumnName="IdCaja" />
                 <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
                 <ScalarProperty Name="IdTipocbte" ColumnName="IdTipocbte" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="caj_Caja_x_seg_usuario">
+            <EntityTypeMapping TypeName="Model_caja.caj_Caja_x_seg_usuario">
+              <MappingFragment StoreEntitySet="caj_Caja_x_seg_usuario">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdCaja" ColumnName="IdCaja" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

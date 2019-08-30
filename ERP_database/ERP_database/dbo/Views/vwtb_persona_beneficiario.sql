@@ -1,32 +1,35 @@
-﻿CREATE VIEW dbo.vwtb_persona_beneficiario
+﻿CREATE VIEW [dbo].[vwtb_persona_beneficiario]
 AS
-SELECT        prov.IdEmpresa, 'PROVEE' + '-' + CAST(prov.IdPersona AS varchar(20)) + '-' + CAST(prov.IdProveedor AS varchar(20)) AS IdBeneficiario, 'PROVEE' AS IdTipo_Persona, prov.IdPersona, 
-                         prov.IdProveedor AS IdEntidad, prov.pr_codigo AS Codigo, pers.pe_nombreCompleto AS Nombre, pers.pe_nombreCompleto pr_girar_cheque_a, pers.pe_razonSocial, pers.pe_cedulaRuc, pers.pe_Naturaleza, prov.IdCtaCble_CXP AS IdCtaCble, 
-                         null AS IdCentroCosto, NULL AS IdSubCentroCosto, null IdCtaCble_Anticipo, prov.IdCtaCble_Gasto, prov.pr_estado AS Estado, prov.IdTipoCta_acreditacion_cat, prov.num_cta_acreditacion, 
-                         prov.IdBanco_acreditacion, pers.pe_apellido, pers.pe_nombre, pers.pe_nombreCompleto, pers.IdTipoDocumento, pers.pe_direccion, null pe_telefonoCasa, pers.pe_celular, pers.pe_correo
-FROM            tb_persona AS pers INNER JOIN
-                         cp_proveedor AS prov ON pers.IdPersona = prov.IdPersona
+SELECT prov.IdEmpresa, 'PROVEE' + '-' + CAST(prov.IdPersona AS varchar(20)) + '-' + CAST(prov.IdProveedor AS varchar(20)) AS IdBeneficiario, 'PROVEE' AS IdTipo_Persona, prov.IdPersona, prov.IdProveedor AS IdEntidad, 
+                  prov.pr_codigo AS Codigo, pers.pe_nombreCompleto AS Nombre, pers.pe_nombreCompleto pr_girar_cheque_a, pers.pe_razonSocial, pers.pe_cedulaRuc, pers.pe_Naturaleza, prov.IdCtaCble_CXP AS IdCtaCble, NULL 
+                  AS IdCentroCosto, NULL AS IdSubCentroCosto, NULL IdCtaCble_Anticipo, prov.IdCtaCble_Gasto, prov.pr_estado AS Estado, isnull(prod.IdTipoCta_acreditacion_cat, prov.IdTipoCta_acreditacion_cat) IdTipoCta_acreditacion_cat, isnull(prod.num_cta_acreditacion,prov.num_cta_acreditacion) num_cta_acreditacion, isnull(prod.IdBanco_acreditacion, prov.IdBanco_acreditacion)IdBanco_acreditacion, pers.pe_apellido, 
+                  pers.pe_nombre, pers.pe_nombreCompleto, pers.IdTipoDocumento, pers.pe_direccion, NULL pe_telefonoCasa, pers.pe_celular, pers.pe_correo
+FROM     tb_persona AS pers INNER JOIN
+                  cp_proveedor AS prov ON pers.IdPersona = prov.IdPersona LEFT JOIN(
+				  SELECT D.IdEmpresa, D.IdProveedor, D.IdBanco_acreditacion, D.num_cta_acreditacion, D.IdTipoCta_acreditacion_cat
+				  FROM cp_proveedor_detalle AS D 
+				  WHERE D.Secuencia = 1
+				  ) AS prod on prov.IdEmpresa = prod.IdEmpresa and prov.IdProveedor = prod.IdProveedor
 UNION
-SELECT        cli.IdEmpresa, 'CLIENTE' + '-' + CAST(pers.IdPersona AS varchar(20)) + '-' + CAST(cli.IdCliente AS varchar(20)) AS IdBeneficiario, 'CLIENTE' AS IdTipo_Persona, pers.IdPersona, cli.IdCliente, cli.Codigo, 
-                         pers.pe_nombreCompleto, pers.pe_nombreCompleto AS Girado_a, pers.pe_razonSocial, pers.pe_cedulaRuc, pers.pe_Naturaleza, cli.IdCtaCble_cxc_Credito IdCtaCble_cxc, NULL AS Expr2, NULL AS Expr3, cli.IdCtaCble_cxc_Credito AS Expr4, 
-                         cli.IdCtaCble_cxc_Credito AS Expr5, cli.Estado, pers.IdTipoCta_acreditacion_cat, pers.num_cta_acreditacion, pers.IdBanco_acreditacion, pers.pe_apellido, pers.pe_nombre, pers.pe_nombreCompleto AS Expr6, 
-                         pers.IdTipoDocumento, pers.pe_direccion, null pe_telefonoCasa, pers.pe_celular, pers.pe_correo
-FROM            tb_persona AS pers INNER JOIN
-                         fa_cliente AS cli ON pers.IdPersona = cli.IdPersona
+SELECT cli.IdEmpresa, 'CLIENTE' + '-' + CAST(pers.IdPersona AS varchar(20)) + '-' + CAST(cli.IdCliente AS varchar(20)) AS IdBeneficiario, 'CLIENTE' AS IdTipo_Persona, pers.IdPersona, cli.IdCliente, cli.Codigo, pers.pe_nombreCompleto, 
+                  pers.pe_nombreCompleto AS Girado_a, pers.pe_razonSocial, pers.pe_cedulaRuc, pers.pe_Naturaleza, cli.IdCtaCble_cxc_Credito IdCtaCble_cxc, NULL AS Expr2, NULL AS Expr3, cli.IdCtaCble_cxc_Credito AS Expr4, 
+                  cli.IdCtaCble_cxc_Credito AS Expr5, cli.Estado, pers.IdTipoCta_acreditacion_cat, pers.num_cta_acreditacion, pers.IdBanco_acreditacion, pers.pe_apellido, pers.pe_nombre, pers.pe_nombreCompleto AS Expr6, pers.IdTipoDocumento, 
+                  pers.pe_direccion, NULL pe_telefonoCasa, pers.pe_celular, pers.pe_correo
+FROM     tb_persona AS pers INNER JOIN
+                  fa_cliente AS cli ON pers.IdPersona = cli.IdPersona
 UNION
-SELECT        emp.IdEmpresa, 'EMPLEA' + '-' + CAST(pers.IdPersona AS varchar(20)) + '-' + CAST(emp.IdEmpleado AS varchar(20)) AS IdBeneficiario, 'EMPLEA' AS IdTipo_Persona, pers.IdPersona, emp.IdEmpleado, 
-                         emp.em_codigo, pers.pe_nombreCompleto, pers.pe_nombreCompleto AS Expr1, pers.pe_razonSocial, pers.pe_cedulaRuc, pers.pe_Naturaleza, emp.IdCtaCble_Emplea, NULL IdCentroCosto, 
-                         NULL IdCentroCosto_sub_centro_costo, emp.IdCtaCble_Emplea AS Expr2, emp.IdCtaCble_Emplea AS Expr3, emp.em_estado, emp.em_tipoCta, emp.em_NumCta, emp.IdBanco, pers.pe_apellido, 
-                         pers.pe_nombre, pers.pe_nombreCompleto AS Expr4, pers.IdTipoDocumento, pers.pe_direccion, null pe_telefonoCasa, pers.pe_celular, pers.pe_correo
-FROM            tb_persona AS pers INNER JOIN
-                         ro_empleado AS emp ON pers.IdPersona = emp.IdPersona
+SELECT emp.IdEmpresa, 'EMPLEA' + '-' + CAST(pers.IdPersona AS varchar(20)) + '-' + CAST(emp.IdEmpleado AS varchar(20)) AS IdBeneficiario, 'EMPLEA' AS IdTipo_Persona, pers.IdPersona, emp.IdEmpleado, emp.em_codigo, 
+                  pers.pe_nombreCompleto, pers.pe_nombreCompleto AS Expr1, pers.pe_razonSocial, pers.pe_cedulaRuc, pers.pe_Naturaleza, emp.IdCtaCble_Emplea, NULL IdCentroCosto, NULL IdCentroCosto_sub_centro_costo, 
+                  emp.IdCtaCble_Emplea AS Expr2, emp.IdCtaCble_Emplea AS Expr3, emp.em_estado, emp.em_tipoCta, emp.em_NumCta, emp.IdBanco, pers.pe_apellido, pers.pe_nombre, pers.pe_nombreCompleto AS Expr4, pers.IdTipoDocumento, 
+                  pers.pe_direccion, NULL pe_telefonoCasa, pers.pe_celular, pers.pe_correo
+FROM     tb_persona AS pers INNER JOIN
+                  ro_empleado AS emp ON pers.IdPersona = emp.IdPersona
 UNION
-SELECT        em.IdEmpresa, 'PERSONA' + '-' + CAST(B.IdPersona AS varchar(20)) + '-' + CAST(B.IdPersona AS varchar(20)) AS IdBeneficiario, 'PERSONA' AS IdTipo_Persona, B.IdPersona, B.IdPersona AS Expr1, B.CodPersona, 
-                         B.pe_nombreCompleto, B.pe_nombreCompleto AS Expr2, B.pe_razonSocial, B.pe_cedulaRuc, B.pe_Naturaleza, NULL AS Expr3, NULL AS Expr4, NULL AS Expr5, NULL AS Expr6, NULL AS Expr7, B.pe_estado, 
-                         B.IdTipoCta_acreditacion_cat, B.num_cta_acreditacion, B.IdBanco_acreditacion, B.pe_apellido, B.pe_nombre, B.pe_nombreCompleto AS Expr8, B.IdTipoDocumento, B.pe_direccion, null pe_telefonoCasa, 
-                         B.pe_celular, B.pe_correo
-FROM            tb_persona AS B CROSS JOIN
-                         tb_empresa AS em
+SELECT em.IdEmpresa, 'PERSONA' + '-' + CAST(B.IdPersona AS varchar(20)) + '-' + CAST(B.IdPersona AS varchar(20)) AS IdBeneficiario, 'PERSONA' AS IdTipo_Persona, B.IdPersona, B.IdPersona AS Expr1, B.CodPersona, B.pe_nombreCompleto, 
+                  B.pe_nombreCompleto AS Expr2, B.pe_razonSocial, B.pe_cedulaRuc, B.pe_Naturaleza, NULL AS Expr3, NULL AS Expr4, NULL AS Expr5, NULL AS Expr6, NULL AS Expr7, B.pe_estado, B.IdTipoCta_acreditacion_cat, 
+                  B.num_cta_acreditacion, B.IdBanco_acreditacion, B.pe_apellido, B.pe_nombre, B.pe_nombreCompleto AS Expr8, B.IdTipoDocumento, B.pe_direccion, NULL pe_telefonoCasa, B.pe_celular, B.pe_correo
+FROM     tb_persona AS B CROSS JOIN
+                  tb_empresa AS em
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 

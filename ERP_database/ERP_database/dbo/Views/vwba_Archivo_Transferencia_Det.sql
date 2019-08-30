@@ -1,21 +1,26 @@
-﻿CREATE VIEW dbo.vwba_Archivo_Transferencia_Det
+﻿CREATE VIEW [dbo].[vwba_Archivo_Transferencia_Det]
 AS
-SELECT dbo.ba_Archivo_Transferencia_Det.IdEmpresa, dbo.ba_Archivo_Transferencia_Det.IdArchivo, dbo.ba_Archivo_Transferencia_Det.Secuencia, dbo.ba_Archivo_Transferencia_Det.IdEmpresa_OP, 
-                  dbo.ba_Archivo_Transferencia_Det.IdOrdenPago, dbo.ba_Archivo_Transferencia_Det.Secuencia_OP, dbo.ba_Archivo_Transferencia_Det.Estado, dbo.ba_Archivo_Transferencia_Det.Valor, 
-                  dbo.ba_Archivo_Transferencia_Det.Secuencial_reg_x_proceso, dbo.cp_proveedor.IdTipoCta_acreditacion_cat, dbo.cp_proveedor.num_cta_acreditacion, dbo.cp_proveedor.IdBanco_acreditacion, dbo.cp_proveedor.pr_direccion, 
-                  dbo.cp_proveedor.pr_correo, dbo.tb_persona.IdTipoDocumento, dbo.tb_persona.pe_cedulaRuc, dbo.tb_persona.pe_nombreCompleto, dbo.tb_banco.CodigoLegal AS CodigoLegalBanco, dbo.ba_Archivo_Transferencia_Det.Referencia, 
-                  dbo.cp_orden_pago.IdTipo_Persona, dbo.cp_orden_pago.IdPersona, dbo.cp_orden_pago.IdEntidad, dbo.ct_cbtecble.cb_Fecha, ct.IdCtaCble_Acreedora, pc.IdCtaCble + ' - ' + pc.pc_Cuenta AS pc_Cuenta, 
-                  dbo.cp_orden_pago_det.IdEmpresa_cxp, dbo.cp_orden_pago_det.IdTipoCbte_cxp, dbo.cp_orden_pago_det.IdCbteCble_cxp
+SELECT d.IdEmpresa, d.IdArchivo, d.Secuencia, d.IdEmpresa_OP, d.IdOrdenPago, d.Secuencia_OP, d.Estado, d.Valor, d.Secuencial_reg_x_proceso, 
+
+isnull(pd.IdTipoCta_acreditacion_cat, dbo.cp_proveedor.IdTipoCta_acreditacion_cat) IdTipoCta_acreditacion_cat, 
+isnull(pd.num_cta_acreditacion, dbo.cp_proveedor.num_cta_acreditacion)num_cta_acreditacion, 
+isnull(pd.IdBanco_acreditacion, dbo.cp_proveedor.IdBanco_acreditacion) IdBanco_acreditacion, 
+				  dbo.cp_proveedor.pr_direccion, isnull(pd.pr_correo, dbo.cp_proveedor.pr_correo)pr_correo, dbo.tb_persona.IdTipoDocumento, dbo.tb_persona.pe_cedulaRuc, 
+				  isnull(pd.NombreAdicional, dbo.tb_persona.pe_nombreCompleto)pe_nombreCompleto, 
+                  dbo.tb_banco.CodigoLegal AS CodigoLegalBanco, d.Referencia, dbo.cp_orden_pago.IdTipo_Persona, dbo.cp_orden_pago.IdPersona, dbo.cp_orden_pago.IdEntidad, dbo.ct_cbtecble.cb_Fecha, ct.IdCtaCble_Acreedora, 
+                  pc.IdCtaCble + ' - ' + pc.pc_Cuenta AS pc_Cuenta, dbo.cp_orden_pago_det.IdEmpresa_cxp, dbo.cp_orden_pago_det.IdTipoCbte_cxp, dbo.cp_orden_pago_det.IdCbteCble_cxp
 FROM     dbo.ba_Archivo_Transferencia INNER JOIN
-                  dbo.ba_Archivo_Transferencia_Det INNER JOIN
-                  dbo.cp_orden_pago_det ON dbo.ba_Archivo_Transferencia_Det.IdEmpresa_OP = dbo.cp_orden_pago_det.IdEmpresa AND dbo.ba_Archivo_Transferencia_Det.IdOrdenPago = dbo.cp_orden_pago_det.IdOrdenPago AND 
-                  dbo.ba_Archivo_Transferencia_Det.Secuencia_OP = dbo.cp_orden_pago_det.Secuencia INNER JOIN
+                  dbo.ba_Archivo_Transferencia_Det AS d INNER JOIN
+                  dbo.cp_orden_pago_det ON d.IdEmpresa_OP = dbo.cp_orden_pago_det.IdEmpresa AND d.IdOrdenPago = dbo.cp_orden_pago_det.IdOrdenPago AND d.Secuencia_OP = dbo.cp_orden_pago_det.Secuencia INNER JOIN
                   dbo.cp_orden_pago ON dbo.cp_orden_pago_det.IdEmpresa = dbo.cp_orden_pago.IdEmpresa AND dbo.cp_orden_pago_det.IdOrdenPago = dbo.cp_orden_pago.IdOrdenPago INNER JOIN
                   dbo.tb_persona INNER JOIN
                   dbo.cp_proveedor ON dbo.tb_persona.IdPersona = dbo.cp_proveedor.IdPersona ON dbo.cp_orden_pago.IdPersona = dbo.cp_proveedor.IdPersona AND dbo.cp_orden_pago.IdEntidad = dbo.cp_proveedor.IdProveedor AND 
-                  dbo.cp_orden_pago.IdEmpresa = dbo.cp_proveedor.IdEmpresa ON dbo.ba_Archivo_Transferencia.IdEmpresa = dbo.ba_Archivo_Transferencia_Det.IdEmpresa AND 
-                  dbo.ba_Archivo_Transferencia.IdArchivo = dbo.ba_Archivo_Transferencia_Det.IdArchivo INNER JOIN
-                  dbo.tb_banco ON dbo.cp_proveedor.IdBanco_acreditacion = dbo.tb_banco.IdBanco INNER JOIN
+                  dbo.cp_orden_pago.IdEmpresa = dbo.cp_proveedor.IdEmpresa ON dbo.ba_Archivo_Transferencia.IdEmpresa = d.IdEmpresa AND dbo.ba_Archivo_Transferencia.IdArchivo = d.IdArchivo 
+				  left join 
+				  cp_orden_giro as og on cp_orden_pago_det.IdEmpresa_cxp = og.IdEmpresa and cp_orden_pago_det.IdTipoCbte_cxp = og.IdTipoCbte_Ogiro and cp_orden_pago_det.IdCbteCble_cxp = og.IdCbteCble_Ogiro left join
+				  cp_proveedor_detalle as pd on pd.IdEmpresa = og.IdEmpresa and pd.IdProveedor = og.IdProveedor and pd.Secuencia = og.SecuenciaProveedor
+				  INNER JOIN
+                  dbo.tb_banco ON dbo.tb_banco.IdBanco = ISNULL(pd.IdBanco_acreditacion, dbo.cp_proveedor.IdBanco_acreditacion) INNER JOIN
                   dbo.ct_cbtecble ON dbo.cp_orden_pago_det.IdEmpresa_cxp = dbo.ct_cbtecble.IdEmpresa AND dbo.cp_orden_pago_det.IdTipoCbte_cxp = dbo.ct_cbtecble.IdTipoCbte AND 
                   dbo.cp_orden_pago_det.IdCbteCble_cxp = dbo.ct_cbtecble.IdCbteCble LEFT OUTER JOIN
                   dbo.vwct_cbtecble_con_ctacble_acreedora AS ct ON ct.IdEmpresa = dbo.cp_orden_pago_det.IdEmpresa AND ct.IdTipoCbte = dbo.cp_orden_pago_det.IdTipoCbte_cxp AND 

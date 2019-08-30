@@ -1,11 +1,11 @@
 ﻿CREATE VIEW dbo.vwcp_SolicitudPago
 AS
-SELECT        dbo.cp_SolicitudPago.IdEmpresa, dbo.cp_SolicitudPago.IdSolicitud, dbo.cp_SolicitudPago.IdSucursal, dbo.cp_SolicitudPago.Fecha, dbo.cp_SolicitudPago.IdProveedor, dbo.cp_SolicitudPago.Concepto, 
-                         dbo.cp_SolicitudPago.Estado, dbo.cp_SolicitudPago.Valor, dbo.cp_SolicitudPago.Solicitante, dbo.cp_SolicitudPago.GiradoA, dbo.cp_proveedor.pr_codigo, dbo.tb_persona.pe_razonSocial, dbo.tb_persona.pe_apellido, 
-                         dbo.tb_persona.pe_nombre, dbo.tb_persona.pe_nombreCompleto
-FROM            dbo.cp_SolicitudPago INNER JOIN
-                         dbo.cp_proveedor ON dbo.cp_SolicitudPago.IdEmpresa = dbo.cp_proveedor.IdEmpresa AND dbo.cp_SolicitudPago.IdProveedor = dbo.cp_proveedor.IdProveedor INNER JOIN
-                         dbo.tb_persona ON dbo.cp_proveedor.IdPersona = dbo.tb_persona.IdPersona
+SELECT dbo.cp_SolicitudPago.IdEmpresa, dbo.cp_SolicitudPago.IdSolicitud, dbo.cp_SolicitudPago.IdSucursal, dbo.cp_SolicitudPago.Fecha, dbo.cp_SolicitudPago.IdProveedor, dbo.cp_SolicitudPago.Concepto, dbo.cp_SolicitudPago.Estado, 
+                  dbo.cp_SolicitudPago.Valor, dbo.cp_SolicitudPago.Solicitante, dbo.cp_SolicitudPago.GiradoA, dbo.cp_proveedor.pr_codigo, dbo.tb_persona.pe_razonSocial, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, 
+                  dbo.tb_persona.pe_nombreCompleto, dbo.cp_SolicitudPago.IdUsuarioCreacion
+FROM     dbo.cp_SolicitudPago INNER JOIN
+                  dbo.cp_proveedor ON dbo.cp_SolicitudPago.IdEmpresa = dbo.cp_proveedor.IdEmpresa AND dbo.cp_SolicitudPago.IdProveedor = dbo.cp_proveedor.IdProveedor INNER JOIN
+                  dbo.tb_persona ON dbo.cp_proveedor.IdPersona = dbo.tb_persona.IdPersona
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_SolicitudPago';
 
@@ -90,7 +90,7 @@ Begin DesignProperties =
                Right = 247
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 2
          End
          Begin Table = "cp_proveedor"
             Begin Extent = 
@@ -136,14 +136,14 @@ Begin DesignProperties =
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -151,4 +151,6 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_SolicitudPago';
+
+
 

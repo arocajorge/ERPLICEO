@@ -1,4 +1,4 @@
-﻿CREATE VIEW [web].[VWBAN_013]
+﻿CREATE VIEW [web].[VWBAN_014]
 AS
 SELECT dbo.cp_orden_pago_cancelaciones.IdEmpresa_pago, dbo.cp_orden_pago_cancelaciones.IdTipoCbte_pago, dbo.cp_orden_pago_cancelaciones.IdCbteCble_pago, CASE WHEN ba_Archivo_Transferencia.IdArchivo IS NOT NULL 
                   THEN 'ARCHIVO BANCARIO' ELSE ba_Cbte_Ban_tipo.Descripcion END AS TipoPago, dbo.tb_persona.pe_nombreCompleto, dbo.ba_Cbte_Ban.IdBanco, dbo.ba_Banco_Cuenta.ba_descripcion, ISNULL(dbo.ba_Cbte_Ban.cb_Cheque, 

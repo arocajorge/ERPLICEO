@@ -1,4 +1,5 @@
 ﻿--exec [web].[SPROL_013] 1,1,1,1,17,17,1,99999,1,99999,'01/01/2019','31/12/2019'
+-- exec [web].[SPROL_013] 1,2,1,1,276,276,1,99999,1,99999,'01/12/2018','31/07/2019'
 
 CREATE  PROCEDURE [web].[SPROL_013]
 @idempresa int,
@@ -14,8 +15,6 @@ CREATE  PROCEDURE [web].[SPROL_013]
 @fecha_inicio date,
 @fecha_fin date
 AS
-
-
 
 
 --declare 
@@ -36,10 +35,13 @@ AS
 
 BEGIN
 
-SELECT        dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpresa, dbo.ro_rol_detalle_x_rubro_acumulado.IdRol, dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpleado , dbo.ro_empleado.IdArea, dbo.ro_empleado.IdDivision, dbo.ro_rubros_calculados.IdRubro_DIII as IdRubro, 
+ select * from ( 
+SELECT    dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpresa, dbo.ro_rol_detalle_x_rubro_acumulado.IdRol, dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpleado , dbo.ro_empleado.IdArea, dbo.ro_empleado.IdDivision, dbo.ro_rubros_calculados.IdRubro_DIII as IdRubro, 
                          dbo.ro_rol_detalle_x_rubro_acumulado.Valor AS Provision, dbo.ro_rol_detalle_x_rubro_acumulado.Estado, dbo.ro_rol_detalle_x_rubro_acumulado.IdSucursal, dbo.ro_empleado.em_codigo, 
-                         dbo.ro_Departamento.de_descripcion, dbo.tb_sucursal.Su_Descripcion, dbo.tb_persona.pe_nombreCompleto, dbo.ro_Division.Descripcion AS Division, dbo.ro_area.Descripcion AS Area,  CONCAT(dbo.ro_periodo.pe_anio, '-', 
+                        dbo.ro_Departamento.de_descripcion, dbo.tb_sucursal.Su_Descripcion, dbo.tb_persona.pe_nombreCompleto, dbo.ro_Division.Descripcion AS Division, dbo.ro_area.Descripcion AS Area,  CONCAT(dbo.ro_periodo.pe_anio, '-', 
+
                          DATENAME(MONTH, dbo.ro_periodo.pe_FechaIni))  AS Mes, 0.00 AS Prestamo, su.Valor AS Sueldo--ROUND( dbo.ro_rol_detalle_x_rubro_acumulado.Valor * 12,2) AS Sueldo
+						 ,dbo.ro_periodo.pe_anio,dbo.ro_periodo.pe_mes -- se añadio, para filtrar  27/08/2019 by Acueva
 FROM            dbo.ro_rol_detalle_x_rubro_acumulado INNER JOIN
                          dbo.ro_rol ON dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.ro_rol_detalle_x_rubro_acumulado.IdRol = dbo.ro_rol.IdRol INNER JOIN
                          dbo.ro_empleado ON dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpresa = dbo.ro_empleado.IdEmpresa AND dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpleado = dbo.ro_empleado.IdEmpleado INNER JOIN
@@ -54,14 +56,17 @@ FROM            dbo.ro_rol_detalle_x_rubro_acumulado INNER JOIN
                          dbo.ro_rubros_calculados ON dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpresa = dbo.ro_rubros_calculados.IdEmpresa AND dbo.ro_rol_detalle_x_rubro_acumulado.IdRubro = dbo.ro_rubros_calculados.IdRubro_prov_DIII INNER JOIN
 						 (
 							SELECT rd.IdEmpresa, rd.IdRol, rd.IdEmpleado, SUM(rd.Valor) AS Valor, ro_rubro_tipo.ru_tipo, ro_rol.IdNominaTipoLiqui
-							FROM     ro_rol_detalle AS rd INNER JOIN
-							ro_rubro_tipo ON rd.IdEmpresa = ro_rubro_tipo.IdEmpresa AND rd.IdRubro = ro_rubro_tipo.IdRubro INNER JOIN
+							FROM     ro_rol_detalle AS rd 	
+					
+							INNER JOIN ro_rubro_tipo ON rd.IdEmpresa = ro_rubro_tipo.IdEmpresa AND rd.IdRubro = ro_rubro_tipo.IdRubro INNER JOIN
 							ro_rol ON rd.IdEmpresa = ro_rol.IdEmpresa AND rd.IdRol = ro_rol.IdRol INNER JOIN
 							ro_rubros_calculados ON ro_rubro_tipo.IdEmpresa = ro_rubros_calculados.IdEmpresa
 							WHERE  (ro_rubro_tipo.ru_tipo = 'I') AND (ro_rol.IdNominaTipoLiqui = 2)
 							AND RD.IdRubro NOT IN (ro_rubros_calculados.IdRubro_fondo_reserva, ro_rubros_calculados.IdRubro_DIII, ro_rubros_calculados.IdRubro_DIV)
 							AND ro_rubro_tipo.rub_grupo = 'INGRESOS'
 							GROUP BY rd.IdEmpresa, rd.IdRol, rd.IdEmpleado, ro_rubro_tipo.ru_tipo, ro_rol.IdNominaTipoLiqui
+						
+
 						 ) AS Su on su.IdEmpresa = ro_rol_detalle_x_rubro_acumulado.IdEmpresa
 						 and su.IdRol = ro_rol_detalle_x_rubro_acumulado.IdRol
 						 and su.IdEmpleado = ro_rol_detalle_x_rubro_acumulado.IdEmpleado
@@ -82,13 +87,16 @@ FROM            dbo.ro_rol_detalle_x_rubro_acumulado INNER JOIN
 						  and ro_empleado.IdDivision>=@IdDivisionInicio
 						 and ro_empleado.IdDivision<=@IdDivisionFin
 						 and ro_periodo.pe_FechaIni between @fecha_inicio and @fecha_fin
+						
 
 union all
 
-SELECT        dbo.ro_rol_detalle.IdEmpresa, dbo.ro_rol_detalle.IdRol, dbo.ro_rol_detalle.IdEmpleado , dbo.ro_empleado.IdArea, dbo.ro_empleado.IdDivision, dbo.ro_rubros_calculados.IdRubro_DIII, 
+SELECT      dbo.ro_rol_detalle.IdEmpresa, dbo.ro_rol_detalle.IdRol, dbo.ro_rol_detalle.IdEmpleado , dbo.ro_empleado.IdArea, dbo.ro_empleado.IdDivision, dbo.ro_rubros_calculados.IdRubro_DIII, 
                          dbo.ro_rol_detalle.Valor AS Provision, '', dbo.ro_rol_detalle.IdSucursal, dbo.ro_empleado.em_codigo, 
                          dbo.ro_Departamento.de_descripcion, dbo.tb_sucursal.Su_Descripcion, dbo.tb_persona.pe_nombreCompleto, dbo.ro_Division.Descripcion AS Division, dbo.ro_area.Descripcion AS Area,  CONCAT(dbo.ro_periodo.pe_anio, '-', 
+						
                          DATENAME(MONTH, dbo.ro_periodo.pe_FechaIni))  AS Mes, 0.00 AS Prestamo, su.Valor AS Sueldo
+						 ,dbo.ro_periodo.pe_anio,dbo.ro_periodo.pe_mes -- se añadio, para filtrar  27/08/2019 by Acueva
 FROM            dbo.ro_rol_detalle INNER JOIN
                          dbo.ro_rol ON dbo.ro_rol_detalle.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.ro_rol_detalle.IdRol = dbo.ro_rol.IdRol INNER JOIN
                          dbo.ro_empleado ON dbo.ro_rol_detalle.IdEmpresa = dbo.ro_empleado.IdEmpresa AND dbo.ro_rol_detalle.IdEmpleado = dbo.ro_empleado.IdEmpleado INNER JOIN
@@ -103,14 +111,16 @@ FROM            dbo.ro_rol_detalle INNER JOIN
                          dbo.ro_rubros_calculados ON dbo.ro_rol_detalle.IdEmpresa = dbo.ro_rubros_calculados.IdEmpresa AND dbo.ro_rol_detalle.IdRubro = dbo.ro_rubros_calculados.IdRubro_DIII INNER JOIN
 						 (
 							SELECT rd.IdEmpresa, rd.IdRol, rd.IdEmpleado, SUM(rd.Valor) AS Valor, ro_rubro_tipo.ru_tipo, ro_rol.IdNominaTipoLiqui
-							FROM     ro_rol_detalle AS rd INNER JOIN
-							ro_rubro_tipo ON rd.IdEmpresa = ro_rubro_tipo.IdEmpresa AND rd.IdRubro = ro_rubro_tipo.IdRubro INNER JOIN
+							FROM     ro_rol_detalle AS rd
+
+							 INNER JOIN ro_rubro_tipo ON rd.IdEmpresa = ro_rubro_tipo.IdEmpresa AND rd.IdRubro = ro_rubro_tipo.IdRubro INNER JOIN
 							ro_rol ON rd.IdEmpresa = ro_rol.IdEmpresa AND rd.IdRol = ro_rol.IdRol INNER JOIN
 							ro_rubros_calculados ON ro_rubro_tipo.IdEmpresa = ro_rubros_calculados.IdEmpresa
 							WHERE  (ro_rubro_tipo.ru_tipo = 'I') AND (ro_rol.IdNominaTipoLiqui = 2)
 							AND RD.IdRubro NOT IN (ro_rubros_calculados.IdRubro_fondo_reserva, ro_rubros_calculados.IdRubro_DIII, ro_rubros_calculados.IdRubro_DIV)
 							AND ro_rubro_tipo.rub_grupo = 'INGRESOS'
 							GROUP BY rd.IdEmpresa, rd.IdRol, rd.IdEmpleado, ro_rubro_tipo.ru_tipo, ro_rol.IdNominaTipoLiqui
+							
 						 ) AS Su on su.IdEmpresa = ro_rol_detalle.IdEmpresa
 						 and su.IdRol = ro_rol_detalle.IdRol
 						 and su.IdEmpleado = ro_rol_detalle.IdEmpleado
@@ -124,12 +134,13 @@ FROM            dbo.ro_rol_detalle INNER JOIN
 						 and ro_rol_detalle.IdEmpleado>=@IdEmpleadoInicio
 						 and ro_rol_detalle.IdEmpleado<=@IdEmpleadoFin
 
-
+						-- -- and ro_periodo.pe_anio=2019 and ro_periodo.pe_mes not in(4,5) -- aqui union all, repite ciertos datos
+						
 						  and ro_empleado.IdArea>=@IdAreaInicion
 						 and ro_empleado.IdArea<=@IdAreafin
 
 						  and ro_empleado.IdDivision>=@IdDivisionInicio
 						 and ro_empleado.IdDivision<=@IdDivisionFin
 						 and ro_periodo.pe_FechaIni between @fecha_inicio and @fecha_fin
-
+) t order by t.pe_anio,t.pe_mes
 END

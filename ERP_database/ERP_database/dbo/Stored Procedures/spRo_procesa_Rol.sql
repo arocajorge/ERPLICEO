@@ -1,7 +1,4 @@
-﻿
-
-
-ALTER PROCEDURE [dbo].[spRo_procesa_Rol] (
+﻿CREATE PROCEDURE [dbo].[spRo_procesa_Rol] (
 @IdEmpresa int,
 @IdNomina numeric,
 @IdNominaTipo numeric,
@@ -901,7 +898,7 @@ insert into ro_rol_detalle_x_jornada
 (IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro, IdJornada,			Orden,			Valor
 ,rub_visible_reporte,	Observacion)
 
-select IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro, IdJornada,			Orden,		SUM(	Valor)
+select IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro, IdJornada,			Orden,		ROUND(SUM(	Valor),2)
 ,Visible,	Observacion from ( 
 select 
 @IdEmpresa	IdEmpresa			,@IdRol IdRol				,emp.IdSucursal							,novc.IdEmpleado		,@IdRubro_calculado IdRubro,ISNULL( novc.IdJornada,1)IdJornada		,0 Orden,   sum(nov.Valor)*@Por_apor_pers_iess Valor
@@ -941,7 +938,7 @@ insert into ro_rol_detalle_x_jornada
 ,rub_visible_reporte,	Observacion)
 
 
-SELECT IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro,IdJornada ,			Orden,			sum(Valor)Valor
+SELECT IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro,IdJornada ,			Orden,			ROUND(sum(Valor),2)Valor
 ,rub_visible_reporte,	Observacion FROM (
 select 
 @IdEmpresa	IdEmpresa			,@IdRol	IdRol			,emp.IdSucursal							,novc.IdEmpleado		,@IdRubro_calculado IdRubro, ISNULL( novc.IdJornada,1)IdJornada		,0 Orden,   sum(nov.Valor)/12 Valor
@@ -1063,7 +1060,7 @@ insert into ro_rol_detalle_x_jornada
 ,rub_visible_reporte,	Observacion)
 select
 @IdEmpresa				,@IdRol				,emp.IdSucursal						,emp.IdEmpleado		,@IdRubro_calculado,1	,'51'			,ROUND((@SueldoBasico/360)* 
-dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida),2) *0.5
+dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida) *0.5,2)
 ,1						,'Decimo cuarto sueldo'	
 FROM  dbo.ro_empleado emp, ro_contrato cont
 where emp.IdEmpresa=cont.IdEmpresa
@@ -1096,7 +1093,7 @@ insert into ro_rol_detalle_x_jornada
 ,rub_visible_reporte,	Observacion)
 select
 @IdEmpresa				,@IdRol				,emp.IdSucursal						,emp.IdEmpleado		,@IdRubro_calculado,2	,'51'			,ROUND((@SueldoBasico/360)* 
-dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida),2) *0.5
+dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida) *0.5,2)
 ,1						,'Decimo cuarto sueldo'	
 FROM  dbo.ro_empleado emp, ro_contrato cont
 where emp.IdEmpresa=cont.IdEmpresa
@@ -1135,7 +1132,7 @@ insert into ro_rol_detalle_x_jornada
 ,rub_visible_reporte,	Observacion)
 
 
-SELECT IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro,IdJornada ,			Orden,			sum(Valor)Valor
+SELECT IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro,IdJornada ,			Orden,			ROUND(sum(Valor),2)Valor
 ,rub_visible_reporte,	Observacion FROM (
 select 
 @IdEmpresa	IdEmpresa			,@IdRol	IdRol			,emp.IdSucursal							,novc.IdEmpleado		,@IdRubro_calculado IdRubro, ISNULL( novc.IdJornada,1)IdJornada		,0 Orden,   sum(nov.Valor)/12 Valor
@@ -1181,7 +1178,7 @@ insert into ro_rol_detalle_x_jornada
 ,rub_visible_reporte,	Observacion)
 
 
-select IdEmpresa,				IdRol,			IdSucursal,			IdEmpleado,			IdRubro,IdJornada,			Orden,			sum(Valor)Valor
+select IdEmpresa,				IdRol,			IdSucursal,			IdEmpleado,			IdRubro,IdJornada,			Orden,			ROUND(sum(Valor),2)Valor
 ,rub_visible_reporte,	Observacion from
 (
 select
@@ -1255,7 +1252,7 @@ insert into ro_rol_detalle_x_jornada
 ,rub_visible_reporte,	Observacion)
 select
 @IdEmpresa				,@IdRol				,emp.IdSucursal						,emp.IdEmpleado		,@IdRubro_calculado,1	,'51'			,ROUND((@SueldoBasico/360)* 
-dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida),2) *0.5
+dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida) *0.5,2)
 ,1						,'Provision Decimo cuarto sueldo'	
 FROM  dbo.ro_empleado emp, ro_contrato cont
 where emp.IdEmpresa=cont.IdEmpresa
@@ -1288,7 +1285,7 @@ insert into ro_rol_detalle_x_jornada
 ,rub_visible_reporte,	Observacion)
 select
 @IdEmpresa				,@IdRol				,emp.IdSucursal						,emp.IdEmpleado		,@IdRubro_calculado,2	,'51'			,ROUND((@SueldoBasico/360)* 
-dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida),2) *0.5
+dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida) *0.5,2)
 ,1						,'Provision Decimo cuarto sueldo'	
 FROM  dbo.ro_empleado emp, ro_contrato cont
 where emp.IdEmpresa=cont.IdEmpresa

@@ -4,6 +4,7 @@
     [IdTipoCbte_Ogiro]              INT            NOT NULL,
     [IdOrden_giro_Tipo]             VARCHAR (5)    NOT NULL,
     [IdProveedor]                   NUMERIC (18)   NOT NULL,
+    [SecuenciaProveedor]            INT            NULL,
     [co_fechaOg]                    DATETIME       NOT NULL,
     [co_serie]                      VARCHAR (10)   NOT NULL,
     [co_factura]                    VARCHAR (50)   NOT NULL,
@@ -58,10 +59,13 @@
     CONSTRAINT [FK_cp_orden_giro_cp_codigo_SRI2] FOREIGN KEY ([IdCod_101]) REFERENCES [dbo].[cp_codigo_SRI] ([IdCodigo_SRI]),
     CONSTRAINT [FK_cp_orden_giro_cp_pais_sri] FOREIGN KEY ([PaisPago]) REFERENCES [dbo].[cp_pais_sri] ([Codigo]),
     CONSTRAINT [FK_cp_orden_giro_cp_proveedor] FOREIGN KEY ([IdEmpresa], [IdProveedor]) REFERENCES [dbo].[cp_proveedor] ([IdEmpresa], [IdProveedor]),
+    CONSTRAINT [FK_cp_orden_giro_cp_proveedor_detalle] FOREIGN KEY ([IdEmpresa], [IdProveedor], [SecuenciaProveedor]) REFERENCES [dbo].[cp_proveedor_detalle] ([IdEmpresa], [IdProveedor], [Secuencia]),
     CONSTRAINT [FK_cp_orden_giro_ct_cbtecble] FOREIGN KEY ([IdEmpresa], [IdTipoCbte_Ogiro], [IdCbteCble_Ogiro]) REFERENCES [dbo].[ct_cbtecble] ([IdEmpresa], [IdTipoCbte], [IdCbteCble]),
     CONSTRAINT [FK_cp_orden_giro_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal]),
     CONSTRAINT [FK_cp_orden_giro_tb_sucursal1] FOREIGN KEY ([IdEmpresa], [IdSucursal_cxp]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])
 );
+
+
 
 
 

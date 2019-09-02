@@ -57,8 +57,9 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             var lst_movimiento = bus_movimiento.get_list(IdEmpresa, false);
             ViewBag.lst_movimiento = lst_movimiento;
 
-            var lst_caja = bus_caja.get_list(IdEmpresa, false);
-            ViewBag.lst_caja= lst_caja;
+            bool EsContador = Convert.ToBoolean(SessionFixed.EsContador);
+            var lst_caja = bus_caja.GetList(IdEmpresa, 0, false, SessionFixed.IdUsuario, EsContador);
+            ViewBag.lst_caja = lst_caja;
 
 
             var lst_tiponota = bus_tiponota.get_list(IdEmpresa, "D", false);

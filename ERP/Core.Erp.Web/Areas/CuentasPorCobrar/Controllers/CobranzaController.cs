@@ -92,7 +92,8 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             var lst_sucursal = bus_sucursal.GetList(IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
             ViewBag.lst_sucursal = lst_sucursal;
 
-            var lst_caja = bus_caja.get_list(IdEmpresa, false);
+            bool EsContador = Convert.ToBoolean(SessionFixed.EsContador);
+            var lst_caja = bus_caja.GetList(IdEmpresa, IdSucursal, false, SessionFixed.IdUsuario, EsContador);
             ViewBag.lst_caja = lst_caja;
 
             var lst_cobro_tipo = bus_cobro_tipo.get_list(false);

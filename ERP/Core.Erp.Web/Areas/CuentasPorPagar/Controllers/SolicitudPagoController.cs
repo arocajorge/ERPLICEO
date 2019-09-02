@@ -69,12 +69,12 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         {
 
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-
+            bool EsContador = Convert.ToBoolean(SessionFixed.EsContador);
             ViewBag.IdSucursal = IdSucursal;
             ViewBag.IdEmpresa = IdEmpresa;
             ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
             ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
-            var model = bus_solicitud.GetList(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin, true);
+            var model = bus_solicitud.GetList(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin, SessionFixed.IdUsuario,EsContador);
             return PartialView("_GridViewPartial_solicitud_pago", model);
         }
         #endregion

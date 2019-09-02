@@ -65,12 +65,9 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         }
         public void CargarCombosConsulta(int IdEmpresa)
         {
-            var lst_caja = bus_caja.get_list(IdEmpresa, false);
-            lst_caja.Add(new caj_Caja_Info
-            {
-                IdCaja = 0,
-                ca_Descripcion = "Todos"
-            });
+            int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
+            bool EsContador = Convert.ToBoolean(SessionFixed.EsContador);
+            var lst_caja = bus_caja.GetList(IdEmpresa, IdSucursal, false, SessionFixed.IdUsuario, EsContador);
             ViewBag.lst_caja = lst_caja;
         }
         #endregion
@@ -126,10 +123,12 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         {
             var lst_tipo = bus_tipo.get_list(IdEmpresa,"+", false, true);
             ViewBag.lst_tipo = lst_tipo;
-            
-            var lst_caja = bus_caja.get_list(IdEmpresa, false);
+
+            bool EsContador = Convert.ToBoolean(SessionFixed.EsContador);
+            int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
+            var lst_caja = bus_caja.GetList(IdEmpresa, IdSucursal, false, SessionFixed.IdUsuario, EsContador);
             ViewBag.lst_caja = lst_caja;
-            
+
             var lst_cobro = bus_cobro.get_list(false);
             ViewBag.lst_cobro = lst_cobro;
 

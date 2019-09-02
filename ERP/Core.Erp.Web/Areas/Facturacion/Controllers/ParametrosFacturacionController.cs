@@ -65,7 +65,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             ViewBag.lst_tipo_movimiento_egr = lst_tipo_movimiento.Where(q => q.cm_tipo_movi == "-").ToList();
             ViewBag.lst_tipo_movimiento_ing = lst_tipo_movimiento.Where(q => q.cm_tipo_movi == "+").ToList();
 
-            var lst_caja = bus_caja.get_list(IdEmpresa, false);
+            bool EsContador = Convert.ToBoolean(SessionFixed.EsContador);
+            var lst_caja = bus_caja.GetList(IdEmpresa, 0, false, SessionFixed.IdUsuario, EsContador);
             ViewBag.lst_caja = lst_caja;
 
             var lst_nota = bus_nota.get_list(IdEmpresa, false);

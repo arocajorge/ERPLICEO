@@ -13,11 +13,11 @@ namespace Core.Erp.Bus.CuentasPorPagar
     public class cp_SolicitudPago_Bus
     {
         cp_SolicitudPago_Data odata = new cp_SolicitudPago_Data();
-        public List<cp_SolicitudPago_Info> GetList(int IdEmpresa, int IdSucursal, DateTime Fecha_ini, DateTime Fecha_fin, bool mostrar_anulados)
+        public List<cp_SolicitudPago_Info> GetList(int IdEmpresa, int IdSucursal, DateTime Fecha_ini, DateTime Fecha_fin, string IdUsuario, bool EsContador)
         {
             try
             {
-                return odata.GetList(IdEmpresa, IdSucursal, Fecha_ini, Fecha_fin, mostrar_anulados);
+                return odata.GetList(IdEmpresa, IdSucursal, Fecha_ini, Fecha_fin, IdUsuario,EsContador);
             }
             catch (Exception)
             {

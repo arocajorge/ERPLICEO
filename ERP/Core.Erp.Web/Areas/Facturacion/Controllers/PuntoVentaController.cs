@@ -86,7 +86,8 @@ namespace Core.Erp.Web.Areas.Facturacion.Controllers
             ViewBag.lst_signos = lst_signos;
 
             caj_Caja_Bus bus_caja = new caj_Caja_Bus();
-            var lst_caja = bus_caja.get_list(model.IdEmpresa, false);
+            bool EsContador = Convert.ToBoolean(SessionFixed.EsContador);
+            var lst_caja = bus_caja.GetList(model.IdEmpresa, model.IdSucursal, false, SessionFixed.IdUsuario, EsContador);
             ViewBag.lst_caja = lst_caja;
 
             tb_sis_Documento_Tipo_Bus bus_doc = new tb_sis_Documento_Tipo_Bus();

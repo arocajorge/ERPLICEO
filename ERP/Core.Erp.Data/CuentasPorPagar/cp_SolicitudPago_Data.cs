@@ -11,7 +11,7 @@ namespace Core.Erp.Data.CuentasPorPagar
 {
   public  class cp_SolicitudPago_Data
     {
-        public List<cp_SolicitudPago_Info> GetList(int IdEmpresa , int IdSucursal, DateTime Fecha_ini, DateTime Fecha_fin, bool mostrar_anulados)
+        public List<cp_SolicitudPago_Info> GetList(int IdEmpresa, int IdSucursal, DateTime Fecha_ini, DateTime Fecha_fin, string IdUsuario, bool EsContador)
         {
             try
             {
@@ -20,40 +20,24 @@ namespace Core.Erp.Data.CuentasPorPagar
                 Fecha_fin = Fecha_fin.Date; List<cp_SolicitudPago_Info> Lista;
                 using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
                 {
-                    if(mostrar_anulados)
-                    Lista = Context.vwcp_SolicitudPago.Where(q => q.IdEmpresa == IdEmpresa
+                    var lst = Context.vwcp_SolicitudPago.Where(q => q.IdEmpresa == IdEmpresa
                              && q.IdSucursal == IdSucursal
-                             && Fecha_ini <= q.Fecha && q.Fecha <= Fecha_fin).Select(q => new cp_SolicitudPago_Info
-                    {
-                        IdEmpresa = q.IdEmpresa,
-                        IdSolicitud = q.IdSolicitud,
-                        IdSucursal = q. IdSucursal,
-                        IdProveedor = q.IdProveedor,
-                        Concepto = q.Concepto,
-                        Estado = q.Estado,
-                        Fecha = q.Fecha,
-                        Solicitante = q.Solicitante,
-                        Valor = q.Valor,
-                        pe_nombreCompleto = q.pe_nombreCompleto
-                             }).OrderByDescending(q=>q.IdSolicitud).ToList();
+                             && Fecha_ini <= q.Fecha && q.Fecha <= Fecha_fin && q.IdUsuarioCreacion.ToLower() == (EsContador ? q.IdUsuarioCreacion.ToLower() : IdUsuario.ToLower())).ToList();
+                    
+                    Lista = lst.Select(q => new cp_SolicitudPago_Info
+                             {
+                                 IdEmpresa = q.IdEmpresa,
+                                 IdSolicitud = q.IdSolicitud,
+                                 IdSucursal = q.IdSucursal,
+                                 IdProveedor = q.IdProveedor,
+                                 Concepto = q.Concepto,
+                                 Estado = q.Estado,
+                                 Fecha = q.Fecha,
+                                 Solicitante = q.Solicitante,
+                                 Valor = q.Valor,
+                                 pe_nombreCompleto = q.pe_nombreCompleto
+                             }).OrderByDescending(q => q.IdSolicitud).ToList();
 
-                    else
-                        Lista =  Context.vwcp_SolicitudPago.Where(q => q.IdEmpresa == IdEmpresa 
-                        && q.IdSucursal == IdSucursal
-                        && Fecha_ini <= q.Fecha && q.Fecha <= Fecha_fin
-                        && q.Estado == true).Select(q => new cp_SolicitudPago_Info
-                        {
-                            IdEmpresa = q.IdEmpresa,
-                            IdSolicitud = q.IdSolicitud,
-                            IdSucursal = q.IdSucursal,
-                            IdProveedor = q.IdProveedor,
-                            Concepto = q.Concepto,
-                            Estado = q.Estado,
-                            Fecha = q.Fecha,
-                            Solicitante = q.Solicitante,
-                            Valor = q.Valor,
-                            pe_nombreCompleto = q.pe_nombreCompleto
-                        }).OrderByDescending(q => q.IdSolicitud).ToList();
                 }
                 return Lista;
             }

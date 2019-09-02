@@ -11,102 +11,48 @@ namespace Core.Erp.Data.Caja
 {
     public class caj_Caja_Data
     {
-        public List<caj_Caja_Info> GetList(int IdEmpresa, int IdSucursal, bool mostrar_anulados)
+        public List<caj_Caja_Info> GetList(int IdEmpresa, int IdSucursal, bool mostrar_anulados, string IdUsuario, bool EsContador)
         {
             try
             {
                 List<caj_Caja_Info> Lista;
                 using (Entities_caja Context = new Entities_caja())
                 {
-                    if (mostrar_anulados)
-                        Lista = (from q in Context.caj_Caja
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.IdSucursal == IdSucursal
-                                 select new caj_Caja_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     ca_Codigo = q.ca_Codigo,
-                                      Estado = q.Estado,
-                                      IdCaja = q.IdCaja,
-                                      IdCtaCble = q.IdCtaCble,
-                                      IdSucursal = q.IdSucursal,
-                                     ca_Descripcion = q.ca_Descripcion,
-                                     IdUsuario_Responsable = q.IdUsuario_Responsable,
+                    if (EsContador)
+                    {
+                        var lst = Context.caj_Caja.Where(q => q.IdEmpresa == IdEmpresa && q.Estado == (mostrar_anulados ? q.Estado : "A") 
+                        && q.IdSucursal == (IdSucursal == 0 ? q.IdSucursal : IdSucursal)
+                        ).ToList();
+                        Lista = lst.Select(q => new caj_Caja_Info
+                        {
+                            IdEmpresa = q.IdEmpresa,
+                            ca_Codigo = q.ca_Codigo,
+                            Estado = q.Estado,
+                            IdCaja = q.IdCaja,
+                            IdCtaCble = q.IdCtaCble,
+                            IdSucursal = q.IdSucursal,
+                            ca_Descripcion = q.ca_Descripcion,
+                            IdUsuario_Responsable = q.IdUsuario_Responsable,
 
-                                     EstadoBool = q.Estado == "A" ? true : false
-
-                                 }).ToList();
+                            EstadoBool = q.Estado == "A" ? true : false
+                        }).ToList();
+                    }
                     else
-                        Lista = (from q in Context.caj_Caja
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.IdSucursal == IdSucursal
-                                 && q.Estado == "A"
-                                 select new caj_Caja_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     ca_Codigo = q.ca_Codigo,
-                                     Estado = q.Estado,
-                                     IdCaja = q.IdCaja,
-                                     IdCtaCble = q.IdCtaCble,
-                                     IdSucursal = q.IdSucursal,
-                                     ca_Descripcion = q.ca_Descripcion,
-                                     IdUsuario_Responsable = q.IdUsuario_Responsable,
-
-                                     EstadoBool = q.Estado == "A" ? true : false
-
-                                 }).ToList();
-                }
-                return Lista;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        public List<caj_Caja_Info> get_list(int IdEmpresa,  bool mostrar_anulados)
-        {
-            try
-            {
-                List<caj_Caja_Info> Lista;
-                using (Entities_caja Context = new Entities_caja())
-                {
-                    if (mostrar_anulados)
-                        Lista = (from q in Context.caj_Caja
-                                 where q.IdEmpresa == IdEmpresa
-                                 select new caj_Caja_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     ca_Codigo = q.ca_Codigo,
-                                     Estado = q.Estado,
-                                     IdCaja = q.IdCaja,
-                                     IdCtaCble = q.IdCtaCble,
-                                     IdSucursal = q.IdSucursal,
-                                     ca_Descripcion = q.ca_Descripcion,
-                                     IdUsuario_Responsable = q.IdUsuario_Responsable,
-
-                                     EstadoBool = q.Estado == "A" ? true : false
-
-                                 }).ToList();
-                    else
-                        Lista = (from q in Context.caj_Caja
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.Estado == "A"
-                                 select new caj_Caja_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     ca_Codigo = q.ca_Codigo,
-                                     Estado = q.Estado,
-                                     IdCaja = q.IdCaja,
-                                     IdCtaCble = q.IdCtaCble,
-                                     IdSucursal = q.IdSucursal,
-                                     ca_Descripcion = q.ca_Descripcion,
-                                     IdUsuario_Responsable = q.IdUsuario_Responsable,
-
-                                     EstadoBool = q.Estado == "A" ? true : false
-
-                                 }).ToList();
+                    {
+                        var lst = Context.caj_Caja_x_seg_usuario.Include("caj_Caja").Where(q => q.IdEmpresa == IdEmpresa && q.IdUsuario.ToLower() == IdUsuario.ToLower() && q.caj_Caja.Estado == (mostrar_anulados ? q.caj_Caja.Estado : "A") && q.caj_Caja.IdSucursal == IdSucursal).ToList();
+                        Lista = lst.Select(q => new caj_Caja_Info
+                        {
+                            IdEmpresa = q.IdEmpresa,
+                            ca_Codigo = q.caj_Caja.ca_Codigo,
+                            Estado = q.caj_Caja.Estado,
+                            IdCaja = q.IdCaja,
+                            IdCtaCble = q.caj_Caja.IdCtaCble,
+                            IdSucursal = q.caj_Caja.IdSucursal,
+                            ca_Descripcion = q.caj_Caja.ca_Descripcion,
+                            IdUsuario_Responsable = q.caj_Caja.IdUsuario_Responsable,
+                            EstadoBool = q.caj_Caja.Estado == "A" ? true : false
+                        }).ToList();
+                    }
                 }
                 return Lista;
             }

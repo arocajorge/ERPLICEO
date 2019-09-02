@@ -69,8 +69,9 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         public ActionResult GridViewPartial_caja(int IdSucursal=0)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            bool EsContador = Convert.ToBoolean(SessionFixed.EsContador);
             ViewBag.IdSucursal = IdSucursal;
-            var model = bus_caja.GetList(IdEmpresa, IdSucursal, true);
+            var model = bus_caja.GetList(IdEmpresa, IdSucursal, true,SessionFixed.IdUsuario,EsContador);
             return PartialView("_GridViewPartial_caja", model);
         }
 

@@ -56,6 +56,7 @@ namespace Core.Erp.Info.ActivoFijo
         public bool EstadoBool { get; set; }
         [Required(ErrorMessage = ("el campo cantidad es obligatorio"))]
         public int Cantidad { get; set; }
+        public Nullable<System.DateTime> FechaEntrega { get; set; }
 
         //Campos que no existen en la tabla
         public string Estado_Proceso_nombre { get; set; }

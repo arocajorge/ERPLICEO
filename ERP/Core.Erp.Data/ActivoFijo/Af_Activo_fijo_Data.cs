@@ -104,6 +104,7 @@ namespace Core.Erp.Data.ActivoFijo
                                      Estado_Proceso = q.Estado_Proceso,
                                      Estado_Proceso_nombre = c.Descripcion,
                                      Cantidad = q.Cantidad,
+                                     FechaEntrega = q.FechaEntrega,
                                      EstadoBool = q.Estado == "A" ? true : false
 
                                  }).ToList();
@@ -122,6 +123,7 @@ namespace Core.Erp.Data.ActivoFijo
                                      Estado_Proceso = q.Estado_Proceso,
                                      Estado_Proceso_nombre = c.Descripcion,
                                      Cantidad = q.Cantidad,
+                                     FechaEntrega = q.FechaEntrega,
                                      EstadoBool = q.Estado == "A" ? true : false
                                  }).ToList();
                 }
@@ -176,7 +178,8 @@ namespace Core.Erp.Data.ActivoFijo
                         Estado_Proceso_nombre = Entity.Estado_Proceso,
                         IdDepartamento = Entity.IdDepartamento,
                         Cantidad = Entity.Cantidad,
-                        IdArea = Entity.IdArea
+                        IdArea = Entity.IdArea,
+                        FechaEntrega = Entity.FechaEntrega
 
                     };
                 }
@@ -250,8 +253,9 @@ namespace Core.Erp.Data.ActivoFijo
                         IdDepartamento = info.IdDepartamento,
                         Cantidad = info.Cantidad,
                         IdUsuario = info.IdUsuario,
-                        Fecha_Transac = DateTime.Now     ,
-                        IdArea = info.IdArea
+                        Fecha_Transac = DateTime.Now,
+                        IdArea = info.IdArea,
+                        FechaEntrega = info.FechaEntrega
 
                     };
 
@@ -304,6 +308,7 @@ namespace Core.Erp.Data.ActivoFijo
                     Entity.IdDepartamento = info.IdDepartamento;
                     Entity.Cantidad = info.Cantidad;
                     Entity.IdArea = info.IdArea;
+                    Entity.FechaEntrega = info.FechaEntrega;
 
                     /*
                     var detalle = Context.Af_Activo_fijo_CtaCble.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdActivoFijo == info.IdActivoFijo);

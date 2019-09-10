@@ -22,5 +22,6 @@ namespace Core.Erp.Info.Reportes.ActivoFijo
         public string NomEncargado { get; set; }
         public string NomCustodio { get; set; }
         public int Cantidad { get; set; }
+        public Nullable<System.DateTime> FechaEntrega { get; set; }
     }
 }

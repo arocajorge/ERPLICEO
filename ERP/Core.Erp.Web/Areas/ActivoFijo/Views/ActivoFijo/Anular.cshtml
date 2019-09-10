@@ -47,7 +47,28 @@
                     @Html.ValidationMessageFor(q => q.Estado_Proceso, "", new { @class = "text-danger", @id = "pe_cedulaRuc" })
                 </div>
             </div>
-            <div class="col-md-offset-3 col-md-2">
+            <div class="col-md-offset-2 col-md-2">
+                <div class="form-group">
+                    <label for="Af_fecha_compra">Fecha de entrega</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q => q.FechaEntrega, settings =>
+                   {
+                       settings.Name = "FechaEntrega";
+                       settings.Properties.UseMaskBehavior = true;
+                       settings.Properties.EditFormat = EditFormat.Date;
+                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                       settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+                   }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.FechaEntrega, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="Af_fecha_compra">Fecha de compra</label>
                     <div class="input-group date">

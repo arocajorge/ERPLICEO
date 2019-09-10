@@ -48,6 +48,7 @@
           <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
           <Property Name="Fecha_UltAnu" Type="datetime" />
           <Property Name="MotiAnula" Type="varchar" MaxLength="100" />
+          <Property Name="FechaEntrega" Type="datetime" />
         </EntityType>
         <EntityType Name="Af_Activo_fijo_Categoria">
           <Key>
@@ -1044,6 +1045,7 @@
           <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
           <Property Name="MotiAnula" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FechaEntrega" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Af_Activo_fijo_Categoria" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Activo_fijo_Categoria" FromRole="Af_Activo_fijo" ToRole="Af_Activo_fijo_Categoria" />
           <NavigationProperty Name="Af_Activo_fijo_tipo" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Activo_fijo_tipo" FromRole="Af_Activo_fijo" ToRole="Af_Activo_fijo_tipo" />
           <NavigationProperty Name="Af_Area" Relationship="Model_activo_fijo.FK_Af_Activo_fijo_Af_Area" FromRole="Af_Activo_fijo" ToRole="Af_Area" />
@@ -1526,6 +1528,7 @@
           <EntitySetMapping Name="Af_Activo_fijo">
             <EntityTypeMapping TypeName="Model_activo_fijo.Af_Activo_fijo">
               <MappingFragment StoreEntitySet="Af_Activo_fijo">
+                <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
                 <ScalarProperty Name="MotiAnula" ColumnName="MotiAnula" />
                 <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
                 <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />

@@ -31,7 +31,8 @@ namespace Core.Erp.Data.Reportes.ActivoFijo
                         NomEncargado = q.NomEncargado,
                         NomTipo = q.NomTipo,
                         Su_Descripcion = q.Su_Descripcion,
-                        Cantidad = q.Cantidad
+                        Cantidad = q.Cantidad,
+                        FechaEntrega = q.FechaEntrega
 
 
                     }).ToList();

@@ -180,6 +180,7 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
             Af_Activo_fijo_Info model = new Af_Activo_fijo_Info
             {
                 IdEmpresa = IdEmpresa,
+                FechaEntrega = DateTime.Now,
                 Af_fecha_compra = DateTime.Now,
                 Af_fecha_fin_depre = DateTime.Now,
                 Af_fecha_ini_depre = DateTime.Now,

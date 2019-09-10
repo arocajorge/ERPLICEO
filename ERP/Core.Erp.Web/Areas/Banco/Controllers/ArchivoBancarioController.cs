@@ -15,6 +15,7 @@ using Core.Erp.Info.General;
 using DevExpress.Web;
 using Core.Erp.Web.Areas.Contabilidad.Controllers;
 using Core.Erp.Info.Contabilidad;
+using Core.Erp.Bus.SeguridadAcceso;
 
 namespace Core.Erp.Web.Areas.Banco.Controllers
 {
@@ -46,6 +47,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ct_cbtecble_det_List List_Cbte = new ct_cbtecble_det_List();
         ct_plancta_Bus bus_plancta = new ct_plancta_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
+        tb_ColaImpresionDirecta_Bus bus_impresion = new tb_ColaImpresionDirecta_Bus();
+        seg_usuario_Bus bus_usuario = new seg_usuario_Bus();
         #endregion
         #region Index
 
@@ -511,6 +514,28 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             List_Cbte.set_list(Lista, IdTransaccionSession);
             return Json("", JsonRequestBehavior.AllowGet);
         }
+        public JsonResult ImprimirOPMasivo(int IdEmpresa = 0, decimal IdArchivo = 0)
+        {
+
+            var usuario = bus_usuario.get_info(SessionFixed.IdUsuario);
+            var lst = bus_archivo_det.GetList(IdEmpresa, IdArchivo);
+            foreach (var item in lst)
+            {
+                bus_impresion.GuardarDB(new tb_ColaImpresionDirecta_Info
+                {
+                    IdEmpresa = IdEmpresa,
+                    NumCopias = 1,
+                    Usuario = SessionFixed.IdUsuario,
+                    IPUsuario = usuario.IPMaquina,
+                    CodReporte = "CXP_004",
+                    IPImpresora = usuario.IPImpresora,
+                    Parametros = item.IdOrdenPago.ToString()+",0,0,0",
+                    NombreEmpresa = SessionFixed.NomEmpresa,
+                });
+            }
+            
+            return Json("",JsonRequestBehavior.AllowGet);
+        }
         #endregion
         #region Archivo
 
@@ -581,7 +606,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                         }
                         linea += (string.IsNullOrEmpty(Referencia) ? "" : (Referencia.Length > 200 ? Referencia.Substring(0, 200) : Referencia.Trim())) + "\t";
                         //linea += (string.IsNullOrEmpty(item.Referencia) ? "" : (item.Referencia.Length > 200 ? item.Referencia.Substring(0, 200) : item.Referencia.Trim())) + "\t";
-                        linea += "| "+ (string.IsNullOrEmpty(item.pr_correo) ? "" : (item.pr_correo.Trim().Length > 100 ? item.pr_correo.Trim().Substring(0,100) : item.pr_correo.Trim())) +"\t";//Ref adicional
+                        linea += "|"+ (string.IsNullOrEmpty(item.pr_correo) ? "" : (item.pr_correo.Trim().Length > 100 ? item.pr_correo.Trim().Substring(0,100) : item.pr_correo.Trim())) +"\t";//Ref adicional
 
                         file.WriteLine(linea);
                     }

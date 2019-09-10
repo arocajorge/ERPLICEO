@@ -939,7 +939,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                                     }
                                 },
                                 IdSucursal = info_add.IdSucursal
-                                ,IdUsuario = SessionFixed.IdUsuario
+                                ,IdUsuario = SessionFixed.IdUsuario,
+                                num_cta_acreditacion = info_add.num_cta_acreditacion
                             });
                         }
                     }

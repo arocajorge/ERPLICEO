@@ -21,5 +21,6 @@ namespace Core.Erp.Info.Reportes.Banco
         public System.DateTime BAN_Fecha { get; set; }
         public Nullable<decimal> IdCbteCble_cxp { get; set; }
         public Nullable<int> IdTipoCbte_cxp { get; set; }
+        public string Su_Descripcion { get; set; }
     }
 }

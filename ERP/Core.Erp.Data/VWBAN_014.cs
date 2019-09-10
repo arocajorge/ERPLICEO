@@ -31,5 +31,7 @@ namespace Core.Erp.Data
         public System.DateTime BAN_Fecha { get; set; }
         public Nullable<decimal> IdCbteCble_cxp { get; set; }
         public Nullable<int> IdTipoCbte_cxp { get; set; }
+        public int IdSucursal { get; set; }
+        public string Su_Descripcion { get; set; }
     }
 }

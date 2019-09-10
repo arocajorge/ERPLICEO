@@ -89,12 +89,35 @@
         var win = window.open(location +"/Reportes/BancoReportes/BAN_010?IdEmpresa="+@Model.IdEmpresa+"&IdArchivo="+@Model.IdArchivo, '_blank');
         win.focus();
     }
+
+    function ImprimirOPMasivo() {
+
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            IdArchivo: $("#IdArchivo").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("ImprimirOPMasivo", "ArchivoBancario",new { Area = "Banco"})',
+            async: false,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                alert("Impresión enviada exitósamente");
+            },
+            error: function (error) {
+            }
+        });
+    }
 </script>
 
 @using (Html.BeginForm("Anular", "ArchivoBancario", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
-    @Html.HiddenFor(q => q.IdArchivo)
+    @Html.HiddenFor(q => q.IdArchivo, new { @id = "IdArchivo" })
+    @Html.HiddenFor(q => q.IdTipoCbte)
+    @Html.HiddenFor(q => q.IdCbteCble)
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
 
     <div class="row">
@@ -167,6 +190,12 @@
                         <i class="fa fa-print"></i>
                     </button>
                 </div>
+            </div>
+            <div class="col-md-1">
+                <label for="IdImprimir"></label>
+                <button type="button" class="btn btn-primary form-control" id="btn_imprimirDirecto" onclick="ImprimirOPMasivo();" title="Imprimir">
+                    <i class="fa fa-clock-o"></i>
+                </button>
             </div>
         </div>
     </div>

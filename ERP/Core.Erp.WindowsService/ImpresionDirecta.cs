@@ -2,6 +2,7 @@
 using Core.Erp.Bus.General;
 using Core.Erp.Info.FacturacionElectronica;
 using Core.Erp.Info.FacturacionElectronica.Factura_V2;
+using Core.Erp.Web.Reportes.CuentasPorPagar;
 using Core.Erp.Web.Reportes.Facturacion;
 using DevExpress.XtraPrinting;
 using System;
@@ -153,6 +154,37 @@ namespace Core.Erp.WindowsService
                                 tool013.Print();
                             else
                                 tool013.Print(Impresion.IPImpresora);
+
+                        }
+                        break;
+
+                    case "CXP_004":
+                        CXP_004_Rpt RPT_CXP_004 = new CXP_004_Rpt();
+
+                        #region Cargo diseño desde base                        
+                        if (reporte != null)
+                        {
+                            System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                            RPT_CXP_004.LoadLayout(RootReporte);
+                        }
+                        #endregion
+
+                        #region Parametros
+                        if (!string.IsNullOrEmpty(Impresion.Parametros))
+                        {
+                            RPT_CXP_004.p_IdEmpresa.Value = Impresion.IdEmpresa;
+                            RPT_CXP_004.p_IdOrdenPago.Value = IdSucursal;
+                            RPT_CXP_004.PrinterName = Impresion.IPImpresora;
+                            RPT_CXP_004.CreateDocument();
+                        }
+                        #endregion
+                        PrintToolBase toolCXP004 = new PrintToolBase(RPT_CXP_004.PrintingSystem);
+                        for (int i = 0; i < Impresion.NumCopias; i++)
+                        {
+                            if (string.IsNullOrEmpty(Impresion.IPImpresora))
+                                toolCXP004.Print();
+                            else
+                                toolCXP004.Print(Impresion.IPImpresora);
 
                         }
                         break;

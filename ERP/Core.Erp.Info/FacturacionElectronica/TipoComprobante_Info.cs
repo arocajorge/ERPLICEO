@@ -8,7 +8,6 @@ using Core.Erp.Info.FacturacionElectronica.GuiaRemision;
 using Core.Erp.Info.FacturacionElectronica.NotaCredito;
 using Core.Erp.Info.FacturacionElectronica.NotaDebito;
 using Core.Erp.Info.FacturacionElectronica.Retencion;
-using static Core.Erp.Info.Helps.cl_enumeradores;
 using Core.Erp.Info.Helps;
 
 namespace Core.Erp.Info.FacturacionElectronica
@@ -17,7 +16,7 @@ namespace Core.Erp.Info.FacturacionElectronica
     {
         public string IdComprobante { get; set; }
         public DateTime Fecha { get; set; }
-        public eTipoDocumento TipoCbte { get; set; }
+        public cl_enumeradores.eTipoDocumento TipoCbte { get; set; }
         public string Observacion { get; set; }
 
         public factura  CbteFactura { get; set; }

@@ -91,6 +91,8 @@ namespace Core.Erp.Info.CuentasPorPagar
         public cp_retencion_Info info_retencion { get; set; }
         public int TieneRetencion { get; set; }
         public int MostrarComboCuentas { get; set; }
+        public string num_cta_acreditacion { get; set; }
+
         public cp_orden_giro_Info()
 
         {
@@ -162,6 +164,7 @@ namespace Core.Erp.Info.CuentasPorPagar
         public double Total_Pagado { get; set; }
         public Nullable<double> Saldo_OG { get; set; }
         public Nullable<int> IdBodega { get; set; }
+        public string num_cta_acreditacion { get; set; }
         public cp_orden_giro_pagos_sri_Info info_forma_pago { get; set; }
 
         public bool seleccionado { get; set; }

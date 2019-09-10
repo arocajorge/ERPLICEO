@@ -627,7 +627,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             cl_filtros_banco_Info model = new cl_filtros_banco_Info
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                IdPersona = 0
+                IdPersona = 0,
+                IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
             };
             cargar_banco(model.IdEmpresa);
             BAN_014_Rpt report = new BAN_014_Rpt();
@@ -642,7 +643,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdPersona.Value = model.IdPersona;
-            report.p_IdBanco.Value = model.IdBanco;
+            report.p_IdSucursal.Value = model.IdSucursal;
             report.p_FechaIni.Value = model.fecha_ini;
             report.p_FechaFin.Value = model.fecha_fin;
             report.usuario = SessionFixed.IdUsuario;
@@ -666,11 +667,12 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdPersona.Value = model.IdPersona == null ? 0 : Convert.ToDecimal(model.IdPersona);
-            report.p_IdBanco.Value = model.IdBanco;
+            report.p_IdSucursal.Value = model.IdSucursal;
             report.p_FechaIni.Value = model.fecha_ini;
             report.p_FechaFin.Value = model.fecha_fin;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
+            
             ViewBag.Report = report;
             return View(model);
         }

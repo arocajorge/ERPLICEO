@@ -42,7 +42,8 @@ namespace Core.Erp.Data.Reportes.Banco
                         IdTipoCbte_pago = q.IdTipoCbte_pago,
                         MontoAplicado = q.MontoAplicado,
                         pe_nombreCompleto = q.pe_nombreCompleto,
-                        TipoPago = q.TipoPago
+                        TipoPago = q.TipoPago,
+                        Su_Descripcion = q.Su_Descripcion
                     }).ToList();
                 }
 

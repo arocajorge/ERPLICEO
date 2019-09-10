@@ -7,6 +7,7 @@ using Core.Erp.Bus.Reportes.Banco;
 using Core.Erp.Info.Reportes.Banco;
 using System.Collections.Generic;
 using Core.Erp.Bus.General;
+using Core.Erp.Bus.Banco;
 
 namespace Core.Erp.Web.Reportes.Banco
 {
@@ -28,11 +29,18 @@ namespace Core.Erp.Web.Reportes.Banco
                 lbl_empresa.Text = empresa;
                 lbl_usuario.Text = usuario;
                 int IdEmpresa = string.IsNullOrEmpty(p_IdEmpresa.Value.ToString()) ? 0 : Convert.ToInt32(p_IdEmpresa.Value);
-                int IdBanco = string.IsNullOrEmpty(p_IdBanco.Value.ToString()) ? 0 : Convert.ToInt32(p_IdBanco.Value);
+                int IdSucursal = string.IsNullOrEmpty(p_IdSucursal.Value.ToString()) ? 0 : Convert.ToInt32(p_IdSucursal.Value);
                 decimal IdPersona = string.IsNullOrEmpty(p_IdPersona.Value.ToString()) ? 0 : Convert.ToDecimal(p_IdPersona.Value);
                 DateTime FechaIni = string.IsNullOrEmpty(p_FechaIni.Value.ToString()) ? DateTime.Now.Date : Convert.ToDateTime(p_FechaIni.Value);
                 DateTime FechaFin = string.IsNullOrEmpty(p_FechaFin.Value.ToString()) ? DateTime.Now.Date : Convert.ToDateTime(p_FechaFin.Value);
-                List<BAN_014_Info> Lista = bus_rpt.GetList(IdEmpresa,IdBanco,IdPersona,FechaIni,FechaFin);
+
+                ba_Banco_Cuenta_Bus bus_banco = new ba_Banco_Cuenta_Bus();
+                var lst_sucursales = bus_banco.get_list(IdEmpresa, IdSucursal, false);
+                List<BAN_014_Info> Lista = new List<BAN_014_Info>();
+                foreach (var item in lst_sucursales)
+                {
+                    Lista.AddRange(bus_rpt.GetList(IdEmpresa, item.IdBanco, IdPersona, FechaIni, FechaFin));
+                }
 
                 tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
                 var emp = bus_empresa.get_info(IdEmpresa);

@@ -38,7 +38,7 @@
         {
             column.FieldName = "co_factura";
             column.Caption = "Documento";
-            column.Width = Unit.Percentage(30);
+            column.Width = Unit.Percentage(20);
             column.PropertiesEdit.DisplayFormatString = "d";
             column.EditorProperties().DateEdit(sp =>
             {
@@ -53,7 +53,7 @@
         {
             column.FieldName = "info_proveedor.info_persona.pe_nombreCompleto";
             column.Caption = "Proveedor";
-            column.Width = Unit.Percentage(40);
+            column.Width = Unit.Percentage(30);
             column.PropertiesEdit.DisplayFormatString = "d";
             column.EditorProperties().DateEdit(sp =>
             {
@@ -97,9 +97,9 @@
 
         settings.Columns.Add(column =>
         {
-            column.FieldName = "Tipo_Vcto";
-            column.Caption = "Estado";
-            column.Width = Unit.Percentage(5);
+            column.FieldName = "num_cta_acreditacion";
+            column.Caption = "Cuenta";
+            column.Width = Unit.Percentage(10);
             column.EditorProperties().SpinEdit(sp =>
             {
                 sp.MinValue = 0;

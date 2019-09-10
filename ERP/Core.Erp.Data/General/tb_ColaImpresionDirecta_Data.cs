@@ -17,7 +17,7 @@ namespace Core.Erp.Data.General
                         IdEmpresa = info.IdEmpresa,
                         IdImpresion = info.IdImpresion = GetID(info.IdEmpresa),
                         CodReporte = info.CodReporte,
-                        IPUsuario = info.IPUsuario,
+                        IPUsuario = info.IPUsuario ?? "",
                         IPImpresora = info.IPImpresora,
                         Parametros = info.Parametros,
                         Usuario = info.Usuario,

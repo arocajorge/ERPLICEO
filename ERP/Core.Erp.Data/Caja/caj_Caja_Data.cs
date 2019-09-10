@@ -67,10 +67,16 @@ namespace Core.Erp.Data.Caja
         {
             try
             {
-                int ID = 1;
+                int ID = 0;
 
                 using (Entities_caja db = new Entities_caja())
                 {
+                    var PrimerCaja = db.caj_Caja_x_seg_usuario.Where(q => q.IdEmpresa == IdEmpresa && q.IdUsuario.ToLower() == IdUsuario.ToLower()).FirstOrDefault();
+                    if(PrimerCaja != null)
+                    {
+                        ID = PrimerCaja.IdCaja;
+                        return ID;
+                    }
                     var caja = db.caj_Caja.Where(q => q.IdEmpresa == IdEmpresa && q.IdUsuario_Responsable.ToLower() == IdUsuario.ToLower() && q.Estado == "A").FirstOrDefault();
                     if (caja != null)
                         ID = caja.IdCaja;

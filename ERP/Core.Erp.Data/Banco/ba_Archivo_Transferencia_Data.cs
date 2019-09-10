@@ -14,6 +14,8 @@ namespace Core.Erp.Data.Banco
 {
   public  class ba_Archivo_Transferencia_Data
     {
+        ba_Cbte_Ban_Data data_cbte = new ba_Cbte_Ban_Data();
+        ct_cbtecble_Data data_ct = new ct_cbtecble_Data();
         public List<ba_Archivo_Transferencia_Info> GetList(int IdEmpresa, int IdSucursal, DateTime fechaini, DateTime fechafin, bool mostrar_anulados)
         {
             try
@@ -107,7 +109,9 @@ namespace Core.Erp.Data.Banco
                             Nom_Archivo = Entity.Nom_Archivo,
                             Observacion = Entity.Observacion,
                             IdSucursal = Entity.IdSucursal,
-                            SecuencialInicial = Entity.SecuencialInicial
+                            SecuencialInicial = Entity.SecuencialInicial,
+                            IdTipoCbte = Entity.IdTipoCbte,
+                            IdCbteCble = Entity.IdCbteCble
                     };
                 }
                 return info;
@@ -300,6 +304,18 @@ namespace Core.Erp.Data.Banco
 
                     Context.ba_Archivo_Transferencia.Remove(Context.ba_Archivo_Transferencia.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdArchivo == info.IdArchivo).FirstOrDefault());
                     Context.SaveChanges();
+                }
+
+                if (data_ct.anularDB(new ct_cbtecble_Info { IdEmpresa = info.IdEmpresa, IdTipoCbte = info.IdTipoCbte ?? 0, IdCbteCble =  info.IdCbteCble ?? 0}))
+                {
+                    data_cbte.anularDB(new ba_Cbte_Ban_Info
+                    {
+                        IdEmpresa = info.IdEmpresa,
+                        IdTipocbte = info.IdTipoCbte ?? 0,
+                        IdCbteCble = info.IdCbteCble ?? 0,
+                        IdUsuario_Anu = info.IdUsuario,
+
+                    });
                 }
                 return true;
             }

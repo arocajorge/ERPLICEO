@@ -674,7 +674,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                                          pe_nombreCompleto = q.nom_proveedor
                                      }
                                  },
-                                 IdSucursal = q.IdSucursal
+                                 IdSucursal = q.IdSucursal,
+                                 num_cta_acreditacion = q.num_cta_acreditacion
 
                              }).ToList();
 

@@ -426,9 +426,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                                 ru_descripcion = rubros.ru_descripcion
 
                             };
-                            info.ValorHora = 1.32;
+                            info.ValorHora = 1.38;
                             info.NumHoras = (Math.Round(Convert.ToDouble((mat_mas_ves) * (formula_horas.Dividendo / formula_horas.Divisor))) - 160);
-                            info.Valor = 1.32 * info.NumHoras;
+                            info.Valor = 1.38 * info.NumHoras;
                             info.Secuencia = lista_novedades.Count() + 1;
                             if (info.Valor > 0)
                                 lista_novedades.Add(info);

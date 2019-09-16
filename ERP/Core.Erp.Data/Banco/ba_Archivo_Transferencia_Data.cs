@@ -338,6 +338,7 @@ namespace Core.Erp.Data.Banco
                     var proceso = odataProceso.get_info(info.IdEmpresa, info.IdProceso_bancario);
                     if (proceso == null)
                         return false;
+                    double Valor = Math.Round(info.Lst_Flujo.Sum(q => q.Valor),2,MidpointRounding.AwayFromZero);
 
                     var cbte = new ba_Cbte_Ban_Info
                     {
@@ -352,17 +353,17 @@ namespace Core.Erp.Data.Banco
                         {
                             IdTipoFlujo = q.IdTipoFlujo,
                             Valor = q.Valor,
-                            Porcentaje = q.Porcentaje,
+                            Porcentaje = (q.Valor / info.cb_Valor)*100,
                             IdEmpresa = info.IdEmpresa
                         }).ToList()),
                         lst_det_ct = new List<ct_cbtecble_det_Info>(info.Lst_diario.Select(q => new ct_cbtecble_det_Info
                         {
                             IdCtaCble = q.IdCtaCble,
-                            dc_Valor = q.dc_Valor,
+                            dc_Valor = Math.Round(q.dc_Valor,2,MidpointRounding.AwayFromZero),
                             dc_para_conciliar = q.dc_para_conciliar,
                             IdCentroCosto = q.IdCentroCosto,
                             IdPunto_cargo = q.IdPunto_cargo,
-                            IdPunto_cargo_grupo = q.IdPunto_cargo_grupo
+                            IdPunto_cargo_grupo = q.IdPunto_cargo_grupo,
                         }).ToList()),
                         lst_det_canc_op = new List<cp_orden_pago_cancelaciones_Info>(info.Lst_det.Select(q => new cp_orden_pago_cancelaciones_Info
                         {

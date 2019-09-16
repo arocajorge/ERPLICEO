@@ -44,7 +44,7 @@
             e.NewValues["dc_Valor_debe"] = 0;
             //e.NewValues["IdCtaCble"] = null;
             e.NewValues["IdGrupoPresupuesto"] = null;
-
+            e.NewValues["dc_para_conciliar"] = false;
         };
         settings.Columns.Add(column =>
         {
@@ -91,20 +91,17 @@
                 sp.MaxValue = 999999999;
             });
         });
-        /*
         settings.Columns.Add(column =>
         {
-            column.EditFormSettings.Visible = DefaultBoolean.False;
             column.FieldName = "dc_para_conciliar";
-            column.Caption = "Se concilia";
+            column.Caption = "Conci";
             column.Width = Unit.Percentage(10);
-            column.Visible = false;
             column.EditorProperties().CheckBox(sp =>
             {
 
             });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
         });
-        */
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "dc_Valor_debe").DisplayFormat = "Debe {0:c2}";
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "dc_Valor_haber").DisplayFormat = "Haber {0:c2}";
 

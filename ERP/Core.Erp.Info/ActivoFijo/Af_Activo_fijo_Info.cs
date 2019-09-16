@@ -63,7 +63,12 @@ namespace Core.Erp.Info.ActivoFijo
         public string IdCtaCble { get; set; }
         public string pc_Cuenta { get; set; }
         public byte[] imagen_af { get; set; }
-
+        public string NomDepartamento { get; set; }
+        public string NomArea { get; set; }
+        public string NomCategoria { get; set; }
+        public string NomTipo { get; set; }
+        public string NomEncargado { get; set; }
+        public string NomCustodio { get; set; }
     }
 
     public class Af_Activo_fijo_valores_Info

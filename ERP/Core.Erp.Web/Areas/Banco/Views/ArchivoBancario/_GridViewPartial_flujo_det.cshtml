@@ -57,7 +57,7 @@
         {
             column.FieldName = "IdTipoFlujo";
             column.Caption = "Tipo flujo";
-            column.Width = Unit.Percentage(40);
+            column.Width = Unit.Percentage(60);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
@@ -65,6 +65,7 @@
                 Html.RenderPartial("_CmbFlujo_Tipo", DataBinder.Eval(c.DataItem, "IdTipoFlujo"));
             });
         });
+        /*
         settings.Columns.Add(column =>
         {
             column.FieldName = "Porcentaje";
@@ -77,6 +78,7 @@
                 q.ClientSideEvents.ValueChanged = "function(s,e,){CalcularValor()}";
             });
         });
+        */
         settings.Columns.Add(column =>
         {
             column.FieldName = "Valor";
@@ -86,7 +88,7 @@
             {
                 q.MinValue = 0;
                 q.Width = Unit.Percentage(100);
-                q.ClientSideEvents.ValueChanged = "function(s,e,){CalcularPorcentaje()}";
+                //q.ClientSideEvents.ValueChanged = "function(s,e,){CalcularPorcentaje()}";
             });
         });
 

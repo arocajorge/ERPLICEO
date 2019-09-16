@@ -226,7 +226,7 @@ function GetValor()
     <div class="row">
         <div class="col-md-12">
             
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <div class="form-group">
                     <label for="ICatalogo">Nombre archivo*</label>
                     @Html.TextBoxFor(q => q.Nom_Archivo, new { @class = "form-control" })
@@ -243,6 +243,7 @@ function GetValor()
                 </div>
             </div>
             <div class="col-md-1">
+                <label for="IdImprimir"></label>
                 <button type="button" class="btn btn-primary form-control" id="btn_imprimirDirecto" onclick="ImprimirOPMasivo();" title="Imprimir">
                     <i class="fa fa-clock-o"></i>
                 </button>

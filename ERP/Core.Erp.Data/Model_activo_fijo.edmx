@@ -313,6 +313,35 @@
           <Property Name="IdTipoCbte" Type="int" />
           <Property Name="IdCbteCble" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwAf_Activo_fijo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwAf_Activo_fijo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdActivoFijo" />
+            <PropertyRef Name="Af_Nombre" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="EstadoProceso" />
+            <PropertyRef Name="NomEncargado" />
+            <PropertyRef Name="NomCustodio" />
+            <PropertyRef Name="Cantidad" />
+            <PropertyRef Name="Estado_Proceso" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdActivoFijo" Type="int" Nullable="false" />
+          <Property Name="Af_Nombre" Type="varchar(max)" Nullable="false" />
+          <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="EstadoProceso" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="NomCategoria" Type="varchar" MaxLength="5000" />
+          <Property Name="NomTipo" Type="varchar" MaxLength="5000" />
+          <Property Name="NomArea" Type="varchar(max)" />
+          <Property Name="NomDepartamento" Type="varchar(max)" />
+          <Property Name="NomEncargado" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="NomCustodio" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="FechaEntrega" Type="datetime" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Estado_Proceso" Type="varchar" MaxLength="35" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Af_Activo_fijo_Af_Activo_fijo_Categoria">
           <End Role="Af_Activo_fijo_Categoria" Type="Self.Af_Activo_fijo_Categoria" Multiplicity="1" />
           <End Role="Af_Activo_fijo" Type="Self.Af_Activo_fijo" Multiplicity="*" />
@@ -531,6 +560,24 @@
           <EntitySet Name="Af_Parametros" EntityType="Self.Af_Parametros" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Af_Retiro_Activo" EntityType="Self.Af_Retiro_Activo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Af_Venta_Activo" EntityType="Self.Af_Venta_Activo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwAf_Activo_fijo" EntityType="Self.vwAf_Activo_fijo" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwAf_Activo_fijo].[IdEmpresa] AS [IdEmpresa], 
+    [vwAf_Activo_fijo].[IdActivoFijo] AS [IdActivoFijo], 
+    [vwAf_Activo_fijo].[Af_Nombre] AS [Af_Nombre], 
+    [vwAf_Activo_fijo].[Estado] AS [Estado], 
+    [vwAf_Activo_fijo].[EstadoProceso] AS [EstadoProceso], 
+    [vwAf_Activo_fijo].[NomCategoria] AS [NomCategoria], 
+    [vwAf_Activo_fijo].[NomTipo] AS [NomTipo], 
+    [vwAf_Activo_fijo].[NomArea] AS [NomArea], 
+    [vwAf_Activo_fijo].[NomDepartamento] AS [NomDepartamento], 
+    [vwAf_Activo_fijo].[NomEncargado] AS [NomEncargado], 
+    [vwAf_Activo_fijo].[NomCustodio] AS [NomCustodio], 
+    [vwAf_Activo_fijo].[FechaEntrega] AS [FechaEntrega], 
+    [vwAf_Activo_fijo].[Cantidad] AS [Cantidad], 
+    [vwAf_Activo_fijo].[Estado_Proceso] AS [Estado_Proceso]
+    FROM [dbo].[vwAf_Activo_fijo] AS [vwAf_Activo_fijo]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Af_Activo_fijo_Af_Activo_fijo_Categoria" Association="Self.FK_Af_Activo_fijo_Af_Activo_fijo_Categoria">
             <End Role="Af_Activo_fijo_Categoria" EntitySet="Af_Activo_fijo_Categoria" />
             <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
@@ -833,6 +880,7 @@
             <End Role="Af_Activo_fijo" EntitySet="Af_Activo_fijo" />
             <End Role="Af_Venta_Activo" EntitySet="Af_Venta_Activo" />
           </AssociationSet>
+          <EntitySet Name="vwAf_Activo_fijo" EntityType="Model_activo_fijo.vwAf_Activo_fijo" />
           </EntityContainer>
         <ComplexType Name="spACTF_activos_a_depreciar_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -1232,6 +1280,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vwAf_Activo_fijo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdActivoFijo" />
+            <PropertyRef Name="Af_Nombre" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="EstadoProceso" />
+            <PropertyRef Name="NomEncargado" />
+            <PropertyRef Name="NomCustodio" />
+            <PropertyRef Name="Cantidad" />
+            <PropertyRef Name="Estado_Proceso" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdActivoFijo" Type="Int32" Nullable="false" />
+          <Property Name="Af_Nombre" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="EstadoProceso" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="NomCategoria" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="NomTipo" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="NomArea" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NomDepartamento" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NomEncargado" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="NomCustodio" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaEntrega" Type="DateTime" Precision="3" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Estado_Proceso" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1565,6 +1640,26 @@
                 <ScalarProperty Name="IdActivoFijoTipo" ColumnName="IdActivoFijoTipo" />
                 <ScalarProperty Name="Af_Nombre" ColumnName="Af_Nombre" />
                 <ScalarProperty Name="CodActivoFijo" ColumnName="CodActivoFijo" />
+                <ScalarProperty Name="IdActivoFijo" ColumnName="IdActivoFijo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwAf_Activo_fijo">
+            <EntityTypeMapping TypeName="Model_activo_fijo.vwAf_Activo_fijo">
+              <MappingFragment StoreEntitySet="vwAf_Activo_fijo">
+                <ScalarProperty Name="Estado_Proceso" ColumnName="Estado_Proceso" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
+                <ScalarProperty Name="NomCustodio" ColumnName="NomCustodio" />
+                <ScalarProperty Name="NomEncargado" ColumnName="NomEncargado" />
+                <ScalarProperty Name="NomDepartamento" ColumnName="NomDepartamento" />
+                <ScalarProperty Name="NomArea" ColumnName="NomArea" />
+                <ScalarProperty Name="NomTipo" ColumnName="NomTipo" />
+                <ScalarProperty Name="NomCategoria" ColumnName="NomCategoria" />
+                <ScalarProperty Name="EstadoProceso" ColumnName="EstadoProceso" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Af_Nombre" ColumnName="Af_Nombre" />
                 <ScalarProperty Name="IdActivoFijo" ColumnName="IdActivoFijo" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>

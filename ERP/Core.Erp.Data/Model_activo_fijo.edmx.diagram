@@ -33,6 +33,7 @@
         <AssociationConnector Association="Model_activo_fijo.FK_Af_Mej_Baj_Activo_Af_Activo_fijo" />
         <AssociationConnector Association="Model_activo_fijo.FK_Af_Retiro_Activo_Af_Activo_fijo" />
         <AssociationConnector Association="Model_activo_fijo.FK_Af_Venta_Activo_Af_Activo_fijo" />
+        <EntityTypeShape EntityType="Model_activo_fijo.vwAf_Activo_fijo" Width="1.5" PointX="3.375" PointY="9.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

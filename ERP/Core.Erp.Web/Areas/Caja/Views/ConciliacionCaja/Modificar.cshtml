@@ -465,6 +465,7 @@
                         settings.Properties.EditFormatString = "dd/MM/yyyy";
                         settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){GetIngresos(); Calcular();}";
                     }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Fecha_fin, "", new { @class = "text-danger" })
                 </div>

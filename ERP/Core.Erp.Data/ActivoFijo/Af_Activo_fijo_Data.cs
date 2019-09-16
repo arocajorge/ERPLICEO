@@ -87,45 +87,28 @@ namespace Core.Erp.Data.ActivoFijo
         {
             try
             {
-                List<Af_Activo_fijo_Info> Lista;
+                List<Af_Activo_fijo_Info> Lista = new List<Af_Activo_fijo_Info>();
                 using (Entities_activo_fijo Context = new Entities_activo_fijo())
                 {
-                    if (mostrar_anulados)
-                        Lista = (from q in Context.Af_Activo_fijo
-                                 join c in Context.Af_Catalogo
-                                 on q.Estado_Proceso equals c.IdCatalogo
-                                 where q.IdEmpresa == IdEmpresa
-                                 select new Af_Activo_fijo_Info
-                                 {
-                                     IdEmpresa = q.IdEmpresa,
-                                     Estado = q.Estado,
-                                     Af_Nombre = q.Af_Nombre,
-                                     IdActivoFijo = q.IdActivoFijo,
-                                     Estado_Proceso = q.Estado_Proceso,
-                                     Estado_Proceso_nombre = c.Descripcion,
-                                     Cantidad = q.Cantidad,
-                                     FechaEntrega = q.FechaEntrega,
-                                     EstadoBool = q.Estado == "A" ? true : false
-
-                                 }).ToList();
-                    else
-                        Lista = (from q in Context.Af_Activo_fijo
-                                 join c in Context.Af_Catalogo
-                                 on q.Estado_Proceso equals c.IdCatalogo
-                                 where q.IdEmpresa == IdEmpresa
-                                 && q.Estado == "A"
-                                 select new Af_Activo_fijo_Info
-                                 {                                     
-                                     IdEmpresa = q.IdEmpresa,
-                                     Af_Nombre = q.Af_Nombre,
-                                     Estado = q.Estado,
-                                     IdActivoFijo = q.IdActivoFijo,
-                                     Estado_Proceso = q.Estado_Proceso,
-                                     Estado_Proceso_nombre = c.Descripcion,
-                                     Cantidad = q.Cantidad,
-                                     FechaEntrega = q.FechaEntrega,
-                                     EstadoBool = q.Estado == "A" ? true : false
-                                 }).ToList();
+                    var lst = Context.vwAf_Activo_fijo.Where(q => q.IdEmpresa == IdEmpresa && q.Estado == (mostrar_anulados ? q.Estado : "A")).ToList();
+                    Lista.AddRange(lst.Select(q => new Af_Activo_fijo_Info
+                    {
+                        IdEmpresa = q.IdEmpresa,
+                        Estado = q.Estado,
+                        Af_Nombre = q.Af_Nombre,
+                        IdActivoFijo = q.IdActivoFijo,
+                        Estado_Proceso_nombre = q.EstadoProceso,
+                        FechaEntrega = q.FechaEntrega,
+                        EstadoBool = q.Estado == "A" ? true : false,
+                        NomCustodio = q.NomCustodio,
+                        NomEncargado = q.NomEncargado,
+                        NomTipo = q.NomTipo,
+                        NomCategoria = q.NomCategoria,
+                        NomArea = q.NomArea,
+                        NomDepartamento = q.NomDepartamento,
+                        Estado_Proceso = q.Estado_Proceso,
+                        Cantidad = q.Cantidad
+                    }).ToList());
                 }
                 return Lista;
             }

@@ -16,6 +16,7 @@ namespace Core.Erp.Data.CuentasPorPagar
     {
         tb_sis_Documento_Tipo_Talonario_Data odata_talonario = new tb_sis_Documento_Tipo_Talonario_Data();
         tb_sis_Documento_Tipo_Talonario_Info info_documento = new tb_sis_Documento_Tipo_Talonario_Info();
+        cp_proveedor_Data data_proveedor = new cp_proveedor_Data();
         fa_PuntoVta_Data odata_pto = new fa_PuntoVta_Data();
         public List<cp_retencion_Info> get_list(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin)
         {
@@ -233,6 +234,17 @@ namespace Core.Erp.Data.CuentasPorPagar
                         var diario = odata_ct.armar_info(info.info_comprobante.lst_ct_cbtecble_det, info.IdEmpresa, info.IdSucursal, (int)param.pa_IdTipoCbte_x_Retencion, 0,
                             "Comprobante contable de retención #" + info.serie1 + " " + info.serie2 + " " + info.NumRetencion
                         , info.fecha);
+
+                        var prov = data_proveedor.get_info(info.IdEmpresa, info.IdProveedor);
+                        if (prov != null)
+                        {
+                            if (diario.cb_Observacion == null)
+                                diario.cb_Observacion = "";
+
+                            diario.cb_Observacion = "Prov: " + prov.info_persona.pe_nombreCompleto + " FAC# " + info.co_serie + "-" + info.co_factura + " OBS: " + diario.cb_Observacion;
+
+                        }
+
                         odata_ct.guardarDB(diario);
 
                         Context.cp_retencion_x_ct_cbtecble.Add(new cp_retencion_x_ct_cbtecble

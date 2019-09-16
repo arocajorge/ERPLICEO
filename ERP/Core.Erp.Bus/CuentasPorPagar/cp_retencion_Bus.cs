@@ -28,6 +28,7 @@ namespace Core.Erp.Bus.CuentasPorPagar
         ct_cbtecble_det_Bus bus_comprobante_det = new ct_cbtecble_det_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         cp_retencion_det_Data data_retencion_der = new cp_retencion_det_Data();
+        cp_proveedor_Bus bus_proveedor = new cp_proveedor_Bus();
         #endregion
         public List<cp_retencion_Info> get_list(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin)
         {
@@ -129,8 +130,8 @@ namespace Core.Erp.Bus.CuentasPorPagar
         {
             try
             {
-
                 odata = new cp_retencion_Data();
+                var prov = bus_proveedor.get_info(info.IdEmpresa, info.IdProveedor);
                 info.IdEmpresa_Ogiro = info.IdEmpresa;
                 info.CodDocumentoTipo = cl_enumeradores.eTipoDocumento.RETEN.ToString();
                 info.info_comprobante.IdEmpresa = info.IdEmpresa;
@@ -141,8 +142,20 @@ namespace Core.Erp.Bus.CuentasPorPagar
                 info.info_comprobante.cb_Estado = "A";
                 info.info_comprobante.IdPeriodo = Convert.ToInt32(info.info_comprobante.cb_Fecha.Year.ToString() + info.info_comprobante.cb_Fecha.Month.ToString().PadLeft(2, '0'));
                 info.info_comprobante.IdEmpresa = info.IdEmpresa;
-                info.info_comprobante.cb_Observacion = info.observacion;
+                
                 info.info_comprobante.IdSucursal = info.IdSucursal;
+
+                if (prov != null)
+                {
+                    if (info.observacion == null)
+                        info.observacion = "";
+
+                    info.info_comprobante.cb_Observacion = "Prov: " + prov.info_persona.pe_nombreCompleto + " FAC# " + info.co_serie + "-" + info.co_factura + " OBS: " + info.observacion;
+
+                }
+                else
+                    info.info_comprobante.cb_Observacion = info.observacion;
+
                 if (odata.guardarDB(info))
                 {
                     return true;

@@ -399,6 +399,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #endregion
 
             model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
+            model.usuario = SessionFixed.IdUsuario;
             model.p_IdActivoFijo.Value = IdActivoFijo;
             model.empresa = SessionFixed.NomEmpresa.ToString();
             return View(model);

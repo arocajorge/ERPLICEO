@@ -78,7 +78,8 @@ namespace Core.Erp.Data.Reportes.ActivoFijo
                         NomModelo = q.NomModelo,
                         IdActivoFijoTipo = q.IdActivoFijoTipo,
                         IdArea = q.IdArea,
-                        IdCategoriaAF = q.IdCategoriaAF
+                        IdCategoriaAF = q.IdCategoriaAF,
+                        FechaEntrega = q.FechaEntrega
                     }).ToList();
                 }
                 return Lista;

@@ -64,12 +64,13 @@
             column.FieldName = "CantidadHoras";
             column.Caption = "Cantidad Horas";
             column.Width = Unit.Percentage(10);
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
             column.EditorProperties().SpinEdit(sp =>
             {
                 sp.MinValue = 0;
                 sp.MaxValue = 999999999;
                 sp.Width = Unit.Percentage(100);
-
+                sp.ClientSideEvents.ValueChanged = "function(s, e){ CalcularValorTotalHoras();}";
             });
         });
         settings.Columns.Add(column =>
@@ -114,3 +115,28 @@
 
 }
 @grid.Bind(Model.lst_novedad_det).GetHtml()
+
+<script type="text/javascript">
+    function CalcularValorTotalHoras(s, e) {
+        var datos = {
+            IdEmpleado: IdEmpleado.GetValue(),
+            IdRubro: IdRubro.GetValue(),
+            CantidadHoras: GridViewPartial_empleado_novedad_det.GetEditor('CantidadHoras').GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("CalcularValorTotalHoras", "EmpleadoNovedad", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                GridViewPartial_empleado_novedad_det.GetEditor('Valor').SetValue(data);
+            },
+            error: function (error) {
+            }
+        });
+    };
+</script>

@@ -19,6 +19,7 @@
 
         settings.Properties.Columns.Add("IdRubro", "ID", 20);
         settings.Properties.Columns.Add("ru_descripcion", "Descripción", 80);
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s, e){ CalcularValorTotalHoras(s,e);} ";
         settings.Properties.FilterMinLength = 3;
     })
      .BindList(new Core.Erp.Web.Areas.RRHH.Controllers.EmpleadoNovedadController().get_list_bajo_demanda_rubro, new Core.Erp.Web.Areas.RRHH.Controllers.EmpleadoNovedadController().get_info_bajo_demanda_rubro)

@@ -369,6 +369,49 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
        
             return Json(IdNomina_Tipo, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult CalcularValorTotalHoras(decimal IdEmpleado = 0, string IdRubro = "", decimal CantidadHoras = 0)
+        {
+            var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var sueldo = bus_contrato.get_sueldo_actual(IdEmpresa, IdEmpleado);
+            var info_rubro = bus_rubro.get_info(IdEmpresa, IdRubro);
+            string[] array_horas = CantidadHoras.ToString().Split('.');
+            decimal resultado = 0;
+
+            if(array_horas.Count() > 1)
+            {
+                /*HORAS*/
+                var cant_horas = Convert.ToInt32((array_horas[0] == null ? "0" : array_horas[0]));
+                var valor_horas = sueldo / 240;
+                var recargo_horas = valor_horas * Convert.ToDecimal(((info_rubro == null ? 0 : info_rubro.rub_ValorRecargoHoras) / 100));
+                var valor_final_horas = valor_horas + recargo_horas;
+                var valor_total_horas = cant_horas * valor_final_horas;
+
+                /*MINUTOS*/
+                var cant_minutos = Convert.ToInt32((array_horas[1] == null ? "0" : array_horas[1].PadRight(2,'0')));
+                var valor_minutos = valor_horas / 60;
+                var recargo_minutos = valor_minutos * Convert.ToDecimal(((info_rubro == null ? 0 : info_rubro.rub_ValorRecargoHoras) / 100));
+                var valor_final_minutos = valor_minutos + recargo_minutos;
+                var valor_total_minutos = cant_minutos * valor_final_minutos;
+
+                resultado = valor_total_horas + valor_total_minutos;
+            }
+            else
+            {
+                /*HORAS*/
+                var cant_horas = Convert.ToInt32((array_horas[0] == null ? "0" : array_horas[0]));
+                var valor_horas = sueldo / 240;
+                var recargo_horas = valor_horas * Convert.ToDecimal(((info_rubro == null ? 0 : info_rubro.rub_ValorRecargoHoras) / 100));
+                var valor_final_horas = valor_horas + recargo_horas;
+                var valor_total_horas = cant_horas * valor_final_horas;
+
+                resultado = valor_total_horas;
+            }
+
+            resultado = Math.Round((resultado), 2, MidpointRounding.AwayFromZero);
+
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         private void cargar_combos_detalle()

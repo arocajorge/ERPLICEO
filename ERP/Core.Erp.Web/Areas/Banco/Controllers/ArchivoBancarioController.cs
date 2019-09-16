@@ -419,7 +419,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         #region Json
         public JsonResult GetListPorCruzar(int IdEmpresa = 0, decimal IdTransaccionSession = 0, int IdSucursal = 0)
         {
-            var lst = bus_archivo_det.get_list_con_saldo(IdEmpresa, 0, "PROVEE", 0, "APRO", SessionFixed.IdUsuario, IdSucursal, false);
+            var lst = bus_archivo_det.get_list_con_saldo(IdEmpresa, 0, "PROVEE", 0, "APRO", SessionFixed.IdUsuario ?? " ", IdSucursal, false);
             Lst_det_op.set_list(lst, IdTransaccionSession);
             return Json(lst, JsonRequestBehavior.AllowGet);
         }
@@ -451,7 +451,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         }
         public JsonResult actualizarGridDetFlujoArchivo(float Valor = 0, decimal IdTransaccionSession = 0, int IdEmpresa = 0)
         {
-
+            /*
             var ListaPlantillaTipoFlujo = List_flujo.get_list(IdTransaccionSession);
 
             var ListaDetFlujo = new List<ba_archivo_transferencia_x_ba_tipo_flujo_Info>();
@@ -466,9 +466,11 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                     Valor = (item.Porcentaje * Valor) / 100
                 });
             }
-
+            
             List_flujo.set_list(ListaDetFlujo, IdTransaccionSession);
             return Json(ListaDetFlujo, JsonRequestBehavior.AllowGet);
+            */
+            return Json("", JsonRequestBehavior.AllowGet);
         }
         public JsonResult ArmarDiario(int IdEmpresa = 0, decimal IdTransaccionSession = 0, int IdBanco = 0)
         {
@@ -507,7 +509,9 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                     IdCtaCble = banco == null ? string.Empty : banco.IdCtaCble,
                     pc_Cuenta = cuenta == null ? string.Empty : cuenta.pc_Cuenta,
                     dc_Valor = Math.Round(ListaD.Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero)*-1,
-                    dc_Valor_haber = Math.Round(ListaD.Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero)
+                    dc_Valor_haber = Math.Round(ListaD.Sum(q => q.Valor), 2, MidpointRounding.AwayFromZero),
+                    dc_para_conciliar = true,
+                    dc_para_conciliar_null = true
                 });
                 #endregion
             }

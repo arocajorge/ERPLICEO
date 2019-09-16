@@ -2026,6 +2026,9 @@
     <Compile Include="VWACTF_008.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwAf_Activo_fijo.cs">
+      <DependentUpon>Model_activo_fijo.tt</DependentUpon>
+    </Compile>
     <Compile Include="VWBAN_001.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>

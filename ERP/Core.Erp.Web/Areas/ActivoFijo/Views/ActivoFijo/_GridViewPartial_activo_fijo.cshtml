@@ -85,15 +85,21 @@
             c.Width = System.Web.UI.WebControls.Unit.Pixel(150);
         });
 
-        settings.Columns.Add("IdActivoFijo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("IdActivoFijo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(5);
         settings.Columns.Add("Estado_Proceso_nombre", "Proceso").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-        settings.Columns.Add("Af_Nombre", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(60);
-        settings.Columns.Add("Cantidad", "Cantidad").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+        settings.Columns.Add("Af_Nombre", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        settings.Columns.Add("NomCustodio", "Custodio").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("NomEncargado", "Encargado").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("NomArea", "Area").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add("NomDepartamento", "Departamento").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+
+        settings.Columns.Add("Cantidad", "Cantidad").Width = System.Web.UI.WebControls.Unit.Percentage(5);
         settings.Columns.Add(column =>
         {
             column.FieldName = "EstadoBool";
             column.Caption = "Estado";
-            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
             column.EditorProperties().CheckBox(sp =>
             {
 

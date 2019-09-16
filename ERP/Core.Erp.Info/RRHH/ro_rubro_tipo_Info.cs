@@ -51,6 +51,7 @@ namespace Core.Erp.Info.RRHH
         public string rub_GrupoResumen { get; set; }
         public bool rub_ContPorEmpleado { get; set; }
         public Nullable<bool> rub_ContPorJornada { get; set; }
+        public Nullable<double> rub_ValorRecargoHoras { get; set; }
         public List<ro_rubro_tipo_x_jornada_Info> lst_rubro_jornada { get; set; }
 
     }

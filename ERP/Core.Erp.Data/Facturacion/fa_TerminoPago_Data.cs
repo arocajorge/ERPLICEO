@@ -24,6 +24,8 @@ namespace Core.Erp.Data.Facturacion
                                   Dias_Vct = q.Dias_Vct,
                                   nom_TerminoPago = q.nom_TerminoPago,
                                   Num_Coutas = q.Num_Coutas,
+                                  AplicaDescuentoNomina = q.AplicaDescuentoNomina,
+                                  CodigoRubroDescto = q.CodigoRubroDescto,
                                   estado = q.estado
                              }).ToList();
                     else
@@ -35,6 +37,8 @@ namespace Core.Erp.Data.Facturacion
                                      Dias_Vct = q.Dias_Vct,
                                      nom_TerminoPago = q.nom_TerminoPago,
                                      Num_Coutas = q.Num_Coutas,
+                                     AplicaDescuentoNomina = q.AplicaDescuentoNomina,
+                                     CodigoRubroDescto = q.CodigoRubroDescto,
                                      estado = q.estado
                                  }).ToList();
                 }
@@ -62,6 +66,8 @@ namespace Core.Erp.Data.Facturacion
                         Dias_Vct = Entity.Dias_Vct,
                         nom_TerminoPago = Entity.nom_TerminoPago,
                         Num_Coutas = Entity.Num_Coutas,
+                        AplicaDescuentoNomina = Entity.AplicaDescuentoNomina,
+                        CodigoRubroDescto = Entity.CodigoRubroDescto,
                         estado = Entity.estado
                     };
                 }
@@ -109,6 +115,8 @@ namespace Core.Erp.Data.Facturacion
                         Dias_Vct = info.Dias_Vct,
                         nom_TerminoPago = info.nom_TerminoPago,
                         Num_Coutas = info.Num_Coutas,
+                        AplicaDescuentoNomina = info.AplicaDescuentoNomina,
+                        CodigoRubroDescto = info.CodigoRubroDescto,
                         estado = info.estado = true
 
                     };
@@ -148,6 +156,8 @@ namespace Core.Erp.Data.Facturacion
                     Entity.Dias_Vct = info.Dias_Vct;
                     Entity.nom_TerminoPago = info.nom_TerminoPago;
                     Entity.Num_Coutas = info.Num_Coutas;
+                    Entity.AplicaDescuentoNomina = info.AplicaDescuentoNomina;
+                    Entity.CodigoRubroDescto = info.CodigoRubroDescto;
                     
                     foreach (var item in info.Lst_fa_TerminoPago_Distribucion)
                     {

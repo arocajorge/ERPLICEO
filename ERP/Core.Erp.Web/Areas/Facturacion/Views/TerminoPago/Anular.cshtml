@@ -37,18 +37,36 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="Num_Coutas">Cuotas*</label>
                     @Html.TextBoxFor(q => q.Num_Coutas, new { @class = "form-control", @id = "Num_Coutas" })
                     @Html.ValidationMessageFor(q => q.Num_Coutas, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="Dias_Vct">Días*</label>
                     @Html.TextBoxFor(q => q.Dias_Vct, new { @class = "form-control", @id = "Dias_Vct" })
                     @Html.ValidationMessageFor(q => q.Dias_Vct, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="AplicaDescuentoNomina"></label>
+                    @Html.DevExpress().CheckBoxFor(q => q.AplicaDescuentoNomina, settings =>
+                            {
+                                settings.Name = "AplicaDescuentoNomina";
+                                settings.Text = "Aplica descuento en nómina";
+                            }).GetHtml()
+                    @Html.ValidationMessageFor(q => q.AplicaDescuentoNomina, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="CodigoRubroDescto">Código de rubro descuento</label>
+                    @Html.TextBoxFor(q => q.CodigoRubroDescto, new { @class = "form-control", @id = "CodigoRubroDescto" })
+                    @Html.ValidationMessageFor(q => q.CodigoRubroDescto, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

@@ -32,10 +32,17 @@
                     @Html.ValidationMessageFor(q => q.ru_codRolGen, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="ru_orden">Orden*</label>
                     @Html.TextBoxFor(q => q.ru_orden, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.ru_orden, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="ru_orden">Valor recargo*</label>
+                    @Html.TextBoxFor(q => q.rub_ValorRecargoHoras, new { @class = "form-control" })
                     @Html.ValidationMessageFor(q => q.ru_orden, "", new { @class = "text-danger" })
                 </div>
             </div>

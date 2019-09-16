@@ -201,7 +201,7 @@ namespace Core.Erp.Web.Areas.General.Controllers
 
         public List<ct_plancta_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
-            return bus_plancta.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), true);
+            return bus_plancta.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
         }
         public ct_plancta_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args)
         {
@@ -218,7 +218,7 @@ namespace Core.Erp.Web.Areas.General.Controllers
 
         public List<ct_plancta_Info> get_list_bajo_demanda_ctacble_iva(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
-            return bus_plancta.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), true);
+            return bus_plancta.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
         }
         public ct_plancta_Info get_info_bajo_demanda_ctacble_iva(ListEditItemRequestedByValueEventArgs args)
         {
@@ -235,7 +235,7 @@ namespace Core.Erp.Web.Areas.General.Controllers
 
         public List<ct_plancta_Info> get_list_bajo_demanda_ctacble_iva0(ListEditItemsRequestedByFilterConditionEventArgs args)
         {
-            return bus_plancta.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), true);
+            return bus_plancta.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), false);
         }
         public ct_plancta_Info get_info_bajo_demanda_ctacble_iva0(ListEditItemRequestedByValueEventArgs args)
         {

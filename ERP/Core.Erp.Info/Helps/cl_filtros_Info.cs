@@ -90,7 +90,7 @@ namespace Core.Erp.Info.Helps
         public bool mostrar_agrupado { get; set; }
         public double MontoMin { get; set; }
         public double MontoMax { get; set; }
-
+        public string IdTipoCatalogo_Ubicacion { get; set; }
         public cl_filtros_activo_Info()
         {
             fecha_ini = DateTime.Now.Date.AddMonths(-1);

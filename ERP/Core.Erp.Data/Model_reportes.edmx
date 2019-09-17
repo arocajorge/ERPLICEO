@@ -203,6 +203,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWACTF_008' no tiene definida ning
             <PropertyRef Name="IdArea" />
             <PropertyRef Name="IdActivoFijoTipo" />
             <PropertyRef Name="IdCategoriaAF" />
+            <PropertyRef Name="IdTipoCatalogo_Ubicacion" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdActivoFijo" Type="int" Nullable="false" />
@@ -229,6 +230,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWACTF_008' no tiene definida ning
           <Property Name="IdActivoFijoTipo" Type="int" Nullable="false" />
           <Property Name="IdCategoriaAF" Type="int" Nullable="false" />
           <Property Name="FechaEntrega" Type="datetime" />
+          <Property Name="IdTipoCatalogo_Ubicacion" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="250" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.VWBAN_001' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -4803,7 +4806,9 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
     [VWACTF_008].[NomModelo] AS [NomModelo], 
     [VWACTF_008].[IdActivoFijoTipo] AS [IdActivoFijoTipo], 
     [VWACTF_008].[IdCategoriaAF] AS [IdCategoriaAF], 
-    [VWACTF_008].[FechaEntrega] AS [FechaEntrega]
+    [VWACTF_008].[FechaEntrega] AS [FechaEntrega], 
+    [VWACTF_008].[IdTipoCatalogo_Ubicacion] AS [IdTipoCatalogo_Ubicacion], 
+    [VWACTF_008].[Descripcion] AS [Descripcion]
     FROM [web].[VWACTF_008] AS [VWACTF_008]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWBAN_001" EntityType="Self.VWBAN_001" store:Type="Views" store:Schema="web">
@@ -12743,6 +12748,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
             <PropertyRef Name="IdArea" />
             <PropertyRef Name="IdActivoFijoTipo" />
             <PropertyRef Name="IdCategoriaAF" />
+            <PropertyRef Name="IdTipoCatalogo_Ubicacion" />
           </Key>
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="IdActivoFijo" Type="Int32" Nullable="false" />
@@ -12769,6 +12775,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <Property Name="IdActivoFijoTipo" Type="Int32" Nullable="false" />
           <Property Name="IdCategoriaAF" Type="Int32" Nullable="false" />
           <Property Name="FechaEntrega" Type="DateTime" Precision="3" />
+          <Property Name="IdTipoCatalogo_Ubicacion" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -16613,6 +16621,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.VWROL_028' no tiene definida ningu
           <EntitySetMapping Name="VWACTF_008">
             <EntityTypeMapping TypeName="Model_reportes.VWACTF_008">
               <MappingFragment StoreEntitySet="VWACTF_008">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdTipoCatalogo_Ubicacion" ColumnName="IdTipoCatalogo_Ubicacion" />
                 <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
                 <ScalarProperty Name="IdCategoriaAF" ColumnName="IdCategoriaAF" />
                 <ScalarProperty Name="IdActivoFijoTipo" ColumnName="IdActivoFijoTipo" />

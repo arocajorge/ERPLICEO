@@ -292,6 +292,14 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 Descripcion = "Todos"
             });
             ViewBag.lst_dep = lst_dep;
+
+            var lst_ubicacion = bus_catalogo.get_list(Convert.ToString(cl_enumeradores.eTipoCatalogoAF.TIP_UBICACION), false);
+            lst_ubicacion.Add(new Af_Catalogo_Info
+            {
+                IdCatalogo = "",
+                Descripcion = "Todos"
+            });
+            ViewBag.lst_ubicacion = lst_ubicacion;
         }
         public ActionResult ACTF_005()
         {
@@ -414,7 +422,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 IdDepartamento = 0,
                 IdEmpleadoCustodio =0,
                 IdEmpleadoEncargado = 0,
-                mostrar_agrupado = true
+                mostrar_agrupado = true,
+                IdTipoCatalogo_Ubicacion = ""
             };
             cargar_combos(model);
             ACTF_008_Rpt report = new ACTF_008_Rpt();
@@ -437,6 +446,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdEmpleadoCustodio.Value = model.IdEmpleadoCustodio == null ? 0 : Convert.ToDecimal(model.IdEmpleadoCustodio);
             report.p_IdEmpleadoEncargado.Value = model.IdEmpleadoEncargado == null ? 0 : Convert.ToDecimal(model.IdEmpleadoEncargado);
             report.p_AgruparPorCustodio.Value = model.mostrar_agrupado;
+            report.p_IdTipoCatalogo_Ubicacion.Value = model.IdTipoCatalogo_Ubicacion;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             ViewBag.Report = report;
@@ -465,6 +475,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdEmpleadoCustodio.Value = model.IdEmpleadoCustodio == null ? 0 : Convert.ToDecimal(model.IdEmpleadoCustodio);
             report.p_IdEmpleadoEncargado.Value = model.IdEmpleadoEncargado == null ? 0 : Convert.ToDecimal(model.IdEmpleadoEncargado);
             report.p_AgruparPorCustodio.Value = model.mostrar_agrupado;
+            report.p_IdTipoCatalogo_Ubicacion.Value = model.IdTipoCatalogo_Ubicacion;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
             cargar_combos(model);

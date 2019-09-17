@@ -7,7 +7,7 @@ namespace Core.Erp.Data.Reportes.ActivoFijo
 {
     public class ACTF_008_Data
     {
-        public List<ACTF_008_Info> GetList(int IdEmpresa, int IdSucursal, int IdArea, decimal IdDepartamento, decimal IdEmpleadoCustodio, decimal IdEmpleadoEncargado, int IdTipo, int IdCategoria, double MontoMin, double MontoMax)
+        public List<ACTF_008_Info> GetList(int IdEmpresa, int IdSucursal, int IdArea, decimal IdDepartamento, decimal IdEmpleadoCustodio, decimal IdEmpleadoEncargado, int IdTipo, int IdCategoria, double MontoMin, double MontoMax, string IdTipoCatalogo_Ubicacion)
         {
             try
             {
@@ -53,6 +53,7 @@ namespace Core.Erp.Data.Reportes.ActivoFijo
                     && q.IdCategoriaAF <= IdCategoriaFin
                     && MontoMin <= q.Af_costo_compra
                     && q.Af_costo_compra <= MontoMax
+                    && q.IdTipoCatalogo_Ubicacion == (IdTipoCatalogo_Ubicacion=="" ? q.IdTipoCatalogo_Ubicacion : IdTipoCatalogo_Ubicacion) 
                     ).Select(q => new ACTF_008_Info
                     {
                         IdEmpleadoCustodio = q.IdEmpleadoCustodio,
@@ -79,7 +80,9 @@ namespace Core.Erp.Data.Reportes.ActivoFijo
                         IdActivoFijoTipo = q.IdActivoFijoTipo,
                         IdArea = q.IdArea,
                         IdCategoriaAF = q.IdCategoriaAF,
-                        FechaEntrega = q.FechaEntrega
+                        FechaEntrega = q.FechaEntrega,
+                        IdTipoCatalogo_Ubicacion = q.IdTipoCatalogo_Ubicacion,
+                        Descripcion = q.Descripcion
                     }).ToList();
                 }
                 return Lista;

@@ -96,7 +96,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="form-group">
                             <label for="IdProductoPadre">Empleado custodio</label>
                             @Html.Partial("_CmbEmpleado_AF1", Model.IdEmpleadoCustodio)
@@ -104,11 +104,19 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="form-group">
                            <label for="IdProductoPadre">Empleado encargado</label>
                             @Html.Partial("_CmbEmpleado_AF2", Model.IdEmpleadoEncargado)
                             @Html.ValidationMessageFor(q => q.IdEmpleadoEncargado, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdProductoPadre">Ubicación</label>
+                            @Html.DropDownListFor(q => q.IdTipoCatalogo_Ubicacion, new SelectList(ViewBag.lst_ubicacion, "IdCatalogo", "Descripcion"), new { @class = "form-control", @id = "IdTipoCatalogo_Ubicacion" })
+                            @Html.ValidationMessageFor(q => q.IdTipoCatalogo_Ubicacion, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>

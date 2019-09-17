@@ -39,5 +39,7 @@ namespace Core.Erp.Data
         public int IdActivoFijoTipo { get; set; }
         public int IdCategoriaAF { get; set; }
         public Nullable<System.DateTime> FechaEntrega { get; set; }
+        public string IdTipoCatalogo_Ubicacion { get; set; }
+        public string Descripcion { get; set; }
     }
 }

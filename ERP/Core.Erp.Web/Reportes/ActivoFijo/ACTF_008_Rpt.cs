@@ -35,9 +35,9 @@ namespace Core.Erp.Web.Reportes.ActivoFijo
             int IdCategoria = string.IsNullOrEmpty(p_IdCategoria.Value.ToString()) ? 0 : Convert.ToInt32(p_IdCategoria.Value);
             double MontoMin = string.IsNullOrEmpty(p_MontoMin.Value.ToString()) ? 0 : Convert.ToDouble(p_MontoMin.Value);
             double MontoMax = string.IsNullOrEmpty(p_MontoMax.Value.ToString()) ? 0 : Convert.ToDouble(p_MontoMax.Value);
-
+            string IdTipoCatalogo_Ubicacion = string.IsNullOrEmpty(p_IdTipoCatalogo_Ubicacion.Value.ToString()) ? "" : Convert.ToString(p_IdTipoCatalogo_Ubicacion.Value);
             ACTF_008_Bus bus_rpt = new ACTF_008_Bus();
-            List<ACTF_008_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdArea, IdDepartamento, IdEmpleadoCustodio, IdEmpleadoEncargado,IdTipo,IdCategoria,MontoMin,MontoMax);
+            List<ACTF_008_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdArea, IdDepartamento, IdEmpleadoCustodio, IdEmpleadoEncargado,IdTipo,IdCategoria,MontoMin,MontoMax, IdTipoCatalogo_Ubicacion);
             this.DataSource = lst_rpt;
 
             tb_empresa_Bus bus_empresa = new tb_empresa_Bus();

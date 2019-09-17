@@ -2,7 +2,7 @@
 @model Core.Erp.Info.Helps.cl_filtros_contabilidad_Info
 @{
     Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
-    ViewBag.Title = "CONTA_005";
+    ViewBag.Title = "Saldo contable de cargos";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");

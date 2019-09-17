@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.Helps.cl_filtros_importacion_Info
 @{
     Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
-    ViewBag.Title = "IMP_003";
+    ViewBag.Title = "Listado de compras al exterior";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");

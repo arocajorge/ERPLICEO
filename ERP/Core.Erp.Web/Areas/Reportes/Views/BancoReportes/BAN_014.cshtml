@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.Helps.cl_filtros_banco_Info
 @{
     Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
-    ViewBag.Title = "BAN_014";
+    ViewBag.Title = "Listado de pagos bancarios por tipo";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");

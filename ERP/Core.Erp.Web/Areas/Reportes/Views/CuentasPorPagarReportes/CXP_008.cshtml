@@ -2,7 +2,7 @@
 @model Core.Erp.Info.Helps.cl_filtros_Info
 @{
     Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
-    ViewBag.Title = "CXP_008";
+    ViewBag.Title = "Estado de cuenta proveedor por rango vencimiento";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");

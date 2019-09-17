@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.Helps.cl_filtros_facturacion_Info
 @{
     Layout = "~/Areas/Reportes/Views/Layout/_Layout_filtros.cshtml";
-    ViewBag.Title = "CXC_010";
+    ViewBag.Title = "estado de cuenta cliente con rango vcto";
     if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
     {
         Response.Redirect("~/Account/Login");

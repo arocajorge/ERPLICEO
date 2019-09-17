@@ -37,6 +37,7 @@
     [IdUsuarioUltAnu]          VARCHAR (20)   NULL,
     [Fecha_UltAnu]             DATETIME       NULL,
     [MotiAnula]                VARCHAR (100)  NULL,
+    [FechaEntrega]             DATETIME       NULL,
     CONSTRAINT [PK_Af_Activo_fijo_1] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdActivoFijo] ASC),
     CONSTRAINT [FK_Af_Activo_fijo_Af_Activo_fijo_Categoria] FOREIGN KEY ([IdEmpresa], [IdCategoriaAF]) REFERENCES [dbo].[Af_Activo_fijo_Categoria] ([IdEmpresa], [IdCategoriaAF]),
     CONSTRAINT [FK_Af_Activo_fijo_Af_Activo_fijo_tipo] FOREIGN KEY ([IdEmpresa], [IdActivoFijoTipo]) REFERENCES [dbo].[Af_Activo_fijo_tipo] ([IdEmpresa], [IdActivoFijoTipo]),
@@ -52,6 +53,8 @@
     CONSTRAINT [FK_Af_Activo_fijo_tb_persona1] FOREIGN KEY ([IdEmpleadoCustodio]) REFERENCES [dbo].[tb_persona] ([IdPersona]),
     CONSTRAINT [FK_Af_Activo_fijo_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])
 );
+
+
 
 
 

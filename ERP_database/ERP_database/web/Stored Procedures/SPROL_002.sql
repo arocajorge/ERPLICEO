@@ -81,7 +81,9 @@ FROM            dbo.ro_rol_detalle AS D INNER JOIN
 	  and D.Valor>0
 	  -- insertando ingresos 
 	  	insert  into web.ro_SPROL_002(IdEmpresa,IdNominaTipo,IdNominaTipoLiqui,IdPeriodo,IdEmpleado,IdRubro,Valor ,Idsucursal, IdArea,ru_descripcion)	
-	select ro.IdEmpresa,ro.IdNominaTipo,ro.IdNominaTipoLiqui,ro.IdPeriodo,D.IdEmpleado,D.IdRubro,Valor ,D.IdSucursal,emp.IdArea,R.ru_descripcion
+--	select ro.IdEmpresa,ro.IdNominaTipo,ro.IdNominaTipoLiqui,ro.IdPeriodo,D.IdEmpleado,D.IdRubro,Valor ,D.IdSucursal,emp.IdArea,R.ru_descripcion
+select ro.IdEmpresa,ro.IdNominaTipo,ro.IdNominaTipoLiqui,ro.IdPeriodo,D.IdEmpleado,D.IdRubro,Valor ,D.IdSucursal,emp.IdArea --by Acueva 05/09/2019
+,iif(r.IdRubro=119,R.ru_descripcion+' ('+ dbo.calcular_horas_nocturnas(@idempresa,@idnomina_tipo,@idnomina_Tipo_liq,@idperiodo ,119,D.IdEmpleado)+')',isnull(R.ru_descripcion,''))
 	
 FROM            dbo.ro_rol_detalle AS D INNER JOIN
                          dbo.ro_empleado AS emp ON D.IdEmpresa = emp.IdEmpresa AND D.IdEmpleado = emp.IdEmpleado INNER JOIN

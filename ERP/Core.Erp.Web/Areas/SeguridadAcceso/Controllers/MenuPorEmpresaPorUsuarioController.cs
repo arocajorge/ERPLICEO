@@ -104,4 +104,24 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
     }
+
+    public static class seg_Menu_x_Empresa_x_Usuario_Lista
+    {
+        static string Variable = "fx_MenuXEmpresaXUsuarioFixed";
+        public static List<seg_Menu_x_Empresa_x_Usuario_Info> get_list()
+        {
+            if (HttpContext.Current.Session[Variable] == null)
+            {
+                List<seg_Menu_x_Empresa_x_Usuario_Info> list = new List<seg_Menu_x_Empresa_x_Usuario_Info>();
+
+                HttpContext.Current.Session[Variable] = list;
+            }
+            return (List<seg_Menu_x_Empresa_x_Usuario_Info>)HttpContext.Current.Session[Variable];
+        }
+
+        public static void set_list(List<seg_Menu_x_Empresa_x_Usuario_Info> list)
+        {
+            HttpContext.Current.Session[Variable] = list;
+        }
+    }
 }

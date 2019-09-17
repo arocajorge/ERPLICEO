@@ -1167,7 +1167,6 @@
     <Build Include="dbo\Tables\caj_Caja_x_seg_usuario.sql" />
     <Build Include="web\Views\VWBAN_014.sql" />
     <Build Include="dbo\Tables\TMPSPROL_013.sql" />
-    <Build Include="web\Views\VWFAC_014.sql" />
     <Build Include="dbo\Views\vwAf_Activo_fijo_1.sql" />
     <Build Include="dbo\Functions\calcular_horas_nocturnas.sql" />
   </ItemGroup>

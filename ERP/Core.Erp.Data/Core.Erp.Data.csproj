@@ -1589,6 +1589,12 @@
     <Compile Include="ro_prestamo.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
+    <Compile Include="ro_PrestamoMasivo.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_PrestamoMasivo_Det.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
     <Compile Include="ro_prestamo_detalle.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
@@ -1707,6 +1713,8 @@
     <Compile Include="RRHH\ro_periodo_Data.cs" />
     <Compile Include="RRHH\ro_periodo_x_ro_Nomina_TipoLiqui_Data.cs" />
     <Compile Include="RRHH\ro_permiso_x_empleado_Data.cs" />
+    <Compile Include="RRHH\ro_PrestamoMasivo_Data.cs" />
+    <Compile Include="RRHH\ro_PrestamoMasivo_Det_Data.cs" />
     <Compile Include="RRHH\ro_prestamo_Data.cs" />
     <Compile Include="RRHH\ro_prestamo_detalle_Data.cs" />
     <Compile Include="RRHH\ro_rdep_Data.cs" />
@@ -2807,6 +2815,9 @@
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="vwRo_Prestamo.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_PrestamoMasivo_Det.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="vwro_rdep.cs">

@@ -1,0 +1,125 @@
+@using System.Web.UI.WebControls;
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewPartial_PrestamosMasivos_Det";
+        settings.CallbackRouteValues = new { Controller = "PrestamosMasivos", Action = "GridViewPartial_PrestamosMasivos_Det" };
+        settings.KeyFieldName = "Secuencia";
+        settings.Width = Unit.Percentage(100);
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "PrestamosMasivos", Action = "EditingUpdate", Area = "RRHH" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "PrestamosMasivos", Action = "EditingDelete", Area = "RRHH" };
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsContextMenu.RowMenuItemVisibility.NewRow = false;
+        settings.SettingsContextMenu.RowMenuItemVisibility.EditRow = true;
+        settings.SettingsContextMenu.RowMenuItemVisibility.DeleteRow = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        //Configuración para que la grilla no muestre texto completo
+        settings.SettingsBehavior.AllowEllipsisInText = true;
+        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
+        //Configuracion responsive
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
+
+        //Funcion para inicializar fila al presionar nuevo
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Secuencia";
+            column.Caption = "ID";
+            column.Width = Unit.Percentage(5);
+            column.Visible = true;
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "pe_nombreCompleto";
+            column.Caption = "Empleado";
+            column.Width = Unit.Percentage(25);
+            column.Visible = true;
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdEmpleado";
+            column.Caption = "Empleado";
+            column.Width = Unit.Percentage(25);
+            column.Visible = false;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbEmpleado_PrestamosMasivos", DataBinder.Eval(c.DataItem, "IdEmpleado"));
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "ru_descripcion";
+            column.Caption = "Rubro";
+            column.Width = Unit.Percentage(15);
+            column.Visible = true;
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdRubro";
+            column.Caption = "Rubro";
+            column.Width = Unit.Percentage(15);
+            column.Visible = false;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.SetEditItemTemplateContent(c =>
+            {
+                Html.RenderPartial("_CmbRubro_PrestamosMasivos", DataBinder.Eval(c.DataItem, "IdRubro"));
+            });
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Monto";
+            column.Caption = "$Monto";
+            column.Width = Unit.Percentage(10);
+            column.Visible = true;
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+                sp.Width = Unit.Percentage(100);
+                column.PropertiesEdit.DisplayFormatString = "n2";
+
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "NumCuotas";
+            column.Caption = "Nº de cuotas";
+            column.Width = Unit.Percentage(10);
+            column.Visible = true;
+            column.EditorProperties().TextBox(sp =>
+            {
+
+            });
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
+
+        //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "TotalCuota");
+        settings.Settings.ShowFooter = true;
+    });
+}
+    @grid.Bind(Model).GetHtml()

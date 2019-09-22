@@ -149,6 +149,9 @@ namespace Core.Erp.Data
         public DbSet<vwro_rol_detalle> vwro_rol_detalle { get; set; }
         public DbSet<vwro_rubro_tipo_x_jornada> vwro_rubro_tipo_x_jornada { get; set; }
         public DbSet<ro_rubro_tipo> ro_rubro_tipo { get; set; }
+        public DbSet<ro_PrestamoMasivo> ro_PrestamoMasivo { get; set; }
+        public DbSet<ro_PrestamoMasivo_Det> ro_PrestamoMasivo_Det { get; set; }
+        public DbSet<vwro_PrestamoMasivo_Det> vwro_PrestamoMasivo_Det { get; set; }
     
         public virtual int spRo_LiquidarEmpleado(Nullable<int> idEmpresa, Nullable<decimal> idActaFiniquito)
         {

@@ -17,6 +17,7 @@ namespace Core.Erp.Data
         public ro_prestamo()
         {
             this.ro_prestamo_detalle = new HashSet<ro_prestamo_detalle>();
+            this.ro_PrestamoMasivo_Det = new HashSet<ro_PrestamoMasivo_Det>();
         }
     
         public int IdEmpresa { get; set; }
@@ -57,5 +58,6 @@ namespace Core.Erp.Data
         public virtual ICollection<ro_prestamo_detalle> ro_prestamo_detalle { get; set; }
         public virtual ro_empleado ro_empleado { get; set; }
         public virtual ro_rubro_tipo ro_rubro_tipo { get; set; }
+        public virtual ICollection<ro_PrestamoMasivo_Det> ro_PrestamoMasivo_Det { get; set; }
     }
 }

@@ -482,6 +482,7 @@
     <Compile Include="Areas\RRHH\Controllers\PeriodosPorNominasController.cs" />
     <Compile Include="Areas\RRHH\Controllers\PermisoEmpleadoController.cs" />
     <Compile Include="Areas\RRHH\Controllers\PreLiquidacionController.cs" />
+    <Compile Include="Areas\RRHH\Controllers\PrestamosMasivosController.cs" />
     <Compile Include="Areas\RRHH\Controllers\PrestamosAprobacionController.cs" />
     <Compile Include="Areas\RRHH\Controllers\PrestamosConsultasController.cs" />
     <Compile Include="Areas\RRHH\Controllers\PrestamosController.cs" />
@@ -10199,6 +10200,14 @@
     <Content Include="Areas\CuentasPorPagar\Views\ProveedorDetalle\Modificar.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ProveedorDetalle\Anular.cshtml" />
     <Content Include="Areas\Caja\Views\Caja\_GridViewPartial_caja_usuario.cshtml" />
+    <Content Include="Areas\RRHH\Views\PrestamosMasivos\Index.cshtml" />
+    <Content Include="Areas\RRHH\Views\PrestamosMasivos\Nuevo.cshtml" />
+    <Content Include="Areas\RRHH\Views\PrestamosMasivos\_CmbEmpleado_PrestamosMasivos.cshtml" />
+    <Content Include="Areas\RRHH\Views\PrestamosMasivos\_CmbSucursal_PrestamosMasivos.cshtml" />
+    <Content Include="Areas\RRHH\Views\PrestamosMasivos\_GridViewPartial_PrestamosMasivos.cshtml" />
+    <Content Include="Areas\RRHH\Views\PrestamosMasivos\_GridViewPartial_PrestamosMasivos_Det.cshtml" />
+    <Content Include="Areas\RRHH\Views\PrestamosMasivos\_CmbRubro_PrestamosMasivos.cshtml" />
+    <Content Include="Areas\RRHH\Views\PrestamosMasivos\Anular.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

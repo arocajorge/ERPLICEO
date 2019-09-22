@@ -109,5 +109,18 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
+
+        public ro_rubro_tipo_Info get_info_x_codigo(int IdEmpresa, string rub_codigo)
+        {
+            try
+            {
+                return odata.get_info_x_codigo(IdEmpresa, rub_codigo);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

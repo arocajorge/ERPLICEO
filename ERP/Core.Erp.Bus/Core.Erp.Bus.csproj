@@ -472,6 +472,8 @@
     <Compile Include="RRHH\ro_periodo_Bus.cs" />
     <Compile Include="RRHH\ro_periodo_x_ro_Nomina_TipoLiqui_Bus.cs" />
     <Compile Include="RRHH\ro_permiso_x_empleado_Bus.cs" />
+    <Compile Include="RRHH\ro_PrestamoMasivo_Bus.cs" />
+    <Compile Include="RRHH\ro_PrestamoMasivo_Det_Bus.cs" />
     <Compile Include="RRHH\ro_prestamo_Bus.cs" />
     <Compile Include="RRHH\ro_prestamo_detalle_Bus.cs" />
     <Compile Include="RRHH\ro_rdep_Bus.cs" />

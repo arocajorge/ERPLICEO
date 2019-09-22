@@ -1,0 +1,29 @@
+﻿
+@using System.Web.UI.WebControls;
+@{
+    var comboBox = Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "IdRubro";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.DropDownWidth = Unit.Percentage(100);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+        settings.CallbackRouteValues = new { Controller = "PrestamosMasivos", Action = "CmbRubro_PrestamosMasivos", Area = "RRHH" };
+        settings.Properties.CallbackPageSize = 15;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        settings.Properties.TextField = "ru_descripcion";
+        settings.Properties.TextFormatString = "[{0}] {1}";
+        settings.Properties.ValueField = "IdRubro";
+        settings.Properties.ValueType = typeof(string);
+        settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+        settings.Properties.NullText = "== Seleccione ==";
+
+        settings.Properties.Columns.Add("IdRubro", "ID", 20);
+        settings.Properties.Columns.Add("ru_descripcion", "Descripción", 80);
+        settings.Properties.FilterMinLength = 3;
+
+    })
+    .BindList(new Core.Erp.Web.Areas.RRHH.Controllers.PrestamosMasivosController().get_list_bajo_demanda_rubro, new Core.Erp.Web.Areas.RRHH.Controllers.PrestamosMasivosController().get_info_bajo_demanda_rubro)
+    .Bind(Model.GetType() == typeof(Core.Erp.Info.RRHH.ro_PrestamoMasivo_Det_Info) ? "" : (Model == "" ? "" : Model));
+
+}
+@comboBox.GetHtml()

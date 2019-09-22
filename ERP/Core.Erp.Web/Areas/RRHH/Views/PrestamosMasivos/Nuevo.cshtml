@@ -1,0 +1,143 @@
+﻿@model Core.Erp.Info.RRHH.ro_PrestamoMasivo_Info
+
+@{
+    ViewBag.Title = "Nueva carga de préstamo masivo";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+    }
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+@using (Html.BeginForm("Nuevo", "PrestamosMasivos", FormMethod.Post, new { @class = "form", @role = "form" }))
+{
+    @Html.HiddenFor(q => q.IdCarga);
+    @Html.HiddenFor(q => q.IdTransaccionSession);
+    @Html.HiddenFor(q => q.IdEmpresa);
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="IdProveedor">Sucursal*</label>
+                    @Html.Partial("_CmbSucursal_PrestamosMasivos", Model.IdSucursal)
+                    @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="Fecha_PriPago">Fecha primer pago*</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.DevExpress().DateEditFor(q=> q.Fecha_PriPago, settings =>
+                        {
+                            settings.Name = "Fecha_PriPago";
+                            settings.Properties.UseMaskBehavior = true;
+                            settings.Properties.EditFormat = EditFormat.Date;
+                            settings.Properties.EditFormatString = "dd/MM/yyyy";
+                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.Fecha_PriPago, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="descuento_mensual">Descuento</label>
+                        @Html.DevExpress().RadioButtonFor(q => q.descuento_mensual, settings =>
+                   {
+                       settings.Name = "descuento_mensual";
+                       settings.GroupName = "formapao";
+                       settings.Text = "Fin de mes";
+
+                   }).GetHtml()
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="descuento_quincena">Descuento</label>
+                        @Html.DevExpress().RadioButtonFor(q => q.descuento_quincena, settings =>
+                   {
+                       settings.Name = "descuento_quincena";
+                       settings.GroupName = "formapao";
+                       settings.Text = "Quincena";
+                   }).GetHtml()
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="descuento_men_quin">Descuentos</label>
+                        @Html.DevExpress().RadioButtonFor(q => q.descuento_men_quin, settings =>
+                           {
+                               settings.Name = "descuento_men_quin";
+                               settings.GroupName = "formapao";
+                               settings.Text = "Quincena y fin de mes";
+
+                           }).GetHtml()
+                        @Html.ValidationMessageFor(q => q.descuento_men_quin, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Valor">Observaciones*</label>
+                    @Html.TextBoxFor(q => q.Observacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.Observacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                @Html.DevExpress().UploadControl(settings =>
+               {
+                   settings.Name = "UploadControlFile";
+                   settings.CallbackRouteValues = new { Controller = "PrestamosMasivos", Action = "UploadControlUpload" };
+                   settings.ShowUploadButton = true;
+                   settings.ShowProgressPanel = true;
+                   settings.NullText = "Click here to browse files...";
+                   settings.ClientSideEvents.FileUploadComplete = "function(s, e) { GridViewPartial_PrestamosMasivos_Det.PerformCallback({ path: e.callbackData}); }";
+               }).GetHtml()
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="GridViewPartial_prestamos_det">Detalle carga de prestamos*</label>
+                    @Html.Action("GridViewPartial_PrestamosMasivos_Det")
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","PrestamosMasivos",new { Area = "RRHH" },null)">Cancelar</a>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}

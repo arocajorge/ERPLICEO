@@ -1,4 +1,5 @@
-﻿--exec [web].[SPROL_023] 2,8,8,1,2,201906,1,99999,1,99999,1,99999
+﻿
+--exec [web].[SPROL_023] 2,8,8,1,2,201906,1,99999,1,99999,1,99999
 CREATE PROCEDURE [web].[SPROL_023]
 (
 @IdEmpresa int,
@@ -82,26 +83,31 @@ FROM (
 		CASE WHEN ro_rubro_tipo.IdRubro = ro_rubros_calculados.IdRubro_dias_trabajados then VALOR ELSE 0 END AS DIASTRABAJADOS,				  
 		CASE WHEN ro_rubro_tipo.IdRubro <> ro_rubros_calculados.IdRubro_horas_vespertina AND ro_rubro_tipo.IdRubro<>ro_rubros_calculados.IdRubro_primaria_vespertina  then 'HORAS MATUTINA' WHEN ro_rubro_tipo.IdRubro = ro_rubros_calculados.IdRubro_horas_vespertina THEN'HORAS VESPERTINA'   WHEN ro_rubro_tipo.IdRubro = ro_rubros_calculados.IdRubro_primaria_vespertina THEN'PRIMARIA VESP.'  END AS JORNADA
 				 
-		FROM            dbo.tb_persona INNER JOIN
-		dbo.ro_empleado ON dbo.tb_persona.IdPersona = dbo.ro_empleado.IdPersona INNER JOIN
-		dbo.ro_Departamento ON dbo.ro_empleado.IdEmpresa = dbo.ro_Departamento.IdEmpresa AND dbo.ro_empleado.IdDepartamento = dbo.ro_Departamento.IdDepartamento RIGHT OUTER JOIN
-		dbo.ro_rol INNER JOIN
-		dbo.ro_rol_detalle ON dbo.ro_rol.IdEmpresa = dbo.ro_rol_detalle.IdEmpresa AND dbo.ro_rol.IdRol = dbo.ro_rol_detalle.IdRol INNER JOIN
-		dbo.ro_rubro_tipo ON dbo.ro_rol_detalle.IdEmpresa = dbo.ro_rubro_tipo.IdEmpresa AND dbo.ro_rol_detalle.IdRubro = dbo.ro_rubro_tipo.IdRubro INNER JOIN
-		dbo.ro_rubros_calculados ON dbo.ro_rol_detalle.IdEmpresa = dbo.ro_rubros_calculados.IdEmpresa ON dbo.ro_empleado.IdEmpresa = dbo.ro_rol_detalle.IdEmpresa AND 
-		dbo.ro_empleado.IdEmpleado = dbo.ro_rol_detalle.IdEmpleado LEFT OUTER JOIN
-		dbo.ro_Nomina_Tipo INNER JOIN
-		dbo.ro_Nomina_Tipoliqui ON dbo.ro_Nomina_Tipo.IdEmpresa = dbo.ro_Nomina_Tipoliqui.IdEmpresa AND dbo.ro_Nomina_Tipo.IdNomina_Tipo = dbo.ro_Nomina_Tipoliqui.IdNomina_Tipo ON 
-		dbo.ro_rol.IdEmpresa = dbo.ro_Nomina_Tipoliqui.IdEmpresa AND dbo.ro_rol.IdNominaTipo = dbo.ro_Nomina_Tipoliqui.IdNomina_Tipo AND 
-		dbo.ro_rol.IdNominaTipoLiqui = dbo.ro_Nomina_Tipoliqui.IdNomina_TipoLiqui LEFT OUTER JOIN
-		dbo.ro_area INNER JOIN
-		dbo.ro_Division ON dbo.ro_area.IdEmpresa = dbo.ro_Division.IdEmpresa AND dbo.ro_area.IdDivision = dbo.ro_Division.IdDivision ON dbo.ro_empleado.IdEmpresa = dbo.ro_area.IdEmpresa AND 
-		dbo.ro_empleado.IdDivision = dbo.ro_area.IdDivision AND dbo.ro_empleado.IdArea = dbo.ro_area.IdArea LEFT OUTER JOIN
-		dbo.ro_catalogo ON dbo.ro_rubro_tipo.rub_GrupoResumen = dbo.ro_catalogo.CodCatalogo INNER JOIN
-		dbo.tb_sucursal ON dbo.tb_sucursal.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.tb_sucursal.IdSucursal = dbo.ro_rol.IdSucursal INNER JOIN
-		dbo.ro_cargo ON dbo.ro_empleado.IdEmpresa = dbo.ro_cargo.IdEmpresa AND dbo.ro_empleado.IdCargo = dbo.ro_cargo.IdCargo INNER JOIN
-		dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado and dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ'
-		and dbo.ro_contrato.EstadoContrato <>'ECT_PLQ'  --16/07/2019
+		FROM            dbo.ro_area INNER JOIN
+                         dbo.ro_Division ON dbo.ro_area.IdEmpresa = dbo.ro_Division.IdEmpresa AND dbo.ro_area.IdDivision = dbo.ro_Division.IdDivision INNER JOIN
+                         dbo.ro_empleado_division_area_x_rol ON dbo.ro_area.IdEmpresa = dbo.ro_empleado_division_area_x_rol.IdEmpresa AND dbo.ro_area.IdDivision = dbo.ro_empleado_division_area_x_rol.IDividion AND 
+                         dbo.ro_area.IdArea = dbo.ro_empleado_division_area_x_rol.IdArea RIGHT OUTER JOIN
+                         dbo.tb_persona INNER JOIN
+                         dbo.ro_empleado ON dbo.tb_persona.IdPersona = dbo.ro_empleado.IdPersona INNER JOIN
+                         dbo.ro_Departamento ON dbo.ro_empleado.IdEmpresa = dbo.ro_Departamento.IdEmpresa AND dbo.ro_empleado.IdDepartamento = dbo.ro_Departamento.IdDepartamento RIGHT OUTER JOIN
+                         dbo.ro_rol INNER JOIN
+                         dbo.ro_rol_detalle ON dbo.ro_rol.IdEmpresa = dbo.ro_rol_detalle.IdEmpresa AND dbo.ro_rol.IdRol = dbo.ro_rol_detalle.IdRol INNER JOIN
+                         dbo.ro_rubro_tipo ON dbo.ro_rol_detalle.IdEmpresa = dbo.ro_rubro_tipo.IdEmpresa AND dbo.ro_rol_detalle.IdRubro = dbo.ro_rubro_tipo.IdRubro INNER JOIN
+                         dbo.ro_rubros_calculados ON dbo.ro_rol_detalle.IdEmpresa = dbo.ro_rubros_calculados.IdEmpresa ON dbo.ro_empleado.IdEmpresa = dbo.ro_rol_detalle.IdEmpresa AND 
+                         dbo.ro_empleado.IdEmpleado = dbo.ro_rol_detalle.IdEmpleado LEFT OUTER JOIN
+                         dbo.ro_Nomina_Tipo INNER JOIN
+                         dbo.ro_Nomina_Tipoliqui ON dbo.ro_Nomina_Tipo.IdEmpresa = dbo.ro_Nomina_Tipoliqui.IdEmpresa AND dbo.ro_Nomina_Tipo.IdNomina_Tipo = dbo.ro_Nomina_Tipoliqui.IdNomina_Tipo ON 
+                         dbo.ro_rol.IdEmpresa = dbo.ro_Nomina_Tipoliqui.IdEmpresa AND dbo.ro_rol.IdNominaTipo = dbo.ro_Nomina_Tipoliqui.IdNomina_Tipo AND 
+                         dbo.ro_rol.IdNominaTipoLiqui = dbo.ro_Nomina_Tipoliqui.IdNomina_TipoLiqui INNER JOIN
+                         dbo.tb_sucursal ON dbo.tb_sucursal.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.tb_sucursal.IdSucursal = dbo.ro_rol.IdSucursal INNER JOIN
+                         dbo.ro_cargo ON dbo.ro_empleado.IdEmpresa = dbo.ro_cargo.IdEmpresa AND dbo.ro_empleado.IdCargo = dbo.ro_cargo.IdCargo INNER JOIN
+                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado AND dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ' ON 
+                         dbo.ro_empleado_division_area_x_rol.IdEmpresa = dbo.ro_empleado.IdEmpresa AND dbo.ro_empleado_division_area_x_rol.IdEmpleado = dbo.ro_empleado.IdEmpleado AND 
+                         dbo.ro_empleado_division_area_x_rol.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.ro_empleado_division_area_x_rol.IdRol = dbo.ro_rol.IdRol AND 
+                         dbo.ro_empleado_division_area_x_rol.IDividion = dbo.ro_empleado.IdDivision AND dbo.ro_empleado_division_area_x_rol.IdArea = dbo.ro_empleado.IdArea LEFT OUTER JOIN
+                         dbo.ro_catalogo ON dbo.ro_rubro_tipo.rub_GrupoResumen = dbo.ro_catalogo.CodCatalogo
+				   		 and dbo.ro_contrato.EstadoContrato <>'ECT_PLQ'  --16/07/2019
+		
 		--METE EL WHERE AQUIIIIIIIIIIIIIIIIIIIIIIIIII :*
 
 		where ro_rol_detalle.IdEmpresa=@IdEmpresa
@@ -122,8 +128,8 @@ FROM (
 		and ro_empleado.IdDepartamento>=@IdDepartamentoIni
 		and ro_empleado.IdDepartamento<=@IdDepartamentoFin
 
-		and  ro_empleado.Tiene_ingresos_compartidos=1
-		AND ro_empleado.Pago_por_horas=1
+		and dbo.ro_rol_detalle.IngresosCompartidos=1
+		AND ro_rol_detalle.PagoHora=1
 		) A
 		GROUP BY IdEmpresa, IdRol,IdEmpleado,IdDivision,IdArea,Descripcion,DescripcionProcesoNomina,IdDepartamento,IdSucursal,IdNominaTipo,IdNominaTipoLiqui,IdPeriodo,pe_nombreCompleto,NombreDivision,NombreArea,NombreDepartamento,Su_Descripcion,NombreCargo, JORNADA
 ) A
@@ -196,8 +202,13 @@ ro_cargo.ca_descripcion as NombreCargo,
 				 THEN'HORAS VESPERTINA' 
 				 WHEN ro_rubro_tipo.IdRubro = ro_rubros_calculados.IdRubro_primaria_vespertina THEN'PRIMARIA VESP.'  END )
 				 ELSE J.NomJornada END
-				 AS JORNADA						 
-FROM            dbo.tb_persona INNER JOIN
+				 AS JORNADA		
+				 				 
+FROM            dbo.ro_area INNER JOIN
+                         dbo.ro_Division ON dbo.ro_area.IdEmpresa = dbo.ro_Division.IdEmpresa AND dbo.ro_area.IdDivision = dbo.ro_Division.IdDivision RIGHT OUTER JOIN
+                         dbo.ro_empleado_division_area_x_rol ON dbo.ro_area.IdEmpresa = dbo.ro_empleado_division_area_x_rol.IdEmpresa AND dbo.ro_area.IdDivision = dbo.ro_empleado_division_area_x_rol.IDividion AND 
+                         dbo.ro_area.IdArea = dbo.ro_empleado_division_area_x_rol.IdArea RIGHT OUTER JOIN
+                         dbo.tb_persona INNER JOIN
                          dbo.ro_empleado ON dbo.tb_persona.IdPersona = dbo.ro_empleado.IdPersona INNER JOIN
                          dbo.ro_Departamento ON dbo.ro_empleado.IdEmpresa = dbo.ro_Departamento.IdEmpresa AND dbo.ro_empleado.IdDepartamento = dbo.ro_Departamento.IdDepartamento RIGHT OUTER JOIN
                          dbo.ro_rol INNER JOIN
@@ -208,14 +219,15 @@ FROM            dbo.tb_persona INNER JOIN
                          dbo.ro_Nomina_Tipo INNER JOIN
                          dbo.ro_Nomina_Tipoliqui ON dbo.ro_Nomina_Tipo.IdEmpresa = dbo.ro_Nomina_Tipoliqui.IdEmpresa AND dbo.ro_Nomina_Tipo.IdNomina_Tipo = dbo.ro_Nomina_Tipoliqui.IdNomina_Tipo ON 
                          dbo.ro_rol.IdEmpresa = dbo.ro_Nomina_Tipoliqui.IdEmpresa AND dbo.ro_rol.IdNominaTipo = dbo.ro_Nomina_Tipoliqui.IdNomina_Tipo AND 
-                         dbo.ro_rol.IdNominaTipoLiqui = dbo.ro_Nomina_Tipoliqui.IdNomina_TipoLiqui LEFT OUTER JOIN
-                         dbo.ro_area INNER JOIN
-                         dbo.ro_Division ON dbo.ro_area.IdEmpresa = dbo.ro_Division.IdEmpresa AND dbo.ro_area.IdDivision = dbo.ro_Division.IdDivision ON dbo.ro_empleado.IdEmpresa = dbo.ro_area.IdEmpresa AND 
-                         dbo.ro_empleado.IdDivision = dbo.ro_area.IdDivision AND dbo.ro_empleado.IdArea = dbo.ro_area.IdArea LEFT OUTER JOIN
-                         dbo.ro_catalogo ON dbo.ro_rubro_tipo.rub_GrupoResumen = dbo.ro_catalogo.CodCatalogo INNER JOIN
+                         dbo.ro_rol.IdNominaTipoLiqui = dbo.ro_Nomina_Tipoliqui.IdNomina_TipoLiqui INNER JOIN
                          dbo.tb_sucursal ON dbo.tb_sucursal.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.tb_sucursal.IdSucursal = dbo.ro_rol.IdSucursal INNER JOIN
                          dbo.ro_cargo ON dbo.ro_empleado.IdEmpresa = dbo.ro_cargo.IdEmpresa AND dbo.ro_empleado.IdCargo = dbo.ro_cargo.IdCargo INNER JOIN
-                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado and dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ'
+                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado AND dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ' ON 
+                         dbo.ro_empleado_division_area_x_rol.IdEmpresa = dbo.ro_empleado.IdEmpresa AND dbo.ro_empleado_division_area_x_rol.IdEmpleado = dbo.ro_empleado.IdEmpleado AND 
+                         dbo.ro_empleado_division_area_x_rol.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.ro_empleado_division_area_x_rol.IdRol = dbo.ro_rol.IdRol AND 
+                         dbo.ro_empleado_division_area_x_rol.IDividion = dbo.ro_empleado.IdDivision AND dbo.ro_empleado_division_area_x_rol.IdArea = dbo.ro_empleado.IdArea LEFT OUTER JOIN
+                         dbo.ro_catalogo ON dbo.ro_rubro_tipo.rub_GrupoResumen = dbo.ro_catalogo.CodCatalogo
+
 						 and dbo.ro_contrato.EstadoContrato <>'ECT_PLQ'  --16/07/2019
 						 LEFT JOIN (
 						 SELECT X.IdEmpresa, IdEmpleado, MAX(Y.Descripcion) NomJornada, COUNT(*) CONT FROM ro_empleado_x_jornada AS X
@@ -309,7 +321,11 @@ ro_cargo.ca_descripcion as NombreCargo,
 				  CASE WHEN ro_rubro_tipo.IdRubro = ro_rubros_calculados.IdRubro_dias_trabajados then VALOR ELSE 0 END AS DIASTRABAJADOS,				  
 				  ' ' JORNADA
 				 
-FROM            dbo.tb_persona INNER JOIN
+FROM            dbo.ro_area INNER JOIN
+                         dbo.ro_Division ON dbo.ro_area.IdEmpresa = dbo.ro_Division.IdEmpresa AND dbo.ro_area.IdDivision = dbo.ro_Division.IdDivision RIGHT OUTER JOIN
+                         dbo.ro_empleado_division_area_x_rol ON dbo.ro_area.IdEmpresa = dbo.ro_empleado_division_area_x_rol.IdEmpresa AND dbo.ro_area.IdDivision = dbo.ro_empleado_division_area_x_rol.IDividion AND 
+                         dbo.ro_area.IdArea = dbo.ro_empleado_division_area_x_rol.IdArea RIGHT OUTER JOIN
+                         dbo.tb_persona INNER JOIN
                          dbo.ro_empleado ON dbo.tb_persona.IdPersona = dbo.ro_empleado.IdPersona INNER JOIN
                          dbo.ro_Departamento ON dbo.ro_empleado.IdEmpresa = dbo.ro_Departamento.IdEmpresa AND dbo.ro_empleado.IdDepartamento = dbo.ro_Departamento.IdDepartamento RIGHT OUTER JOIN
                          dbo.ro_rol INNER JOIN
@@ -320,14 +336,14 @@ FROM            dbo.tb_persona INNER JOIN
                          dbo.ro_Nomina_Tipo INNER JOIN
                          dbo.ro_Nomina_Tipoliqui ON dbo.ro_Nomina_Tipo.IdEmpresa = dbo.ro_Nomina_Tipoliqui.IdEmpresa AND dbo.ro_Nomina_Tipo.IdNomina_Tipo = dbo.ro_Nomina_Tipoliqui.IdNomina_Tipo ON 
                          dbo.ro_rol.IdEmpresa = dbo.ro_Nomina_Tipoliqui.IdEmpresa AND dbo.ro_rol.IdNominaTipo = dbo.ro_Nomina_Tipoliqui.IdNomina_Tipo AND 
-                         dbo.ro_rol.IdNominaTipoLiqui = dbo.ro_Nomina_Tipoliqui.IdNomina_TipoLiqui LEFT OUTER JOIN
-                         dbo.ro_area INNER JOIN
-                         dbo.ro_Division ON dbo.ro_area.IdEmpresa = dbo.ro_Division.IdEmpresa AND dbo.ro_area.IdDivision = dbo.ro_Division.IdDivision ON dbo.ro_empleado.IdEmpresa = dbo.ro_area.IdEmpresa AND 
-                         dbo.ro_empleado.IdDivision = dbo.ro_area.IdDivision AND dbo.ro_empleado.IdArea = dbo.ro_area.IdArea LEFT OUTER JOIN
-                         dbo.ro_catalogo ON dbo.ro_rubro_tipo.rub_GrupoResumen = dbo.ro_catalogo.CodCatalogo INNER JOIN
+                         dbo.ro_rol.IdNominaTipoLiqui = dbo.ro_Nomina_Tipoliqui.IdNomina_TipoLiqui INNER JOIN
                          dbo.tb_sucursal ON dbo.tb_sucursal.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.tb_sucursal.IdSucursal = dbo.ro_rol.IdSucursal INNER JOIN
                          dbo.ro_cargo ON dbo.ro_empleado.IdEmpresa = dbo.ro_cargo.IdEmpresa AND dbo.ro_empleado.IdCargo = dbo.ro_cargo.IdCargo INNER JOIN
-                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado and dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ'
+                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado AND dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ' ON 
+                         dbo.ro_empleado_division_area_x_rol.IdEmpresa = dbo.ro_empleado.IdEmpresa AND dbo.ro_empleado_division_area_x_rol.IdEmpleado = dbo.ro_empleado.IdEmpleado AND 
+                         dbo.ro_empleado_division_area_x_rol.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.ro_empleado_division_area_x_rol.IdRol = dbo.ro_rol.IdRol AND 
+                         dbo.ro_empleado_division_area_x_rol.IDividion = dbo.ro_empleado.IdDivision AND dbo.ro_empleado_division_area_x_rol.IdArea = dbo.ro_empleado.IdArea LEFT OUTER JOIN
+                         dbo.ro_catalogo ON dbo.ro_rubro_tipo.rub_GrupoResumen = dbo.ro_catalogo.CodCatalogo
 						 and dbo.ro_contrato.EstadoContrato <>'ECT_PLQ'  --16/07/2019
 
 				  
@@ -349,8 +365,8 @@ FROM            dbo.tb_persona INNER JOIN
 				  and ro_empleado.IdDepartamento>=@IdDepartamentoIni
 				  and ro_empleado.IdDepartamento<=@IdDepartamentoFin
 
-				  and  ro_empleado.Tiene_ingresos_compartidos=1
-				  AND ro_empleado.Pago_por_horas=0
+				  and  ro_rol_detalle.IngresosCompartidos=1
+				  AND ro_rol_detalle.PagoHora=0
 				  ) A
 				  GROUP BY IdEmpresa, IdRol,IdEmpleado,IdDivision,IdArea,Descripcion,DescripcionProcesoNomina,IdDepartamento,IdSucursal,IdNominaTipo,IdNominaTipoLiqui,IdPeriodo,pe_nombreCompleto,NombreDivision,NombreArea,NombreDepartamento,Su_Descripcion,NombreCargo, JORNADA
 				  ) A
@@ -460,7 +476,7 @@ FROM            dbo.tb_persona INNER JOIN
 				  and ro_empleado.IdDepartamento<=@IdDepartamentoFin
 				  AND ro_empleado.Pago_por_horas=0
 				  
-				  and  ro_empleado.Tiene_ingresos_compartidos=0
+				  and  ro_rol_detalle.IngresosCompartidos=0
 				  ) A
 				  LEFT JOIN(
 					SELECT G.IdEmpresa, G.IdRol, G.IdEmpleado, SUM(G.IESS_TOTAL)IESS_TOTAL, SUM(G.FRESERVA_TOTAL) FRESERVA_TOTAL

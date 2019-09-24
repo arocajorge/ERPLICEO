@@ -1,7 +1,4 @@
-﻿--exec [web].[SPROL_022]  1,1,2,201904
-
--- exec [web].[SPROL_022]  5,1,2,201906
-
+﻿-- exec [web].[SPROL_022]  1,1,2,201909
 CREATE  PROCEDURE [web].[SPROL_022]  
 	@idempresa int,
 	@idnomina_tipo int,
@@ -46,7 +43,7 @@ select @FechaInicio=pe_FechaIni, @FechaFin=pe_FechaFin from ro_periodo where IdE
 
 insert into web.ro_SPROL_022
 SELECT e.IdEmpresa, e.IdDivision, e.IdSucursal, nc.IdNomina_TipoLiqui, e.IdArea, e.IdEmpleado, nc.IdJornada, nc.IdNomina_Tipo,  CAST(cast( year(nc.Fecha) as varchar(4))+ RIGHT('00'+CAST(MONTH(nc.Fecha) AS VARCHAR(2)),2) AS INT) IdPeriodo,
-case when  j.Descripcion is null then '' else   j.Descripcion+'-'+CAST( nd.CantidadHoras as varchar)+'-'+CAST( nd.Valor / isnull(iif(nd.CantidadHoras = 0,1,nd.CantidadHoras),1) as varchar)  end Descripcion, 
+case when  j.Descripcion is null then '' else   j.Descripcion+'-'+CAST( ISNULL(nd.CantidadHoras,0) as varchar)+'-'+CAST( nd.Valor / isnull(iif(nd.CantidadHoras = 0,1,nd.CantidadHoras),1) as varchar)  end Descripcion, 
 case when  nc.IdJornada is null  then rub.ru_descripcion else   case when ( nd.IdRubro= rub_cal.IdRubro_horas_matutina or nd.IdRubro= rub_cal.IdRubro_horas_vespertina or nd.IdRubro=rub_cal.IdRubro_primaria_vespertina )and nc.IdJornada is not null  then   'SUELDO POR HORA' else    rub.ru_descripcion  end end ru_descripcion,
 pe.pe_nombreCompleto AS empleado, 
 c.ca_descripcion, rub.ru_tipo,
@@ -124,10 +121,11 @@ FROM            dbo.ro_rol AS r INNER JOIN
 										  ro_Nomina_Tipoliqui.IdNomina_Tipo = ro_Nomina_Tipo.IdNomina_Tipo ON r.IdEmpresa = ro_Nomina_Tipoliqui.IdEmpresa AND r.IdNomina_TipoLiqui = ro_Nomina_Tipoliqui.IdNomina_TipoLiqui AND 
 										  r.IdNomina_Tipo = ro_Nomina_Tipoliqui.IdNomina_Tipo
 										  WHERE R.IdPeriodo = @idperiodo   
+										  --and r.IdEmpleado = 127
 										  -- Se añadio filtro x empresa, y agrupamiento  , para q no salgan repetidos los rubros(brigada) 27/06/2019
 										  and  r.IdEmpresa =@idempresa Group By r.IdEmpresa, r.IdDivision, r.IdSucursal, r.IdNomina_TipoLiqui, r.IdArea,IdEmpleado, r.IdJornada,r.IdNomina_Tipo, r.IdPeriodo, r.Descripcion, r.ru_descripcion, r.empleado, r.ca_descripcion, r.ru_tipo, r.ru_orden, r.Valor, r.IdRubro
 										    ,ro_Nomina_Tipo.Descripcion, ro_Nomina_Tipoliqui.DescripcionProcesoNomina,tb_sucursal.Su_Descripcion, ro_Division.Descripcion, ro_area.Descripcion
-				  --and r.IdEmpleado = 222
+				  
 			ORDER BY r.empleado
 
 END

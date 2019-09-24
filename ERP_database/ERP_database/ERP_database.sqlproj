@@ -1172,6 +1172,7 @@
     <Build Include="dbo\Tables\ro_PrestamoMasivo_Det.sql" />
     <Build Include="dbo\Tables\ro_PrestamoMasivo.sql" />
     <Build Include="dbo\Views\vwro_PrestamoMasivo_Det.sql" />
+    <Build Include="dbo\Views\vwro_DescuentosPorFacturacionEmpleado.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

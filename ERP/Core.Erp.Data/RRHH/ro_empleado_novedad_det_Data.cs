@@ -168,7 +168,6 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
-  
 
         public decimal get_valor_acumulado_del_mes_x_rubro(int IdEmpresa, decimal IdEmpleado, string IdRubro, DateTime Fi, DateTime Ff)
         {
@@ -199,5 +198,49 @@ namespace Core.Erp.Data.RRHH
             }
         }
 
+        public List<ro_empleado_novedad_det_Info> get_list_descuentos(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin)
+        {
+            try
+            {
+                List<ro_empleado_novedad_det_Info> Lista;
+
+                using (Entities_rrhh Context = new Entities_rrhh())
+                {
+                    Lista = (from q in Context.vwro_DescuentosPorFacturacionEmpleado
+                             where q.IdEmpresa == IdEmpresa
+                                   && q.IdSucursal == IdSucursal
+                                   && q.vt_fecha >= fecha_ini
+                                   && q.vt_fecha <= fecha_fin
+                             select new ro_empleado_novedad_det_Info
+                             {
+                                 AplicaDescuentoNomina = q.AplicaDescuentoNomina,
+                                 nom_TerminoPago= q.nom_TerminoPago,
+                                 Num_Coutas = q.Num_Coutas,
+                                 CodigoRubroDescto = q.CodigoRubroDescto,
+                                 IdEmpresa= q.IdEmpresa,
+                                 IdSucursal = q.IdSucursal,
+                                 IdEmpleado = q.IdEmpleado,
+                                 IdPersona = q.IdPersona,
+                                 pe_nombreCompleto = q.pe_nombreCompleto,
+                                 Total = q.Total,
+                                 vt_fecha = q.vt_fecha,
+                                 vt_NumFactura = q.vt_NumFactura,
+                                 vt_Observacion = q.vt_Observacion,
+                                 pe_cedulaRuc = q.pe_cedulaRuc,
+                                 IdNomina = q.IdNomina,
+                                 EstadoContrato = q.EstadoContrato,
+                                 em_status = q.em_status
+                             }).ToList();
+
+                }
+
+                return Lista;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

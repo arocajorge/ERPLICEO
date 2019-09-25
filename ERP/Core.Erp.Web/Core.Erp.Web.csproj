@@ -456,6 +456,7 @@
     <Compile Include="Areas\RRHH\Controllers\ControlDeMarcacionesController.cs" />
     <Compile Include="Areas\RRHH\Controllers\DepartamentoController.cs" />
     <Compile Include="Areas\RRHH\Controllers\DepartamentoPorAreaController.cs" />
+    <Compile Include="Areas\RRHH\Controllers\DescargaDescuentoFacturacionController.cs" />
     <Compile Include="Areas\RRHH\Controllers\DivisionController.cs" />
     <Compile Include="Areas\RRHH\Controllers\EmpleadoController.cs" />
     <Compile Include="Areas\RRHH\Controllers\EmpleadoNovedadController.cs" />
@@ -10208,6 +10209,8 @@
     <Content Include="Areas\RRHH\Views\PrestamosMasivos\_GridViewPartial_PrestamosMasivos_Det.cshtml" />
     <Content Include="Areas\RRHH\Views\PrestamosMasivos\_CmbRubro_PrestamosMasivos.cshtml" />
     <Content Include="Areas\RRHH\Views\PrestamosMasivos\Anular.cshtml" />
+    <Content Include="Areas\RRHH\Views\DescargaDescuentoFacturacion\Nuevo.cshtml" />
+    <Content Include="Areas\RRHH\Views\DescargaDescuentoFacturacion\_GridViewPartial_DescuentosEmpleado.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

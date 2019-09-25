@@ -261,6 +261,7 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_PrestamoMasivo_Det_ro_PrestamoMasivo" />
         <AssociationConnector Association="Model_rrhh.FK_ro_PrestamoMasivo_Det_ro_rubro_tipo" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_PrestamoMasivo_Det" Width="1.5" PointX="27.375" PointY="26.75" />
+        <EntityTypeShape EntityType="Model_rrhh.vwro_DescuentosPorFacturacionEmpleado" Width="1.5" PointX="19.375" PointY="28.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

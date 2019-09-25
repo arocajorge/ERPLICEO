@@ -1733,6 +1733,40 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_archivos_bancos_generac
           <Property Name="Secuencia" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_DescuentosPorFacturacionEmpleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwro_DescuentosPorFacturacionEmpleado">
+          <Key>
+            <PropertyRef Name="nom_TerminoPago" />
+            <PropertyRef Name="Num_Coutas" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdEmpleado" />
+            <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="Total" />
+            <PropertyRef Name="vt_fecha" />
+            <PropertyRef Name="vt_Observacion" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="IdSucursal" />
+          </Key>
+          <Property Name="AplicaDescuentoNomina" Type="bit" />
+          <Property Name="nom_TerminoPago" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Num_Coutas" Type="int" Nullable="false" />
+          <Property Name="CodigoRubroDescto" Type="varchar" MaxLength="200" />
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdEmpleado" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdPersona" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Total" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="vt_NumFactura" Type="varchar" MaxLength="28" />
+          <Property Name="vt_fecha" Type="datetime" Nullable="false" />
+          <Property Name="vt_Observacion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdNomina" Type="int" />
+          <Property Name="EstadoContrato" Type="varchar" MaxLength="10" />
+          <Property Name="IdSucursal" Type="int" Nullable="false" />
+          <Property Name="em_status" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_combo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_combo">
           <Key>
@@ -5389,6 +5423,27 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
     [vwro_archivos_bancos_generacion_x_empleado].[Secuencia] AS [Secuencia]
     FROM [dbo].[vwro_archivos_bancos_generacion_x_empleado] AS [vwro_archivos_bancos_generacion_x_empleado]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vwro_DescuentosPorFacturacionEmpleado" EntityType="Self.vwro_DescuentosPorFacturacionEmpleado" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwro_DescuentosPorFacturacionEmpleado].[AplicaDescuentoNomina] AS [AplicaDescuentoNomina], 
+    [vwro_DescuentosPorFacturacionEmpleado].[nom_TerminoPago] AS [nom_TerminoPago], 
+    [vwro_DescuentosPorFacturacionEmpleado].[Num_Coutas] AS [Num_Coutas], 
+    [vwro_DescuentosPorFacturacionEmpleado].[CodigoRubroDescto] AS [CodigoRubroDescto], 
+    [vwro_DescuentosPorFacturacionEmpleado].[IdEmpresa] AS [IdEmpresa], 
+    [vwro_DescuentosPorFacturacionEmpleado].[IdEmpleado] AS [IdEmpleado], 
+    [vwro_DescuentosPorFacturacionEmpleado].[IdPersona] AS [IdPersona], 
+    [vwro_DescuentosPorFacturacionEmpleado].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [vwro_DescuentosPorFacturacionEmpleado].[Total] AS [Total], 
+    [vwro_DescuentosPorFacturacionEmpleado].[vt_NumFactura] AS [vt_NumFactura], 
+    [vwro_DescuentosPorFacturacionEmpleado].[vt_fecha] AS [vt_fecha], 
+    [vwro_DescuentosPorFacturacionEmpleado].[vt_Observacion] AS [vt_Observacion], 
+    [vwro_DescuentosPorFacturacionEmpleado].[pe_cedulaRuc] AS [pe_cedulaRuc], 
+    [vwro_DescuentosPorFacturacionEmpleado].[IdNomina] AS [IdNomina], 
+    [vwro_DescuentosPorFacturacionEmpleado].[EstadoContrato] AS [EstadoContrato], 
+    [vwro_DescuentosPorFacturacionEmpleado].[IdSucursal] AS [IdSucursal], 
+    [vwro_DescuentosPorFacturacionEmpleado].[em_status] AS [em_status]
+    FROM [dbo].[vwro_DescuentosPorFacturacionEmpleado] AS [vwro_DescuentosPorFacturacionEmpleado]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwro_empleado_combo" EntityType="Self.vwro_empleado_combo" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwro_empleado_combo].[Empleado] AS [Empleado], 
@@ -8874,6 +8929,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
             <End Role="ro_PrestamoMasivo_Det" EntitySet="ro_PrestamoMasivo_Det" />
           </AssociationSet>
           <EntitySet Name="vwro_PrestamoMasivo_Det" EntityType="Model_rrhh.vwro_PrestamoMasivo_Det" />
+          <EntitySet Name="vwro_DescuentosPorFacturacionEmpleado" EntityType="Model_rrhh.vwro_DescuentosPorFacturacionEmpleado" />
         </EntityContainer>
         <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -12938,6 +12994,38 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
           <Property Name="Monto" Type="Double" Nullable="false" />
           <Property Name="NumCuotas" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="vwro_DescuentosPorFacturacionEmpleado">
+          <Key>
+            <PropertyRef Name="nom_TerminoPago" />
+            <PropertyRef Name="Num_Coutas" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdEmpleado" />
+            <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="Total" />
+            <PropertyRef Name="vt_fecha" />
+            <PropertyRef Name="vt_Observacion" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="IdSucursal" />
+          </Key>
+          <Property Name="AplicaDescuentoNomina" Type="Boolean" />
+          <Property Name="nom_TerminoPago" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Num_Coutas" Type="Int32" Nullable="false" />
+          <Property Name="CodigoRubroDescto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdPersona" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="vt_NumFactura" Type="String" MaxLength="28" FixedLength="false" Unicode="false" />
+          <Property Name="vt_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="vt_Observacion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdNomina" Type="Int32" />
+          <Property Name="EstadoContrato" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="em_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -15650,6 +15738,29 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
                 <ScalarProperty Name="IdCarga" ColumnName="IdCarga" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwro_DescuentosPorFacturacionEmpleado">
+            <EntityTypeMapping TypeName="Model_rrhh.vwro_DescuentosPorFacturacionEmpleado">
+              <MappingFragment StoreEntitySet="vwro_DescuentosPorFacturacionEmpleado">
+                <ScalarProperty Name="em_status" ColumnName="em_status" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="EstadoContrato" ColumnName="EstadoContrato" />
+                <ScalarProperty Name="IdNomina" ColumnName="IdNomina" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="vt_Observacion" ColumnName="vt_Observacion" />
+                <ScalarProperty Name="vt_fecha" ColumnName="vt_fecha" />
+                <ScalarProperty Name="vt_NumFactura" ColumnName="vt_NumFactura" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="CodigoRubroDescto" ColumnName="CodigoRubroDescto" />
+                <ScalarProperty Name="Num_Coutas" ColumnName="Num_Coutas" />
+                <ScalarProperty Name="nom_TerminoPago" ColumnName="nom_TerminoPago" />
+                <ScalarProperty Name="AplicaDescuentoNomina" ColumnName="AplicaDescuentoNomina" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -52,6 +52,8 @@ namespace Core.Erp.Info.Helps
         public int IdAnio { get; set; }
         public string IdSigno { get; set; }
         public double Valor { get; set; }
+        public bool FormatoDescuento { get; set; }
+        public bool FormatoPrestamo { get; set; }
         #endregion
 
         #region filtros de Presupuesto
@@ -249,6 +251,8 @@ namespace Core.Erp.Info.Helps
         public int[] IntArray { get; set; }
         public int IdTipoNota { get; set; }
         public string CreDeb { get; set; }
+
+
         public cl_filtros_facturacion_Info()
         {
             fecha_ini = DateTime.Now.Date.AddMonths(-1);

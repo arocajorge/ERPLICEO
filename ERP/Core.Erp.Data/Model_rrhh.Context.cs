@@ -152,6 +152,7 @@ namespace Core.Erp.Data
         public DbSet<ro_PrestamoMasivo> ro_PrestamoMasivo { get; set; }
         public DbSet<ro_PrestamoMasivo_Det> ro_PrestamoMasivo_Det { get; set; }
         public DbSet<vwro_PrestamoMasivo_Det> vwro_PrestamoMasivo_Det { get; set; }
+        public DbSet<vwro_DescuentosPorFacturacionEmpleado> vwro_DescuentosPorFacturacionEmpleado { get; set; }
     
         public virtual int spRo_LiquidarEmpleado(Nullable<int> idEmpresa, Nullable<decimal> idActaFiniquito)
         {

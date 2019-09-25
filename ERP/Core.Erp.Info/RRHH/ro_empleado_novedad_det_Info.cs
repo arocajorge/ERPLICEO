@@ -30,5 +30,24 @@ namespace Core.Erp.Info.RRHH
         public string rub_tipo { get; set; }
         public string ru_descripcion { get; set; }
 
+
+        #region DescuentoEmpleado
+        public int IdSucursal { get; set; }
+        public Nullable<bool> AplicaDescuentoNomina { get; set; }
+        public string pe_nombreCompleto { get; set; }
+        public string pe_cedulaRuc { get; set; }
+        public string nom_TerminoPago { get; set; }
+        public int Num_Coutas { get; set; }
+        public string CodigoRubroDescto { get; set; }
+        public decimal IdPersona { get; set; }
+        public decimal Total { get; set; }
+        public string vt_NumFactura { get; set; }
+        public System.DateTime vt_fecha { get; set; }
+        public string vt_Observacion { get; set; }
+        public Nullable<int> IdNomina { get; set; }
+        public string EstadoContrato { get; set; }
+        public string em_status { get; set; }
+        #endregion
+
     }
 }

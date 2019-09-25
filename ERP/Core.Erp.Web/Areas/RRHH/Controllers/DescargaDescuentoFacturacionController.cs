@@ -153,40 +153,41 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             var Lista = Lista_Excel.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSession));
 
-            //var data = new[] {
-            //    new { Cedula = "CEDULA", Empleado = "EMPLEADO", CodRubro = "CODIGO RUBRO", Monto = "MONTO", Cantidad = "NUM HORAS/COUTAS" }
-            //};
-
-            var lst = new
-            {
-                Cedula = "CEDULA", Empleado = "EMPLEADO", CodRubro = "CODIGO RUBRO", Monto = "MONTO", Cantidad = "NUM HORAS/COUTAS"
+            var data = new[] {
+                new { Cedula = "CEDULA", Empleado = "EMPLEADO", CodRubro = "CODIGO RUBRO", Monto = "MONTO", Cantidad = "NUM HORAS/COUTAS" }
             };
 
-            foreach (var item in Lista)
-            {
-                lst.Add( new {
-                        Cedula = Convert.ToString(item.pe_cedulaRuc),
-                        Empleado = Convert.ToString(item.pe_nombreCompleto),
-                        CodRubro = Convert.ToString(item.CodigoRubroDescto),
-                        Monto = Convert.ToString(item.Valor),
-                        Cantidad = Convert.ToString((item.Num_Horas == null ? 0 : item.Num_Horas))
-                    });
-            }
-            //for (int i = 0; i < Lista.Count; i++)
+            //var lst = new
             //{
-            //    var index = i + 1;
-            //    var item = Lista[i];
-            //    //data.Add(item);
-            //    data[index] = new
-            //            {
-            //                Cedula = Convert.ToString(item.pe_cedulaRuc),
-            //                Empleado = Convert.ToString(item.pe_nombreCompleto),
-            //                CodRubro = Convert.ToString(item.CodigoRubroDescto),
-            //                Monto = Convert.ToString(item.Valor),
-            //                Cantidad = Convert.ToString((item.Num_Horas== null ? 0 : item.Num_Horas))
-            //            };
+            //    Cedula = "CEDULA", Empleado = "EMPLEADO", CodRubro = "CODIGO RUBRO", Monto = "MONTO", Cantidad = "NUM HORAS/COUTAS"
+            //};
 
+            //foreach (var item in Lista)
+            //{
+            //    lst.Add( new {
+            //            Cedula = Convert.ToString(item.pe_cedulaRuc),
+            //            Empleado = Convert.ToString(item.pe_nombreCompleto),
+            //            CodRubro = Convert.ToString(item.CodigoRubroDescto),
+            //            Monto = Convert.ToString(item.Valor),
+            //            Cantidad = Convert.ToString((item.Num_Horas == null ? 0 : item.Num_Horas))
+            //        });
             //}
+
+            for (int i = 0; i < Lista.Count; i++)
+            {
+                var index = i + 1;
+                var item = Lista[i];
+                //data.Add(item);
+                data[index] = new
+                {
+                    Cedula = Convert.ToString(item.pe_cedulaRuc),
+                    Empleado = Convert.ToString(item.pe_nombreCompleto),
+                    CodRubro = Convert.ToString(item.CodigoRubroDescto),
+                    Monto = Convert.ToString(item.Valor),
+                    Cantidad = Convert.ToString((item.Num_Horas == null ? 0 : item.Num_Horas))
+                };
+
+            }
 
             var ejemplo = new[]{
                                new{ Name="Ram", Email="ram@techbrij.com", Phone="111-222-3333" },

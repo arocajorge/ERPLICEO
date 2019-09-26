@@ -405,6 +405,7 @@
           <Property Name="IdUsuarioUltAnu" Type="varchar" MaxLength="20" />
           <Property Name="MotivoAnu" Type="varchar" MaxLength="150" />
           <Property Name="Fecha_UltAnu" Type="datetime" />
+          <Property Name="SecuenciaProveedor" Type="int" />
         </EntityType>
         <EntityType Name="cp_orden_pago_cancelaciones">
           <Key>
@@ -2948,8 +2949,8 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_retencion_det' no tiene
           <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="GeneraDiario" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="cp_orden_pago" Relationship="Model_cuentas_por_pagar.FK_cp_orden_pago_cp_orden_pago_tipo" FromRole="cp_orden_pago_tipo" ToRole="cp_orden_pago" />
           <NavigationProperty Name="cp_orden_pago_tipo_x_empresa" Relationship="Model_cuentas_por_pagar.FK_cp_orden_pago_tipo_x_empresa_cp_orden_pago_tipo" FromRole="cp_orden_pago_tipo" ToRole="cp_orden_pago_tipo_x_empresa" />
+          <NavigationProperty Name="cp_orden_pago" Relationship="Model_cuentas_por_pagar.FK_cp_orden_pago_cp_orden_pago_tipo" FromRole="cp_orden_pago_tipo" ToRole="cp_orden_pago" />
         </EntityType>
         <EntityType Name="cp_pagos_sri">
           <Key>
@@ -3211,19 +3212,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_retencion_det' no tiene
             <End Role="cp_SolicitudPagoDet" EntitySet="cp_SolicitudPagoDet" />
           </AssociationSet>
           <EntitySet Name="vwcp_SolicitudPago" EntityType="Model_cuentas_por_pagar.vwcp_SolicitudPago" />
-          <EntitySet Name="cp_orden_pago" EntityType="Model_cuentas_por_pagar.cp_orden_pago" />
-          <AssociationSet Name="FK_cp_orden_pago_cp_orden_pago_formapago" Association="Model_cuentas_por_pagar.FK_cp_orden_pago_cp_orden_pago_formapago">
-            <End Role="cp_orden_pago_formapago" EntitySet="cp_orden_pago_formapago" />
-            <End Role="cp_orden_pago" EntitySet="cp_orden_pago" />
-          </AssociationSet>
-          <AssociationSet Name="FK_cp_orden_pago_cp_orden_pago_tipo" Association="Model_cuentas_por_pagar.FK_cp_orden_pago_cp_orden_pago_tipo">
-            <End Role="cp_orden_pago_tipo" EntitySet="cp_orden_pago_tipo" />
-            <End Role="cp_orden_pago" EntitySet="cp_orden_pago" />
-          </AssociationSet>
-          <AssociationSet Name="FK_cp_orden_pago_det_cp_orden_pago" Association="Model_cuentas_por_pagar.FK_cp_orden_pago_det_cp_orden_pago">
-            <End Role="cp_orden_pago" EntitySet="cp_orden_pago" />
-            <End Role="cp_orden_pago_det" EntitySet="cp_orden_pago_det" />
-          </AssociationSet>
           <EntitySet Name="vwcp_orden_pago" EntityType="Model_cuentas_por_pagar.vwcp_orden_pago" />
           <EntitySet Name="vwcp_orden_giro" EntityType="Model_cuentas_por_pagar.vwcp_orden_giro" />
           <EntitySet Name="vwcp_orden_giro_det_ing_x_oc_x_cruzar" EntityType="Model_cuentas_por_pagar.vwcp_orden_giro_det_ing_x_oc_x_cruzar" />
@@ -3294,10 +3282,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_retencion_det' no tiene
             <End Role="cp_ConciliacionAnticipo" EntitySet="cp_ConciliacionAnticipo" />
             <End Role="cp_ConciliacionAnticipoDetAnt" EntitySet="cp_ConciliacionAnticipoDetAnt" />
           </AssociationSet>
-          <AssociationSet Name="FK_cp_ConciliacionAnticipoDetAnt_cp_orden_pago" Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetAnt_cp_orden_pago">
-            <End Role="cp_orden_pago" EntitySet="cp_orden_pago" />
-            <End Role="cp_ConciliacionAnticipoDetAnt" EntitySet="cp_ConciliacionAnticipoDetAnt" />
-          </AssociationSet>
           <EntitySet Name="vwcp_ConciliacionAnticipo" EntityType="Model_cuentas_por_pagar.vwcp_ConciliacionAnticipo" />
           <EntitySet Name="vwcp_ConciliacionAnticipoDetAnt_x_cruzar" EntityType="Model_cuentas_por_pagar.vwcp_ConciliacionAnticipoDetAnt_x_cruzar" />
           <EntitySet Name="cp_ConciliacionAnticipoDetCXP" EntityType="Model_cuentas_por_pagar.cp_ConciliacionAnticipoDetCXP" />
@@ -3305,10 +3289,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_retencion_det' no tiene
           <EntitySet Name="vwcp_ConciliacionAnticipoDetCXP" EntityType="Model_cuentas_por_pagar.vwcp_ConciliacionAnticipoDetCXP" />
           <AssociationSet Name="FK_cp_ConciliacionAnticipoDetCXP_cp_ConciliacionAnticipo" Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_ConciliacionAnticipo">
             <End Role="cp_ConciliacionAnticipo" EntitySet="cp_ConciliacionAnticipo" />
-            <End Role="cp_ConciliacionAnticipoDetCXP" EntitySet="cp_ConciliacionAnticipoDetCXP" />
-          </AssociationSet>
-          <AssociationSet Name="FK_cp_ConciliacionAnticipoDetCXP_cp_orden_pago" Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_orden_pago">
-            <End Role="cp_orden_pago" EntitySet="cp_orden_pago" />
             <End Role="cp_ConciliacionAnticipoDetCXP" EntitySet="cp_ConciliacionAnticipoDetCXP" />
           </AssociationSet>
           <EntitySet Name="cp_proveedor_detalle" EntityType="Model_cuentas_por_pagar.cp_proveedor_detalle" />
@@ -3366,6 +3346,27 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_retencion_det' no tiene
             <End Role="cp_retencion" EntitySet="cp_retencion" />
           </AssociationSet>
           <EntitySet Name="vwcp_orden_giro_x_pagar" EntityType="Model_cuentas_por_pagar.vwcp_orden_giro_x_pagar" />
+          <EntitySet Name="cp_orden_pago" EntityType="Model_cuentas_por_pagar.cp_orden_pago" />
+          <AssociationSet Name="FK_cp_ConciliacionAnticipoDetAnt_cp_orden_pago" Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetAnt_cp_orden_pago">
+            <End Role="cp_orden_pago" EntitySet="cp_orden_pago" />
+            <End Role="cp_ConciliacionAnticipoDetAnt" EntitySet="cp_ConciliacionAnticipoDetAnt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cp_ConciliacionAnticipoDetCXP_cp_orden_pago" Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_orden_pago">
+            <End Role="cp_orden_pago" EntitySet="cp_orden_pago" />
+            <End Role="cp_ConciliacionAnticipoDetCXP" EntitySet="cp_ConciliacionAnticipoDetCXP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cp_orden_pago_cp_orden_pago_formapago" Association="Model_cuentas_por_pagar.FK_cp_orden_pago_cp_orden_pago_formapago">
+            <End Role="cp_orden_pago_formapago" EntitySet="cp_orden_pago_formapago" />
+            <End Role="cp_orden_pago" EntitySet="cp_orden_pago" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cp_orden_pago_cp_orden_pago_tipo" Association="Model_cuentas_por_pagar.FK_cp_orden_pago_cp_orden_pago_tipo">
+            <End Role="cp_orden_pago_tipo" EntitySet="cp_orden_pago_tipo" />
+            <End Role="cp_orden_pago" EntitySet="cp_orden_pago" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cp_orden_pago_det_cp_orden_pago" Association="Model_cuentas_por_pagar.FK_cp_orden_pago_det_cp_orden_pago">
+            <End Role="cp_orden_pago" EntitySet="cp_orden_pago" />
+            <End Role="cp_orden_pago_det" EntitySet="cp_orden_pago_det" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="spcp_Get_Data_orden_pago_con_cancelacion_x_pago_Result">
           <Property Type="Int64" Name="IdRow" Nullable="false" />
@@ -3738,78 +3739,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_retencion_det' no tiene
           <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="IdUsuarioCreacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="cp_orden_pago">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdOrdenPago" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdOrdenPago" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipo_op" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipo_Persona" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdPersona" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdEntidad" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IdEstadoAprobacion" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdFormaPago" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="ReferenciaGen" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuarioAprobacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="MotivoAprobacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="FechaAprobacion" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="FechaUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="MotivoAnu" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="cp_orden_pago_formapago" Relationship="Model_cuentas_por_pagar.FK_cp_orden_pago_cp_orden_pago_formapago" FromRole="cp_orden_pago" ToRole="cp_orden_pago_formapago" />
-          <NavigationProperty Name="cp_orden_pago_tipo" Relationship="Model_cuentas_por_pagar.FK_cp_orden_pago_cp_orden_pago_tipo" FromRole="cp_orden_pago" ToRole="cp_orden_pago_tipo" />
-          <NavigationProperty Name="cp_orden_pago_det" Relationship="Model_cuentas_por_pagar.FK_cp_orden_pago_det_cp_orden_pago" FromRole="cp_orden_pago" ToRole="cp_orden_pago_det" />
-          <NavigationProperty Name="cp_ConciliacionAnticipoDetAnt" Relationship="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetAnt_cp_orden_pago" FromRole="cp_orden_pago" ToRole="cp_ConciliacionAnticipoDetAnt" />
-          <NavigationProperty Name="cp_ConciliacionAnticipoDetCXP" Relationship="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_orden_pago" FromRole="cp_orden_pago" ToRole="cp_ConciliacionAnticipoDetCXP" />
-        </EntityType>
-        <Association Name="FK_cp_orden_pago_cp_orden_pago_formapago">
-          <End Type="Model_cuentas_por_pagar.cp_orden_pago_formapago" Role="cp_orden_pago_formapago" Multiplicity="1" />
-          <End Type="Model_cuentas_por_pagar.cp_orden_pago" Role="cp_orden_pago" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cp_orden_pago_formapago">
-              <PropertyRef Name="IdFormaPago" />
-            </Principal>
-            <Dependent Role="cp_orden_pago">
-              <PropertyRef Name="IdFormaPago" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_cp_orden_pago_cp_orden_pago_tipo">
-          <End Type="Model_cuentas_por_pagar.cp_orden_pago_tipo" Role="cp_orden_pago_tipo" Multiplicity="1" />
-          <End Type="Model_cuentas_por_pagar.cp_orden_pago" Role="cp_orden_pago" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cp_orden_pago_tipo">
-              <PropertyRef Name="IdTipo_op" />
-            </Principal>
-            <Dependent Role="cp_orden_pago">
-              <PropertyRef Name="IdTipo_op" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_cp_orden_pago_det_cp_orden_pago">
-          <End Type="Model_cuentas_por_pagar.cp_orden_pago" Role="cp_orden_pago" Multiplicity="1" />
-          <End Type="Model_cuentas_por_pagar.cp_orden_pago_det" Role="cp_orden_pago_det" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cp_orden_pago">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdOrdenPago" />
-            </Principal>
-            <Dependent Role="cp_orden_pago_det">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdOrdenPago" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="vwcp_orden_pago">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -4706,20 +4635,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_retencion_det' no tiene
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_cp_ConciliacionAnticipoDetAnt_cp_orden_pago">
-          <End Type="Model_cuentas_por_pagar.cp_orden_pago" Role="cp_orden_pago" Multiplicity="1" />
-          <End Type="Model_cuentas_por_pagar.cp_ConciliacionAnticipoDetAnt" Role="cp_ConciliacionAnticipoDetAnt" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cp_orden_pago">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdOrdenPago" />
-            </Principal>
-            <Dependent Role="cp_ConciliacionAnticipoDetAnt">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdOrdenPago" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="vwcp_ConciliacionAnticipo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -4838,20 +4753,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_retencion_det' no tiene
             <Dependent Role="cp_ConciliacionAnticipoDetCXP">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdConciliacion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_cp_ConciliacionAnticipoDetCXP_cp_orden_pago">
-          <End Type="Model_cuentas_por_pagar.cp_orden_pago" Role="cp_orden_pago" Multiplicity="1" />
-          <End Type="Model_cuentas_por_pagar.cp_ConciliacionAnticipoDetCXP" Role="cp_ConciliacionAnticipoDetCXP" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cp_orden_pago">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdOrdenPago" />
-            </Principal>
-            <Dependent Role="cp_ConciliacionAnticipoDetCXP">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdOrdenPago" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5199,6 +5100,107 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_retencion_det' no tiene
           <Property Name="IdTipoMovi" Type="Int32" />
           <Property Name="num_cta_acreditacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="cp_orden_pago">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdOrdenPago" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdOrdenPago" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipo_op" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipo_Persona" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdPersona" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdEntidad" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdEstadoAprobacion" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdFormaPago" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ReferenciaGen" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioAprobacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MotivoAprobacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAprobacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MotivoAnu" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="SecuenciaProveedor" Type="Int32" />
+          <NavigationProperty Name="cp_ConciliacionAnticipoDetAnt" Relationship="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetAnt_cp_orden_pago" FromRole="cp_orden_pago" ToRole="cp_ConciliacionAnticipoDetAnt" />
+          <NavigationProperty Name="cp_ConciliacionAnticipoDetCXP" Relationship="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_orden_pago" FromRole="cp_orden_pago" ToRole="cp_ConciliacionAnticipoDetCXP" />
+          <NavigationProperty Name="cp_orden_pago_formapago" Relationship="Model_cuentas_por_pagar.FK_cp_orden_pago_cp_orden_pago_formapago" FromRole="cp_orden_pago" ToRole="cp_orden_pago_formapago" />
+          <NavigationProperty Name="cp_orden_pago_tipo" Relationship="Model_cuentas_por_pagar.FK_cp_orden_pago_cp_orden_pago_tipo" FromRole="cp_orden_pago" ToRole="cp_orden_pago_tipo" />
+          <NavigationProperty Name="cp_orden_pago_det" Relationship="Model_cuentas_por_pagar.FK_cp_orden_pago_det_cp_orden_pago" FromRole="cp_orden_pago" ToRole="cp_orden_pago_det" />
+        </EntityType>
+        <Association Name="FK_cp_ConciliacionAnticipoDetAnt_cp_orden_pago">
+          <End Type="Model_cuentas_por_pagar.cp_orden_pago" Role="cp_orden_pago" Multiplicity="1" />
+          <End Type="Model_cuentas_por_pagar.cp_ConciliacionAnticipoDetAnt" Role="cp_ConciliacionAnticipoDetAnt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cp_orden_pago">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdOrdenPago" />
+            </Principal>
+            <Dependent Role="cp_ConciliacionAnticipoDetAnt">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdOrdenPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cp_ConciliacionAnticipoDetCXP_cp_orden_pago">
+          <End Type="Model_cuentas_por_pagar.cp_orden_pago" Role="cp_orden_pago" Multiplicity="1" />
+          <End Type="Model_cuentas_por_pagar.cp_ConciliacionAnticipoDetCXP" Role="cp_ConciliacionAnticipoDetCXP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cp_orden_pago">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdOrdenPago" />
+            </Principal>
+            <Dependent Role="cp_ConciliacionAnticipoDetCXP">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdOrdenPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cp_orden_pago_cp_orden_pago_formapago">
+          <End Type="Model_cuentas_por_pagar.cp_orden_pago_formapago" Role="cp_orden_pago_formapago" Multiplicity="1" />
+          <End Type="Model_cuentas_por_pagar.cp_orden_pago" Role="cp_orden_pago" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cp_orden_pago_formapago">
+              <PropertyRef Name="IdFormaPago" />
+            </Principal>
+            <Dependent Role="cp_orden_pago">
+              <PropertyRef Name="IdFormaPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cp_orden_pago_cp_orden_pago_tipo">
+          <End Type="Model_cuentas_por_pagar.cp_orden_pago_tipo" Role="cp_orden_pago_tipo" Multiplicity="1" />
+          <End Type="Model_cuentas_por_pagar.cp_orden_pago" Role="cp_orden_pago" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cp_orden_pago_tipo">
+              <PropertyRef Name="IdTipo_op" />
+            </Principal>
+            <Dependent Role="cp_orden_pago">
+              <PropertyRef Name="IdTipo_op" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cp_orden_pago_det_cp_orden_pago">
+          <End Type="Model_cuentas_por_pagar.cp_orden_pago" Role="cp_orden_pago" Multiplicity="1" />
+          <End Type="Model_cuentas_por_pagar.cp_orden_pago_det" Role="cp_orden_pago_det" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cp_orden_pago">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdOrdenPago" />
+            </Principal>
+            <Dependent Role="cp_orden_pago_det">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdOrdenPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5713,35 +5715,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_retencion_det' no tiene
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdSolicitud" ColumnName="IdSolicitud" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="cp_orden_pago">
-            <EntityTypeMapping TypeName="Model_cuentas_por_pagar.cp_orden_pago">
-              <MappingFragment StoreEntitySet="cp_orden_pago">
-                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
-                <ScalarProperty Name="MotivoAnu" ColumnName="MotivoAnu" />
-                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
-                <ScalarProperty Name="FechaUltMod" ColumnName="FechaUltMod" />
-                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
-                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="FechaAprobacion" ColumnName="FechaAprobacion" />
-                <ScalarProperty Name="MotivoAprobacion" ColumnName="MotivoAprobacion" />
-                <ScalarProperty Name="IdUsuarioAprobacion" ColumnName="IdUsuarioAprobacion" />
-                <ScalarProperty Name="ReferenciaGen" ColumnName="ReferenciaGen" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="IdFormaPago" ColumnName="IdFormaPago" />
-                <ScalarProperty Name="IdEstadoAprobacion" ColumnName="IdEstadoAprobacion" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="IdEntidad" ColumnName="IdEntidad" />
-                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
-                <ScalarProperty Name="IdTipo_Persona" ColumnName="IdTipo_Persona" />
-                <ScalarProperty Name="IdTipo_op" ColumnName="IdTipo_op" />
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdOrdenPago" ColumnName="IdOrdenPago" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -6509,6 +6482,36 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_retencion_det' no tiene
                 <ScalarProperty Name="IdOrden_giro_Tipo" ColumnName="IdOrden_giro_Tipo" />
                 <ScalarProperty Name="IdTipoCbte_Ogiro" ColumnName="IdTipoCbte_Ogiro" />
                 <ScalarProperty Name="IdCbteCble_Ogiro" ColumnName="IdCbteCble_Ogiro" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cp_orden_pago">
+            <EntityTypeMapping TypeName="Model_cuentas_por_pagar.cp_orden_pago">
+              <MappingFragment StoreEntitySet="cp_orden_pago">
+                <ScalarProperty Name="SecuenciaProveedor" ColumnName="SecuenciaProveedor" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="MotivoAnu" ColumnName="MotivoAnu" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="FechaUltMod" ColumnName="FechaUltMod" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="FechaAprobacion" ColumnName="FechaAprobacion" />
+                <ScalarProperty Name="MotivoAprobacion" ColumnName="MotivoAprobacion" />
+                <ScalarProperty Name="IdUsuarioAprobacion" ColumnName="IdUsuarioAprobacion" />
+                <ScalarProperty Name="ReferenciaGen" ColumnName="ReferenciaGen" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdFormaPago" ColumnName="IdFormaPago" />
+                <ScalarProperty Name="IdEstadoAprobacion" ColumnName="IdEstadoAprobacion" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdEntidad" ColumnName="IdEntidad" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="IdTipo_Persona" ColumnName="IdTipo_Persona" />
+                <ScalarProperty Name="IdTipo_op" ColumnName="IdTipo_op" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdOrdenPago" ColumnName="IdOrdenPago" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

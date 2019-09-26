@@ -42,10 +42,6 @@
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_SolicitudPagoDet" Width="1.5" PointX="9.75" PointY="53.75" />
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_SolicitudPagoDet_cp_SolicitudPago" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_SolicitudPago" Width="1.5" PointX="3.375" PointY="12.75" />
-        <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_orden_pago" Width="1.5" PointX="3" PointY="5.375" />
-        <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_orden_pago_cp_orden_pago_formapago" />
-        <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_orden_pago_cp_orden_pago_tipo" />
-        <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_orden_pago_det_cp_orden_pago" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_orden_pago" Width="1.5" PointX="0.75" PointY="12.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_orden_giro" Width="1.5" PointX="18.75" PointY="4.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_orden_giro_det_ing_x_oc_x_cruzar" Width="1.5" PointX="20.375" PointY="16.75" />
@@ -73,14 +69,12 @@
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_ConciliacionAnticipoDetAnt" Width="1.5" PointX="15.75" PointY="27.25" />
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipo_cp_proveedor" />
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetAnt_cp_ConciliacionAnticipo" />
-        <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetAnt_cp_orden_pago" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_ConciliacionAnticipo" Width="1.5" PointX="14.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_ConciliacionAnticipoDetAnt_x_cruzar" Width="1.5" PointX="18.375" PointY="23.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_ConciliacionAnticipoDetCXP" Width="1.5" PointX="15.75" PointY="36.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_ConciliacionAnticipoDetAnt" Width="1.5" PointX="10.375" PointY="5.75" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_ConciliacionAnticipoDetCXP" Width="1.5" PointX="24.375" PointY="6.75" />
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_ConciliacionAnticipo" />
-        <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_orden_pago" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_proveedor_detalle" Width="1.5" PointX="7.5" PointY="48.625" />
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_proveedor_detalle_cp_proveedor" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_orden_giro" Width="1.5" PointX="10.5" PointY="32.875" />
@@ -97,6 +91,12 @@
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_orden_giro_x_in_Ing_Egr_Inven_cp_orden_giro" />
         <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_retencion_cp_orden_giro" />
         <EntityTypeShape EntityType="Model_cuentas_por_pagar.vwcp_orden_giro_x_pagar" Width="1.5" PointX="10.375" PointY="14.75" />
+        <EntityTypeShape EntityType="Model_cuentas_por_pagar.cp_orden_pago" Width="1.5" PointX="3" PointY="5.125" />
+        <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetAnt_cp_orden_pago" />
+        <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_ConciliacionAnticipoDetCXP_cp_orden_pago" />
+        <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_orden_pago_cp_orden_pago_formapago" />
+        <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_orden_pago_cp_orden_pago_tipo" />
+        <AssociationConnector Association="Model_cuentas_por_pagar.FK_cp_orden_pago_det_cp_orden_pago" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

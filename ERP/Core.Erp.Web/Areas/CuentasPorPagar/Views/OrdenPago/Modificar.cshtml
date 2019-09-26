@@ -86,7 +86,7 @@
     @Html.HiddenFor(q => q.info_comprobante.IdTipoCbte)
     @Html.HiddenFor(q => q.info_comprobante.IdCbteCble)
     @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
-
+    @Html.HiddenFor(q => q.MostrarComboCuentas, new { @id = "MostrarComboCuentas" })
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-3">
@@ -176,6 +176,17 @@
                     <label for="IdEntidad">Beneficiario:*</label>
                     @Html.Partial("_CmbPersona_OP", Model.IdEntidad)
                     @Html.ValidationMessageFor(q => q.IdEntidad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12" id="SecuenciaProveedor_Div">
+                <div class="form-group">
+                    <label for="IdBodega">Cuentas</label>
+                    @Html.DropDownListFor(q => q.SecuenciaProveedor, new SelectList(ViewBag.lst_proveedor_detalle, "Secuencia", "NombreAdicional"), new { @class = "form-control", @id = "SecuenciaProveedor" })
+                    @Html.ValidationMessageFor(q => q.SecuenciaProveedor, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -287,6 +298,7 @@
         }
 }
 <script>
+    MostrarCuentas();
 
     $("#Valor_a_pagar").change(function () {
         armar_diario();
@@ -322,5 +334,45 @@
 
     };
 
+    function MostrarProveedorDetalle() {
+        $("#SecuenciaProveedor").empty();
+        var datos = {
+            TipoPersona: $("#IdTipo_Persona").val(),
+            IdEntidad: IdEntidad.GetValue()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("MostrarProveedorDetalle", "OrdenPago",new { Area = "CuentasPorPagar"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data.MostrarComboCuentas);
+                $("#MostrarComboCuentas").val(data.MostrarComboCuentas);
+                if (data.resultado.length > 0) {
+                    $.each(data.resultado, function (i, row) {
+                        $("#SecuenciaProveedor").append("<option value=" + row.Secuencia + ">" + row.NombreAdicional + "</option>");
+                    });
+                }
+                MostrarCuentas();
 
+
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+    function MostrarCuentas() {
+        var MostrarCuentas = $("#MostrarComboCuentas").val();
+        if (MostrarCuentas == 1) {
+            $("#SecuenciaProveedor_Div").show();
+        }
+        else {
+            $("#SecuenciaProveedor_Div").hide();
+        }
+    }
 </script>

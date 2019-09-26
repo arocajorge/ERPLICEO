@@ -47,7 +47,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  Estado =q.Estado,
                                  Nom_Beneficiario=q.pe_nombreCompleto,
                                  Total_OP=q.Total_OP,
-
                                  EstadoBool = q.Estado == "A" ? true : false
 
                              }).ToList();
@@ -130,7 +129,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                         IdFormaPago = Entity.IdFormaPago,
                         Estado = Entity.Estado,
                         IdSucursal = Entity.IdSucursal,
-                        ReferenciaGen = Entity.ReferenciaGen
+                        ReferenciaGen = Entity.ReferenciaGen,
+                        SecuenciaProveedor = Entity.SecuenciaProveedor
                     };
                     info.detalle
                           = (from q in Context.cp_orden_pago_det
@@ -153,7 +153,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  IdUsuario_Aprobacion = q.IdUsuario_Aprobacion,
                                  fecha_hora_Aproba = q.fecha_hora_Aproba,
                                  Motivo_aproba=q.Motivo_aproba
-                                 
                              }).ToList();
                 }
                 if (info.detalle != null)
@@ -227,7 +226,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                         Estado = "A",
                         IdUsuario = info.IdUsuario,
                         Fecha_Transac = info.Fecha_Transac = DateTime.Now,
-                        ReferenciaGen = info.ReferenciaGen
+                        ReferenciaGen = info.ReferenciaGen,
+                        SecuenciaProveedor = info.SecuenciaProveedor
                     };
 
                     Context.cp_orden_pago.Add(Entity);
@@ -293,6 +293,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                         Entity.IdUsuarioUltMod = info.IdUsuario;
                         Entity.IdSucursal = info.IdSucursal;
                         Entity.ReferenciaGen = info.ReferenciaGen;
+                        Entity.SecuenciaProveedor = info.SecuenciaProveedor;
+
                         Context.SaveChanges();        
                     }
                 }

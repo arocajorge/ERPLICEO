@@ -153,41 +153,44 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             var Lista = Lista_Excel.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSession));
 
-            var data = new[] {
-                new { Cedula = "CEDULA", Empleado = "EMPLEADO", CodRubro = "CODIGO RUBRO", Monto = "MONTO", Cantidad = "NUM HORAS/COUTAS" }
-            };
-
-            //var lst = new
-            //{
-            //    Cedula = "CEDULA", Empleado = "EMPLEADO", CodRubro = "CODIGO RUBRO", Monto = "MONTO", Cantidad = "NUM HORAS/COUTAS"
+            //var data = new[] {
+            //    new { Cedula = "CEDULA", Empleado = "EMPLEADO", CodRubro = "CODIGO RUBRO", Monto = "MONTO", Cantidad = "NUM HORAS/COUTAS" }
             //};
 
-            //foreach (var item in Lista)
-            //{
-            //    lst.Add( new {
-            //            Cedula = Convert.ToString(item.pe_cedulaRuc),
-            //            Empleado = Convert.ToString(item.pe_nombreCompleto),
-            //            CodRubro = Convert.ToString(item.CodigoRubroDescto),
-            //            Monto = Convert.ToString(item.Valor),
-            //            Cantidad = Convert.ToString((item.Num_Horas == null ? 0 : item.Num_Horas))
-            //        });
-            //}
+            var lst = new Excel_List();
+            lst.Cedula = "CEDULA";
+            lst.Empleado = "EMPLEADO";
+            lst.CodRubro = "CODIGO RUBRO";
+            lst.Monto = "MONTO";
+            lst.Cantidad = "NUM HORAS/COUTAS";
 
-            for (int i = 0; i < Lista.Count; i++)
+            foreach (var item in Lista)
             {
-                var index = i + 1;
-                var item = Lista[i];
-                //data.Add(item);
-                data[index] = new
-                {
-                    Cedula = Convert.ToString(item.pe_cedulaRuc),
-                    Empleado = Convert.ToString(item.pe_nombreCompleto),
-                    CodRubro = Convert.ToString(item.CodigoRubroDescto),
-                    Monto = Convert.ToString(item.Valor),
-                    Cantidad = Convert.ToString((item.Num_Horas == null ? 0 : item.Num_Horas))
-                };
+                var info = new Excel_List();
+                info.Cedula = "CEDULA";
+                info.Empleado = "EMPLEADO";
+                info.CodRubro = "CODIGO RUBRO";
+                info.Monto = "MONTO";
+                lst.Cantidad = "NUM HORAS/COUTAS";
 
+                //lst.Add(info);
             }
+
+            //for (int i = 0; i < Lista.Count; i++)
+            //{
+            //    var index = i + 1;
+            //    var item = Lista[i];
+            //    //data.Add(item);
+            //    data[index] = new
+            //    {
+            //        Cedula = Convert.ToString(item.pe_cedulaRuc),
+            //        Empleado = Convert.ToString(item.pe_nombreCompleto),
+            //        CodRubro = Convert.ToString(item.CodigoRubroDescto),
+            //        Monto = Convert.ToString(item.Valor),
+            //        Cantidad = Convert.ToString((item.Num_Horas == null ? 0 : item.Num_Horas))
+            //    };
+
+            //}
 
             var ejemplo = new[]{
                                new{ Name="Ram", Email="ram@techbrij.com", Phone="111-222-3333" },
@@ -201,7 +204,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             Response.ClearContent();
             Response.AddHeader("content-disposition", "attachment;filename=Contact.xls");
             Response.AddHeader("Content-Type", "application/vnd.ms-excel");
-            WriteTsv(data, Response.Output);
+            //WriteTsv(lst, Response.Output);
             Response.End();
         }
         #endregion
@@ -245,5 +248,14 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             HttpContext.Current.Session[variable + IdTransaccionSession.ToString()] = list;
         }
+    }
+
+    public class Excel_List
+    {
+        public string Cedula { get; set; }
+        public string Empleado { get; set; }
+        public string CodRubro { get; set; }
+        public string Monto { get; set; }
+        public string Cantidad { get; set; }
     }
 }

@@ -34,6 +34,9 @@ namespace Core.Erp.Info.CuentasPorPagar
         public bool EstadoBool { get; set; }
 
         public string ReferenciaGen { get; set; }
+        public Nullable<int> SecuenciaProveedor { get; set; }
+        public int MostrarComboCuentas { get; set; }
+        
         #region Campos auditoria
         public string IdUsuario { get; set; }
         public string IdUsuarioUltAnu { get; set; }

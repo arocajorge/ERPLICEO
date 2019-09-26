@@ -480,7 +480,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             cargar_combos(model);
             var lst_det = ViewBag.lst_proveedor_detalle;
-            model.MostrarComboCuentas = ((lst_det != null) ? 1 : 0);
+            model.MostrarComboCuentas = ((lst_det != null && lst_det.Count >0) ? 1 : 0);
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
 

@@ -19,6 +19,7 @@
         settings.Properties.Columns.Add("pe_cedulaRUC", "RUC", 20);
         settings.Properties.Columns.Add("pe_nombreCompleto", "Persona", 70);
         settings.Properties.FilterMinLength = 3;
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){MostrarProveedorDetalle();}";
         settings.Properties.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['IdTipo_Persona'] =  $('#IdTipo_Persona').val(); }";
 
     })

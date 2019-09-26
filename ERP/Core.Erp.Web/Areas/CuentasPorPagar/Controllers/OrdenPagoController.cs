@@ -37,6 +37,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         cp_orden_pago_cancelaciones_Bus bus_cancelacion = new cp_orden_pago_cancelaciones_Bus();
         List<cp_orden_pago_tipo_x_empresa_Info> lst_tipo_orden_pago = new List<cp_orden_pago_tipo_x_empresa_Info>();
         cp_orden_pago_det_Info_list lis_cp_orden_pago_det_Info = new cp_orden_pago_det_Info_list();
+        cp_proveedor_detalle_Bus bus_proveedor_det = new cp_proveedor_detalle_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         string mensaje = string.Empty;
@@ -101,9 +102,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         }
         #endregion
         #region Metodos
-        private void cargar_combos(int IdEmpresa )
+        private void cargar_combos(cp_orden_pago_Info model)
         {
-            var lst_proveedores = bus_proveedor.get_list(IdEmpresa, false);
+            var lst_proveedores = bus_proveedor.get_list(model.IdEmpresa, false);
             ViewBag.lst_proveedores = lst_proveedores;
 
             var lst_persona_tipo = bus_persona_tipo.get_list();
@@ -112,10 +113,10 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
              var lst_forma_pago = bus_forma_pago.get_list();
             ViewBag.lst_forma_pago = lst_forma_pago;
 
-            var lst_tipo_orden_pago = bus_orden_pago_tipo.get_list(IdEmpresa);
+            var lst_tipo_orden_pago = bus_orden_pago_tipo.get_list(model.IdEmpresa);
             ViewBag.lst_tipo_orden_pago = lst_tipo_orden_pago;
 
-            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
+            var lst_sucursal = bus_sucursal.GetList(model.IdEmpresa, Convert.ToString(SessionFixed.IdUsuario), false);
             ViewBag.lst_sucursal = lst_sucursal;
 
             //var lst_tipo_personas = bus_persona_tipo.get_list();
@@ -127,6 +128,14 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             lst_tipo_personas.Add(cl_enumeradores.eTipoPersona.EMPLEA.ToString(), "Empleado");
             lst_tipo_personas.Add(cl_enumeradores.eTipoPersona.CLIENTE.ToString(), "Cliente");
             ViewBag.lst_tipo_personas = lst_tipo_personas;
+
+            ViewBag.lst_proveedor_detalle = new List<cp_proveedor_detalle_Info>();
+            if (model.IdTipo_Persona == cl_enumeradores.eTipoPersona.PROVEE.ToString() && model.IdEntidad != 0)
+            {
+                var lst_proveedor_detalle = bus_proveedor_det.get_list(model.IdEmpresa, model.IdEntidad, false);
+                ViewBag.lst_proveedor_detalle = lst_proveedor_detalle;
+            }
+            
         }
 
         private void cargar_combos_consulta(int IdEmpresa)
@@ -189,17 +198,19 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             cp_orden_pago_Info model = new cp_orden_pago_Info
             {
                 IdEmpresa = IdEmpresa,
-                Fecha=DateTime.Now.Date,
+                Fecha = DateTime.Now.Date,
                 IdTipo_Persona = "PROVEE",
                 IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdTipo_op = "OTROS_CONC",
-                IdFormaPago = "CHEQUE"
+                IdFormaPago = "CHEQUE",
+                MostrarComboCuentas = 0
             };
             SessionFixed.TipoPersona = "PROVEE";
             lis_cp_orden_pago_det_Info.set_list(new List<cp_orden_pago_det_Info>(), model.IdTransaccionSession);
             comprobante_contable_fp.set_list(new List<ct_cbtecble_det_Info>(),model.IdTransaccionSession);
-            cargar_combos(IdEmpresa);
+            cargar_combos(model);
+
             return View(model);
         }
 
@@ -219,13 +230,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             if (!validar(model, ref mensaje))
             {
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
             if (mensaje != "")
             {
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 ViewBag.mensaje = mensaje;
 
                 return View(model);
@@ -240,7 +251,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 else
                 {
                     ViewBag.mensaje = mensaje;
-                    cargar_combos(model.IdEmpresa);
+                    cargar_combos(model);
 
                     return View(model);
                 }
@@ -256,8 +267,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
 
-            bus_orden_pago = new cp_orden_pago_Bus();
-            cargar_combos(IdEmpresa);            
+            bus_orden_pago = new cp_orden_pago_Bus();           
 
             cp_orden_pago_Info model = bus_orden_pago.get_info(IdEmpresa, IdOrdenPago);
             if (model == null)
@@ -280,7 +290,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 ViewBag.MostrarBoton = false;
             }
             #endregion
-
+            cargar_combos(model);
+            var lst_det = ViewBag.lst_proveedor_detalle;
+            model.MostrarComboCuentas = ((lst_det != null && lst_det.Count() > 0) ? 1 : 0);
             return View(model);
         }
 
@@ -297,7 +309,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 mensaje = "La orden de pago tiene cancelaciones no se puede modificar";
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
@@ -305,14 +317,14 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 mensaje = "No se puede modificar una orden de pago de tipo factura por proveedor";
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
 
             if (!validar(model, ref mensaje))
             {
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
@@ -325,7 +337,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             mensaje = bus_orden_pago.validar(model);
             if (mensaje != "")
             {
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
@@ -339,7 +351,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 else
                 {
                     ViewBag.mensaje = mensaje;
-                    cargar_combos(model.IdEmpresa);
+                    cargar_combos(model);
                     return View(model);
                 }
             }
@@ -352,8 +364,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
-
-            cargar_combos(IdEmpresa);            
+            
             cp_orden_pago_Info model = bus_orden_pago.get_info(IdEmpresa, IdOrdenPago);
             if (model == null)
                 return RedirectToAction("Index");
@@ -370,7 +381,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 ViewBag.MostrarBoton = false;
             }
             #endregion
-
+            cargar_combos(model);
+            var lst_det = ViewBag.lst_proveedor_detalle;
+            model.MostrarComboCuentas = ((lst_det != null) ? 1 : 0);
             return View(model);
         }
 
@@ -382,7 +395,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             if (bus_cancelacion.si_existe_cancelacion(model.IdEmpresa, model.IdOrdenPago))
             {
                 mensaje = "La orden de pago tiene cancelaciones no se puede anular";
-                cargar_combos(model.IdEmpresa);
+                cargar_combos(model);
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
@@ -393,13 +406,12 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                     return RedirectToAction("Index");
                 else
                 {
-                    cargar_combos(model.IdEmpresa);
+                    cargar_combos(model);
                     return View(model);
                 }
         }
         #endregion
         #region json
-       
         public JsonResult armar_diario(string IdTipo_op = "", string IdTipo_Persona = "" ,decimal IdEntidad = 0, double Valor_a_pagar = 0, string observacion="",int IdEmpresa = 0, decimal IdTransaccionSession = 0)
         {
             info_param_op = bus_orden_pago_tipo.get_info(IdEmpresa, IdTipo_op);
@@ -459,6 +471,28 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             }
 
             return Json(mensaje, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult MostrarProveedorDetalle(string TipoPersona, decimal IdEntidad = 0)
+        {
+            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var resultado = new List<cp_proveedor_detalle_Info>();
+
+            if (TipoPersona== cl_enumeradores.eTipoPersona.PROVEE.ToString())
+            {
+                resultado = bus_proveedor_det.get_list(IdEmpresa, IdEntidad, false);
+            }
+            
+            var MostrarComboCuentas = 1;
+
+            if (resultado == null || resultado.Count() == 0)
+            {
+                resultado = new List<cp_proveedor_detalle_Info>();
+                MostrarComboCuentas = 0;
+            }
+
+
+            return Json(new { resultado = resultado, MostrarComboCuentas = MostrarComboCuentas }, JsonRequestBehavior.AllowGet);
         }
         #endregion
         #region DEtalles

@@ -198,7 +198,7 @@ namespace Core.Erp.Data.RRHH
             }
         }
 
-        public List<ro_empleado_novedad_det_Info> get_list_descuentos(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin)
+        public List<ro_empleado_novedad_det_Info> get_list_descuentos(int IdEmpresa, int IdSucursal, bool EsDescuento, bool EsPrestamo, DateTime fecha_ini, DateTime fecha_fin)
         {
             try
             {
@@ -211,6 +211,7 @@ namespace Core.Erp.Data.RRHH
                                    && q.IdSucursal == IdSucursal
                                    && q.vt_fecha >= fecha_ini
                                    && q.vt_fecha <= fecha_fin
+                                   && (EsDescuento == true ? q.Num_Coutas ==0 : (EsPrestamo == true ? q.Num_Coutas > 0: q.Num_Coutas ==0 ))
                              select new ro_empleado_novedad_det_Info
                              {
                                  AplicaDescuentoNomina = q.AplicaDescuentoNomina,

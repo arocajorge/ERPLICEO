@@ -82,11 +82,11 @@ namespace Core.Erp.Bus.RRHH
             }
         }
 
-        public List<ro_empleado_novedad_det_Info> get_list_descuentos(int IdEmpresa, int IdSucursal, DateTime fecha_ini, DateTime fecha_fin)
+        public List<ro_empleado_novedad_det_Info> get_list_descuentos(int IdEmpresa, int IdSucursal, bool EsDescuento, bool EsPrestamo, DateTime fecha_ini, DateTime fecha_fin)
         {
             try
             {
-                return odata.get_list_descuentos(IdEmpresa, IdSucursal, fecha_ini, fecha_fin);
+                return odata.get_list_descuentos(IdEmpresa, IdSucursal, EsDescuento, EsPrestamo, fecha_ini, fecha_fin);
             }
             catch (Exception)
             {

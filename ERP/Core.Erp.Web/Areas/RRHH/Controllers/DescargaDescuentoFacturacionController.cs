@@ -74,7 +74,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         {
             model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             var Lista = new List<ro_empleado_novedad_det_Info>();
-            Lista = bus_novedad_empleado.get_list_descuentos(model.IdEmpresa, model.IdSucursal, model.fecha_ini, model.fecha_fin);
+            Lista = bus_novedad_empleado.get_list_descuentos(model.IdEmpresa, model.IdSucursal, model.FormatoDescuento, model.FormatoPrestamo, model.fecha_ini, model.fecha_fin);
             Lista_DescuentosEmpleados.set_list(Lista, model.IdTransaccionSession);
             var lst_descuentos = Lista_DescuentosEmpleados.get_list(model.IdTransaccionSession);
             List<ro_empleado_novedad_det_Info> lst_excel = new List<ro_empleado_novedad_det_Info>();
@@ -87,7 +87,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                         pe_cedulaRuc = item.pe_cedulaRuc,
                         pe_nombreCompleto = item.pe_nombreCompleto,
                         CodigoRubroDescto = item.CodigoRubroDescto,
-                        Valor = item.Valor,
+                        Total = item.Total,
                         CantidadHoras = (item.CantidadHoras == null ? 0 : item.CantidadHoras)
                     };
 
@@ -104,7 +104,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                         pe_cedulaRuc = item.pe_cedulaRuc,
                         pe_nombreCompleto = item.pe_nombreCompleto,
                         CodigoRubroDescto = item.CodigoRubroDescto,
-                        Valor = item.Valor,
+                        Total = item.Total,
                         CantidadHoras = item.Num_Coutas
                     };
 
@@ -157,54 +157,34 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             //    new { Cedula = "CEDULA", Empleado = "EMPLEADO", CodRubro = "CODIGO RUBRO", Monto = "MONTO", Cantidad = "NUM HORAS/COUTAS" }
             //};
 
-            var lst = new Excel_List();
-            lst.Cedula = "CEDULA";
-            lst.Empleado = "EMPLEADO";
-            lst.CodRubro = "CODIGO RUBRO";
-            lst.Monto = "MONTO";
-            lst.Cantidad = "NUM HORAS/COUTAS";
+            var lst = new List<Excel_List>();
+            //var cabecera = new Excel_List
+            //{
+            //    Cedula = "CEDULA",
+            //    Empleado = "EMPLEADO",
+            //    CodRubro = "CODIGO RUBRO",
+            //    Monto = "MONTO",
+            //    Cantidad = "NUM HORAS/COUTAS",
+            //};
+            //lst.Add(cabecera);
 
             foreach (var item in Lista)
             {
-                var info = new Excel_List();
-                info.Cedula = "CEDULA";
-                info.Empleado = "EMPLEADO";
-                info.CodRubro = "CODIGO RUBRO";
-                info.Monto = "MONTO";
-                lst.Cantidad = "NUM HORAS/COUTAS";
+                var info = new Excel_List {
+                    Cedula = Convert.ToString(item.pe_cedulaRuc),
+                    Empleado = Convert.ToString(item.pe_nombreCompleto),
+                    CodRubro = Convert.ToString(item.CodigoRubroDescto),
+                    Monto = Convert.ToString(item.Total),
+                    Cantidad = Convert.ToString((item.CantidadHoras == null ? 0 : item.CantidadHoras))
+                };
 
-                //lst.Add(info);
+                lst.Add(info);
             }
-
-            //for (int i = 0; i < Lista.Count; i++)
-            //{
-            //    var index = i + 1;
-            //    var item = Lista[i];
-            //    //data.Add(item);
-            //    data[index] = new
-            //    {
-            //        Cedula = Convert.ToString(item.pe_cedulaRuc),
-            //        Empleado = Convert.ToString(item.pe_nombreCompleto),
-            //        CodRubro = Convert.ToString(item.CodigoRubroDescto),
-            //        Monto = Convert.ToString(item.Valor),
-            //        Cantidad = Convert.ToString((item.Num_Horas == null ? 0 : item.Num_Horas))
-            //    };
-
-            //}
-
-            var ejemplo = new[]{
-                               new{ Name="Ram", Email="ram@techbrij.com", Phone="111-222-3333" },
-                               new{ Name="Shyam", Email="shyam@techbrij.com", Phone="159-222-1596" },
-                               new{ Name="Mohan", Email="mohan@techbrij.com", Phone="456-222-4569" },
-                               new{ Name="Sohan", Email="sohan@techbrij.com", Phone="789-456-3333" },
-                               new{ Name="Karan", Email="karan@techbrij.com", Phone="111-222-1234" },
-                               new{ Name="Brij", Email="brij@techbrij.com", Phone="111-222-3333" }
-                      };
 
             Response.ClearContent();
             Response.AddHeader("content-disposition", "attachment;filename=Contact.xls");
             Response.AddHeader("Content-Type", "application/vnd.ms-excel");
-            //WriteTsv(lst, Response.Output);
+            WriteTsv(lst, Response.Output);
             Response.End();
         }
         #endregion

@@ -424,6 +424,7 @@
                     settings.Properties.UseMaskBehavior = true;
                     settings.Properties.EditFormat = EditFormat.Date;
                     settings.Properties.EditFormatString = "dd/MM/yyyy";
+                    settings.Properties.AllowMouseWheel = false;
                     settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                     settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                 }).GetHtml()
@@ -470,6 +471,7 @@
                    settings.Properties.EditFormatString = "dd/MM/yyyy";
                    settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.AllowMouseWheel = false;
                    settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){GetSaldoAnterior(); Calcular();}";
                        }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Fecha_ini, "", new { @class = "text-danger" })
@@ -486,6 +488,7 @@
                         settings.Properties.EditFormatString = "dd/MM/yyyy";
                         settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                        settings.Properties.AllowMouseWheel = false;
                         settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){GetIngresos(); Calcular();}";
                     }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Fecha_fin, "", new { @class = "text-danger" })
@@ -598,6 +601,7 @@
                                 settings.Properties.UseMaskBehavior = true;
                                 settings.Properties.EditFormat = EditFormat.Date;
                                 settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                settings.Properties.AllowMouseWheel = false;
                                 settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
                                 settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                             }).GetHtml()

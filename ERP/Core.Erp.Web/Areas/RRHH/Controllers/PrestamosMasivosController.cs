@@ -268,7 +268,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                         {
                             
                             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-                            string cedula = reader.GetString(0);
+                            string cedula = Convert.ToString(reader.GetValue(0));
                             var empleado = empleado_info_list.get_list().Where(v => v.pe_cedulaRuc == cedula).FirstOrDefault();
                             var CodRubro = Convert.ToString(reader.GetValue(2));
                             var info_rubro = bus_rubro.get_info_x_codigo(IdEmpresa, CodRubro);

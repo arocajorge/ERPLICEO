@@ -83,6 +83,7 @@ namespace Core.Erp.Web.Controllers
             if (usuario != null)
             {
                 SessionFixed.IdUsuario = usuario.IdUsuario;
+                SessionFixed.EsContador = Convert.ToString(usuario.EsContador);
                 SessionFixed.EsSuperAdmin = usuario.es_super_admin.ToString();
                 SessionFixed.IdCaja = bus_caja.GetIdCajaPorUsuario(model.IdEmpresa, SessionFixed.IdUsuario).ToString();
                 seg_Menu_x_Empresa_x_Usuario_Lista.set_list(bus_MenuPorEmpresa.get_list(model.IdEmpresa, usuario.IdUsuario));

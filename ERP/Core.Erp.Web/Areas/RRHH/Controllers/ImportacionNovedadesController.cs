@@ -246,7 +246,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     {
                         if (cont != 0)
                         {
-                            string cedua = reader.GetString(0);
+                            string cedua = Convert.ToString(reader.GetValue(0));
+                            if (cedua== "0914568092")
+                            {
+
+                            }
                             var empleado = empleado_info_list.get_list().Where(v => v.pe_cedulaRuc == cedua).FirstOrDefault();
                             if (empleado != null)
                             {

@@ -7,11 +7,12 @@ using DevExpress.Utils.About;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.ComponentModel;
+using System.Windows.Forms;
+using System.IO;
 
 namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
@@ -128,49 +129,15 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         }
 
         #region Excel
-        public void WriteTsv<T>(IEnumerable<T> data, TextWriter output)
+        public void ExportarExcel()
         {
-            PropertyDescriptorCollection props = TypeDescriptor.GetProperties(typeof(T));
-            foreach (PropertyDescriptor prop in props)
-            {
-                output.Write(prop.DisplayName); // header
-                output.Write("\t");
-            }
-            output.WriteLine();
-            foreach (T item in data)
-            {
-                foreach (PropertyDescriptor prop in props)
-                {
-                    output.Write(prop.Converter.ConvertToString(
-                         prop.GetValue(item)));
-                    output.Write("\t");
-                }
-                output.WriteLine();
-            }
-        }
-
-        public void ExportListFromTsv()
-        {
-            var Lista = Lista_Excel.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSession));
-
-            //var data = new[] {
-            //    new { Cedula = "CEDULA", Empleado = "EMPLEADO", CodRubro = "CODIGO RUBRO", Monto = "MONTO", Cantidad = "NUM HORAS/COUTAS" }
-            //};
-
             var lst = new List<Excel_List>();
-            //var cabecera = new Excel_List
-            //{
-            //    Cedula = "CEDULA",
-            //    Empleado = "EMPLEADO",
-            //    CodRubro = "CODIGO RUBRO",
-            //    Monto = "MONTO",
-            //    Cantidad = "NUM HORAS/COUTAS",
-            //};
-            //lst.Add(cabecera);
-
+            var Lista = Lista_Excel.get_list(Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+            string NomArchivo = "Descuentos_" + DateTime.Now.Date.Year.ToString()+ DateTime.Now.Date.Month.ToString()+ DateTime.Now.Date.Day.ToString();
             foreach (var item in Lista)
             {
-                var info = new Excel_List {
+                var info = new Excel_List
+                {
                     Cedula = Convert.ToString(item.pe_cedulaRuc),
                     Empleado = Convert.ToString(item.pe_nombreCompleto),
                     CodRubro = Convert.ToString(item.CodigoRubroDescto),
@@ -181,11 +148,44 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 lst.Add(info);
             }
 
-            Response.ClearContent();
-            Response.AddHeader("content-disposition", "attachment;filename=Contact.xls");
-            Response.AddHeader("Content-Type", "application/vnd.ms-excel");
-            WriteTsv(lst, Response.Output);
-            Response.End();
+            Microsoft.Office.Interop.Excel.Application excel = null;
+            Microsoft.Office.Interop.Excel.Workbook book = null;
+
+            excel = new Microsoft.Office.Interop.Excel.Application();
+            book= excel.Workbooks.Add();
+
+            excel.Cells[1, 1] = "CEDULA";
+            excel.Cells[1, 2] = "EMPLEADO";
+            excel.Cells[1, 3] = "CODIGO RUBRO";
+            excel.Cells[1, 4] = "MONTO";
+            excel.Cells[1, 5] = "NUM HORAS/CUOTAS";
+
+            excel.Cells[1, 1].Font.Bold = true;
+            excel.Cells[1, 2].Font.Bold = true;
+            excel.Cells[1, 3].Font.Bold = true;
+            excel.Cells[1, 4].Font.Bold = true;
+            excel.Cells[1, 5].Font.Bold = true;
+
+            int IndeceFila = 1;
+            foreach (var fil in lst) // Filas
+            {
+                IndeceFila++;
+                excel.Cells[IndeceFila, 1].NumberFormat = "@";
+                excel.Cells[IndeceFila, 2].NumberFormat = "@";
+                excel.Cells[IndeceFila, 3].NumberFormat = "@";
+                excel.Cells[IndeceFila, 4].NumberFormat = "@";
+                excel.Cells[IndeceFila, 5].NumberFormat = "@";
+
+                excel.Cells[IndeceFila, 1] = fil.Cedula;
+                excel.Cells[IndeceFila, 2] = fil.Empleado;
+                excel.Cells[IndeceFila, 3] = fil.CodRubro;
+                excel.Cells[IndeceFila, 4] = fil.Monto;
+                excel.Cells[IndeceFila, 5] = fil.Cantidad;
+            }
+            excel.Columns.AutoFit();
+            excel.Visible = true;
+            book.SaveAs(NomArchivo);
+            excel.Quit();
         }
         #endregion
     }

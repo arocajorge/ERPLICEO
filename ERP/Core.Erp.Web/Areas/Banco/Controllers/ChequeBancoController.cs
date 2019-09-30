@@ -142,6 +142,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         {
             i_validar.lst_det_canc_op = List_op.get_list(i_validar.IdTransaccionSession);
             i_validar.lst_det_ct = List_ct.get_list(i_validar.IdTransaccionSession);
+            i_validar.list_det = List_Flujo.get_list(i_validar.IdTransaccionSession);
             if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cb_Fecha, cl_enumeradores.eModulo.BANCO,i_validar.IdSucursal, ref msg))
             {
                 return false;
@@ -307,12 +308,14 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             if (!validar(model, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model.IdEmpresa, model.IdSucursal);
                 return View(model);
             }            
             
             if (!bus_cbteban.modificarDB(model, cl_enumeradores.eTipoCbteBancario.CHEQ))
             {
+                SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 ViewBag.mensaje = "No se pudo modificar el registro";
                 cargar_combos(model.IdEmpresa, model.IdSucursal);
                 return View(model);

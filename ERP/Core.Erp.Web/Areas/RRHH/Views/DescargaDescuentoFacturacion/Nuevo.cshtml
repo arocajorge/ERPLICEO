@@ -117,7 +117,7 @@
                     <div class="col-md-1">
                         <label for="IdImprimir"></label>
                         <div class="form-group">
-                            <a type="button" class="btn btn-primary form-control" title="Descargar" href="@Url.Action("ExportListFromTsv","DescargaDescuentoFacturacion",null)">
+                            <a type="button" class="btn btn-primary form-control" title="Descargar" href="@Url.Action("ExportarExcel","DescargaDescuentoFacturacion")" target="_blank">
                                 <i class="fa fa-download"></i>
                             </a>
                         </div>
@@ -152,48 +152,6 @@
 }
 
 <script type="text/javascript">
-    function ExportExcel(result) {
-        $.fileDownload(uri + "?guid=" + result,
-        {
-            successCallback: onSuccess.bind(this),
-            failCallback: onFail.bind(this)
-        });
-    }
-
-    var uri = BASE_EXPORT_METADATA_URL;
-    var data = createExportationData.call(this);
-
-    $.ajax({
-        url: uri,
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(data),
-        success: download.bind(this),
-        fail: onFail.bind(this)
-    });
     
-    function ExportExcel1() {
-        var datos = {
-            IdTransaccionSession: $("#IdTransaccionSession").val(),
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("ExportExcel", "DescargaDescuentoFacturacion",new { Area = "RRHH"})',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                if (data.fileName != "") {
-                    //use window.location.href for redirect to download action for download the file
-                    window.location.href = "@Url.RouteUrl(new 
-                    { Controller = "DescargaDescuentoFacturacion", Action = "Download"})/?file=" + data.fileName;
-                    }
-            },
-            error: function (error) {
-            }
-        });
-    }
+    
 </script>

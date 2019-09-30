@@ -3,6 +3,7 @@ using Core.Erp.Bus.Caja;
 using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.CuentasPorCobrar;
 using Core.Erp.Bus.General;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.CuentasPorCobrar;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
@@ -35,6 +36,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         cxc_cobro_det_x_cruzar_List List_x_Cruzar = new cxc_cobro_det_x_cruzar_List();
         List<cxc_cobro_det_Info> ListaDetalleXCruzar = new List<cxc_cobro_det_Info>();
+        seg_usuario_Bus bus_usuario = new seg_usuario_Bus();
         string mensaje = string.Empty;
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion

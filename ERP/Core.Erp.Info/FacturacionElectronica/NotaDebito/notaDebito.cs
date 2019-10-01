@@ -1,11 +1,5 @@
-﻿using System;
+﻿using Core.Erp.Info.FacturacionElectronica.Factura_V2;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-using System.Collections.Generic;
-using Core.Erp.Info.FacturacionElectronica.Factura_V2;
 
 namespace Core.Erp.Info.FacturacionElectronica.NotaDebito
 {

@@ -96,6 +96,7 @@
                             @Html.DevExpress().RadioButtonFor(q => q.FormatoDescuento, settings =>
                            {
                                settings.Name = "FormatoDescuento";
+                               settings.GroupName = "TipoDoc";
                                settings.Text = "Descuento";
 
                            }).GetHtml()
@@ -108,20 +109,21 @@
                             @Html.DevExpress().RadioButtonFor(q => q.FormatoPrestamo, settings =>
                            {
                                settings.Name = "FormatoPrestamo";
+                               settings.GroupName = "TipoDoc";
                                settings.Text = "Préstamo";
-
+                               
                            }).GetHtml()
                             @Html.ValidationMessageFor(q => q.FormatoPrestamo, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="col-md-1">
+                    @*<div class="col-md-1">
                         <label for="IdImprimir"></label>
                         <div class="form-group">
                             <a type="button" class="btn btn-primary form-control" title="Descargar" href="@Url.Action("ExportarExcel","DescargaDescuentoFacturacion")" target="_blank">
                                 <i class="fa fa-download"></i>
                             </a>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
             </div>
         </div>

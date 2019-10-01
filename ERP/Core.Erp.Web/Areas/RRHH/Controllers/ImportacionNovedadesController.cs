@@ -247,10 +247,6 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                         if (cont != 0)
                         {
                             string cedua = Convert.ToString(reader.GetValue(0));
-                            if (cedua== "0914568092")
-                            {
-
-                            }
                             var empleado = empleado_info_list.get_list().Where(v => v.pe_cedulaRuc == cedua).FirstOrDefault();
                             if (empleado != null)
                             {
@@ -269,10 +265,11 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                             }
                         }
                         cont++;
-
                     }
-
                 }
+
+                //var ListaNovedades = lista_novedades.GroupBy(a => a.pe_cedulaRuc).Select(b => new { b.Valor }).Sum();
+
                 EmpleadoNovedadCargaMasiva_detLis_Info.set_list(lista_novedades);
             }
         }

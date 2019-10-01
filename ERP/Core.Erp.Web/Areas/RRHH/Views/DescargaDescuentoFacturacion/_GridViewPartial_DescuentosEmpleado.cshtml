@@ -32,9 +32,27 @@
         settings.Settings.ShowHeaderFilterButton = true;
         settings.SettingsBehavior.AllowSelectByRowClick = true;
 
+        settings.SettingsExport.EnableClientSideExportAPI = true;
+        settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
+        settings.Toolbars.Add(t =>
+        {
+            t.EnableAdaptivity = true;
+            t.Items.Add(GridViewToolbarCommand.ExportToPdf).Text = "Exportar a PDF";
+            t.Items.Add(GridViewToolbarCommand.ExportToXls).Text = "Exportar a XLS";
+            t.Items.Add(GridViewToolbarCommand.ExportToXlsx).Text = "Exportar a XLSX";
+            t.Items.Add(GridViewToolbarCommand.ExportToDocx).Text = "Exportar a DOCX";
+            t.Items.Add(GridViewToolbarCommand.ExportToRtf).Text = "Exportar a RTF";
+            t.Items.Add(GridViewToolbarCommand.ExportToCsv).Text = "Exportar a CSV";
+        });
+        settings.SettingsExport.RenderBrick = (sender, e) =>
+        {
+            if (e.RowType == GridViewRowType.Data && e.VisibleIndex % 2 == 0)
+                e.BrickStyle.BackColor = System.Drawing.Color.FromArgb(0xEE, 0xEE, 0xEE);
+        };
+
         settings.Columns.Add(column =>
         {
-            column.FieldName = "IdEmpleado";
+            column.FieldName = "pe_cedulaRuc";
             column.Caption = "ID";
             column.Width = Unit.Percentage(5);
             column.EditorProperties().TextBox(sp =>
@@ -51,6 +69,45 @@
             column.EditorProperties().TextBox(sp =>
             {
                 sp.Width = Unit.Percentage(100);
+
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "CodigoRubroDescto";
+            column.Caption = "Codigo Rubro";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().TextBox(sp =>
+            {
+                sp.Width = Unit.Percentage(100);
+
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Total";
+            column.Caption = "Total";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+                sp.Width = Unit.Percentage(100);
+                column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+
+            });
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Num_Coutas";
+            column.Caption = "Cantidad";
+            column.Width = Unit.Percentage(10);
+            column.EditorProperties().SpinEdit(sp =>
+            {
+                sp.MinValue = 0;
+                sp.MaxValue = 999999999;
+                sp.Width = Unit.Percentage(100);
+                column.PropertiesEdit.DisplayFormatString = "{0:n2}";
 
             });
         });
@@ -81,7 +138,7 @@
         {
             column.FieldName = "vt_Observacion";
             column.Caption = "Observación";
-            column.Width = Unit.Percentage(30);
+            column.Width = Unit.Percentage(20);
             column.EditorProperties().TextBox(sp =>
             {
                 sp.Width = Unit.Percentage(100);
@@ -89,21 +146,8 @@
             });
         });
 
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "Total";
-            column.Caption = "Total";
-            column.Width = Unit.Percentage(10);
-            column.EditorProperties().SpinEdit(sp =>
-            {
-                sp.MinValue = 0;
-                sp.MaxValue = 999999999;
-                sp.Width = Unit.Percentage(100);
-                column.PropertiesEdit.DisplayFormatString = "{0:n2}";
-
-            });
-        });
-        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Total");
+        
+        //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Total");
     });
 
 }

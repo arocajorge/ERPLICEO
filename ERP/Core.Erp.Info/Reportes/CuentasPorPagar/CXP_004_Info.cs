@@ -33,5 +33,6 @@ namespace Core.Erp.Info.Reportes.CuentasPorPagar
         public string estado_apro { get; set; }
         public string NombreUsuario { get; set; }
         public string Su_Descripcion { get; set; }
+        public string num_cta_acreditacion { get; set; }
     }
 }

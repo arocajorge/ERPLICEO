@@ -47,8 +47,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                  IdEstadoAprobacion = q.IdEstadoAprobacion,
                                  estado_apro = q.estado_apro,
                                  NombreUsuario = q.NombreUsuario,
-                                 Su_Descripcion = q.Su_Descripcion
-                                 
+                                 Su_Descripcion = q.Su_Descripcion,
+                                 num_cta_acreditacion = q.num_cta_acreditacion
                              }).ToList();
                 }
                 return Lista;

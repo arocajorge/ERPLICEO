@@ -15,7 +15,6 @@ namespace Core.Erp.Data
     using System.Data.Entity.Core.Objects;
     using System.Linq;
 
-
     public partial class Entities_reportes : DbContext
     {
         public Entities_reportes()
@@ -62,7 +61,6 @@ namespace Core.Erp.Data
         public DbSet<VWINV_014> VWINV_014 { get; set; }
         public DbSet<VWROL_003> VWROL_003 { get; set; }
         public DbSet<VWPRO_001> VWPRO_001 { get; set; }
-        public DbSet<VWCXP_011> VWCXP_011 { get; set; }
         public DbSet<VWBAN_005> VWBAN_005 { get; set; }
         public DbSet<VWBAN_006> VWBAN_006 { get; set; }
         public DbSet<VWBAN_002> VWBAN_002 { get; set; }
@@ -129,6 +127,7 @@ namespace Core.Erp.Data
         public DbSet<VWCXC_001> VWCXC_001 { get; set; }
         public DbSet<VWCXP_009> VWCXP_009 { get; set; }
         public DbSet<VWFAC_018> VWFAC_018 { get; set; }
+        public DbSet<VWCXP_011> VWCXP_011 { get; set; }
     
         public virtual ObjectResult<SPACTF_004_detalle_Result> SPACTF_004_detalle(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_corte, string idUsuario, Nullable<int> idActivoFijoTipo_ini, Nullable<int> idActivoFijoTipo_fin, Nullable<int> idCategoria_ini, Nullable<int> idCategoria_fin, string estado_Proceso)
         {

@@ -32,7 +32,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                         Su_Descripcion = q.Su_Descripcion,
                         Valor = q.Valor,
                         Nombre = q.Nombre,
-                        GiradoA = q.GiradoA
+                        GiradoA = q.GiradoA,
+                        num_cta_acreditacion = q.num_cta_acreditacion
                     }).ToList();
                 }
                 return Lista;

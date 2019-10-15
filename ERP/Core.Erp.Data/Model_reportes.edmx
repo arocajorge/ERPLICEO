@@ -1743,6 +1743,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWCXP_011' no tiene definida
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Nombre" Type="varchar(max)" />
           <Property Name="GiradoA" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="num_cta_acreditacion" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWCXP_012' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -5729,7 +5730,8 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
     [VWCXP_011].[pe_cedulaRuc] AS [pe_cedulaRuc], 
     [VWCXP_011].[Su_Descripcion] AS [Su_Descripcion], 
     [VWCXP_011].[Nombre] AS [Nombre], 
-    [VWCXP_011].[GiradoA] AS [GiradoA]
+    [VWCXP_011].[GiradoA] AS [GiradoA], 
+    [VWCXP_011].[num_cta_acreditacion] AS [num_cta_acreditacion]
     FROM [web].[VWCXP_011] AS [VWCXP_011]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWCXP_012" EntityType="Self.VWCXP_012" store:Type="Views" store:Schema="web">
@@ -8333,7 +8335,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
           <EntitySet Name="VWINV_014" EntityType="Model_reportes.VWINV_014" />
           <EntitySet Name="VWROL_003" EntityType="Model_reportes.VWROL_003" />
           <EntitySet Name="VWPRO_001" EntityType="Model_reportes.VWPRO_001" />
-          <EntitySet Name="VWCXP_011" EntityType="Model_reportes.VWCXP_011" />
           <EntitySet Name="VWBAN_005" EntityType="Model_reportes.VWBAN_005" />
           <EntitySet Name="VWBAN_006" EntityType="Model_reportes.VWBAN_006" />
           <EntitySet Name="VWBAN_002" EntityType="Model_reportes.VWBAN_002" />
@@ -8669,6 +8670,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
           <EntitySet Name="VWCXC_001" EntityType="Model_reportes.VWCXC_001" />
           <EntitySet Name="VWCXP_009" EntityType="Model_reportes.VWCXP_009" />
           <EntitySet Name="VWFAC_018" EntityType="Model_reportes.VWFAC_018" />
+          <EntitySet Name="VWCXP_011" EntityType="Model_reportes.VWCXP_011" />
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -9213,37 +9215,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
           <Property Name="Orden" Type="Int32" Nullable="false" />
           <Property Name="Tipo" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="false" />
           <Property Name="Movimiento" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="VWCXP_011">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSolicitud" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="Fecha" />
-            <PropertyRef Name="IdProveedor" />
-            <PropertyRef Name="Concepto" />
-            <PropertyRef Name="Estado" />
-            <PropertyRef Name="Valor" />
-            <PropertyRef Name="Solicitante" />
-            <PropertyRef Name="pe_nombreCompleto" />
-            <PropertyRef Name="pe_cedulaRuc" />
-            <PropertyRef Name="Su_Descripcion" />
-            <PropertyRef Name="GiradoA" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSolicitud" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IdProveedor" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Concepto" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="Boolean" Nullable="false" />
-          <Property Name="Valor" Type="Double" Nullable="false" />
-          <Property Name="Solicitante" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="GiradoA" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="VWBAN_005">
           <Key>
@@ -12783,6 +12754,38 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
           <Property Name="Orden" Type="Int32" Nullable="false" />
           <Property Name="CreDeb" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
         </EntityType>
+        <EntityType Name="VWCXP_011">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSolicitud" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="IdProveedor" />
+            <PropertyRef Name="Concepto" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="Valor" />
+            <PropertyRef Name="Solicitante" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="GiradoA" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSolicitud" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdProveedor" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Concepto" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="Valor" Type="Double" Nullable="false" />
+          <Property Name="Solicitante" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="GiradoA" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="num_cta_acreditacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -13830,26 +13833,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdFabricacion" ColumnName="IdFabricacion" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="VWCXP_011">
-            <EntityTypeMapping TypeName="Model_reportes.VWCXP_011">
-              <MappingFragment StoreEntitySet="VWCXP_011">
-                <ScalarProperty Name="GiradoA" ColumnName="GiradoA" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
-                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
-                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
-                <ScalarProperty Name="Solicitante" ColumnName="Solicitante" />
-                <ScalarProperty Name="Valor" ColumnName="Valor" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Concepto" ColumnName="Concepto" />
-                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdSolicitud" ColumnName="IdSolicitud" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -16654,6 +16637,27 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
                 <ScalarProperty Name="IdNota" ColumnName="IdNota" />
                 <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VWCXP_011">
+            <EntityTypeMapping TypeName="Model_reportes.VWCXP_011">
+              <MappingFragment StoreEntitySet="VWCXP_011">
+                <ScalarProperty Name="num_cta_acreditacion" ColumnName="num_cta_acreditacion" />
+                <ScalarProperty Name="GiradoA" ColumnName="GiradoA" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="Solicitante" ColumnName="Solicitante" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Concepto" ColumnName="Concepto" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdSolicitud" ColumnName="IdSolicitud" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -28,5 +28,6 @@ namespace Core.Erp.Data
         public string Su_Descripcion { get; set; }
         public string Nombre { get; set; }
         public string GiradoA { get; set; }
+        public string num_cta_acreditacion { get; set; }
     }
 }

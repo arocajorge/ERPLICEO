@@ -30,6 +30,10 @@
         settings.Settings.ShowGroupPanel = false;
         settings.SettingsBehavior.AllowSelectByRowClick = true;
 
+        //Configuración filtro por columna
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Settings.ShowFilterRow = true;
+
         //Configuracion responsive
         settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
         settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
@@ -49,9 +53,22 @@
 
         settings.Columns.Add(column =>
         {
+            column.FieldName = "SecuenciaCaja";
+            column.Caption = "# Documento";
+            column.Width = Unit.Percentage(8);
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "IdCbteCble_movcaja";
+            column.Caption = "# Cbte";
+            column.Width = Unit.Percentage(8);
+        });
+
+        settings.Columns.Add(column =>
+        {
             column.FieldName = "pe_nombreCompleto";
             column.Caption = "Beneficiario";
-            column.Width = Unit.Percentage(30);
+            column.Width = Unit.Percentage(22);
             column.EditFormSettings.Visible = DefaultBoolean.False;
         });
 
@@ -59,7 +76,7 @@
         {
             column.FieldName = "IdPersona";
             column.Caption = "Beneficiario";
-            column.Width = Unit.Percentage(30);
+            column.Width = Unit.Percentage(20);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.SetEditItemTemplateContent(c =>
@@ -72,7 +89,7 @@
         {
             column.FieldName = "fecha";
             column.Caption = "Fecha";
-            column.Width = Unit.Percentage(15);
+            column.Width = Unit.Percentage(8);
             column.EditorProperties().DateEdit(p =>
             {
                 p.Width = Unit.Percentage(100);
@@ -85,7 +102,7 @@
         {
             column.FieldName = "idTipoMovi";
             column.Caption = "Tipo";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(22);
             column.EditorProperties().ComboBox(p =>
             {
                 p.Width = Unit.Percentage(100);

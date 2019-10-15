@@ -1,14 +1,16 @@
-﻿CREATE VIEW [dbo].[vwro_empleado_combo]
+﻿/* se añadio este filtro 21/06/2019
+ AND (dbo.ro_contrato.EstadoContrato <> 'ECT_PLQ')*/
+CREATE VIEW dbo.vwro_empleado_combo
 AS
-SELECT distinct dbo.tb_persona.pe_apellido + ' ' + dbo.tb_persona.pe_nombre AS Empleado, dbo.tb_persona.pe_cedulaRuc, dbo.ro_empleado.em_status, dbo.ro_empleado.IdEmpresa, dbo.ro_empleado.IdEmpleado, dbo.ro_contrato.IdNomina, 
-                  dbo.ro_empleado.IdSucursal, dbo.ro_empleado.Pago_por_horas, dbo.ro_empleado.Valor_horas_vespertina, dbo.ro_empleado.Valor_horas_matutino, dbo.ro_empleado.Tiene_ingresos_compartidos, 
-                  dbo.ro_empleado.Valor_maximo_horas_vesp, dbo.ro_empleado.Valor_maximo_horas_mat, dbo.ro_empleado.Valor_horas_brigada, dbo.ro_empleado.GozaMasDeQuinceDiasVaciones, dbo.ro_empleado.DiasVacaciones, 
-                  dbo.ro_empleado.Valor_hora_adicionales, dbo.ro_empleado.Valor_hora_control_salida
-FROM     dbo.ro_empleado INNER JOIN
-                  dbo.tb_persona ON dbo.ro_empleado.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
-                  dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado
-where dbo.ro_contrato.EstadoContrato <> 'EST_LIQ' 
-and dbo.ro_contrato.EstadoContrato<>'ECT_PLQ'-- se añadio este filtro 21/06/2019
+SELECT DISTINCT 
+                         dbo.tb_persona.pe_apellido + ' ' + dbo.tb_persona.pe_nombre AS Empleado, dbo.tb_persona.pe_cedulaRuc, dbo.ro_empleado.em_status, dbo.ro_empleado.IdEmpresa, dbo.ro_empleado.IdEmpleado, 
+                         dbo.ro_contrato.IdNomina, dbo.ro_empleado.IdSucursal, dbo.ro_empleado.Pago_por_horas, dbo.ro_empleado.Valor_horas_vespertina, dbo.ro_empleado.Valor_horas_matutino, 
+                         dbo.ro_empleado.Tiene_ingresos_compartidos, dbo.ro_empleado.Valor_maximo_horas_vesp, dbo.ro_empleado.Valor_maximo_horas_mat, dbo.ro_empleado.Valor_horas_brigada, 
+                         dbo.ro_empleado.GozaMasDeQuinceDiasVaciones, dbo.ro_empleado.DiasVacaciones, dbo.ro_empleado.Valor_hora_adicionales, dbo.ro_empleado.Valor_hora_control_salida
+FROM            dbo.ro_empleado INNER JOIN
+                         dbo.tb_persona ON dbo.ro_empleado.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
+                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado
+WHERE        (dbo.ro_contrato.EstadoContrato <> 'EST_LIQ')
 
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
@@ -16,7 +18,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[17] 4[5] 2[27] 3) )"
+         Configuration = "(H (1[32] 4[17] 2[30] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -150,6 +152,8 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_empleado_combo';
+
+
 
 
 

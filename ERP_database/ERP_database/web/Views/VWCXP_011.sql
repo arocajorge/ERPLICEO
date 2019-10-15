@@ -1,13 +1,13 @@
 ﻿CREATE VIEW [web].[VWCXP_011]
 AS
-SELECT        dbo.cp_SolicitudPago.IdEmpresa, dbo.cp_SolicitudPago.IdSolicitud, dbo.cp_SolicitudPago.IdSucursal, dbo.cp_SolicitudPago.Fecha, dbo.cp_SolicitudPago.IdProveedor, dbo.cp_SolicitudPago.Concepto, 
-                         dbo.cp_SolicitudPago.Estado, dbo.cp_SolicitudPago.Valor, dbo.cp_SolicitudPago.Solicitante, dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_cedulaRuc, dbo.tb_sucursal.Su_Descripcion, dbo.seg_usuario.Nombre, 
-                         dbo.cp_SolicitudPago.GiradoA
-FROM            dbo.cp_SolicitudPago INNER JOIN
-                         dbo.cp_proveedor ON dbo.cp_SolicitudPago.IdEmpresa = dbo.cp_proveedor.IdEmpresa AND dbo.cp_SolicitudPago.IdProveedor = dbo.cp_proveedor.IdProveedor INNER JOIN
-                         dbo.tb_persona ON dbo.cp_proveedor.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
-                         dbo.tb_sucursal ON dbo.cp_SolicitudPago.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.cp_SolicitudPago.IdSucursal = dbo.tb_sucursal.IdSucursal LEFT OUTER JOIN
-                         dbo.seg_usuario ON dbo.cp_SolicitudPago.IdUsuarioCreacion = dbo.seg_usuario.IdUsuario
+SELECT dbo.cp_SolicitudPago.IdEmpresa, dbo.cp_SolicitudPago.IdSolicitud, dbo.cp_SolicitudPago.IdSucursal, dbo.cp_SolicitudPago.Fecha, dbo.cp_SolicitudPago.IdProveedor, dbo.cp_SolicitudPago.Concepto, dbo.cp_SolicitudPago.Estado, 
+                  dbo.cp_SolicitudPago.Valor, dbo.cp_SolicitudPago.Solicitante, dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_cedulaRuc, dbo.tb_sucursal.Su_Descripcion, dbo.seg_usuario.Nombre, dbo.cp_SolicitudPago.GiradoA,
+				  cp_proveedor.num_cta_acreditacion
+FROM     dbo.cp_SolicitudPago INNER JOIN
+                  dbo.cp_proveedor ON dbo.cp_SolicitudPago.IdEmpresa = dbo.cp_proveedor.IdEmpresa AND dbo.cp_SolicitudPago.IdProveedor = dbo.cp_proveedor.IdProveedor INNER JOIN
+                  dbo.tb_persona ON dbo.cp_proveedor.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
+                  dbo.tb_sucursal ON dbo.cp_SolicitudPago.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.cp_SolicitudPago.IdSucursal = dbo.tb_sucursal.IdSucursal LEFT OUTER JOIN
+                  dbo.seg_usuario ON dbo.cp_SolicitudPago.IdUsuarioCreacion = dbo.seg_usuario.IdUsuario
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWCXP_011';
 

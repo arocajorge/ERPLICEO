@@ -106,9 +106,8 @@ FROM (
                          dbo.ro_empleado_division_area_x_rol.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.ro_empleado_division_area_x_rol.IdRol = dbo.ro_rol.IdRol AND 
                          dbo.ro_empleado_division_area_x_rol.IDividion = dbo.ro_empleado.IdDivision AND dbo.ro_empleado_division_area_x_rol.IdArea = dbo.ro_empleado.IdArea LEFT OUTER JOIN
                          dbo.ro_catalogo ON dbo.ro_rubro_tipo.rub_GrupoResumen = dbo.ro_catalogo.CodCatalogo
-				   		 and dbo.ro_contrato.EstadoContrato <>'ECT_PLQ'  --16/07/2019
+				   		 --and dbo.ro_contrato.EstadoContrato <>'ECT_PLQ'  --16/07/2019
 		
-		--METE EL WHERE AQUIIIIIIIIIIIIIIIIIIIIIIIIII :*
 
 		where ro_rol_detalle.IdEmpresa=@IdEmpresa
 		and ro_rol_detalle.IdSucursal>=@IdSucursalIni
@@ -228,7 +227,7 @@ FROM            dbo.ro_area INNER JOIN
                          dbo.ro_empleado_division_area_x_rol.IDividion = dbo.ro_empleado.IdDivision AND dbo.ro_empleado_division_area_x_rol.IdArea = dbo.ro_empleado.IdArea LEFT OUTER JOIN
                          dbo.ro_catalogo ON dbo.ro_rubro_tipo.rub_GrupoResumen = dbo.ro_catalogo.CodCatalogo
 
-						 and dbo.ro_contrato.EstadoContrato <>'ECT_PLQ'  --16/07/2019
+						 --and dbo.ro_contrato.EstadoContrato <>'ECT_PLQ'  --16/07/2019
 						 LEFT JOIN (
 						 SELECT X.IdEmpresa, IdEmpleado, MAX(Y.Descripcion) NomJornada, COUNT(*) CONT FROM ro_empleado_x_jornada AS X
 						 INNER JOIN ro_jornada AS Y ON X.IDEMPRESA = Y.IdEmpresa AND X.IdJornada = Y.IdJornada
@@ -344,7 +343,7 @@ FROM            dbo.ro_area INNER JOIN
                          dbo.ro_empleado_division_area_x_rol.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.ro_empleado_division_area_x_rol.IdRol = dbo.ro_rol.IdRol AND 
                          dbo.ro_empleado_division_area_x_rol.IDividion = dbo.ro_empleado.IdDivision AND dbo.ro_empleado_division_area_x_rol.IdArea = dbo.ro_empleado.IdArea LEFT OUTER JOIN
                          dbo.ro_catalogo ON dbo.ro_rubro_tipo.rub_GrupoResumen = dbo.ro_catalogo.CodCatalogo
-						 and dbo.ro_contrato.EstadoContrato <>'ECT_PLQ'  --16/07/2019
+						 --and dbo.ro_contrato.EstadoContrato <>'ECT_PLQ'  --16/07/2019
 
 				  
 				  where ro_rol_detalle.IdEmpresa=@IdEmpresa
@@ -454,8 +453,7 @@ FROM            dbo.tb_persona INNER JOIN
                          dbo.tb_sucursal ON dbo.tb_sucursal.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.tb_sucursal.IdSucursal = dbo.ro_rol.IdSucursal INNER JOIN
                          dbo.ro_cargo ON dbo.ro_empleado.IdEmpresa = dbo.ro_cargo.IdEmpresa AND dbo.ro_empleado.IdCargo = dbo.ro_cargo.IdCargo INNER JOIN
                          dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado  and dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ'
-						 and dbo.ro_contrato.EstadoContrato <>'ECT_PLQ'  --16/07/2019
-				  --METE EL WHERE AQUIIIIIIIIIIIIIIIIIIIIIIIIII :*
+						 --and dbo.ro_contrato.EstadoContrato <>'ECT_PLQ'  --16/07/2019
 
 				  where ro_rol_detalle.IdEmpresa=@IdEmpresa
 				  and ro_rol_detalle.IdSucursal>=@IdSucursalIni

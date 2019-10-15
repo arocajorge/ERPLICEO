@@ -3,29 +3,32 @@ AS
 SELECT dbo.ba_Archivo_Transferencia_Det.IdEmpresa, dbo.ba_Archivo_Transferencia_Det.IdArchivo, dbo.ba_Archivo_Transferencia_Det.Secuencia, dbo.ba_Archivo_Transferencia_Det.IdEmpresa_OP, 
                   dbo.ba_Archivo_Transferencia_Det.IdOrdenPago, dbo.ba_Archivo_Transferencia_Det.Secuencia_OP, dbo.ba_Archivo_Transferencia_Det.Estado, dbo.ba_Archivo_Transferencia_Det.Valor, 
                   dbo.ba_Archivo_Transferencia_Det.Secuencial_reg_x_proceso, CAST(0 AS BIT) AS Contabilizado, GETDATE() AS Fecha_proceso, 
-				  case when cp_proveedor_detalle.IdTipoCta_acreditacion_cat is null then
-				  dbo.cp_proveedor.IdTipoCta_acreditacion_cat else cp_proveedor_detalle.IdTipoCta_acreditacion_cat end AS IdTipoCta_acreditacion_cat, 
 
-				  case when cp_proveedor_detalle.num_cta_acreditacion is null then
-				  dbo.cp_proveedor.num_cta_acreditacion else cp_proveedor_detalle.num_cta_acreditacion end AS num_cta_acreditacion, 
-
-				  case when cp_proveedor_detalle.IdBanco_acreditacion is null then
-                  dbo.cp_proveedor.IdBanco_acreditacion else cp_proveedor_detalle.IdBanco_acreditacion end AS IdBanco_acreditacion, 
-
-				  case when cp_proveedor_detalle.pr_correo is null then
-				  dbo.cp_proveedor.pr_correo else cp_proveedor_detalle.pr_correo end AS pr_correo,
-
-				  case when cp_proveedor_detalle.NombreAdicional is null then
-				  dbo.tb_persona.pe_nombreCompleto else cp_proveedor_detalle.NombreAdicional end AS pe_nombreCompleto,
-
-				  dbo.cp_proveedor.pr_direccion,
-				  dbo.tb_persona.IdTipoDocumento, dbo.tb_persona.pe_cedulaRuc,  
+				  CASE WHEN cp_proveedor_detalle.IdTipoCta_acreditacion_cat IS NULL 
+				  THEN isnull(opd.IdTipoCta_acreditacion_cat,dbo.cp_proveedor.IdTipoCta_acreditacion_cat)
+				  ELSE cp_proveedor_detalle.IdTipoCta_acreditacion_cat END AS IdTipoCta_acreditacion_cat, 
+				  
+				  CASE WHEN cp_proveedor_detalle.num_cta_acreditacion IS NULL 
+                  THEN isnull( opd.num_cta_acreditacion, dbo.cp_proveedor.num_cta_acreditacion )
+				  ELSE cp_proveedor_detalle.num_cta_acreditacion END AS num_cta_acreditacion, 
+				  
+				  CASE WHEN cp_proveedor_detalle.IdBanco_acreditacion IS NULL 
+                  THEN isnull(opd.IdBanco_acreditacion, dbo.cp_proveedor.IdBanco_acreditacion)
+				  ELSE cp_proveedor_detalle.IdBanco_acreditacion END AS IdBanco_acreditacion, 
+				  
+				  CASE WHEN cp_proveedor_detalle.pr_correo IS NULL 
+                  THEN isnull(opd.pr_correo, dbo.cp_proveedor.pr_correo )
+				  ELSE cp_proveedor_detalle.pr_correo END AS pr_correo, 
+				  
+				  CASE WHEN cp_proveedor_detalle.NombreAdicional IS NULL 
+                  THEN isnull(opd.NombreAdicional, dbo.tb_persona.pe_nombreCompleto)
+				  ELSE cp_proveedor_detalle.NombreAdicional END AS pe_nombreCompleto, 				  
+				  
+				  dbo.cp_proveedor.pr_direccion, dbo.tb_persona.IdTipoDocumento, dbo.tb_persona.pe_cedulaRuc, 
                   dbo.tb_banco.CodigoLegal AS CodigoLegalBanco, dbo.ba_Archivo_Transferencia_Det.Referencia, dbo.cp_orden_pago.IdTipo_Persona, dbo.cp_orden_pago.IdPersona, dbo.cp_orden_pago.IdEntidad, dbo.ct_cbtecble.cb_Fecha, 
                   dbo.tb_banco.ba_descripcion, dbo.ba_Banco_Cuenta.ba_descripcion AS NomCuenta, dbo.tb_banco_procesos_bancarios_x_empresa.NombreProceso, dbo.ba_Archivo_Transferencia.Fecha, 
                   dbo.ba_Archivo_Transferencia.Observacion
-FROM     dbo.cp_proveedor_detalle INNER JOIN
-                  dbo.cp_orden_giro ON dbo.cp_proveedor_detalle.IdEmpresa = dbo.cp_orden_giro.IdEmpresa AND dbo.cp_proveedor_detalle.IdProveedor = dbo.cp_orden_giro.IdProveedor AND 
-                  dbo.cp_proveedor_detalle.Secuencia = dbo.cp_orden_giro.SecuenciaProveedor RIGHT OUTER JOIN
+FROM     dbo.cp_proveedor_detalle AS opd RIGHT OUTER JOIN
                   dbo.ba_Archivo_Transferencia INNER JOIN
                   dbo.ba_Archivo_Transferencia_Det INNER JOIN
                   dbo.cp_orden_pago_det ON dbo.ba_Archivo_Transferencia_Det.IdEmpresa_OP = dbo.cp_orden_pago_det.IdEmpresa AND dbo.ba_Archivo_Transferencia_Det.IdOrdenPago = dbo.cp_orden_pago_det.IdOrdenPago AND 
@@ -40,8 +43,12 @@ FROM     dbo.cp_proveedor_detalle INNER JOIN
                   dbo.cp_orden_pago_det.IdCbteCble_cxp = dbo.ct_cbtecble.IdCbteCble INNER JOIN
                   dbo.ba_Banco_Cuenta ON dbo.ba_Archivo_Transferencia.IdEmpresa = dbo.ba_Banco_Cuenta.IdEmpresa AND dbo.ba_Archivo_Transferencia.IdBanco = dbo.ba_Banco_Cuenta.IdBanco INNER JOIN
                   dbo.tb_banco_procesos_bancarios_x_empresa ON dbo.ba_Archivo_Transferencia.IdEmpresa = dbo.tb_banco_procesos_bancarios_x_empresa.IdEmpresa AND 
-                  dbo.ba_Archivo_Transferencia.IdProceso_bancario = dbo.tb_banco_procesos_bancarios_x_empresa.IdProceso ON dbo.cp_orden_giro.IdEmpresa = dbo.cp_orden_pago_det.IdEmpresa_cxp AND 
-                  dbo.cp_orden_giro.IdTipoCbte_Ogiro = dbo.cp_orden_pago_det.IdTipoCbte_cxp AND dbo.cp_orden_giro.IdCbteCble_Ogiro = dbo.cp_orden_pago_det.IdCbteCble_cxp
+                  dbo.ba_Archivo_Transferencia.IdProceso_bancario = dbo.tb_banco_procesos_bancarios_x_empresa.IdProceso ON opd.IdEmpresa = dbo.cp_orden_pago.IdEmpresa AND opd.IdProveedor = dbo.cp_orden_pago.IdEntidad AND 
+                  opd.Secuencia = dbo.cp_orden_pago.SecuenciaProveedor LEFT OUTER JOIN
+                  dbo.cp_proveedor_detalle INNER JOIN
+                  dbo.cp_orden_giro ON dbo.cp_proveedor_detalle.IdEmpresa = dbo.cp_orden_giro.IdEmpresa AND dbo.cp_proveedor_detalle.IdProveedor = dbo.cp_orden_giro.IdProveedor AND 
+                  dbo.cp_proveedor_detalle.Secuencia = dbo.cp_orden_giro.SecuenciaProveedor ON dbo.cp_orden_pago_det.IdEmpresa_cxp = dbo.cp_orden_giro.IdEmpresa AND 
+                  dbo.cp_orden_pago_det.IdTipoCbte_cxp = dbo.cp_orden_giro.IdTipoCbte_Ogiro AND dbo.cp_orden_pago_det.IdCbteCble_cxp = dbo.cp_orden_giro.IdCbteCble_Ogiro
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWBAN_010';
 

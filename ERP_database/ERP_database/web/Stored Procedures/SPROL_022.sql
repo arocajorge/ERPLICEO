@@ -1,4 +1,4 @@
-﻿-- exec [web].[SPROL_022]  1,1,2,201909
+﻿-- exec [web].[SPROL_022]  1,1,2,201901
 CREATE  PROCEDURE [web].[SPROL_022]  
 	@idempresa int,
 	@idnomina_tipo int,
@@ -83,7 +83,8 @@ FROM            dbo.ro_rol AS r INNER JOIN
 						 and r.IdNominaTipoLiqui=@idnomina_Tipo_liq
 						 and r.IdPeriodo=@idperiodo
 						 and rub.ru_tipo='I'
-						 and r_dt.IdRubro not in(@IdRubroMatutino,@IdRubroVespertino,@IdRubroPrmariaVespertina ,@IdRubroHorasAdicionales, @IdRubro_horas_control_salida)
+						  and r_dt.IdRubro not in(@IdRubroMatutino,@IdRubroVespertino,@IdRubroPrmariaVespertina ,@IdRubroHorasAdicionales, @IdRubro_horas_control_salida)
+						 --and r_dt.IdRubro not in(@IdRubroMatutino,@IdRubroVespertino,@IdRubroPrmariaVespertina ,@IdRubroHorasAdicionales)--ojo AQUI 25/09/2019
 						 and not exists
 						 (
 						 select * from web.ro_SPROL_022  d

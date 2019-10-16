@@ -318,7 +318,7 @@
             // xrTableCell19
             // 
             this.xrTableCell19.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Parameters].[p_fecha_ini]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "?p_fecha_ini")});
             this.xrTableCell19.Name = "xrTableCell19";
             this.xrTableCell19.TextFormatString = "{0:dd/MM/yyyy}";
             this.xrTableCell19.Weight = 1.4569900743065372D;
@@ -334,7 +334,7 @@
             // xrTableCell21
             // 
             this.xrTableCell21.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Parameters].[p_fecha_fin]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "?p_fecha_fin")});
             this.xrTableCell21.Name = "xrTableCell21";
             this.xrTableCell21.TextFormatString = "{0:dd/MM/yyyy}";
             this.xrTableCell21.Weight = 1.5576569935655871D;
@@ -690,7 +690,7 @@
             this.p_mostrar_agrupado,
             this.p_IdSucursal,
             this.p_fecha_ini});
-            this.Version = "17.2";
+            this.Version = "19.1";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.BAN_009_Flujo_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();

@@ -68,6 +68,7 @@
             success: function (data) {
                 $("#ValorOP").val(data);
                 $("#ValorReposicion").val(data);
+                $("#ObservacionOP").val($("#Observacion").val());
             },
             error: function (error) {
             }
@@ -547,7 +548,7 @@
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li class="active">
-                <a href="#tab_facturas" aria-controls="facturas" role="tab" data-toggle="tab" id="link_fact">Facturas</a>
+                <a href="#tab_facturas" aria-controls="facturas" role="tab" data-toggle="tab" id="link_fact" hidden>Facturas</a>
             </li>
             <li>
                 <a href="#tab_vales" aria-controls="vales" role="tab" data-toggle="tab">Vales</a>
@@ -560,7 +561,7 @@
             </li>
         </ul>
         <div class="tab-content" style="padding-top: 20px">
-            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_facturas">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_facturas" hidden>
                 <div class="row">
                     <div class="col-md-1">
                         <button type="button" class="btn btn-primary form-control" id="btn_buscar_og" onclick="MostrarModal();">
@@ -571,7 +572,7 @@
                 <br />
                 @Html.Action("GridViewPartial_conciliacion_facturas")
             </div>
-            <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_vales">
+            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_vales">
                 <div class="row">
                     <div class="col-md-1">
                         <button type="button" class="btn btn-primary form-control" id="btn_buscar_og" onclick="MostrarCajaMovimientoConciliacionModal();">

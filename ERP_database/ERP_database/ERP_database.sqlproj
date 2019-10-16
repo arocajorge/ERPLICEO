@@ -1173,6 +1173,16 @@
     <Build Include="dbo\Tables\ro_PrestamoMasivo.sql" />
     <Build Include="dbo\Views\vwro_PrestamoMasivo_Det.sql" />
     <Build Include="dbo\Views\vwro_DescuentosPorFacturacionEmpleado.sql" />
+    <Build Include="dbo\Tables\seg_usuario_x_aca_Sede.sql" />
+    <Build Include="dbo\Tables\aca_Sede.sql" />
+    <Build Include="dbo\Tables\aca_Seccion.sql" />
+    <Build Include="dbo\Tables\aca_Profesor.sql" />
+    <Build Include="dbo\Tables\aca_Menu_x_seg_usuario.sql" />
+    <Build Include="dbo\Tables\aca_Menu_x_aca_Sede.sql" />
+    <Build Include="dbo\Tables\aca_Menu.sql" />
+    <Build Include="dbo\Tables\aca_Jornada.sql" />
+    <Build Include="dbo\Tables\aca_Curso.sql" />
+    <Build Include="dbo\Tables\aca_AnioLectivo.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

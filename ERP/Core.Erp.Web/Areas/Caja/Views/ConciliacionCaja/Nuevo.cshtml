@@ -29,7 +29,9 @@
         $("#IdEstadoCierre").change(function () {
             MostrarOcultarOP();
         });
-
+        $("#ValorOP").change(function () {
+            $("#ValorReposicion").val($("#ValorOP").val());
+        });
         GetIdCtaCbleCaja();
         GetSaldoAnterior();
         GetIngresos();
@@ -44,10 +46,30 @@
         } else {
             $("#link_op").show();
             $("#link_op").click();
-            armar_diario();
+            SetValorCierre();
         }
     }
-
+    function SetValorCierre() {
+        var datos = {
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("SetValorCierre", "ConciliacionCaja",new { Area = "Caja"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#ValorOP").val(data);
+                $("#ValorReposicion").val(data);
+            },
+            error: function (error) {
+            }
+        });
+    }
      function OnSelectedIndexChanged(s, e) {
         GridView_conciliacion_vales.AutoFilterByColumn("IdPersona", s.GetText());
     }
@@ -585,16 +607,16 @@
             </div>
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_op">
                 <div class="row">
-                    <div class="col-md-8">
+                 @*<div class="col-md-8">
+        <div class="form-group">
+            <label for="IdTipoFlujo">Flujo</label>
+            @Html.Partial("_CmbFlujo_ConciliacionCaja", Model.IdTipoFlujo)
+            @Html.ValidationMessageFor(q => q.IdTipoFlujo, "", new { @class = "text-danger" })
+        </div>
+    </div>*@
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <label for="IdTipoFlujo">Flujo</label>
-                            @Html.Partial("_CmbFlujo_ConciliacionCaja", Model.IdTipoFlujo)
-                            @Html.ValidationMessageFor(q => q.IdTipoFlujo, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="FechaOP">Hasta*</label>
+                            <label for="FechaOP">Fecha OP*</label>
                             @Html.DevExpress().DateEditFor(q => q.FechaOP, settings =>
                             {
                                 settings.Name = "FechaOP";
@@ -606,6 +628,20 @@
                                 settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                             }).GetHtml()
                             @Html.ValidationMessageFor(q => q.FechaOP, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="ValorOP">Valor OP*</label>
+                            @Html.TextBoxFor(q => q.ValorOP, new { @id = "ValorOP", @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.ValorOP, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="ValorReposicion">Valor reposición*</label>
+                            @Html.TextBoxFor(q => q.ValorReposicion, new { @id = "ValorReposicion", @class = "form-control" })
+                            @Html.ValidationMessageFor(q => q.ValorReposicion, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
@@ -635,7 +671,7 @@
                     </div>
                 </div>
 
-                @Html.Action("GridViewPartial_comprobante_detalle", new { Area = "Contabilidad", Controller = "ComprobanteContable" })
+                @*@Html.Action("GridViewPartial_comprobante_detalle", new { Area = "Contabilidad", Controller = "ComprobanteContable" })*@
 
             </div>
         </div>

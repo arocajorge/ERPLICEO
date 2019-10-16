@@ -55,6 +55,8 @@ namespace Core.Erp.Info.Caja
         public decimal IdEntidad { get; set; }
         public decimal IdPersona { get; set; }
         public string IdUsuario { get; set; }
+        public double ValorOP { get; set; }
+        public double ValorReposicion { get; set; }
         public List<ct_cbtecble_det_Info> lst_det_ct { get; set; }
     }
 }

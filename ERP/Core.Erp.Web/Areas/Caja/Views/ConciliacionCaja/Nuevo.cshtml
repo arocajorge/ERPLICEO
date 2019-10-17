@@ -41,7 +41,7 @@
     function MostrarOcultarOP() {
         var Estado = $("#IdEstadoCierre").val();
         if (Estado == "EST_CIE_ABI") {
-            $("#link_fact").click();
+            $("#link_vale").click();
             $("#link_op").hide();
         } else {
             $("#link_op").show();
@@ -124,7 +124,7 @@
             IDs: selectedIDs,
             IdTransaccionFixed: $("#IdTransaccionSession").val(),
             IdCaja: $("#IdCaja").val(),
-            IdEmpresa: $("#IdEmpresa").val(),            
+            IdEmpresa: $("#IdEmpresa").val(),
         }
         $.ajax({
             type: 'POST',
@@ -441,16 +441,16 @@
             <div class="col-md-offset-6 col-md-2">
                 <div class="form-group">
                     <label for="Fecha_fin">Fecha*</label>
-                    @Html.DevExpress().DateEditFor(q=> q.Fecha, settings =>
-                {
-                    settings.Name = "Fecha";
-                    settings.Properties.UseMaskBehavior = true;
-                    settings.Properties.EditFormat = EditFormat.Date;
-                    settings.Properties.EditFormatString = "dd/MM/yyyy";
-                    settings.Properties.AllowMouseWheel = false;
-                    settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
-                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                }).GetHtml()
+                    @Html.DevExpress().DateEditFor(q => q.Fecha, settings =>
+               {
+                   settings.Name = "Fecha";
+                   settings.Properties.UseMaskBehavior = true;
+                   settings.Properties.EditFormat = EditFormat.Date;
+                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                   settings.Properties.AllowMouseWheel = false;
+                   settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Date;
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+               }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Fecha, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -496,7 +496,7 @@
                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                    settings.Properties.AllowMouseWheel = false;
                    settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){GetSaldoAnterior(); Calcular();}";
-                       }).GetHtml()
+               }).GetHtml()
                     @Html.ValidationMessageFor(q => q.Fecha_ini, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -567,11 +567,11 @@
 
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
+            @*<li>
+        <a href="#tab_facturas" aria-controls="facturas" role="tab" data-toggle="tab" id="link_fact" hidden>Facturas</a>
+    </li>*@
             <li class="active">
-                <a href="#tab_facturas" aria-controls="facturas" role="tab" data-toggle="tab" id="link_fact" hidden>Facturas</a>
-            </li>
-            <li>
-                <a href="#tab_vales" aria-controls="vales" role="tab" data-toggle="tab">Vales</a>
+                <a href="#tab_vales" aria-controls="vales" role="tab" data-toggle="tab" id="link_vale">Vales</a>
             </li>
             <li>
                 <a href="#tab_ingresos" aria-controls="ingresos" role="tab" data-toggle="tab">Ingresos</a>
@@ -580,18 +580,18 @@
                 <a href="#tab_op" aria-controls="vales" role="tab" data-toggle="tab" id="link_op">Orden de pago</a>
             </li>
         </ul>
-        <div class="tab-content" style="padding-top: 20px" hidden>
-            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_facturas">
-                <div class="row">
-                    <div class="col-md-12">
-                        <button type="button" class="btn btn-primary" id="btn_buscar_og" onclick="MostrarModal();">
-                            <i class="fa fa-search"></i>
-                        </button>
+        <div class="tab-content" style="padding-top: 20px">
+            @*<div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_facturas">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-primary" id="btn_buscar_og" onclick="MostrarModal();">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <br />
-                @Html.Action("GridViewPartial_conciliacion_facturas")
-            </div>
+                    <br />
+                    @Html.Action("GridViewPartial_conciliacion_facturas")
+                </div>*@
             <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_vales">
                 <div class="row">
                     <div class="col-md-1">
@@ -608,13 +608,13 @@
             </div>
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_op">
                 <div class="row">
-                 @*<div class="col-md-8">
-        <div class="form-group">
-            <label for="IdTipoFlujo">Flujo</label>
-            @Html.Partial("_CmbFlujo_ConciliacionCaja", Model.IdTipoFlujo)
-            @Html.ValidationMessageFor(q => q.IdTipoFlujo, "", new { @class = "text-danger" })
-        </div>
-    </div>*@
+                    @*<div class="col-md-8">
+                            <div class="form-group">
+                                <label for="IdTipoFlujo">Flujo</label>
+                                @Html.Partial("_CmbFlujo_ConciliacionCaja", Model.IdTipoFlujo)
+                                @Html.ValidationMessageFor(q => q.IdTipoFlujo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="FechaOP">Fecha OP*</label>

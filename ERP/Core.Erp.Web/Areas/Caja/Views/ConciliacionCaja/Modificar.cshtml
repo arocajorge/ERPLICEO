@@ -44,7 +44,7 @@
     function MostrarOcultarOP() {
         var Estado = $("#IdEstadoCierre").val();
         if (Estado == "EST_CIE_ABI") {
-            $("#link_fact").click();
+            $("#link_vale").click();
             $("#link_op").hide();
         } else {
             $("#link_op").show();
@@ -547,11 +547,11 @@
 
     <div id="Tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
+           @* <li class="active">
+        <a href="#tab_facturas" aria-controls="facturas" role="tab" data-toggle="tab" id="link_fact" hidden>Facturas</a>
+    </li>*@
             <li class="active">
-                <a href="#tab_facturas" aria-controls="facturas" role="tab" data-toggle="tab" id="link_fact" hidden>Facturas</a>
-            </li>
-            <li>
-                <a href="#tab_vales" aria-controls="vales" role="tab" data-toggle="tab">Vales</a>
+                <a href="#tab_vales" aria-controls="vales" role="tab" data-toggle="tab" id="link_vale">Vales</a>
             </li>
             <li>
                 <a href="#tab_ingresos" aria-controls="ingresos" role="tab" data-toggle="tab" id="link_ingresos">Ingresos</a>
@@ -561,17 +561,17 @@
             </li>
         </ul>
         <div class="tab-content" style="padding-top: 20px">
-            <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_facturas" hidden>
+            @*<div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_facturas" hidden>
                 <div class="row">
-                    <div class="col-md-1">
-                        <button type="button" class="btn btn-primary form-control" id="btn_buscar_og" onclick="MostrarModal();">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </div>
+        <div class="col-md-1">
+            <button type="button" class="btn btn-primary form-control" id="btn_buscar_og" onclick="MostrarModal();">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+    </div> 
                 <br />
                 @Html.Action("GridViewPartial_conciliacion_facturas")
-            </div>
+            </div>*@
             <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_vales">
                 <div class="row">
                     <div class="col-md-1">

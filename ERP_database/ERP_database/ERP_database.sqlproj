@@ -1192,6 +1192,7 @@
     <Build Include="dbo\Tables\aca_AnioLectivo_Jornada_Curso.sql" />
     <Build Include="dbo\Tables\aca_AnioLectivo_Curso_Paralelo.sql" />
     <Build Include="dbo\Tables\aca_AnioLectivo_Curso_Materia.sql" />
+    <Build Include="dbo\Stored Procedures\spaca_corregir_menu.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

@@ -498,7 +498,7 @@
             // xrTableCell24
             // 
             this.xrTableCell24.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Iif([cr_estado]=\'I\',\'ANULADO\' ,\'\' )")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Iif([cr_estado]==\'I\',\'ANULADO\' ,\'\' )")});
             this.xrTableCell24.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Bold);
             this.xrTableCell24.ForeColor = System.Drawing.Color.Red;
             this.xrTableCell24.Name = "xrTableCell24";
@@ -840,7 +840,7 @@
             this.p_IdEmpresa,
             this.p_IdSucursal,
             this.p_IdCobro});
-            this.Version = "17.2";
+            this.Version = "19.1";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.CXC_001_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();

@@ -1175,7 +1175,6 @@
     <Build Include="dbo\Views\vwro_DescuentosPorFacturacionEmpleado.sql" />
     <Build Include="dbo\Tables\seg_usuario_x_aca_Sede.sql" />
     <Build Include="dbo\Tables\aca_Sede.sql" />
-    <Build Include="dbo\Tables\aca_Seccion.sql" />
     <Build Include="dbo\Tables\aca_Profesor.sql" />
     <Build Include="dbo\Tables\aca_Menu_x_seg_usuario.sql" />
     <Build Include="dbo\Tables\aca_Menu_x_aca_Sede.sql" />
@@ -1183,6 +1182,16 @@
     <Build Include="dbo\Tables\aca_Jornada.sql" />
     <Build Include="dbo\Tables\aca_Curso.sql" />
     <Build Include="dbo\Tables\aca_AnioLectivo.sql" />
+    <Build Include="dbo\Tables\aca_Paralelo.sql" />
+    <Build Include="dbo\Tables\aca_NivelAcademico.sql" />
+    <Build Include="dbo\Tables\aca_MateriaGrupo.sql" />
+    <Build Include="dbo\Tables\aca_Materia.sql" />
+    <Build Include="dbo\Tables\aca_AnioLectivo_Sede_NivelAcademico.sql" />
+    <Build Include="dbo\Tables\aca_AnioLectivo_Paralelo_Profesor.sql" />
+    <Build Include="dbo\Tables\aca_AnioLectivo_NivelAcademico_Jornada.sql" />
+    <Build Include="dbo\Tables\aca_AnioLectivo_Jornada_Curso.sql" />
+    <Build Include="dbo\Tables\aca_AnioLectivo_Curso_Paralelo.sql" />
+    <Build Include="dbo\Tables\aca_AnioLectivo_Curso_Materia.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

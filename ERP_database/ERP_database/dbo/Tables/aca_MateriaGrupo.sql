@@ -1,11 +1,9 @@
-﻿CREATE TABLE [dbo].[aca_AnioLectivo] (
+﻿CREATE TABLE [dbo].[aca_MateriaGrupo] (
     [IdEmpresa]             INT           NOT NULL,
-    [IdAnio]                INT           NOT NULL,
-    [Descripcion]           VARCHAR (50)  NOT NULL,
-    [FechaDesde]            DATE          NOT NULL,
-    [FechaHasta]            DATE          NOT NULL,
+    [IdMateriaGrupo]        INT           NOT NULL,
+    [NomMateriaGrupo]       VARCHAR (500) NOT NULL,
+    [OrdenMateriaGrupo]     INT           NOT NULL,
     [Estado]                BIT           NOT NULL,
-    [EnCurso]               BIT           NOT NULL,
     [IdUsuarioCreacion]     VARCHAR (200) NULL,
     [FechaCreacion]         DATETIME      NULL,
     [IdUsuarioModificacion] VARCHAR (200) NULL,
@@ -13,8 +11,6 @@
     [IdUsuarioAnulacion]    VARCHAR (200) NULL,
     [FechaAnulacion]        DATETIME      NULL,
     [MotivoAnulacion]       VARCHAR (MAX) NULL,
-    CONSTRAINT [PK_aca_AnioLectivo] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdAnio] ASC)
+    CONSTRAINT [PK_aca_MateriaGrupo] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdMateriaGrupo] ASC)
 );
-
-
 

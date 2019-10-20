@@ -4372,6 +4372,13 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
           <Parameter Name="MostrarSaldo0" Type="bit" Mode="In" />
           <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SPBAN_015" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
+          <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
+          <Parameter Name="FechaIni" Type="date" Mode="In" />
+          <Parameter Name="FechaFin" Type="date" Mode="In" />
+          <Parameter Name="Reporte" Type="varchar" Mode="In" />
+          <Parameter Name="MostrarSaldo0" Type="bit" Mode="In" />
+        </Function>
         <Function Name="SPCONTA_002" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
           <Parameter Name="IdSucursalIni" Type="int" Mode="In" />
@@ -8671,6 +8678,13 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
           <EntitySet Name="VWCXP_009" EntityType="Model_reportes.VWCXP_009" />
           <EntitySet Name="VWFAC_018" EntityType="Model_reportes.VWFAC_018" />
           <EntitySet Name="VWCXP_011" EntityType="Model_reportes.VWCXP_011" />
+          <FunctionImport Name="SPBAN_015" ReturnType="Collection(Model_reportes.SPBAN_015_Result)">
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+            <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="Reporte" Mode="In" Type="String" />
+            <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -12786,6 +12800,19 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
           <Property Name="GiradoA" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="num_cta_acreditacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="SPBAN_015_Result">
+          <Property Type="String" Name="IdUsuario" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Reporte" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="Secuencia" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="Tipo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Codigo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
+          <Property Type="Double" Name="SaldoE1" Nullable="false" />
+          <Property Type="Double" Name="SaldoE2" Nullable="false" />
+          <Property Type="Double" Name="SaldoE3" Nullable="false" />
+          <Property Type="Double" Name="SaldoE4" Nullable="false" />
+          <Property Type="Double" Name="Total" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -16662,6 +16689,23 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SPBAN_015" FunctionName="Model_reportes.Store.SPBAN_015">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_reportes.SPBAN_015_Result">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Reporte" ColumnName="Reporte" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="SaldoE1" ColumnName="SaldoE1" />
+                <ScalarProperty Name="SaldoE2" ColumnName="SaldoE2" />
+                <ScalarProperty Name="SaldoE3" ColumnName="SaldoE3" />
+                <ScalarProperty Name="SaldoE4" ColumnName="SaldoE4" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

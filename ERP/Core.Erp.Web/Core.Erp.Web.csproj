@@ -658,11 +658,35 @@
     <Compile Include="Reportes\Banco\BAN_011_Rpt.Designer.cs">
       <DependentUpon>BAN_011_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Banco\BAN_015_cta_bancaria_iglesia.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Banco\BAN_015_cta_bancaria_iglesia.Designer.cs">
+      <DependentUpon>BAN_015_cta_bancaria_iglesia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Banco\BAN_015_cta_bancaria_liceo.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Banco\BAN_015_cta_bancaria_liceo.Designer.cs">
+      <DependentUpon>BAN_015_cta_bancaria_liceo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Banco\BAN_012_cta_bancaria.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reportes\Banco\BAN_012_cta_bancaria.Designer.cs">
       <DependentUpon>BAN_012_cta_bancaria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Banco\BAN_015_iglesia_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Banco\BAN_015_iglesia_Rpt.Designer.cs">
+      <DependentUpon>BAN_015_iglesia_Rpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Banco\BAN_015_liceo_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Banco\BAN_015_liceo_Rpt.Designer.cs">
+      <DependentUpon>BAN_015_liceo_Rpt.cs</DependentUpon>
     </Compile>
     <Compile Include="Reportes\Banco\BAN_012_Rpt.cs">
       <SubType>Component</SubType>
@@ -10212,6 +10236,7 @@
     <Content Include="Areas\RRHH\Views\PrestamosMasivos\Anular.cshtml" />
     <Content Include="Areas\RRHH\Views\DescargaDescuentoFacturacion\Nuevo.cshtml" />
     <Content Include="Areas\RRHH\Views\DescargaDescuentoFacturacion\_GridViewPartial_DescuentosEmpleado.cshtml" />
+    <Content Include="Areas\Reportes\Views\BancoReportes\BAN_015.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
@@ -10403,8 +10428,20 @@
     <EmbeddedResource Include="Reportes\Banco\BAN_011_Rpt.resx">
       <DependentUpon>BAN_011_Rpt.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Banco\BAN_015_cta_bancaria_iglesia.resx">
+      <DependentUpon>BAN_015_cta_bancaria_iglesia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Banco\BAN_015_cta_bancaria_liceo.resx">
+      <DependentUpon>BAN_015_cta_bancaria_liceo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Banco\BAN_012_cta_bancaria.resx">
       <DependentUpon>BAN_012_cta_bancaria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Banco\BAN_015_iglesia_Rpt.resx">
+      <DependentUpon>BAN_015_iglesia_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Banco\BAN_015_liceo_Rpt.resx">
+      <DependentUpon>BAN_015_liceo_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Banco\BAN_012_Rpt.resx">
       <DependentUpon>BAN_012_Rpt.cs</DependentUpon>

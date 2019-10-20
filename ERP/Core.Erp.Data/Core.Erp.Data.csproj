@@ -1309,6 +1309,7 @@
     <Compile Include="Reportes\Banco\BAN_012_Data.cs" />
     <Compile Include="Reportes\Banco\BAN_013_Data.cs" />
     <Compile Include="Reportes\Banco\BAN_014_Data.cs" />
+    <Compile Include="Reportes\Banco\BAN_015_Data.cs" />
     <Compile Include="Reportes\Caja\CAJ_001_Data.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_Data.cs" />
     <Compile Include="Reportes\Caja\CAJ_002_ingresos_Data.cs" />
@@ -1788,6 +1789,9 @@
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="SPBAN_012_Result.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SPBAN_015_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="SPCONTA_002_Result.cs">

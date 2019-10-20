@@ -1526,5 +1526,30 @@ namespace Core.Erp.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCXP_010_Result>("SPCXP_010", idEmpresaParameter, idProveedorIniParameter, idProveedorFinParameter, fechaIniParameter, fechaFinParameter, mostrarAnuladosParameter);
         }
+    
+        public virtual ObjectResult<SPBAN_015_Result> SPBAN_015(string idUsuario, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, string reporte, Nullable<bool> mostrarSaldo0)
+        {
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            var fechaIniParameter = fechaIni.HasValue ?
+                new ObjectParameter("FechaIni", fechaIni) :
+                new ObjectParameter("FechaIni", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            var reporteParameter = reporte != null ?
+                new ObjectParameter("Reporte", reporte) :
+                new ObjectParameter("Reporte", typeof(string));
+    
+            var mostrarSaldo0Parameter = mostrarSaldo0.HasValue ?
+                new ObjectParameter("MostrarSaldo0", mostrarSaldo0) :
+                new ObjectParameter("MostrarSaldo0", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPBAN_015_Result>("SPBAN_015", idUsuarioParameter, fechaIniParameter, fechaFinParameter, reporteParameter, mostrarSaldo0Parameter);
+        }
     }
 }

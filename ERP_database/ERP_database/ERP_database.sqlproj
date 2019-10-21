@@ -1195,6 +1195,7 @@
     <Build Include="dbo\Stored Procedures\spaca_corregir_menu.sql" />
     <Build Include="web\Tables\ba_spBAN_015.sql" />
     <Build Include="web\Stored Procedures\SPBAN_015.sql" />
+    <Build Include="dbo\Views\vwseg_usuario_x_aca_Sede.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

@@ -267,12 +267,10 @@ namespace Core.Erp.Data.Banco
                 decimal secuencia = 0;
                 using (Entities_banco Context = new Entities_banco())
                 {
-                    var lst = from q in Context.ba_Talonario_cheques_x_banco
-                              where q.IdEmpresa == IdEmpresa
+                    var lst = Context.ba_Talonario_cheques_x_banco.Where(q => q.IdEmpresa == IdEmpresa
                               && q.IdBanco == IdBanco
                               && q.Usado == false
-                              && q.Estado == "A"
-                              select q;
+                              && q.Estado == "A").ToList();
 
                     if (lst.Count() > 0)
                     {

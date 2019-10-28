@@ -432,6 +432,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 report_flujo.p_IdEmpresa.Value = model.IdEmpresa;
                 report_flujo.p_IdSucursal.Value = model.IdSucursal;
                 report_flujo.p_fecha_fin.Value = model.fecha_fin;
+                report_flujo.p_fecha_ini.Value = model.fecha_ini;
                 report_flujo.p_mostrar_agrupado.Value = model.mostrar_agrupado;
                 report_flujo.usuario = SessionFixed.IdUsuario.ToString();
                 report_flujo.empresa = SessionFixed.NomEmpresa.ToString();

@@ -87,6 +87,7 @@
     <Folder Include="Snapshots" />
     <Folder Include="Migraciones\" />
     <Folder Include="Migraciones\Tables\" />
+    <Folder Include="Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\in_Ing_Egr_Inven.sql" />
@@ -1200,6 +1201,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />
+    <None Include="Scripts\1.- Permisos Admin.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ERP_database.refactorlog" />

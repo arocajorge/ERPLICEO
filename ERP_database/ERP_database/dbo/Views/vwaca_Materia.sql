@@ -1,13 +1,11 @@
-﻿CREATE VIEW dbo.vwaca_Profesor
+﻿CREATE VIEW dbo.vwaca_Materia
 AS
-SELECT dbo.aca_Profesor.IdEmpresa, dbo.aca_Profesor.IdProfesor, dbo.aca_Profesor.IdPersona, dbo.aca_Profesor.Codigo, dbo.aca_Profesor.Estado, dbo.tb_persona.CodPersona, dbo.tb_persona.pe_Naturaleza, 
-                  dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_razonSocial, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.tb_persona.IdTipoDocumento, dbo.tb_persona.pe_cedulaRuc, dbo.tb_persona.pe_direccion, 
-                  dbo.tb_persona.pe_telfono_Contacto, dbo.tb_persona.pe_celular, dbo.tb_persona.pe_sexo, dbo.tb_persona.IdEstadoCivil, dbo.tb_persona.pe_fechaNacimiento, dbo.tb_persona.pe_estado, dbo.tb_persona.pe_correo, 
-                  dbo.aca_Profesor.Correo, dbo.aca_Profesor.Direccion, dbo.aca_Profesor.Telefonos
-FROM     dbo.aca_Profesor INNER JOIN
-                  dbo.tb_persona ON dbo.aca_Profesor.IdPersona = dbo.tb_persona.IdPersona
+SELECT dbo.aca_Materia.IdEmpresa, dbo.aca_Materia.IdMateria, dbo.aca_Materia.IdMateriaGrupo, dbo.aca_MateriaGrupo.NomMateriaGrupo, dbo.aca_MateriaGrupo.OrdenMateriaGrupo, dbo.aca_Materia.NomMateria, 
+                  dbo.aca_Materia.EsObligatorio, dbo.aca_Materia.OrdenMateria, dbo.aca_Materia.Estado
+FROM     dbo.aca_Materia INNER JOIN
+                  dbo.aca_MateriaGrupo ON dbo.aca_Materia.IdEmpresa = dbo.aca_MateriaGrupo.IdEmpresa AND dbo.aca_Materia.IdMateriaGrupo = dbo.aca_MateriaGrupo.IdMateriaGrupo
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Profesor';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Materia';
 
 
 GO
@@ -16,7 +14,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+         Configuration = "(H (1[41] 4[20] 2[13] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -82,25 +80,25 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_Profesor"
+         Begin Table = "aca_Materia"
             Begin Extent = 
                Top = 7
                Left = 48
-               Bottom = 279
+               Bottom = 170
                Right = 293
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 3
          End
-         Begin Table = "tb_persona"
+         Begin Table = "aca_MateriaGrupo"
             Begin Extent = 
-               Top = 7
-               Left = 341
-               Bottom = 254
-               Right = 615
+               Top = 0
+               Left = 594
+               Bottom = 163
+               Right = 839
             End
             DisplayFlags = 280
-            TopColumn = 10
+            TopColumn = 0
          End
       End
    End
@@ -109,27 +107,12 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 25
+      Begin ColumnWidths = 10
          Width = 284
          Width = 1200
          Width = 1200
          Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
+         Width = 2088
          Width = 1200
          Width = 1200
          Width = 1200
@@ -141,21 +124,19 @@ Begin DesignProperties =
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1176
+         Table = 1170
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1356
-         SortOrder = 1416
+         SortType = 1350
+         SortOrder = 1410
          GroupBy = 1350
-         Filter = 1356
+         Filter = 1350
          Or = 1350
          Or = 1350
          Or = 1350
       End
    End
 End
-', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Profesor';
-
-
+', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Materia';
 

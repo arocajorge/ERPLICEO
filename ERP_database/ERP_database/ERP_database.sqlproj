@@ -1198,6 +1198,12 @@
     <Build Include="web\Stored Procedures\SPBAN_015.sql" />
     <Build Include="dbo\Views\vwseg_usuario_x_aca_Sede.sql" />
     <Build Include="dbo\Views\vwaca_Profesor.sql" />
+    <Build Include="dbo\Tables\aca_rubro.sql" />
+    <Build Include="dbo\Tables\aca_familia.sql" />
+    <Build Include="dbo\Tables\aca_CatalogoTipo.sql" />
+    <Build Include="dbo\Tables\aca_Catalogo.sql" />
+    <Build Include="dbo\Tables\aca_alumno.sql" />
+    <Build Include="dbo\Views\vwaca_Materia.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

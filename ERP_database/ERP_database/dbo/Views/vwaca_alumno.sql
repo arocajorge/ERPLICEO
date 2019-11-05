@@ -3,11 +3,16 @@ AS
 SELECT dbo.aca_alumno.IdEmpresa, dbo.aca_alumno.IdAlumno, dbo.aca_alumno.Codigo, dbo.aca_alumno.IdPersona, dbo.tb_persona.pe_Naturaleza, dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, 
                   dbo.tb_persona.IdTipoDocumento, dbo.tb_persona.pe_cedulaRuc, dbo.aca_alumno.Direccion, dbo.aca_alumno.Celular, dbo.aca_alumno.Correo, dbo.tb_persona.pe_sexo, dbo.tb_persona.pe_fechaNacimiento, 
                   dbo.tb_persona.CodCatalogoSangre, dbo.tb_persona.CodCatalogoCONADIS, dbo.tb_persona.PorcentajeDiscapacidad, dbo.tb_persona.NumeroCarnetConadis, dbo.aca_alumno.Estado, dbo.aca_alumno.IdCatalogoESTMAT, 
-                  dbo.aca_alumno.IdCurso, dbo.aca_alumno.IdCatalogoESTALU, dbo.aca_alumno.MotivoNoMatricula, dbo.tb_persona.pe_telfono_Contacto
+                  dbo.aca_alumno.IdCurso, dbo.aca_alumno.IdCatalogoESTALU, dbo.aca_alumno.MotivoNoMatricula, dbo.tb_persona.pe_telfono_Contacto, aca_Catalogo_1.NomCatalogo AS NomCatalogoESTMAT, 
+                  dbo.aca_Catalogo.NomCatalogo AS NomCatalogoESTALU
 FROM     dbo.aca_alumno INNER JOIN
-                  dbo.tb_persona ON dbo.aca_alumno.IdPersona = dbo.tb_persona.IdPersona
+                  dbo.tb_persona ON dbo.aca_alumno.IdPersona = dbo.tb_persona.IdPersona LEFT OUTER JOIN
+                  dbo.aca_Catalogo ON dbo.aca_alumno.IdCatalogoESTALU = dbo.aca_Catalogo.IdCatalogo LEFT OUTER JOIN
+                  dbo.aca_Catalogo AS aca_Catalogo_1 ON dbo.aca_alumno.IdCatalogoESTMAT = aca_Catalogo_1.IdCatalogo
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_alumno';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_alumno';
+
+
 
 
 GO
@@ -16,7 +21,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+         Configuration = "(H (1[41] 4[9] 2[31] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -86,11 +91,11 @@ Begin DesignProperties =
             Begin Extent = 
                Top = 7
                Left = 48
-               Bottom = 233
+               Bottom = 289
                Right = 293
             End
             DisplayFlags = 280
-            TopColumn = 12
+            TopColumn = 8
          End
          Begin Table = "tb_persona"
             Begin Extent = 
@@ -102,6 +107,26 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 10
          End
+         Begin Table = "aca_Catalogo_1"
+            Begin Extent = 
+               Top = 181
+               Left = 525
+               Bottom = 344
+               Right = 770
+            End
+            DisplayFlags = 280
+            TopColumn = 2
+         End
+         Begin Table = "aca_Catalogo"
+            Begin Extent = 
+               Top = 51
+               Left = 907
+               Bottom = 214
+               Right = 1152
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
       End
    End
    Begin SQLPane = 
@@ -109,7 +134,7 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 9
+      Begin ColumnWidths = 28
          Width = 284
          Width = 1200
          Width = 1200
@@ -117,6 +142,31 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+     ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_alumno';
+
+
+
+
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'    Width = 1200
          Width = 1200
          Width = 1200
       End

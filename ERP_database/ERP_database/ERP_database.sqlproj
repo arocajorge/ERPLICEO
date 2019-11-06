@@ -1206,6 +1206,7 @@
     <Build Include="dbo\Views\vwaca_Materia.sql" />
     <Build Include="dbo\Views\vwaca_familia.sql" />
     <Build Include="dbo\Views\vwaca_alumno.sql" />
+    <Build Include="dbo\Views\vwaca_AnioLectivo_Paralelo_Profesor.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

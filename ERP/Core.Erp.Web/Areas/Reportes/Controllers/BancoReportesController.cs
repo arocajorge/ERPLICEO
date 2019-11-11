@@ -111,7 +111,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             model.empresa = SessionFixed.NomEmpresa.ToString();
             return View(model);
         }
-        public ActionResult BAN_004( int IdBanco = 0, decimal IdConciliacion = 0)
+        public ActionResult BAN_004(int IdBanco = 0, decimal IdConciliacion = 0)
         {
             BAN_004_Rpt model = new BAN_004_Rpt();
             #region Cargo diseño desde base

@@ -3305,7 +3305,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_001' no tiene definida
           <Property Name="IdNominaTipoLiqui" Type="int" />
           <Property Name="Descripcion" Type="varchar" MaxLength="100" />
           <Property Name="Observacion" Type="varchar" MaxLength="200" />
-          <Property Name="Cerrado" Type="char" MaxLength="1" />
+          <Property Name="Cerrado" Type="varchar" MaxLength="50" />
           <Property Name="de_descripcion" Type="varchar" MaxLength="200" />
           <Property Name="IdEmpleado" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="IdRubro" Type="varchar" MaxLength="50" Nullable="false" />
@@ -3486,7 +3486,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_004' no tiene definida
           <Property Name="IdEmpleado" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Nombres" Type="varchar" MaxLength="201" />
           <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ca_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ca_descripcion" Type="varchar(max)" Nullable="false" />
           <Property Name="em_codigo" Type="varchar" MaxLength="50" />
           <Property Name="IdUtilidad" Type="int" Nullable="false" />
         </EntityType>
@@ -3597,7 +3597,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_006' no tiene definida
           <Property Name="Canceladas" Type="bit" Nullable="false" />
           <Property Name="Gozadas_Pgadas" Type="bit" Nullable="false" />
           <Property Name="em_fechaIngaRol" Type="datetime" />
-          <Property Name="ca_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ca_descripcion" Type="varchar(max)" Nullable="false" />
           <Property Name="ValorCancelado" Type="float" Nullable="false" />
           <Property Name="FechaPago" Type="date" Nullable="false" />
           <Property Name="Anio" Type="int" Nullable="false" />
@@ -3652,7 +3652,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_007' no tiene definida
           <Property Name="Canceladas" Type="bit" Nullable="false" />
           <Property Name="Gozadas_Pgadas" Type="bit" Nullable="false" />
           <Property Name="em_fechaIngaRol" Type="datetime" />
-          <Property Name="ca_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ca_descripcion" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_008' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -3851,7 +3851,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_011' no tiene definida
           <Property Name="pe_FechaFin" Type="smalldatetime" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="DescripcionProcesoNomina" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ca_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ca_descripcion" Type="varchar(max)" Nullable="false" />
           <Property Name="pe_apellido" Type="varchar" MaxLength="100" />
           <Property Name="pe_nombre" Type="varchar" MaxLength="100" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
@@ -3921,7 +3921,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_016' no tiene definida
           <Property Name="Liquido" Type="float" Nullable="false" />
           <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="ca_descripcion" Type="varchar" MaxLength="50" />
+          <Property Name="ca_descripcion" Type="varchar(max)" />
           <Property Name="Contrato" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="IdTipoCatalogo" Type="int" Nullable="false" />
         </EntityType>
@@ -8033,7 +8033,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
           <Property Name="IdEmpleado" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Nombres" Type="String" MaxLength="201" FixedLength="false" Unicode="false" />
           <Property Name="pe_cedulaRuc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ca_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ca_descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="em_codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IdUtilidad" Type="Int32" Nullable="false" />
         </EntityType>
@@ -8087,7 +8087,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
           <Property Name="Canceladas" Type="Boolean" Nullable="false" />
           <Property Name="Gozadas_Pgadas" Type="Boolean" Nullable="false" />
           <Property Name="em_fechaIngaRol" Type="DateTime" Precision="3" />
-          <Property Name="ca_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ca_descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ValorCancelado" Type="Double" Nullable="false" />
           <Property Name="FechaPago" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Anio" Type="Int32" Nullable="false" />
@@ -8140,7 +8140,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
           <Property Name="Canceladas" Type="Boolean" Nullable="false" />
           <Property Name="Gozadas_Pgadas" Type="Boolean" Nullable="false" />
           <Property Name="em_fechaIngaRol" Type="DateTime" Precision="3" />
-          <Property Name="ca_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ca_descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="VWROL_011">
           <Key>
@@ -8193,7 +8193,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
           <Property Name="pe_FechaFin" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DescripcionProcesoNomina" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ca_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ca_descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="pe_apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="pe_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="pe_nombreCompleto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
@@ -8546,11 +8546,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
             <Parameter Name="Balance" Mode="In" Type="String" />
             <Parameter Name="MostrarAcumulado" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <FunctionImport Name="SPBAN_004" ReturnType="Collection(Model_reportes.SPBAN_004_Result)">
-            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
-            <Parameter Name="IdBanco" Mode="In" Type="Int32" />
-            <Parameter Name="IdConciliacion" Mode="In" Type="Decimal" />
-          </FunctionImport>
           <EntitySet Name="VWINV_017" EntityType="Model_reportes.VWINV_017" />
           <FunctionImport Name="SPBAN_011" ReturnType="Collection(Model_reportes.SPBAN_011_Result)">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
@@ -8684,6 +8679,11 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
             <Parameter Name="Reporte" Mode="In" Type="String" />
             <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SPBAN_004" ReturnType="Collection(Model_reportes.SPBAN_004_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdBanco" Mode="In" Type="Int32" />
+            <Parameter Name="IdConciliacion" Mode="In" Type="Decimal" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
@@ -8963,7 +8963,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
           <Property Name="Liquido" Type="Double" Nullable="false" />
           <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ca_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ca_descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Contrato" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="IdTipoCatalogo" Type="Int32" Nullable="false" />
         </EntityType>
@@ -9345,7 +9345,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
           <Property Name="IdNominaTipoLiqui" Type="Int32" />
           <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Observacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Cerrado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Cerrado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="de_descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="IdRubro" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -10783,40 +10783,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
           <Property Type="Double" Name="SaldoDebitosNaturaleza" Nullable="false" />
           <Property Type="Double" Name="SaldoCreditosNaturaleza" Nullable="false" />
           <Property Type="Double" Name="SaldoFinalNaturaleza" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="SPBAN_004_Result">
-          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
-          <Property Type="Decimal" Name="IdConciliacion" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Int32" Name="IdBanco" Nullable="false" />
-          <Property Type="Int32" Name="IdPeriodo" Nullable="false" />
-          <Property Type="String" Name="nom_banco" Nullable="false" MaxLength="150" />
-          <Property Type="String" Name="ba_Num_Cuenta" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="IdCtaCble" Nullable="true" MaxLength="20" />
-          <Property Type="DateTime" Name="Fecha" Nullable="true" />
-          <Property Type="String" Name="CodTipoCbte" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="Tipo_Cbte" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="IdCbteCble" Nullable="false" Precision="18" Scale="0" />
-          <Property Type="Int32" Name="IdTipoCbte" Nullable="false" />
-          <Property Type="Int32" Name="SecuenciaCbte" Nullable="false" />
-          <Property Type="Double" Name="Valor" Nullable="true" />
-          <Property Type="String" Name="Observacion" Nullable="true" />
-          <Property Type="String" Name="Cheque" Nullable="true" MaxLength="50" />
-          <Property Type="Double" Name="SaldoInicial" Nullable="true" />
-          <Property Type="Double" Name="SaldoFinal" Nullable="true" />
-          <Property Type="String" Name="Titulo_grupo" Nullable="true" MaxLength="73" />
-          <Property Type="String" Name="referencia" Nullable="true" MaxLength="88" />
-          <Property Type="String" Name="ruc_empresa" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="nom_empresa" Nullable="false" MaxLength="300" />
-          <Property Type="Double" Name="SaldoBanco_EstCta" Nullable="false" />
-          <Property Type="String" Name="Estado_Conciliacion" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="GiradoA" Nullable="true" />
-          <Property Type="Decimal" Name="IdTipoFlujo" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="String" Name="nom_tipo_flujo" Nullable="true" />
-          <Property Type="Double" Name="Total_Conciliado" Nullable="true" />
-          <Property Type="DateTime" Name="FechaIni" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="FechaFin" Nullable="true" Precision="23" />
-          <Property Type="Double" Name="TotalConciliadoNoContable" Nullable="false" />
-          <Property Type="Double" Name="co_SaldoBanco_anterior" Nullable="false" />
         </ComplexType>
         <EntityType Name="VWINV_017">
           <Key>
@@ -12812,6 +12778,41 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
           <Property Type="Double" Name="SaldoE3" Nullable="false" />
           <Property Type="Double" Name="SaldoE4" Nullable="false" />
           <Property Type="Double" Name="Total" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SPBAN_004_Result">
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="Decimal" Name="IdConciliacion" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="IdBanco" Nullable="false" />
+          <Property Type="Int32" Name="IdPeriodo" Nullable="false" />
+          <Property Type="String" Name="nom_banco" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="ba_Num_Cuenta" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="IdCtaCble" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="Fecha" Nullable="true" />
+          <Property Type="String" Name="CodTipoCbte" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Tipo_Cbte" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="IdCbteCble" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="IdTipoCbte" Nullable="false" />
+          <Property Type="Int32" Name="SecuenciaCbte" Nullable="false" />
+          <Property Type="Double" Name="Valor" Nullable="true" />
+          <Property Type="String" Name="Observacion" Nullable="true" />
+          <Property Type="String" Name="Cheque" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="SaldoInicial" Nullable="true" />
+          <Property Type="Double" Name="SaldoFinal" Nullable="true" />
+          <Property Type="String" Name="Titulo_grupo" Nullable="true" MaxLength="73" />
+          <Property Type="String" Name="referencia" Nullable="true" MaxLength="62" />
+          <Property Type="String" Name="ruc_empresa" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="nom_empresa" Nullable="false" MaxLength="300" />
+          <Property Type="Double" Name="SaldoBanco_EstCta" Nullable="false" />
+          <Property Type="String" Name="Estado_Conciliacion" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="GiradoA" Nullable="true" />
+          <Property Type="Decimal" Name="IdTipoFlujo" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="nom_tipo_flujo" Nullable="true" />
+          <Property Type="Double" Name="Total_Conciliado" Nullable="true" />
+          <Property Type="DateTime" Name="FechaIni" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="FechaFin" Nullable="true" Precision="23" />
+          <Property Type="Double" Name="TotalConciliadoNoContable" Nullable="false" />
+          <Property Type="Double" Name="co_SaldoBanco_anterior" Nullable="false" />
+          <Property Type="Double" Name="SaldoContableActual" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -15182,44 +15183,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SPBAN_004" FunctionName="Model_reportes.Store.SPBAN_004">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Model_reportes.SPBAN_004_Result">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdConciliacion" ColumnName="IdConciliacion" />
-                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
-                <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
-                <ScalarProperty Name="nom_banco" ColumnName="nom_banco" />
-                <ScalarProperty Name="ba_Num_Cuenta" ColumnName="ba_Num_Cuenta" />
-                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="CodTipoCbte" ColumnName="CodTipoCbte" />
-                <ScalarProperty Name="Tipo_Cbte" ColumnName="Tipo_Cbte" />
-                <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
-                <ScalarProperty Name="IdTipoCbte" ColumnName="IdTipoCbte" />
-                <ScalarProperty Name="SecuenciaCbte" ColumnName="SecuenciaCbte" />
-                <ScalarProperty Name="Valor" ColumnName="Valor" />
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-                <ScalarProperty Name="Cheque" ColumnName="Cheque" />
-                <ScalarProperty Name="SaldoInicial" ColumnName="SaldoInicial" />
-                <ScalarProperty Name="SaldoFinal" ColumnName="SaldoFinal" />
-                <ScalarProperty Name="Titulo_grupo" ColumnName="Titulo_grupo" />
-                <ScalarProperty Name="referencia" ColumnName="referencia" />
-                <ScalarProperty Name="ruc_empresa" ColumnName="ruc_empresa" />
-                <ScalarProperty Name="nom_empresa" ColumnName="nom_empresa" />
-                <ScalarProperty Name="SaldoBanco_EstCta" ColumnName="SaldoBanco_EstCta" />
-                <ScalarProperty Name="Estado_Conciliacion" ColumnName="Estado_Conciliacion" />
-                <ScalarProperty Name="GiradoA" ColumnName="GiradoA" />
-                <ScalarProperty Name="IdTipoFlujo" ColumnName="IdTipoFlujo" />
-                <ScalarProperty Name="nom_tipo_flujo" ColumnName="nom_tipo_flujo" />
-                <ScalarProperty Name="Total_Conciliado" ColumnName="Total_Conciliado" />
-                <ScalarProperty Name="FechaIni" ColumnName="FechaIni" />
-                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
-                <ScalarProperty Name="TotalConciliadoNoContable" ColumnName="TotalConciliadoNoContable" />
-                <ScalarProperty Name="co_SaldoBanco_anterior" ColumnName="co_SaldoBanco_anterior" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="VWINV_017">
             <EntityTypeMapping TypeName="Model_reportes.VWINV_017">
               <MappingFragment StoreEntitySet="VWINV_017">
@@ -16703,6 +16666,45 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
                 <ScalarProperty Name="SaldoE3" ColumnName="SaldoE3" />
                 <ScalarProperty Name="SaldoE4" ColumnName="SaldoE4" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPBAN_004" FunctionName="Model_reportes.Store.SPBAN_004">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_reportes.SPBAN_004_Result">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdConciliacion" ColumnName="IdConciliacion" />
+                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
+                <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
+                <ScalarProperty Name="nom_banco" ColumnName="nom_banco" />
+                <ScalarProperty Name="ba_Num_Cuenta" ColumnName="ba_Num_Cuenta" />
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="CodTipoCbte" ColumnName="CodTipoCbte" />
+                <ScalarProperty Name="Tipo_Cbte" ColumnName="Tipo_Cbte" />
+                <ScalarProperty Name="IdCbteCble" ColumnName="IdCbteCble" />
+                <ScalarProperty Name="IdTipoCbte" ColumnName="IdTipoCbte" />
+                <ScalarProperty Name="SecuenciaCbte" ColumnName="SecuenciaCbte" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="Cheque" ColumnName="Cheque" />
+                <ScalarProperty Name="SaldoInicial" ColumnName="SaldoInicial" />
+                <ScalarProperty Name="SaldoFinal" ColumnName="SaldoFinal" />
+                <ScalarProperty Name="Titulo_grupo" ColumnName="Titulo_grupo" />
+                <ScalarProperty Name="referencia" ColumnName="referencia" />
+                <ScalarProperty Name="ruc_empresa" ColumnName="ruc_empresa" />
+                <ScalarProperty Name="nom_empresa" ColumnName="nom_empresa" />
+                <ScalarProperty Name="SaldoBanco_EstCta" ColumnName="SaldoBanco_EstCta" />
+                <ScalarProperty Name="Estado_Conciliacion" ColumnName="Estado_Conciliacion" />
+                <ScalarProperty Name="GiradoA" ColumnName="GiradoA" />
+                <ScalarProperty Name="IdTipoFlujo" ColumnName="IdTipoFlujo" />
+                <ScalarProperty Name="nom_tipo_flujo" ColumnName="nom_tipo_flujo" />
+                <ScalarProperty Name="Total_Conciliado" ColumnName="Total_Conciliado" />
+                <ScalarProperty Name="FechaIni" ColumnName="FechaIni" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="TotalConciliadoNoContable" ColumnName="TotalConciliadoNoContable" />
+                <ScalarProperty Name="co_SaldoBanco_anterior" ColumnName="co_SaldoBanco_anterior" />
+                <ScalarProperty Name="SaldoContableActual" ColumnName="SaldoContableActual" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

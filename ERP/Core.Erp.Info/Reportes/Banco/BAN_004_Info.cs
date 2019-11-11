@@ -21,11 +21,11 @@ namespace Core.Erp.Info.Reportes.Banco
         public decimal IdCbteCble { get; set; }
         public int IdTipoCbte { get; set; }
         public int SecuenciaCbte { get; set; }
-        public double Valor { get; set; }
+        public Nullable<double> Valor { get; set; }
         public string Observacion { get; set; }
         public string Cheque { get; set; }
-        public double SaldoInicial { get; set; }
-        public double SaldoFinal { get; set; }
+        public Nullable<double> SaldoInicial { get; set; }
+        public Nullable<double> SaldoFinal { get; set; }
         public string Titulo_grupo { get; set; }
         public string referencia { get; set; }
         public string ruc_empresa { get; set; }
@@ -35,10 +35,11 @@ namespace Core.Erp.Info.Reportes.Banco
         public string GiradoA { get; set; }
         public Nullable<decimal> IdTipoFlujo { get; set; }
         public string nom_tipo_flujo { get; set; }
-        public double Total_Conciliado { get; set; }
+        public Nullable<double> Total_Conciliado { get; set; }
         public Nullable<System.DateTime> FechaIni { get; set; }
         public Nullable<System.DateTime> FechaFin { get; set; }
         public double TotalConciliadoNoContable { get; set; }
         public double co_SaldoBanco_anterior { get; set; }
+        public double SaldoContableActual { get; set; }
     }
 }

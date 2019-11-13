@@ -1,14 +1,11 @@
-﻿CREATE VIEW dbo.vwaca_Familia
+﻿CREATE VIEW dbo.vwaca_AnioLectivo_Rubro
 AS
-SELECT dbo.aca_Familia.IdEmpresa, dbo.aca_Familia.IdAlumno, dbo.aca_Familia.IdCatalogoPAREN, dbo.aca_Catalogo.NomCatalogo, dbo.aca_Familia.IdPersona, dbo.tb_persona.pe_Naturaleza, dbo.tb_persona.IdTipoDocumento, 
-                  dbo.tb_persona.pe_cedulaRuc, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.tb_persona.pe_nombreCompleto, dbo.aca_Familia.Direccion, dbo.aca_Familia.Celular, dbo.aca_Familia.Correo, dbo.aca_Familia.SeFactura, 
-                  dbo.tb_persona.pe_sexo, dbo.tb_persona.IdEstadoCivil, dbo.tb_persona.pe_fechaNacimiento, dbo.tb_persona.CodCatalogoSangre, dbo.tb_persona.CodCatalogoCONADIS, dbo.tb_persona.PorcentajeDiscapacidad, 
-                  dbo.tb_persona.NumeroCarnetConadis, dbo.tb_persona.pe_telfono_Contacto, dbo.aca_Familia.Secuencia, dbo.aca_Familia.EsRepresentante
-FROM     dbo.tb_persona INNER JOIN
-                  dbo.aca_Familia ON dbo.tb_persona.IdPersona = dbo.aca_Familia.IdPersona LEFT OUTER JOIN
-                  dbo.aca_Catalogo ON dbo.aca_Familia.IdCatalogoPAREN = dbo.aca_Catalogo.IdCatalogo
+SELECT dbo.aca_AnioLectivo_Rubro.IdEmpresa, dbo.aca_AnioLectivo_Rubro.IdAnio, dbo.aca_AnioLectivo.Descripcion, dbo.aca_AnioLectivo_Rubro.IdRubro, dbo.aca_AnioLectivo_Rubro.NomRubro, dbo.aca_AnioLectivo_Rubro.IdProducto, 
+                  dbo.aca_AnioLectivo_Rubro.Subtotal, dbo.aca_AnioLectivo_Rubro.IdCod_Impuesto_Iva, dbo.aca_AnioLectivo_Rubro.Porcentaje, dbo.aca_AnioLectivo_Rubro.ValorIVA, dbo.aca_AnioLectivo_Rubro.Total
+FROM     dbo.aca_AnioLectivo_Rubro INNER JOIN
+                  dbo.aca_AnioLectivo ON dbo.aca_AnioLectivo_Rubro.IdEmpresa = dbo.aca_AnioLectivo.IdEmpresa AND dbo.aca_AnioLectivo_Rubro.IdAnio = dbo.aca_AnioLectivo.IdAnio
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_familia';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Rubro';
 
 
 GO
@@ -17,7 +14,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[53] 4[9] 2[20] 3) )"
+         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -83,32 +80,22 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "tb_persona"
-            Begin Extent = 
-               Top = 170
-               Left = 170
-               Bottom = 333
-               Right = 444
-            End
-            DisplayFlags = 280
-            TopColumn = 10
-         End
-         Begin Table = "aca_Familia"
+         Begin Table = "aca_AnioLectivo_Rubro"
             Begin Extent = 
                Top = 7
                Left = 48
-               Bottom = 352
-               Right = 293
+               Bottom = 170
+               Right = 292
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_Catalogo"
+         Begin Table = "aca_AnioLectivo"
             Begin Extent = 
                Top = 0
-               Left = 568
+               Left = 478
                Bottom = 163
-               Right = 813
+               Right = 723
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -120,8 +107,10 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 10
+      Begin ColumnWidths = 12
          Width = 284
+         Width = 1200
+         Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -137,21 +126,19 @@ Begin DesignProperties =
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1176
+         Table = 1170
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1356
-         SortOrder = 1416
+         SortType = 1350
+         SortOrder = 1410
          GroupBy = 1350
-         Filter = 1356
+         Filter = 1350
          Or = 1350
          Or = 1350
          Or = 1350
       End
    End
 End
-', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Familia';
-
-
+', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Rubro';
 

@@ -102,12 +102,12 @@ select @IdRubro_calculado= IdRubro_dias_trabajados from ro_rubros_calculados whe
 
 insert into ro_rol_detalle
 (IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro,			Orden,			Valor
-,rub_visible_reporte,	Observacion			)
+,rub_visible_reporte,	Observacion		,IngresosCompartidos, PagoHora	)
 
 select 
 
 @IdEmpresa				,@IdRol				,emp.IdSucursal			,cont.IdEmpleado		,@IdRubro_calculado	,'0' ,  dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida)
-,1						,'Días trabajados'		
+,1						,'Días trabajados'	,	emp.Tiene_ingresos_compartidos,emp.Pago_por_horas
 FROM            dbo.ro_contrato AS cont INNER JOIN
                 dbo.ro_empleado AS emp ON cont.IdEmpresa = emp.IdEmpresa AND cont.IdEmpleado = emp.IdEmpleado
 where cont.IdEmpresa=@IdEmpresa 
@@ -766,12 +766,29 @@ group by rol_det.IdEmpresa,rol_det.IdEmpleado,ro_rol.IdNominaTipo,ro_rol.IdNomin
 
 insert into  ro_empleado_division_area_x_rol
 
-select ro_empleado_x_division_x_area.IdEmpresa,@IdRol, ROW_NUMBER() OVER(ORDER BY ro_empleado.idempresa ASC) AS Row ,ro_empleado.IdEmpleado,ro_empleado_x_division_x_area.IDividion,ro_empleado_x_division_x_area.IdArea,Porcentaje, Observacion 
+select a.IdEmpresa, @IdRol IdRol,ROW_NUMBER() OVER(ORDER BY a.idempresa ASC) AS Row, a.IdEmpleado,a.IDividion,a.IdArea,a.Porcentaje,a.Observacion,a.CargaGasto
+
+from (
+select ro_empleado_x_division_x_area.IdEmpresa ,ro_empleado.IdEmpleado,ro_empleado_x_division_x_area.IDividion,ro_empleado_x_division_x_area.IdArea,Porcentaje, Observacion 
 ,ro_empleado_x_division_x_area.CargaGasto
 FROM            dbo.ro_empleado_x_division_x_area INNER JOIN
                          dbo.ro_empleado ON dbo.ro_empleado_x_division_x_area.IdEmpresa = dbo.ro_empleado.IdEmpresa AND dbo.ro_empleado_x_division_x_area.IdEmpleado = dbo.ro_empleado.IdEmpleado
 WHERE ro_empleado_x_division_x_area.IdEmpresa=@IdEmpresa
 and ro_empleado.IdSucursal=@IdSucursalFin
+
+union all
+
+select ro_empleado.IdEmpresa,ro_empleado.IdEmpleado, ro_empleado.IdDivision,ro_empleado.IdArea,0 Porcentaje,'' Observacion, 1 Cargaasto from ro_empleado
+
+where not exists(select * from ro_empleado_x_division_x_area 
+where ro_empleado_x_division_x_area.IdEmpresa=ro_empleado.IdEmpresa
+and ro_empleado_x_division_x_area.IdEmpleado=ro_empleado.IdEmpleado)
+
+and ro_empleado.IdEmpresa=@IdEmpresa
+and ro_empleado.IdSucursal=@IdSucursalFin
+
+)a
+
 
 
 ----------------------------------------------------------------------------------------------------------------------------------------------

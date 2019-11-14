@@ -398,7 +398,18 @@ SELECT        A.IdEmpresa, A.IdConciliacion, A.IdBanco, A.IdPeriodo, dbo.ba_Banc
                          dbo.ct_cbtecble_tipo.tc_TipoCbte AS Tipo_Cbte,web.ba_SPBAN_004.IdCbteCble, web.ba_SPBAN_004.IdTipoCbte,web.ba_SPBAN_004.secuencia AS SecuenciaCbte, 
                          isnull(dbo.ct_cbtecble_det.dc_Valor,0) AS Valor, dbo.ct_cbtecble_det.dc_Observacion AS Observacion, 
                          dbo.ba_Cbte_Ban.cb_Cheque AS Cheque, ISNULL(@SaldoInicial, 0) AS SaldoInicial, ISNULL(@SaldoFin, 0) AS SaldoFinal, RTRIM(dbo.ct_cbtecble_tipo.tc_TipoCbte) 
-                         + 'S GIRADOS Y NO COBRADOS' AS Titulo_grupo, CASE WHEN ISNULL(ba_Cbte_Ban.cb_Cheque, '') <> '' THEN rtrim(ct_cbtecble_tipo.CodTipoCbte) 
+                         + 
+						 CASE WHEN ba_Cbte_Ban.IdTipocbte = 2 then 
+						 'S GIRADOS Y NO COBRADOS' 
+						 WHEN ba_Cbte_Ban.IdTipocbte = 3 then 
+						 'S EN TRANSITO'
+						 WHEN ba_Cbte_Ban.IdTipocbte = 4 then 
+						 'S EN TRANSITO'
+						 WHEN ba_Cbte_Ban.IdTipocbte = 5 then 
+						 'S EN TRANSITO' 
+						 END AS Titulo_grupo, 
+						 
+						 CASE WHEN ISNULL(ba_Cbte_Ban.cb_Cheque, '') <> '' THEN rtrim(ct_cbtecble_tipo.CodTipoCbte) 
                          + '#:' + ba_Cbte_Ban.cb_Cheque + ' cbte:' + rtrim(CAST(web.ba_SPBAN_004.IdCbteCble AS varchar(20))) ELSE rtrim(ct_cbtecble_tipo.CodTipoCbte) 
                          + '#: ' + rtrim(CAST(web.ba_SPBAN_004.IdCbteCble AS varchar(20))) END AS referencia, dbo.tb_empresa.em_ruc AS ruc_empresa, 
                          dbo.tb_empresa.em_nombre AS nom_empresa, A.co_SaldoBanco_EstCta AS SaldoBanco_EstCta, A.IdEstado_Concil_Cat AS Estado_Conciliacion, 

@@ -426,6 +426,8 @@ SELECT        A.IdEmpresa, A.IdConciliacion, A.IdBanco, A.IdPeriodo, dbo.ba_Banc
 						 'S EN TRANSITO' 
 						 END AS Titulo_grupo, 
 
+                        CASE WHEN ISNULL(ba_Cbte_Ban.cb_Cheque, '') <> '' THEN rtrim(ct_cbtecble_tipo.CodTipoCbte) 
+                         + '#:' + ba_Cbte_Ban.cb_Cheque /*+ ' cbte:' + rtrim(CAST(web.ba_SPBAN_004.IdCbteCble AS varchar(20)))*/ ELSE rtrim(ct_cbtecble_tipo.CodTipoCbte) 
                          + '#: ' + rtrim(CAST(web.ba_SPBAN_004.IdCbteCble AS varchar(20))) END AS referencia, dbo.tb_empresa.em_ruc AS ruc_empresa, 
                          dbo.tb_empresa.em_nombre AS nom_empresa, A.co_SaldoBanco_EstCta AS SaldoBanco_EstCta, A.IdEstado_Concil_Cat AS Estado_Conciliacion, 
                          case when dbo.ba_Cbte_Ban.Estado = 'I' THEN '**ANULADO** ' ELSE '' END +

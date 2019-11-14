@@ -20,7 +20,7 @@ namespace Core.Erp.Data.Reportes.Banco
                              select new BAN_004_Info
                              {
                                  IdEmpresa = q.IdEmpresa,
-                                 IdConciliacion = q.IdConciliacion, 
+                                 IdConciliacion = q.IdConciliacion,
                                  IdBanco = q.IdBanco,
                                  IdPeriodo = q.IdPeriodo,
                                  nom_banco = q.nom_banco,
@@ -50,7 +50,8 @@ namespace Core.Erp.Data.Reportes.Banco
                                  FechaFin = q.FechaFin,
                                  FechaIni = q.FechaIni,
                                  co_SaldoBanco_anterior = q.co_SaldoBanco_anterior,
-                                 TotalConciliadoNoContable = q.TotalConciliadoNoContable
+                                 TotalConciliadoNoContable = q.TotalConciliadoNoContable,
+                                 SaldoContableActual = q.SaldoContableActual
                              }).ToList();
                 }
                 return Lista;

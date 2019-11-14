@@ -1207,6 +1207,14 @@
     <Build Include="dbo\Views\vwaca_familia.sql" />
     <Build Include="dbo\Views\vwaca_alumno.sql" />
     <Build Include="dbo\Views\vwaca_AnioLectivo_Paralelo_Profesor.sql" />
+    <Build Include="dbo\Tables\aca_Plantilla_Rubro.sql" />
+    <Build Include="dbo\Tables\aca_Plantilla.sql" />
+    <Build Include="dbo\Tables\aca_Matricula.sql" />
+    <Build Include="dbo\Tables\aca_AnioLectivo_Rubro_Periodo.sql" />
+    <Build Include="dbo\Tables\aca_AnioLectivo_Rubro.sql" />
+    <Build Include="dbo\Tables\aca_AnioLectivo_Periodo.sql" />
+    <Build Include="dbo\Tables\aca_AnioLectivo_Curso_Plantilla.sql" />
+    <Build Include="dbo\Views\vwaca_AnioLectivo_Rubro.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

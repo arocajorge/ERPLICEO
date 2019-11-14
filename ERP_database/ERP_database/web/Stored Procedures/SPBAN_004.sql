@@ -27,6 +27,7 @@ declare @o_nomBanco varchar(200)
 declare @o_ba_Num_Cuenta varchar(200)
 declare @TotalConciliadoContable float
 declare @TotalConciliadoNoContable float
+declare @SaldoContableActual float
 
 delete web.ba_SPBAN_004
 
@@ -69,6 +70,12 @@ select @i_FechaIni=A.pe_FechaIni ,@i_FechaFin=A.pe_FechaFin
 from ct_periodo A
 where A.IdEmpresa=@IdEmpresa
 and A.IdPeriodo=@IdPeriodo
+END
+
+BEGIN --OBTENGO SALDO CONTABLE ACTUAL
+	select @SaldoContableActual = round( sum(d.dc_Valor),2) from ct_cbtecble as c inner join ct_cbtecble_det as d
+	on c.IdEmpresa = d.IdEmpresa and c.IdTipoCbte = d.IdTipoCbte and c.IdCbteCble = d.IdCbteCble
+	where c.IdEmpresa = @IdEmpresa and c.cb_Fecha <= @i_FechaFin and d.IdCtaCble  = @IdCtaCble
 END
 
 BEGIN --CALCULO SALDO INICIAL
@@ -306,8 +313,9 @@ SELECT       @IdEmpresa,@IdConciliacion,C.IdTipoCbte,C.IdCbteCble,D.secuencia
 FROM            ct_cbtecble_det AS D INNER JOIN
 ct_cbtecble AS C ON C.IdEmpresa = D.IdEmpresa AND C.IdTipoCbte = D.IdTipoCbte AND D.IdCbteCble = C.IdCbteCble
 WHERE        (C.IdEmpresa = @IdEmpresa) AND (D.IdCtaCble = @IdCtaCble) AND (D.dc_Valor < 0) 
-AND C.cb_Fecha <= @i_FechaFin AND C.cb_Estado = 'A' 
-AND C.cb_Observacion NOT LIKE '%**REVERS%' AND SUBSTRING(C.cb_Observacion, 1, 2) != '**'
+AND C.cb_Fecha <= @i_FechaFin 
+--AND C.cb_Estado = 'A' 
+--AND C.cb_Observacion NOT LIKE '%**REVERS%' AND SUBSTRING(C.cb_Observacion, 1, 2) != '**'
 AND ISNULL(D.dc_para_conciliar,0) = 1
 AND EXISTS
             (
@@ -321,7 +329,15 @@ AND EXISTS
             WHERE ba_Conciliacion.IdPeriodo <= @IdPeriodo and ba_Conciliacion_det_IngEgr.IdEmpresa = D.IdEmpresa AND 
             ba_Conciliacion_det_IngEgr.IdTipocbte = D.IdTipoCbte AND ba_Conciliacion_det_IngEgr.IdCbteCble = D.IdCbteCble AND 
             ba_Conciliacion_det_IngEgr.SecuenciaCbteCble = D.secuencia and ba_Conciliacion.IdEmpresa = @IdEmpresa and ba_Conciliacion_det_IngEgr.checked = 0
-            and ba_Conciliacion_det_IngEgr.IdConciliacion = @IdConciliacion)
+            and ba_Conciliacion_det_IngEgr.IdConciliacion = @IdConciliacion
+			and not exists(
+				select * from ct_cbtecble as a inner join ct_cbtecble_Reversado as b on a.IdEmpresa = b.IdEmpresa and a.IdTipoCbte = b.IdTipoCbte and a.IdCbteCble = b.IdCbteCble
+				inner join ct_cbtecble as c on b.IdEmpresa_Anu = c.IdEmpresa and b.IdTipoCbte_Anu = c.IdTipoCbte and b.IdCbteCble_Anu = c.IdCbteCble
+				where c.IdEmpresa = @IdEmpresa and c.cb_Fecha <= @i_FechaFin
+				and ct_cbtecble_det.IdEmpresa = a.IdEmpresa
+				and ct_cbtecble_det.IdTipoCbte = a.IdTipoCbte
+				and ct_cbtecble_det.IdCbteCble = a.IdCbteCble
+			))
             
 END
 
@@ -398,6 +414,7 @@ SELECT        A.IdEmpresa, A.IdConciliacion, A.IdBanco, A.IdPeriodo, dbo.ba_Banc
                          dbo.ct_cbtecble_tipo.tc_TipoCbte AS Tipo_Cbte,web.ba_SPBAN_004.IdCbteCble, web.ba_SPBAN_004.IdTipoCbte,web.ba_SPBAN_004.secuencia AS SecuenciaCbte, 
                          isnull(dbo.ct_cbtecble_det.dc_Valor,0) AS Valor, dbo.ct_cbtecble_det.dc_Observacion AS Observacion, 
                          dbo.ba_Cbte_Ban.cb_Cheque AS Cheque, ISNULL(@SaldoInicial, 0) AS SaldoInicial, ISNULL(@SaldoFin, 0) AS SaldoFinal, RTRIM(dbo.ct_cbtecble_tipo.tc_TipoCbte) 
+
                          + 
 						 CASE WHEN ba_Cbte_Ban.IdTipocbte = 2 then 
 						 'S GIRADOS Y NO COBRADOS' 
@@ -408,9 +425,7 @@ SELECT        A.IdEmpresa, A.IdConciliacion, A.IdBanco, A.IdPeriodo, dbo.ba_Banc
 						 WHEN ba_Cbte_Ban.IdTipocbte = 5 then 
 						 'S EN TRANSITO' 
 						 END AS Titulo_grupo, 
-						 
-						 CASE WHEN ISNULL(ba_Cbte_Ban.cb_Cheque, '') <> '' THEN rtrim(ct_cbtecble_tipo.CodTipoCbte) 
-                         + '#:' + ba_Cbte_Ban.cb_Cheque + ' cbte:' + rtrim(CAST(web.ba_SPBAN_004.IdCbteCble AS varchar(20))) ELSE rtrim(ct_cbtecble_tipo.CodTipoCbte) 
+
                          + '#: ' + rtrim(CAST(web.ba_SPBAN_004.IdCbteCble AS varchar(20))) END AS referencia, dbo.tb_empresa.em_ruc AS ruc_empresa, 
                          dbo.tb_empresa.em_nombre AS nom_empresa, A.co_SaldoBanco_EstCta AS SaldoBanco_EstCta, A.IdEstado_Concil_Cat AS Estado_Conciliacion, 
                          case when dbo.ba_Cbte_Ban.Estado = 'I' THEN '**ANULADO** ' ELSE '' END +
@@ -418,7 +433,8 @@ SELECT        A.IdEmpresa, A.IdConciliacion, A.IdBanco, A.IdPeriodo, dbo.ba_Banc
                          dbo.ba_Cbte_Ban.cb_giradoA END AS GiradoA,
 						 
 						  dbo.ba_TipoFlujo.IdTipoFlujo, dbo.ba_TipoFlujo.Descricion AS nom_tipo_flujo, ISNULL(@TotalConciliado, 0) 
-                         AS Total_Conciliado, @i_FechaIni AS FechaIni, @i_FechaFin AS FechaFin, isnull(@TotalConciliadoNoContable,0) TotalConciliadoNoContable, a.co_SaldoBanco_anterior
+                         AS Total_Conciliado, @i_FechaIni AS FechaIni, @i_FechaFin AS FechaFin, isnull(@TotalConciliadoNoContable,0) TotalConciliadoNoContable, a.co_SaldoBanco_anterior,
+						 isnull(@SaldoContableActual,0) SaldoContableActual
 FROM            ba_TipoFlujo RIGHT OUTER JOIN
                          web.ba_SPBAN_004 INNER JOIN
                          ba_Conciliacion AS A INNER JOIN
@@ -432,7 +448,7 @@ FROM            ba_TipoFlujo RIGHT OUTER JOIN
 where web.ba_SPBAN_004.IdEmpresa = @IdEmpresa AND isnull(ct_cbtecble_det.dc_para_conciliar,0) = 1
 UNION ALL
 SELECT d.IdEmpresa,d.IdConciliacion,c.IdBanco,c.IdPeriodo, b.ba_descripcion, b.ba_Num_Cuenta, b.IdCtaCble, d.Fecha, t.CodTipoCbteBan, ti.tc_TipoCbte, d.Secuencia, d.IdTipocbte, d.Secuencia, case WHEN d.tipo_IngEgr = '+' THEN d.Valor ELSE d.Valor *-1 END Valor,d.Observacion, d.Referencia,@SaldoInicial, @SaldoFin,
-'REGISTROS ADICIONALES ', d.Referencia, e.em_ruc, e.em_nombre, c.co_SaldoBanco_EstCta, c.IdEstado_Concil_Cat, d.Observacion,null,null,@TotalConciliado,@i_FechaIni AS FechaIni, @i_FechaFin AS FechaFin, isnull(@TotalConciliadoNoContable,0) TotalConciliadoNoContable, c.co_SaldoBanco_anterior
+'REGISTROS ADICIONALES ', d.Referencia, e.em_ruc, e.em_nombre, c.co_SaldoBanco_EstCta, c.IdEstado_Concil_Cat, d.Observacion,null,null,@TotalConciliado,@i_FechaIni AS FechaIni, @i_FechaFin AS FechaFin, isnull(@TotalConciliadoNoContable,0) TotalConciliadoNoContable, c.co_SaldoBanco_anterior, isnull(@SaldoContableActual,0) SaldoContableActual
 FROM ba_Conciliacion as c inner join 
 ba_Conciliacion_det as d on c.IdEmpresa = d.IdEmpresa and c.IdConciliacion = d.IdConciliacion inner join
 ba_Banco_Cuenta as b on b.IdEmpresa = c.IdEmpresa and b.IdBanco = c.IdBanco inner join 
@@ -449,10 +465,10 @@ begin
             A.IdEmpresa                    ,cast(@IdConciliacion as numeric) IdConciliacion    ,@IdBanco IdBanco        ,@IdPeriodo IdPeriodo        ,@o_nomBanco nom_banco        ,@o_ba_Num_Cuenta ba_Num_Cuenta    
             ,@IdCtaCble IdCtaCble        ,cast(@i_FechaIni as date ) Fecha                ,'' CodTipoCbte         ,'NO HAY REGISTRO' Tipo_Cbte                ,0 Secuencia        ,cast(0  as numeric) as IdCbteCble  
             ,0 IdTipocbte                ,0 SecuenciaCbte                ,cast(0 as float) Valor                ,'NO HAY REGISTRO' Observacion                ,''    Cheque    
-            ,ISNULL(@SaldoInicial,0) SaldoInicial    ,ISNULL(@SaldoFin,0) SaldoFinal            ,''Titulo_grupo            ,'NO HAY REGISTRO' referencia                ,A.em_ruc ruc_empresa    ,A.em_nombre nom_empresa
+            ,ISNULL(@SaldoInicial,0) SaldoInicial    ,ISNULL(@SaldoFin,0) SaldoFinal            ,''Titulo_grupo            ,'NO HAY REGISTRO' referencia                ,e.em_ruc ruc_empresa    ,e.em_nombre nom_empresa
             ,ISNULL(@SaldoContable,0) SaldoBanco_EstCta        ,@EstadoConciliado Estado_Conciliacion ,'' GiradoA
             ,null IdTipoFlujo            ,null AS nom_tipo_flujo            , ISNULL(@TotalConciliado,0) Total_Conciliado
-            ,cast(@i_FechaIni as date) as FechaIni,cast(@i_FechaFin as date )as FechaFin
-            from tb_empresa A
-            where A.IdEmpresa=@IdEmpresa 
+            ,cast(@i_FechaIni as date) as FechaIni,cast(@i_FechaFin as date )as FechaFin, isnull(@TotalConciliadoNoContable,0) TotalConciliadoNoContable, a.co_SaldoBanco_anterior, isnull(@SaldoContableActual,0) SaldoContableActual
+            from ba_Conciliacion A inner join tb_empresa as e on a.IdEmpresa = e.IdEmpresa
+            where A.IdEmpresa=@IdEmpresa  and a.IdConciliacion = @IdConciliacion
 end

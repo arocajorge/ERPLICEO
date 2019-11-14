@@ -716,16 +716,19 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         public void AddRow(cp_conciliacion_Caja_det_x_ValeCaja_Info info_det, decimal IdTransaccionSession)
         {
             List<cp_conciliacion_Caja_det_x_ValeCaja_Info> list = get_list(IdTransaccionSession);
-            info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
-            var per = bus_persona.get_info(info_det.IdPersona);
-            if (per != null)
-                info_det.pe_nombreCompleto = per.pe_nombreCompleto;
+            if (list.Where(q => q.IdCbteCble_movcaja == info_det.IdCbteCble_movcaja).Count() == 0)
+            {
+                info_det.Secuencia = list.Count == 0 ? 1 : list.Max(q => q.Secuencia) + 1;
+                var per = bus_persona.get_info(info_det.IdPersona);
+                if (per != null)
+                    info_det.pe_nombreCompleto = per.pe_nombreCompleto;
 
-            var tipo = bus_tipo_movi.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), Convert.ToInt32(info_det.idTipoMovi));
-            if (tipo != null)
-                info_det.IdCtaCble = tipo.IdCtaCble;
+                var tipo = bus_tipo_movi.get_info(Convert.ToInt32(SessionFixed.IdEmpresa), Convert.ToInt32(info_det.idTipoMovi));
+                if (tipo != null)
+                    info_det.IdCtaCble = tipo.IdCtaCble;
 
-            list.Add(info_det);
+                list.Add(info_det);
+            }
         }
 
         public void UpdateRow(cp_conciliacion_Caja_det_x_ValeCaja_Info info_det, decimal IdTransaccionSession)

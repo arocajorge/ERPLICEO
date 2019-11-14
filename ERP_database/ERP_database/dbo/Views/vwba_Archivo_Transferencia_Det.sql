@@ -1,31 +1,54 @@
 ﻿CREATE VIEW [dbo].[vwba_Archivo_Transferencia_Det]
 AS
 SELECT d.IdEmpresa, d.IdArchivo, d.Secuencia, d.IdEmpresa_OP, d.IdOrdenPago, d.Secuencia_OP, d.Estado, d.Valor, d.Secuencial_reg_x_proceso, 
+                  
+				  CASE WHEN cp_orden_pago.IdTipo_op <> 'FACT_PROVEE' THEN ISNULL(cp_proveedor_detalle.IdTipoCta_acreditacion_cat, cp_proveedor.IdTipoCta_acreditacion_cat) 
+				  ELSE ISNULL(pd.IdTipoCta_acreditacion_cat, pog.IdTipoCta_acreditacion_cat) END AS IdTipoCta_acreditacion_cat, 
+				  
+				  CASE WHEN cp_orden_pago.IdTipo_op <> 'FACT_PROVEE' THEN ISNULL(cp_proveedor_detalle.num_cta_acreditacion, cp_proveedor.num_cta_acreditacion) 
+				  ELSE ISNULL(pd.num_cta_acreditacion, pog.num_cta_acreditacion) END AS num_cta_acreditacion, 
 
-isnull(pd.IdTipoCta_acreditacion_cat, dbo.cp_proveedor.IdTipoCta_acreditacion_cat) IdTipoCta_acreditacion_cat, 
-isnull(pd.num_cta_acreditacion, dbo.cp_proveedor.num_cta_acreditacion)num_cta_acreditacion, 
-isnull(pd.IdBanco_acreditacion, dbo.cp_proveedor.IdBanco_acreditacion) IdBanco_acreditacion, 
-				  dbo.cp_proveedor.pr_direccion, isnull(pd.pr_correo, dbo.cp_proveedor.pr_correo)pr_correo, dbo.tb_persona.IdTipoDocumento, dbo.tb_persona.pe_cedulaRuc, 
-				  isnull(pd.NombreAdicional, dbo.tb_persona.pe_nombreCompleto)pe_nombreCompleto, 
-                  dbo.tb_banco.CodigoLegal AS CodigoLegalBanco, d.Referencia, dbo.cp_orden_pago.IdTipo_Persona, dbo.cp_orden_pago.IdPersona, dbo.cp_orden_pago.IdEntidad, dbo.ct_cbtecble.cb_Fecha, ct.IdCtaCble_Acreedora, 
-                  pc.IdCtaCble + ' - ' + pc.pc_Cuenta AS pc_Cuenta, dbo.cp_orden_pago_det.IdEmpresa_cxp, dbo.cp_orden_pago_det.IdTipoCbte_cxp, dbo.cp_orden_pago_det.IdCbteCble_cxp
+                  CASE WHEN cp_orden_pago.IdTipo_op <> 'FACT_PROVEE' THEN ISNULL(cp_proveedor_detalle.IdBanco_acreditacion, cp_proveedor.IdBanco_acreditacion) 
+				  ELSE ISNULL(pd.IdBanco_acreditacion, pog.IdBanco_acreditacion) END AS IdBanco_acreditacion, 
+
+				  dbo.cp_proveedor.pr_direccion, 
+
+				  CASE WHEN cp_orden_pago.IdTipo_op <> 'FACT_PROVEE' THEN ISNULL(cp_proveedor_detalle.pr_correo, cp_proveedor.pr_correo) 
+				  else ISNULL(pd.pr_correo, pog.pr_correo) end AS pr_correo, 
+				  
+				  dbo.tb_persona.IdTipoDocumento, 
+                  dbo.tb_persona.pe_cedulaRuc, 
+				  
+				  CASE WHEN cp_orden_pago.IdTipo_op <> 'FACT_PROVEE' THEN ISNULL(cp_proveedor_detalle.NombreAdicional, tb_persona.pe_nombreCompleto) 
+				  else ISNULL(pd.NombreAdicional, eog.pe_nombreCompleto) end AS pe_nombreCompleto, 
+				  
+				  dbo.tb_banco.CodigoLegal AS CodigoLegalBanco, 
+				  
+				  d.Referencia, dbo.cp_orden_pago.IdTipo_Persona, 
+                  dbo.cp_orden_pago.IdPersona, dbo.cp_orden_pago.IdEntidad, dbo.ct_cbtecble.cb_Fecha, ct.IdCtaCble_Acreedora, pc.IdCtaCble + ' - ' + pc.pc_Cuenta AS pc_Cuenta, dbo.cp_orden_pago_det.IdEmpresa_cxp, 
+                  dbo.cp_orden_pago_det.IdTipoCbte_cxp, dbo.cp_orden_pago_det.IdCbteCble_cxp
 FROM     dbo.ba_Archivo_Transferencia INNER JOIN
                   dbo.ba_Archivo_Transferencia_Det AS d INNER JOIN
                   dbo.cp_orden_pago_det ON d.IdEmpresa_OP = dbo.cp_orden_pago_det.IdEmpresa AND d.IdOrdenPago = dbo.cp_orden_pago_det.IdOrdenPago AND d.Secuencia_OP = dbo.cp_orden_pago_det.Secuencia INNER JOIN
                   dbo.cp_orden_pago ON dbo.cp_orden_pago_det.IdEmpresa = dbo.cp_orden_pago.IdEmpresa AND dbo.cp_orden_pago_det.IdOrdenPago = dbo.cp_orden_pago.IdOrdenPago INNER JOIN
                   dbo.tb_persona INNER JOIN
                   dbo.cp_proveedor ON dbo.tb_persona.IdPersona = dbo.cp_proveedor.IdPersona ON dbo.cp_orden_pago.IdPersona = dbo.cp_proveedor.IdPersona AND dbo.cp_orden_pago.IdEntidad = dbo.cp_proveedor.IdProveedor AND 
-                  dbo.cp_orden_pago.IdEmpresa = dbo.cp_proveedor.IdEmpresa ON dbo.ba_Archivo_Transferencia.IdEmpresa = d.IdEmpresa AND dbo.ba_Archivo_Transferencia.IdArchivo = d.IdArchivo 
-				  left join 
-				  cp_orden_giro as og on cp_orden_pago_det.IdEmpresa_cxp = og.IdEmpresa and cp_orden_pago_det.IdTipoCbte_cxp = og.IdTipoCbte_Ogiro and cp_orden_pago_det.IdCbteCble_cxp = og.IdCbteCble_Ogiro left join
-				  cp_proveedor_detalle as pd on pd.IdEmpresa = og.IdEmpresa and pd.IdProveedor = og.IdProveedor and pd.Secuencia = og.SecuenciaProveedor
-				  INNER JOIN
-                  dbo.tb_banco ON dbo.tb_banco.IdBanco = ISNULL(pd.IdBanco_acreditacion, dbo.cp_proveedor.IdBanco_acreditacion) INNER JOIN
+                  dbo.cp_orden_pago.IdEmpresa = dbo.cp_proveedor.IdEmpresa ON dbo.ba_Archivo_Transferencia.IdEmpresa = d.IdEmpresa AND dbo.ba_Archivo_Transferencia.IdArchivo = d.IdArchivo LEFT OUTER JOIN
+                  dbo.cp_orden_giro AS og ON dbo.cp_orden_pago_det.IdEmpresa_cxp = og.IdEmpresa AND dbo.cp_orden_pago_det.IdTipoCbte_cxp = og.IdTipoCbte_Ogiro AND 
+                  dbo.cp_orden_pago_det.IdCbteCble_cxp = og.IdCbteCble_Ogiro LEFT OUTER JOIN
+                  dbo.cp_proveedor_detalle AS pd ON pd.IdEmpresa = og.IdEmpresa AND pd.IdProveedor = og.IdProveedor AND pd.Secuencia = og.SecuenciaProveedor  INNER JOIN
                   dbo.ct_cbtecble ON dbo.cp_orden_pago_det.IdEmpresa_cxp = dbo.ct_cbtecble.IdEmpresa AND dbo.cp_orden_pago_det.IdTipoCbte_cxp = dbo.ct_cbtecble.IdTipoCbte AND 
                   dbo.cp_orden_pago_det.IdCbteCble_cxp = dbo.ct_cbtecble.IdCbteCble LEFT OUTER JOIN
+                  dbo.cp_proveedor AS pog ON og.IdEmpresa = pog.IdEmpresa AND og.IdProveedor = pog.IdProveedor LEFT OUTER JOIN
+                  dbo.cp_proveedor_detalle ON dbo.cp_orden_pago.IdEmpresa = dbo.cp_proveedor_detalle.IdEmpresa AND dbo.cp_orden_pago.IdEntidad = dbo.cp_proveedor_detalle.IdProveedor AND 
+                  dbo.cp_orden_pago.SecuenciaProveedor = dbo.cp_proveedor_detalle.Secuencia LEFT OUTER JOIN
                   dbo.vwct_cbtecble_con_ctacble_acreedora AS ct ON ct.IdEmpresa = dbo.cp_orden_pago_det.IdEmpresa AND ct.IdTipoCbte = dbo.cp_orden_pago_det.IdTipoCbte_cxp AND 
                   ct.IdCbteCble = dbo.cp_orden_pago_det.IdCbteCble_cxp LEFT OUTER JOIN
-                  dbo.ct_plancta AS pc ON ct.IdEmpresa = pc.IdEmpresa AND ct.IdCtaCble_Acreedora = pc.IdCtaCble
+                  dbo.ct_plancta AS pc ON ct.IdEmpresa = pc.IdEmpresa AND ct.IdCtaCble_Acreedora = pc.IdCtaCble AND dbo.cp_orden_pago.IdTipo_Persona = 'PROVEE' left join 
+				  tb_persona as eog on pog.IdPersona = eog.IdPersona INNER JOIN
+                  dbo.tb_banco ON dbo.tb_banco.IdBanco = CASE WHEN cp_orden_pago.IdTipo_op <> 'FACT_PROVEE' THEN ISNULL(cp_proveedor_detalle.IdBanco_acreditacion, cp_proveedor.IdBanco_acreditacion) 
+				  ELSE ISNULL(pd.IdBanco_acreditacion, pog.IdBanco_acreditacion) end
+--where ba_Archivo_Transferencia.IdArchivo = 83
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwba_Archivo_Transferencia_Det';
 

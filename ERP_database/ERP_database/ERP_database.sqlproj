@@ -1219,6 +1219,7 @@
     <Build Include="dbo\Tables\aca_Matricula_Rubro.sql" />
     <Build Include="dbo\Views\vwaca_Plantilla_Rubro.sql" />
     <Build Include="dbo\Views\vwaca_Matricula_AlumnosPorParalelo.sql" />
+    <Build Include="dbo\Views\vwaca_Matricula.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

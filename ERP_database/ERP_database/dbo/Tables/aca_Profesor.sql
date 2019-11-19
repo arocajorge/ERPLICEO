@@ -7,6 +7,8 @@
     [Correo]                VARCHAR (500)  NULL,
     [Direccion]             VARCHAR (1000) NULL,
     [Telefonos]             VARCHAR (500)  NULL,
+    [EsProfesor]            BIT            NOT NULL,
+    [EsInspector]           BIT            NOT NULL,
     [IdUsuarioCreacion]     VARCHAR (200)  NULL,
     [FechaCreacion]         DATETIME       NULL,
     [IdUsuarioModificacion] VARCHAR (200)  NULL,
@@ -17,6 +19,8 @@
     CONSTRAINT [PK_aca_Profesor] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdProfesor] ASC),
     CONSTRAINT [FK_aca_Profesor_tb_persona] FOREIGN KEY ([IdPersona]) REFERENCES [dbo].[tb_persona] ([IdPersona])
 );
+
+
 
 
 

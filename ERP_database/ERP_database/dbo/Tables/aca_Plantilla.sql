@@ -4,6 +4,7 @@
     [IdPlantilla]           INT             NOT NULL,
     [NomPlantilla]          VARCHAR (500)   NOT NULL,
     [Valor]                 NUMERIC (18, 2) NOT NULL,
+    [TipoDescuento]         VARCHAR (1)     NOT NULL,
     [Estado]                BIT             NOT NULL,
     [IdUsuarioCreacion]     VARCHAR (200)   NULL,
     [FechaCreacion]         DATETIME        NULL,
@@ -14,4 +15,6 @@
     [MotivoAnulacion]       VARCHAR (MAX)   NULL,
     CONSTRAINT [PK_aca_Plantilla] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdAnio] ASC, [IdPlantilla] ASC)
 );
+
+
 

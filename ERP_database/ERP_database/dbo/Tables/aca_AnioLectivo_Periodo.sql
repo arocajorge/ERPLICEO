@@ -5,6 +5,7 @@
     [IdMes]                 INT           NOT NULL,
     [FechaDesde]            DATE          NOT NULL,
     [FechaHasta]            DATE          NOT NULL,
+    [FechaProntoPago]       DATETIME      NULL,
     [Estado]                BIT           NOT NULL,
     [IdUsuarioCreacion]     VARCHAR (200) NULL,
     [FechaCreacion]         DATETIME      NULL,
@@ -16,4 +17,6 @@
     CONSTRAINT [PK_aca_AnioLectivo_Periodo] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdPeriodo] ASC),
     CONSTRAINT [FK_aca_AnioLectivo_Periodo_aca_AnioLectivo] FOREIGN KEY ([IdEmpresa], [IdAnio]) REFERENCES [dbo].[aca_AnioLectivo] ([IdEmpresa], [IdAnio])
 );
+
+
 

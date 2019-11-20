@@ -35,8 +35,8 @@ and f.IdMenu = menu.IdMenuPadre
 )
 group by menu.IdMenuPadre
 
-insert into aca_Menu_x_seg_usuario (IdEmpresa,IdSede,IdMenu,IdUsuario,Perfil)
-select @IdEmpresa, @IdSede, menu.IdMenuPadre, @IdUsuario, 0
+insert into aca_Menu_x_seg_usuario (IdEmpresa,IdSede,IdMenu,IdUsuario,Nuevo,Modificar,Anular)
+select @IdEmpresa, @IdSede, menu.IdMenuPadre, @IdUsuario, 0,0,0
 from seg_Menu as menu
 join aca_Menu_x_seg_usuario as me
 on me.IdMenu = menu.IdMenu
@@ -51,8 +51,8 @@ and f.IdUsuario = @IdUsuario
 )
 group by menu.IdMenuPadre
 
-insert into aca_Menu_x_seg_usuario(IdEmpresa,IdSede,IdMenu,IdUsuario,Perfil)
-select @IdEmpresa, @IdSede, menu.IdMenuPadre, @IdUsuario, 0
+insert into aca_Menu_x_seg_usuario(IdEmpresa,IdSede,IdMenu,IdUsuario,Nuevo,Modificar,Anular)
+select @IdEmpresa, @IdSede, menu.IdMenuPadre, @IdUsuario, 0,0,0
 from seg_Menu as menu
 join aca_Menu_x_seg_usuario as me
 on me.IdMenu = menu.IdMenu

@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[aca_alumno] (
+﻿CREATE TABLE [dbo].[aca_Alumno] (
     [IdEmpresa]             INT            NOT NULL,
     [IdAlumno]              NUMERIC (18)   NOT NULL,
     [Codigo]                VARCHAR (200)  NULL,
@@ -10,7 +10,6 @@
     [IdCatalogoESTMAT]      INT            NOT NULL,
     [IdCurso]               INT            NULL,
     [IdCatalogoESTALU]      INT            NOT NULL,
-    [MotivoNoMatricula]     VARCHAR (1000) NULL,
     [FechaIngreso]          DATE           NOT NULL,
     [IdUsuarioCreacion]     VARCHAR (200)  NULL,
     [FechaCreacion]         DATETIME       NULL,
@@ -24,4 +23,6 @@
     CONSTRAINT [FK_aca_alumno_aca_Catalogo2] FOREIGN KEY ([IdCatalogoESTALU]) REFERENCES [dbo].[aca_Catalogo] ([IdCatalogo]),
     CONSTRAINT [FK_aca_alumno_aca_Curso] FOREIGN KEY ([IdEmpresa], [IdCurso]) REFERENCES [dbo].[aca_Curso] ([IdEmpresa], [IdCurso])
 );
+
+
 

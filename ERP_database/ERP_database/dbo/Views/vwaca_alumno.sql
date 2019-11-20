@@ -1,9 +1,9 @@
-﻿CREATE VIEW dbo.vwaca_alumno
+﻿CREATE VIEW dbo.vwaca_Alumno
 AS
 SELECT dbo.aca_alumno.IdEmpresa, dbo.aca_alumno.IdAlumno, dbo.aca_alumno.Codigo, dbo.aca_alumno.IdPersona, dbo.tb_persona.pe_Naturaleza, dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, 
                   dbo.tb_persona.IdTipoDocumento, dbo.tb_persona.pe_cedulaRuc, dbo.aca_alumno.Direccion, dbo.aca_alumno.Celular, dbo.aca_alumno.Correo, dbo.tb_persona.pe_sexo, dbo.tb_persona.pe_fechaNacimiento, 
                   dbo.tb_persona.CodCatalogoSangre, dbo.tb_persona.CodCatalogoCONADIS, dbo.tb_persona.PorcentajeDiscapacidad, dbo.tb_persona.NumeroCarnetConadis, dbo.aca_alumno.Estado, dbo.aca_alumno.IdCatalogoESTMAT, 
-                  dbo.aca_alumno.IdCurso, dbo.aca_alumno.IdCatalogoESTALU, dbo.aca_alumno.MotivoNoMatricula, dbo.tb_persona.pe_telfono_Contacto, aca_Catalogo_1.NomCatalogo AS NomCatalogoESTMAT, 
+                  dbo.aca_alumno.IdCurso, dbo.aca_alumno.IdCatalogoESTALU, dbo.tb_persona.pe_telfono_Contacto, aca_Catalogo_1.NomCatalogo AS NomCatalogoESTMAT, 
                   dbo.aca_Catalogo.NomCatalogo AS NomCatalogoESTALU
 FROM     dbo.aca_alumno INNER JOIN
                   dbo.tb_persona ON dbo.aca_alumno.IdPersona = dbo.tb_persona.IdPersona LEFT OUTER JOIN

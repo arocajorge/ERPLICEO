@@ -3,6 +3,36 @@ DELETE aca_Menu_x_aca_Sede
 DELETE [dbo].[aca_Menu]
 DELETE [dbo].[aca_Sede]
 
+BEGIN --CATALOGO
+INSERT [dbo].[aca_CatalogoTipo] ([IdCatalogoTipo], [Codigo], [NomCatalogoTipo], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (1, N'ESTMAT', N'ESTADO MATRICULACION', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_CatalogoTipo] ([IdCatalogoTipo], [Codigo], [NomCatalogoTipo], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (2, N'ESTALU', N'ESTADO ALUMNO', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_CatalogoTipo] ([IdCatalogoTipo], [Codigo], [NomCatalogoTipo], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (3, N'PAREN', N'PARENTESCO', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_CatalogoTipo] ([IdCatalogoTipo], [Codigo], [NomCatalogoTipo], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (4, N'PERNEG', N'PERMISO O NEGACION DE MATRICULA', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+
+
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (1, 1, NULL, N'REGISTRADO', 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (2, 1, NULL, N'MATRICULADO', 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (3, 2, NULL, N'CURSANDO', 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (4, 2, NULL, N'REPROBADO NOTAS', 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (5, 2, NULL, N'REPROBADO DEUDA', 3, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (6, 2, NULL, N'REPROBADO OTROS', 4, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (7, 2, NULL, N'SUPLENCIA', 5, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (8, 2, NULL, N'PROMOVIDO', 6, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (9, 2, NULL, N'NO PROMOVIDO', 7, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (10, 3, NULL, N'PAPA', 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (11, 3, NULL, N'MAMA', 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (12, 3, NULL, N'REPRESENTANTE ECONOMICO', 3, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (13, 3, NULL, N'HERMANO', 4, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (14, 3, NULL, N'HERMANA', 5, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (15, 3, NULL, N'ABUELA', 6, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (16, 3, NULL, N'ABUELO', 7, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (17, 3, NULL, N'TIO', 8, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (18, 3, NULL, N'TIA', 9, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (19, 4, NULL, N'PERMITIR MATRICULA', 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[aca_Catalogo] ([IdCatalogo], [IdCatalogoTipo], [Codigo], [NomCatalogo], [Orden], [Estado], [IdUsuarioCreacion], [FechaCreacion], [IdUsuarioModificacion], [FechaModificacion], [IdUsuarioAnulacion], [FechaAnulacion], [MotivoAnulacion]) VALUES (20, 4, NULL, N'NEGAR MATRICULA', 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+
+END
+
 BEGIN --MENU
 	INSERT [dbo].[aca_Menu] ([IdMenu], [IdMenuPadre], [DescripcionMenu], [PosicionMenu], [Estado], [nivel], [web_nom_Area], [web_nom_Controller], [web_nom_Action]) VALUES (1, 3, N'Sede', 4, 1, 1, N'Academico', N'Sede', N'Index')
 	INSERT [dbo].[aca_Menu] ([IdMenu], [IdMenuPadre], [DescripcionMenu], [PosicionMenu], [Estado], [nivel], [web_nom_Area], [web_nom_Controller], [web_nom_Action]) VALUES (2, 0, N'Academico', 2, 1, 1, NULL, N'', NULL)
@@ -37,6 +67,10 @@ BEGIN --SEDE
 END
 
 BEGIN --PERMISOS
+ 
+	insert into seg_usuario_x_aca_Sede
+	SELECT 'admin',    1,    1,    '' 
+
 	insert into aca_Menu_x_aca_Sede
 	select b.IdEmpresa, b.IdSede, a.IdMenu, '' from aca_Menu a, aca_Sede b
 

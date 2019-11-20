@@ -1,8 +1,8 @@
 ﻿CREATE TABLE [dbo].[aca_Documento] (
     [IdEmpresa]             INT           NOT NULL,
     [IdDocumento]           INT           NOT NULL,
-    [NomDocumento]          VARCHAR (500) NULL,
-    [OrdenDocumento]        INT           NULL,
+    [NomDocumento]          VARCHAR (500) NOT NULL,
+    [OrdenDocumento]        INT           NOT NULL,
     [Estado]                BIT           NOT NULL,
     [IdUsuarioCreacion]     VARCHAR (200) NULL,
     [FechaCreacion]         DATETIME      NULL,
@@ -13,4 +13,6 @@
     [MotivoAnulacion]       VARCHAR (MAX) NULL,
     CONSTRAINT [PK_aca_Documento] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdDocumento] ASC)
 );
+
+
 

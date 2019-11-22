@@ -1226,6 +1226,9 @@
     <Build Include="dbo\Views\vwaca_AnioLectivo_Curso_Paralelo.sql" />
     <Build Include="dbo\Tables\aca_PermisoMatricula.sql" />
     <Build Include="dbo\Tables\aca_MecanismoDePago.sql" />
+    <Build Include="dbo\Views\vwaca_Plantilla_Rubro_Matricula.sql" />
+    <Build Include="dbo\Views\vwaca_PermisoMatricula.sql" />
+    <Build Include="dbo\Views\vwaca_Matricula_Rubro.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

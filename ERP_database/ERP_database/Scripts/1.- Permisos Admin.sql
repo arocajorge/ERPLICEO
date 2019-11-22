@@ -59,6 +59,20 @@ BEGIN --MENU
 	INSERT [dbo].[aca_Menu] ([IdMenu], [IdMenuPadre], [DescripcionMenu], [PosicionMenu], [Estado], [nivel], [web_nom_Area], [web_nom_Controller], [web_nom_Action]) VALUES (23, 17, N'Asignación de profesor por materia', 6, 1, 1, N'Academico', N'MateriaPorProfesor', N'Index')
 	INSERT [dbo].[aca_Menu] ([IdMenu], [IdMenuPadre], [DescripcionMenu], [PosicionMenu], [Estado], [nivel], [web_nom_Area], [web_nom_Controller], [web_nom_Action]) VALUES (24, 3, N'Alumno', 12, 1, 1, N'Academico', N'Alumno', N'Index')
 	INSERT [dbo].[aca_Menu] ([IdMenu], [IdMenuPadre], [DescripcionMenu], [PosicionMenu], [Estado], [nivel], [web_nom_Area], [web_nom_Controller], [web_nom_Action]) VALUES (25, 3, N'Profesor', 13, 1, 1, N'Academico', N'Profesor', N'Index')
+	INSERT [dbo].[aca_Menu] ([IdMenu], [IdMenuPadre], [DescripcionMenu], [PosicionMenu], [Estado], [nivel], [web_nom_Area], [web_nom_Controller], [web_nom_Action]) VALUES (26, 0, N'Colecturia', 4, 1, 1, N'Academico', N'', NULL)
+	INSERT [dbo].[aca_Menu] ([IdMenu], [IdMenuPadre], [DescripcionMenu], [PosicionMenu], [Estado], [nivel], [web_nom_Area], [web_nom_Controller], [web_nom_Action]) VALUES (27, 26, N'Mantenimeintos', 1, 1, 1, N'Academico', N'', NULL)
+	INSERT [dbo].[aca_Menu] ([IdMenu], [IdMenuPadre], [DescripcionMenu], [PosicionMenu], [Estado], [nivel], [web_nom_Area], [web_nom_Controller], [web_nom_Action]) VALUES (28, 27, N'Rubro por periodo', 2, 1, 1, N'Academico', N'RubroPorPeriodo', N'Index')
+	INSERT [dbo].[aca_Menu] ([IdMenu], [IdMenuPadre], [DescripcionMenu], [PosicionMenu], [Estado], [nivel], [web_nom_Area], [web_nom_Controller], [web_nom_Action]) VALUES (29, 27, N'Plantilla', 3, 1, 1, N'Academico', N'Plantilla', N'Index')
+	INSERT [dbo].[aca_Menu] ([IdMenu], [IdMenuPadre], [DescripcionMenu], [PosicionMenu], [Estado], [nivel], [web_nom_Area], [web_nom_Controller], [web_nom_Action]) VALUES (30, 36, N'Plantillas por curso', 2, 1, 1, N'Academico', N'PlantillaPorCurso', N'Index')
+	INSERT [dbo].[aca_Menu] ([IdMenu], [IdMenuPadre], [DescripcionMenu], [PosicionMenu], [Estado], [nivel], [web_nom_Area], [web_nom_Controller], [web_nom_Action]) VALUES (31, 2, N'Procesos', 4, 1, 1, N'Academico', N'', NULL)
+	INSERT [dbo].[aca_Menu] ([IdMenu], [IdMenuPadre], [DescripcionMenu], [PosicionMenu], [Estado], [nivel], [web_nom_Area], [web_nom_Controller], [web_nom_Action]) VALUES (32, 31, N'Matriculacion', 1, 1, 1, N'Academico', N'Matricula', N'Index')
+	INSERT [dbo].[aca_Menu] ([IdMenu], [IdMenuPadre], [DescripcionMenu], [PosicionMenu], [Estado], [nivel], [web_nom_Area], [web_nom_Controller], [web_nom_Action]) VALUES (33, 27, N'Rubros', 1, 1, 1, N'Academico', N'Rubro', N'Index')
+	INSERT [dbo].[aca_Menu] ([IdMenu], [IdMenuPadre], [DescripcionMenu], [PosicionMenu], [Estado], [nivel], [web_nom_Area], [web_nom_Controller], [web_nom_Action]) VALUES (34, 3, N'Documentos Habilitantes', 14, 1, 1, N'Academico', N'Documento', N'Index')
+	INSERT [dbo].[aca_Menu] ([IdMenu], [IdMenuPadre], [DescripcionMenu], [PosicionMenu], [Estado], [nivel], [web_nom_Area], [web_nom_Controller], [web_nom_Action]) VALUES (35, 17, N'Asignacion de documentos por curso', 7, 1, 1, N'Academico', N'DocumentoPorCurso', N'Index')
+	INSERT [dbo].[aca_Menu] ([IdMenu], [IdMenuPadre], [DescripcionMenu], [PosicionMenu], [Estado], [nivel], [web_nom_Area], [web_nom_Controller], [web_nom_Action]) VALUES (36, 26, N'Configuracion', 2, 1, 1, NULL, N'', NULL)
+	INSERT [dbo].[aca_Menu] ([IdMenu], [IdMenuPadre], [DescripcionMenu], [PosicionMenu], [Estado], [nivel], [web_nom_Area], [web_nom_Controller], [web_nom_Action]) VALUES (37, 36, N'Periodos por año lectivo', 1, 1, 1, N'Academico', N'PeriodoPorAnioLectivo', N'Index')
+	INSERT [dbo].[aca_Menu] ([IdMenu], [IdMenuPadre], [DescripcionMenu], [PosicionMenu], [Estado], [nivel], [web_nom_Area], [web_nom_Controller], [web_nom_Action]) VALUES (38, 17, N'Asignacion de tutor e inspector', 8, 1, 1, N'Academico', N'AsignacionTutorInspector', N'Index')
+
 END
 
 BEGIN --SEDE
@@ -75,6 +89,6 @@ BEGIN --PERMISOS
 	select b.IdEmpresa, b.IdSede, a.IdMenu, '' from aca_Menu a, aca_Sede b
 
 	insert into aca_Menu_x_seg_usuario
-	select a.IdEmpresa, a.IdSede, a.IdMenu, b.IdUsuario, '' from aca_Menu_x_aca_Sede a, seg_usuario b
+	select a.IdEmpresa, a.IdSede, a.IdMenu, b.IdUsuario, 1,1,1 from aca_Menu_x_aca_Sede a, seg_usuario b
 	where b.IdUsuario = 'admin'
 END

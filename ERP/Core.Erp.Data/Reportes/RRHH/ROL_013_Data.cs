@@ -28,6 +28,7 @@ namespace Core.Erp.Data.Reportes.RRHH
                 List<ROL_013_Info> Lista = new List<ROL_013_Info>();
                 using (Entities_reportes Context = new Entities_reportes())
                 {
+                    Context.SetCommandTimeOut(3000);
                     Lista = Context.SPROL_013(IdEmpresa, IdNomina, IdSucursalIni, IdSucursalFin, IdEmpleadoIni, IdEmpleadoFin,
                                             IdDivisionIni, IdDivisionFin, IdArealIni, IdAreaFin, FechaIni, FechaFin).Select(q=> new ROL_013_Info
                     {
@@ -53,7 +54,7 @@ namespace Core.Erp.Data.Reportes.RRHH
                 }
                 return Lista;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

@@ -2,6 +2,7 @@
     [IdEmpresa]          INT             NOT NULL,
     [IdAnio]             INT             NOT NULL,
     [IdRubro]            INT             NOT NULL,
+    [AplicaProntoPago]   BIT             NOT NULL,
     [NomRubro]           VARCHAR (1000)  NOT NULL,
     [IdProducto]         NUMERIC (18)    NOT NULL,
     [Subtotal]           NUMERIC (18, 2) NOT NULL,
@@ -13,4 +14,6 @@
     CONSTRAINT [FK_aca_AnioLectivo_Rubro_aca_rubro] FOREIGN KEY ([IdEmpresa], [IdRubro]) REFERENCES [dbo].[aca_Rubro] ([IdEmpresa], [IdRubro]),
     CONSTRAINT [FK_aca_AnioLectivo_Rubro_in_Producto] FOREIGN KEY ([IdEmpresa], [IdProducto]) REFERENCES [dbo].[in_Producto] ([IdEmpresa], [IdProducto])
 );
+
+
 

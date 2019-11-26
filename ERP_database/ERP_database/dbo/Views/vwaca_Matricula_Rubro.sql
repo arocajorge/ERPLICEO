@@ -2,7 +2,7 @@
 AS
 SELECT dbo.aca_Matricula_Rubro.IdEmpresa, dbo.aca_Matricula_Rubro.IdMatricula, dbo.aca_Matricula_Rubro.IdPeriodo, dbo.aca_AnioLectivo_Periodo.FechaDesde, dbo.aca_Matricula_Rubro.IdRubro, dbo.aca_AnioLectivo_Rubro.NomRubro, 
                   dbo.aca_Matricula_Rubro.IdProducto, dbo.aca_Matricula_Rubro.Subtotal, dbo.aca_Matricula_Rubro.IdCod_Impuesto_Iva, dbo.aca_Matricula_Rubro.Porcentaje, dbo.aca_Matricula_Rubro.ValorIVA, dbo.aca_Matricula_Rubro.Total, 
-                  dbo.in_Producto.pr_descripcion, dbo.aca_Matricula_Rubro.IdSucursal, dbo.aca_Matricula_Rubro.IdBodega, dbo.aca_Matricula_Rubro.IdCbteVta, dbo.aca_Matricula_Rubro.FechaFacturacion
+                  dbo.in_Producto.pr_descripcion, dbo.aca_Matricula_Rubro.IdSucursal, dbo.aca_Matricula_Rubro.IdBodega, dbo.aca_Matricula_Rubro.IdCbteVta, dbo.aca_Matricula_Rubro.FechaFacturacion, dbo.aca_Matricula_Rubro.IdMecanismo
 FROM     dbo.aca_AnioLectivo_Rubro INNER JOIN
                   dbo.aca_AnioLectivo_Rubro_Periodo ON dbo.aca_AnioLectivo_Rubro.IdEmpresa = dbo.aca_AnioLectivo_Rubro_Periodo.IdEmpresa AND dbo.aca_AnioLectivo_Rubro.IdAnio = dbo.aca_AnioLectivo_Rubro_Periodo.IdAnio AND 
                   dbo.aca_AnioLectivo_Rubro.IdRubro = dbo.aca_AnioLectivo_Rubro_Periodo.IdRubro INNER JOIN
@@ -15,7 +15,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' = 1200
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'dth = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -28,14 +28,14 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' = 1200
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -43,6 +43,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' = 1200
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula_Rubro';
+
+
 
 
 GO
@@ -113,16 +115,16 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = 0
+         Top = -240
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_Matricula_Rubro"
+         Begin Table = "aca_AnioLectivo_Rubro"
             Begin Extent = 
-               Top = 7
-               Left = 54
-               Bottom = 399
-               Right = 292
+               Top = 0
+               Left = 1078
+               Bottom = 219
+               Right = 1322
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -137,16 +139,6 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_AnioLectivo_Rubro"
-            Begin Extent = 
-               Top = 0
-               Left = 1078
-               Bottom = 219
-               Right = 1322
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
          Begin Table = "aca_AnioLectivo_Periodo"
             Begin Extent = 
                Top = 126
@@ -156,6 +148,16 @@ Begin DesignProperties =
             End
             DisplayFlags = 280
             TopColumn = 2
+         End
+         Begin Table = "aca_Matricula_Rubro"
+            Begin Extent = 
+               Top = 7
+               Left = 54
+               Bottom = 399
+               Right = 292
+            End
+            DisplayFlags = 280
+            TopColumn = 1
          End
          Begin Table = "in_Producto"
             Begin Extent = 
@@ -186,5 +188,7 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 1200
-         Width', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula_Rubro';
+         Wi', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula_Rubro';
+
+
 

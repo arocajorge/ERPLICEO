@@ -1,14 +1,14 @@
 ﻿CREATE VIEW dbo.vwaca_Alumno
 AS
-SELECT dbo.aca_alumno.IdEmpresa, dbo.aca_alumno.IdAlumno, dbo.aca_alumno.Codigo, dbo.aca_alumno.IdPersona, dbo.tb_persona.pe_Naturaleza, dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, 
-                  dbo.tb_persona.IdTipoDocumento, dbo.tb_persona.pe_cedulaRuc, dbo.aca_alumno.Direccion, dbo.aca_alumno.Celular, dbo.aca_alumno.Correo, dbo.tb_persona.pe_sexo, dbo.tb_persona.pe_fechaNacimiento, 
-                  dbo.tb_persona.CodCatalogoSangre, dbo.tb_persona.CodCatalogoCONADIS, dbo.tb_persona.PorcentajeDiscapacidad, dbo.tb_persona.NumeroCarnetConadis, dbo.aca_alumno.Estado, dbo.aca_alumno.IdCatalogoESTMAT, 
-                  dbo.aca_alumno.IdCurso, dbo.aca_alumno.IdCatalogoESTALU, dbo.tb_persona.pe_telfono_Contacto, aca_Catalogo_1.NomCatalogo AS NomCatalogoESTMAT, 
-                  dbo.aca_Catalogo.NomCatalogo AS NomCatalogoESTALU
-FROM     dbo.aca_alumno INNER JOIN
-                  dbo.tb_persona ON dbo.aca_alumno.IdPersona = dbo.tb_persona.IdPersona LEFT OUTER JOIN
-                  dbo.aca_Catalogo ON dbo.aca_alumno.IdCatalogoESTALU = dbo.aca_Catalogo.IdCatalogo LEFT OUTER JOIN
-                  dbo.aca_Catalogo AS aca_Catalogo_1 ON dbo.aca_alumno.IdCatalogoESTMAT = aca_Catalogo_1.IdCatalogo
+SELECT dbo.aca_Alumno.IdEmpresa, dbo.aca_Alumno.IdAlumno, dbo.aca_Alumno.Codigo, dbo.aca_Alumno.IdPersona, dbo.tb_persona.pe_Naturaleza, dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_apellido, 
+                  dbo.tb_persona.pe_nombre, dbo.tb_persona.IdTipoDocumento, dbo.tb_persona.pe_cedulaRuc, dbo.aca_Alumno.Direccion, dbo.aca_Alumno.Celular, dbo.aca_Alumno.Correo, dbo.tb_persona.pe_sexo, dbo.tb_persona.pe_fechaNacimiento, 
+                  dbo.tb_persona.CodCatalogoSangre, dbo.tb_persona.CodCatalogoCONADIS, dbo.tb_persona.PorcentajeDiscapacidad, dbo.tb_persona.NumeroCarnetConadis, dbo.aca_Alumno.Estado, dbo.aca_Alumno.IdCatalogoESTMAT, 
+                  dbo.aca_Alumno.IdCurso, dbo.aca_Alumno.IdCatalogoESTALU, dbo.tb_persona.pe_telfono_Contacto, aca_Catalogo_1.NomCatalogo AS NomCatalogoESTMAT, dbo.aca_Catalogo.NomCatalogo AS NomCatalogoESTALU, 
+                  dbo.aca_Alumno.FechaIngreso
+FROM     dbo.aca_Alumno INNER JOIN
+                  dbo.tb_persona ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona LEFT OUTER JOIN
+                  dbo.aca_Catalogo ON dbo.aca_Alumno.IdCatalogoESTALU = dbo.aca_Catalogo.IdCatalogo LEFT OUTER JOIN
+                  dbo.aca_Catalogo AS aca_Catalogo_1 ON dbo.aca_Alumno.IdCatalogoESTMAT = aca_Catalogo_1.IdCatalogo
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_alumno';
 
@@ -21,7 +21,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[41] 4[9] 2[31] 3) )"
+         Configuration = "(H (1[60] 4[2] 2[21] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -87,15 +87,15 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_alumno"
+         Begin Table = "aca_Alumno"
             Begin Extent = 
                Top = 7
                Left = 48
-               Bottom = 289
+               Bottom = 429
                Right = 293
             End
             DisplayFlags = 280
-            TopColumn = 8
+            TopColumn = 4
          End
          Begin Table = "tb_persona"
             Begin Extent = 
@@ -107,16 +107,6 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 10
          End
-         Begin Table = "aca_Catalogo_1"
-            Begin Extent = 
-               Top = 181
-               Left = 525
-               Bottom = 344
-               Right = 770
-            End
-            DisplayFlags = 280
-            TopColumn = 2
-         End
          Begin Table = "aca_Catalogo"
             Begin Extent = 
                Top = 51
@@ -126,6 +116,16 @@ Begin DesignProperties =
             End
             DisplayFlags = 280
             TopColumn = 0
+         End
+         Begin Table = "aca_Catalogo_1"
+            Begin Extent = 
+               Top = 181
+               Left = 525
+               Bottom = 344
+               Right = 770
+            End
+            DisplayFlags = 280
+            TopColumn = 2
          End
       End
    End
@@ -160,7 +160,9 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 1200
-     ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_alumno';
+     ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Alumno';
+
+
 
 
 

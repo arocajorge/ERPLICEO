@@ -25,6 +25,24 @@
     </div>
     <div class="row">
         <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdEmpleado">Division</label>
+                    @Html.Partial("_CmbDivision", Model)
+                    @Html.ValidationMessageFor(q => q.IdDivision, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdEmpleado">Area</label>
+                    @Html.Partial("_CmbArea", Model)
+                    @Html.ValidationMessageFor(q => q.IdArea, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="IdContrato_Tipo">Nómina*</label>

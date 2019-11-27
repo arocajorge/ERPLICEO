@@ -23,7 +23,8 @@ namespace Core.Erp.Info.RRHH
         public Nullable<System.DateTime> Fec_Inicio_Acumulacion { get; set; }
         [Required(ErrorMessage = "El campo fecha fin acumulacion es obligatorio")]
         public Nullable<System.DateTime> Fec_Fin_Acumulacion { get; set; }
-
+        public Nullable<int> IdDivision { get; set; }
+        public Nullable<int> IdArea { get; set; }
 
 
         public string ru_descripcion { get; set; }

@@ -76,7 +76,9 @@ namespace Core.Erp.Data.RRHH
                         IdRubro = Entity.IdRubro,
                         FechaInicio=Entity.FechaInicio,
                         FechaFin=Entity.FechaFin,
-                        es_indifinido= Entity.es_indifinido
+                        es_indifinido= Entity.es_indifinido,
+                        IdDivision = Entity.IdDivision,
+                        IdArea = Entity.IdArea
                     };
                 }
 
@@ -106,7 +108,9 @@ namespace Core.Erp.Data.RRHH
                         FechaInicio=info.FechaInicio,
                         FechaFin=info.FechaFin,
                         es_indifinido =info.es_indifinido,
-
+                        IdDivision = info.IdDivision,
+                        IdArea = info.IdArea,
+                        
                         IdUsuario = info.IdUsuario,
                         Fecha_Transac = DateTime.Now
                     };
@@ -164,6 +168,8 @@ namespace Core.Erp.Data.RRHH
                     Entity.FechaFin = info.FechaFin;
                     Entity.FechaInicio = info.FechaInicio;
                     Entity.es_indifinido = info.es_indifinido;
+                    Entity.IdDivision = info.IdDivision;
+                    Entity.IdArea = info.IdArea;
 
                     Entity.IdUsuarioUltMod= info.IdUsuarioUltMod;
                     Entity.Fecha_UltMod = DateTime.Now;

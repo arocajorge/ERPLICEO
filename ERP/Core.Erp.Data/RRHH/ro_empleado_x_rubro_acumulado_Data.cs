@@ -63,7 +63,7 @@ namespace Core.Erp.Data.RRHH
                         IdEmpleado = Entity.IdEmpleado,
                         IdRubro = Entity.IdRubro,
                         Fec_Inicio_Acumulacion = Entity.Fec_Inicio_Acumulacion,
-                        Fec_Fin_Acumulacion = Entity.Fec_Fin_Acumulacion
+                        Fec_Fin_Acumulacion = Entity.Fec_Fin_Acumulacion,
                     };
                 }
 
@@ -157,7 +157,7 @@ namespace Core.Erp.Data.RRHH
                     && q.IdRubro == info.IdRubro
                     && q.IdEmpleado == info.IdEmpleado);
                     if (Entity == null)
-                        return false;
+                        return false;  
 
                     //var lst_det = Context.ro_empleado_x_rubro_acumulado_detalle.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdEmpleado == info.IdEmpleado && v.IdRubro == info.IdRubro);
                     //Context.ro_empleado_x_rubro_acumulado_detalle.RemoveRange(lst_det);

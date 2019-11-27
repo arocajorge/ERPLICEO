@@ -1,0 +1,16 @@
+﻿@Html.DevExpress().ComboBox(settings =>
+{
+    settings.Name = "IdArea";
+    settings.CallbackRouteValues = new { Controller = "EmpleadoPorRubro", Action = "ComboBoxPartial_Area", Area = "RRHH" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Properties.DisplayFormatString = "[{0}] - {1}";
+    settings.Properties.Columns.Add("IdArea", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(20);
+    settings.Properties.Columns.Add("Descripcion", "Area").Width = System.Web.UI.WebControls.Unit.Percentage(80);
+    //Campo ID
+    settings.Properties.ValueField = "IdArea";
+    settings.Properties.ValueType = typeof(int?);
+    settings.Properties.TextField = "Descripcion";
+    settings.Properties.NullText = "== Seleccione ==";
+    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+    settings.Properties.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['TempIdDivision'] = IdDivision.GetValue(); }";
+}).BindList(new Core.Erp.Bus.RRHH.ro_area_Bus().get_list(Convert.ToInt32(Core.Erp.Web.Helps.SessionFixed.IdEmpresa), Model.IdDivision ?? 0)).Bind(Model.IdArea).GetHtml()

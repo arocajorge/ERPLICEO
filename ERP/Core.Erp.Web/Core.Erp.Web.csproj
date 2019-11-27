@@ -10237,6 +10237,8 @@
     <Content Include="Areas\RRHH\Views\DescargaDescuentoFacturacion\Nuevo.cshtml" />
     <Content Include="Areas\RRHH\Views\DescargaDescuentoFacturacion\_GridViewPartial_DescuentosEmpleado.cshtml" />
     <Content Include="Areas\Reportes\Views\BancoReportes\BAN_015.cshtml" />
+    <Content Include="Areas\RRHH\Views\EmpleadoPorRubro\_CmbDivision.cshtml" />
+    <Content Include="Areas\RRHH\Views\EmpleadoPorRubro\_CmbArea.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

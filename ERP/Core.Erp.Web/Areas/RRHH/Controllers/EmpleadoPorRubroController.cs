@@ -223,6 +223,17 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         }
         #endregion
 
+        #region Combos cascada
+        public ActionResult ComboBoxPartial_Division()
+        {
+            return PartialView("_CmbDisivion", new ro_empleado_x_ro_rubro_Info());
+        }
+        public ActionResult ComboBoxPartial_Area()
+        {
+            int IdDivision = (Request.Params["TempIdDivision"] != null) ? int.Parse(Request.Params["TempIdDivision"]) : -1;
+            return PartialView("_CmbArea", new ro_empleado_x_ro_rubro_Info { IdDivision = IdDivision });
+        }
+        #endregion
         private void cargar_combos(int IdNominaTipo)
         {
             try

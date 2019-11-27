@@ -307,6 +307,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             return PartialView("_GridViewPartial_rubros_acumulados_detalle", model);
         }
         #endregion
+
+
         private void cargar_combos()
         {
             try

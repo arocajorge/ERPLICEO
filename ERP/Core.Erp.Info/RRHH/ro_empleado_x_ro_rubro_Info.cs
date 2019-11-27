@@ -24,6 +24,8 @@ namespace Core.Erp.Info.RRHH
         public Nullable<System.DateTime> FechaInicio { get; set; }
         public Nullable<System.DateTime> FechaFin { get; set; }
         public bool es_indifinido { get; set; }
+        public int? IdDivision { get; set; }
+        public int? IdArea { get; set; }
 
         public string Estado { get; set; }
         public string IdUsuario { get; set; }

@@ -1230,6 +1230,7 @@
     <Build Include="dbo\Views\vwaca_PermisoMatricula.sql" />
     <Build Include="dbo\Views\vwaca_Matricula_Rubro.sql" />
     <Build Include="dbo\Tables\aca_AlumnoRetiro.sql" />
+    <Build Include="dbo\Tables\ro_rol_detalle_x_ro_rubro_fijo.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

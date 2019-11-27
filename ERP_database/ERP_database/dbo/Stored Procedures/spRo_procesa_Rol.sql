@@ -232,6 +232,32 @@ and CAST( emp.em_fechaIngaRol as date)<=@Ff
 and emp.IdSucursal = @IdSucursalFin
 and cont.IdNomina=@IdNomina
 and cont.EstadoContrato<>'ECT_LIQ'
+
+insert into ro_rol_detalle_x_ro_rubro_fijo(
+IdEmpresa,
+IdRol,
+IdEmpleado,
+IdRubro,
+IdDivision,
+IdArea,
+Valor)
+select
+@IdEmpresa				,@IdRol				,emp.IdEmpleado		,rub_fij.IdRubro,	rub_fij.IdDivision,rub_fij.IdArea ,rub_fij.Valor
+FROM            dbo.ro_rubro_tipo AS rub INNER JOIN
+                         dbo.ro_empleado_x_ro_rubro AS rub_fij ON rub.IdEmpresa = rub_fij.IdEmpresa AND rub.IdRubro = rub_fij.IdRubro INNER JOIN
+                         dbo.ro_empleado AS emp ON rub_fij.IdEmpresa = emp.IdEmpresa AND rub_fij.IdEmpleado = emp.IdEmpleado INNER JOIN
+                         dbo.ro_contrato AS cont ON emp.IdEmpresa = cont.IdEmpresa AND emp.IdEmpleado = cont.IdEmpleado
+and rub_fij.IdEmpresa=@IdEmpresa
+and emp.IdEmpresa=@IdEmpresa
+and rub_fij.IdNomina_tipo=@IdNomina
+and rub_fij.IdNomina_TipoLiqui=@IdNominaTipo
+--and (rub_fij.es_indifinido=1 or ( @Fi between rub_fij.FechaFin and rub_fij.FechaFin and @Ff between rub_fij.FechaFin and rub_fij.FechaFin))
+--and rub_fij.Estado='A'
+and (emp.em_status<>'EST_LIQ' and isnull( emp.em_fechaSalida, @Ff) between @Fi and @Ff )
+and CAST( emp.em_fechaIngaRol as date)<=@Ff
+and emp.IdSucursal = @IdSucursalFin
+and cont.IdNomina=@IdNomina
+and cont.EstadoContrato<>'ECT_LIQ'
 ----------------------------------------------------------------------------------------------------------------------------------------------
 -------------calculando aporte personal------------------------------------------------------------------------------------------------------<
 ----------------------------------------------------------------------------------------------------------------------------------------------

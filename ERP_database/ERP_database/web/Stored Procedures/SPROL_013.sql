@@ -34,7 +34,7 @@ AS
 
 
 BEGIN
-
+		 Set nocount on
  select * from ( 
 SELECT    dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpresa, dbo.ro_rol_detalle_x_rubro_acumulado.IdRol, dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpleado , dbo.ro_empleado.IdArea, dbo.ro_empleado.IdDivision, dbo.ro_rubros_calculados.IdRubro_DIII as IdRubro, 
                          dbo.ro_rol_detalle_x_rubro_acumulado.Valor AS Provision, dbo.ro_rol_detalle_x_rubro_acumulado.Estado, dbo.ro_rol_detalle_x_rubro_acumulado.IdSucursal, dbo.ro_empleado.em_codigo, 
@@ -42,7 +42,7 @@ SELECT    dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpresa, dbo.ro_rol_detalle_x_r
 
                          DATENAME(MONTH, dbo.ro_periodo.pe_FechaIni))  AS Mes, 0.00 AS Prestamo, su.Valor AS Sueldo--ROUND( dbo.ro_rol_detalle_x_rubro_acumulado.Valor * 12,2) AS Sueldo
 						 ,dbo.ro_periodo.pe_anio,dbo.ro_periodo.pe_mes -- se añadio, para filtrar  27/08/2019 by Acueva
-FROM            dbo.ro_rol_detalle_x_rubro_acumulado INNER JOIN
+FROM            dbo.ro_rol_detalle_x_rubro_acumulado(nolock) INNER JOIN
                          dbo.ro_rol ON dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.ro_rol_detalle_x_rubro_acumulado.IdRol = dbo.ro_rol.IdRol INNER JOIN
                          dbo.ro_empleado ON dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpresa = dbo.ro_empleado.IdEmpresa AND dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpleado = dbo.ro_empleado.IdEmpleado INNER JOIN
                          dbo.tb_persona ON dbo.ro_empleado.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
@@ -56,7 +56,7 @@ FROM            dbo.ro_rol_detalle_x_rubro_acumulado INNER JOIN
                          dbo.ro_rubros_calculados ON dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpresa = dbo.ro_rubros_calculados.IdEmpresa AND dbo.ro_rol_detalle_x_rubro_acumulado.IdRubro = dbo.ro_rubros_calculados.IdRubro_prov_DIII INNER JOIN
 						 (
 							SELECT rd.IdEmpresa, rd.IdRol, rd.IdEmpleado, SUM(rd.Valor) AS Valor, ro_rubro_tipo.ru_tipo, ro_rol.IdNominaTipoLiqui
-							FROM     ro_rol_detalle AS rd 	
+							FROM     ro_rol_detalle(nolock) AS rd 	
 					
 							INNER JOIN ro_rubro_tipo ON rd.IdEmpresa = ro_rubro_tipo.IdEmpresa AND rd.IdRubro = ro_rubro_tipo.IdRubro INNER JOIN
 							ro_rol ON rd.IdEmpresa = ro_rol.IdEmpresa AND rd.IdRol = ro_rol.IdRol INNER JOIN
@@ -87,7 +87,7 @@ FROM            dbo.ro_rol_detalle_x_rubro_acumulado INNER JOIN
 						  and ro_empleado.IdDivision>=@IdDivisionInicio
 						 and ro_empleado.IdDivision<=@IdDivisionFin
 						 and ro_periodo.pe_FechaIni between @fecha_inicio and @fecha_fin
-						
+						and ro_empleado.em_status<>'EST_PLQ' --22/11/2019 by Acueva, por q salian los liquidados
 
 union all
 
@@ -97,7 +97,7 @@ SELECT      dbo.ro_rol_detalle.IdEmpresa, dbo.ro_rol_detalle.IdRol, dbo.ro_rol_d
 						
                          DATENAME(MONTH, dbo.ro_periodo.pe_FechaIni))  AS Mes, 0.00 AS Prestamo, su.Valor AS Sueldo
 						 ,dbo.ro_periodo.pe_anio,dbo.ro_periodo.pe_mes -- se añadio, para filtrar  27/08/2019 by Acueva
-FROM            dbo.ro_rol_detalle INNER JOIN
+FROM            dbo.ro_rol_detalle(nolock) INNER JOIN
                          dbo.ro_rol ON dbo.ro_rol_detalle.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.ro_rol_detalle.IdRol = dbo.ro_rol.IdRol INNER JOIN
                          dbo.ro_empleado ON dbo.ro_rol_detalle.IdEmpresa = dbo.ro_empleado.IdEmpresa AND dbo.ro_rol_detalle.IdEmpleado = dbo.ro_empleado.IdEmpleado INNER JOIN
                          dbo.tb_persona ON dbo.ro_empleado.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
@@ -129,7 +129,7 @@ FROM            dbo.ro_rol_detalle INNER JOIN
 						  (
 						  SELECT   dbo.ro_rol_detalle_x_rubro_acumulado.IdRol
 
-						FROM dbo.ro_rol_detalle_x_rubro_acumulado INNER JOIN
+						FROM dbo.ro_rol_detalle_x_rubro_acumulado(nolock) INNER JOIN
                          dbo.ro_rol ON dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.ro_rol_detalle_x_rubro_acumulado.IdRol = dbo.ro_rol.IdRol INNER JOIN
                          dbo.ro_empleado ON dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpresa = dbo.ro_empleado.IdEmpresa AND dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpleado = dbo.ro_empleado.IdEmpleado INNER JOIN
                          dbo.tb_persona ON dbo.ro_empleado.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
@@ -184,6 +184,8 @@ FROM            dbo.ro_rol_detalle INNER JOIN
 						  and ro_empleado.IdDivision>=@IdDivisionInicio
 						 and ro_empleado.IdDivision<=@IdDivisionFin
 						 and ro_periodo.pe_FechaIni between @fecha_inicio and @fecha_fin
+						 and ro_empleado.em_status<>'EST_PLQ' --22/11/2019 by Acueva, por q salian los liquidados
+
 ) t order by t.pe_anio,t.pe_mes
 
 END

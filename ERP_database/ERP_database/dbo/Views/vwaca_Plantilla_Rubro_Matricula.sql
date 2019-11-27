@@ -2,7 +2,7 @@
 AS
 SELECT dbo.aca_Plantilla_Rubro.IdEmpresa, dbo.aca_Plantilla_Rubro.IdAnio, dbo.aca_Plantilla_Rubro.IdPlantilla, dbo.aca_Plantilla_Rubro.IdRubro, dbo.aca_AnioLectivo_Rubro.NomRubro, dbo.aca_AnioLectivo_Rubro_Periodo.IdPeriodo, 
                   dbo.aca_AnioLectivo_Periodo.FechaDesde, dbo.aca_AnioLectivo_Periodo.FechaHasta, dbo.aca_Plantilla_Rubro.IdProducto, dbo.aca_Plantilla_Rubro.Subtotal, dbo.aca_Plantilla_Rubro.IdCod_Impuesto_Iva, 
-                  dbo.aca_Plantilla_Rubro.Porcentaje, dbo.aca_Plantilla_Rubro.ValorIVA, dbo.aca_Plantilla_Rubro.Total, dbo.in_Producto.pr_descripcion
+                  dbo.aca_Plantilla_Rubro.Porcentaje, dbo.aca_Plantilla_Rubro.ValorIVA, dbo.aca_Plantilla_Rubro.Total, dbo.in_Producto.pr_descripcion, dbo.aca_AnioLectivo_Rubro.AplicaProntoPago
 FROM     dbo.aca_AnioLectivo_Rubro_Periodo INNER JOIN
                   dbo.aca_Plantilla_Rubro ON dbo.aca_AnioLectivo_Rubro_Periodo.IdEmpresa = dbo.aca_Plantilla_Rubro.IdEmpresa AND dbo.aca_AnioLectivo_Rubro_Periodo.IdAnio = dbo.aca_Plantilla_Rubro.IdAnio AND 
                   dbo.aca_AnioLectivo_Rubro_Periodo.IdRubro = dbo.aca_Plantilla_Rubro.IdRubro INNER JOIN
@@ -15,11 +15,14 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' 1200
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'= 1200
          Width = 1200
-         Width = 564
-         Width = 600
+         Width = 1056
+         Width = 1488
          Width = 1608
+         Width = 1200
+         Width = 1200
+         Width = 1200
       End
    End
    Begin CriteriaPane = 
@@ -43,13 +46,15 @@ End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Plantilla_Rubro_Matricula';
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[56] 4[3] 2[21] 3) )"
+         Configuration = "(H (1[42] 4[11] 2[15] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -147,13 +152,13 @@ Begin DesignProperties =
          End
          Begin Table = "aca_AnioLectivo_Rubro"
             Begin Extent = 
-               Top = 262
-               Left = 645
-               Bottom = 443
-               Right = 889
+               Top = 221
+               Left = 641
+               Bottom = 484
+               Right = 885
             End
             DisplayFlags = 280
-            TopColumn = 1
+            TopColumn = 3
          End
          Begin Table = "in_Producto"
             Begin Extent = 
@@ -172,7 +177,7 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 16
+      Begin ColumnWidths = 19
          Width = 284
          Width = 1200
          Width = 1200
@@ -184,5 +189,7 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 1200
-         Width =', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Plantilla_Rubro_Matricula';
+         Width ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Plantilla_Rubro_Matricula';
+
+
 

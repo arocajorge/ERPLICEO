@@ -20,11 +20,12 @@
     [IdArea]             INT           NULL,
     [IdDivision]         INT           NULL,
     CONSTRAINT [PK_ro_empleado_x_ro_rubro] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdRubroFijo] ASC),
-    CONSTRAINT [FK_ro_empleado_x_ro_rubro_ro_area] FOREIGN KEY ([IdEmpresa], [IdDivision], [IdArea]) REFERENCES [dbo].[ro_area] ([IdEmpresa], [IdDivision], [IdArea]),
     CONSTRAINT [FK_ro_empleado_x_ro_rubro_ro_empleado] FOREIGN KEY ([IdEmpresa], [IdEmpleado]) REFERENCES [dbo].[ro_empleado] ([IdEmpresa], [IdEmpleado]),
     CONSTRAINT [FK_ro_empleado_x_ro_rubro_ro_Nomina_Tipoliqui] FOREIGN KEY ([IdEmpresa], [IdNomina_Tipo], [IdNomina_TipoLiqui]) REFERENCES [dbo].[ro_Nomina_Tipoliqui] ([IdEmpresa], [IdNomina_Tipo], [IdNomina_TipoLiqui]),
     CONSTRAINT [FK_ro_empleado_x_ro_rubro_ro_rubro_tipo] FOREIGN KEY ([IdEmpresa], [IdRubro]) REFERENCES [dbo].[ro_rubro_tipo] ([IdEmpresa], [IdRubro])
 );
+
+
 
 
 

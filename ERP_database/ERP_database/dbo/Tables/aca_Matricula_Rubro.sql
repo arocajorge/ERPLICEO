@@ -5,6 +5,7 @@
     [IdRubro]            INT             NOT NULL,
     [IdMecanismo]        NUMERIC (18)    NOT NULL,
     [IdProducto]         NUMERIC (18)    NOT NULL,
+    [EnMatricula]        BIT             NOT NULL,
     [Subtotal]           NUMERIC (18, 2) NOT NULL,
     [IdCod_Impuesto_Iva] VARCHAR (50)    NOT NULL,
     [Porcentaje]         NUMERIC (18, 2) NOT NULL,
@@ -20,6 +21,8 @@
     CONSTRAINT [FK_aca_Matricula_Rubro_aca_Rubro] FOREIGN KEY ([IdEmpresa], [IdRubro]) REFERENCES [dbo].[aca_Rubro] ([IdEmpresa], [IdRubro]),
     CONSTRAINT [FK_aca_Matricula_Rubro_fa_factura] FOREIGN KEY ([IdEmpresa], [IdSucursal], [IdBodega], [IdCbteVta]) REFERENCES [dbo].[fa_factura] ([IdEmpresa], [IdSucursal], [IdBodega], [IdCbteVta])
 );
+
+
 
 
 

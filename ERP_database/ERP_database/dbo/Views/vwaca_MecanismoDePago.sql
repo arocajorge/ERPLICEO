@@ -1,14 +1,11 @@
-﻿CREATE VIEW dbo.vwaca_Familia
+﻿CREATE VIEW dbo.vwaca_MecanismoDePago
 AS
-SELECT dbo.aca_Familia.IdEmpresa, dbo.aca_Familia.IdAlumno, dbo.aca_Familia.IdCatalogoPAREN, dbo.aca_Catalogo.NomCatalogo, dbo.aca_Familia.IdPersona, dbo.tb_persona.pe_Naturaleza, dbo.tb_persona.IdTipoDocumento, 
-                  dbo.tb_persona.pe_cedulaRuc, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.tb_persona.pe_nombreCompleto, dbo.aca_Familia.Direccion, dbo.aca_Familia.Celular, dbo.aca_Familia.Correo, dbo.aca_Familia.SeFactura, 
-                  dbo.tb_persona.pe_sexo, dbo.tb_persona.IdEstadoCivil, dbo.tb_persona.pe_fechaNacimiento, dbo.tb_persona.CodCatalogoSangre, dbo.tb_persona.CodCatalogoCONADIS, dbo.tb_persona.PorcentajeDiscapacidad, 
-                  dbo.tb_persona.NumeroCarnetConadis, dbo.tb_persona.pe_telfono_Contacto, dbo.aca_Familia.Secuencia, dbo.aca_Familia.EsRepresentante, dbo.tb_persona.pe_razonSocial
-FROM     dbo.tb_persona INNER JOIN
-                  dbo.aca_Familia ON dbo.tb_persona.IdPersona = dbo.aca_Familia.IdPersona LEFT OUTER JOIN
-                  dbo.aca_Catalogo ON dbo.aca_Familia.IdCatalogoPAREN = dbo.aca_Catalogo.IdCatalogo
+SELECT dbo.aca_MecanismoDePago.IdEmpresa, dbo.aca_MecanismoDePago.IdMecanismo, dbo.aca_MecanismoDePago.NombreMecanismo, dbo.aca_MecanismoDePago.IdTerminoPago, dbo.fa_TerminoPago.nom_TerminoPago, 
+                  dbo.aca_MecanismoDePago.Estado
+FROM     dbo.aca_MecanismoDePago INNER JOIN
+                  dbo.fa_TerminoPago ON dbo.aca_MecanismoDePago.IdTerminoPago = dbo.fa_TerminoPago.IdTerminoPago
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_familia';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MecanismoDePago';
 
 
 GO
@@ -17,7 +14,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[53] 4[9] 2[20] 3) )"
+         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -83,32 +80,22 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "tb_persona"
-            Begin Extent = 
-               Top = 170
-               Left = 170
-               Bottom = 395
-               Right = 444
-            End
-            DisplayFlags = 280
-            TopColumn = 2
-         End
-         Begin Table = "aca_Familia"
+         Begin Table = "aca_MecanismoDePago"
             Begin Extent = 
                Top = 7
                Left = 48
-               Bottom = 352
+               Bottom = 233
                Right = 293
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_Catalogo"
+         Begin Table = "fa_TerminoPago"
             Begin Extent = 
-               Top = 0
-               Left = 568
-               Bottom = 163
-               Right = 813
+               Top = 27
+               Left = 528
+               Bottom = 190
+               Right = 788
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -120,14 +107,13 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 10
+      Begin ColumnWidths = 9
          Width = 284
          Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
-         Width = 1200
-         Width = 1200
+         Width = 1836
          Width = 1200
          Width = 1200
          Width = 1200
@@ -137,23 +123,19 @@ Begin DesignProperties =
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1176
+         Table = 1170
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1356
-         SortOrder = 1416
+         SortType = 1350
+         SortOrder = 1410
          GroupBy = 1350
-         Filter = 1356
+         Filter = 1350
          Or = 1350
          Or = 1350
          Or = 1350
       End
    End
 End
-', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Familia';
-
-
-
-
+', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MecanismoDePago';
 

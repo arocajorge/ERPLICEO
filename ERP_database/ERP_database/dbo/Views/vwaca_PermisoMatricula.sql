@@ -1,7 +1,8 @@
 ﻿CREATE VIEW dbo.vwaca_PermisoMatricula
 AS
 SELECT dbo.aca_PermisoMatricula.IdEmpresa, dbo.aca_PermisoMatricula.IdPermiso, dbo.aca_PermisoMatricula.IdAlumno, dbo.aca_Alumno.IdPersona, dbo.tb_persona.pe_nombreCompleto, dbo.aca_PermisoMatricula.IdAnio, 
-                  dbo.aca_AnioLectivo.Descripcion, dbo.aca_PermisoMatricula.IdCatalogoPERNEG, dbo.aca_PermisoMatricula.Fecha, dbo.aca_PermisoMatricula.Observacion, dbo.aca_PermisoMatricula.Estado
+                  dbo.aca_AnioLectivo.Descripcion, dbo.aca_PermisoMatricula.IdCatalogoPERNEG, dbo.aca_PermisoMatricula.Fecha, dbo.aca_PermisoMatricula.Observacion, dbo.aca_PermisoMatricula.Estado, 
+                  dbo.aca_PermisoMatricula.IdUsuarioCreacion
 FROM     dbo.aca_Alumno INNER JOIN
                   dbo.aca_PermisoMatricula ON dbo.aca_Alumno.IdEmpresa = dbo.aca_PermisoMatricula.IdEmpresa AND dbo.aca_Alumno.IdAlumno = dbo.aca_PermisoMatricula.IdAlumno INNER JOIN
                   dbo.aca_AnioLectivo ON dbo.aca_PermisoMatricula.IdEmpresa = dbo.aca_AnioLectivo.IdEmpresa AND dbo.aca_PermisoMatricula.IdAnio = dbo.aca_AnioLectivo.IdAnio INNER JOIN
@@ -17,6 +18,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_PermisoMatricula';
+
+
 
 
 GO
@@ -101,22 +104,22 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
+         Begin Table = "aca_PermisoMatricula"
+            Begin Extent = 
+               Top = 0
+               Left = 290
+               Bottom = 311
+               Right = 535
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "aca_AnioLectivo"
             Begin Extent = 
                Top = 23
                Left = 1087
                Bottom = 186
                Right = 1332
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "aca_PermisoMatricula"
-            Begin Extent = 
-               Top = 0
-               Left = 290
-               Bottom = 261
-               Right = 535
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -154,14 +157,16 @@ Begin DesignProperties =
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_PermisoMatricula';
+
+
 

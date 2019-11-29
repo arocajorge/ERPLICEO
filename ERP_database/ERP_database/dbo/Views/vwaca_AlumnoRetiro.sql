@@ -1,14 +1,12 @@
-﻿CREATE VIEW dbo.vwaca_Familia
+﻿CREATE VIEW dbo.vwaca_AlumnoRetiro
 AS
-SELECT dbo.aca_Familia.IdEmpresa, dbo.aca_Familia.IdAlumno, dbo.aca_Familia.IdCatalogoPAREN, dbo.aca_Catalogo.NomCatalogo, dbo.aca_Familia.IdPersona, dbo.tb_persona.pe_Naturaleza, dbo.tb_persona.IdTipoDocumento, 
-                  dbo.tb_persona.pe_cedulaRuc, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.tb_persona.pe_nombreCompleto, dbo.aca_Familia.Direccion, dbo.aca_Familia.Celular, dbo.aca_Familia.Correo, dbo.aca_Familia.SeFactura, 
-                  dbo.tb_persona.pe_sexo, dbo.tb_persona.IdEstadoCivil, dbo.tb_persona.pe_fechaNacimiento, dbo.tb_persona.CodCatalogoSangre, dbo.tb_persona.CodCatalogoCONADIS, dbo.tb_persona.PorcentajeDiscapacidad, 
-                  dbo.tb_persona.NumeroCarnetConadis, dbo.tb_persona.pe_telfono_Contacto, dbo.aca_Familia.Secuencia, dbo.aca_Familia.EsRepresentante, dbo.tb_persona.pe_razonSocial
-FROM     dbo.tb_persona INNER JOIN
-                  dbo.aca_Familia ON dbo.tb_persona.IdPersona = dbo.aca_Familia.IdPersona LEFT OUTER JOIN
-                  dbo.aca_Catalogo ON dbo.aca_Familia.IdCatalogoPAREN = dbo.aca_Catalogo.IdCatalogo
+SELECT dbo.aca_AlumnoRetiro.IdEmpresa, dbo.aca_AlumnoRetiro.IdRetiro, dbo.aca_AlumnoRetiro.IdAlumno, dbo.aca_Alumno.IdPersona, dbo.tb_persona.pe_cedulaRuc, dbo.tb_persona.pe_nombreCompleto, dbo.aca_AlumnoRetiro.Fecha, 
+                  dbo.aca_AlumnoRetiro.Observacion, dbo.aca_AlumnoRetiro.IdCatalogoESTALU, dbo.aca_AlumnoRetiro.IdUsuarioAnulacion
+FROM     dbo.aca_AlumnoRetiro INNER JOIN
+                  dbo.aca_Alumno ON dbo.aca_AlumnoRetiro.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_AlumnoRetiro.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
+                  dbo.tb_persona ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_familia';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AlumnoRetiro';
 
 
 GO
@@ -17,7 +15,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[53] 4[9] 2[20] 3) )"
+         Configuration = "(H (1[41] 4[28] 2[12] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -83,35 +81,35 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "tb_persona"
-            Begin Extent = 
-               Top = 170
-               Left = 170
-               Bottom = 395
-               Right = 444
-            End
-            DisplayFlags = 280
-            TopColumn = 2
-         End
-         Begin Table = "aca_Familia"
+         Begin Table = "aca_AlumnoRetiro"
             Begin Extent = 
                Top = 7
                Left = 48
-               Bottom = 352
-               Right = 293
+               Bottom = 296
+               Right = 292
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_Catalogo"
+         Begin Table = "aca_Alumno"
             Begin Extent = 
-               Top = 0
-               Left = 568
-               Bottom = 163
-               Right = 813
+               Top = 7
+               Left = 340
+               Bottom = 170
+               Right = 585
             End
             DisplayFlags = 280
             TopColumn = 0
+         End
+         Begin Table = "tb_persona"
+            Begin Extent = 
+               Top = 7
+               Left = 633
+               Bottom = 263
+               Right = 907
+            End
+            DisplayFlags = 280
+            TopColumn = 1
          End
       End
    End
@@ -151,9 +149,5 @@ Begin DesignProperties =
       End
    End
 End
-', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Familia';
-
-
-
-
+', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AlumnoRetiro';
 

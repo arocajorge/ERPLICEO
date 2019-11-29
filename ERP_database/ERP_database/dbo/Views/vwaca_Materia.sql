@@ -1,7 +1,7 @@
 ﻿CREATE VIEW dbo.vwaca_Materia
 AS
 SELECT dbo.aca_Materia.IdEmpresa, dbo.aca_Materia.IdMateria, dbo.aca_Materia.IdMateriaGrupo, dbo.aca_MateriaGrupo.NomMateriaGrupo, dbo.aca_MateriaGrupo.OrdenMateriaGrupo, dbo.aca_Materia.NomMateria, 
-                  dbo.aca_Materia.EsObligatorio, dbo.aca_Materia.OrdenMateria, dbo.aca_Materia.Estado
+                  dbo.aca_Materia.EsObligatorio, dbo.aca_Materia.OrdenMateria, dbo.aca_Materia.Estado, dbo.aca_Materia.EsCompartida
 FROM     dbo.aca_Materia INNER JOIN
                   dbo.aca_MateriaGrupo ON dbo.aca_Materia.IdEmpresa = dbo.aca_MateriaGrupo.IdEmpresa AND dbo.aca_Materia.IdMateriaGrupo = dbo.aca_MateriaGrupo.IdMateriaGrupo
 GO
@@ -124,14 +124,14 @@ Begin DesignProperties =
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -139,4 +139,6 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Materia';
+
+
 

@@ -33,7 +33,6 @@
             DevExpress.XtraReports.UI.XRSummary xrSummary2 = new DevExpress.XtraReports.UI.XRSummary();
             DevExpress.XtraReports.UI.XRSummary xrSummary3 = new DevExpress.XtraReports.UI.XRSummary();
             DevExpress.XtraReports.UI.XRSummary xrSummary4 = new DevExpress.XtraReports.UI.XRSummary();
-            DevExpress.XtraReports.UI.XRSummary xrSummary5 = new DevExpress.XtraReports.UI.XRSummary();
             this.Detail = new DevExpress.XtraReports.UI.DetailBand();
             this.xrTable4 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow7 = new DevExpress.XtraReports.UI.XRTableRow();
@@ -74,7 +73,7 @@
             this.xrTableCell27 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell28 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell12 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.xrTableCell13 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.ValorNeto = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableRow13 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell30 = new DevExpress.XtraReports.UI.XRTableCell();
             this.num_empleados = new DevExpress.XtraReports.UI.XRTableCell();
@@ -96,7 +95,7 @@
             this.xrPageInfo2 = new DevExpress.XtraReports.UI.XRPageInfo();
             this.p_IdEmpleado = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_FechaFin = new DevExpress.XtraReports.Parameters.Parameter();
-            this.xrTableCell24 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.Neto = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell23 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell18 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell17 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -110,8 +109,8 @@
             this.xrTableCell32 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell33 = new DevExpress.XtraReports.UI.XRTableCell();
             this.p_IdDivision = new DevExpress.XtraReports.Parameters.Parameter();
-            this.objectDataSource2 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             this.p_IdArea = new DevExpress.XtraReports.Parameters.Parameter();
+            this.objectDataSource2 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
@@ -470,7 +469,7 @@
             this.xrTableCell27,
             this.xrTableCell28,
             this.xrTableCell12,
-            this.xrTableCell13});
+            this.ValorNeto});
             this.xrTableRow6.Font = new System.Drawing.Font("Verdana", 7F);
             this.xrTableRow6.Name = "xrTableRow6";
             this.xrTableRow6.StylePriority.UseBorders = false;
@@ -516,21 +515,17 @@
             this.xrTableCell12.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell12.Weight = 0.580472377256787D;
             // 
-            // xrTableCell13
+            // ValorNeto
             // 
-            this.xrTableCell13.Borders = DevExpress.XtraPrinting.BorderSide.Top;
-            this.xrTableCell13.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([Provision])")});
-            this.xrTableCell13.Name = "xrTableCell13";
-            this.xrTableCell13.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 0, 0, 100F);
-            this.xrTableCell13.StylePriority.UseBorders = false;
-            this.xrTableCell13.StylePriority.UsePadding = false;
-            this.xrTableCell13.StylePriority.UseTextAlignment = false;
-            xrSummary3.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
-            this.xrTableCell13.Summary = xrSummary3;
-            this.xrTableCell13.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
-            this.xrTableCell13.TextFormatString = "{0:n2}";
-            this.xrTableCell13.Weight = 0.565790705069478D;
+            this.ValorNeto.Borders = DevExpress.XtraPrinting.BorderSide.Top;
+            this.ValorNeto.Name = "ValorNeto";
+            this.ValorNeto.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 0, 0, 100F);
+            this.ValorNeto.StylePriority.UseBorders = false;
+            this.ValorNeto.StylePriority.UsePadding = false;
+            this.ValorNeto.StylePriority.UseTextAlignment = false;
+            this.ValorNeto.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
+            this.ValorNeto.TextFormatString = "{0:n2}";
+            this.ValorNeto.Weight = 0.565790705069478D;
             // 
             // xrTableRow13
             // 
@@ -763,21 +758,21 @@
             this.p_FechaFin.Name = "p_FechaFin";
             this.p_FechaFin.Visible = false;
             // 
-            // xrTableCell24
+            // Neto
             // 
-            this.xrTableCell24.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([Provision])")});
-            this.xrTableCell24.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold);
-            this.xrTableCell24.Name = "xrTableCell24";
-            this.xrTableCell24.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 100F);
-            this.xrTableCell24.StylePriority.UseFont = false;
-            this.xrTableCell24.StylePriority.UsePadding = false;
-            this.xrTableCell24.StylePriority.UseTextAlignment = false;
-            xrSummary4.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
-            this.xrTableCell24.Summary = xrSummary4;
-            this.xrTableCell24.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
-            this.xrTableCell24.TextFormatString = "{0:n2}";
-            this.xrTableCell24.Weight = 0.715712771813901D;
+            this.Neto.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Round((sumSum([Sueldo]/12) - [Prestamo]) ,2)")});
+            this.Neto.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold);
+            this.Neto.Name = "Neto";
+            this.Neto.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 100F);
+            this.Neto.StylePriority.UseFont = false;
+            this.Neto.StylePriority.UsePadding = false;
+            this.Neto.StylePriority.UseTextAlignment = false;
+            xrSummary3.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
+            this.Neto.Summary = xrSummary3;
+            this.Neto.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
+            this.Neto.TextFormatString = "{0:n2}";
+            this.Neto.Weight = 0.715712771813901D;
             // 
             // xrTableCell23
             // 
@@ -804,8 +799,8 @@
             this.xrTableCell18.StylePriority.UseFont = false;
             this.xrTableCell18.StylePriority.UsePadding = false;
             this.xrTableCell18.StylePriority.UseTextAlignment = false;
-            xrSummary5.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
-            this.xrTableCell18.Summary = xrSummary5;
+            xrSummary4.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
+            this.xrTableCell18.Summary = xrSummary4;
             this.xrTableCell18.Text = "xrTableCell18";
             this.xrTableCell18.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell18.TextFormatString = "{0:n2}";
@@ -845,7 +840,7 @@
             this.xrTableCell17,
             this.xrTableCell18,
             this.xrTableCell23,
-            this.xrTableCell24});
+            this.Neto});
             this.xrTableRow10.Font = new System.Drawing.Font("Verdana", 7F);
             this.xrTableRow10.Name = "xrTableRow10";
             this.xrTableRow10.StylePriority.UseBorders = false;
@@ -938,15 +933,15 @@
             this.p_IdDivision.Name = "p_IdDivision";
             this.p_IdDivision.Visible = false;
             // 
-            // objectDataSource2
-            // 
-            this.objectDataSource2.DataSource = typeof(Core.Erp.Info.Reportes.RRHH.ROL_013_Info);
-            this.objectDataSource2.Name = "objectDataSource2";
-            // 
             // p_IdArea
             // 
             this.p_IdArea.Name = "p_IdArea";
             this.p_IdArea.Visible = false;
+            // 
+            // objectDataSource2
+            // 
+            this.objectDataSource2.DataSource = typeof(Core.Erp.Info.Reportes.RRHH.ROL_013_Info);
+            this.objectDataSource2.Name = "objectDataSource2";
             // 
             // ROL_013_Rpt
             // 
@@ -1040,12 +1035,12 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell50;
         private DevExpress.XtraReports.UI.XRPageInfo xrPageInfo2;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell12;
-        private DevExpress.XtraReports.UI.XRTableCell xrTableCell13;
+        private DevExpress.XtraReports.UI.XRTableCell ValorNeto;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell4;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell3;
         public DevExpress.XtraReports.Parameters.Parameter p_IdEmpleado;
         public DevExpress.XtraReports.Parameters.Parameter p_FechaFin;
-        private DevExpress.XtraReports.UI.XRTableCell xrTableCell24;
+        private DevExpress.XtraReports.UI.XRTableCell Neto;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell23;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell18;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell17;

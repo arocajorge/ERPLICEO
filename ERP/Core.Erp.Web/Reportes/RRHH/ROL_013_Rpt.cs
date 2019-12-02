@@ -52,15 +52,17 @@ namespace Core.Erp.Web.Reportes.RRHH
                                         group q by new
                                         {
                                             q.IdEmpresa,
-                                            q.IdEmpleado,
+                                            q.IdEmpleado
                                         } into empleados
                                         select new ROL_013_Info
                                         {
                                             IdEmpresa = empleados.Key.IdEmpresa,
-                                            IdEmpleado = empleados.Key.IdEmpleado
+                                            IdEmpleado = empleados.Key.IdEmpleado,
+                                            ValorNeto = (empleados.Sum(q=> q.Sueldo)/12) - Convert.ToDouble(empleados.Max(q=>q.Prestamo))
                                         }).ToList();
 
             num_empleados.Text = Convert.ToString(Lista.Count);
+            ValorNeto.Text = Convert.ToString(Lista.Sum(q=>q.ValorNeto));
             this.DataSource = lst_rpt;
         }
     }

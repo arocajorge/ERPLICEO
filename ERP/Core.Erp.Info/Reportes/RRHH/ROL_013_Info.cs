@@ -26,5 +26,7 @@ namespace Core.Erp.Info.Reportes.RRHH
         public string Mes { get; set; }
         public decimal Prestamo { get; set; }
         public double Sueldo { get; set; }
+        public double ValorNeto { get; set; }
+        
     }
 }

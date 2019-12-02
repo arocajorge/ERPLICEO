@@ -445,6 +445,7 @@
     <Compile Include="Areas\RRHH\Controllers\ActaFiniquitoController.cs" />
     <Compile Include="Areas\RRHH\Controllers\AjusteBeneficiosSocialesController.cs" />
     <Compile Include="Areas\RRHH\Controllers\AjustesAnticipoController.cs" />
+    <Compile Include="Areas\RRHH\Controllers\AnticipoDeBeneficiosController.cs" />
     <Compile Include="Areas\RRHH\Controllers\ArchivosActualizacionSueldoController.cs" />
     <Compile Include="Areas\RRHH\Controllers\ArchivosTransferenciasController.cs" />
     <Compile Include="Areas\RRHH\Controllers\AreaController.cs" />
@@ -10239,6 +10240,8 @@
     <Content Include="Areas\Reportes\Views\BancoReportes\BAN_015.cshtml" />
     <Content Include="Areas\RRHH\Views\EmpleadoPorRubro\_CmbDivision.cshtml" />
     <Content Include="Areas\RRHH\Views\EmpleadoPorRubro\_CmbArea.cshtml" />
+    <Content Include="Areas\RRHH\Views\AnticipoDeBeneficios\Index.cshtml" />
+    <Content Include="Areas\RRHH\Views\AnticipoDeBeneficios\_GridViewPartial_anticipo.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

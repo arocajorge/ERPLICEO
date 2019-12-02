@@ -29,7 +29,9 @@ namespace Core.Erp.Data
         public string Division { get; set; }
         public string Area { get; set; }
         public string Mes { get; set; }
-        public decimal Prestamo { get; set; }
-        public double Sueldo { get; set; }
+        public double Prestamo { get; set; }
+        public Nullable<double> Sueldo { get; set; }
+        public Nullable<int> pe_anio { get; set; }
+        public Nullable<int> pe_mes { get; set; }
     }
 }

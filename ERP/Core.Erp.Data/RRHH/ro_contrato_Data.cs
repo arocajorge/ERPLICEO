@@ -21,7 +21,7 @@ namespace Core.Erp.Data.RRHH
                 {
                         Lista = (from cont in Context.ro_contrato
                                  join emp in Context.vwro_empleado_combo
-                                 on new { cont.IdEmpresa, cont.IdEmpleado } equals new { emp.IdEmpresa, emp.IdEmpleado }
+                                 on new { cont.IdEmpresa, cont.IdEmpleado, cont.IdNomina } equals new { emp.IdEmpresa, emp.IdEmpleado, emp.IdNomina}
                                  join cat in Context.ro_catalogo
                                  on cont.IdContrato_Tipo equals cat.CodCatalogo
                                  where cont.IdEmpresa==IdEmpresa

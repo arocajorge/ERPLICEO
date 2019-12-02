@@ -94,6 +94,7 @@ delete ro_rol_x_prestamo_detalle where IdEmpresa=@IdEmpresa and IdRol=@IdRol
 delete ro_rol_detalle where ro_rol_detalle.IdEmpresa=@IdEmpresa and @IdRol=IdRol
 delete ro_empleado_division_area_x_rol where IdEmpresa=@IdEmpresa and IdRol= @IdRol 
 delete ro_rol_detalle_x_jornada where IdEmpresa=@IdEmpresa and IdRol= @IdRol
+delete ro_rol_detalle_x_ro_rubro_fijo where IdEmpresa=@IdEmpresa and IdRol= @IdRol
 ----------------------------------------------------------------------------------------------------------------------------------------------
 -------------calculando dias trabajados por empleado-----------------------------------------------------------------------------------------<
 ----------------------------------------------------------------------------------------------------------------------------------------------

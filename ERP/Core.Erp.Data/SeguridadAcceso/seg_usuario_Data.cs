@@ -123,7 +123,7 @@ namespace Core.Erp.Data.SeguridadAcceso
                         IdMenu = Entity.IdMenu,
                         IPImpresora = Entity.IPImpresora,
                         IPMaquina = Entity.IPUsuario,
-                        EsContador = Entity.EsContador,
+                        EsContador = Entity.EsContador ?? false,
                     };
                 }
 
@@ -155,7 +155,7 @@ namespace Core.Erp.Data.SeguridadAcceso
                         IdMenu = info.IdMenu == 0 ? null : info.IdMenu,
                         IPImpresora = info.IPImpresora,
                         IPUsuario = info.IPMaquina,
-                        EsContador = info.EsContador,
+                        EsContador = info.EsContador ?? false,
 
                         Fecha_Transaccion = info.Fecha_Transaccion
                     };
@@ -221,7 +221,7 @@ namespace Core.Erp.Data.SeguridadAcceso
                     Entity.IdMenu = info.IdMenu == 0 ? null : info.IdMenu;
                     Entity.IPImpresora = info.IPImpresora;
                     Entity.IPUsuario = info.IPMaquina;
-                    Entity.EsContador = info.EsContador;
+                    Entity.EsContador = info.EsContador ?? false;
 
                     var lst = Context.seg_usuario_x_tb_sucursal.Where(q => q.IdUsuario == info.IdUsuario).ToList();
                     Context.seg_usuario_x_tb_sucursal.RemoveRange(lst);

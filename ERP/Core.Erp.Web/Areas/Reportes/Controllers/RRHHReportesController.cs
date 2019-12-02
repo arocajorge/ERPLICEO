@@ -608,7 +608,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
-                IdNomina = 1
+                IdNomina = 1,
+                IdDivision = 0,
+                IdArea = 0,
             };
             cargar_combos(model.IdEmpresa);
             ROL_013_Rpt report = new ROL_013_Rpt();
@@ -626,6 +628,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_FechaIni.Value = model.fecha_ini;
             report.p_IdEmpleado.Value = model.IdEmpleado;
             report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdDivision.Value = model.IdDivision;
+            report.p_IdArea.Value = model.IdArea;
             report.p_FechaFin.Value = model.fecha_fin;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();
@@ -650,6 +654,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_FechaIni.Value = model.fecha_ini;
             report.p_IdEmpleado.Value = model.IdEmpleado;
             report.p_IdSucursal.Value = model.IdSucursal;
+            report.p_IdDivision.Value = model.IdDivision;
+            report.p_IdArea.Value = model.IdArea;
             report.p_FechaFin.Value = model.fecha_fin;
             report.usuario = SessionFixed.IdUsuario.ToString();
             report.empresa = SessionFixed.NomEmpresa.ToString();

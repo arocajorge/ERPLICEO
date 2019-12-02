@@ -10242,6 +10242,10 @@
     <Content Include="Areas\RRHH\Views\EmpleadoPorRubro\_CmbArea.cshtml" />
     <Content Include="Areas\RRHH\Views\AnticipoDeBeneficios\Index.cshtml" />
     <Content Include="Areas\RRHH\Views\AnticipoDeBeneficios\_GridViewPartial_anticipo.cshtml" />
+    <Content Include="Areas\RRHH\Views\AnticipoDeBeneficios\Nuevo.cshtml" />
+    <Content Include="Areas\RRHH\Views\AnticipoDeBeneficios\_CmbEmpleado_anticipo.cshtml" />
+    <Content Include="Areas\RRHH\Views\AnticipoDeBeneficios\Modificar.cshtml" />
+    <Content Include="Areas\RRHH\Views\AnticipoDeBeneficios\Anular.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

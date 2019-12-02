@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Core.Erp.Info.General;
+using Core.Erp.Bus.General;
+using DevExpress.Web;
 
 namespace Core.Erp.Web.Areas.RRHH.Controllers
 {
@@ -52,7 +55,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 FechaDesde = new DateTime(DateTime.Now.Date.Year, 1, 1),
                 FechaHasta = new DateTime(DateTime.Now.Date.Year, 12, 31),
             };
-            return View();
+            CargarCombos();
+            return View(model);
         }
 
         [HttpPost]
@@ -71,7 +75,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ro_EmpleadoAnticipoBeneficio_Info model = bus_anticipo.GetInfo(IdEmpresa, IdAnticipo);
             if (model == null)
                 return RedirectToAction("Index");
-
+            CargarCombos();
             return View(model);
         }
 
@@ -91,7 +95,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ro_EmpleadoAnticipoBeneficio_Info model = bus_anticipo.GetInfo(IdEmpresa, IdAnticipo);
             if (model == null)
                 return RedirectToAction("Index");
-
+            CargarCombos();
             return View(model);
         }
 
@@ -104,6 +108,33 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 return View(model);
             }
             return RedirectToAction("Index");
+        }
+        #endregion
+
+        #region Metodos ComboBox bajo demanda
+        tb_persona_Bus bus_persona = new tb_persona_Bus();
+        public ActionResult CmbEmpleado_anticipo()
+        {
+            decimal model = new decimal();
+            return PartialView("_CmbEmpleado_anticipo", model);
+        }
+        public List<tb_persona_Info> get_list_bajo_demanda(ListEditItemsRequestedByFilterConditionEventArgs args)
+        {
+            return bus_persona.get_list_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.EMPLEA.ToString());
+        }
+        public tb_persona_Info get_info_bajo_demanda(ListEditItemRequestedByValueEventArgs args)
+        {
+            return bus_persona.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.EMPLEA.ToString());
+        }
+        #endregion
+
+        #region Metodos
+        private void CargarCombos()
+        {
+            Dictionary<string, string> lst_Rubro = new Dictionary<string, string>();
+            lst_Rubro.Add("11", "Décimo tercer sueldo");
+            lst_Rubro.Add("12", "Décimo cuarto sueldo");
+            ViewBag.lst_Rubro = lst_Rubro;
         }
         #endregion
     }

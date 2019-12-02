@@ -187,6 +187,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 report.LoadLayout(RootReporte);
             }
             #endregion
+            
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
             report.p_IdCtaCble.Value = model.IdCtaCble;
@@ -196,8 +197,9 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             report.p_IdSucursal.Value = model.IdSucursal;
             report.usuario = SessionFixed.IdUsuario;
             report.empresa = SessionFixed.NomEmpresa;
-            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
+            
             cargar_combos(model.IdEmpresa);
+            cargar_sucursal_check(model.IdEmpresa, model.IntArray);
             ViewBag.Report = report;
             return View(model);
         }

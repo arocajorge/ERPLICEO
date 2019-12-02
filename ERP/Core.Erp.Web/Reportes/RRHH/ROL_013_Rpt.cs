@@ -58,11 +58,11 @@ namespace Core.Erp.Web.Reportes.RRHH
                                         {
                                             IdEmpresa = empleados.Key.IdEmpresa,
                                             IdEmpleado = empleados.Key.IdEmpleado,
-                                            ValorNeto = (empleados.Sum(q=> q.Sueldo)/12) - Convert.ToDouble(empleados.Max(q=>q.Prestamo))
+                                            ValorNeto = Convert.ToDouble((empleados.Sum(q=> q.Sueldo)/12) - empleados.Max(q=>q.Prestamo))
                                         }).ToList();
 
             num_empleados.Text = Convert.ToString(Lista.Count);
-            ValorNeto.Text = Convert.ToString(Lista.Sum(q=>q.ValorNeto));
+            ValorNeto.Text = Math.Round((Lista.Sum(q=>q.ValorNeto)),2).ToString("n2");
             this.DataSource = lst_rpt;
         }
     }

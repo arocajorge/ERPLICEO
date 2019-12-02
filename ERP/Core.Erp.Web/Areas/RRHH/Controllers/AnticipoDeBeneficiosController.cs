@@ -66,26 +66,44 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             return RedirectToAction("Modificar",new { IdEmpresa = model.IdEmpleado, IdAnticipo = model.IdAnticipo, Exito = true});
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, decimal IdAnticipo = 0)
+        public ActionResult Modificar(int IdEmpresa = 0, decimal IdAnticipo = 0, bool Exito = false)
         {
-            ro_EmpleadoAnticipoBeneficio_Info model = new ro_EmpleadoAnticipoBeneficio_Info
-            {
-                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa ?? "0"),
-                FechaDesde = new DateTime(DateTime.Now.Date.Year, 1, 1),
-                FechaHasta = new DateTime(DateTime.Now.Date.Year, 12, 31),
-            };
-            return View();
+            ro_EmpleadoAnticipoBeneficio_Info model = bus_anticipo.GetInfo(IdEmpresa, IdAnticipo);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            return View(model);
         }
 
         [HttpPost]
         public ActionResult Modificar(ro_EmpleadoAnticipoBeneficio_Info model)
         {
             model.IdUsuarioCreacion = SessionFixed.IdUsuario;
-            if (!bus_anticipo.GuardarDB(model))
+            if (!bus_anticipo.ModificarDB(model))
             {
                 return View(model);
             }
             return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpleado, IdAnticipo = model.IdAnticipo, Exito = true });
+        }
+
+        public ActionResult Anular(int IdEmpresa = 0, decimal IdAnticipo = 0, bool Exito = false)
+        {
+            ro_EmpleadoAnticipoBeneficio_Info model = bus_anticipo.GetInfo(IdEmpresa, IdAnticipo);
+            if (model == null)
+                return RedirectToAction("Index");
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Anular(ro_EmpleadoAnticipoBeneficio_Info model)
+        {
+            model.IdUsuarioCreacion = SessionFixed.IdUsuario;
+            if (!bus_anticipo.AnularDB(model))
+            {
+                return View(model);
+            }
+            return RedirectToAction("Index");
         }
         #endregion
     }

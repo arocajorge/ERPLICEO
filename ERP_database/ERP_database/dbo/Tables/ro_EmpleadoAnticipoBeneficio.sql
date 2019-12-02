@@ -6,6 +6,7 @@
     [FechaHasta]            DATE          NOT NULL,
     [IdRubro]               VARCHAR (50)  NOT NULL,
     [Valor]                 FLOAT (53)    NOT NULL,
+    [Estado]                BIT           NOT NULL,
     [IdUsuarioCreacion]     VARCHAR (200) NULL,
     [FechaCreacion]         DATETIME      NULL,
     [IdUsuarioModificacion] VARCHAR (200) NULL,
@@ -17,4 +18,6 @@
     CONSTRAINT [FK_ro_EmpleadoAnticipoBeneficio_ro_empleado] FOREIGN KEY ([IdEmpresa], [IdEmpleado]) REFERENCES [dbo].[ro_empleado] ([IdEmpresa], [IdEmpleado]),
     CONSTRAINT [FK_ro_EmpleadoAnticipoBeneficio_ro_rubro_tipo] FOREIGN KEY ([IdEmpresa], [IdRubro]) REFERENCES [dbo].[ro_rubro_tipo] ([IdEmpresa], [IdRubro])
 );
+
+
 

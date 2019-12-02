@@ -1,8 +1,152 @@
-﻿CREATE VIEW vwro_EmpleadoAnticipoBeneficio
+﻿CREATE VIEW dbo.vwro_EmpleadoAnticipoBeneficio
 AS
-SELECT ro_EmpleadoAnticipoBeneficio.IdEmpresa, ro_EmpleadoAnticipoBeneficio.IdAnticipo, ro_EmpleadoAnticipoBeneficio.FechaDesde, ro_EmpleadoAnticipoBeneficio.FechaHasta, ro_EmpleadoAnticipoBeneficio.FechaCreacion, 
-                  ro_EmpleadoAnticipoBeneficio.Valor, ro_rubro_tipo.ru_descripcion, tb_persona.pe_nombreCompleto
-FROM     ro_empleado INNER JOIN
-                  ro_EmpleadoAnticipoBeneficio ON ro_empleado.IdEmpresa = ro_EmpleadoAnticipoBeneficio.IdEmpresa AND ro_empleado.IdEmpleado = ro_EmpleadoAnticipoBeneficio.IdEmpleado INNER JOIN
-                  ro_rubro_tipo ON ro_EmpleadoAnticipoBeneficio.IdEmpresa = ro_rubro_tipo.IdEmpresa AND ro_EmpleadoAnticipoBeneficio.IdRubro = ro_rubro_tipo.IdRubro INNER JOIN
-                  tb_persona ON ro_empleado.IdPersona = tb_persona.IdPersona
+SELECT dbo.ro_EmpleadoAnticipoBeneficio.IdEmpresa, dbo.ro_EmpleadoAnticipoBeneficio.IdAnticipo, dbo.ro_EmpleadoAnticipoBeneficio.FechaDesde, dbo.ro_EmpleadoAnticipoBeneficio.FechaHasta, 
+                  dbo.ro_EmpleadoAnticipoBeneficio.FechaCreacion, dbo.ro_EmpleadoAnticipoBeneficio.Valor, dbo.ro_rubro_tipo.ru_descripcion, dbo.tb_persona.pe_nombreCompleto, dbo.ro_EmpleadoAnticipoBeneficio.Estado
+FROM     dbo.ro_empleado INNER JOIN
+                  dbo.ro_EmpleadoAnticipoBeneficio ON dbo.ro_empleado.IdEmpresa = dbo.ro_EmpleadoAnticipoBeneficio.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_EmpleadoAnticipoBeneficio.IdEmpleado INNER JOIN
+                  dbo.ro_rubro_tipo ON dbo.ro_EmpleadoAnticipoBeneficio.IdEmpresa = dbo.ro_rubro_tipo.IdEmpresa AND dbo.ro_EmpleadoAnticipoBeneficio.IdRubro = dbo.ro_rubro_tipo.IdRubro INNER JOIN
+                  dbo.tb_persona ON dbo.ro_empleado.IdPersona = dbo.tb_persona.IdPersona
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_EmpleadoAnticipoBeneficio';
+
+
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
+Begin DesignProperties = 
+   Begin PaneConfigurations = 
+      Begin PaneConfiguration = 0
+         NumPanes = 4
+         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+      End
+      Begin PaneConfiguration = 1
+         NumPanes = 3
+         Configuration = "(H (1 [50] 4 [25] 3))"
+      End
+      Begin PaneConfiguration = 2
+         NumPanes = 3
+         Configuration = "(H (1 [50] 2 [25] 3))"
+      End
+      Begin PaneConfiguration = 3
+         NumPanes = 3
+         Configuration = "(H (4 [30] 2 [40] 3))"
+      End
+      Begin PaneConfiguration = 4
+         NumPanes = 2
+         Configuration = "(H (1 [56] 3))"
+      End
+      Begin PaneConfiguration = 5
+         NumPanes = 2
+         Configuration = "(H (2 [66] 3))"
+      End
+      Begin PaneConfiguration = 6
+         NumPanes = 2
+         Configuration = "(H (4 [50] 3))"
+      End
+      Begin PaneConfiguration = 7
+         NumPanes = 1
+         Configuration = "(V (3))"
+      End
+      Begin PaneConfiguration = 8
+         NumPanes = 3
+         Configuration = "(H (1[56] 4[18] 2) )"
+      End
+      Begin PaneConfiguration = 9
+         NumPanes = 2
+         Configuration = "(H (1 [75] 4))"
+      End
+      Begin PaneConfiguration = 10
+         NumPanes = 2
+         Configuration = "(H (1[66] 2) )"
+      End
+      Begin PaneConfiguration = 11
+         NumPanes = 2
+         Configuration = "(H (4 [60] 2))"
+      End
+      Begin PaneConfiguration = 12
+         NumPanes = 1
+         Configuration = "(H (1) )"
+      End
+      Begin PaneConfiguration = 13
+         NumPanes = 1
+         Configuration = "(V (4))"
+      End
+      Begin PaneConfiguration = 14
+         NumPanes = 1
+         Configuration = "(V (2))"
+      End
+      ActivePaneConfig = 0
+   End
+   Begin DiagramPane = 
+      Begin Origin = 
+         Top = -120
+         Left = 0
+      End
+      Begin Tables = 
+         Begin Table = "ro_empleado"
+            Begin Extent = 
+               Top = 7
+               Left = 48
+               Bottom = 170
+               Right = 395
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "ro_EmpleadoAnticipoBeneficio"
+            Begin Extent = 
+               Top = 175
+               Left = 48
+               Bottom = 338
+               Right = 293
+            End
+            DisplayFlags = 280
+            TopColumn = 5
+         End
+         Begin Table = "ro_rubro_tipo"
+            Begin Extent = 
+               Top = 343
+               Left = 48
+               Bottom = 506
+               Right = 301
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "tb_persona"
+            Begin Extent = 
+               Top = 511
+               Left = 48
+               Bottom = 674
+               Right = 322
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 1440
+         Alias = 900
+         Table = 1170
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1350
+         SortOrder = 1410
+         GroupBy = 1350
+         Filter = 1350
+         Or = 1350
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwro_EmpleadoAnticipoBeneficio';
+

@@ -1679,6 +1679,7 @@
     <Compile Include="RRHH\ro_contrato_Data.cs" />
     <Compile Include="RRHH\ro_departamento_Data.cs" />
     <Compile Include="RRHH\ro_division_Data.cs" />
+    <Compile Include="RRHH\ro_EmpleadoAnticipoBeneficio_Data.cs" />
     <Compile Include="RRHH\ro_EmpleadoFoto_Data.cs" />
     <Compile Include="RRHH\ro_EmpleadoNovedadCargaMasiva_Data.cs" />
     <Compile Include="RRHH\ro_EmpleadoNovedadCargaMasiva_det_Data.cs" />

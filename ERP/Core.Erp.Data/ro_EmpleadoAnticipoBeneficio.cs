@@ -21,6 +21,7 @@ namespace Core.Erp.Data
         public System.DateTime FechaHasta { get; set; }
         public string IdRubro { get; set; }
         public double Valor { get; set; }
+        public bool Estado { get; set; }
         public string IdUsuarioCreacion { get; set; }
         public Nullable<System.DateTime> FechaCreacion { get; set; }
         public string IdUsuarioModificacion { get; set; }

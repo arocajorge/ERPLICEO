@@ -22,5 +22,6 @@ namespace Core.Erp.Data
         public double Valor { get; set; }
         public string ru_descripcion { get; set; }
         public string pe_nombreCompleto { get; set; }
+        public bool Estado { get; set; }
     }
 }

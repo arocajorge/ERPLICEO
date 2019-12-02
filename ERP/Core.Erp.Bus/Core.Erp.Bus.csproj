@@ -435,6 +435,7 @@
     <Compile Include="RRHH\ro_contrato_Bus.cs" />
     <Compile Include="RRHH\ro_departamento_Bus.cs" />
     <Compile Include="RRHH\ro_division_Bus.cs" />
+    <Compile Include="RRHH\ro_EmpleadoAnticipoBeneficio_Bus.cs" />
     <Compile Include="RRHH\ro_EmpleadoFoto_Bus.cs" />
     <Compile Include="RRHH\ro_EmpleadoNovedadCargaMasiva_Bus.cs" />
     <Compile Include="RRHH\ro_EmpleadoNovedadCargaMasiva_det_Bus.cs" />

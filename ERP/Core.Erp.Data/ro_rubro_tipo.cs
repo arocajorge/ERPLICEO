@@ -45,6 +45,7 @@ namespace Core.Erp.Data
             this.ro_PrestamoMasivo_Det = new HashSet<ro_PrestamoMasivo_Det>();
             this.ro_empleado_x_ro_rubro = new HashSet<ro_empleado_x_ro_rubro>();
             this.ro_empleado_x_rubro_acumulado = new HashSet<ro_empleado_x_rubro_acumulado>();
+            this.ro_EmpleadoAnticipoBeneficio = new HashSet<ro_EmpleadoAnticipoBeneficio>();
         }
     
         public int IdEmpresa { get; set; }
@@ -107,5 +108,6 @@ namespace Core.Erp.Data
         public virtual ICollection<ro_PrestamoMasivo_Det> ro_PrestamoMasivo_Det { get; set; }
         public virtual ICollection<ro_empleado_x_ro_rubro> ro_empleado_x_ro_rubro { get; set; }
         public virtual ICollection<ro_empleado_x_rubro_acumulado> ro_empleado_x_rubro_acumulado { get; set; }
+        public virtual ICollection<ro_EmpleadoAnticipoBeneficio> ro_EmpleadoAnticipoBeneficio { get; set; }
     }
 }

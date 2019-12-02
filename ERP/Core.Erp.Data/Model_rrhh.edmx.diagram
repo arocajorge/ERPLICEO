@@ -263,6 +263,10 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_empleado_x_ro_rubro_ro_Nomina_Tipoliqui" />
         <AssociationConnector Association="Model_rrhh.FK_ro_empleado_x_ro_rubro_ro_rubro_tipo" />
         <AssociationConnector Association="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_ro_rubro_tipo" />
+        <EntityTypeShape EntityType="Model_rrhh.ro_EmpleadoAnticipoBeneficio" Width="1.5" PointX="14.25" PointY="67.375" />
+        <EntityTypeShape EntityType="Model_rrhh.vwro_EmpleadoAnticipoBeneficio" Width="1.5" PointX="29.375" PointY="13.75" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_EmpleadoAnticipoBeneficio_ro_empleado" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_EmpleadoAnticipoBeneficio_ro_rubro_tipo" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

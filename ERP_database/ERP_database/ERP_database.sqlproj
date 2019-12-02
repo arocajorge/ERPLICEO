@@ -1235,6 +1235,8 @@
     <Build Include="dbo\Views\vwaca_AlumnoDocumento.sql" />
     <Build Include="dbo\Views\vwaca_MecanismoDePago.sql" />
     <Build Include="dbo\Views\vwaca_AlumnoRetiro.sql" />
+    <Build Include="dbo\Tables\ro_EmpleadoAnticipoBeneficio.sql" />
+    <Build Include="dbo\Views\vwro_EmpleadoAnticipoBeneficio.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

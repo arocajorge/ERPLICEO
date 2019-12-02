@@ -42,5 +42,6 @@ namespace Core.Erp.Data
         public string pe_correo { get; set; }
         public string pe_telfono_Contacto { get; set; }
         public string pe_direccion { get; set; }
+        public string sexo { get; set; }
     }
 }

@@ -66,7 +66,8 @@ namespace Core.Erp.Data.Reportes.RRHH
                                      TipoNomina = q.TipoNomina,
                                      pe_correo = q.pe_correo,
                                      pe_direccion = q.pe_direccion,
-                                     pe_telfono_Contacto = q.pe_telfono_Contacto
+                                     pe_telfono_Contacto = q.pe_telfono_Contacto,
+                                     sexo = q.sexo
                                  }).ToList();
                     }
                     else
@@ -108,7 +109,8 @@ namespace Core.Erp.Data.Reportes.RRHH
                                      TipoNomina = q.TipoNomina,
                                      pe_correo = q.pe_correo,
                                      pe_direccion = q.pe_direccion,
-                                     pe_telfono_Contacto = q.pe_telfono_Contacto
+                                     pe_telfono_Contacto = q.pe_telfono_Contacto,
+                                     sexo = q.sexo
                                  }).ToList();
                     }                    
                 }

@@ -517,18 +517,18 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWBAN_010' no tiene definida
             
             <PropertyRef Name="IdTipoDocumento" />
             <PropertyRef Name="pe_cedulaRuc" />
-            <PropertyRef Name="CodigoLegalBanco" />
             <PropertyRef Name="IdTipo_Persona" />
             <PropertyRef Name="IdPersona" />
             <PropertyRef Name="IdEntidad" />
             <PropertyRef Name="cb_Fecha" />
-            <PropertyRef Name="ba_descripcion" />
             <PropertyRef Name="NomCuenta" />
             <PropertyRef Name="NombreProceso" />
             <PropertyRef Name="Fecha" />
             <PropertyRef Name="Observacion" />
             <PropertyRef Name="Contabilizado" />
             <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="CodigoLegalBanco" />
+            <PropertyRef Name="ba_descripcion" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdArchivo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
@@ -3797,6 +3797,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_010' no tiene definida
           <Property Name="pe_correo" Type="varchar" MaxLength="100" />
           <Property Name="pe_telfono_Contacto" Type="varchar" MaxLength="50" />
           <Property Name="pe_direccion" Type="varchar" MaxLength="150" />
+          <Property Name="sexo" Type="varchar" MaxLength="250" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_011' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -6983,7 +6984,8 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
     [VWROL_010].[TipoNomina] AS [TipoNomina], 
     [VWROL_010].[pe_correo] AS [pe_correo], 
     [VWROL_010].[pe_telfono_Contacto] AS [pe_telfono_Contacto], 
-    [VWROL_010].[pe_direccion] AS [pe_direccion]
+    [VWROL_010].[pe_direccion] AS [pe_direccion], 
+    [VWROL_010].[sexo] AS [sexo]
     FROM [web].[VWROL_010] AS [VWROL_010]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VWROL_011" EntityType="Self.VWROL_011" store:Type="Views" store:Schema="web">
@@ -8527,7 +8529,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
             <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <EntitySet Name="VWROL_010" EntityType="Model_reportes.VWROL_010" />
           <FunctionImport Name="SPCXP_016" ReturnType="Collection(Model_reportes.SPCXP_016_Result)">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
             <Parameter Name="IdUsuario" Mode="In" Type="String" />
@@ -8685,6 +8686,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
             <Parameter Name="IdBanco" Mode="In" Type="Int32" />
             <Parameter Name="IdConciliacion" Mode="In" Type="Decimal" />
           </FunctionImport>
+          <EntitySet Name="VWROL_010" EntityType="Model_reportes.VWROL_010" />
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -10698,49 +10700,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
           <Property Type="Int32" Name="IdSucursal" Nullable="false" />
           <Property Type="String" Name="Su_Descripcion" Nullable="true" MaxLength="100" />
         </ComplexType>
-        <EntityType Name="VWROL_010">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="IdEmpleado" />
-            <PropertyRef Name="Su_Descripcion" />
-            <PropertyRef Name="DescDivision" />
-            <PropertyRef Name="DescArea" />
-            <PropertyRef Name="de_descripcion" />
-            <PropertyRef Name="pe_cedulaRuc" />
-            <PropertyRef Name="ca_descripcion" />
-            <PropertyRef Name="EstadoEmpleado" />
-            <PropertyRef Name="TipoNomina" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdDivision" Type="Int32" />
-          <Property Name="IdArea" Type="Int32" />
-          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="IdTipoNomina" Type="Int32" />
-          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="DescDivision" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="DescArea" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="de_descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Empleado" Type="String" MaxLength="201" FixedLength="false" Unicode="false" />
-          <Property Name="pe_fechaNacimiento" Type="DateTime" Precision="3" />
-          <Property Name="EstadoCivil" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="edad" Type="Int32" />
-          <Property Name="em_fecha_ingreso" Type="DateTime" Precision="3" />
-          <Property Name="em_fechaSalida" Type="DateTime" Precision="0" />
-          <Property Name="ca_descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="EstadoEmpleado" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="em_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="em_fechaIngaRol" Type="DateTime" Precision="3" />
-          <Property Name="antiguedad_string" Type="String" MaxLength="57" FixedLength="false" Unicode="false" />
-          <Property Name="CodCatalogo_Ubicacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="UbicacionGeneral" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="TipoNomina" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="pe_correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="pe_telfono_Contacto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="pe_direccion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-        </EntityType>
         <ComplexType Name="SPCXP_016_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
           <Property Type="Int32" Name="IdSucursal" Nullable="false" />
@@ -12814,6 +12773,50 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
           <Property Type="Double" Name="co_SaldoBanco_anterior" Nullable="false" />
           <Property Type="Double" Name="SaldoContableActual" Nullable="false" />
         </ComplexType>
+        <EntityType Name="VWROL_010">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="IdEmpleado" />
+            <PropertyRef Name="Su_Descripcion" />
+            <PropertyRef Name="DescDivision" />
+            <PropertyRef Name="DescArea" />
+            <PropertyRef Name="de_descripcion" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="ca_descripcion" />
+            <PropertyRef Name="EstadoEmpleado" />
+            <PropertyRef Name="TipoNomina" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdDivision" Type="Int32" />
+          <Property Name="IdArea" Type="Int32" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdTipoNomina" Type="Int32" />
+          <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DescDivision" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DescArea" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="de_descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Empleado" Type="String" MaxLength="201" FixedLength="false" Unicode="false" />
+          <Property Name="pe_fechaNacimiento" Type="DateTime" Precision="3" />
+          <Property Name="EstadoCivil" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="edad" Type="Int32" />
+          <Property Name="em_fecha_ingreso" Type="DateTime" Precision="3" />
+          <Property Name="em_fechaSalida" Type="DateTime" Precision="0" />
+          <Property Name="ca_descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="EstadoEmpleado" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="em_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="em_fechaIngaRol" Type="DateTime" Precision="3" />
+          <Property Name="antiguedad_string" Type="String" MaxLength="57" FixedLength="false" Unicode="false" />
+          <Property Name="CodCatalogo_Ubicacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="UbicacionGeneral" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="TipoNomina" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pe_correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pe_telfono_Contacto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pe_direccion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="sexo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -15098,40 +15101,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="VWROL_010">
-            <EntityTypeMapping TypeName="Model_reportes.VWROL_010">
-              <MappingFragment StoreEntitySet="VWROL_010">
-                <ScalarProperty Name="pe_direccion" ColumnName="pe_direccion" />
-                <ScalarProperty Name="pe_telfono_Contacto" ColumnName="pe_telfono_Contacto" />
-                <ScalarProperty Name="pe_correo" ColumnName="pe_correo" />
-                <ScalarProperty Name="TipoNomina" ColumnName="TipoNomina" />
-                <ScalarProperty Name="UbicacionGeneral" ColumnName="UbicacionGeneral" />
-                <ScalarProperty Name="CodCatalogo_Ubicacion" ColumnName="CodCatalogo_Ubicacion" />
-                <ScalarProperty Name="antiguedad_string" ColumnName="antiguedad_string" />
-                <ScalarProperty Name="em_fechaIngaRol" ColumnName="em_fechaIngaRol" />
-                <ScalarProperty Name="em_status" ColumnName="em_status" />
-                <ScalarProperty Name="EstadoEmpleado" ColumnName="EstadoEmpleado" />
-                <ScalarProperty Name="ca_descripcion" ColumnName="ca_descripcion" />
-                <ScalarProperty Name="em_fechaSalida" ColumnName="em_fechaSalida" />
-                <ScalarProperty Name="em_fecha_ingreso" ColumnName="em_fecha_ingreso" />
-                <ScalarProperty Name="edad" ColumnName="edad" />
-                <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
-                <ScalarProperty Name="pe_fechaNacimiento" ColumnName="pe_fechaNacimiento" />
-                <ScalarProperty Name="Empleado" ColumnName="Empleado" />
-                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
-                <ScalarProperty Name="de_descripcion" ColumnName="de_descripcion" />
-                <ScalarProperty Name="DescArea" ColumnName="DescArea" />
-                <ScalarProperty Name="DescDivision" ColumnName="DescDivision" />
-                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
-                <ScalarProperty Name="IdTipoNomina" ColumnName="IdTipoNomina" />
-                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
-                <ScalarProperty Name="IdArea" ColumnName="IdArea" />
-                <ScalarProperty Name="IdDivision" ColumnName="IdDivision" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SPCXP_016" FunctionName="Model_reportes.Store.SPCXP_016">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Model_reportes.SPCXP_016_Result">
@@ -16708,6 +16677,41 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_028' no tiene definida
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="VWROL_010">
+            <EntityTypeMapping TypeName="Model_reportes.VWROL_010">
+              <MappingFragment StoreEntitySet="VWROL_010">
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+                <ScalarProperty Name="pe_direccion" ColumnName="pe_direccion" />
+                <ScalarProperty Name="pe_telfono_Contacto" ColumnName="pe_telfono_Contacto" />
+                <ScalarProperty Name="pe_correo" ColumnName="pe_correo" />
+                <ScalarProperty Name="TipoNomina" ColumnName="TipoNomina" />
+                <ScalarProperty Name="UbicacionGeneral" ColumnName="UbicacionGeneral" />
+                <ScalarProperty Name="CodCatalogo_Ubicacion" ColumnName="CodCatalogo_Ubicacion" />
+                <ScalarProperty Name="antiguedad_string" ColumnName="antiguedad_string" />
+                <ScalarProperty Name="em_fechaIngaRol" ColumnName="em_fechaIngaRol" />
+                <ScalarProperty Name="em_status" ColumnName="em_status" />
+                <ScalarProperty Name="EstadoEmpleado" ColumnName="EstadoEmpleado" />
+                <ScalarProperty Name="ca_descripcion" ColumnName="ca_descripcion" />
+                <ScalarProperty Name="em_fechaSalida" ColumnName="em_fechaSalida" />
+                <ScalarProperty Name="em_fecha_ingreso" ColumnName="em_fecha_ingreso" />
+                <ScalarProperty Name="edad" ColumnName="edad" />
+                <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
+                <ScalarProperty Name="pe_fechaNacimiento" ColumnName="pe_fechaNacimiento" />
+                <ScalarProperty Name="Empleado" ColumnName="Empleado" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="de_descripcion" ColumnName="de_descripcion" />
+                <ScalarProperty Name="DescArea" ColumnName="DescArea" />
+                <ScalarProperty Name="DescDivision" ColumnName="DescDivision" />
+                <ScalarProperty Name="Su_Descripcion" ColumnName="Su_Descripcion" />
+                <ScalarProperty Name="IdTipoNomina" ColumnName="IdTipoNomina" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdArea" ColumnName="IdArea" />
+                <ScalarProperty Name="IdDivision" ColumnName="IdDivision" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

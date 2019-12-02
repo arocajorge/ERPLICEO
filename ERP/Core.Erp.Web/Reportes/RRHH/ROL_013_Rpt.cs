@@ -7,6 +7,7 @@ using Core.Erp.Bus.Reportes.RRHH;
 using Core.Erp.Info.Reportes.RRHH;
 using System.Collections.Generic;
 using Core.Erp.Bus.General;
+using System.Linq;
 
 namespace Core.Erp.Web.Reportes.RRHH
 {
@@ -46,6 +47,20 @@ namespace Core.Erp.Web.Reportes.RRHH
 
             ROL_013_Bus bus_rpt = new ROL_013_Bus();
             List<ROL_013_Info> lst_rpt = bus_rpt.get_list(IdEmpresa, IdNomina, IdSucursal, FechaIni, FechaFin, IdEmpleado, IdDivision, IdArea);
+
+            List<ROL_013_Info> Lista = (from q in lst_rpt
+                                        group q by new
+                                        {
+                                            q.IdEmpresa,
+                                            q.IdEmpleado,
+                                        } into empleados
+                                        select new ROL_013_Info
+                                        {
+                                            IdEmpresa = empleados.Key.IdEmpresa,
+                                            IdEmpleado = empleados.Key.IdEmpleado
+                                        }).ToList();
+
+            num_empleados.Text = Convert.ToString(Lista.Count);
             this.DataSource = lst_rpt;
         }
     }

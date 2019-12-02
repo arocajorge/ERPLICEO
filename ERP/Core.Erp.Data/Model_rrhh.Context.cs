@@ -156,6 +156,8 @@ namespace Core.Erp.Data
         public DbSet<vwro_DescuentosPorFacturacionEmpleado> vwro_DescuentosPorFacturacionEmpleado { get; set; }
         public DbSet<ro_empleado_x_ro_rubro> ro_empleado_x_ro_rubro { get; set; }
         public DbSet<ro_empleado_x_rubro_acumulado> ro_empleado_x_rubro_acumulado { get; set; }
+        public DbSet<ro_EmpleadoAnticipoBeneficio> ro_EmpleadoAnticipoBeneficio { get; set; }
+        public DbSet<vwro_EmpleadoAnticipoBeneficio> vwro_EmpleadoAnticipoBeneficio { get; set; }
     
         public virtual int spRo_LiquidarEmpleado(Nullable<int> idEmpresa, Nullable<decimal> idActaFiniquito)
         {

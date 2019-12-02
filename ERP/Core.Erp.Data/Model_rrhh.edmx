@@ -562,6 +562,27 @@
           <Property Name="MotivoAnulacion" Type="varchar" MaxLength="100" />
           <Property Name="estado" Type="varchar" MaxLength="1" />
         </EntityType>
+        <EntityType Name="ro_EmpleadoAnticipoBeneficio">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdAnticipo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdAnticipo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdEmpleado" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="FechaDesde" Type="date" Nullable="false" />
+          <Property Name="FechaHasta" Type="date" Nullable="false" />
+          <Property Name="IdRubro" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Valor" Type="float" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="varchar" MaxLength="200" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="IdUsuarioModificacion" Type="varchar" MaxLength="200" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="IdUsuarioAnulacion" Type="varchar" MaxLength="200" />
+          <Property Name="FechaAnulacion" Type="datetime" />
+          <Property Name="MotivoAnulacion" Type="varchar(max)" />
+        </EntityType>
         <EntityType Name="ro_EmpleadoFoto">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2166,6 +2187,29 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_x_titulos' no 
           <Property Name="IdInstitucion" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="IdTitulo" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="estado" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_EmpleadoAnticipoBeneficio' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwro_EmpleadoAnticipoBeneficio">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdAnticipo" />
+            <PropertyRef Name="FechaDesde" />
+            <PropertyRef Name="FechaHasta" />
+            <PropertyRef Name="Valor" />
+            <PropertyRef Name="ru_descripcion" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="Estado" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdAnticipo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="FechaDesde" Type="date" Nullable="false" />
+          <Property Name="FechaHasta" Type="date" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="Valor" Type="float" Nullable="false" />
+          <Property Name="ru_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_EmpleadoNovedadCargaMasiva' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -3920,6 +3964,34 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ro_EmpleadoAnticipoBeneficio_ro_empleado">
+          <End Role="ro_empleado" Type="Self.ro_empleado" Multiplicity="1" />
+          <End Role="ro_EmpleadoAnticipoBeneficio" Type="Self.ro_EmpleadoAnticipoBeneficio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_empleado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="ro_EmpleadoAnticipoBeneficio">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_EmpleadoAnticipoBeneficio_ro_rubro_tipo">
+          <End Role="ro_rubro_tipo" Type="Self.ro_rubro_tipo" Multiplicity="1" />
+          <End Role="ro_EmpleadoAnticipoBeneficio" Type="Self.ro_EmpleadoAnticipoBeneficio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_EmpleadoAnticipoBeneficio">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ro_EmpleadoFoto_ro_empleado">
           <End Role="ro_empleado" Type="Self.ro_empleado" Multiplicity="1" />
           <End Role="ro_EmpleadoFoto" Type="Self.ro_EmpleadoFoto" Multiplicity="0..1" />
@@ -5319,6 +5391,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
           <EntitySet Name="ro_empleado_x_ro_rubro" EntityType="Self.ro_empleado_x_ro_rubro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ro_empleado_x_rubro_acumulado" EntityType="Self.ro_empleado_x_rubro_acumulado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ro_empleado_x_titulos" EntityType="Self.ro_empleado_x_titulos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ro_EmpleadoAnticipoBeneficio" EntityType="Self.ro_EmpleadoAnticipoBeneficio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ro_EmpleadoFoto" EntityType="Self.ro_EmpleadoFoto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ro_EmpleadoNovedadCargaMasiva" EntityType="Self.ro_EmpleadoNovedadCargaMasiva" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ro_EmpleadoNovedadCargaMasiva_det" EntityType="Self.ro_EmpleadoNovedadCargaMasiva_det" Schema="dbo" store:Type="Tables" />
@@ -5725,6 +5798,19 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
     [vwro_empleado_x_titulos].[IdTitulo] AS [IdTitulo], 
     [vwro_empleado_x_titulos].[estado] AS [estado]
     FROM [dbo].[vwro_empleado_x_titulos] AS [vwro_empleado_x_titulos]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwro_EmpleadoAnticipoBeneficio" EntityType="Self.vwro_EmpleadoAnticipoBeneficio" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwro_EmpleadoAnticipoBeneficio].[IdEmpresa] AS [IdEmpresa], 
+    [vwro_EmpleadoAnticipoBeneficio].[IdAnticipo] AS [IdAnticipo], 
+    [vwro_EmpleadoAnticipoBeneficio].[FechaDesde] AS [FechaDesde], 
+    [vwro_EmpleadoAnticipoBeneficio].[FechaHasta] AS [FechaHasta], 
+    [vwro_EmpleadoAnticipoBeneficio].[FechaCreacion] AS [FechaCreacion], 
+    [vwro_EmpleadoAnticipoBeneficio].[Valor] AS [Valor], 
+    [vwro_EmpleadoAnticipoBeneficio].[ru_descripcion] AS [ru_descripcion], 
+    [vwro_EmpleadoAnticipoBeneficio].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [vwro_EmpleadoAnticipoBeneficio].[Estado] AS [Estado]
+    FROM [dbo].[vwro_EmpleadoAnticipoBeneficio] AS [vwro_EmpleadoAnticipoBeneficio]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_EmpleadoNovedadCargaMasiva" EntityType="Self.vwro_EmpleadoNovedadCargaMasiva" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -6579,6 +6665,14 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
           <AssociationSet Name="FK_ro_empleado_x_titulos_ro_empleado" Association="Self.FK_ro_empleado_x_titulos_ro_empleado">
             <End Role="ro_empleado" EntitySet="ro_empleado" />
             <End Role="ro_empleado_x_titulos" EntitySet="ro_empleado_x_titulos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_EmpleadoAnticipoBeneficio_ro_empleado" Association="Self.FK_ro_EmpleadoAnticipoBeneficio_ro_empleado">
+            <End Role="ro_empleado" EntitySet="ro_empleado" />
+            <End Role="ro_EmpleadoAnticipoBeneficio" EntitySet="ro_EmpleadoAnticipoBeneficio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_EmpleadoAnticipoBeneficio_ro_rubro_tipo" Association="Self.FK_ro_EmpleadoAnticipoBeneficio_ro_rubro_tipo">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_EmpleadoAnticipoBeneficio" EntitySet="ro_EmpleadoAnticipoBeneficio" />
           </AssociationSet>
           <AssociationSet Name="FK_ro_EmpleadoFoto_ro_empleado" Association="Self.FK_ro_EmpleadoFoto_ro_empleado">
             <End Role="ro_empleado" EntitySet="ro_empleado" />
@@ -8940,6 +9034,16 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
           <AssociationSet Name="FK_ro_empleado_x_rubro_acumulado_ro_rubro_tipo" Association="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_ro_rubro_tipo">
             <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
             <End Role="ro_empleado_x_rubro_acumulado" EntitySet="ro_empleado_x_rubro_acumulado" />
+          </AssociationSet>
+          <EntitySet Name="ro_EmpleadoAnticipoBeneficio" EntityType="Model_rrhh.ro_EmpleadoAnticipoBeneficio" />
+          <EntitySet Name="vwro_EmpleadoAnticipoBeneficio" EntityType="Model_rrhh.vwro_EmpleadoAnticipoBeneficio" />
+          <AssociationSet Name="FK_ro_EmpleadoAnticipoBeneficio_ro_empleado" Association="Model_rrhh.FK_ro_EmpleadoAnticipoBeneficio_ro_empleado">
+            <End Role="ro_empleado" EntitySet="ro_empleado" />
+            <End Role="ro_EmpleadoAnticipoBeneficio" EntitySet="ro_EmpleadoAnticipoBeneficio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_EmpleadoAnticipoBeneficio_ro_rubro_tipo" Association="Model_rrhh.FK_ro_EmpleadoAnticipoBeneficio_ro_rubro_tipo">
+            <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
+            <End Role="ro_EmpleadoAnticipoBeneficio" EntitySet="ro_EmpleadoAnticipoBeneficio" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
@@ -11672,6 +11776,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
           <NavigationProperty Name="ro_PrestamoMasivo_Det" Relationship="Model_rrhh.FK_ro_PrestamoMasivo_Det_ro_empleado" FromRole="ro_empleado" ToRole="ro_PrestamoMasivo_Det" />
           <NavigationProperty Name="ro_empleado_x_ro_rubro" Relationship="Model_rrhh.FK_ro_empleado_x_ro_rubro_ro_empleado" FromRole="ro_empleado" ToRole="ro_empleado_x_ro_rubro" />
           <NavigationProperty Name="ro_empleado_x_rubro_acumulado" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado" FromRole="ro_empleado" ToRole="ro_empleado_x_rubro_acumulado" />
+          <NavigationProperty Name="ro_EmpleadoAnticipoBeneficio" Relationship="Model_rrhh.FK_ro_EmpleadoAnticipoBeneficio_ro_empleado" FromRole="ro_empleado" ToRole="ro_EmpleadoAnticipoBeneficio" />
         </EntityType>
         <Association Name="FK_ro_Acta_Finiquito_ro_empleado">
           <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
@@ -12402,6 +12507,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
           <NavigationProperty Name="ro_PrestamoMasivo_Det" Relationship="Model_rrhh.FK_ro_PrestamoMasivo_Det_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_PrestamoMasivo_Det" />
           <NavigationProperty Name="ro_empleado_x_ro_rubro" Relationship="Model_rrhh.FK_ro_empleado_x_ro_rubro_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_empleado_x_ro_rubro" />
           <NavigationProperty Name="ro_empleado_x_rubro_acumulado" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_empleado_x_rubro_acumulado" />
+          <NavigationProperty Name="ro_EmpleadoAnticipoBeneficio" Relationship="Model_rrhh.FK_ro_EmpleadoAnticipoBeneficio_ro_rubro_tipo" FromRole="ro_rubro_tipo" ToRole="ro_EmpleadoAnticipoBeneficio" />
         </EntityType>
         <Association Name="FK_ro_Acta_Finiquito_Detalle_ro_rubro_tipo">
           <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
@@ -13071,6 +13177,78 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
               <PropertyRef Name="IdRubro" />
             </Principal>
             <Dependent Role="ro_empleado_x_rubro_acumulado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ro_EmpleadoAnticipoBeneficio">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdAnticipo" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdAnticipo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="FechaDesde" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaHasta" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IdRubro" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Valor" Type="Double" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioModificacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioAnulacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_EmpleadoAnticipoBeneficio_ro_empleado" FromRole="ro_EmpleadoAnticipoBeneficio" ToRole="ro_empleado" />
+          <NavigationProperty Name="ro_rubro_tipo" Relationship="Model_rrhh.FK_ro_EmpleadoAnticipoBeneficio_ro_rubro_tipo" FromRole="ro_EmpleadoAnticipoBeneficio" ToRole="ro_rubro_tipo" />
+        </EntityType>
+        <EntityType Name="vwro_EmpleadoAnticipoBeneficio">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdAnticipo" />
+            <PropertyRef Name="FechaDesde" />
+            <PropertyRef Name="FechaHasta" />
+            <PropertyRef Name="Valor" />
+            <PropertyRef Name="ru_descripcion" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="Estado" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdAnticipo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="FechaDesde" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaHasta" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="Valor" Type="Double" Nullable="false" />
+          <Property Name="ru_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ro_EmpleadoAnticipoBeneficio_ro_empleado">
+          <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_EmpleadoAnticipoBeneficio" Role="ro_EmpleadoAnticipoBeneficio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_empleado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="ro_EmpleadoAnticipoBeneficio">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_EmpleadoAnticipoBeneficio_ro_rubro_tipo">
+          <End Type="Model_rrhh.ro_rubro_tipo" Role="ro_rubro_tipo" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_EmpleadoAnticipoBeneficio" Role="ro_EmpleadoAnticipoBeneficio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_rubro_tipo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdRubro" />
+            </Principal>
+            <Dependent Role="ro_EmpleadoAnticipoBeneficio">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdRubro" />
             </Dependent>
@@ -15814,6 +15992,42 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
                 <ScalarProperty Name="FechaIngresa" ColumnName="FechaIngresa" />
                 <ScalarProperty Name="IdRubro" ColumnName="IdRubro" />
                 <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ro_EmpleadoAnticipoBeneficio">
+            <EntityTypeMapping TypeName="Model_rrhh.ro_EmpleadoAnticipoBeneficio">
+              <MappingFragment StoreEntitySet="ro_EmpleadoAnticipoBeneficio">
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="IdUsuarioAnulacion" ColumnName="IdUsuarioAnulacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="IdRubro" ColumnName="IdRubro" />
+                <ScalarProperty Name="FechaHasta" ColumnName="FechaHasta" />
+                <ScalarProperty Name="FechaDesde" ColumnName="FechaDesde" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdAnticipo" ColumnName="IdAnticipo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwro_EmpleadoAnticipoBeneficio">
+            <EntityTypeMapping TypeName="Model_rrhh.vwro_EmpleadoAnticipoBeneficio">
+              <MappingFragment StoreEntitySet="vwro_EmpleadoAnticipoBeneficio">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="ru_descripcion" ColumnName="ru_descripcion" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaHasta" ColumnName="FechaHasta" />
+                <ScalarProperty Name="FechaDesde" ColumnName="FechaDesde" />
+                <ScalarProperty Name="IdAnticipo" ColumnName="IdAnticipo" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

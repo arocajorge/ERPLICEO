@@ -1472,6 +1472,9 @@
     <Compile Include="ro_empleado.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
+    <Compile Include="ro_EmpleadoAnticipoBeneficio.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
     <Compile Include="ro_EmpleadoFoto.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
@@ -1676,6 +1679,7 @@
     <Compile Include="RRHH\ro_contrato_Data.cs" />
     <Compile Include="RRHH\ro_departamento_Data.cs" />
     <Compile Include="RRHH\ro_division_Data.cs" />
+    <Compile Include="RRHH\ro_EmpleadoAnticipoBeneficio_Data.cs" />
     <Compile Include="RRHH\ro_EmpleadoFoto_Data.cs" />
     <Compile Include="RRHH\ro_EmpleadoNovedadCargaMasiva_Data.cs" />
     <Compile Include="RRHH\ro_EmpleadoNovedadCargaMasiva_det_Data.cs" />
@@ -2734,6 +2738,9 @@
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="vwro_DescuentosPorFacturacionEmpleado.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_EmpleadoAnticipoBeneficio.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="vwro_EmpleadoNovedadCargaMasiva.cs">

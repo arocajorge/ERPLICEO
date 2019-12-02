@@ -1,4 +1,4 @@
-﻿--exec [web].[SPROL_013] 1,1,1,1,17,17,1,99999,1,99999,'01/01/2019','31/12/2019'
+﻿--exec [web].[SPROL_013] 1,1,1,10,0,999999,1,99999,1,99999,'01/01/2019','12/31/2019'
 -- exec [web].[SPROL_013] 1,2,1,1,276,276,1,99999,1,99999,'01/12/2018','31/07/2019'
 
 CREATE  PROCEDURE [web].[SPROL_013]
@@ -40,7 +40,7 @@ SELECT    dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpresa, dbo.ro_rol_detalle_x_r
                          dbo.ro_rol_detalle_x_rubro_acumulado.Valor AS Provision, dbo.ro_rol_detalle_x_rubro_acumulado.Estado, dbo.ro_rol_detalle_x_rubro_acumulado.IdSucursal, dbo.ro_empleado.em_codigo, 
                         dbo.ro_Departamento.de_descripcion, dbo.tb_sucursal.Su_Descripcion, dbo.tb_persona.pe_nombreCompleto, dbo.ro_Division.Descripcion AS Division, dbo.ro_area.Descripcion AS Area,  CONCAT(dbo.ro_periodo.pe_anio, '-', 
 
-                         DATENAME(MONTH, dbo.ro_periodo.pe_FechaIni))  AS Mes, 0.00 AS Prestamo, su.Valor AS Sueldo--ROUND( dbo.ro_rol_detalle_x_rubro_acumulado.Valor * 12,2) AS Sueldo
+                         DATENAME(MONTH, dbo.ro_periodo.pe_FechaIni))  AS Mes, isnull(g.ValorAnticipo,0) AS Prestamo, su.Valor AS Sueldo--ROUND( dbo.ro_rol_detalle_x_rubro_acumulado.Valor * 12,2) AS Sueldo
 						 ,dbo.ro_periodo.pe_anio,dbo.ro_periodo.pe_mes -- se añadio, para filtrar  27/08/2019 by Acueva
 FROM            dbo.ro_rol_detalle_x_rubro_acumulado(nolock) INNER JOIN
                          dbo.ro_rol ON dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.ro_rol_detalle_x_rubro_acumulado.IdRol = dbo.ro_rol.IdRol INNER JOIN
@@ -69,7 +69,16 @@ FROM            dbo.ro_rol_detalle_x_rubro_acumulado(nolock) INNER JOIN
 
 						 ) AS Su on su.IdEmpresa = ro_rol_detalle_x_rubro_acumulado.IdEmpresa
 						 and su.IdRol = ro_rol_detalle_x_rubro_acumulado.IdRol
-						 and su.IdEmpleado = ro_rol_detalle_x_rubro_acumulado.IdEmpleado
+						 and su.IdEmpleado = ro_rol_detalle_x_rubro_acumulado.IdEmpleado LEFT JOIN
+						 (
+							SELECT IdEmpresa, IdEmpleado, ROUND(SUM(Valor),2) ValorAnticipo
+							FROM ro_EmpleadoAnticipoBeneficio
+							where IdEmpresa = @idempresa
+							and (FechaDesde between @fecha_inicio and @fecha_fin
+							or FechaHasta between @fecha_inicio and @fecha_fin)
+							group by IdEmpresa, IdEmpleado
+						 ) G ON ro_empleado.IdEmpresa = G.IdEmpresa
+						 AND ro_empleado.IdEmpleado = G.IdEmpleado
 
 						 where ro_rol.IdEmpresa=@idempresa
 						 and ro_rol.IdSucursal>=@IdSucursalInicio
@@ -95,7 +104,7 @@ SELECT      dbo.ro_rol_detalle.IdEmpresa, dbo.ro_rol_detalle.IdRol, dbo.ro_rol_d
                          dbo.ro_rol_detalle.Valor AS Provision, '', dbo.ro_rol_detalle.IdSucursal, dbo.ro_empleado.em_codigo, 
                          dbo.ro_Departamento.de_descripcion, dbo.tb_sucursal.Su_Descripcion, dbo.tb_persona.pe_nombreCompleto, dbo.ro_Division.Descripcion AS Division, dbo.ro_area.Descripcion AS Area,  CONCAT(dbo.ro_periodo.pe_anio, '-', 
 						
-                         DATENAME(MONTH, dbo.ro_periodo.pe_FechaIni))  AS Mes, 0.00 AS Prestamo, su.Valor AS Sueldo
+                         DATENAME(MONTH, dbo.ro_periodo.pe_FechaIni))  AS Mes, isnull(G.ValorAnticipo,0) AS Prestamo, su.Valor AS Sueldo
 						 ,dbo.ro_periodo.pe_anio,dbo.ro_periodo.pe_mes -- se añadio, para filtrar  27/08/2019 by Acueva
 FROM            dbo.ro_rol_detalle(nolock) INNER JOIN
                          dbo.ro_rol ON dbo.ro_rol_detalle.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.ro_rol_detalle.IdRol = dbo.ro_rol.IdRol INNER JOIN
@@ -154,7 +163,7 @@ FROM            dbo.ro_rol_detalle(nolock) INNER JOIN
 							GROUP BY rd.IdEmpresa, rd.IdRol, rd.IdEmpleado, ro_rubro_tipo.ru_tipo, ro_rol.IdNominaTipoLiqui
 						 ) AS Su on su.IdEmpresa = ro_rol_detalle_x_rubro_acumulado.IdEmpresa
 						 and su.IdRol = ro_rol_detalle_x_rubro_acumulado.IdRol
-						 and su.IdEmpleado = ro_rol_detalle_x_rubro_acumulado.IdEmpleado
+						 and su.IdEmpleado = ro_rol_detalle_x_rubro_acumulado.IdEmpleado 
 						 
 						 where ro_rol.IdEmpresa=@idempresa
 						 and ro_rol.IdSucursal>=@IdSucursalInicio
@@ -168,6 +177,17 @@ FROM            dbo.ro_rol_detalle(nolock) INNER JOIN
 						 and ro_empleado.IdDivision<=@IdDivisionFin
 						 and ro_periodo.pe_FechaIni between @fecha_inicio and @fecha_fin
 						  ) -- fin del not in   -- para q no filtre repetidos del select de arriba(PRINCIPAL)
+						  LEFT JOIN
+						 (
+							SELECT IdEmpresa, IdEmpleado, ROUND(SUM(Valor),2) ValorAnticipo
+							FROM ro_EmpleadoAnticipoBeneficio
+							where IdEmpresa = @idempresa
+							and (FechaDesde between @fecha_inicio and @fecha_fin
+							or FechaHasta between @fecha_inicio and @fecha_fin)
+							group by IdEmpresa, IdEmpleado
+						 ) G ON ro_empleado.IdEmpresa = G.IdEmpresa
+						 AND ro_empleado.IdEmpleado = G.IdEmpleado
+
 
 						 where ro_rol.IdEmpresa=@idempresa
 						 and ro_rol.IdSucursal>=@IdSucursalInicio

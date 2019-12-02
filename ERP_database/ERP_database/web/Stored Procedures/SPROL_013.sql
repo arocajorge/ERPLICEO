@@ -1,6 +1,4 @@
-﻿--exec [web].[SPROL_013] 1,1,1,10,0,999999,1,99999,1,99999,'01/01/2019','12/31/2019'
--- exec [web].[SPROL_013] 1,2,1,1,276,276,1,99999,1,99999,'01/12/2018','31/07/2019'
-
+﻿
 CREATE  PROCEDURE [web].[SPROL_013]
 @idempresa int,
 @idnomina int,
@@ -71,14 +69,15 @@ FROM            dbo.ro_rol_detalle_x_rubro_acumulado(nolock) INNER JOIN
 						 and su.IdRol = ro_rol_detalle_x_rubro_acumulado.IdRol
 						 and su.IdEmpleado = ro_rol_detalle_x_rubro_acumulado.IdEmpleado LEFT JOIN
 						 (
-							SELECT IdEmpresa, IdEmpleado, ROUND(SUM(Valor),2) ValorAnticipo
+							SELECT IdEmpresa, IdEmpleado, IdRubro, ROUND(SUM(Valor),2) ValorAnticipo
 							FROM ro_EmpleadoAnticipoBeneficio
 							where IdEmpresa = @idempresa
 							and (FechaDesde between @fecha_inicio and @fecha_fin
-							or FechaHasta between @fecha_inicio and @fecha_fin)
-							group by IdEmpresa, IdEmpleado
-						 ) G ON ro_empleado.IdEmpresa = G.IdEmpresa
+							or FechaHasta between @fecha_inicio and @fecha_fin) and Estado = 1
+							group by IdEmpresa, IdEmpleado, IdRubro
+						 ) G ON ro_empleado.IdEmpresa = G.IdEmpresa 
 						 AND ro_empleado.IdEmpleado = G.IdEmpleado
+						 and dbo.ro_rubros_calculados.IdRubro_prov_DIII = g.IdRubro
 
 						 where ro_rol.IdEmpresa=@idempresa
 						 and ro_rol.IdSucursal>=@IdSucursalInicio
@@ -179,15 +178,15 @@ FROM            dbo.ro_rol_detalle(nolock) INNER JOIN
 						  ) -- fin del not in   -- para q no filtre repetidos del select de arriba(PRINCIPAL)
 						  LEFT JOIN
 						 (
-							SELECT IdEmpresa, IdEmpleado, ROUND(SUM(Valor),2) ValorAnticipo
+							SELECT IdEmpresa, IdEmpleado, IdRubro, ROUND(SUM(Valor),2) ValorAnticipo
 							FROM ro_EmpleadoAnticipoBeneficio
 							where IdEmpresa = @idempresa
 							and (FechaDesde between @fecha_inicio and @fecha_fin
-							or FechaHasta between @fecha_inicio and @fecha_fin)
-							group by IdEmpresa, IdEmpleado
-						 ) G ON ro_empleado.IdEmpresa = G.IdEmpresa
+							or FechaHasta between @fecha_inicio and @fecha_fin) and Estado = 1
+							group by IdEmpresa, IdEmpleado, IdRubro
+						 ) G ON ro_empleado.IdEmpresa = G.IdEmpresa 
 						 AND ro_empleado.IdEmpleado = G.IdEmpleado
-
+						 and dbo.ro_rubros_calculados.IdRubro_prov_DIII = g.IdRubro
 
 						 where ro_rol.IdEmpresa=@idempresa
 						 and ro_rol.IdSucursal>=@IdSucursalInicio

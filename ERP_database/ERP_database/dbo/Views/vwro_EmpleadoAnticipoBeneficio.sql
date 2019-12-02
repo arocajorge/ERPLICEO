@@ -1,7 +1,7 @@
-﻿CREATE VIEW dbo.vwro_EmpleadoAnticipoBeneficio
+﻿CREATE VIEW [dbo].[vwro_EmpleadoAnticipoBeneficio]
 AS
 SELECT dbo.ro_EmpleadoAnticipoBeneficio.IdEmpresa, dbo.ro_EmpleadoAnticipoBeneficio.IdAnticipo, dbo.ro_EmpleadoAnticipoBeneficio.FechaDesde, dbo.ro_EmpleadoAnticipoBeneficio.FechaHasta, 
-                  dbo.ro_EmpleadoAnticipoBeneficio.FechaCreacion, dbo.ro_EmpleadoAnticipoBeneficio.Valor, dbo.ro_rubro_tipo.ru_descripcion, dbo.tb_persona.pe_nombreCompleto, dbo.ro_EmpleadoAnticipoBeneficio.Estado
+                  cast(dbo.ro_EmpleadoAnticipoBeneficio.FechaCreacion as date) FechaCreacion, dbo.ro_EmpleadoAnticipoBeneficio.Valor, dbo.ro_rubro_tipo.ru_descripcion, dbo.tb_persona.pe_nombreCompleto, dbo.ro_EmpleadoAnticipoBeneficio.Estado
 FROM     dbo.ro_empleado INNER JOIN
                   dbo.ro_EmpleadoAnticipoBeneficio ON dbo.ro_empleado.IdEmpresa = dbo.ro_EmpleadoAnticipoBeneficio.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_EmpleadoAnticipoBeneficio.IdEmpleado INNER JOIN
                   dbo.ro_rubro_tipo ON dbo.ro_EmpleadoAnticipoBeneficio.IdEmpresa = dbo.ro_rubro_tipo.IdEmpresa AND dbo.ro_EmpleadoAnticipoBeneficio.IdRubro = dbo.ro_rubro_tipo.IdRubro INNER JOIN

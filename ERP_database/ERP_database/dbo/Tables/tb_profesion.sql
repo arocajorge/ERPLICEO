@@ -1,9 +1,6 @@
-﻿CREATE TABLE [dbo].[aca_CatalogoFicha] (
-    [IdCatalogoFicha]       INT           NOT NULL,
-    [IdCatalogoTipoFicha]   INT           NOT NULL,
-    [Codigo]                VARCHAR (50)  NULL,
-    [NomCatalogoFicha]      VARCHAR (500) NOT NULL,
-    [Orden]                 INT           NOT NULL,
+﻿CREATE TABLE [dbo].[tb_profesion] (
+    [IdProfesion]           INT           NOT NULL,
+    [Descripcion]           VARCHAR (500) NOT NULL,
     [Estado]                BIT           NOT NULL,
     [IdUsuarioCreacion]     VARCHAR (200) NULL,
     [FechaCreacion]         DATETIME      NULL,
@@ -12,8 +9,6 @@
     [IdUsuarioAnulacion]    VARCHAR (200) NULL,
     [FechaAnulacion]        DATETIME      NULL,
     [MotivoAnulacion]       VARCHAR (MAX) NULL,
-    CONSTRAINT [PK_aca_CatalogoFicha] PRIMARY KEY CLUSTERED ([IdCatalogoFicha] ASC)
+    CONSTRAINT [PK_tb_profesion_1] PRIMARY KEY CLUSTERED ([IdProfesion] ASC)
 );
-
-
 

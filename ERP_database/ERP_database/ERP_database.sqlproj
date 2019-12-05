@@ -1240,6 +1240,7 @@
     <Build Include="dbo\Tables\aca_SocioEconomico.sql" />
     <Build Include="dbo\Tables\aca_CatalogoTipoFicha.sql" />
     <Build Include="dbo\Tables\aca_CatalogoFicha.sql" />
+    <Build Include="dbo\Tables\tb_profesion.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

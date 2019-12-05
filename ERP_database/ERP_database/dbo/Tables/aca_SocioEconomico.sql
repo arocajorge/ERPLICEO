@@ -5,8 +5,8 @@
     [IdCatalogoFichaVi]     INT           NOT NULL,
     [IdCatalogoFichaTVi]    INT           NOT NULL,
     [IdCatalogoFichaAg]     INT           NOT NULL,
-    [IdCatalogoFichaEl]     INT           NOT NULL,
-    [IdCatalogoFichaHe]     INT           NOT NULL,
+    [TieneElectricidad]     BIT           NOT NULL,
+    [TieneHermanos]         BIT           NOT NULL,
     [NombreHermanos]        VARCHAR (MAX) NULL,
     [SueldoPadre]           FLOAT (53)    NOT NULL,
     [SueldoMadre]           FLOAT (53)    NOT NULL,
@@ -29,15 +29,14 @@
     [FechaCreacion]         DATETIME      NULL,
     [IdUsuarioModificacion] VARCHAR (200) NULL,
     [FechaModificacion]     DATETIME      NULL,
-    CONSTRAINT [PK_aca_SocioEconomico_1] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSocioEconomico] ASC),
     CONSTRAINT [FK_aca_SocioEconomico_aca_Alumno] FOREIGN KEY ([IdEmpresa], [IdAlumno]) REFERENCES [dbo].[aca_Alumno] ([IdEmpresa], [IdAlumno]),
     CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha] FOREIGN KEY ([IdCatalogoFichaVi]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
     CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha1] FOREIGN KEY ([IdCatalogoFichaTVi]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
     CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha2] FOREIGN KEY ([IdCatalogoFichaAg]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
-    CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha3] FOREIGN KEY ([IdCatalogoFichaEl]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
-    CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha4] FOREIGN KEY ([IdCatalogoFichaMot]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
-    CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha5] FOREIGN KEY ([IdCatalogoFichaIns]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
-    CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha6] FOREIGN KEY ([IdCatalogoFichaFin]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
-    CONSTRAINT [FK_aca_SocioEconomico_aca_Matricula] FOREIGN KEY ([IdEmpresa], [IdAlumno]) REFERENCES [dbo].[aca_Matricula] ([IdEmpresa], [IdMatricula])
+    CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha3] FOREIGN KEY ([IdCatalogoFichaMot]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
+    CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha4] FOREIGN KEY ([IdCatalogoFichaIns]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
+    CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha5] FOREIGN KEY ([IdCatalogoFichaFin]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha])
 );
+
+
 

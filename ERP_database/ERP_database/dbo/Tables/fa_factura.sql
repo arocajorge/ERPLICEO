@@ -10,6 +10,7 @@
     [vt_NumFactura]        VARCHAR (20)  NULL,
     [Fecha_Autorizacion]   DATETIME      NULL,
     [vt_autorizacion]      VARCHAR (50)  NULL,
+    [IdAlumno]             NUMERIC (18)  NULL,
     [IdCliente]            NUMERIC (18)  NOT NULL,
     [IdVendedor]           INT           NOT NULL,
     [IdNivel]              INT           NOT NULL,
@@ -35,6 +36,7 @@
     [aprobada_enviar_sri]  BIT           NOT NULL,
     [Generado]             BIT           NULL,
     CONSTRAINT [PK_fa_factura] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSucursal] ASC, [IdBodega] ASC, [IdCbteVta] ASC),
+    CONSTRAINT [FK_fa_factura_aca_Alumno] FOREIGN KEY ([IdEmpresa], [IdAlumno]) REFERENCES [dbo].[aca_Alumno] ([IdEmpresa], [IdAlumno]),
     CONSTRAINT [FK_fa_factura_caj_Caja] FOREIGN KEY ([IdEmpresa], [IdCaja]) REFERENCES [dbo].[caj_Caja] ([IdEmpresa], [IdCaja]),
     CONSTRAINT [FK_fa_factura_fa_catalogo] FOREIGN KEY ([IdCatalogo_FormaPago]) REFERENCES [dbo].[fa_catalogo] ([IdCatalogo]),
     CONSTRAINT [FK_fa_factura_fa_cliente] FOREIGN KEY ([IdEmpresa], [IdCliente]) REFERENCES [dbo].[fa_cliente] ([IdEmpresa], [IdCliente]),
@@ -44,6 +46,8 @@
     CONSTRAINT [FK_fa_factura_tb_bodega] FOREIGN KEY ([IdEmpresa], [IdSucursal], [IdBodega]) REFERENCES [dbo].[tb_bodega] ([IdEmpresa], [IdSucursal], [IdBodega]),
     CONSTRAINT [FK_fa_factura_tb_sis_Documento_Tipo_Talonario] FOREIGN KEY ([IdEmpresa], [vt_tipoDoc], [vt_serie2], [vt_serie1], [vt_NumFactura]) REFERENCES [dbo].[tb_sis_Documento_Tipo_Talonario] ([IdEmpresa], [CodDocumentoTipo], [PuntoEmision], [Establecimiento], [NumDocumento])
 );
+
+
 
 
 

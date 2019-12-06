@@ -5,6 +5,7 @@
     [IdCobro_a_aplicar] NUMERIC (18)  NULL,
     [cr_Codigo]         VARCHAR (10)  NULL,
     [IdCobro_tipo]      VARCHAR (20)  NULL,
+    [IdAlumno]          NUMERIC (18)  NULL,
     [IdCliente]         NUMERIC (18)  NOT NULL,
     [cr_TotalCobro]     FLOAT (53)    NOT NULL,
     [cr_fecha]          DATETIME      NOT NULL,
@@ -32,12 +33,15 @@
     [MotiAnula]         VARCHAR (50)  NULL,
     [IdTipoNotaCredito] INT           NULL,
     CONSTRAINT [PK_cxc_cobro] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSucursal] ASC, [IdCobro] ASC),
+    CONSTRAINT [FK_cxc_cobro_aca_Alumno] FOREIGN KEY ([IdEmpresa], [IdAlumno]) REFERENCES [dbo].[aca_Alumno] ([IdEmpresa], [IdAlumno]),
     CONSTRAINT [FK_cxc_cobro_ba_Banco_Cuenta] FOREIGN KEY ([IdEmpresa], [IdBanco]) REFERENCES [dbo].[ba_Banco_Cuenta] ([IdEmpresa], [IdBanco]),
     CONSTRAINT [FK_cxc_cobro_caj_Caja] FOREIGN KEY ([IdEmpresa], [IdCaja]) REFERENCES [dbo].[caj_Caja] ([IdEmpresa], [IdCaja]),
     CONSTRAINT [FK_cxc_cobro_cxc_cobro_tipo] FOREIGN KEY ([IdCobro_tipo]) REFERENCES [dbo].[cxc_cobro_tipo] ([IdCobro_tipo]),
     CONSTRAINT [FK_cxc_cobro_fa_cliente] FOREIGN KEY ([IdEmpresa], [IdCliente]) REFERENCES [dbo].[fa_cliente] ([IdEmpresa], [IdCliente]),
     CONSTRAINT [FK_cxc_cobro_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])
 );
+
+
 
 
 

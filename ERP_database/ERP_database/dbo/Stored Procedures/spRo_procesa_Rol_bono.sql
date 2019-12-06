@@ -200,27 +200,32 @@ group by rol_det.IdEmpresa,rol_det.IdEmpleado,ro_rol.IdNominaTipo,ro_rol.IdNomin
 select @IdRubro_calculado= IdRubro_tot_pagar from ro_rubros_calculados where IdEmpresa=@IdEmpresa-- obteniendo el idrubro desde parametros
 insert into ro_rol_detalle
 (IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro,			Orden,			Valor
-,rub_visible_reporte,	Observacion)
+,rub_visible_reporte,	Observacion, IngresosCompartidos,PagoHora)
 
 select
-@IdEmpresa				,@IdRol				,IdSucursal			,IdEmpleado		,@IdRubro_calculado	,'1000'			,(ISNULL( [500],0) -ISNULL( [900],0))
-,1						,'Liquido a recibir'	
+@IdEmpresa				,@IdRol				,IdSucursal			,IdEmpleado		,@IdRubro_calculado	,'1500'			, cast( (ISNULL( [22],0) -ISNULL( [23],0)) as numeric(12,2))
+,1						,'Liquido a recibir'	, Tiene_ingresos_compartidos,Pago_por_horas	
 FROM (
     SELECT 
-        rol_det.IdEmpresa,emp.IdEmpleado, emp.IdSucursal,IdNominaTipo,IdNominaTipoLiqui ,IdPeriodo ,rol_det.IdRubro, Valor
+        rol_det.IdEmpresa,emp.IdEmpleado, emp.IdSucursal,IdNominaTipo,IdNominaTipoLiqui ,IdPeriodo ,rol_det.IdRubro, Valor, emp.Tiene_ingresos_compartidos,emp.Pago_por_horas	
 FROM            dbo.ro_rol_detalle AS rol_det INNER JOIN
                          dbo.ro_rubro_tipo AS rub ON rol_det.IdEmpresa = rub.IdEmpresa AND rol_det.IdRubro = rub.IdRubro INNER JOIN
                          dbo.ro_rol ON rol_det.IdEmpresa = dbo.ro_rol.IdEmpresa AND rol_det.IdRol = dbo.ro_rol.IdRol INNER JOIN
-                         dbo.ro_empleado AS emp ON rol_det.IdEmpresa = emp.IdEmpresa AND rol_det.IdEmpleado = emp.IdEmpleado
+                         dbo.ro_empleado AS emp ON rol_det.IdEmpresa = emp.IdEmpresa AND rol_det.IdEmpleado = emp.IdEmpleado INNER JOIN
+                         dbo.ro_contrato AS cont ON emp.IdEmpresa = cont.IdEmpresa AND emp.IdEmpleado = cont.IdEmpleado
 	 where rol_det.IdEmpresa=@IdEmpresa
 	 and IdNominaTipo=@IdNomina
 	 and IdNominaTipoLiqui=@IdNominaTipo
 	 and IdPeriodo=@IdPEriodo
+	 and rol_det.IdRol=@IdRol
+and dbo.ro_rol.IdRol = @IdRol
+and cont.IdNomina=@IdNomina
+and cont.EstadoContrato<>'ECT_LIQ'
 ) as s
 PIVOT
 (
    max([Valor])
-    FOR [IdRubro] IN ([500],[900])
+    FOR [IdRubro] IN ([22],[23])
 )AS pvt
 
 

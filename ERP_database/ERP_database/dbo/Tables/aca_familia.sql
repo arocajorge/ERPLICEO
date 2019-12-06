@@ -20,6 +20,7 @@
     [CasaPropia]            BIT            NOT NULL,
     [SeFactura]             BIT            NOT NULL,
     [EsRepresentante]       BIT            NOT NULL,
+    [Estado]                BIT            NOT NULL,
     [IdUsuarioCreacion]     VARCHAR (200)  NULL,
     [FechaCreacion]         DATETIME       NULL,
     [IdUsuarioModificacion] VARCHAR (200)  NULL,
@@ -32,6 +33,8 @@
     CONSTRAINT [FK_aca_Familia_aca_CatalogoFicha] FOREIGN KEY ([IdCatalogoFichaInst]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
     CONSTRAINT [FK_aca_familia_tb_persona] FOREIGN KEY ([IdPersona]) REFERENCES [dbo].[tb_persona] ([IdPersona])
 );
+
+
 
 
 

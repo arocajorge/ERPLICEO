@@ -5,7 +5,7 @@ SELECT dbo.aca_Familia.IdEmpresa, dbo.aca_Familia.IdAlumno, dbo.aca_Familia.IdCa
                   dbo.tb_persona.pe_sexo, dbo.tb_persona.IdEstadoCivil, dbo.tb_persona.pe_fechaNacimiento, dbo.tb_persona.CodCatalogoSangre, dbo.tb_persona.CodCatalogoCONADIS, dbo.tb_persona.PorcentajeDiscapacidad, 
                   dbo.tb_persona.NumeroCarnetConadis, dbo.tb_persona.pe_telfono_Contacto, dbo.aca_Familia.Secuencia, dbo.aca_Familia.EsRepresentante, dbo.tb_persona.pe_razonSocial, dbo.tb_persona.IdProfesion, 
                   dbo.aca_Familia.IdCatalogoFichaInst, dbo.aca_Familia.EmpresaTrabajo, dbo.aca_Familia.DireccionTrabajo, dbo.aca_Familia.TelefonoTrabajo, dbo.aca_Familia.CargoTrabajo, dbo.aca_Familia.AniosServicio, 
-                  dbo.aca_Familia.IngresoMensual, dbo.aca_Familia.VehiculoPropio, dbo.aca_Familia.Marca, dbo.aca_Familia.Modelo, dbo.aca_Familia.CasaPropia
+                  dbo.aca_Familia.IngresoMensual, dbo.aca_Familia.VehiculoPropio, dbo.aca_Familia.Marca, dbo.aca_Familia.Modelo, dbo.aca_Familia.CasaPropia, dbo.aca_Familia.Estado
 FROM     dbo.tb_persona INNER JOIN
                   dbo.aca_Familia ON dbo.tb_persona.IdPersona = dbo.aca_Familia.IdPersona LEFT OUTER JOIN
                   dbo.aca_Catalogo ON dbo.aca_Familia.IdCatalogoPAREN = dbo.aca_Catalogo.IdCatalogo

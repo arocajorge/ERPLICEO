@@ -29,6 +29,7 @@
     [FechaCreacion]         DATETIME      NULL,
     [IdUsuarioModificacion] VARCHAR (200) NULL,
     [FechaModificacion]     DATETIME      NULL,
+    CONSTRAINT [PK_aca_SocioEconomico] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSocioEconomico] ASC),
     CONSTRAINT [FK_aca_SocioEconomico_aca_Alumno] FOREIGN KEY ([IdEmpresa], [IdAlumno]) REFERENCES [dbo].[aca_Alumno] ([IdEmpresa], [IdAlumno]),
     CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha] FOREIGN KEY ([IdCatalogoFichaVi]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
     CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha1] FOREIGN KEY ([IdCatalogoFichaTVi]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
@@ -37,6 +38,8 @@
     CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha4] FOREIGN KEY ([IdCatalogoFichaIns]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
     CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha5] FOREIGN KEY ([IdCatalogoFichaFin]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha])
 );
+
+
 
 
 

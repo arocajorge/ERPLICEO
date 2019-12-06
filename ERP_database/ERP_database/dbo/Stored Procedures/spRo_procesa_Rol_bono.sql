@@ -113,7 +113,7 @@ and pre.IdEmpresa=@IdEmpresa
 and emp.IdEmpresa=@IdEmpresa
 and pred.IdNominaTipoLiqui=@IdNominaTipo
 and pred.FechaPago between @Fi and @Ff
-and pred.Estado='A'
+and pred.Estado=1
 and pred.EstadoPago='PEN'
 and (emp.em_status='EST_ACT')
 and CAST( emp.em_fechaIngaRol as date)<=@Ff

@@ -138,7 +138,7 @@
             <div class="col-md-12" id="SecuenciaProveedor_Div">
                 <div class="form-group">
                     <label for="IdBodega">Cuentas</label>
-                    @Html.DropDownListFor(q => q.SecuenciaProveedor, new SelectList(ViewBag.lst_proveedor_detalle, "Secuencia", "NombreAdicional"), new { @class = "form-control", @id = "SecuenciaProveedor" })
+                    @Html.DropDownListFor(q => q.SecuenciaProveedor, new SelectList(ViewBag.lst_proveedor_detalle, "Secuencia", "NombreAdicionalCombo"), new { @class = "form-control", @id = "SecuenciaProveedor" })
                     @Html.ValidationMessageFor(q => q.SecuenciaProveedor, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -1042,7 +1042,7 @@
                 if(data.resultado.length > 0)
                 {
                     $.each(data.resultado, function (i, row) {
-                        $("#SecuenciaProveedor").append("<option value=" + row.Secuencia + ">" + row.NombreAdicional + "</option>");
+                        $("#SecuenciaProveedor").append("<option value=" + row.Secuencia + ">" + row.NombreAdicionalCombo + "</option>");
                     });
                 }
                 MostrarCuentas();

@@ -33,6 +33,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  pr_correo = q.pr_correo,
                                  Estado = q.Estado
                              }).ToList();
+
+                    Lista.ForEach(q => q.NombreAdicionalCombo = q.NombreAdicional + " Cta.: " + q.num_cta_acreditacion);
                 }
 
                 return Lista;

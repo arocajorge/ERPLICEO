@@ -1,13 +1,13 @@
-﻿
-
-CREATE PROCEDURE [dbo].[spRo_procesa_Rol_bono] (
+﻿CREATE PROCEDURE [dbo].[spRo_procesa_Rol_bono] (
 @IdEmpresa int,
 @IdNomina numeric,
 @IdNominaTipo numeric,
 @IdPEriodo numeric,
 @IdUsuario varchar(50),
 @Observacion varchar(500),
-@IdRol int
+@IdRol int,
+@IdSucursalIni int,
+@IdSucursalFin int
 )
 AS
 
@@ -22,13 +22,13 @@ AS
 --@IdSucursal int
 
 
---set @IdEmpresa =1
+--set @IdEmpresa =2
 --set @IdNomina =1
---set @IdNominaTipo =2
---set @IdPEriodo= 201812
+--set @IdNominaTipo =6
+--set @IdPEriodo= 20191201
 --set @IdUsuario ='admin'
 --set @observacion= 'PERIODO'+CAST( @IdPEriodo AS varchar(15))
---set @IdRol =11
+--set @IdRol =95
 
 BEGIN
 
@@ -53,11 +53,11 @@ else
 insert into ro_rol
 (IdEmpresa,	IdRol,	IdNominaTipo,		IdNominaTipoLiqui,		IdPeriodo,			Descripcion,				Observacion,				Cerrado,			FechaIngresa,
 UsuarioIngresa,	FechaModifica,		UsuarioModifica,		FechaAnula,			UsuarioAnula,				MotivoAnula,				UsuarioCierre,		FechaCierre,
-IdCentroCosto)
+IdCentroCosto, IdSucursal)
 values
-(@IdEmpresa	, @IdRol	,@IdNomina			,@IdNominaTipo			,@IdPEriodo			,@observacion				,@observacion				,'N'				,GETDATE()
+(@IdEmpresa	, @IdRol	,@IdNomina			,@IdNominaTipo			,@IdPEriodo			,@observacion				,@observacion				,'ABIERTO'				,GETDATE()
 ,@IdUsuario		,null				,null					,null				,null						,null						,null				,null
-,null)
+,null, @IdSucursalIni)
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
 -------------eliminando detalle--------------------------- ----------------------------------------------------------------------------------<
@@ -93,7 +93,10 @@ and novc.Estado='A'
 and nov.EstadoCobro='PEN'
 and (emp.em_status='EST_ACT')
 and CAST( emp.em_fechaIngaRol as date)<=@Ff
+AND EMP.IdSucursal between @IdSucursalIni and @IdSucursalFin
 group by novc.IdEmpresa,novc.IdEmpleado,nov.IdRubro,rub.ru_orden,rub.ru_descripcion, emp.IdSucursal
+
+--select * from ro_rol_detalle where IdEmpresa = 2 and IdRol = 95
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
 -------------buscando cuota de prestamos e insertando al rol detalle-------------------------------------------------------------------------<
@@ -113,9 +116,10 @@ and pre.IdEmpresa=@IdEmpresa
 and emp.IdEmpresa=@IdEmpresa
 and pred.IdNominaTipoLiqui=@IdNominaTipo
 and pred.FechaPago between @Fi and @Ff
-and pred.Estado=1
+and pred.Estado=1 -- 'A'  -- Esto vino mal se cambio 'A' por 1 by acueva 2019/12/04
 and pred.EstadoPago='PEN'
 and (emp.em_status='EST_ACT')
+AND EMP.IdSucursal between @IdSucursalIni and @IdSucursalFin
 and CAST( emp.em_fechaIngaRol as date)<=@Ff
 ----------------------------------------------------------------------------------------------------------------------------------------------
 -------------buscando rubros fijos e insertando al rol detalle-------------------------------------------------------------------------------<
@@ -138,6 +142,7 @@ and rub_fij.IdNomina_TipoLiqui=@IdNominaTipo
 and (rub_fij.es_indifinido=1 or ( @Fi between rub_fij.FechaFin and rub_fij.FechaFin and @Ff between rub_fij.FechaFin and rub_fij.FechaFin))
 --and rub_fij.Estado='A'
 and (emp.em_status='EST_ACT')
+AND EMP.IdSucursal between @IdSucursalIni and @IdSucursalFin
 and CAST( emp.em_fechaIngaRol as date)<=@Ff
 ----------------------------------------------------------------------------------------------------------------------------------------------
 -------------calculando total ingreso por empleado-------------------------------------------------------------------------------------------<
@@ -160,7 +165,9 @@ where rol_det.IdEmpresa=@IdEmpresa
 and ro_rol.IdNominaTipo=@IdNomina
 and ro_rol.IdNominaTipoLiqui=@IdNominaTipo
 and ro_rol.IdPeriodo=@IdPEriodo
+and ro_rol.IdRol = @IdRol
 and rub.ru_tipo='I'
+AND EMP.IdSucursal between @IdSucursalIni and @IdSucursalFin
 group by rol_det.IdEmpresa,rol_det.IdEmpleado,ro_rol.IdNominaTipo,ro_rol.IdNominaTipoLiqui,ro_rol.IdPeriodo, emp.IdSucursal
 
 
@@ -186,6 +193,7 @@ and ro_rol.IdNominaTipo=@IdNomina
 and ro_rol.IdNominaTipoLiqui=@IdNominaTipo
 and ro_rol.IdPeriodo=@IdPEriodo
 and rub.ru_tipo='E'
+AND EMP.IdSucursal between @IdSucursalIni and @IdSucursalFin
 group by rol_det.IdEmpresa,rol_det.IdEmpleado,ro_rol.IdNominaTipo,ro_rol.IdNominaTipoLiqui,ro_rol.IdPeriodo, emp.IdSucursal
 
 
@@ -220,6 +228,7 @@ FROM            dbo.ro_rol_detalle AS rol_det INNER JOIN
 	 and rol_det.IdRol=@IdRol
 and dbo.ro_rol.IdRol = @IdRol
 and cont.IdNomina=@IdNomina
+AND EMP.IdSucursal between @IdSucursalIni and @IdSucursalFin
 and cont.EstadoContrato<>'ECT_LIQ'
 ) as s
 PIVOT

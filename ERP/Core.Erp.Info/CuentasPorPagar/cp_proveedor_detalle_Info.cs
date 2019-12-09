@@ -17,6 +17,6 @@ namespace Core.Erp.Info.CuentasPorPagar
         public Nullable<int> IdBanco_acreditacion { get; set; }
         public string pr_correo { get; set; }
         public bool Estado { get; set; }
-
+        public string NombreAdicionalCombo { get; set; }
     }
 }

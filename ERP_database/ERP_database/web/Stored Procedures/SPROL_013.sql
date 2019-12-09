@@ -96,6 +96,7 @@ FROM            dbo.ro_rol_detalle_x_rubro_acumulado(nolock) INNER JOIN
 						 and ro_empleado.IdDivision<=@IdDivisionFin
 						 and ro_periodo.pe_FechaIni between @fecha_inicio and @fecha_fin
 						and ro_empleado.em_status<>'EST_PLQ' --22/11/2019 by Acueva, por q salian los liquidados
+						and ro_empleado.em_status<>'EST_LIQ' --03/12/2019 by Acueva, por q salian los liquidados
 
 union all
 
@@ -204,7 +205,26 @@ FROM            dbo.ro_rol_detalle(nolock) INNER JOIN
 						 and ro_empleado.IdDivision<=@IdDivisionFin
 						 and ro_periodo.pe_FechaIni between @fecha_inicio and @fecha_fin
 						 and ro_empleado.em_status<>'EST_PLQ' --22/11/2019 by Acueva, por q salian los liquidados
+						 and ro_empleado.em_status<>'EST_LIQ' --03/12/2019 by Acueva, por q salian los liquidados
 
 ) t order by t.pe_anio,t.pe_mes
 
 END
+
+/*
+
+EXEC [web].[SPROL_013]
+@idempresa =2,
+@idnomina=1,
+@IdSucursalInicio=1,
+@IdSucursalFin=999999,
+@IdEmpleadoInicio=1,
+@IdEmpleadoFin=9999999,
+@IdDivisionInicio=1,
+@IdDivisionFin=99999,
+@IdAreaInicion=1,
+@IdAreafin=99999,
+@fecha_inicio='01-12-2018',
+@fecha_fin='30-11-2019'
+
+*/

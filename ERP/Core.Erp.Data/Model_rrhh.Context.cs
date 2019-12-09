@@ -21,10 +21,7 @@ namespace Core.Erp.Data
             : base("name=Entities_rrhh")
         {
         }
-        public void SetCommandTimeOut(int TimeOut)
-        {
-            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
-        }
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -261,39 +258,6 @@ namespace Core.Erp.Data
                 new ObjectParameter("IdSucursalFin", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRo_procesa_Rol", idEmpresaParameter, idNominaParameter, idNominaTipoParameter, idPEriodoParameter, idUsuarioParameter, observacionParameter, idRolParameter, idSucursalInicioParameter, idSucursalFinParameter);
-        }
-    
-        public virtual int spRo_procesa_Rol_bono(Nullable<int> idEmpresa, Nullable<decimal> idNomina, Nullable<decimal> idNominaTipo, Nullable<decimal> idPEriodo, string idUsuario, string observacion, Nullable<int> idRol)
-        {
-            var idEmpresaParameter = idEmpresa.HasValue ?
-                new ObjectParameter("IdEmpresa", idEmpresa) :
-                new ObjectParameter("IdEmpresa", typeof(int));
-    
-            var idNominaParameter = idNomina.HasValue ?
-                new ObjectParameter("IdNomina", idNomina) :
-                new ObjectParameter("IdNomina", typeof(decimal));
-    
-            var idNominaTipoParameter = idNominaTipo.HasValue ?
-                new ObjectParameter("IdNominaTipo", idNominaTipo) :
-                new ObjectParameter("IdNominaTipo", typeof(decimal));
-    
-            var idPEriodoParameter = idPEriodo.HasValue ?
-                new ObjectParameter("IdPEriodo", idPEriodo) :
-                new ObjectParameter("IdPEriodo", typeof(decimal));
-    
-            var idUsuarioParameter = idUsuario != null ?
-                new ObjectParameter("IdUsuario", idUsuario) :
-                new ObjectParameter("IdUsuario", typeof(string));
-    
-            var observacionParameter = observacion != null ?
-                new ObjectParameter("Observacion", observacion) :
-                new ObjectParameter("Observacion", typeof(string));
-    
-            var idRolParameter = idRol.HasValue ?
-                new ObjectParameter("IdRol", idRol) :
-                new ObjectParameter("IdRol", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRo_procesa_Rol_bono", idEmpresaParameter, idNominaParameter, idNominaTipoParameter, idPEriodoParameter, idUsuarioParameter, observacionParameter, idRolParameter);
         }
     
         public virtual int spRo_procesa_Rol_anticipo(Nullable<int> idEmpresa, Nullable<decimal> idNomina, Nullable<decimal> idNominaTipo, Nullable<decimal> idPEriodo, string idUsuario, string observacion, Nullable<int> idRol, Nullable<int> idSucursalInicio, Nullable<int> idSucursalFin)
@@ -562,6 +526,47 @@ namespace Core.Erp.Data
                 new ObjectParameter("TipoReverso", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRo_Reverso_Rol", idEmpresaParameter, idNomina_TipoParameter, idNomina_TipoLiquiParameter, idPeriodoParameter, idRolParameter, tipoReversoParameter);
+        }
+    
+        public virtual int spRo_procesa_Rol_bono(Nullable<int> idEmpresa, Nullable<decimal> idNomina, Nullable<decimal> idNominaTipo, Nullable<decimal> idPEriodo, string idUsuario, string observacion, Nullable<int> idRol, Nullable<int> idSucursalIni, Nullable<int> idSucursalFin)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var idNominaParameter = idNomina.HasValue ?
+                new ObjectParameter("IdNomina", idNomina) :
+                new ObjectParameter("IdNomina", typeof(decimal));
+    
+            var idNominaTipoParameter = idNominaTipo.HasValue ?
+                new ObjectParameter("IdNominaTipo", idNominaTipo) :
+                new ObjectParameter("IdNominaTipo", typeof(decimal));
+    
+            var idPEriodoParameter = idPEriodo.HasValue ?
+                new ObjectParameter("IdPEriodo", idPEriodo) :
+                new ObjectParameter("IdPEriodo", typeof(decimal));
+    
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            var observacionParameter = observacion != null ?
+                new ObjectParameter("Observacion", observacion) :
+                new ObjectParameter("Observacion", typeof(string));
+    
+            var idRolParameter = idRol.HasValue ?
+                new ObjectParameter("IdRol", idRol) :
+                new ObjectParameter("IdRol", typeof(int));
+    
+            var idSucursalIniParameter = idSucursalIni.HasValue ?
+                new ObjectParameter("IdSucursalIni", idSucursalIni) :
+                new ObjectParameter("IdSucursalIni", typeof(int));
+    
+            var idSucursalFinParameter = idSucursalFin.HasValue ?
+                new ObjectParameter("IdSucursalFin", idSucursalFin) :
+                new ObjectParameter("IdSucursalFin", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRo_procesa_Rol_bono", idEmpresaParameter, idNominaParameter, idNominaTipoParameter, idPEriodoParameter, idUsuarioParameter, observacionParameter, idRolParameter, idSucursalIniParameter, idSucursalFinParameter);
         }
     }
 }

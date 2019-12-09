@@ -282,11 +282,11 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                 ViewBag.MensajeSuccess = MensajeSuccess;
 
             #region Validacion Periodo
-            ViewBag.MostrarBoton = true;
+            ViewBag.NoMostrarBotones = false;
             if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.cm_fecha, cl_enumeradores.eModulo.CAJA, 0, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
-                ViewBag.MostrarBoton = false;
+                ViewBag.NoMostrarBotones = true;
             }
             #endregion
 
@@ -343,11 +343,11 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                 ViewBag.NoMostrarBotones = false;
 
             #region Validacion Periodo
-            ViewBag.MostrarBoton = true;
+            ViewBag.NoMostrarBotones = false;
             if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.cm_fecha, cl_enumeradores.eModulo.CAJA, 0, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
-                ViewBag.MostrarBoton = false;
+                ViewBag.NoMostrarBotones = true;
             }
             #endregion
 

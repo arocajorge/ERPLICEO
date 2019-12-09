@@ -255,22 +255,14 @@
         </div>
 
     </div>
-    if (!(ViewBag.NoMostrarBotones ?? true))
-    {
+    
         <div class="box-footer">
-        @if (ViewBag.MostrarBoton ?? false)
-        {
+            if (!(ViewBag.NoMostrarBotones ?? true))
+            {
             <button type="submit" class="btn btn-danger">Anular</button>
-        }
+            }
             <a class="btn btn-default" href="@Url.Action("Index", "CajaMovimientoEgreso", new { Area = "Caja" }, null)">Cancelar</a>
         </div>
-    }
-    else
-    {
-        <div class="box-footer">
-            <a class="btn btn-default" href="@Url.Action("Index", "CajaMovimientoEgreso", new { Area = "Caja" }, null)">Cancelar</a>
-        </div>
-    }
 
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")

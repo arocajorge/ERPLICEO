@@ -220,7 +220,7 @@ namespace Core.Erp.Data.RRHH
 
                     if (info.IdNomina_Tipo == 1 && info.IdNomina_TipoLiqui == 6)
                         Context.spRo_procesa_Rol_bono(info.IdEmpresa, info.IdNomina_Tipo, info.IdNomina_TipoLiqui, info.IdPeriodo,
-                        info.UsuarioIngresa, info.Observacion, Convert.ToInt32(info.IdRol));
+                        info.UsuarioIngresa, info.Observacion, Convert.ToInt32(info.IdRol),IdSucursalInicio,IdSucursalFin);
 
                     var conte = Context.ro_periodo_x_ro_Nomina_TipoLiqui.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdNomina_Tipo == info.IdNomina_Tipo && v.IdNomina_TipoLiqui == info.IdNomina_TipoLiqui
                       && v.IdPeriodo == info.IdPeriodo).FirstOrDefault();

@@ -2205,7 +2205,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_EmpleadoAnticipoBenefic
           <Property Name="IdAnticipo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="FechaDesde" Type="date" Nullable="false" />
           <Property Name="FechaHasta" Type="date" Nullable="false" />
-          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="FechaCreacion" Type="date" />
           <Property Name="Valor" Type="float" Nullable="false" />
           <Property Name="ru_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
@@ -5307,6 +5307,8 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
           <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
           <Parameter Name="Observacion" Type="varchar" Mode="In" />
           <Parameter Name="IdRol" Type="int" Mode="In" />
+          <Parameter Name="IdSucursalIni" Type="int" Mode="In" />
+          <Parameter Name="IdSucursalFin" Type="int" Mode="In" />
         </Function>
         <Function Name="spRo_Reverso_Rol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
@@ -8482,15 +8484,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
           <EntitySet Name="vwro_nomina_sin_percebir_sueldo" EntityType="Model_rrhh.vwro_nomina_sin_percebir_sueldo" />
           <EntitySet Name="ro_FormulaHorasRecargo" EntityType="Model_rrhh.ro_FormulaHorasRecargo" />
           <EntitySet Name="vwRo_Solicitud_Vacaciones" EntityType="Model_rrhh.vwRo_Solicitud_Vacaciones" />
-          <FunctionImport Name="spRo_procesa_Rol_bono">
-            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
-            <Parameter Name="IdNomina" Mode="In" Type="Decimal" />
-            <Parameter Name="IdNominaTipo" Mode="In" Type="Decimal" />
-            <Parameter Name="IdPEriodo" Mode="In" Type="Decimal" />
-            <Parameter Name="IdUsuario" Mode="In" Type="String" />
-            <Parameter Name="Observacion" Mode="In" Type="String" />
-            <Parameter Name="IdRol" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="ro_NominasPagosCheques" EntityType="Model_rrhh.ro_NominasPagosCheques" />
           <AssociationSet Name="FK_ro_NominasPagosCheques_ro_Nomina_Tipoliqui" Association="Model_rrhh.FK_ro_NominasPagosCheques_ro_Nomina_Tipoliqui">
             <End Role="ro_Nomina_Tipoliqui" EntitySet="ro_Nomina_Tipoliqui" />
@@ -9045,6 +9038,17 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
             <End Role="ro_rubro_tipo" EntitySet="ro_rubro_tipo" />
             <End Role="ro_EmpleadoAnticipoBeneficio" EntitySet="ro_EmpleadoAnticipoBeneficio" />
           </AssociationSet>
+          <FunctionImport Name="spRo_procesa_Rol_bono">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="IdNomina" Mode="In" Type="Decimal" />
+            <Parameter Name="IdNominaTipo" Mode="In" Type="Decimal" />
+            <Parameter Name="IdPEriodo" Mode="In" Type="Decimal" />
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+            <Parameter Name="Observacion" Mode="In" Type="String" />
+            <Parameter Name="IdRol" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursalIni" Mode="In" Type="Int32" />
+            <Parameter Name="IdSucursalFin" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -13220,7 +13224,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
           <Property Name="IdAnticipo" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="FechaDesde" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FechaHasta" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="0" />
           <Property Name="Valor" Type="Double" Nullable="false" />
           <Property Name="ru_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
@@ -14503,7 +14507,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spRo_procesa_Rol_bono" FunctionName="Model_rrhh.Store.spRo_procesa_Rol_bono" />
           <EntitySetMapping Name="ro_NominasPagosCheques">
             <EntityTypeMapping TypeName="Model_rrhh.ro_NominasPagosCheques">
               <MappingFragment StoreEntitySet="ro_NominasPagosCheques">
@@ -16032,6 +16035,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spRo_procesa_Rol_bono" FunctionName="Model_rrhh.Store.spRo_procesa_Rol_bono" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

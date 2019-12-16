@@ -58,9 +58,11 @@ namespace Core.Erp.Web.Reportes.RRHH
                                         {
                                             IdEmpresa = empleados.Key.IdEmpresa,
                                             IdEmpleado = empleados.Key.IdEmpleado,
-                                            ValorNeto = Math.Round(Convert.ToDouble((empleados.Sum(q=> q.Sueldo)/12) - empleados.Max(q=>q.Prestamo)),2,MidpointRounding.AwayFromZero),
+                                            ValorNeto = Math.Round(empleados.Sum(q=> q.Sueldo)/12,2,MidpointRounding.AwayFromZero) - Math.Round(Convert.ToDecimal(empleados.Max(q=>q.Prestamo)),2,MidpointRounding.AwayFromZero),
                                             Prestamo = empleados.Max(q => q.Prestamo)
                                         }).ToList();
+            
+            
 
             var lst = (from a in lst_rpt
                        join b in Lista

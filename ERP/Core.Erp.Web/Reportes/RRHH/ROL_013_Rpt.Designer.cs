@@ -32,7 +32,6 @@
             DevExpress.XtraReports.UI.XRSummary xrSummary1 = new DevExpress.XtraReports.UI.XRSummary();
             DevExpress.XtraReports.UI.XRSummary xrSummary2 = new DevExpress.XtraReports.UI.XRSummary();
             DevExpress.XtraReports.UI.XRSummary xrSummary3 = new DevExpress.XtraReports.UI.XRSummary();
-            DevExpress.XtraReports.UI.XRSummary xrSummary4 = new DevExpress.XtraReports.UI.XRSummary();
             this.Detail = new DevExpress.XtraReports.UI.DetailBand();
             this.xrTable4 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow7 = new DevExpress.XtraReports.UI.XRTableRow();
@@ -77,7 +76,7 @@
             this.xrTableRow6 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell27 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell28 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.xrTableCell12 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.txtTotalPrestamo = new DevExpress.XtraReports.UI.XRTableCell();
             this.ValorNeto = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableRow13 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell30 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -298,7 +297,7 @@
             this.xrTableCell3.StylePriority.UseFont = false;
             this.xrTableCell3.StylePriority.UsePadding = false;
             this.xrTableCell3.Text = "Fecha fin:";
-            this.xrTableCell3.Weight = 0.532054555562948D;
+            this.xrTableCell3.Weight = 0.514841016878965D;
             // 
             // xrTableCell6
             // 
@@ -308,7 +307,7 @@
             this.xrTableCell6.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 0, 0, 0, 100F);
             this.xrTableCell6.StylePriority.UsePadding = false;
             this.xrTableCell6.TextFormatString = "{0:dd-MM-yyyy}";
-            this.xrTableCell6.Weight = 0.910784579753153D;
+            this.xrTableCell6.Weight = 0.927998118437136D;
             // 
             // xrTableRow11
             // 
@@ -353,7 +352,7 @@
             this.xrTableCell32.StylePriority.UseFont = false;
             this.xrTableCell32.StylePriority.UsePadding = false;
             this.xrTableCell32.Text = "Area:";
-            this.xrTableCell32.Weight = 0.532054555562948D;
+            this.xrTableCell32.Weight = 0.514841016878965D;
             // 
             // xrTableCell33
             // 
@@ -364,7 +363,7 @@
             this.xrTableCell33.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 0, 0, 0, 100F);
             this.xrTableCell33.StylePriority.UsePadding = false;
             this.xrTableCell33.Text = "xrTableCell33";
-            this.xrTableCell33.Weight = 0.910784579753153D;
+            this.xrTableCell33.Weight = 0.927998118437136D;
             // 
             // xrTable1
             // 
@@ -471,13 +470,13 @@
             // 
             this.xrTableCell9.Name = "xrTableCell9";
             this.xrTableCell9.Text = "Total";
-            this.xrTableCell9.Weight = 0.831115483267757D;
+            this.xrTableCell9.Weight = 0.80425539701685544D;
             // 
             // xrTableCell10
             // 
             this.xrTableCell10.Name = "xrTableCell10";
             this.xrTableCell10.Text = "Préstamos";
-            this.xrTableCell10.Weight = 0.706448176750625D;
+            this.xrTableCell10.Weight = 0.73330826300152652D;
             // 
             // xrTableCell11
             // 
@@ -524,7 +523,7 @@
             this.xrTableRow6.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
             this.xrTableCell27,
             this.xrTableCell28,
-            this.xrTableCell12,
+            this.txtTotalPrestamo,
             this.ValorNeto});
             this.xrTableRow6.Font = new System.Drawing.Font("Verdana", 7F);
             this.xrTableRow6.Name = "xrTableRow6";
@@ -548,7 +547,7 @@
             // 
             this.xrTableCell28.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.xrTableCell28.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([Sueldo])")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "ROUND(sumSum([Sueldo]),2)")});
             this.xrTableCell28.Name = "xrTableCell28";
             this.xrTableCell28.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 0, 0, 100F);
             this.xrTableCell28.StylePriority.UseBorders = false;
@@ -560,16 +559,19 @@
             this.xrTableCell28.TextFormatString = "{0:n2}";
             this.xrTableCell28.Weight = 0.635929825787606D;
             // 
-            // xrTableCell12
+            // txtTotalPrestamo
             // 
-            this.xrTableCell12.Borders = DevExpress.XtraPrinting.BorderSide.None;
-            this.xrTableCell12.Name = "xrTableCell12";
-            this.xrTableCell12.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 0, 0, 100F);
-            this.xrTableCell12.StylePriority.UseBorders = false;
-            this.xrTableCell12.StylePriority.UsePadding = false;
-            this.xrTableCell12.StylePriority.UseTextAlignment = false;
-            this.xrTableCell12.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
-            this.xrTableCell12.Weight = 0.580472377256787D;
+            this.txtTotalPrestamo.Borders = DevExpress.XtraPrinting.BorderSide.Top;
+            this.txtTotalPrestamo.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "")});
+            this.txtTotalPrestamo.Name = "txtTotalPrestamo";
+            this.txtTotalPrestamo.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 0, 0, 100F);
+            this.txtTotalPrestamo.StylePriority.UseBorders = false;
+            this.txtTotalPrestamo.StylePriority.UsePadding = false;
+            this.txtTotalPrestamo.StylePriority.UseTextAlignment = false;
+            this.txtTotalPrestamo.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
+            this.txtTotalPrestamo.TextFormatString = "{0:n2}";
+            this.txtTotalPrestamo.Weight = 0.580472377256787D;
             // 
             // ValorNeto
             // 
@@ -817,15 +819,13 @@
             // Neto
             // 
             this.Neto.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Round((sumSum([Sueldo]/12) - [Prestamo]) ,2)")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[ValorNeto]")});
             this.Neto.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold);
             this.Neto.Name = "Neto";
             this.Neto.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 100F);
             this.Neto.StylePriority.UseFont = false;
             this.Neto.StylePriority.UsePadding = false;
             this.Neto.StylePriority.UseTextAlignment = false;
-            xrSummary3.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
-            this.Neto.Summary = xrSummary3;
             this.Neto.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.Neto.TextFormatString = "{0:n2}";
             this.Neto.Weight = 0.715712771813901D;
@@ -848,15 +848,15 @@
             // xrTableCell18
             // 
             this.xrTableCell18.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum([Sueldo])")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "ROUND(sumSum([Sueldo]),2)")});
             this.xrTableCell18.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold);
             this.xrTableCell18.Name = "xrTableCell18";
             this.xrTableCell18.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 100F);
             this.xrTableCell18.StylePriority.UseFont = false;
             this.xrTableCell18.StylePriority.UsePadding = false;
             this.xrTableCell18.StylePriority.UseTextAlignment = false;
-            xrSummary4.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
-            this.xrTableCell18.Summary = xrSummary4;
+            xrSummary3.Running = DevExpress.XtraReports.UI.SummaryRunning.Group;
+            this.xrTableCell18.Summary = xrSummary3;
             this.xrTableCell18.Text = "xrTableCell18";
             this.xrTableCell18.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.xrTableCell18.TextFormatString = "{0:n2}";
@@ -1034,7 +1034,7 @@
         private DevExpress.XtraReports.UI.XRTableCell lbl_fecha;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell50;
         private DevExpress.XtraReports.UI.XRPageInfo xrPageInfo2;
-        private DevExpress.XtraReports.UI.XRTableCell xrTableCell12;
+        private DevExpress.XtraReports.UI.XRTableCell txtTotalPrestamo;
         private DevExpress.XtraReports.UI.XRTableCell ValorNeto;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell4;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell3;

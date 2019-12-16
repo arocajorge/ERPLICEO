@@ -58,12 +58,40 @@ namespace Core.Erp.Web.Reportes.RRHH
                                         {
                                             IdEmpresa = empleados.Key.IdEmpresa,
                                             IdEmpleado = empleados.Key.IdEmpleado,
-                                            ValorNeto = Convert.ToDouble((empleados.Sum(q=> q.Sueldo)/12) - empleados.Max(q=>q.Prestamo))
+                                            ValorNeto = Math.Round(Convert.ToDouble((empleados.Sum(q=> q.Sueldo)/12) - empleados.Max(q=>q.Prestamo)),2,MidpointRounding.AwayFromZero),
+                                            Prestamo = empleados.Max(q => q.Prestamo)
                                         }).ToList();
 
+            var lst = (from a in lst_rpt
+                       join b in Lista
+                       on a.IdEmpleado equals b.IdEmpleado
+                       select new ROL_013_Info
+                       {
+                           IdEmpresa = a.IdEmpresa,
+                           IdRol = a.IdRol,
+                           IdEmpleado = a.IdEmpleado,
+                           IdArea = a.IdArea,
+                           IdDivision = a.IdDivision,
+                           IdRubro = a.IdRubro,
+                           em_codigo = a.em_codigo,
+                           Provision = a.Provision,
+                           Estado = a.Estado,
+                           IdSucursal = a.IdSucursal,
+                           de_descripcion = a.de_descripcion,
+                           Su_Descripcion = a.Su_Descripcion,
+                           pe_nombreCompleto = a.pe_nombreCompleto,
+                           Division = a.Division,
+                           Area = a.Area,
+                           Mes = a.Mes,
+                           Prestamo = a.Prestamo,
+                           Sueldo = a.Sueldo,
+                           ValorNeto = b.ValorNeto
+                       });
+
             num_empleados.Text = Convert.ToString(Lista.Count);
-            ValorNeto.Text = Math.Round((Lista.Sum(q=>q.ValorNeto)),2).ToString("n2");
-            this.DataSource = lst_rpt;
+            txtTotalPrestamo.Text = Lista.Sum(q => q.Prestamo).ToString("n2");
+            ValorNeto.Text = Lista.Sum(q=>q.ValorNeto).ToString("n2");
+            this.DataSource = lst;
         }
     }
 }

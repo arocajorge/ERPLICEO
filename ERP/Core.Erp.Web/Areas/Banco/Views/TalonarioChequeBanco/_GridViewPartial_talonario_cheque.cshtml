@@ -81,8 +81,19 @@
         });
 
         settings.Columns.Add("IdBanco", "Código").Width = Unit.Percentage(10);
-        settings.Columns.Add("ba_descripcion", "Descripción").Width = Unit.Percentage(50);
+        settings.Columns.Add("ba_descripcion", "Descripción").Width = Unit.Percentage(40);
         settings.Columns.Add("Num_cheque", "Número cheque").Width = Unit.Percentage(30);
+        
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Usado";
+            column.Caption = "Usado";
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            column.EditorProperties().CheckBox(sp =>
+            {
+
+            });
+        });
         settings.Columns.Add(column =>
         {
             column.FieldName = "Estado_bool";

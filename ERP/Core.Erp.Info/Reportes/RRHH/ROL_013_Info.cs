@@ -14,7 +14,7 @@ namespace Core.Erp.Info.Reportes.RRHH
         public Nullable<int> IdArea { get; set; }
         public Nullable<int> IdDivision { get; set; }
         public string IdRubro { get; set; }
-        public double Provision { get; set; }
+        public double? Provision { get; set; }
         public string Estado { get; set; }
         public Nullable<int> IdSucursal { get; set; }
         public string em_codigo { get; set; }
@@ -25,10 +25,10 @@ namespace Core.Erp.Info.Reportes.RRHH
         public string Area { get; set; }
         public string Mes { get; set; }
         public double Prestamo { get; set; }
-        public Nullable<double> Sueldo { get; set; }
+        public decimal Sueldo { get; set; }
         public Nullable<int> pe_anio { get; set; }
         public Nullable<int> pe_mes { get; set; }
-        public double ValorNeto { get; set; }
+        public decimal ValorNeto { get; set; }
         
     }
 }

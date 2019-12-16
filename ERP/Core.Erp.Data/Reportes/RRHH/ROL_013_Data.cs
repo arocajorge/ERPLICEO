@@ -39,7 +39,7 @@ namespace Core.Erp.Data.Reportes.RRHH
                         IdDivision = q.IdDivision,
                         IdRubro = q.IdRubro,
                         em_codigo = q.em_codigo,
-                        Provision = q.Provision,
+                        Provision = q.Provision ?? 0,
                         Estado = q.Estado,
                         IdSucursal = q.IdSucursal,
                         de_descripcion = q.de_descripcion,
@@ -49,7 +49,7 @@ namespace Core.Erp.Data.Reportes.RRHH
                         Area = q.Area,
                         Mes = q.Mes,
                         Prestamo = q.Prestamo,
-                        Sueldo = q.Sueldo
+                        Sueldo = q.Sueldo ??0
                     }).ToList();
                 }
                 return Lista;

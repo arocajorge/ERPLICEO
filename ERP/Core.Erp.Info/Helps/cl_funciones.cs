@@ -261,7 +261,7 @@ namespace Core.Erp.Info.Helps
 
                             total =  total + valor_;                                                                        
                         }
-                        var digito_verificador_obtenido = total > 10 ? (total % 10) != 0 ? 10 - (total % 10) : (total % 10) : total;
+                        var digito_verificador_obtenido = total > 10 ? (total % 10) != 0 ? 10 - (total % 10) : (total % 10) : (total % 10)==0 ? 0 : total;
 
                         return digito_verificador_recibido == digito_verificador_obtenido;
                     }

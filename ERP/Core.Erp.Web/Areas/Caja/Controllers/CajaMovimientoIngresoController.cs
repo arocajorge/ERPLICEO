@@ -225,6 +225,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             if (model == null)
                 return RedirectToAction("Index");
             SessionFixed.TipoPersona = model.IdTipo_Persona;
+            ViewBag.MostrarBoton = true;
             model.info_caj_Caja_Movimiento_det = bus_caja_mov_det.get_info(IdEmpresa, IdTipocbte, IdCbteCble);
             if (model.info_caj_Caja_Movimiento_det == null)
                 return RedirectToAction("Index");
@@ -234,8 +235,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
 
-            #region Validacion Periodo
-            ViewBag.MostrarBoton = true;
+            #region Validacion Periodo  
             if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.cm_fecha, cl_enumeradores.eModulo.CAJA, 0, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
@@ -245,13 +245,14 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
 
             cargar_combos(IdEmpresa);
 
-            if (!bus_caja_mov.ValidarMovimientoModificar(IdEmpresa, IdTipocbte, IdCbteCble, "+"))
+            if (!bus_caja_mov.ValidarMovimientoModificar(IdEmpresa, IdTipocbte, IdCbteCble, "-"))
             {
                 ViewBag.mensaje = "El movimiento de caja no puede ser modificado";
                 ViewBag.NoMostrarBotones = true;
             }
             else
                 ViewBag.NoMostrarBotones = false;
+
 
             return View(model);
         }

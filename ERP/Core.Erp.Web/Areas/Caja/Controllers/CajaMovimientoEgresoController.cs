@@ -256,6 +256,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
             caj_Caja_Movimiento_Info model = bus_caja_mov.get_info(IdEmpresa, IdTipocbte, IdCbteCble);
+            ViewBag.NoMostrarBotones = false;
             if (model == null)
                 return RedirectToAction("Index");
             SessionFixed.TipoPersona = model.IdTipo_Persona;
@@ -270,23 +271,24 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             List_op.set_list(model.lst_det_canc_op, model.IdTransaccionSession);
 
             SessionFixed.TipoPersona = model.IdTipo_Persona;
-
+            
             if (!bus_caja_mov.ValidarMovimientoModificar(IdEmpresa,IdTipocbte,IdCbteCble,"-"))
             {
                 ViewBag.mensaje = "El movimiento de caja no puede ser modificado";
-                ViewBag.NoMostrarBotones = true;
-            }else
                 ViewBag.NoMostrarBotones = false;
+            }
+            else
+                ViewBag.NoMostrarBotones = true;
 
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
 
             #region Validacion Periodo
-            ViewBag.NoMostrarBotones = false;
+            
             if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.cm_fecha, cl_enumeradores.eModulo.CAJA, 0, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
-                ViewBag.NoMostrarBotones = true;
+                ViewBag.NoMostrarBotones = false;
             }
             #endregion
 

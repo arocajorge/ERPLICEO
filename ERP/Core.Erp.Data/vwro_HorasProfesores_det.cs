@@ -34,5 +34,6 @@ namespace Core.Erp.Data
         public int IdSucursal { get; set; }
         public double ValorHora { get; set; }
         public double Valor { get; set; }
+        public Nullable<int> IdJornada { get; set; }
     }
 }

@@ -1633,7 +1633,7 @@
           <Property Name="IngresosGravadorPorEsteEmpleador" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwRo_ActaFiniquito' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_ActaFiniquito' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwRo_ActaFiniquito">
           <Key>
             <PropertyRef Name="NombreCompleto" />
@@ -1686,7 +1686,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwRo_ActaFiniquito' no tiene
           <Property Name="EstadoContrato" Type="varchar" MaxLength="10" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_archivos_bancos_generacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_archivos_bancos_generacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_archivos_bancos_generacion">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1722,7 +1722,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_archivos_bancos_generac
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_archivos_bancos_generacion_x_empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_archivos_bancos_generacion_x_empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_archivos_bancos_generacion_x_empleado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1758,7 +1758,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_archivos_bancos_generac
           <Property Name="Secuencia" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_DescuentosPorFacturacionEmpleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_DescuentosPorFacturacionEmpleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_DescuentosPorFacturacionEmpleado">
           <Key>
             <PropertyRef Name="nom_TerminoPago" />
@@ -1792,7 +1792,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_DescuentosPorFacturacio
           <Property Name="em_status" Type="varchar" MaxLength="10" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_combo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_combo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_combo">
           <Key>
             <PropertyRef Name="pe_cedulaRuc" />
@@ -1824,7 +1824,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_combo' no tien
           <Property Name="Valor_hora_control_salida" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_datos_generales' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_datos_generales' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_datos_generales">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1929,7 +1929,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_datos_generale
           <Property Name="IdSucursalContabilizacion" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_Novedad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_Novedad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_Novedad">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1961,7 +1961,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_Novedad' no ti
           <Property Name="IdSucursal" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_novedad_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_novedad_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_novedad_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1986,7 +1986,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_novedad_det' n
           <Property Name="CantidadHoras" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_Empleado_Novedades' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_Empleado_Novedades' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_Empleado_Novedades">
           <Key>
             <PropertyRef Name="IdEmpleado" />
@@ -2028,7 +2028,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_Empleado_Novedades' no 
           <Property Name="IdSucursal" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_x_division_x_area' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_division_x_area' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_division_x_area">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2052,7 +2052,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_x_division_x_a
           <Property Name="CargaGasto" Type="bit" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_x_jornada' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_jornada' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_jornada">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2076,7 +2076,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_x_jornada' no 
           <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_x_ro_rubro' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_ro_rubro' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_ro_rubro">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2112,7 +2112,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_x_ro_rubro' no
           <Property Name="es_indifinido" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_x_rubro_acumulado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_rubro_acumulado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_rubro_acumulado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2135,7 +2135,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_x_rubro_acumul
           <Property Name="em_codigo" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_x_rubro_acumulado_detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_rubro_acumulado_detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_rubro_acumulado_detalle">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2155,7 +2155,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_x_rubro_acumul
           <Property Name="ru_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_x_titulos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleado_x_titulos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_titulos">
           <Key>
             <PropertyRef Name="CodCatalogo" />
@@ -2189,7 +2189,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleado_x_titulos' no 
           <Property Name="estado" Type="varchar" MaxLength="1" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_EmpleadoAnticipoBeneficio' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_EmpleadoAnticipoBeneficio' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_EmpleadoAnticipoBeneficio">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2212,7 +2212,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_EmpleadoAnticipoBenefic
           <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_EmpleadoNovedadCargaMasiva' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_EmpleadoNovedadCargaMasiva' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_EmpleadoNovedadCargaMasiva">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2242,7 +2242,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_EmpleadoNovedadCargaMas
           <Property Name="DescripcionProcesoNomina" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_EmpleadoNovedadCargaMasiva_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_EmpleadoNovedadCargaMasiva_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_EmpleadoNovedadCargaMasiva_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2268,7 +2268,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_EmpleadoNovedadCargaMas
           <Property Name="Valor" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleados_consulta' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_empleados_consulta' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleados_consulta">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2294,7 +2294,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_empleados_consulta' no 
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_Historico_Liquidacion_Vacaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_Historico_Liquidacion_Vacaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_Historico_Liquidacion_Vacaciones">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2331,7 +2331,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_Historico_Liquidacion_V
           <Property Name="Fecha_Retorno" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_horario_planificacion_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_horario_planificacion_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_horario_planificacion_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2373,7 +2373,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_horario_planificacion_d
           <Property Name="IdCalendario" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_HorasProfesores' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_HorasProfesores' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_HorasProfesores">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2398,7 +2398,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_HorasProfesores' no tie
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_HorasProfesores_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_HorasProfesores_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_HorasProfesores_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2438,9 +2438,10 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_HorasProfesores_det' no
           <Property Name="IdSucursal" Type="int" Nullable="false" />
           <Property Name="ValorHora" Type="float" Nullable="false" />
           <Property Name="Valor" Type="float" Nullable="false" />
+          <Property Name="IdJornada" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_marcaciones_x_empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_marcaciones_x_empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_marcaciones_x_empleado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2476,7 +2477,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_marcaciones_x_empleado'
           <Property Name="ma_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_marcaciones_x_planificacion_horario' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_marcaciones_x_planificacion_horario' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_marcaciones_x_planificacion_horario">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2511,7 +2512,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_marcaciones_x_planifica
           <Property Name="HoraFin" Type="time" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_nomina_sin_percebir_sueldo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_nomina_sin_percebir_sueldo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_nomina_sin_percebir_sueldo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2535,7 +2536,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_nomina_sin_percebir_sue
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_nomina_x_horas_extras_aprobadas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_nomina_x_horas_extras_aprobadas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_nomina_x_horas_extras_aprobadas">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2561,7 +2562,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_nomina_x_horas_extras_a
           <Property Name="IdSucursal" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_nomina_x_horas_extras_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_nomina_x_horas_extras_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_nomina_x_horas_extras_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2619,7 +2620,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_nomina_x_horas_extras_d
           <Property Name="Sueldo_base" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_NominasPagosCheques' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_NominasPagosCheques' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_NominasPagosCheques">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2646,7 +2647,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_NominasPagosCheques' no
           <Property Name="pe_FechaFin" Type="smalldatetime" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_NominasPagosCheques_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_NominasPagosCheques_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_NominasPagosCheques_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2687,7 +2688,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_NominasPagosCheques_det
           <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2707,7 +2708,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_parametro_contable_x_No
           <Property Name="pc_Cuenta" Type="varchar" MaxLength="500" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_participacion_utilidad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_participacion_utilidad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_participacion_utilidad">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2744,7 +2745,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_participacion_utilidad'
           <Property Name="Estado" Type="varchar" MaxLength="1" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_participacion_utilidad_empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_participacion_utilidad_empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_participacion_utilidad_empleado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2789,7 +2790,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_participacion_utilidad_
           <Property Name="UtilidadCargaFamiliar" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwRo_Prestamo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_Prestamo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwRo_Prestamo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2855,7 +2856,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwRo_Prestamo' no tiene defi
           <Property Name="EstadoCancelacion" Type="varchar" MaxLength="9" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_PrestamoMasivo_Det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_PrestamoMasivo_Det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_PrestamoMasivo_Det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2884,7 +2885,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_PrestamoMasivo_Det' no 
           <Property Name="NumCuotas" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_rol' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rol' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_rol">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2922,7 +2923,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_rol' no tiene definida 
           <Property Name="EstadoRol" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_rol_detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rol_detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_rol_detalle">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -2965,7 +2966,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_rol_detalle' no tiene d
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwRo_rol_detalle_saldo_por_pagar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_rol_detalle_saldo_por_pagar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwRo_rol_detalle_saldo_por_pagar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3006,7 +3007,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwRo_rol_detalle_saldo_por_p
           <Property Name="IdCtaCble_x_pagar_empleado" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_rol_detalle_x_rubro_acumulado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rol_detalle_x_rubro_acumulado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_rol_detalle_x_rubro_acumulado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3030,7 +3031,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_rol_detalle_x_rubro_acu
           <Property Name="IdNominaTipo" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_rubro_tipo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rubro_tipo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_rubro_tipo">
           <Key>
             <PropertyRef Name="ru_descripcion" />
@@ -3041,7 +3042,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_rubro_tipo' no tiene de
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_rubro_tipo_x_jornada' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_rubro_tipo_x_jornada' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_rubro_tipo_x_jornada">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3061,7 +3062,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_rubro_tipo_x_jornada' n
           <Property Name="Descripcion" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_SancionesPorMarcaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_SancionesPorMarcaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_SancionesPorMarcaciones">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3088,7 +3089,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_SancionesPorMarcaciones
           <Property Name="FechaNovedades" Type="date" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_SancionesPorMarcaciones_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_SancionesPorMarcaciones_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_SancionesPorMarcaciones_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3126,7 +3127,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_SancionesPorMarcaciones
           <Property Name="HoraSalio" Type="time" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_SancionesPorMarcaciones_x_novedad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwro_SancionesPorMarcaciones_x_novedad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_SancionesPorMarcaciones_x_novedad">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3159,7 +3160,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_SancionesPorMarcaciones
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwRo_Solicitud_Vacaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwRo_Solicitud_Vacaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwRo_Solicitud_Vacaciones">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3213,7 +3214,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwRo_Solicitud_Vacaciones' n
           <Property Name="Estado_liquidacion" Type="varchar" MaxLength="1" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.EntidadRegulatoria.vwrdep_IngrEgr_x_Empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwrdep_IngrEgr_x_Empleado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwrdep_IngrEgr_x_Empleado">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3265,7 +3266,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.EntidadRegulatoria.vwrdep_IngrEg
           <Property Name="IngresosGravadorPorEsteEmpleador" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.EntidadRegulatoria.vwro_ArchivosIess' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwro_ArchivosIess' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_ArchivosIess">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3300,7 +3301,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.EntidadRegulatoria.vwro_Archivos
           <Property Name="Sueldo" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.EntidadRegulatoria.vwro_rdep' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.EntidadRegulatoria.vwro_rdep' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_rdep">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -3323,7 +3324,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.EntidadRegulatoria.vwro_rdep' no
           <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_Gastos_Personales' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.web.vwro_empleado_x_Proyeccion_Gastos_Personales' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwro_empleado_x_Proyeccion_Gastos_Personales">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -5946,7 +5947,8 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
     [vwro_HorasProfesores_det].[pe_cedulaRuc] AS [pe_cedulaRuc], 
     [vwro_HorasProfesores_det].[IdSucursal] AS [IdSucursal], 
     [vwro_HorasProfesores_det].[ValorHora] AS [ValorHora], 
-    [vwro_HorasProfesores_det].[Valor] AS [Valor]
+    [vwro_HorasProfesores_det].[Valor] AS [Valor], 
+    [vwro_HorasProfesores_det].[IdJornada] AS [IdJornada]
     FROM [dbo].[vwro_HorasProfesores_det] AS [vwro_HorasProfesores_det]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwro_marcaciones_x_empleado" EntityType="Self.vwro_marcaciones_x_empleado" store:Type="Views" store:Schema="dbo">
@@ -8480,7 +8482,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
             <End Role="ro_Nomina_Tipoliqui" EntitySet="ro_Nomina_Tipoliqui" />
             <End Role="ro_HorasProfesores" EntitySet="ro_HorasProfesores" />
           </AssociationSet>
-          <EntitySet Name="vwro_HorasProfesores_det" EntityType="Model_rrhh.vwro_HorasProfesores_det" />
           <EntitySet Name="vwro_nomina_sin_percebir_sueldo" EntityType="Model_rrhh.vwro_nomina_sin_percebir_sueldo" />
           <EntitySet Name="ro_FormulaHorasRecargo" EntityType="Model_rrhh.ro_FormulaHorasRecargo" />
           <EntitySet Name="vwRo_Solicitud_Vacaciones" EntityType="Model_rrhh.vwRo_Solicitud_Vacaciones" />
@@ -9049,6 +9050,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
             <Parameter Name="IdSucursalIni" Mode="In" Type="Int32" />
             <Parameter Name="IdSucursalFin" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="vwro_HorasProfesores_det" EntityType="Model_rrhh.vwro_HorasProfesores_det" />
           </EntityContainer>
         <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -9674,46 +9676,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="vwro_HorasProfesores_det">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdCarga" />
-            <PropertyRef Name="Secuencia" />
-            <PropertyRef Name="IdRubro" />
-            <PropertyRef Name="IdEmpresa_nov" />
-            <PropertyRef Name="IdNovedad" />
-            <PropertyRef Name="IdEmpleado" />
-            <PropertyRef Name="NumHoras" />
-            <PropertyRef Name="rub_codigo" />
-            <PropertyRef Name="ru_codRolGen" />
-            <PropertyRef Name="ru_descripcion" />
-            <PropertyRef Name="pe_nombreCompleto" />
-            <PropertyRef Name="pe_cedulaRuc" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="ValorHora" />
-            <PropertyRef Name="Valor" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdCarga" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="IdRubro" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdEmpresa_nov" Type="Int32" Nullable="false" />
-          <Property Name="IdNovedad" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="NumHoras" Type="Double" Nullable="false" />
-          <Property Name="rub_codigo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ru_codRolGen" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ru_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="em_codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="pe_apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="pe_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="ValorHora" Type="Double" Nullable="false" />
-          <Property Name="Valor" Type="Double" Nullable="false" />
-        </EntityType>
         <EntityType Name="vwro_nomina_sin_percebir_sueldo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -13258,6 +13220,47 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vwro_HorasProfesores_det">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdCarga" />
+            <PropertyRef Name="Secuencia" />
+            <PropertyRef Name="IdRubro" />
+            <PropertyRef Name="IdEmpresa_nov" />
+            <PropertyRef Name="IdNovedad" />
+            <PropertyRef Name="IdEmpleado" />
+            <PropertyRef Name="NumHoras" />
+            <PropertyRef Name="rub_codigo" />
+            <PropertyRef Name="ru_codRolGen" />
+            <PropertyRef Name="ru_descripcion" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="pe_cedulaRuc" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="ValorHora" />
+            <PropertyRef Name="Valor" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdCarga" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdRubro" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdEmpresa_nov" Type="Int32" Nullable="false" />
+          <Property Name="IdNovedad" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="NumHoras" Type="Double" Nullable="false" />
+          <Property Name="rub_codigo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ru_codRolGen" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ru_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="em_codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="pe_apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="ValorHora" Type="Double" Nullable="false" />
+          <Property Name="Valor" Type="Double" Nullable="false" />
+          <Property Name="IdJornada" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -14415,32 +14418,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
                 <ScalarProperty Name="IdPeriodo" ColumnName="IdPeriodo" />
                 <ScalarProperty Name="IdNominaTipo" ColumnName="IdNominaTipo" />
                 <ScalarProperty Name="IdNomina" ColumnName="IdNomina" />
-                <ScalarProperty Name="IdCarga" ColumnName="IdCarga" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vwro_HorasProfesores_det">
-            <EntityTypeMapping TypeName="Model_rrhh.vwro_HorasProfesores_det">
-              <MappingFragment StoreEntitySet="vwro_HorasProfesores_det">
-                <ScalarProperty Name="Valor" ColumnName="Valor" />
-                <ScalarProperty Name="ValorHora" ColumnName="ValorHora" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
-                <ScalarProperty Name="pe_nombre" ColumnName="pe_nombre" />
-                <ScalarProperty Name="pe_apellido" ColumnName="pe_apellido" />
-                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
-                <ScalarProperty Name="em_codigo" ColumnName="em_codigo" />
-                <ScalarProperty Name="ru_descripcion" ColumnName="ru_descripcion" />
-                <ScalarProperty Name="ru_codRolGen" ColumnName="ru_codRolGen" />
-                <ScalarProperty Name="rub_codigo" ColumnName="rub_codigo" />
-                <ScalarProperty Name="NumHoras" ColumnName="NumHoras" />
-                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-                <ScalarProperty Name="IdNovedad" ColumnName="IdNovedad" />
-                <ScalarProperty Name="IdEmpresa_nov" ColumnName="IdEmpresa_nov" />
-                <ScalarProperty Name="IdRubro" ColumnName="IdRubro" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdCarga" ColumnName="IdCarga" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
@@ -16036,6 +16013,33 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spRo_procesa_Rol_bono" FunctionName="Model_rrhh.Store.spRo_procesa_Rol_bono" />
+          <EntitySetMapping Name="vwro_HorasProfesores_det">
+            <EntityTypeMapping TypeName="Model_rrhh.vwro_HorasProfesores_det">
+              <MappingFragment StoreEntitySet="vwro_HorasProfesores_det">
+                <ScalarProperty Name="IdJornada" ColumnName="IdJornada" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="ValorHora" ColumnName="ValorHora" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="pe_cedulaRuc" ColumnName="pe_cedulaRuc" />
+                <ScalarProperty Name="pe_nombre" ColumnName="pe_nombre" />
+                <ScalarProperty Name="pe_apellido" ColumnName="pe_apellido" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="em_codigo" ColumnName="em_codigo" />
+                <ScalarProperty Name="ru_descripcion" ColumnName="ru_descripcion" />
+                <ScalarProperty Name="ru_codRolGen" ColumnName="ru_codRolGen" />
+                <ScalarProperty Name="rub_codigo" ColumnName="rub_codigo" />
+                <ScalarProperty Name="NumHoras" ColumnName="NumHoras" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="IdNovedad" ColumnName="IdNovedad" />
+                <ScalarProperty Name="IdEmpresa_nov" ColumnName="IdEmpresa_nov" />
+                <ScalarProperty Name="IdRubro" ColumnName="IdRubro" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdCarga" ColumnName="IdCarga" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

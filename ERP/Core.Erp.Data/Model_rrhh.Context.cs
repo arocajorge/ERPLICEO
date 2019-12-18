@@ -21,7 +21,10 @@ namespace Core.Erp.Data
             : base("name=Entities_rrhh")
         {
         }
-    
+        public void SetCommandTimeOut(int TimeOut)
+        {
+            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -86,7 +89,6 @@ namespace Core.Erp.Data
         public DbSet<ro_HorasProfesores> ro_HorasProfesores { get; set; }
         public DbSet<ro_HorasProfesores_det> ro_HorasProfesores_det { get; set; }
         public DbSet<vwro_HorasProfesores> vwro_HorasProfesores { get; set; }
-        public DbSet<vwro_HorasProfesores_det> vwro_HorasProfesores_det { get; set; }
         public DbSet<vwro_nomina_sin_percebir_sueldo> vwro_nomina_sin_percebir_sueldo { get; set; }
         public DbSet<ro_FormulaHorasRecargo> ro_FormulaHorasRecargo { get; set; }
         public DbSet<vwRo_Solicitud_Vacaciones> vwRo_Solicitud_Vacaciones { get; set; }
@@ -155,6 +157,7 @@ namespace Core.Erp.Data
         public DbSet<ro_empleado_x_rubro_acumulado> ro_empleado_x_rubro_acumulado { get; set; }
         public DbSet<ro_EmpleadoAnticipoBeneficio> ro_EmpleadoAnticipoBeneficio { get; set; }
         public DbSet<vwro_EmpleadoAnticipoBeneficio> vwro_EmpleadoAnticipoBeneficio { get; set; }
+        public DbSet<vwro_HorasProfesores_det> vwro_HorasProfesores_det { get; set; }
     
         public virtual int spRo_LiquidarEmpleado(Nullable<int> idEmpresa, Nullable<decimal> idActaFiniquito)
         {

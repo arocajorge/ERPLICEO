@@ -94,7 +94,6 @@
         <EntityTypeShape EntityType="Model_rrhh.vwro_HorasProfesores" Width="1.5" PointX="5.375" PointY="13.75" />
         <AssociationConnector Association="Model_rrhh.FK_ro_HorasProfesores_det_ro_HorasProfesores" />
         <AssociationConnector Association="Model_rrhh.FK_ro_HorasProfesores_ro_Nomina_Tipoliqui" />
-        <EntityTypeShape EntityType="Model_rrhh.vwro_HorasProfesores_det" Width="1.5" PointX="19.375" PointY="22.75" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_nomina_sin_percebir_sueldo" Width="1.5" PointX="23.375" PointY="5.75" />
         <EntityTypeShape EntityType="Model_rrhh.ro_FormulaHorasRecargo" Width="1.5" PointX="7.375" PointY="10.75" />
         <EntityTypeShape EntityType="Model_rrhh.vwRo_Solicitud_Vacaciones" Width="1.5" PointX="24.375" PointY="18.75" />
@@ -267,6 +266,7 @@
         <EntityTypeShape EntityType="Model_rrhh.vwro_EmpleadoAnticipoBeneficio" Width="1.5" PointX="29.375" PointY="13.75" />
         <AssociationConnector Association="Model_rrhh.FK_ro_EmpleadoAnticipoBeneficio_ro_empleado" />
         <AssociationConnector Association="Model_rrhh.FK_ro_EmpleadoAnticipoBeneficio_ro_rubro_tipo" />
+        <EntityTypeShape EntityType="Model_rrhh.vwro_HorasProfesores_det" Width="1.5" PointX="17.375" PointY="22.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

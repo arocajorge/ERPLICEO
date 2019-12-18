@@ -39,10 +39,8 @@ namespace Core.Erp.Data.RRHH
                                  Valor=q.Valor,
                                  ru_descripcion=q.ru_descripcion,
                                  IdRubro=q.IdRubro,
-                                 IdSucursal=q.IdSucursal
-                                  
-                                 
-
+                                 IdSucursal=q.IdSucursal,
+                                 IdJornada = q.IdJornada
                              }).ToList();
 
                 }

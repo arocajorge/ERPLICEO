@@ -111,6 +111,7 @@ FROM            dbo.ro_rol_detalle_x_rubro_acumulado AS acum INNER JOIN
 and acum.IdEmpleado=emp.IdEmpleado    
 and acum.Estado='PEN'
 AND emp.em_status='EST_ACT'
+and cont.EstadoContrato = 'ECT_ACT'
 AND acum.IdRubro=@IdRubro_Provision
 AND acum.IdSucursal>=@IdSucursalInicio
 AND acum.IdSucursal<=@IdSucursalFin
@@ -148,6 +149,7 @@ FROM            dbo.ro_rol_detalle_x_rubro_acumulado AS acum INNER JOIN
 and acum.IdEmpleado=emp.IdEmpleado    
 and acum.Estado='PEN'
 AND emp.em_status='EST_ACT'
+and cont.EstadoContrato = 'ECT_ACT'
 AND acum.IdRubro=@IdRubro_Provision
 AND acum.IdSucursal>=@IdSucursalInicio
 AND acum.IdSucursal<=@IdSucursalFin

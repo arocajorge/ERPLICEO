@@ -559,12 +559,14 @@ FROM            dbo.tb_persona INNER JOIN
 
 				  
 				  where ro_rol_detalle_x_ro_rubro_fijo.IdEmpresa=@IdEmpresa
-				  
+				   and ro_rol_detalle_x_ro_rubro_fijo.IdRol=ro_rol.IdRol -- by Acueva 2019/12/12
+				  -- idrol=103 Es Sucurursal 1 Antorcha x eso salia Catherine Mejia, faltaba filtro Idperiodo de ro_rol(arriba) aqui revisar se mueve ccg  OJO add IDSUCURSAL EN TBL
+
 				  and ro_rol.IdNominaTipo=@IdNomina
 				  and ro_rol.IdNominaTipoLiqui=@IdNominaTipoLiqui
 				  and ro_rol.IdPeriodo=@IdPeriodo
 
-				  
+				  AND ro_rol.IdSucursal BETWEEN @IdSucursalIni AND @IdSucursalFin -- Jorge 16/12/2019 ; x sucursal
 				  and ro_empleado.IdDivision>=@IdDivisionIni
 				  and ro_empleado.IdDivision<=@IdDivisionFin
 

@@ -1,5 +1,4 @@
-﻿
---exec [web].[SPBAN_004] 1,2,13
+﻿--exec [web].[SPBAN_004] 1,2,46
 CREATE proc [web].[SPBAN_004]
 (
  @IdEmpresa int
@@ -405,7 +404,7 @@ WHERE        (A.IdEmpresa = @IdEmpresa) AND (A.IdConciliacion = @IdConciliacion)
 END
 
 set @TotalConciliado = ISNULL(@w_TIng,0)  + ISNULL(@w_TEgr,0)
-select @TotalConciliadoNoContable = sum(CASE WHEN tipo_IngEgr = '+' THEN valor ELSE valor *-1 END) from ba_conciliacion_det where idempresa = @idempresa and idconciliacion = @idconciliacion and Seleccionado = 1
+select @TotalConciliadoNoContable = sum(CASE WHEN tipo_IngEgr = '+' THEN valor *-1 ELSE valor  END) from ba_conciliacion_det where idempresa = @idempresa and idconciliacion = @idconciliacion and Seleccionado = 1
 
 if (@TotalRegistros>0)
 begin

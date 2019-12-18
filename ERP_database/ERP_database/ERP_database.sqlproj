@@ -1243,6 +1243,11 @@
     <Build Include="dbo\Tables\tb_profesion.sql" />
     <Build Include="web\Views\VWACA_001.sql" />
     <Build Include="dbo\Views\vwaca_Matricula_Rubro_PorFacturar.sql" />
+    <Build Include="dbo\Tables\ro_AjusteImpuestoRentaDetOI.sql" />
+    <Build Include="dbo\Tables\ro_AjusteImpuestoRentaDet.sql" />
+    <Build Include="dbo\Tables\ro_AjusteImpuestoRenta.sql" />
+    <Build Include="dbo\Functions\BankersRounding.sql" />
+    <Build Include="dbo\Stored Procedures\spRo_procesa_AjusteIR.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

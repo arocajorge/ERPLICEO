@@ -30,10 +30,11 @@ BEGIN --GET SECUENCIA
 	select @w_Secuencia = max(Secuencia)
 	from [dbo].[ro_AjusteImpuestoRentaDet]
 	where IdEmpresa = @IdEmpresa and IdAjuste = @IdAjuste
+	SET @w_Secuencia= ISNULL(@w_Secuencia,0)
 END
 
 BEGIN --INSERT O UPDATE DE CABECERA
-IF(@IdAjuste = 0)
+IF(@w_IdAjuste IS NOT NULL)
 	BEGIN
 		INSERT INTO [dbo].[ro_AjusteImpuestoRenta]
            ([IdEmpresa]
@@ -48,7 +49,7 @@ IF(@IdAjuste = 0)
            ,[FechaCreacion])
      VALUES
            (@IdEmpresa
-           ,@w_IdAjuste
+           ,@IdAjuste
            ,@IdAnio
            ,@Fecha
            ,@FechaCorte
@@ -113,11 +114,24 @@ BEGIN --INSERT DEL DETALLE
 		   ro_contrato as c on c.IdEmpresa = e.IdEmpresa and c.IdEmpleado = e.IdEmpleado
 		   where e.IdEmpresa = @IdEmpresa and e.IdEmpleado between @IdEmpleado and case when @IdEmpleado = 0 then 999999999999 else @IdEmpleado end
 		   and e.IdSucursal between @IdSucursal and case when @IdSucursal = 0 then 999999999 else 0 end
-		   and isnull(c.FechaFin,DATEFROMPARTS(31,12,@IdAnio)) >= DATEFROMPARTS(31,12,@IdAnio)
 		   and e.em_status NOT IN ('EST_LIQ','EST_PLQ')
 		   and C.EstadoContrato NOT IN ('ECT_LIQ','ECT_PLQ')
 		   AND E.em_estado = 'A'
+		   and isnull(c.FechaFin,@FechaCorte) >= @FechaCorte
 
 END
 
 END
+
+/*
+EXEC [dbo].[spRo_procesa_AjusteIR]
+@IdEmpresa = 1,
+@IdAnio = 2019,
+@IdAjuste = 0,
+@IdEmpleado = 0,
+@IdSucursal = 0,
+@IdUsuario ='ADMIN',
+@Fecha = '01/01/2019',
+@FechaCorte ='2019/12/31',
+@Observacion =''
+*/

@@ -465,10 +465,14 @@
     <Compile Include="Reportes\RRHH\ROL_026_Info.cs" />
     <Compile Include="Reportes\RRHH\ROL_027_Info.cs" />
     <Compile Include="Reportes\RRHH\ROL_028_Info.cs" />
+    <Compile Include="Reportes\RRHH\ROL_029_Info.cs" />
     <Compile Include="RRHH\MTE\ro_archivosCSV_Info.cs" />
     <Compile Include="RRHH\RDEP\Rdep.cs" />
     <Compile Include="RRHH\ro_Acta_Finiquito_Detalle_Info.cs" />
     <Compile Include="RRHH\ro_Acta_Finiquito_Info.cs" />
+    <Compile Include="RRHH\ro_AjusteImpuestoRentaDetOI_Info.cs" />
+    <Compile Include="RRHH\ro_AjusteImpuestoRentaDet_Info.cs" />
+    <Compile Include="RRHH\ro_AjusteImpuestoRenta_Info.cs" />
     <Compile Include="RRHH\ro_ArchivosIess_Info.cs" />
     <Compile Include="RRHH\ro_archivos_bancos_generacion_Info.cs" />
     <Compile Include="RRHH\ro_archivos_bancos_generacion_x_empleado_Info.cs" />

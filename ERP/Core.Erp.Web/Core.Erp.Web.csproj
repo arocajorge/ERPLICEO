@@ -444,6 +444,8 @@
     <Compile Include="Areas\Reportes\Views\RRHHReportes\PivotGridDataOutputDemosHelper.cs" />
     <Compile Include="Areas\RRHH\Controllers\ActaFiniquitoController.cs" />
     <Compile Include="Areas\RRHH\Controllers\AjusteBeneficiosSocialesController.cs" />
+    <Compile Include="Areas\RRHH\Controllers\AjusteImpuestoRentaController.cs" />
+    <Compile Include="Areas\RRHH\Controllers\AjusteImpuestoRenta_OIController.cs" />
     <Compile Include="Areas\RRHH\Controllers\AjustesAnticipoController.cs" />
     <Compile Include="Areas\RRHH\Controllers\AnticipoDeBeneficiosController.cs" />
     <Compile Include="Areas\RRHH\Controllers\ArchivosActualizacionSueldoController.cs" />
@@ -1498,6 +1500,18 @@
     </Compile>
     <Compile Include="Reportes\RRHH\ROL_028_Rpt.Designer.cs">
       <DependentUpon>ROL_028_Rpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\RRHH\ROL_029_OI_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\RRHH\ROL_029_OI_Rpt.Designer.cs">
+      <DependentUpon>ROL_029_OI_Rpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\RRHH\ROL_029_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\RRHH\ROL_029_Rpt.Designer.cs">
+      <DependentUpon>ROL_029_Rpt.cs</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -10246,6 +10260,15 @@
     <Content Include="Areas\RRHH\Views\AnticipoDeBeneficios\_CmbEmpleado_anticipo.cshtml" />
     <Content Include="Areas\RRHH\Views\AnticipoDeBeneficios\Modificar.cshtml" />
     <Content Include="Areas\RRHH\Views\AnticipoDeBeneficios\Anular.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\Index.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\_GridViewPartial_ajuste.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\Nuevo.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\_GridViewPartial_ajuste_det.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\_CmbEmpleado.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta_OI\_CmbEmpleado.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta_OI\Nuevo.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta_OI\_GridViewPartial_AjusteImpuestoRenta_OI.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\Modificar.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
@@ -10856,6 +10879,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\RRHH\ROL_028_Rpt.resx">
       <DependentUpon>ROL_028_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RRHH\ROL_029_OI_Rpt.resx">
+      <DependentUpon>ROL_029_OI_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RRHH\ROL_029_Rpt.resx">
+      <DependentUpon>ROL_029_Rpt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

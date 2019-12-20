@@ -18,7 +18,7 @@ namespace Core.Erp.Bus.Reportes.CuentasPorCobrar
             {
                 return odata.get_list(IdEmpresa, IdSucursal, IdCliente, Idtipo_cliente, fechaCorte, MostrarSoloCarteraVencida);
             }
-            catch (Exception EX)
+            catch (Exception)
             {
 
                 throw;

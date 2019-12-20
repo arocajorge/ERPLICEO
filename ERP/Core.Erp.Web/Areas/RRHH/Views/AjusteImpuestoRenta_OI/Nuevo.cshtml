@@ -1,0 +1,64 @@
+﻿@model Core.Erp.Info.RRHH.ro_AjusteImpuestoRenta_Info
+@{
+    ViewBag.Title = "Nuevo ingreso";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script>
+    var timerHandle = -1;
+    function OnBatchEditStartEditing(s, e) {
+        clearTimeout(timerHandle);
+    }
+    function OnBatchEditEndEditing(s, e) {
+        timerHandle = setTimeout(function () {
+            s.UpdateEdit();
+        }, 200);
+    }
+</script>
+
+@using (Html.BeginForm("Nuevo", "AjusteImpuestoRenta_OI", FormMethod.Post, new { @role = "form", @class = "form" }))
+{
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" })
+    @Html.HiddenFor(q => q.IdAjuste, new { @id = "IdAjuste" })
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" })
+
+    if (ViewBag.mensaje != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <h4>
+                <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+            </h4>
+        </div>
+
+    }
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="IdCliente">Empleado*</label>
+                    @Html.Partial("_CmbEmpleado", Model.IdEmpleado)
+                    @Html.ValidationMessageFor(q => q.IdEmpleado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Action("GridViewPartial_AjusteImpuestoRenta_OI")
+        </div>
+    </div>
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-default" href="@Url.Action("Index","AjusteImpuestoRenta", new { Area = "RRHH"})">Cancelar</a>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+}
+<script>
+</script>

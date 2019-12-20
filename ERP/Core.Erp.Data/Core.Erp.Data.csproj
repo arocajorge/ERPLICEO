@@ -1421,10 +1421,20 @@
     <Compile Include="Reportes\RRHH\ROL_026_Data.cs" />
     <Compile Include="Reportes\RRHH\ROL_027_Data.cs" />
     <Compile Include="Reportes\RRHH\ROL_028_Data.cs" />
+    <Compile Include="Reportes\RRHH\ROL_029_Data.cs" />
     <Compile Include="ro_Acta_Finiquito.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="ro_Acta_Finiquito_Detalle.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_AjusteImpuestoRenta.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_AjusteImpuestoRentaDet.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_AjusteImpuestoRentaDetOI.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="ro_archivos_bancos_generacion.cs">
@@ -1663,6 +1673,9 @@
     </Compile>
     <Compile Include="RRHH\ro_Acta_Finiquito_Data.cs" />
     <Compile Include="RRHH\ro_Acta_Finiquito_Detalle_Data.cs" />
+    <Compile Include="RRHH\ro_AjusteImpuestoRentaDetOI_Data.cs" />
+    <Compile Include="RRHH\ro_AjusteImpuestoRentaDet_Data.cs" />
+    <Compile Include="RRHH\ro_AjusteImpuestoRenta_Data.cs" />
     <Compile Include="RRHH\ro_archivosCSV_Data.cs" />
     <Compile Include="RRHH\ro_ArchivosIess_Data.cs" />
     <Compile Include="RRHH\ro_archivos_bancos_generacion_Data.cs" />
@@ -2725,7 +2738,13 @@
     <Compile Include="VWROL_028.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
+    <Compile Include="VWROL_029.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwRo_ActaFiniquito.cs">
+      <DependentUpon>Model_rrhh.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwro_AjusteImpuestoRentaDet.cs">
       <DependentUpon>Model_rrhh.tt</DependentUpon>
     </Compile>
     <Compile Include="vwro_ArchivosIess.cs">

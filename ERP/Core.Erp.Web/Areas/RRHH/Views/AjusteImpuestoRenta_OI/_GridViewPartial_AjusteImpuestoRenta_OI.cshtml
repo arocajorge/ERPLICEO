@@ -1,0 +1,64 @@
+
+@using System.Web.UI.WebControls;
+
+@{
+    Html.EnableClientValidation();
+    //Html.EnableUnobtrusiveJavaScript();
+}
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "GridViewPartial_AjusteImpuestoRenta_OI";
+        settings.KeyFieldName = "Secuencia";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "AjusteImpuestoRenta_OI", Action = "GridViewPartial_AjusteImpuestoRenta_OI" };
+        settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "AjusteImpuestoRenta_OI", Action = "BatchEditingUpdateModel" };
+
+        settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+        settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+        settings.SettingsEditing.BatchEditSettings.KeepChangesOnCallbacks = DefaultBoolean.True;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowCancelButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.ShowCancelButton = false;
+
+        settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+        //settings.SettingsPager.Mode = BatchEditingOptions.PagerMode;
+        //settings.SettingsEditing.BatchEditSettings.EditMode = BatchEditingOptions.EditMode;
+        //settings.SettingsEditing.BatchEditSettings.StartEditAction = BatchEditingOptions.StartEditAction;
+        //settings.SettingsEditing.BatchEditSettings.HighlightDeletedRows = BatchEditingOptions.HighlightDeletedRows;
+        //settings.SettingsEditing.BatchEditSettings.KeepChangesOnCallbacks = BatchEditingOptions.KeepChangesOnCallbacks ? DefaultBoolean.True : DefaultBoolean.False;
+
+        settings.CommandColumn.Width = Unit.Pixel(150);
+        settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "DescripcionOI";
+            column.Caption = "Descripción";
+            column.Width = Unit.Percentage(80);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Valor";
+            column.Caption = "Valor";
+            column.PropertiesEdit.DisplayFormatString = "{0:n2}";
+            column.EditorProperties().SpinEdit(q =>
+            {
+                q.AllowMouseWheel = false;
+                q.MinValue = 0;
+                q.DisplayFormatString = "{0:n2}";
+                q.Width = Unit.Percentage(100);
+            });
+            column.Width = Unit.Percentage(10);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+        });
+        settings.ClientSideEvents.BatchEditStartEditing = "OnBatchEditStartEditing";
+        settings.ClientSideEvents.BatchEditEndEditing = "OnBatchEditEndEditing";
+        settings.ClientSideEvents.BeginCallback = "function(s,e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();}";//OnBeginGridCallback(s,e);
+    });
+}
+@grid.Bind(Model).GetHtml()

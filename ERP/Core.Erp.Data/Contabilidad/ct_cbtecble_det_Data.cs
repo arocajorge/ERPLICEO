@@ -69,7 +69,7 @@ namespace Core.Erp.Data.Contabilidad
                 }
                 return Lista;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

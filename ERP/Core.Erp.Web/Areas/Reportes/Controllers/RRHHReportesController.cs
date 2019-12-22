@@ -1556,6 +1556,28 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
 
             return View(model);
         }
+
+        public ActionResult ROL_029(int IdEmpresa = 0, int IdAjuste = 0)
+        {
+
+            ROL_029_Rpt model = new ROL_029_Rpt();
+            #region Cargo diseño desde base
+            //int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+            var reporte = bus_rep_x_emp.GetInfo(IdEmpresa, "ROL_029");
+            if (reporte != null)
+            {
+                System.IO.File.WriteAllBytes(RootReporte, reporte.ReporteDisenio);
+                model.LoadLayout(RootReporte);
+            }
+            #endregion
+            model.p_IdEmpresa.Value = Convert.ToInt32(SessionFixed.IdEmpresa);
+            model.p_IdAjuste.Value = IdAjuste;
+
+            model.usuario = SessionFixed.IdUsuario.ToString();
+            model.empresa = SessionFixed.NomEmpresa.ToString();
+
+            return View(model);
+        }
     }
 
     public class preliquidacion_List

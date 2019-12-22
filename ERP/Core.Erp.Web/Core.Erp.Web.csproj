@@ -10269,6 +10269,8 @@
     <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta_OI\Nuevo.cshtml" />
     <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta_OI\_GridViewPartial_AjusteImpuestoRenta_OI.cshtml" />
     <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\Modificar.cshtml" />
+    <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_029.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\Anular.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

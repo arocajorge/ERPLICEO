@@ -84,19 +84,28 @@
         });
 
         settings.Columns.Add("IdAjuste","ID").Width=Unit.Percentage(10);
-        settings.Columns.Add("IdAnio", "Año").Width = Unit.Percentage(20);
+        settings.Columns.Add("IdAnio", "Año").Width = Unit.Percentage(10);
         settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(50);
         settings.Columns.Add(column =>
         {
             column.FieldName = "Estado";
             column.Caption = "Estado";
-            column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
             column.EditorProperties().CheckBox(sp =>
             {
 
             });
         });
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "";
+            column.SetDataItemTemplateContent(c =>
+            {
 
+                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("ROL_029", "RRHHReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa"), IdAjuste = DataBinder.Eval(c.DataItem, "IdAjuste") }, Request.Url.Scheme) + "');\"></span>");
+            });
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        });
         settings.ClientSideEvents.BeginCallback = "function(s,e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();}";
     });
 }

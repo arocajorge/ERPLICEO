@@ -1,7 +1,7 @@
 ﻿@model Core.Erp.Info.RRHH.ro_AjusteImpuestoRenta_Info
 @using Core.Erp.Web.Helps
 @{
-    ViewBag.Title = "Modificar ajuste de impuesto a la renta";
+    ViewBag.Title = "Anular ajuste de impuesto a la renta";
     if (Session["IdUsuario"] == null || Session["IdEmpresa"] == null)
     {
         Response.Redirect("~/Account/Login");
@@ -9,7 +9,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
-@using (Html.BeginForm("Modificar", "AjusteImpuestoRenta", FormMethod.Post, new { @class = "form", @role = "form" }))
+@using (Html.BeginForm("Anular", "AjusteImpuestoRenta", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     if (ViewBag.mensaje != null)
     {
@@ -103,8 +103,12 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-primary">Procesar toda la nomina</button>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Descripcion">Motivo de anulación</label>
+                    @Html.TextBoxFor(q => q.MotivoAnulacion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(q => q.MotivoAnulacion, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
     </div>
@@ -112,6 +116,7 @@
         @Html.Action("GridViewPartial_ajuste_det", new { IdEmpresa = Model.IdEmpresa, IdAjuste = Model.IdAjuste})
     </div>
     <div class="box-footer">
+        <button type="submit" class="btn btn-danger">Anular</button>
         <a class="btn btn-default" href="@Url.Action("Index", "AjusteImpuestoRenta", new { Area ="RRHH" }, null)">Cancelar</a>
     </div>
 

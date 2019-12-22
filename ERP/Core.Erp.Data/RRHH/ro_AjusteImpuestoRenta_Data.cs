@@ -151,6 +151,7 @@ namespace Core.Erp.Data.RRHH
 
                     Entity.IdUsuarioAnulacion = info.IdUsuarioAnulacion;
                     Entity.FechaAnulacion = info.FechaAnulacion = DateTime.Now;
+                    Entity.MotivoAnulacion = info.MotivoAnulacion;
                     Context.SaveChanges();
                 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,8 +12,11 @@ namespace Core.Erp.Info.RRHH
         public decimal IdTransaccionSession { get; set; }
         public int IdEmpresa { get; set; }
         public decimal IdAjuste { get; set; }
+        [Required(ErrorMessage = "El campo año es obligatorio")]
         public int IdAnio { get; set; }
+        [Required(ErrorMessage = "El campo fecha es obligatorio")]
         public System.DateTime Fecha { get; set; }
+        [Required(ErrorMessage = "El campo fecha corte es obligatorio")]
         public System.DateTime FechaCorte { get; set; }
         public Nullable<int> IdSucursal { get; set; }
         public string Observacion { get; set; }
@@ -23,6 +27,7 @@ namespace Core.Erp.Info.RRHH
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public string IdUsuarioAnulacion { get; set; }
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
+        [Required(ErrorMessage = "El campo motivo de anulación es obligatorio")]
         public string MotivoAnulacion { get; set; }
 
         #region Campos que no existen en la tabla

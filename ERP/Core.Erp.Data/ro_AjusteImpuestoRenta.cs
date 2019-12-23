@@ -16,8 +16,8 @@ namespace Core.Erp.Data
     {
         public ro_AjusteImpuestoRenta()
         {
-            this.ro_AjusteImpuestoRentaDet = new HashSet<ro_AjusteImpuestoRentaDet>();
             this.ro_AjusteImpuestoRentaDetOI = new HashSet<ro_AjusteImpuestoRentaDetOI>();
+            this.ro_AjusteImpuestoRentaDet = new HashSet<ro_AjusteImpuestoRentaDet>();
         }
     
         public int IdEmpresa { get; set; }
@@ -36,7 +36,7 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
         public string MotivoAnulacion { get; set; }
     
-        public virtual ICollection<ro_AjusteImpuestoRentaDet> ro_AjusteImpuestoRentaDet { get; set; }
         public virtual ICollection<ro_AjusteImpuestoRentaDetOI> ro_AjusteImpuestoRentaDetOI { get; set; }
+        public virtual ICollection<ro_AjusteImpuestoRentaDet> ro_AjusteImpuestoRentaDet { get; set; }
     }
 }

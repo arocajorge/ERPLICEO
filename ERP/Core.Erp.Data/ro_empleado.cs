@@ -49,8 +49,8 @@ namespace Core.Erp.Data
             this.ro_empleado_x_ro_rubro = new HashSet<ro_empleado_x_ro_rubro>();
             this.ro_empleado_x_rubro_acumulado = new HashSet<ro_empleado_x_rubro_acumulado>();
             this.ro_EmpleadoAnticipoBeneficio = new HashSet<ro_EmpleadoAnticipoBeneficio>();
-            this.ro_AjusteImpuestoRentaDet = new HashSet<ro_AjusteImpuestoRentaDet>();
             this.ro_AjusteImpuestoRentaDetOI = new HashSet<ro_AjusteImpuestoRentaDetOI>();
+            this.ro_AjusteImpuestoRentaDet = new HashSet<ro_AjusteImpuestoRentaDet>();
         }
     
         public int IdEmpresa { get; set; }
@@ -158,7 +158,7 @@ namespace Core.Erp.Data
         public virtual ICollection<ro_empleado_x_ro_rubro> ro_empleado_x_ro_rubro { get; set; }
         public virtual ICollection<ro_empleado_x_rubro_acumulado> ro_empleado_x_rubro_acumulado { get; set; }
         public virtual ICollection<ro_EmpleadoAnticipoBeneficio> ro_EmpleadoAnticipoBeneficio { get; set; }
-        public virtual ICollection<ro_AjusteImpuestoRentaDet> ro_AjusteImpuestoRentaDet { get; set; }
         public virtual ICollection<ro_AjusteImpuestoRentaDetOI> ro_AjusteImpuestoRentaDetOI { get; set; }
+        public virtual ICollection<ro_AjusteImpuestoRentaDet> ro_AjusteImpuestoRentaDet { get; set; }
     }
 }

@@ -1249,6 +1249,8 @@
     <Build Include="dbo\Functions\BankersRounding.sql" />
     <Build Include="dbo\Stored Procedures\spRo_procesa_AjusteIR.sql" />
     <Build Include="dbo\Functions\fxGetIdPeriodo.sql" />
+    <Build Include="web\Views\VWROL_029.sql" />
+    <Build Include="dbo\Views\vwro_AjusteImpuestoRentaDet.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

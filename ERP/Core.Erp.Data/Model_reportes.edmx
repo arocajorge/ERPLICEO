@@ -4330,6 +4330,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_029' no tiene definida
             <PropertyRef Name="SueldoFechaCorte" />
             <PropertyRef Name="SueldoProyectado" />
             <PropertyRef Name="OtrosIngresos" />
+            <PropertyRef Name="IngresosLiquidos" />
             <PropertyRef Name="GastosPersonales" />
             <PropertyRef Name="AporteFechaCorte" />
             <PropertyRef Name="BaseImponible" />
@@ -4355,6 +4356,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_029' no tiene definida
           <Property Name="SueldoFechaCorte" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="SueldoProyectado" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="OtrosIngresos" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IngresosLiquidos" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="GastosPersonales" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="AporteFechaCorte" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="BaseImponible" Type="numeric" Precision="18" Scale="2" Nullable="false" />
@@ -7392,6 +7394,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_029' no tiene definida
     [VWROL_029].[SueldoFechaCorte] AS [SueldoFechaCorte], 
     [VWROL_029].[SueldoProyectado] AS [SueldoProyectado], 
     [VWROL_029].[OtrosIngresos] AS [OtrosIngresos], 
+    [VWROL_029].[IngresosLiquidos] AS [IngresosLiquidos], 
     [VWROL_029].[GastosPersonales] AS [GastosPersonales], 
     [VWROL_029].[AporteFechaCorte] AS [AporteFechaCorte], 
     [VWROL_029].[BaseImponible] AS [BaseImponible], 
@@ -12918,6 +12921,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_029' no tiene definida
             <PropertyRef Name="SueldoFechaCorte" />
             <PropertyRef Name="SueldoProyectado" />
             <PropertyRef Name="OtrosIngresos" />
+            <PropertyRef Name="IngresosLiquidos" />
             <PropertyRef Name="GastosPersonales" />
             <PropertyRef Name="AporteFechaCorte" />
             <PropertyRef Name="BaseImponible" />
@@ -12943,6 +12947,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_029' no tiene definida
           <Property Name="SueldoFechaCorte" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="SueldoProyectado" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="OtrosIngresos" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IngresosLiquidos" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="GastosPersonales" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="AporteFechaCorte" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="BaseImponible" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
@@ -16867,6 +16872,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.VWROL_029' no tiene definida
                 <ScalarProperty Name="BaseImponible" ColumnName="BaseImponible" />
                 <ScalarProperty Name="AporteFechaCorte" ColumnName="AporteFechaCorte" />
                 <ScalarProperty Name="GastosPersonales" ColumnName="GastosPersonales" />
+                <ScalarProperty Name="IngresosLiquidos" ColumnName="IngresosLiquidos" />
                 <ScalarProperty Name="OtrosIngresos" ColumnName="OtrosIngresos" />
                 <ScalarProperty Name="SueldoProyectado" ColumnName="SueldoProyectado" />
                 <ScalarProperty Name="SueldoFechaCorte" ColumnName="SueldoFechaCorte" />

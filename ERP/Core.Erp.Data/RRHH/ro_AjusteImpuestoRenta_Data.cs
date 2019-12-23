@@ -125,7 +125,7 @@ namespace Core.Erp.Data.RRHH
             {
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    Context.spRo_procesa_AjusteIR(info.IdEmpresa, info.IdAnio, info.IdAjuste, info.IdEmpleado, info.IdSucursal, info.IdUsuario, info.Fecha.Date, info.FechaCorte.Date, info.Observacion);
+                    Context.spRo_procesa_AjusteIR(info.IdEmpresa, info.IdAnio, info.IdAjuste, info.IdEmpleado, info.IdSucursal??0, info.IdUsuario, info.Fecha.Date, info.FechaCorte.Date, info.Observacion);
 
                     Context.SaveChanges();
                 }

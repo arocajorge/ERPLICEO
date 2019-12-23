@@ -88,6 +88,7 @@
           <Property Name="SueldoFechaCorte" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="SueldoProyectado" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="OtrosIngresos" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IngresosLiquidos" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="GastosPersonales" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="AporteFechaCorte" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="BaseImponible" Type="numeric" Precision="18" Scale="2" Nullable="false" />
@@ -1754,6 +1755,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_AjusteImpuestoRentaDet'
             <PropertyRef Name="SueldoFechaCorte" />
             <PropertyRef Name="SueldoProyectado" />
             <PropertyRef Name="OtrosIngresos" />
+            <PropertyRef Name="IngresosLiquidos" />
             <PropertyRef Name="GastosPersonales" />
             <PropertyRef Name="AporteFechaCorte" />
             <PropertyRef Name="BaseImponible" />
@@ -1772,6 +1774,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwro_AjusteImpuestoRentaDet'
           <Property Name="SueldoFechaCorte" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="SueldoProyectado" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="OtrosIngresos" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IngresosLiquidos" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="GastosPersonales" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="AporteFechaCorte" Type="numeric" Precision="18" Scale="2" Nullable="false" />
           <Property Name="BaseImponible" Type="numeric" Precision="18" Scale="2" Nullable="false" />
@@ -5407,6 +5410,9 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fxGetIdPeriodo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="Fecha" Type="date" Mode="In" />
+        </Function>
         <Function Name="spRo_Cierre_Rol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
           <Parameter Name="IdPeriodo" Type="int" Mode="In" />
@@ -5655,6 +5661,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
     [vwro_AjusteImpuestoRentaDet].[SueldoFechaCorte] AS [SueldoFechaCorte], 
     [vwro_AjusteImpuestoRentaDet].[SueldoProyectado] AS [SueldoProyectado], 
     [vwro_AjusteImpuestoRentaDet].[OtrosIngresos] AS [OtrosIngresos], 
+    [vwro_AjusteImpuestoRentaDet].[IngresosLiquidos] AS [IngresosLiquidos], 
     [vwro_AjusteImpuestoRentaDet].[GastosPersonales] AS [GastosPersonales], 
     [vwro_AjusteImpuestoRentaDet].[AporteFechaCorte] AS [AporteFechaCorte], 
     [vwro_AjusteImpuestoRentaDet].[BaseImponible] AS [BaseImponible], 
@@ -9257,25 +9264,24 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
           </FunctionImport>
           <EntitySet Name="vwro_HorasProfesores_det" EntityType="Model_rrhh.vwro_HorasProfesores_det" />
           <EntitySet Name="ro_AjusteImpuestoRenta" EntityType="Model_rrhh.ro_AjusteImpuestoRenta" />
-          <EntitySet Name="ro_AjusteImpuestoRentaDet" EntityType="Model_rrhh.ro_AjusteImpuestoRentaDet" />
           <EntitySet Name="ro_AjusteImpuestoRentaDetOI" EntityType="Model_rrhh.ro_AjusteImpuestoRentaDetOI" />
-          <AssociationSet Name="FK_ro_AjusteImpuestoRentaDet_ro_AjusteImpuestoRenta" Association="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_AjusteImpuestoRenta">
-            <End Role="ro_AjusteImpuestoRenta" EntitySet="ro_AjusteImpuestoRenta" />
-            <End Role="ro_AjusteImpuestoRentaDet" EntitySet="ro_AjusteImpuestoRentaDet" />
-          </AssociationSet>
           <AssociationSet Name="FK_ro_AjusteImpuestoRentaDetOI_ro_AjusteImpuestoRenta" Association="Model_rrhh.FK_ro_AjusteImpuestoRentaDetOI_ro_AjusteImpuestoRenta">
             <End Role="ro_AjusteImpuestoRenta" EntitySet="ro_AjusteImpuestoRenta" />
             <End Role="ro_AjusteImpuestoRentaDetOI" EntitySet="ro_AjusteImpuestoRentaDetOI" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ro_AjusteImpuestoRentaDet_ro_empleado" Association="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_empleado">
-            <End Role="ro_empleado" EntitySet="ro_empleado" />
-            <End Role="ro_AjusteImpuestoRentaDet" EntitySet="ro_AjusteImpuestoRentaDet" />
           </AssociationSet>
           <AssociationSet Name="FK_ro_AjusteImpuestoRentaDetOI_ro_empleado" Association="Model_rrhh.FK_ro_AjusteImpuestoRentaDetOI_ro_empleado">
             <End Role="ro_empleado" EntitySet="ro_empleado" />
             <End Role="ro_AjusteImpuestoRentaDetOI" EntitySet="ro_AjusteImpuestoRentaDetOI" />
           </AssociationSet>
-          <EntitySet Name="vwro_AjusteImpuestoRentaDet" EntityType="Model_rrhh.vwro_AjusteImpuestoRentaDet" />
+          <EntitySet Name="ro_AjusteImpuestoRentaDet" EntityType="Model_rrhh.ro_AjusteImpuestoRentaDet" />
+          <AssociationSet Name="FK_ro_AjusteImpuestoRentaDet_ro_AjusteImpuestoRenta" Association="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_AjusteImpuestoRenta">
+            <End Role="ro_AjusteImpuestoRenta" EntitySet="ro_AjusteImpuestoRenta" />
+            <End Role="ro_AjusteImpuestoRentaDet" EntitySet="ro_AjusteImpuestoRentaDet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ro_AjusteImpuestoRentaDet_ro_empleado" Association="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_empleado">
+            <End Role="ro_empleado" EntitySet="ro_empleado" />
+            <End Role="ro_AjusteImpuestoRentaDet" EntitySet="ro_AjusteImpuestoRentaDet" />
+          </AssociationSet>
           <FunctionImport Name="spRo_procesa_AjusteIR">
             <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
             <Parameter Name="IdAnio" Mode="In" Type="Int32" />
@@ -9287,6 +9293,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
             <Parameter Name="FechaCorte" Mode="In" Type="DateTime" />
             <Parameter Name="Observacion" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="vwro_AjusteImpuestoRentaDet" EntityType="Model_rrhh.vwro_AjusteImpuestoRentaDet" />
           </EntityContainer>
         <ComplexType Name="spro_nomina_x_pago_utilidad_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -11979,8 +11986,8 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
           <NavigationProperty Name="ro_empleado_x_ro_rubro" Relationship="Model_rrhh.FK_ro_empleado_x_ro_rubro_ro_empleado" FromRole="ro_empleado" ToRole="ro_empleado_x_ro_rubro" />
           <NavigationProperty Name="ro_empleado_x_rubro_acumulado" Relationship="Model_rrhh.FK_ro_empleado_x_rubro_acumulado" FromRole="ro_empleado" ToRole="ro_empleado_x_rubro_acumulado" />
           <NavigationProperty Name="ro_EmpleadoAnticipoBeneficio" Relationship="Model_rrhh.FK_ro_EmpleadoAnticipoBeneficio_ro_empleado" FromRole="ro_empleado" ToRole="ro_EmpleadoAnticipoBeneficio" />
-          <NavigationProperty Name="ro_AjusteImpuestoRentaDet" Relationship="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_empleado" FromRole="ro_empleado" ToRole="ro_AjusteImpuestoRentaDet" />
           <NavigationProperty Name="ro_AjusteImpuestoRentaDetOI" Relationship="Model_rrhh.FK_ro_AjusteImpuestoRentaDetOI_ro_empleado" FromRole="ro_empleado" ToRole="ro_AjusteImpuestoRentaDetOI" />
+          <NavigationProperty Name="ro_AjusteImpuestoRentaDet" Relationship="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_empleado" FromRole="ro_empleado" ToRole="ro_AjusteImpuestoRentaDet" />
         </EntityType>
         <Association Name="FK_ro_Acta_Finiquito_ro_empleado">
           <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
@@ -13519,33 +13526,8 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
           <Property Name="IdUsuarioAnulacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
           <Property Name="MotivoAnulacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ro_AjusteImpuestoRentaDet" Relationship="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_AjusteImpuestoRenta" FromRole="ro_AjusteImpuestoRenta" ToRole="ro_AjusteImpuestoRentaDet" />
           <NavigationProperty Name="ro_AjusteImpuestoRentaDetOI" Relationship="Model_rrhh.FK_ro_AjusteImpuestoRentaDetOI_ro_AjusteImpuestoRenta" FromRole="ro_AjusteImpuestoRenta" ToRole="ro_AjusteImpuestoRentaDetOI" />
-        </EntityType>
-        <EntityType Name="ro_AjusteImpuestoRentaDet">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdAjuste" />
-            <PropertyRef Name="Secuencia" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdAjuste" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="Secuencia" Type="Int32" Nullable="false" />
-          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="SueldoFechaCorte" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="SueldoProyectado" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="OtrosIngresos" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="GastosPersonales" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="AporteFechaCorte" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="BaseImponible" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="FraccionBasica" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Excedente" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="ImpuestoFraccionBasica" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="ImpuestoRentaCausado" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="DescontadoFechaCorte" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="LiquidacionFinal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <NavigationProperty Name="ro_AjusteImpuestoRenta" Relationship="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_AjusteImpuestoRenta" FromRole="ro_AjusteImpuestoRentaDet" ToRole="ro_AjusteImpuestoRenta" />
-          <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_empleado" FromRole="ro_AjusteImpuestoRentaDet" ToRole="ro_empleado" />
+          <NavigationProperty Name="ro_AjusteImpuestoRentaDet" Relationship="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_AjusteImpuestoRenta" FromRole="ro_AjusteImpuestoRenta" ToRole="ro_AjusteImpuestoRentaDet" />
         </EntityType>
         <EntityType Name="ro_AjusteImpuestoRentaDetOI">
           <Key>
@@ -13563,20 +13545,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
           <NavigationProperty Name="ro_AjusteImpuestoRenta" Relationship="Model_rrhh.FK_ro_AjusteImpuestoRentaDetOI_ro_AjusteImpuestoRenta" FromRole="ro_AjusteImpuestoRentaDetOI" ToRole="ro_AjusteImpuestoRenta" />
           <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_AjusteImpuestoRentaDetOI_ro_empleado" FromRole="ro_AjusteImpuestoRentaDetOI" ToRole="ro_empleado" />
         </EntityType>
-        <Association Name="FK_ro_AjusteImpuestoRentaDet_ro_AjusteImpuestoRenta">
-          <End Type="Model_rrhh.ro_AjusteImpuestoRenta" Role="ro_AjusteImpuestoRenta" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_AjusteImpuestoRentaDet" Role="ro_AjusteImpuestoRentaDet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_AjusteImpuestoRenta">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdAjuste" />
-            </Principal>
-            <Dependent Role="ro_AjusteImpuestoRentaDet">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdAjuste" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ro_AjusteImpuestoRentaDetOI_ro_AjusteImpuestoRenta">
           <End Type="Model_rrhh.ro_AjusteImpuestoRenta" Role="ro_AjusteImpuestoRenta" Multiplicity="1" />
           <End Type="Model_rrhh.ro_AjusteImpuestoRentaDetOI" Role="ro_AjusteImpuestoRentaDetOI" Multiplicity="*" />
@@ -13586,6 +13554,60 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
               <PropertyRef Name="IdAjuste" />
             </Principal>
             <Dependent Role="ro_AjusteImpuestoRentaDetOI">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdAjuste" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ro_AjusteImpuestoRentaDetOI_ro_empleado">
+          <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_AjusteImpuestoRentaDetOI" Role="ro_AjusteImpuestoRentaDetOI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_empleado">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="ro_AjusteImpuestoRentaDetOI">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ro_AjusteImpuestoRentaDet">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdAjuste" />
+            <PropertyRef Name="Secuencia" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdAjuste" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Secuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="SueldoFechaCorte" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SueldoProyectado" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="OtrosIngresos" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IngresosLiquidos" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="GastosPersonales" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="AporteFechaCorte" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="BaseImponible" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="FraccionBasica" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Excedente" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ImpuestoFraccionBasica" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ImpuestoRentaCausado" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="DescontadoFechaCorte" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="LiquidacionFinal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="ro_AjusteImpuestoRenta" Relationship="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_AjusteImpuestoRenta" FromRole="ro_AjusteImpuestoRentaDet" ToRole="ro_AjusteImpuestoRenta" />
+          <NavigationProperty Name="ro_empleado" Relationship="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_empleado" FromRole="ro_AjusteImpuestoRentaDet" ToRole="ro_empleado" />
+        </EntityType>
+        <Association Name="FK_ro_AjusteImpuestoRentaDet_ro_AjusteImpuestoRenta">
+          <End Type="Model_rrhh.ro_AjusteImpuestoRenta" Role="ro_AjusteImpuestoRenta" Multiplicity="1" />
+          <End Type="Model_rrhh.ro_AjusteImpuestoRentaDet" Role="ro_AjusteImpuestoRentaDet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ro_AjusteImpuestoRenta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="IdAjuste" />
+            </Principal>
+            <Dependent Role="ro_AjusteImpuestoRentaDet">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="IdAjuste" />
             </Dependent>
@@ -13605,20 +13627,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ro_AjusteImpuestoRentaDetOI_ro_empleado">
-          <End Type="Model_rrhh.ro_empleado" Role="ro_empleado" Multiplicity="1" />
-          <End Type="Model_rrhh.ro_AjusteImpuestoRentaDetOI" Role="ro_AjusteImpuestoRentaDetOI" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ro_empleado">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-            </Principal>
-            <Dependent Role="ro_AjusteImpuestoRentaDetOI">
-              <PropertyRef Name="IdEmpresa" />
-              <PropertyRef Name="IdEmpleado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="vwro_AjusteImpuestoRentaDet">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -13628,6 +13636,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
             <PropertyRef Name="SueldoFechaCorte" />
             <PropertyRef Name="SueldoProyectado" />
             <PropertyRef Name="OtrosIngresos" />
+            <PropertyRef Name="IngresosLiquidos" />
             <PropertyRef Name="GastosPersonales" />
             <PropertyRef Name="AporteFechaCorte" />
             <PropertyRef Name="BaseImponible" />
@@ -13646,6 +13655,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
           <Property Name="SueldoFechaCorte" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="SueldoProyectado" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="OtrosIngresos" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IngresosLiquidos" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="GastosPersonales" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="AporteFechaCorte" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="BaseImponible" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
@@ -16457,28 +16467,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ro_AjusteImpuestoRentaDet">
-            <EntityTypeMapping TypeName="Model_rrhh.ro_AjusteImpuestoRentaDet">
-              <MappingFragment StoreEntitySet="ro_AjusteImpuestoRentaDet">
-                <ScalarProperty Name="LiquidacionFinal" ColumnName="LiquidacionFinal" />
-                <ScalarProperty Name="DescontadoFechaCorte" ColumnName="DescontadoFechaCorte" />
-                <ScalarProperty Name="ImpuestoRentaCausado" ColumnName="ImpuestoRentaCausado" />
-                <ScalarProperty Name="ImpuestoFraccionBasica" ColumnName="ImpuestoFraccionBasica" />
-                <ScalarProperty Name="Excedente" ColumnName="Excedente" />
-                <ScalarProperty Name="FraccionBasica" ColumnName="FraccionBasica" />
-                <ScalarProperty Name="BaseImponible" ColumnName="BaseImponible" />
-                <ScalarProperty Name="AporteFechaCorte" ColumnName="AporteFechaCorte" />
-                <ScalarProperty Name="GastosPersonales" ColumnName="GastosPersonales" />
-                <ScalarProperty Name="OtrosIngresos" ColumnName="OtrosIngresos" />
-                <ScalarProperty Name="SueldoProyectado" ColumnName="SueldoProyectado" />
-                <ScalarProperty Name="SueldoFechaCorte" ColumnName="SueldoFechaCorte" />
-                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
-                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
-                <ScalarProperty Name="IdAjuste" ColumnName="IdAjuste" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ro_AjusteImpuestoRentaDetOI">
             <EntityTypeMapping TypeName="Model_rrhh.ro_AjusteImpuestoRentaDetOI">
               <MappingFragment StoreEntitySet="ro_AjusteImpuestoRentaDetOI">
@@ -16491,6 +16479,30 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ro_AjusteImpuestoRentaDet">
+            <EntityTypeMapping TypeName="Model_rrhh.ro_AjusteImpuestoRentaDet">
+              <MappingFragment StoreEntitySet="ro_AjusteImpuestoRentaDet">
+                <ScalarProperty Name="LiquidacionFinal" ColumnName="LiquidacionFinal" />
+                <ScalarProperty Name="DescontadoFechaCorte" ColumnName="DescontadoFechaCorte" />
+                <ScalarProperty Name="ImpuestoRentaCausado" ColumnName="ImpuestoRentaCausado" />
+                <ScalarProperty Name="ImpuestoFraccionBasica" ColumnName="ImpuestoFraccionBasica" />
+                <ScalarProperty Name="Excedente" ColumnName="Excedente" />
+                <ScalarProperty Name="FraccionBasica" ColumnName="FraccionBasica" />
+                <ScalarProperty Name="BaseImponible" ColumnName="BaseImponible" />
+                <ScalarProperty Name="AporteFechaCorte" ColumnName="AporteFechaCorte" />
+                <ScalarProperty Name="GastosPersonales" ColumnName="GastosPersonales" />
+                <ScalarProperty Name="IngresosLiquidos" ColumnName="IngresosLiquidos" />
+                <ScalarProperty Name="OtrosIngresos" ColumnName="OtrosIngresos" />
+                <ScalarProperty Name="SueldoProyectado" ColumnName="SueldoProyectado" />
+                <ScalarProperty Name="SueldoFechaCorte" ColumnName="SueldoFechaCorte" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
+                <ScalarProperty Name="IdAjuste" ColumnName="IdAjuste" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spRo_procesa_AjusteIR" FunctionName="Model_rrhh.Store.spRo_procesa_AjusteIR" />
           <EntitySetMapping Name="vwro_AjusteImpuestoRentaDet">
             <EntityTypeMapping TypeName="Model_rrhh.vwro_AjusteImpuestoRentaDet">
               <MappingFragment StoreEntitySet="vwro_AjusteImpuestoRentaDet">
@@ -16504,6 +16516,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
                 <ScalarProperty Name="BaseImponible" ColumnName="BaseImponible" />
                 <ScalarProperty Name="AporteFechaCorte" ColumnName="AporteFechaCorte" />
                 <ScalarProperty Name="GastosPersonales" ColumnName="GastosPersonales" />
+                <ScalarProperty Name="IngresosLiquidos" ColumnName="IngresosLiquidos" />
                 <ScalarProperty Name="OtrosIngresos" ColumnName="OtrosIngresos" />
                 <ScalarProperty Name="SueldoProyectado" ColumnName="SueldoProyectado" />
                 <ScalarProperty Name="SueldoFechaCorte" ColumnName="SueldoFechaCorte" />
@@ -16514,7 +16527,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwro_empleado_x_Proyeccion_G
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spRo_procesa_AjusteIR" FunctionName="Model_rrhh.Store.spRo_procesa_AjusteIR" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

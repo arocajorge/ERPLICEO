@@ -15,6 +15,7 @@ namespace Core.Erp.Info.RRHH
         public decimal SueldoFechaCorte { get; set; }
         public decimal SueldoProyectado { get; set; }
         public decimal OtrosIngresos { get; set; }
+        public decimal IngresosLiquidos { get; set; }
         public decimal GastosPersonales { get; set; }
         public decimal AporteFechaCorte { get; set; }
         public decimal BaseImponible { get; set; }

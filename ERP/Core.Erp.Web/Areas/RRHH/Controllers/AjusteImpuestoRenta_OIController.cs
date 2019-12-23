@@ -19,6 +19,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         #region variables
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         tb_persona_Bus bus_persona = new tb_persona_Bus();
+        ro_AjusteImpuestoRenta_Bus bus_ajuste = new ro_AjusteImpuestoRenta_Bus();
         ro_AjusteImpuestoRentaDetOI_Bus bus_ajuste_ir_det_oi = new ro_AjusteImpuestoRentaDetOI_Bus();
         ro_AjusteImpuestoRentaDetOI_List Lista_Ajuste_OI = new ro_AjusteImpuestoRentaDetOI_List();
         string mensaje = string.Empty;
@@ -78,6 +79,14 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 info.lst_det_oi = Lista_Ajuste_OI.get_list(info.IdTransaccionSession);
+                var info_ajuste = bus_ajuste.get_info(info.IdEmpresa, info.IdAjuste);
+                info.IdAnio = info_ajuste.IdAnio;
+                info.IdSucursal = info_ajuste.IdSucursal;
+                info.IdUsuario = SessionFixed.IdUsuario;
+                info.Fecha = info_ajuste.Fecha;
+                info.FechaCorte = info_ajuste.FechaCorte;
+                info.Observacion = info_ajuste.Observacion;
+
                 if (!bus_ajuste_ir_det_oi.guardarDB(info))
                 {
                     mensaje = "No se puede guardar el registro";

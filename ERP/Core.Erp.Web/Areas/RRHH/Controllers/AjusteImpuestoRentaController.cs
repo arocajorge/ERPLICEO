@@ -26,6 +26,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ro_AjusteImpuestoRenta_List Lista_Ajuste = new ro_AjusteImpuestoRenta_List();
         ro_AjusteImpuestoRentaDet_List Lista_Det = new ro_AjusteImpuestoRentaDet_List();
         string mensaje = string.Empty;
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
         #region Combo bajo demanda
@@ -200,7 +201,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 {
                     IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
                     IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
-                    IdSucursal = 0,
+                    IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                     IdAnio = DateTime.Now.Year,
                     Fecha = DateTime.Now,
                     FechaCorte = DateTime.Now,
@@ -240,7 +241,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 throw;
             }
         }
-        public ActionResult Modificar(int IdEmpresa=0, int IdAjuste = 0)
+        public ActionResult Modificar(int IdEmpresa=0, int IdAjuste = 0, bool Exito = false)
         {
             try
             {
@@ -257,7 +258,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 info.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
                 info.lst_det = bus_ajuste_ir_det.GetList(info.IdEmpresa, info.IdAjuste);
                 Lista_Det.set_list(info.lst_det, info.IdTransaccionSession);
-                
+
+                if (Exito)
+                    ViewBag.MensajeSuccess = MensajeSuccess;
+
                 return View(info);
 
             }
@@ -280,7 +284,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     cargar_combos();
                     return View(info);
                 }
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Modificar", "AjusteImpuestoRenta", new { IdEmpresa = info.IdEmpresa, IdAjuste = info.IdAjuste,  Exito=true });
             }
             catch (Exception)
             {
@@ -320,6 +325,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 cargar_combos();
                 ro_AjusteImpuestoRenta_Info info = new ro_AjusteImpuestoRenta_Info();
                 info = bus_ajuste_ir.get_info(IdEmpresa, IdAjuste);
+
                 info.IdSucursal = (info.IdSucursal == null ? 0 : info.IdSucursal);
 
                 info.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);

@@ -19,6 +19,18 @@
             </h4>
         </div>
     }
+    if (ViewBag.MensajeSuccess != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success alert-dismissible">
+                    <h4>
+                        <i class="icon fa fa-check"></i> @ViewBag.MensajeSuccess
+                    </h4>
+                </div>
+            </div>
+        </div>
+    }
     @Html.HiddenFor(q => q.IdEmpresa);
     @Html.HiddenFor(q => q.IdAjuste);
     @Html.HiddenFor(q => q.IdTransaccionSession);
@@ -84,7 +96,7 @@
                 </button>
             </div>
             <div class="col-md-1">
-                <a type="button" class="btn btn-primary form-control " href="@Url.Action("Nuevo","AjusteImpuestoRenta",new { Area = "RRHH", IdEmpresa = Model.IdEmpresa },null)">
+                <a type="button" class="btn btn-primary form-control" href="@Url.Action("Nuevo","AjusteImpuestoRenta",new { Area = "RRHH", IdEmpresa = Model.IdEmpresa },null)">
                     <i class="fa fa-plus"></i>
                 </a>
             </div>

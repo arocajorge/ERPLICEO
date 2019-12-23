@@ -23,7 +23,7 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
-        public ro_AjusteImpuestoRenta_Info get_info(int IdEmpresa, int IdAjuste)
+        public ro_AjusteImpuestoRenta_Info get_info(int IdEmpresa, decimal IdAjuste)
         {
             try
             {

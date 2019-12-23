@@ -80,7 +80,12 @@ namespace Core.Erp.Data.RRHH
                     ro_AjusteImpuestoRentaDet entity_det = db.ro_AjusteImpuestoRentaDet.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdAjuste == info.IdAjuste && q.IdEmpleado == info.IdEmpleado).FirstOrDefault();
                     entity_det.OtrosIngresos = TotalOtrosIngresos;
 
+                    
+
                     db.SaveChanges();
+
+                    db.spRo_procesa_AjusteIR(info.IdEmpresa, info.IdAnio, info.IdAjuste, info.IdEmpleado, info.IdSucursal ?? 0, info.IdUsuario, info.Fecha.Date, info.FechaCorte.Date, info.Observacion);
+
                 }
                 return true;
             }

@@ -135,7 +135,7 @@
             this.xrSubreport1,
             this.xrTable5,
             this.xrTable4});
-            this.Detail.HeightF = 260F;
+            this.Detail.HeightF = 242F;
             this.Detail.Name = "Detail";
             this.Detail.SortFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
             new DevExpress.XtraReports.UI.GroupField("pe_nombreCompleto", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
@@ -291,7 +291,7 @@
             this.xrTable4.Borders = DevExpress.XtraPrinting.BorderSide.None;
             this.xrTable4.BorderWidth = 0F;
             this.xrTable4.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold);
-            this.xrTable4.LocationFloat = new DevExpress.Utils.PointFloat(0F, 79.99997F);
+            this.xrTable4.LocationFloat = new DevExpress.Utils.PointFloat(0F, 61.99997F);
             this.xrTable4.Name = "xrTable4";
             this.xrTable4.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.xrTableRow5,
@@ -1121,7 +1121,7 @@
             this.xrSubreport1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 59.99997F);
             this.xrSubreport1.Name = "xrSubreport1";
             this.xrSubreport1.ReportSource = new Core.Erp.Web.Reportes.RRHH.ROL_029_OI_Rpt();
-            this.xrSubreport1.SizeF = new System.Drawing.SizeF(100F, 20F);
+            this.xrSubreport1.SizeF = new System.Drawing.SizeF(100F, 2F);
             this.xrSubreport1.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.xrSubreport1_BeforePrint);
             // 
             // ROL_029_Rpt

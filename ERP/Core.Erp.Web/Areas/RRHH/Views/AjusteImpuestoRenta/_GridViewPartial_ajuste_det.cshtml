@@ -161,6 +161,7 @@
                     settingsBtn.ClientSideEvents.Click = "function(s, e) {AgregarOtrosIngresos('" + c.KeyValue + "');}";
                 }).Render();
             });
+            column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(column =>
         {
@@ -177,6 +178,7 @@
                     settingsBtn.ClientSideEvents.Click = "function(s, e) {Reprocesar('" + c.KeyValue + "');}";
                 }).Render();
             });
+            column.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.ClientSideEvents.BeginCallback = "function(s,e) { e.customArgs['TransaccionFixed'] = $('#IdTransaccionSession').val();}";
 

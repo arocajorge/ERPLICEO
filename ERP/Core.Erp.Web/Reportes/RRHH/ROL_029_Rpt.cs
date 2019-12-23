@@ -44,15 +44,21 @@ namespace Core.Erp.Web.Reportes.RRHH
 
         private void xrSubreport1_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
         {
-            //((XRSubreport)sender).ReportSource.Parameters["p_IdEmpresa"].Value = p_IdEmpresa.Value == null ? 0 : Convert.ToInt32(p_IdEmpresa.Value);
-            //((XRSubreport)sender).ReportSource.Parameters["p_IdAjuste"].Value = p_IdAjuste.Value == null ? 0 : Convert.ToDecimal(p_IdAjuste.Value);
-            //((XRSubreport)sender).ReportSource.Parameters["p_IdEmpleado"].Value = xrLabel1.Value == null ? 0 : Convert.ToDecimal(xrLabel1.Text);
+            ((XRSubreport)sender).ReportSource.Parameters["p_IdEmpresa"].Value = p_IdEmpresa.Value == null ? 0 : Convert.ToInt32(p_IdEmpresa.Value);
+            ((XRSubreport)sender).ReportSource.Parameters["p_IdAjuste"].Value = p_IdAjuste.Value == null ? 0 : Convert.ToDecimal(p_IdAjuste.Value);
+            ((XRSubreport)sender).ReportSource.Parameters["p_IdEmpleado"].Value = IdEmpleado.Value == null ? 0 : Convert.ToDecimal(IdEmpleado.Text);
 
-            //((XRSubreport)sender).ReportSource.RequestParameters = false;
+            ((XRSubreport)sender).ReportSource.RequestParameters = false;
         }
 
         private void xrLabel1_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
         {
+
+        }
+
+        private void Detail_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+
 
         }
     }

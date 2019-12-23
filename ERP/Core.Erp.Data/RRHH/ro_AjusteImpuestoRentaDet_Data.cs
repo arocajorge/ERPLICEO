@@ -20,6 +20,7 @@ namespace Core.Erp.Data.RRHH
                         Lista = (from q in Context.vwro_AjusteImpuestoRentaDet
                                  where q.IdEmpresa == IdEmpresa
                                  && q.IdAjuste == IdAjuste
+                                 orderby q.pe_nombreCompleto ascending
                                  select new ro_AjusteImpuestoRentaDet_Info
                                  {
                                      IdEmpresa = q.IdEmpresa,

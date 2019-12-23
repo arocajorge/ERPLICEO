@@ -6,6 +6,7 @@
     [SueldoFechaCorte]       NUMERIC (18, 2) NOT NULL,
     [SueldoProyectado]       NUMERIC (18, 2) NOT NULL,
     [OtrosIngresos]          NUMERIC (18, 2) NOT NULL,
+    [IngresosLiquidos]       NUMERIC (18, 2) NOT NULL,
     [GastosPersonales]       NUMERIC (18, 2) NOT NULL,
     [AporteFechaCorte]       NUMERIC (18, 2) NOT NULL,
     [BaseImponible]          NUMERIC (18, 2) NOT NULL,
@@ -19,4 +20,6 @@
     CONSTRAINT [FK_ro_AjusteImpuestoRentaDet_ro_AjusteImpuestoRenta] FOREIGN KEY ([IdEmpresa], [IdAjuste]) REFERENCES [dbo].[ro_AjusteImpuestoRenta] ([IdEmpresa], [IdAjuste]),
     CONSTRAINT [FK_ro_AjusteImpuestoRentaDet_ro_empleado] FOREIGN KEY ([IdEmpresa], [IdEmpleado]) REFERENCES [dbo].[ro_empleado] ([IdEmpresa], [IdEmpleado])
 );
+
+
 

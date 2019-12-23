@@ -95,11 +95,11 @@
             this.lbl_periodo = new DevExpress.XtraReports.UI.XRTableCell();
             this.lbl_imagen = new DevExpress.XtraReports.UI.XRPictureBox();
             this.groupHeaderBand1 = new DevExpress.XtraReports.UI.GroupHeaderBand();
+            this.IdEmpleado = new DevExpress.XtraReports.UI.XRLabel();
             this.xrTable2 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow4 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell5 = new DevExpress.XtraReports.UI.XRTableCell();
             this.groupFooterBand1 = new DevExpress.XtraReports.UI.GroupFooterBand();
-            this.IdEmpleado = new DevExpress.XtraReports.UI.XRLabel();
             this.PageFooter = new DevExpress.XtraReports.UI.PageFooterBand();
             this.xrTable12 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow10 = new DevExpress.XtraReports.UI.XRTableRow();
@@ -135,7 +135,7 @@
             this.xrSubreport1,
             this.xrTable5,
             this.xrTable4});
-            this.Detail.HeightF = 263F;
+            this.Detail.HeightF = 260F;
             this.Detail.Name = "Detail";
             this.Detail.SortFields.AddRange(new DevExpress.XtraReports.UI.GroupField[] {
             new DevExpress.XtraReports.UI.GroupField("pe_nombreCompleto", DevExpress.XtraReports.UI.XRColumnSortOrder.Ascending)});
@@ -291,7 +291,7 @@
             this.xrTable4.Borders = DevExpress.XtraPrinting.BorderSide.None;
             this.xrTable4.BorderWidth = 0F;
             this.xrTable4.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold);
-            this.xrTable4.LocationFloat = new DevExpress.Utils.PointFloat(0F, 82.99997F);
+            this.xrTable4.LocationFloat = new DevExpress.Utils.PointFloat(0F, 79.99997F);
             this.xrTable4.Name = "xrTable4";
             this.xrTable4.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.xrTableRow5,
@@ -937,6 +937,23 @@
             this.groupHeaderBand1.HeightF = 30F;
             this.groupHeaderBand1.Name = "groupHeaderBand1";
             // 
+            // IdEmpleado
+            // 
+            this.IdEmpleado.Borders = DevExpress.XtraPrinting.BorderSide.None;
+            this.IdEmpleado.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[IdEmpleado]")});
+            this.IdEmpleado.Font = new System.Drawing.Font("Verdana", 7F);
+            this.IdEmpleado.LocationFloat = new DevExpress.Utils.PointFloat(634.5659F, 0F);
+            this.IdEmpleado.Name = "IdEmpleado";
+            this.IdEmpleado.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.IdEmpleado.SizeF = new System.Drawing.SizeF(116.4341F, 30F);
+            this.IdEmpleado.StylePriority.UseBorders = false;
+            this.IdEmpleado.StylePriority.UseFont = false;
+            this.IdEmpleado.StylePriority.UseTextAlignment = false;
+            this.IdEmpleado.Text = "IdEmpleado";
+            this.IdEmpleado.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
+            this.IdEmpleado.Visible = false;
+            // 
             // xrTable2
             // 
             this.xrTable2.Borders = DevExpress.XtraPrinting.BorderSide.Bottom;
@@ -978,25 +995,8 @@
             // 
             // groupFooterBand1
             // 
-            this.groupFooterBand1.HeightF = 20F;
+            this.groupFooterBand1.HeightF = 21.16669F;
             this.groupFooterBand1.Name = "groupFooterBand1";
-            // 
-            // IdEmpleado
-            // 
-            this.IdEmpleado.Borders = DevExpress.XtraPrinting.BorderSide.None;
-            this.IdEmpleado.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[IdEmpleado]")});
-            this.IdEmpleado.Font = new System.Drawing.Font("Verdana", 7F);
-            this.IdEmpleado.LocationFloat = new DevExpress.Utils.PointFloat(634.5659F, 0F);
-            this.IdEmpleado.Name = "IdEmpleado";
-            this.IdEmpleado.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.IdEmpleado.SizeF = new System.Drawing.SizeF(116.4341F, 30F);
-            this.IdEmpleado.StylePriority.UseBorders = false;
-            this.IdEmpleado.StylePriority.UseFont = false;
-            this.IdEmpleado.StylePriority.UseTextAlignment = false;
-            this.IdEmpleado.Text = "IdEmpleado";
-            this.IdEmpleado.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
-            this.IdEmpleado.Visible = false;
             // 
             // PageFooter
             // 
@@ -1121,7 +1121,7 @@
             this.xrSubreport1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 59.99997F);
             this.xrSubreport1.Name = "xrSubreport1";
             this.xrSubreport1.ReportSource = new Core.Erp.Web.Reportes.RRHH.ROL_029_OI_Rpt();
-            this.xrSubreport1.SizeF = new System.Drawing.SizeF(100F, 23F);
+            this.xrSubreport1.SizeF = new System.Drawing.SizeF(100F, 20F);
             this.xrSubreport1.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.xrSubreport1_BeforePrint);
             // 
             // ROL_029_Rpt

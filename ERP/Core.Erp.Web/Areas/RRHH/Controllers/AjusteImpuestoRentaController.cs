@@ -170,6 +170,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             int IdEmpleado = Convert.ToInt32(IdString.Substring(15, 6));
 
             var model = bus_ajuste_ir.get_info(IdEmpresa, IdAjuste);
+            model = (model==null ? new ro_AjusteImpuestoRenta_Info() : model);
             model.IdEmpleado = IdEmpleado;
             model.IdUsuario = SessionFixed.IdUsuario;
             if (!bus_ajuste_ir.ProcesarDB(model))
@@ -252,7 +253,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 cargar_combos();
                 ro_AjusteImpuestoRenta_Info info = new ro_AjusteImpuestoRenta_Info();
                 info = bus_ajuste_ir.get_info(IdEmpresa, IdAjuste);
-
+                info.IdSucursal = (info.IdSucursal == null ? 0 : info.IdSucursal);
                 info.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
                 info.lst_det = bus_ajuste_ir_det.GetList(info.IdEmpresa, info.IdAjuste);
                 Lista_Det.set_list(info.lst_det, info.IdTransaccionSession);
@@ -319,6 +320,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 cargar_combos();
                 ro_AjusteImpuestoRenta_Info info = new ro_AjusteImpuestoRenta_Info();
                 info = bus_ajuste_ir.get_info(IdEmpresa, IdAjuste);
+                info.IdSucursal = (info.IdSucursal == null ? 0 : info.IdSucursal);
+
                 info.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
                 info.lst_det = bus_ajuste_ir_det.GetList(info.IdEmpresa, info.IdAjuste);
                 Lista_Det.set_list(info.lst_det, info.IdTransaccionSession);

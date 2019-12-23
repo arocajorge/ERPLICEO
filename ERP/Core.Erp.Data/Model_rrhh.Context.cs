@@ -21,10 +21,7 @@ namespace Core.Erp.Data
             : base("name=Entities_rrhh")
         {
         }
-        public void SetCommandTimeOut(int TimeOut)
-        {
-            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
-        }
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -159,8 +156,8 @@ namespace Core.Erp.Data
         public DbSet<vwro_EmpleadoAnticipoBeneficio> vwro_EmpleadoAnticipoBeneficio { get; set; }
         public DbSet<vwro_HorasProfesores_det> vwro_HorasProfesores_det { get; set; }
         public DbSet<ro_AjusteImpuestoRenta> ro_AjusteImpuestoRenta { get; set; }
-        public DbSet<ro_AjusteImpuestoRentaDet> ro_AjusteImpuestoRentaDet { get; set; }
         public DbSet<ro_AjusteImpuestoRentaDetOI> ro_AjusteImpuestoRentaDetOI { get; set; }
+        public DbSet<ro_AjusteImpuestoRentaDet> ro_AjusteImpuestoRentaDet { get; set; }
         public DbSet<vwro_AjusteImpuestoRentaDet> vwro_AjusteImpuestoRentaDet { get; set; }
     
         public virtual int spRo_LiquidarEmpleado(Nullable<int> idEmpresa, Nullable<decimal> idActaFiniquito)

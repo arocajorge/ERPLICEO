@@ -34,6 +34,7 @@ namespace Core.Erp.Data.Reportes.RRHH
                                  SueldoProyectado = q.SueldoProyectado,
                                  SueldoFechaCorte = q.SueldoFechaCorte,
                                  OtrosIngresos = q.OtrosIngresos,
+                                 IngresosLiquidos = q.IngresosLiquidos,
                                  GastosPersonales = q.GastosPersonales,
                                  AporteFechaCorte = q.AporteFechaCorte,
                                  BaseImponible = q.BaseImponible,

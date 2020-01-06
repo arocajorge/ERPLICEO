@@ -9,6 +9,35 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
+<script>
+    function Reprocesar()
+    {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            Id_Rdep: $("#Id_Rdep").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("Reprocesar", "Rdep", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data)
+            {
+                console.log(data);
+                GridViewPartial_rdep_det.PerformCallback();
+
+            },
+            error: function (error)
+            {
+            }
+        });
+    };
+</script>
 @using (Html.BeginForm("Modificar", "Rdep", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" });
@@ -70,32 +99,3 @@
     </div>
 }
 
-<script>
-    function Reprocesar()
-    {
-        var datos = {
-            IdEmpresa: $("#IdEmpresa").val(),
-            Id_Rdep: $("#Id_Rdep").val(),
-            IdTransaccionSession: $("#IdTransaccionSession").val()
-        }
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(datos),
-            url: '@Url.Action("Reprocesar", "Rdep", new { Area = "RRHH" })',
-            async: false,
-            bDeferRender: true,
-            bProcessing: true,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data)
-            {
-                console.log(data);
-                GridViewPartial_rdep_det.PerformCallback();
-
-            },
-            error: function (error)
-            {
-            }
-        });
-    };
-</script>

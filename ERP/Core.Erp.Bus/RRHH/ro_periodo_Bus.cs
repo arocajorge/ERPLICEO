@@ -229,7 +229,7 @@ namespace Core.Erp.Bus.RRHH
                         {
                             if (j == 2)
                             {
-                                DateTime p = new DateTime(anio, i, 16);
+                                DateTime p = new DateTime(anio, i, 1);
                                 DateTime q = new DateTime(anio, i, dayMes);
                                 string Id = "";
                                 int IdPeriodo = 0;

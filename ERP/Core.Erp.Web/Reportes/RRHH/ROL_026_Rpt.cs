@@ -26,7 +26,6 @@ namespace Core.Erp.Web.Reportes.RRHH
                 int IdNomina_Tipo = p_IdNomina_Tipo.Value == null ? 0 : Convert.ToInt32(p_IdNomina_Tipo.Value);
                 int IdAnio = p_IdAnio.Value == null ? 0 : Convert.ToInt32(p_IdAnio.Value);
                 decimal IdEmpleado = p_IdEmpleado.Value == null ? 0 : Convert.ToDecimal(p_IdEmpleado.Value);
-
                 ROL_026_Bus bus_rpt = new ROL_026_Bus();
                 List<ROL_026_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdNomina_Tipo, IdAnio, IdEmpleado);
 

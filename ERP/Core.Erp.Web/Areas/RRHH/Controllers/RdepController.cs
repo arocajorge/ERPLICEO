@@ -157,6 +157,24 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         }
         #endregion
 
+        #region Json
+        public ActionResult Reprocesar(int IdEmpresa = 0, int Id_Rdep=0, decimal IdTransaccionSession = 0)
+        {
+            var info_rdep = bus_ro_rpde.GetInfo(IdEmpresa,Id_Rdep);
+            var resultado = "";
+            if (!bus_ro_rpde.GenerarRDEP(info_rdep.IdEmpresa, info_rdep.IdSucursal, info_rdep.Id_Rdep, info_rdep.pe_anio, info_rdep.IdNomina_Tipo, info_rdep.IdEmpleado, info_rdep.Observacion, SessionFixed.IdUsuario))
+            {
+                resultado = "No se reproceso";
+            }
+
+            ro_rdep_Info model = bus_ro_rpde.GetInfo(IdEmpresa, Id_Rdep);
+            model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
+            Lista_ro_rdep.set_list(model.Lista_Rdep_Det, Convert.ToDecimal(SessionFixed.IdTransaccionSession));
+
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
         #region Acciones
 
         public ActionResult Nuevo()

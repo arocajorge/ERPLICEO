@@ -11,8 +11,9 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Modificar", "Rdep", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
-    @Html.HiddenFor(q => q.IdEmpresa);
-    @Html.HiddenFor(q => q.Id_Rdep);
+    @Html.HiddenFor(q => q.IdEmpresa, new { @id = "IdEmpresa" });
+    @Html.HiddenFor(q => q.Id_Rdep, new { @id = "Id_Rdep" });
+    @Html.HiddenFor(q => q.IdTransaccionSession, new { @id = "IdTransaccionSession" });
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-4">
@@ -52,6 +53,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-12">
+                <button type="button" onclick="Reprocesar();" id="btn_reprocesar" class="btn btn-primary">Reprocesar</button>
                 <button type="submit" class="btn btn-primary">Descargar </button>
                 <a class="btn btn-default" href="@Url.Action("Index", "Rdep", new { Area ="RRHH" }, null)">Cancelar</a>
             </div>
@@ -67,3 +69,33 @@
         </div>
     </div>
 }
+
+<script>
+    function Reprocesar()
+    {
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            Id_Rdep: $("#Id_Rdep").val(),
+            IdTransaccionSession: $("#IdTransaccionSession").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("Reprocesar", "Rdep", new { Area = "RRHH" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data)
+            {
+                console.log(data);
+                GridViewPartial_rdep_det.PerformCallback();
+
+            },
+            error: function (error)
+            {
+            }
+        });
+    };
+</script>

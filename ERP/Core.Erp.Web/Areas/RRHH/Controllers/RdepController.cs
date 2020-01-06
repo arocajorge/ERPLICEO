@@ -30,6 +30,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         ct_anio_fiscal_Bus bus_anio = new ct_anio_fiscal_Bus();
         ro_rdep_Bus bus_ro_rpde = new ro_rdep_Bus();
         ro_nomina_tipo_Bus bus_tipo_nomina = new ro_nomina_tipo_Bus();
+        string MensajeSuccess = "La transacción se ha realizado con éxito";
 
         #endregion
 
@@ -198,15 +199,25 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             try
             {
                 info.IdUsuario = SessionFixed.IdUsuario;
-                if (!bus_ro_rpde.GenerarRDEP(info.IdEmpresa, info.IdSucursal, info.Id_Rdep, info.pe_anio, info.IdNomina_Tipo, info.IdEmpleado, info.Observacion, info.IdUsuario))
+
+                var existe_info_x_anio = bus_ro_rpde.GetInfo_X_Anio(info.IdEmpresa, info.pe_anio);
+                if (existe_info_x_anio!= null && existe_info_x_anio.Id_Rdep>0)
                 {
+                    ViewBag.mensaje = "Ya existe registro RDEP para el año seleccionado";
                     cargar_combos(info.IdEmpresa);
                     return View(info);
                 }
                 else
                 {
-                    return RedirectToAction("Index");
+                    if (!bus_ro_rpde.GenerarRDEP(info.IdEmpresa, info.IdSucursal, info.Id_Rdep, info.pe_anio, info.IdNomina_Tipo, info.IdEmpleado, info.Observacion, info.IdUsuario))
+                    {
+                        cargar_combos(info.IdEmpresa);
+                        return View(info);
+                    }
+                    var info_x_anio = bus_ro_rpde.GetInfo_X_Anio(info.IdEmpresa, info.pe_anio);
+                    return RedirectToAction("Modificar", "Rdep", new { IdEmpresa = info.IdEmpresa, Id_Rdep = info_x_anio.Id_Rdep, Exito = true });
                 }
+
             }
             catch (Exception)
             {
@@ -215,7 +226,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
         }
 
-        public ActionResult Modificar(int IdEmpresa = 0, int Id_Rdep=0)
+        public ActionResult Modificar(int IdEmpresa = 0, int Id_Rdep=0, bool Exito = false)
         {
             #region Validar Session
             if (string.IsNullOrEmpty(SessionFixed.IdTransaccionSession))
@@ -230,7 +241,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
             if (model == null)
                 return RedirectToAction("Index");
-           
+
+            if (Exito)
+                ViewBag.MensajeSuccess = MensajeSuccess;
+
             cargar_combos(IdEmpresa);
             return View(model);
         }
@@ -291,7 +305,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 return View(model);
             }
             
-            return RedirectToAction("Modificar", "Rdep", new { model.IdEmpresa, model.Id_Rdep });
+            return RedirectToAction("Modificar", "Rdep", new { IdEmpresa = model.IdEmpresa, Id_Rdep = model.Id_Rdep, Exito = true });
         }
 
         public ActionResult Anular(int IdEmpresa = 0, int Id_Rdep = 0)

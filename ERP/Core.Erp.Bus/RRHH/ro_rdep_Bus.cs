@@ -40,6 +40,17 @@ namespace Core.Erp.Bus.RRHH
                 throw;
             }
         }
+        public ro_rdep_Info GetInfo_X_Anio(int IdEmpresa, int Anio)
+        {
+            try
+            {
+                return oData.GetInfo_X_Anio(IdEmpresa, Anio);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         public ro_rdep_det_Info GetInfo_x_Empleado(int IdEmpresa, int Id_Rdep, int Secuencia)
         {

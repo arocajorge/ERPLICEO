@@ -177,6 +177,86 @@ namespace Core.Erp.Data.RRHH
             }
         }
 
+        public ro_rdep_Info GetInfo_X_Anio(int IdEmpresa, int Anio)
+        {
+            try
+            {
+                ro_rdep_Info info = new ro_rdep_Info();
+                ro_rdep_det_Info info_det = new ro_rdep_det_Info();
+
+                using (Entities_rrhh Context = new Entities_rrhh())
+                {
+                    ro_rdep Entity = Context.ro_rdep.Where(q => q.IdEmpresa == IdEmpresa && q.pe_anio == Anio).FirstOrDefault();
+
+                    if (Entity == null) return null;
+
+                    List<ro_rdep_det> Entity_Det = Context.ro_rdep_det.Where(q => q.IdEmpresa == IdEmpresa && q.Id_Rdep == Entity.Id_Rdep).OrderBy(q => q.pe_apellido).ThenBy(q => q.pe_nombre).ToList();
+                    info = new ro_rdep_Info
+                    {
+                        IdEmpresa = Entity.IdEmpresa,
+                        Id_Rdep = Entity.Id_Rdep,
+                        pe_anio = Entity.pe_anio,
+                        IdSucursal = Entity.IdSucursal,
+                        IdNomina_Tipo = Entity.IdNomina_Tipo,
+                        Estado = Entity.Estado,
+                        Su_CodigoEstablecimiento = Entity.Su_CodigoEstablecimiento,
+                        Observacion = Entity.Observacion
+                    };
+
+                    info.Lista_Rdep_Det = new List<ro_rdep_det_Info>();
+
+                    foreach (var item in Entity_Det)
+                    {
+                        info_det = new ro_rdep_det_Info
+                        {
+                            IdEmpresa = item.IdEmpresa,
+                            IdEmpleado = item.IdEmpleado,
+                            Id_Rdep = item.Id_Rdep,
+                            Secuencia = item.Secuencia,
+                            pe_cedulaRuc = item.pe_cedulaRuc,
+                            Empleado = item.pe_apellido + " " + item.pe_nombre,
+                            pe_nombre = item.pe_nombre,
+                            pe_apellido = item.pe_apellido,
+                            Sueldo = item.Sueldo,
+                            FondosReserva = item.FondosReserva,
+                            DecimoTercerSueldo = item.DecimoTercerSueldo,
+                            DecimoCuartoSueldo = item.DecimoCuartoSueldo,
+                            Vacaciones = item.Vacaciones,
+                            AportePErsonal = item.AportePErsonal,
+                            GastoAlimentacion = item.GastoAlimentacion,
+                            GastoEucacion = item.GastoEucacion,
+                            GastoSalud = item.GastoSalud,
+                            GastoVestimenta = item.GastoVestimenta,
+                            GastoVivienda = item.GastoVivienda,
+                            Utilidades = item.Utilidades,
+                            IngresoVarios = item.IngresoVarios,
+                            IngresoPorOtrosEmpleaodres = item.IngresoPorOtrosEmpleaodres,
+                            IessPorOtrosEmpleadores = item.IessPorOtrosEmpleadores,
+                            ValorImpuestoPorEsteEmplador = item.ValorImpuestoPorEsteEmplador,
+                            ValorImpuestoPorOtroEmplador = item.ValorImpuestoPorOtroEmplador,
+                            ExoneraionPorDiscapacidad = item.ExoneraionPorDiscapacidad,
+                            ExoneracionPorTerceraEdad = item.ExoneracionPorTerceraEdad,
+                            OtrosIngresosRelacionDependencia = item.OtrosIngresosRelacionDependencia,
+                            ImpuestoRentaCausado = item.ImpuestoRentaCausado,
+                            ValorImpuestoRetenidoTrabajador = item.ValorImpuestoRetenidoTrabajador,
+                            ImpuestoRentaAsumidoPorEsteEmpleador = item.ImpuestoRentaAsumidoPorEsteEmpleador,
+                            BaseImponibleGravada = item.BaseImponibleGravada,
+                            IngresosGravadorPorEsteEmpleador = item.IngresosGravadorPorEsteEmpleador
+                        };
+
+                        info.Lista_Rdep_Det.Add(info_det);
+                    }
+                }
+
+                return info;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public ro_rdep_det_Info GetInfo_x_Empleado(int IdEmpresa, int Id_Rdep, int Secuencia)
         {
             try

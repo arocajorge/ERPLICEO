@@ -11,6 +11,22 @@
 <script src="~/Scripts/ValidacionBotonSubmit.js"></script>
 @using (Html.BeginForm("Nuevo", "Rdep", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
+    if (ViewBag.mensaje != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <div class="alert alert-warning alert-dismissible">
+                        <h4>
+                            <i class="icon fa fa-warning"></i> @ViewBag.mensaje
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
     @Html.HiddenFor(q => q.IdEmpresa);
     <div class="row">
         <div class="col-md-12">

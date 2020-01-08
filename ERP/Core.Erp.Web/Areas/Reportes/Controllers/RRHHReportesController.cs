@@ -1424,6 +1424,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
+                fecha_ini = DateTime.Now,
                 IdDivision = 0,
                 IdArea = 0,
                 IdAnio = 0,
@@ -1446,6 +1447,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             reporte.p_IdNomina_Tipo.Value = model.IdNomina;
             reporte.p_IdAnio.Value = model.IdAnio;
             reporte.p_IdEmpleado.Value = model.IdEmpleado;
+            reporte.p_fecha.Value = model.fecha_ini;
             //reporte.usuario = SessionFixed.IdUsuario.ToString();
 
             ViewBag.Report = reporte;
@@ -1472,6 +1474,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             reporte.p_IdNomina_Tipo.Value = model.IdNomina;
             reporte.p_IdAnio.Value = model.IdAnio;
             reporte.p_IdEmpleado.Value = model.IdEmpleado;
+            reporte.p_fecha.Value = model.fecha_ini;
             //reporte.usuario = SessionFixed.IdUsuario.ToString();
 
             ViewBag.Report = reporte;

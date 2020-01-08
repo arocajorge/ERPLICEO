@@ -69,9 +69,9 @@
             this.xrTableCell143 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell144 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableRow54 = new DevExpress.XtraReports.UI.XRTableRow();
-            this.anio = new DevExpress.XtraReports.UI.XRTableCell();
-            this.xrTableCell146 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.xrTableCell147 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.lbl_anio = new DevExpress.XtraReports.UI.XRTableCell();
+            this.lbl_mes = new DevExpress.XtraReports.UI.XRTableCell();
+            this.lbl_dia = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableRow3 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell12 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableRow4 = new DevExpress.XtraReports.UI.XRTableRow();
@@ -267,6 +267,7 @@
             this.lbl_ruc_contador1 = new DevExpress.XtraReports.UI.XRTableCell();
             this.p_IdEmpleado = new DevExpress.XtraReports.Parameters.Parameter();
             this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
+            this.p_fecha = new DevExpress.XtraReports.Parameters.Parameter();
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection3)).BeginInit();
@@ -678,36 +679,32 @@
             // xrTableRow54
             // 
             this.xrTableRow54.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
-            this.anio,
-            this.xrTableCell146,
-            this.xrTableCell147});
+            this.lbl_anio,
+            this.lbl_mes,
+            this.lbl_dia});
             this.xrTableRow54.Name = "xrTableRow54";
             this.xrTableRow54.Weight = 1.26666590372721D;
             // 
-            // anio
+            // lbl_anio
             // 
-            this.anio.Borders = DevExpress.XtraPrinting.BorderSide.Right;
-            this.anio.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[pe_anio]")});
-            this.anio.Name = "anio";
-            this.anio.StylePriority.UseBorders = false;
-            this.anio.Weight = 1D;
+            this.lbl_anio.Borders = DevExpress.XtraPrinting.BorderSide.Right;
+            this.lbl_anio.Name = "lbl_anio";
+            this.lbl_anio.StylePriority.UseBorders = false;
+            this.lbl_anio.Weight = 1D;
             // 
-            // xrTableCell146
+            // lbl_mes
             // 
-            this.xrTableCell146.Borders = DevExpress.XtraPrinting.BorderSide.Right;
-            this.xrTableCell146.Name = "xrTableCell146";
-            this.xrTableCell146.StylePriority.UseBorders = false;
-            this.xrTableCell146.Text = "01";
-            this.xrTableCell146.Weight = 1D;
+            this.lbl_mes.Borders = DevExpress.XtraPrinting.BorderSide.Right;
+            this.lbl_mes.Name = "lbl_mes";
+            this.lbl_mes.StylePriority.UseBorders = false;
+            this.lbl_mes.Weight = 1D;
             // 
-            // xrTableCell147
+            // lbl_dia
             // 
-            this.xrTableCell147.Borders = DevExpress.XtraPrinting.BorderSide.Left;
-            this.xrTableCell147.Name = "xrTableCell147";
-            this.xrTableCell147.StylePriority.UseBorders = false;
-            this.xrTableCell147.Text = "30";
-            this.xrTableCell147.Weight = 1D;
+            this.lbl_dia.Borders = DevExpress.XtraPrinting.BorderSide.Left;
+            this.lbl_dia.Name = "lbl_dia";
+            this.lbl_dia.StylePriority.UseBorders = false;
+            this.lbl_dia.Weight = 1D;
             // 
             // xrTableRow3
             // 
@@ -3131,6 +3128,11 @@
             this.objectDataSource1.DataSource = typeof(Core.Erp.Info.Reportes.RRHH.ROL_026_Info);
             this.objectDataSource1.Name = "objectDataSource1";
             // 
+            // p_fecha
+            // 
+            this.p_fecha.Name = "p_fecha";
+            this.p_fecha.Visible = false;
+            // 
             // ROL_026_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -3150,7 +3152,8 @@
             this.p_IdSucursal,
             this.p_IdNomina_Tipo,
             this.p_IdAnio,
-            this.p_IdEmpleado});
+            this.p_IdEmpleado,
+            this.p_fecha});
             this.Version = "19.1";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.ROL_026_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.imageCollection1)).EndInit();
@@ -3394,9 +3397,9 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell143;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell144;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow54;
-        private DevExpress.XtraReports.UI.XRTableCell anio;
-        private DevExpress.XtraReports.UI.XRTableCell xrTableCell146;
-        private DevExpress.XtraReports.UI.XRTableCell xrTableCell147;
+        private DevExpress.XtraReports.UI.XRTableCell lbl_anio;
+        private DevExpress.XtraReports.UI.XRTableCell lbl_mes;
+        private DevExpress.XtraReports.UI.XRTableCell lbl_dia;
         private DevExpress.XtraReports.UI.XRTable xrTable8;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow55;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell148;
@@ -3412,5 +3415,6 @@
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow58;
         private DevExpress.XtraReports.UI.XRTableCell lbl_ruc_contador1;
         public DevExpress.XtraReports.Parameters.Parameter p_IdEmpleado;
+        public DevExpress.XtraReports.Parameters.Parameter p_fecha;
     }
 }

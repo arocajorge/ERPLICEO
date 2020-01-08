@@ -25,10 +25,13 @@ namespace Core.Erp.Web.Reportes.RRHH
                 int IdSucursal = p_IdSucursal.Value == null ? 0 : Convert.ToInt32(p_IdSucursal.Value);
                 int IdNomina_Tipo = p_IdNomina_Tipo.Value == null ? 0 : Convert.ToInt32(p_IdNomina_Tipo.Value);
                 int IdAnio = p_IdAnio.Value == null ? 0 : Convert.ToInt32(p_IdAnio.Value);
+                DateTime Fecha = p_fecha.Value == null ? DateTime.Now : Convert.ToDateTime(p_fecha.Value);
                 decimal IdEmpleado = p_IdEmpleado.Value == null ? 0 : Convert.ToDecimal(p_IdEmpleado.Value);
                 ROL_026_Bus bus_rpt = new ROL_026_Bus();
                 List<ROL_026_Info> lst_rpt = bus_rpt.GetList(IdEmpresa, IdSucursal, IdNomina_Tipo, IdAnio, IdEmpleado);
-
+                var anio = Fecha.Year.ToString();
+                var mes = Fecha.Month.ToString("00");
+                var dia = Fecha.Day.ToString("00");
                 (sender as XtraReport).PrintingSystem.Document.AutoFitToPagesWidth = 1;
                 this.DataSource = lst_rpt;
 
@@ -38,6 +41,10 @@ namespace Core.Erp.Web.Reportes.RRHH
                 lbl_razon_social.Text = emp.RazonSocial;
                 lbl_ruc_contador.Text = emp.em_rucContador;
                 lbl_ruc_contador1.Text = emp.em_rucContador;
+
+                lbl_anio.Text = anio;
+                lbl_mes.Text = mes;
+                lbl_dia.Text = dia;
             }
             catch (Exception)
             {

@@ -14,6 +14,10 @@
     [Total]                  NUMERIC (18, 2) NOT NULL,
     [ValorEfectivo]          NUMERIC (18, 2) NOT NULL,
     [Cambio]                 NUMERIC (18, 2) NOT NULL,
+    [ValorProntoPago]        NUMERIC (18, 2) NOT NULL,
+    [FechaProntoPago]        DATE            NULL,
     CONSTRAINT [PK_fa_factura_resumen] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSucursal] ASC, [IdBodega] ASC, [IdCbteVta] ASC)
 );
+
+
 

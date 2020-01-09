@@ -177,7 +177,7 @@ namespace Core.Erp.Data.RRHH
             }
         }
 
-        public ro_rdep_Info GetInfo_X_Anio(int IdEmpresa, int Anio)
+        public ro_rdep_Info GetInfo_X_Anio(int IdEmpresa, int IdSucursal, int Anio)
         {
             try
             {
@@ -186,7 +186,7 @@ namespace Core.Erp.Data.RRHH
 
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
-                    ro_rdep Entity = Context.ro_rdep.Where(q => q.IdEmpresa == IdEmpresa && q.pe_anio == Anio).FirstOrDefault();
+                    ro_rdep Entity = Context.ro_rdep.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal== IdSucursal && q.pe_anio == Anio).FirstOrDefault();
 
                     if (Entity == null) return null;
 

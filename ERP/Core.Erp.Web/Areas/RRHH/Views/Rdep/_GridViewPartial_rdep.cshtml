@@ -89,13 +89,13 @@
         settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(30);
 
         settings.Columns.Add(column =>
+        {
+            column.SetDataItemTemplateContent(c =>
             {
-                column.SetDataItemTemplateContent(c =>
-                {
-                    ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("ROL_028", "RRHHReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa"), Id_Rdep = DataBinder.Eval(c.DataItem, "Id_Rdep") }, Request.Url.Scheme) + "');\"></span>");
-                });
-                column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+                ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("ROL_028", "RRHHReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa"), Id_Rdep = DataBinder.Eval(c.DataItem, "Id_Rdep") }, Request.Url.Scheme) + "');\"></span>");
             });
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+        });
     });
 }
 @grid.Bind(Model).GetHtml()

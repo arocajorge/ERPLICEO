@@ -201,14 +201,14 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 info.IdUsuario = SessionFixed.IdUsuario;
 
                 var existe_info_x_anio = bus_ro_rpde.GetInfo_X_Anio(info.IdEmpresa, info.pe_anio);
-                if (existe_info_x_anio!= null && existe_info_x_anio.Id_Rdep>0)
-                {
-                    ViewBag.mensaje = "Ya existe registro RDEP para el año seleccionado";
-                    cargar_combos(info.IdEmpresa);
-                    return View(info);
-                }
-                else
-                {
+                //if (existe_info_x_anio!= null && existe_info_x_anio.Id_Rdep>0)
+                //{
+                //    ViewBag.mensaje = "Ya existe registro RDEP para el año seleccionado";
+                //    cargar_combos(info.IdEmpresa);
+                //    return View(info);
+                //}
+                //else
+                //{
                     if (!bus_ro_rpde.GenerarRDEP(info.IdEmpresa, info.IdSucursal, info.Id_Rdep, info.pe_anio, info.IdNomina_Tipo, info.IdEmpleado, info.Observacion, info.IdUsuario))
                     {
                         cargar_combos(info.IdEmpresa);
@@ -216,7 +216,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     }
                     var info_x_anio = bus_ro_rpde.GetInfo_X_Anio(info.IdEmpresa, info.pe_anio);
                     return RedirectToAction("Modificar", "Rdep", new { IdEmpresa = info.IdEmpresa, Id_Rdep = info_x_anio.Id_Rdep, Exito = true });
-                }
+                //}
 
             }
             catch (Exception)

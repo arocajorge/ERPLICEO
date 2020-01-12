@@ -10,10 +10,13 @@
     [Porcentaje]         NUMERIC (18, 2) NOT NULL,
     [ValorIVA]           NUMERIC (18, 2) NOT NULL,
     [Total]              NUMERIC (18, 2) NOT NULL,
+    [NumeroCuotas]       INT             NOT NULL,
     CONSTRAINT [PK_aca_AnioLectivo_Rubro] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdAnio] ASC, [IdRubro] ASC),
     CONSTRAINT [FK_aca_AnioLectivo_Rubro_aca_rubro] FOREIGN KEY ([IdEmpresa], [IdRubro]) REFERENCES [dbo].[aca_Rubro] ([IdEmpresa], [IdRubro]),
     CONSTRAINT [FK_aca_AnioLectivo_Rubro_in_Producto] FOREIGN KEY ([IdEmpresa], [IdProducto]) REFERENCES [dbo].[in_Producto] ([IdEmpresa], [IdProducto])
 );
+
+
 
 
 

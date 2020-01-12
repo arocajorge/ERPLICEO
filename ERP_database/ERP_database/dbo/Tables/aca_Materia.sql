@@ -4,7 +4,6 @@
     [IdMateriaGrupo]        INT           NULL,
     [NomMateria]            VARCHAR (500) NOT NULL,
     [EsObligatorio]         BIT           NOT NULL,
-    [EsCompartida]          BIT           NOT NULL,
     [OrdenMateria]          INT           NOT NULL,
     [Estado]                BIT           NOT NULL,
     [IdUsuarioCreacion]     VARCHAR (200) NULL,
@@ -17,6 +16,8 @@
     CONSTRAINT [PK_aca_Materia] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdMateria] ASC),
     CONSTRAINT [FK_aca_Materia_aca_MateriaGrupo] FOREIGN KEY ([IdEmpresa], [IdMateriaGrupo]) REFERENCES [dbo].[aca_MateriaGrupo] ([IdEmpresa], [IdMateriaGrupo])
 );
+
+
 
 
 

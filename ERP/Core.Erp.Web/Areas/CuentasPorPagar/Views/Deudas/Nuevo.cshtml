@@ -200,6 +200,10 @@
         }
     }
 
+    function CargarPuntoVtaTipoDocumento() {
+        //IdOrden_giro_Tipo
+    }
+
 </script>
 
 @using (Html.BeginForm("Nuevo", "Deudas", FormMethod.Post, new { @class = "form", @role = "form" }))
@@ -395,11 +399,18 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdOrden_giro_Tipo">Tipo documento*</label>
                     @Html.DropDownListFor(q => q.IdOrden_giro_Tipo, new SelectList(ViewBag.lst_tipo_doc, "CodTipoDocumento", "Descripcion"), new { @class = "form-control", @id = "IdOrden_giro_Tipo" })
                     @Html.ValidationMessageFor(q => q.IdOrden_giro_Tipo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="IdOrden_giro_Tipo">Punto de venta</label>
+                    @Html.DropDownListFor(q => q.IdPuntoVta, new SelectList(ViewBag.lst_puntoVtaLiq, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVta" })
+                    @Html.ValidationMessageFor(q => q.IdPuntoVta, "", new { @class = "text-danger" })
                 </div>
             </div>
 

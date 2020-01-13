@@ -63,7 +63,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                            GeneraRetencion = q.GeneraRetencion,
                            Codigo_Secuenciales_Transaccion = q.Codigo_Secuenciales_Transaccion,
                            Sustento_Tributario = q.Sustento_Tributario,
-
+                           ManejaTalonario = q.ManejaTalonario,
                            EstadoBool = q.Estado == "A" ? true : false
                        }).ToList();
                 else
@@ -82,7 +82,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                GeneraRetencion = q.GeneraRetencion,
                                Codigo_Secuenciales_Transaccion = q.Codigo_Secuenciales_Transaccion,
                                Sustento_Tributario = q.Sustento_Tributario,
-
+                               ManejaTalonario = q.ManejaTalonario,
                                EstadoBool = q.Estado == "A" ? true : false
                            }).ToList();
 

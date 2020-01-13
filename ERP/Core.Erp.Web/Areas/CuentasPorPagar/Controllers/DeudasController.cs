@@ -21,6 +21,7 @@ using Core.Erp.Bus.Presupuesto;
 using Core.Erp.Bus.Facturacion;
 using Core.Erp.Bus.Compras;
 using Core.Erp.Info.Compras;
+using Core.Erp.Info.Facturacion;
 
 namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 {
@@ -46,7 +47,6 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
         cp_orden_giro_det_Bus bus_det = new cp_orden_giro_det_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
-        tb_sis_Documento_Tipo_Talonario_Bus bus_documento = new tb_sis_Documento_Tipo_Talonario_Bus();
         cp_orden_giro_det_ing_x_oc_Bus bus_orden_giro_det_ing_x_oc = new cp_orden_giro_det_ing_x_oc_Bus();
         cp_orden_giro_det_ing_x_os_Bus bus_orden_giro_det_ing_x_os = new cp_orden_giro_det_ing_x_os_Bus();
         cp_orden_giro_det_ing_x_oc_List ListaPorIngresar = new cp_orden_giro_det_ing_x_oc_List();
@@ -254,6 +254,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
 
             }
 
+            ViewBag.lst_puntoVtaLiq = new List<fa_PuntoVta_Info>();
+            var documento = lst_doc_tipo.Where(q => q.CodTipoDocumento == model.IdOrden_giro_Tipo).FirstOrDefault();
+            if (documento != null)
+            {
+                var lst_puntoVtaLiq = bus_punto_venta.get_list_x_tipo_doc(model.IdEmpresa, model.IdSucursal, documento.Codigo);
+                ViewBag.lst_puntoVtaLiq = lst_puntoVtaLiq;
+            }
 
             Dictionary<string, string> lst_pagos = new Dictionary<string, string>();
             lst_pagos.Add("LOC", "LOCAL");

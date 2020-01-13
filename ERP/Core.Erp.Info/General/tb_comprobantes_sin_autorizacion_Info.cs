@@ -20,6 +20,7 @@ namespace Core.Erp.Info.General
         public string vt_Observacion { get; set; }
 
         public bool seleccionado { get; set; }
+        public int IdSucursal { get; set; }
 
         public int secuencia { get; set; }
     }

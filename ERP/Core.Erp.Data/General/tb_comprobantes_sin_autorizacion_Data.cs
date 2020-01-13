@@ -35,7 +35,7 @@ namespace Core.Erp.Data.General
                                              IdCbteVta = q.IdCbteVta,
                                              Tipo_documento = q.Tipo_documento,
                                              Documento = q.Documento,
-                                             
+                                             IdSucursal=q.IdSucursal,
                                              pe_nombreCompleto = q.pe_nombreCompleto,
                                              vt_fecha = q.vt_fecha,
                                              vt_Observacion=q.vt_Observacion,
@@ -56,6 +56,7 @@ namespace Core.Erp.Data.General
                                              IdEmpresa = q.IdEmpresa,
                                              IdCbteVta = q.IdCbteVta,
                                              Tipo_documento = q.Tipo_documento,
+                                             IdSucursal = q.IdSucursal,
                                              Documento = q.Documento,
                                              pe_nombreCompleto = q.pe_nombreCompleto,
                                              vt_fecha = q.vt_fecha,
@@ -126,6 +127,18 @@ namespace Core.Erp.Data.General
                     Entity.aprobada_enviar_sri = true;
                     Context.SaveChanges();
                 }
+
+                if (info.Tipo_documento == cl_enumeradores.eTipoDocumento.LIQCOM.ToString())
+                    using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
+                    {
+                        var Entity = Context.cp_orden_giro.Where(q => q.IdEmpresa == info.IdEmpresa
+                        && q.IdSucursal==info.IdSucursal
+                        && q.IdCbteCble_Ogiro == info.IdCbteVta
+                        && q.co_factura == info.DocumentoDoc
+                        && q.co_serie == info.vt_serie1).FirstOrDefault();
+                        Entity.aprobada_enviar_sri = true;
+                        Context.SaveChanges();
+                    }
                 return true;
 
             }

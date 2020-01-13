@@ -21,7 +21,8 @@
             NTVTA,
             ORDESP,
             PEDI,
-            RETEN
+            RETEN,
+            LIQCOM
         }
         public enum eTipoCatalogoGeneral
         {

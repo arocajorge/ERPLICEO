@@ -21,6 +21,19 @@ namespace Core.Erp.Bus.CuentasPorPagar
             }
         }
 
+        public cp_TipoDocumento_Info GetInfo(string CodDocumentoTipo)
+        {
+            try
+            {
+                return odata.GetInfo(CodDocumentoTipo);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public List<cp_TipoDocumento_Info> get_list(int IdEmpresa, decimal IdProveddor, string codigoSRI)
         {
             try

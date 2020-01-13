@@ -17,8 +17,11 @@
     [GeneraRetencion]                 VARCHAR (1)   NULL,
     [Codigo_Secuenciales_Transaccion] VARCHAR (250) NULL,
     [Sustento_Tributario]             VARCHAR (250) NULL,
+    [ManejaTalonario]                 BIT           NOT NULL,
     CONSTRAINT [PK_cp_TipoDocumento] PRIMARY KEY CLUSTERED ([CodTipoDocumento] ASC)
 );
+
+
 
 
 GO

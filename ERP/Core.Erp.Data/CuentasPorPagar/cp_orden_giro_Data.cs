@@ -17,7 +17,7 @@ namespace Core.Erp.Data.CuentasPorPagar
         tb_sis_Documento_Tipo_Talonario_Data odata_tal = new tb_sis_Documento_Tipo_Talonario_Data();
         in_Ing_Egr_Inven_Data data_inv = new in_Ing_Egr_Inven_Data();
         fa_PuntoVta_Data odata_pv = new fa_PuntoVta_Data();
-        
+        tb_sucursal_Data odata_suc = new tb_sucursal_Data();
         public bool guardarDB(cp_orden_giro_Info info)
         {
             try
@@ -35,6 +35,16 @@ namespace Core.Erp.Data.CuentasPorPagar
                             {
                                 info.co_factura = talonario.NumDocumento;
                             }
+                            var sucursal = odata_suc.get_info(info.IdEmpresa, info.IdSucursal);
+                            if (sucursal != null)
+                            {
+                                 Establecimiento = sucursal.Su_CodigoEstablecimiento;
+                                talonario = odata_tal.GetUltimoNoUsado(info.IdEmpresa, pto_vta.codDocumentoTipo, Establecimiento, pto_vta.cod_PuntoVta, true, true);
+                                if (talonario != null)
+                                {
+                                    info.co_factura = talonario.NumDocumento;
+                                }
+                            }                            
                         }
                     }
 

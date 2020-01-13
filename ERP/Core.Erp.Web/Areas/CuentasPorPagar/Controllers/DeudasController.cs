@@ -297,6 +297,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 return false;
             }
+            
             return true;
         }
         #endregion
@@ -978,6 +979,18 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             ListaOSPorIngresar.set_list(lst, IdTransaccionSession);
 
             return Json("", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetListPuntoVenta(int IdEmpresa = 0, string CodDocumentoTipo = "", int IdSucursal = 0)
+        {
+            List<fa_PuntoVta_Info> Lista = new List<fa_PuntoVta_Info>();
+            var documento = bus_tipo_documento.GetInfo(CodDocumentoTipo);
+            if (documento != null)
+            {
+                Lista = bus_punto_venta.get_list_x_tipo_doc(IdEmpresa, IdSucursal, documento.Codigo);
+            }
+
+            return Json(new { Mostrar = Lista.Count > 0 ? 1 : 0, Lista = Lista }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetUltimoDocumento(int IdEmpresa=0, int IdSucursal = 0, int IdPuntoVta = 0, int TieneRetencion= 0)

@@ -9,7 +9,7 @@ SELECT dbo.aca_Matricula.IdEmpresa, dbo.aca_Matricula.IdMatricula, dbo.aca_Matri
                   dbo.tb_persona.NumeroCarnetConadis, dbo.tb_pais.Nacionalidad AS NacionalidadAlumno, dbo.tb_persona.pe_telfono_Contacto AS TelefonoAlumno, aca_CatalogoFicha_2.NomCatalogoFicha AS Agua, 
                   tb_Catalogo_1.CodCatalogo AS TipoDiscapacidadAlumno, dbo.aca_SocioEconomico.SueldoPadre, dbo.aca_SocioEconomico.SueldoMadre, dbo.aca_SocioEconomico.OtroIngreso, dbo.aca_SocioEconomico.GastoAlimentacion, 
                   dbo.aca_SocioEconomico.GastoEducacion, dbo.aca_SocioEconomico.GastoServicioBasico, dbo.aca_SocioEconomico.GastoSalud, dbo.aca_SocioEconomico.GastoArriendo, dbo.aca_SocioEconomico.GastoPrestamo, 
-                  dbo.aca_SocioEconomico.OtroGasto, dbo.aca_AnioLectivo.Descripcion
+                  dbo.aca_SocioEconomico.OtroGasto, dbo.aca_AnioLectivo.Descripcion, dbo.aca_Matricula.IdAnio
 FROM     dbo.aca_AnioLectivo INNER JOIN
                   dbo.tb_pais INNER JOIN
                   dbo.aca_Matricula INNER JOIN
@@ -33,37 +33,17 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'ght = 1056
-            End
-            DisplayFlags = 280
-            TopColumn = 19
-         End
-         Begin Table = "aca_CatalogoFicha"
-            Begin Extent = 
-               Top = 24
-               Left = 1388
-               Bottom = 187
-               Right = 1633
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'71
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_CatalogoFicha_1"
+         Begin Table = "tb_Catalogo"
             Begin Extent = 
-               Top = 213
-               Left = 1360
-               Bottom = 376
-               Right = 1605
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "tb_pais"
-            Begin Extent = 
-               Top = 497
-               Left = 1296
-               Bottom = 660
-               Right = 1540
+               Top = 218
+               Left = 565
+               Bottom = 438
+               Right = 809
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -78,22 +58,42 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'ght = 1056
             DisplayFlags = 280
             TopColumn = 0
          End
+         Begin Table = "aca_CatalogoFicha"
+            Begin Extent = 
+               Top = 24
+               Left = 1388
+               Bottom = 187
+               Right = 1633
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "aca_SocioEconomico"
+            Begin Extent = 
+               Top = 175
+               Left = 811
+               Bottom = 431
+               Right = 1056
+            End
+            DisplayFlags = 280
+            TopColumn = 19
+         End
+         Begin Table = "aca_CatalogoFicha_1"
+            Begin Extent = 
+               Top = 213
+               Left = 1360
+               Bottom = 376
+               Right = 1605
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "tb_Catalogo_1"
             Begin Extent = 
                Top = 489
                Left = 233
                Bottom = 652
                Right = 477
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "aca_AnioLectivo"
-            Begin Extent = 
-               Top = 324
-               Left = 1104
-               Bottom = 487
-               Right = 1349
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -175,6 +175,8 @@ End
 
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
@@ -243,10 +245,30 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = -317
+         Top = 0
          Left = 0
       End
       Begin Tables = 
+         Begin Table = "aca_AnioLectivo"
+            Begin Extent = 
+               Top = 324
+               Left = 1104
+               Bottom = 487
+               Right = 1349
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "tb_pais"
+            Begin Extent = 
+               Top = 497
+               Left = 1296
+               Bottom = 660
+               Right = 1540
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "aca_Matricula"
             Begin Extent = 
                Top = 7
@@ -255,7 +277,7 @@ Begin DesignProperties =
                Right = 586
             End
             DisplayFlags = 280
-            TopColumn = 12
+            TopColumn = 0
          End
          Begin Table = "aca_Alumno"
             Begin Extent = 
@@ -292,27 +314,9 @@ Begin DesignProperties =
                Top = 7
                Left = 926
                Bottom = 170
-               Right = 1171
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "tb_Catalogo"
-            Begin Extent = 
-               Top = 218
-               Left = 565
-               Bottom = 438
-               Right = 809
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "aca_SocioEconomico"
-            Begin Extent = 
-               Top = 175
-               Left = 811
-               Bottom = 431
-               Ri', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWACA_001';
+               Right = 11', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWACA_001';
+
+
 
 
 

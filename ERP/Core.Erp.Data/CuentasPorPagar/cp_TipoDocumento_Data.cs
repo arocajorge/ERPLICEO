@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Core.Erp.Info.CuentasPorPagar;
 namespace Core.Erp.Data.CuentasPorPagar
 {
-   public class cp_TipoDocumento_Data
+    public class cp_TipoDocumento_Data
     {
         public Boolean guardarDB(cp_TipoDocumento_Info Info)
         {
@@ -36,11 +36,49 @@ namespace Core.Erp.Data.CuentasPorPagar
                 }
                 return true;
             }
-            catch (Exception )
+            catch (Exception)
             {
                 throw;
             }
         }
+
+        public cp_TipoDocumento_Info GetInfo(string CodDocumentoTipo)
+        {
+            try
+            {
+                cp_TipoDocumento_Info info = new cp_TipoDocumento_Info();
+
+                using (Entities_cuentas_por_pagar db = new Entities_cuentas_por_pagar())
+                {
+                    var Documento = db.cp_TipoDocumento.Where(q => q.CodTipoDocumento == CodDocumentoTipo).FirstOrDefault();
+                    if (Documento == null)
+                        return null;
+
+                    info = new cp_TipoDocumento_Info
+                    {
+                        CodTipoDocumento = Documento.CodTipoDocumento,
+                        Codigo = Documento.Codigo,
+                        Descripcion = Documento.Descripcion,
+                        Orden = Documento.Orden,
+                        DeclaraSRI = Documento.DeclaraSRI,
+                        CodSRI = Documento.CodSRI,
+                        Estado = Documento.Estado,
+                        GeneraRetencion = Documento.GeneraRetencion,
+                        Codigo_Secuenciales_Transaccion = Documento.Codigo_Secuenciales_Transaccion,
+                        Sustento_Tributario = Documento.Sustento_Tributario,
+                        ManejaTalonario = Documento.ManejaTalonario
+                    };
+                }
+
+                return info;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
 
         public List<cp_TipoDocumento_Info> get_list(bool mostrar_anulados)
         {
@@ -63,7 +101,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                            GeneraRetencion = q.GeneraRetencion,
                            Codigo_Secuenciales_Transaccion = q.Codigo_Secuenciales_Transaccion,
                            Sustento_Tributario = q.Sustento_Tributario,
-
+                           ManejaTalonario = q.ManejaTalonario,
                            EstadoBool = q.Estado == "A" ? true : false
                        }).ToList();
                 else
@@ -82,7 +120,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                GeneraRetencion = q.GeneraRetencion,
                                Codigo_Secuenciales_Transaccion = q.Codigo_Secuenciales_Transaccion,
                                Sustento_Tributario = q.Sustento_Tributario,
-
+                               ManejaTalonario = q.ManejaTalonario,
                                EstadoBool = q.Estado == "A" ? true : false
                            }).ToList();
 

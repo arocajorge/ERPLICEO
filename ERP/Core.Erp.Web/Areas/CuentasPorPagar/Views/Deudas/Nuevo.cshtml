@@ -200,6 +200,8 @@
         }
     }
 
+  
+
 </script>
 
 @using (Html.BeginForm("Nuevo", "Deudas", FormMethod.Post, new { @class = "form", @role = "form" }))
@@ -395,35 +397,44 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="IdOrden_giro_Tipo">Tipo documento*</label>
                     @Html.DropDownListFor(q => q.IdOrden_giro_Tipo, new SelectList(ViewBag.lst_tipo_doc, "CodTipoDocumento", "Descripcion"), new { @class = "form-control", @id = "IdOrden_giro_Tipo" })
                     @Html.ValidationMessageFor(q => q.IdOrden_giro_Tipo, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="co_serie">Serie*</label>
-                    @Html.TextBoxFor(q => q.co_serie, new { @class = "form-control", @id = "co_serie" })
-                    @Html.ValidationMessageFor(q => q.co_serie, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="co_factura">Documento*</label>
-                    @Html.TextBoxFor(q => q.co_factura, new { @class = "form-control", @id = "co_factura" })
-                    @Html.ValidationMessageFor(q => q.co_factura, "", new { @class = "text-danger" })
-                </div>
-            </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="co_factura">Número autorización*</label>
-                    @Html.TextBoxFor(q => q.Num_Autorizacion, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(q => q.Num_Autorizacion, "", new { @class = "text-danger" })
+                    <label for="IdPuntoVtaTipoDocumento">Punto de venta</label>
+                    @Html.DropDownListFor(q => q.IdPuntoVta, new SelectList(ViewBag.lst_puntoVtaLiq, "IdPuntoVta", "nom_PuntoVta"), new { @class = "form-control", @id = "IdPuntoVtaTipoDocumento" })
+                    @Html.ValidationMessageFor(q => q.IdPuntoVta, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div id="DivNumeroDocumento">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="co_serie">Serie*</label>
+                        @Html.TextBoxFor(q => q.co_serie, new { @class = "form-control", @id = "co_serie" })
+                        @Html.ValidationMessageFor(q => q.co_serie, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="co_factura">Documento*</label>
+                        @Html.TextBoxFor(q => q.co_factura, new { @class = "form-control", @id = "co_factura" })
+                        @Html.ValidationMessageFor(q => q.co_factura, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="co_factura">Número autorización*</label>
+                        @Html.TextBoxFor(q => q.Num_Autorizacion, new { @class = "form-control", @id = "Num_Autorizacion" })
+                        @Html.ValidationMessageFor(q => q.Num_Autorizacion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </div>
 
@@ -775,6 +786,9 @@
         GetUltimoDocumento();
     });
 
+    $("#IdOrden_giro_Tipo").change(function () {
+        CargarPuntoVtaTipoDocumento();
+    });
 
     $("#co_subtotal_iva").change(function () {
         actualizar_valores();
@@ -800,10 +814,45 @@
         } else {
             get_list_tipo_doc();
         }
+        CargarPuntoVtaTipoDocumento();
     });
     $("#co_plazo").change(function () {
         CambiarVcto();
     });
+
+    function CargarPuntoVtaTipoDocumento() {
+        $("#IdPuntoVtaTipoDocumento").empty();
+        var datos = {
+            IdEmpresa: $("#IdEmpresa").val(),
+            CodDocumentoTipo: $("#IdOrden_giro_Tipo").val(),
+            IdSucursal: $("#IdSucursal").val()
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("GetListPuntoVenta", "Deudas",new { Area = "CuentasPorPagar"})',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {       
+                if (data.Mostrar == 1) {
+                    $.each(data.Lista, function (i, row) {
+                        $("#IdPuntoVtaTipoDocumento").append("<option value=" + row.IdPuntoVta + ">" + row.nom_PuntoVta + "</option>");
+                    });
+                    $("#DivNumeroDocumento").hide();
+                    $("#co_serie").val("000-000");
+                    $("#co_factura").val("000000000");
+                    $("#Num_Autorizacion").val("0123456789");
+                }else {
+                    $("#DivNumeroDocumento").show();
+                }
+            },
+            error: function (error) {
+            }
+        });
+    }
 
     function CambiarVcto() {
         var plazo = Number($("#co_plazo").val());
@@ -818,22 +867,6 @@
 
         }
     }
-
-    //$("#IdIden_credito").change(function () {
-
-    //    var tipo_doc = $("#IdIden_credito").val();
-
-    //    if (tipo_doc == "04")
-    //    {
-    //        $("#tab_documento_modificado").show();
-    //    }
-    //    else
-    //    {
-    //        $("#tab_documento_modificado").hide();
-
-    //    }
-    //});
-
 
     function actualizar_valores() {
         var base_iva = $("#co_subtotal_iva").val();
@@ -903,6 +936,7 @@
                         $("#IdOrden_giro_Tipo").append("<option value=" + row.CodTipoDocumento + ">" + row.Descripcion + "</option>");
                         $("#cmbTipoDocu_modif").append("<option value=" + row.CodTipoDocumento + ">" + row.Descripcion + "</option>");
                     });
+                    CargarPuntoVtaTipoDocumento();
                 },
                 error: function (error) {
                 }

@@ -1265,6 +1265,7 @@
     <Build Include="dbo\Tables\cxc_ConciliacionNotaCredito.sql" />
     <Build Include="dbo\Views\vwcxc_ConciliacionNotaCreditoDet.sql" />
     <Build Include="dbo\Views\vwcxc_ConciliacionNotaCredito.sql" />
+    <Build Include="dbo\Tables\fa_notaCreDeb_resumen_1.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

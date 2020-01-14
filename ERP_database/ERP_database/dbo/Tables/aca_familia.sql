@@ -17,6 +17,7 @@
     [VehiculoPropio]        BIT            NOT NULL,
     [Marca]                 VARCHAR (50)   NULL,
     [Modelo]                VARCHAR (50)   NULL,
+    [AnioVehiculo]          INT            NULL,
     [CasaPropia]            BIT            NOT NULL,
     [SeFactura]             BIT            NOT NULL,
     [EsRepresentante]       BIT            NOT NULL,
@@ -33,6 +34,8 @@
     CONSTRAINT [FK_aca_Familia_aca_CatalogoFicha] FOREIGN KEY ([IdCatalogoFichaInst]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
     CONSTRAINT [FK_aca_familia_tb_persona] FOREIGN KEY ([IdPersona]) REFERENCES [dbo].[tb_persona] ([IdPersona])
 );
+
+
 
 
 

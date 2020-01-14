@@ -8,7 +8,7 @@ SELECT dbo.aca_Matricula_Rubro.IdEmpresa, dbo.aca_Matricula_Rubro.IdMatricula, d
                   + '/' + CAST(dbo.aca_AnioLectivo_Rubro.NumeroCuotas AS varchar) END AS DescripcionCuotas, CASE WHEN dbo.aca_AnioLectivo_Periodo.FechaProntoPago > CAST(getdate() AS date) 
                   THEN CAST(dbo.aca_Matricula_Rubro.Subtotal AS float) - CASE WHEN dbo.aca_Plantilla.TipoDescuento = '$' THEN CAST(dbo.aca_Plantilla.Valor AS FLOAT) ELSE ROUND(CAST(dbo.aca_Matricula_Rubro.Subtotal AS float) 
                   * (dbo.aca_Plantilla.Valor / 100), 2) END ELSE CAST(dbo.aca_Matricula_Rubro.Subtotal AS float) + CAST(dbo.aca_Matricula_Rubro.ValorIVA AS FLOAT) END + dbo.aca_Matricula_Rubro.ValorIVA AS ValorProntoPago, 
-                  dbo.aca_AnioLectivo_Periodo.FechaProntoPago, CAST(year(dbo.aca_AnioLectivo_Periodo.FechaHasta) AS VARCHAR) +' - '+ dbo.tb_mes.smes AS Periodo
+                  dbo.aca_AnioLectivo_Periodo.FechaProntoPago, CAST(year(dbo.aca_AnioLectivo_Periodo.FechaHasta) AS VARCHAR) +' - '+ dbo.tb_mes.smes AS Periodo, dbo.aca_Plantilla.IdPlantilla
 FROM     dbo.aca_Matricula INNER JOIN
                   dbo.aca_Matricula_Rubro ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Matricula_Rubro.IdEmpresa AND dbo.aca_Matricula.IdMatricula = dbo.aca_Matricula_Rubro.IdMatricula INNER JOIN
                   dbo.aca_AnioLectivo_Rubro ON dbo.aca_Matricula.IdAnio = dbo.aca_AnioLectivo_Rubro.IdAnio AND dbo.aca_Matricula.IdEmpresa = dbo.aca_AnioLectivo_Rubro.IdEmpresa AND 

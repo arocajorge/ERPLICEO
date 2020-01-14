@@ -3,6 +3,8 @@
     [IdMatricula]        NUMERIC (18)    NOT NULL,
     [IdPeriodo]          INT             NOT NULL,
     [IdRubro]            INT             NOT NULL,
+    [IdAnio]             INT             NOT NULL,
+    [IdPlantilla]        INT             NOT NULL,
     [IdMecanismo]        NUMERIC (18)    NOT NULL,
     [IdProducto]         NUMERIC (18)    NOT NULL,
     [EnMatricula]        BIT             NOT NULL,
@@ -18,8 +20,11 @@
     CONSTRAINT [PK_aca_Matricula_Rubro] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdMatricula] ASC, [IdPeriodo] ASC, [IdRubro] ASC),
     CONSTRAINT [FK_aca_Matricula_Rubro_aca_Matricula] FOREIGN KEY ([IdEmpresa], [IdMatricula]) REFERENCES [dbo].[aca_Matricula] ([IdEmpresa], [IdMatricula]),
     CONSTRAINT [FK_aca_Matricula_Rubro_aca_MecanismoDePago] FOREIGN KEY ([IdEmpresa], [IdMecanismo]) REFERENCES [dbo].[aca_MecanismoDePago] ([IdEmpresa], [IdMecanismo]),
+    CONSTRAINT [FK_aca_Matricula_Rubro_aca_Plantilla] FOREIGN KEY ([IdEmpresa], [IdAnio], [IdPlantilla]) REFERENCES [dbo].[aca_Plantilla] ([IdEmpresa], [IdAnio], [IdPlantilla]),
     CONSTRAINT [FK_aca_Matricula_Rubro_aca_Rubro] FOREIGN KEY ([IdEmpresa], [IdRubro]) REFERENCES [dbo].[aca_Rubro] ([IdEmpresa], [IdRubro])
 );
+
+
 
 
 

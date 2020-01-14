@@ -7,9 +7,9 @@ SELECT dbo.aca_Matricula.IdEmpresa, dbo.aca_Matricula.IdMatricula, dbo.aca_Matri
                   dbo.aca_Alumno.Celular AS CelularAlumno, dbo.aca_SocioEconomico.TieneElectricidad, dbo.aca_SocioEconomico.TieneHermanos, dbo.aca_SocioEconomico.NombreHermanos, 
                   dbo.aca_CatalogoFicha.NomCatalogoFicha AS TipoVivienda, aca_CatalogoFicha_1.NomCatalogoFicha AS TenenciaVivienda, dbo.tb_persona.CodCatalogoCONADIS, dbo.tb_persona.PorcentajeDiscapacidad, 
                   dbo.tb_persona.NumeroCarnetConadis, dbo.tb_pais.Nacionalidad AS NacionalidadAlumno, dbo.tb_persona.pe_telfono_Contacto AS TelefonoAlumno, aca_CatalogoFicha_2.NomCatalogoFicha AS Agua, 
-                  tb_Catalogo_1.CodCatalogo AS TipoDiscapacidadAlumno, dbo.aca_SocioEconomico.SueldoPadre, dbo.aca_SocioEconomico.SueldoMadre, dbo.aca_SocioEconomico.OtroIngreso, dbo.aca_SocioEconomico.GastoAlimentacion, 
-                  dbo.aca_SocioEconomico.GastoEducacion, dbo.aca_SocioEconomico.GastoServicioBasico, dbo.aca_SocioEconomico.GastoSalud, dbo.aca_SocioEconomico.GastoArriendo, dbo.aca_SocioEconomico.GastoPrestamo, 
-                  dbo.aca_SocioEconomico.OtroGasto, dbo.aca_AnioLectivo.Descripcion, dbo.aca_Matricula.IdAnio
+                  tb_Catalogo_1.CodCatalogo AS TipoDiscapacidadAlumno, dbo.aca_SocioEconomico.SueldoPadre, dbo.aca_SocioEconomico.SueldoMadre, dbo.aca_SocioEconomico.GastoAlimentacion, dbo.aca_SocioEconomico.GastoEducacion, 
+                  dbo.aca_SocioEconomico.GastoServicioBasico, dbo.aca_SocioEconomico.GastoSalud, dbo.aca_SocioEconomico.GastoArriendo, dbo.aca_SocioEconomico.GastoPrestamo, dbo.aca_SocioEconomico.OtroGasto, 
+                  dbo.aca_AnioLectivo.Descripcion, dbo.aca_Matricula.IdAnio, dbo.aca_SocioEconomico.OtroIngresoPadre, dbo.aca_SocioEconomico.OtroIngresoMadre
 FROM     dbo.aca_AnioLectivo INNER JOIN
                   dbo.tb_pais INNER JOIN
                   dbo.aca_Matricula INNER JOIN
@@ -33,7 +33,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'71
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'1
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -76,7 +76,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'71
                Right = 1056
             End
             DisplayFlags = 280
-            TopColumn = 19
+            TopColumn = 10
          End
          Begin Table = "aca_CatalogoFicha_1"
             Begin Extent = 
@@ -154,7 +154,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'71
    End
    Begin CriteriaPane = 
       Begin ColumnWidths = 11
-         Column = 1440
+         Column = 3096
          Alias = 900
          Table = 1176
          Output = 720
@@ -177,13 +177,15 @@ End
 
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[58] 4[6] 2[18] 3) )"
+         Configuration = "(H (1[74] 4[3] 2[6] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -314,7 +316,9 @@ Begin DesignProperties =
                Top = 7
                Left = 926
                Bottom = 170
-               Right = 11', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWACA_001';
+               Right = 117', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWACA_001';
+
+
 
 
 

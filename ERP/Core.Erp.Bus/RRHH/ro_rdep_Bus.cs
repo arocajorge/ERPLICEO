@@ -123,7 +123,7 @@ namespace Core.Erp.Bus.RRHH
 
                 Lista_RDEP.ForEach(item =>
                 {
-                    rdep.anio = Convert.ToString(item.pe_anio);
+                    rdep.anio = item.pe_anio;
 
                     datRetRelDepTyp info_det = new datRetRelDepTyp();
                     info_det.empleado = new datEmpTyp();                    
@@ -142,11 +142,11 @@ namespace Core.Erp.Bus.RRHH
                     info_det.empleado.porcentajeDiscap = "0";
                     info_det.empleado.tipIdDiscap = tipIdDiscapTyp.N;
                     info_det.empleado.idDiscap = "999";
-                    info_det.deducAliementSpecified = true;
-                    info_det.deducVestimSpecified = true;
-                    info_det.deducSaludSpecified = true;
+                    //info_det.deducAliementSpecified = true;
+                    //info_det.deducVestimSpecified = true;
+                    //info_det.deducSaludSpecified = true;
                     info_det.deducEducaSpecified = true;
-                    info_det.deducViviendaSpecified = true;
+                    //info_det.deducViviendaSpecified = true;
                     info_det.deducArtycultSpecified = true;
                     info_det.suelSal = (item.Sueldo) == null ? Convert.ToDecimal(0.00) : Convert.ToDecimal(item.Sueldo);
                     info_det.sobSuelComRemu = (item.IngresoVarios) == null ? Convert.ToDecimal(0.00) : Convert.ToDecimal(item.IngresoVarios);

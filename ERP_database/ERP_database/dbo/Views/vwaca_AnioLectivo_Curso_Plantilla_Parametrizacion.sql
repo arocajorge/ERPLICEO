@@ -1,11 +1,17 @@
-﻿CREATE VIEW dbo.vwaca_AnioLectivo_Curso_Plantilla_Parametrizacion
+﻿CREATE VIEW [dbo].[vwaca_AnioLectivo_Curso_Plantilla_Parametrizacion]
 AS
 SELECT        dbo.aca_AnioLectivo_Curso_Plantilla.IdEmpresa, dbo.aca_AnioLectivo_Curso_Plantilla.IdAnio, dbo.aca_AnioLectivo_Curso_Plantilla.IdSede, dbo.aca_AnioLectivo_Curso_Plantilla.IdNivel, 
                          dbo.aca_AnioLectivo_Curso_Plantilla.IdJornada, dbo.aca_AnioLectivo_Curso_Plantilla.IdCurso, dbo.aca_AnioLectivo_Curso_Plantilla.IdPlantilla, dbo.aca_Plantilla_Rubro.IdRubro, 
                          dbo.aca_AnioLectivo_NivelAcademico_Jornada.NomJornada, dbo.aca_AnioLectivo_NivelAcademico_Jornada.OrdenJornada, dbo.aca_AnioLectivo_Jornada_Curso.NomCurso, dbo.aca_AnioLectivo_Jornada_Curso.OrdenCurso, 
                          dbo.aca_Plantilla.NomPlantilla, dbo.aca_AnioLectivo_Rubro.NomRubro, dbo.aca_AnioLectivo_Sede_NivelAcademico.NomNivel, dbo.aca_AnioLectivo_Sede_NivelAcademico.NomSede, 
-                         dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdCtaCbleDebe, dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdCtaCbleHaber
-FROM            dbo.aca_AnioLectivo_Jornada_Curso INNER JOIN
+                         dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdCtaCbleDebe, dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdCtaCbleHaber, dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdCtaCbleDebe +' - '+ct_planctaDebe.pc_Cuenta AS pc_CuentaDebe, 
+                         dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdCtaCbleHaber+' - '+ ct_planctaHaber.pc_Cuenta AS pc_CuentaHaber
+FROM            dbo.ct_plancta AS ct_planctaHaber RIGHT OUTER JOIN
+                         dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion ON ct_planctaHaber.IdCtaCble = dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdCtaCbleHaber AND 
+                         ct_planctaHaber.IdEmpresa = dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdEmpresa LEFT OUTER JOIN
+                         dbo.ct_plancta AS ct_planctaDebe ON dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdEmpresa = ct_planctaDebe.IdEmpresa AND 
+                         dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdCtaCbleDebe = ct_planctaDebe.IdCtaCble RIGHT OUTER JOIN
+                         dbo.aca_AnioLectivo_Jornada_Curso INNER JOIN
                          dbo.aca_AnioLectivo_NivelAcademico_Jornada ON dbo.aca_AnioLectivo_Jornada_Curso.IdEmpresa = dbo.aca_AnioLectivo_NivelAcademico_Jornada.IdEmpresa AND 
                          dbo.aca_AnioLectivo_Jornada_Curso.IdAnio = dbo.aca_AnioLectivo_NivelAcademico_Jornada.IdAnio AND dbo.aca_AnioLectivo_Jornada_Curso.IdSede = dbo.aca_AnioLectivo_NivelAcademico_Jornada.IdSede AND 
                          dbo.aca_AnioLectivo_Jornada_Curso.IdNivel = dbo.aca_AnioLectivo_NivelAcademico_Jornada.IdNivel AND dbo.aca_AnioLectivo_Jornada_Curso.IdJornada = dbo.aca_AnioLectivo_NivelAcademico_Jornada.IdJornada INNER JOIN
@@ -21,13 +27,12 @@ FROM            dbo.aca_AnioLectivo_Jornada_Curso INNER JOIN
                          dbo.aca_Plantilla_Rubro.IdRubro = dbo.aca_AnioLectivo_Rubro.IdRubro ON dbo.aca_AnioLectivo_Jornada_Curso.IdEmpresa = dbo.aca_AnioLectivo_Curso_Plantilla.IdEmpresa AND 
                          dbo.aca_AnioLectivo_Jornada_Curso.IdAnio = dbo.aca_AnioLectivo_Curso_Plantilla.IdAnio AND dbo.aca_AnioLectivo_Jornada_Curso.IdSede = dbo.aca_AnioLectivo_Curso_Plantilla.IdSede AND 
                          dbo.aca_AnioLectivo_Jornada_Curso.IdNivel = dbo.aca_AnioLectivo_Curso_Plantilla.IdNivel AND dbo.aca_AnioLectivo_Jornada_Curso.IdJornada = dbo.aca_AnioLectivo_Curso_Plantilla.IdJornada AND 
-                         dbo.aca_AnioLectivo_Jornada_Curso.IdCurso = dbo.aca_AnioLectivo_Curso_Plantilla.IdCurso LEFT OUTER JOIN
-                         dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion ON dbo.aca_AnioLectivo_Curso_Plantilla.IdEmpresa = dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdEmpresa AND 
-                         dbo.aca_AnioLectivo_Curso_Plantilla.IdAnio = dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdAnio AND dbo.aca_AnioLectivo_Curso_Plantilla.IdSede = dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdSede AND
-                          dbo.aca_AnioLectivo_Curso_Plantilla.IdNivel = dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdNivel AND 
-                         dbo.aca_AnioLectivo_Curso_Plantilla.IdJornada = dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdJornada AND 
-                         dbo.aca_AnioLectivo_Curso_Plantilla.IdCurso = dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdCurso AND 
-                         dbo.aca_AnioLectivo_Curso_Plantilla.IdPlantilla = dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdPlantilla AND dbo.aca_Plantilla_Rubro.IdRubro = dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdRubro
+                         dbo.aca_AnioLectivo_Jornada_Curso.IdCurso = dbo.aca_AnioLectivo_Curso_Plantilla.IdCurso ON dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdEmpresa = dbo.aca_AnioLectivo_Curso_Plantilla.IdEmpresa AND 
+                         dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdAnio = dbo.aca_AnioLectivo_Curso_Plantilla.IdAnio AND dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdSede = dbo.aca_AnioLectivo_Curso_Plantilla.IdSede AND
+                          dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdNivel = dbo.aca_AnioLectivo_Curso_Plantilla.IdNivel AND 
+                         dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdJornada = dbo.aca_AnioLectivo_Curso_Plantilla.IdJornada AND 
+                         dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdCurso = dbo.aca_AnioLectivo_Curso_Plantilla.IdCurso AND 
+                         dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdPlantilla = dbo.aca_AnioLectivo_Curso_Plantilla.IdPlantilla AND dbo.aca_AnioLectivo_Curso_Plantilla_Parametrizacion.IdRubro = dbo.aca_Plantilla_Rubro.IdRubro
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Curso_Plantilla_Parametrizacion';
 

@@ -1,48 +1,99 @@
 ﻿CREATE VIEW web.VWACA_001
 AS
 SELECT dbo.aca_Matricula.IdEmpresa, dbo.aca_Matricula.IdMatricula, dbo.aca_Matricula.Fecha AS FechaMatricula, dbo.aca_Matricula.Codigo AS CodMatricula, dbo.aca_Alumno.Codigo AS CodAlumno, dbo.aca_Matricula.IdAlumno, 
-                  dbo.aca_Alumno.IdPersona, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.vwaca_AnioLectivo_Jornada_Curso.Descripcion AS Anio, dbo.vwaca_AnioLectivo_Jornada_Curso.NomSede, 
-                  dbo.vwaca_AnioLectivo_Jornada_Curso.NomNivel, dbo.vwaca_AnioLectivo_Jornada_Curso.NomJornada, dbo.vwaca_AnioLectivo_Jornada_Curso.NomCurso, dbo.aca_Paralelo.NomParalelo, dbo.tb_Catalogo.ca_descripcion AS Sexo, 
-                  dbo.aca_Alumno.LugarNacimiento, dbo.tb_persona.pe_fechaNacimiento, dbo.aca_Alumno.Direccion, dbo.aca_Alumno.Celular, dbo.aca_SocioEconomico.TieneElectricidad, dbo.aca_SocioEconomico.TieneHermanos, 
-                  dbo.aca_SocioEconomico.NombreHermanos, dbo.aca_CatalogoFicha.NomCatalogoFicha AS TipoVivienda, aca_CatalogoFicha_1.NomCatalogoFicha AS TenenciaVivienda, dbo.tb_persona.CodCatalogoCONADIS, 
-                  dbo.tb_persona.PorcentajeDiscapacidad, dbo.tb_persona.NumeroCarnetConadis
-FROM     dbo.aca_Matricula INNER JOIN
+                  dbo.aca_Alumno.IdPersona AS IdPersonaAlumno, dbo.tb_persona.pe_apellido AS ApellidoAlumno, dbo.tb_persona.pe_nombre AS NombreAlumno, dbo.vwaca_AnioLectivo_Jornada_Curso.Descripcion AS Anio, 
+                  dbo.vwaca_AnioLectivo_Jornada_Curso.NomSede, dbo.vwaca_AnioLectivo_Jornada_Curso.NomNivel, dbo.vwaca_AnioLectivo_Jornada_Curso.NomJornada, dbo.vwaca_AnioLectivo_Jornada_Curso.NomCurso, 
+                  dbo.aca_Paralelo.NomParalelo, dbo.tb_Catalogo.ca_descripcion AS Sexo, dbo.aca_Alumno.LugarNacimiento, dbo.tb_persona.pe_fechaNacimiento, dbo.aca_Alumno.Direccion AS DireccionAlumno, 
+                  dbo.aca_Alumno.Celular AS CelularAlumno, dbo.aca_SocioEconomico.TieneElectricidad, dbo.aca_SocioEconomico.TieneHermanos, dbo.aca_SocioEconomico.NombreHermanos, 
+                  dbo.aca_CatalogoFicha.NomCatalogoFicha AS TipoVivienda, aca_CatalogoFicha_1.NomCatalogoFicha AS TenenciaVivienda, dbo.tb_persona.CodCatalogoCONADIS, dbo.tb_persona.PorcentajeDiscapacidad, 
+                  dbo.tb_persona.NumeroCarnetConadis, dbo.tb_pais.Nacionalidad AS NacionalidadAlumno, dbo.tb_persona.pe_telfono_Contacto AS TelefonoAlumno, aca_CatalogoFicha_2.NomCatalogoFicha AS Agua, 
+                  tb_Catalogo_1.CodCatalogo AS TipoDiscapacidadAlumno, dbo.aca_SocioEconomico.SueldoPadre, dbo.aca_SocioEconomico.SueldoMadre, dbo.aca_SocioEconomico.GastoAlimentacion, dbo.aca_SocioEconomico.GastoEducacion, 
+                  dbo.aca_SocioEconomico.GastoServicioBasico, dbo.aca_SocioEconomico.GastoSalud, dbo.aca_SocioEconomico.GastoArriendo, dbo.aca_SocioEconomico.GastoPrestamo, dbo.aca_SocioEconomico.OtroGasto, 
+                  dbo.aca_AnioLectivo.Descripcion, dbo.aca_Matricula.IdAnio, dbo.aca_SocioEconomico.OtroIngresoPadre, dbo.aca_SocioEconomico.OtroIngresoMadre
+FROM     dbo.aca_AnioLectivo INNER JOIN
+                  dbo.tb_pais INNER JOIN
+                  dbo.aca_Matricula INNER JOIN
                   dbo.aca_Alumno ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_Matricula.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
                   dbo.tb_persona ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
                   dbo.vwaca_AnioLectivo_Jornada_Curso ON dbo.aca_Matricula.IdEmpresa = dbo.vwaca_AnioLectivo_Jornada_Curso.IdEmpresa AND dbo.aca_Matricula.IdAnio = dbo.vwaca_AnioLectivo_Jornada_Curso.IdAnio AND 
                   dbo.aca_Matricula.IdSede = dbo.vwaca_AnioLectivo_Jornada_Curso.IdSede AND dbo.aca_Matricula.IdNivel = dbo.vwaca_AnioLectivo_Jornada_Curso.IdNivel AND 
                   dbo.aca_Matricula.IdJornada = dbo.vwaca_AnioLectivo_Jornada_Curso.IdJornada AND dbo.aca_Matricula.IdCurso = dbo.vwaca_AnioLectivo_Jornada_Curso.IdCurso INNER JOIN
                   dbo.aca_Paralelo ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Paralelo.IdEmpresa AND dbo.aca_Matricula.IdParalelo = dbo.aca_Paralelo.IdParalelo INNER JOIN
-                  dbo.tb_Catalogo ON dbo.tb_persona.pe_sexo = dbo.tb_Catalogo.CodCatalogo INNER JOIN
-                  dbo.aca_SocioEconomico ON dbo.aca_Alumno.IdEmpresa = dbo.aca_SocioEconomico.IdEmpresa AND dbo.aca_Alumno.IdAlumno = dbo.aca_SocioEconomico.IdAlumno INNER JOIN
-                  dbo.aca_CatalogoFicha ON dbo.aca_SocioEconomico.IdCatalogoFichaVi = dbo.aca_CatalogoFicha.IdCatalogoFicha INNER JOIN
-                  dbo.aca_CatalogoFicha AS aca_CatalogoFicha_1 ON dbo.aca_SocioEconomico.IdCatalogoFichaTVi = aca_CatalogoFicha_1.IdCatalogoFicha
+                  dbo.tb_Catalogo ON dbo.tb_persona.pe_sexo = dbo.tb_Catalogo.CodCatalogo ON dbo.tb_pais.IdPais = dbo.aca_Alumno.IdPais ON dbo.aca_AnioLectivo.IdEmpresa = dbo.aca_Matricula.IdEmpresa AND 
+                  dbo.aca_AnioLectivo.IdAnio = dbo.aca_Matricula.IdAnio LEFT OUTER JOIN
+                  dbo.aca_CatalogoFicha AS aca_CatalogoFicha_2 INNER JOIN
+                  dbo.aca_CatalogoFicha INNER JOIN
+                  dbo.aca_SocioEconomico ON dbo.aca_CatalogoFicha.IdCatalogoFicha = dbo.aca_SocioEconomico.IdCatalogoFichaVi INNER JOIN
+                  dbo.aca_CatalogoFicha AS aca_CatalogoFicha_1 ON dbo.aca_SocioEconomico.IdCatalogoFichaTVi = aca_CatalogoFicha_1.IdCatalogoFicha ON aca_CatalogoFicha_2.IdCatalogoFicha = dbo.aca_SocioEconomico.IdCatalogoFichaAg ON 
+                  dbo.aca_Alumno.IdEmpresa = dbo.aca_SocioEconomico.IdEmpresa AND dbo.aca_Alumno.IdAlumno = dbo.aca_SocioEconomico.IdAlumno LEFT OUTER JOIN
+                  dbo.tb_Catalogo AS tb_Catalogo_1 ON dbo.tb_persona.CodCatalogoCONADIS = tb_Catalogo_1.CodCatalogo
+WHERE  (dbo.aca_AnioLectivo.EnCurso = 1)
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWACA_001';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' = 1056
-            End
-            DisplayFlags = 280
-            TopColumn = 2
-         End
-         Begin Table = "aca_CatalogoFicha"
-            Begin Extent = 
-               Top = 19
-               Left = 1188
-               Bottom = 182
-               Right = 1433
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'1
             End
             DisplayFlags = 280
             TopColumn = 0
          End
+         Begin Table = "tb_Catalogo"
+            Begin Extent = 
+               Top = 218
+               Left = 565
+               Bottom = 438
+               Right = 809
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "aca_CatalogoFicha_2"
+            Begin Extent = 
+               Top = 298
+               Left = 1389
+               Bottom = 461
+               Right = 1634
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "aca_CatalogoFicha"
+            Begin Extent = 
+               Top = 24
+               Left = 1388
+               Bottom = 187
+               Right = 1633
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "aca_SocioEconomico"
+            Begin Extent = 
+               Top = 175
+               Left = 811
+               Bottom = 431
+               Right = 1056
+            End
+            DisplayFlags = 280
+            TopColumn = 10
+         End
          Begin Table = "aca_CatalogoFicha_1"
             Begin Extent = 
-               Top = 230
-               Left = 1158
-               Bottom = 393
-               Right = 1403
+               Top = 213
+               Left = 1360
+               Bottom = 376
+               Right = 1605
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "tb_Catalogo_1"
+            Begin Extent = 
+               Top = 489
+               Left = 233
+               Bottom = 652
+               Right = 477
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -54,7 +105,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' = 1056
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 30
+      Begin ColumnWidths = 44
          Width = 284
          Width = 1200
          Width = 1200
@@ -85,11 +136,25 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' = 1056
          Width = 1200
          Width = 1200
          Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
       End
    End
    Begin CriteriaPane = 
       Begin ColumnWidths = 11
-         Column = 1440
+         Column = 3096
          Alias = 900
          Table = 1176
          Output = 720
@@ -108,13 +173,19 @@ End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWACA_001';
 
 
+
+
+
+
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[22] 4[55] 2[3] 3) )"
+         Configuration = "(H (1[74] 4[3] 2[6] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -180,6 +251,26 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
+         Begin Table = "aca_AnioLectivo"
+            Begin Extent = 
+               Top = 324
+               Left = 1104
+               Bottom = 487
+               Right = 1349
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "tb_pais"
+            Begin Extent = 
+               Top = 497
+               Left = 1296
+               Bottom = 660
+               Right = 1540
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "aca_Matricula"
             Begin Extent = 
                Top = 7
@@ -188,7 +279,7 @@ Begin DesignProperties =
                Right = 586
             End
             DisplayFlags = 280
-            TopColumn = 12
+            TopColumn = 0
          End
          Begin Table = "aca_Alumno"
             Begin Extent = 
@@ -198,7 +289,7 @@ Begin DesignProperties =
                Right = 293
             End
             DisplayFlags = 280
-            TopColumn = 3
+            TopColumn = 2
          End
          Begin Table = "tb_persona"
             Begin Extent = 
@@ -225,25 +316,11 @@ Begin DesignProperties =
                Top = 7
                Left = 926
                Bottom = 170
-               Right = 1171
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "tb_Catalogo"
-            Begin Extent = 
-               Top = 194
-               Left = 519
-               Bottom = 414
-               Right = 763
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "aca_SocioEconomico"
-            Begin Extent = 
-               Top = 175
-               Left = 811
-               Bottom = 431
-               Right', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWACA_001';
+               Right = 117', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWACA_001';
+
+
+
+
+
+
 

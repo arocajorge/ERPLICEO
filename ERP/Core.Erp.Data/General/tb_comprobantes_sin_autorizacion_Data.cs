@@ -136,8 +136,13 @@ namespace Core.Erp.Data.General
                         && q.IdCbteCble_Ogiro == info.IdCbteVta
                         && q.co_factura == info.DocumentoDoc
                         && q.co_serie == info.vt_serie1).FirstOrDefault();
-                        Entity.aprobada_enviar_sri = true;
-                        Context.SaveChanges();
+
+                        if (Entity != null)
+                        {
+                            Entity.aprobada_enviar_sri = true;
+                            Context.SaveChanges();
+                        }
+                        
                     }
                 return true;
 

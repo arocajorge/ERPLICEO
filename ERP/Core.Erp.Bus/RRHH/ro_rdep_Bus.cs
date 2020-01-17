@@ -167,7 +167,7 @@ namespace Core.Erp.Bus.RRHH
                     //info_det.deducEduca = Math.Round(Convert.ToDecimal(item.GastoEucacion), 2, MidpointRounding.AwayFromZero);
                     info_det.deducAliement = Math.Round(Convert.ToDecimal(item.GastoAlimentacion), 2, MidpointRounding.AwayFromZero);
                     info_det.deducVestim = Math.Round(Convert.ToDecimal(item.GastoVestimenta), 2, MidpointRounding.AwayFromZero);
-                    info_det.deducArtycult = 0;
+                    info_det.deducArtycult = Math.Round(Convert.ToDecimal(item.GastoEucacion), 2, MidpointRounding.AwayFromZero);
                     info_det.basImp = Math.Round(Convert.ToDecimal((item.BaseImponibleGravada)), 2, MidpointRounding.AwayFromZero);
                     info_det.impRentCaus = Math.Round(Convert.ToDecimal((item.ImpuestoRentaCausado)), 2, MidpointRounding.AwayFromZero);
                     info_det.valRetAsuOtrosEmpls = Math.Round(Convert.ToDecimal((item.ValorImpuestoPorOtroEmplador)), 2, MidpointRounding.AwayFromZero);

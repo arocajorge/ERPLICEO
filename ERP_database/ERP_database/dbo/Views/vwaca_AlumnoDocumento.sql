@@ -1,7 +1,7 @@
 ﻿CREATE VIEW dbo.vwaca_AlumnoDocumento
 AS
 SELECT dbo.aca_AlumnoDocumento.IdEmpresa, dbo.aca_AlumnoDocumento.IdAlumno, dbo.aca_AlumnoDocumento.IdDocumento, dbo.aca_Documento.NomDocumento, dbo.aca_AlumnoDocumento.EnArchivo, 
-                  dbo.aca_Documento.OrdenDocumento
+                  dbo.aca_Documento.OrdenDocumento, dbo.aca_AlumnoDocumento.Secuencia
 FROM     dbo.aca_AlumnoDocumento INNER JOIN
                   dbo.aca_Documento ON dbo.aca_AlumnoDocumento.IdEmpresa = dbo.aca_Documento.IdEmpresa AND dbo.aca_AlumnoDocumento.IdDocumento = dbo.aca_Documento.IdDocumento
 GO
@@ -123,14 +123,14 @@ Begin DesignProperties =
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -138,4 +138,6 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AlumnoDocumento';
+
+
 

@@ -22,6 +22,7 @@
     [IdCatalogoFichaMot]    INT           NOT NULL,
     [IdCatalogoFichaIns]    INT           NOT NULL,
     [IdCatalogoFichaFin]    INT           NOT NULL,
+    [IdCatalogoFichaVive]   INT           NOT NULL,
     [OtroMotivoIngreso]     VARCHAR (MAX) NULL,
     [OtroInformacionInst]   VARCHAR (MAX) NULL,
     [OtroFinanciamiento]    VARCHAR (MAX) NULL,
@@ -37,8 +38,11 @@
     CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha2] FOREIGN KEY ([IdCatalogoFichaAg]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
     CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha3] FOREIGN KEY ([IdCatalogoFichaMot]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
     CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha4] FOREIGN KEY ([IdCatalogoFichaIns]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
-    CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha5] FOREIGN KEY ([IdCatalogoFichaFin]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha])
+    CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha5] FOREIGN KEY ([IdCatalogoFichaFin]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
+    CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha6] FOREIGN KEY ([IdCatalogoFichaVive]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha])
 );
+
+
 
 
 

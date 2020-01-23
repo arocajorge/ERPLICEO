@@ -6,7 +6,7 @@ SELECT dbo.aca_Familia.IdEmpresa, dbo.aca_Familia.IdAlumno, dbo.aca_Familia.IdCa
                   dbo.tb_persona.NumeroCarnetConadis, dbo.tb_persona.pe_telfono_Contacto, dbo.aca_Familia.Secuencia, dbo.aca_Familia.EsRepresentante, dbo.tb_persona.pe_razonSocial, dbo.tb_persona.IdProfesion, 
                   dbo.aca_Familia.IdCatalogoFichaInst, dbo.aca_Familia.EmpresaTrabajo, dbo.aca_Familia.DireccionTrabajo, dbo.aca_Familia.TelefonoTrabajo, dbo.aca_Familia.CargoTrabajo, dbo.aca_Familia.AniosServicio, 
                   dbo.aca_Familia.IngresoMensual, dbo.aca_Familia.VehiculoPropio, dbo.aca_Familia.Marca, dbo.aca_Familia.Modelo, dbo.aca_Familia.CasaPropia, dbo.aca_Familia.Estado, dbo.aca_Familia.AnioVehiculo, dbo.tb_persona.IdReligion, 
-                  dbo.tb_persona.AsisteCentroCristiano, dbo.aca_Familia.EstaFallecido
+                  dbo.tb_persona.AsisteCentroCristiano, dbo.aca_Familia.EstaFallecido, dbo.tb_persona.IdGrupoEtnico
 FROM     dbo.tb_persona INNER JOIN
                   dbo.aca_Familia ON dbo.tb_persona.IdPersona = dbo.aca_Familia.IdPersona LEFT OUTER JOIN
                   dbo.aca_Catalogo ON dbo.aca_Familia.IdCatalogoPAREN = dbo.aca_Catalogo.IdCatalogo
@@ -88,16 +88,6 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_Catalogo"
-            Begin Extent = 
-               Top = 0
-               Left = 568
-               Bottom = 163
-               Right = 813
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
          Begin Table = "tb_persona"
             Begin Extent = 
                Top = 140
@@ -106,7 +96,7 @@ Begin DesignProperties =
                Right = 998
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 26
          End
          Begin Table = "aca_Familia"
             Begin Extent = 
@@ -114,6 +104,16 @@ Begin DesignProperties =
                Left = 48
                Bottom = 418
                Right = 293
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "aca_Catalogo"
+            Begin Extent = 
+               Top = 0
+               Left = 568
+               Bottom = 163
+               Right = 813
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -162,7 +162,9 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 1200
-         Width = 1200', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Familia';
+         Width = 1200', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Familia';
+
+
 
 
 
@@ -205,4 +207,6 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Familia';
+
+
 

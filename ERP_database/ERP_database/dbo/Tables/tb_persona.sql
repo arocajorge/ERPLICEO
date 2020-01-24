@@ -30,6 +30,9 @@
     [PorcentajeDiscapacidad]     FLOAT (53)    NULL,
     [NumeroCarnetConadis]        VARCHAR (200) NULL,
     [IdProfesion]                INT           NULL,
+    [IdReligion]                 INT           NULL,
+    [AsisteCentroCristiano]      BIT           NULL,
+    [IdGrupoEtnico]              INT           NULL,
     CONSTRAINT [PK_tb_persona] PRIMARY KEY CLUSTERED ([IdPersona] ASC),
     CONSTRAINT [FK_tb_persona_tb_banco] FOREIGN KEY ([IdBanco_acreditacion]) REFERENCES [dbo].[tb_banco] ([IdBanco]),
     CONSTRAINT [FK_tb_persona_tb_Catalogo] FOREIGN KEY ([pe_Naturaleza]) REFERENCES [dbo].[tb_Catalogo] ([CodCatalogo]),
@@ -41,8 +44,14 @@
     CONSTRAINT [FK_tb_persona_tb_Catalogo6] FOREIGN KEY ([IdTipoCta_acreditacion_cat]) REFERENCES [dbo].[tb_Catalogo] ([CodCatalogo]),
     CONSTRAINT [FK_tb_persona_tb_Catalogo7] FOREIGN KEY ([CodCatalogoSangre]) REFERENCES [dbo].[tb_Catalogo] ([CodCatalogo]),
     CONSTRAINT [FK_tb_persona_tb_Catalogo8] FOREIGN KEY ([CodCatalogoCONADIS]) REFERENCES [dbo].[tb_Catalogo] ([CodCatalogo]),
-    CONSTRAINT [FK_tb_persona_tb_profesion] FOREIGN KEY ([IdProfesion]) REFERENCES [dbo].[tb_profesion] ([IdProfesion])
+    CONSTRAINT [FK_tb_persona_tb_GrupoEtnico] FOREIGN KEY ([IdGrupoEtnico]) REFERENCES [dbo].[tb_GrupoEtnico] ([IdGrupoEtnico]),
+    CONSTRAINT [FK_tb_persona_tb_profesion] FOREIGN KEY ([IdProfesion]) REFERENCES [dbo].[tb_profesion] ([IdProfesion]),
+    CONSTRAINT [FK_tb_persona_tb_Religion] FOREIGN KEY ([IdReligion]) REFERENCES [dbo].[tb_Religion] ([IdReligion])
 );
+
+
+
+
 
 
 

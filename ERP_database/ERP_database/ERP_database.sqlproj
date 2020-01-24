@@ -1266,6 +1266,9 @@
     <Build Include="dbo\Views\vwcxc_ConciliacionNotaCreditoDet.sql" />
     <Build Include="dbo\Views\vwcxc_ConciliacionNotaCredito.sql" />
     <Build Include="dbo\Tables\fa_notaCreDeb_resumen_1.sql" />
+    <Build Include="dbo\Tables\tb_Religion.sql" />
+    <Build Include="dbo\Views\vwaca_Hermanos.sql" />
+    <Build Include="dbo\Tables\tb_GrupoEtnico.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

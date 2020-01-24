@@ -705,8 +705,10 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         {
             string retorno = string.Empty;
 
+            bus_orden_giro.ModificarEstadoAutorizacion(IdEmpresa, IdTipoCbte_Ogiro, IdCbteCble_Ogiro);
+            
             if (bus_retencion.ModificarEstadoAutorizacion(IdEmpresa, IdTipoCbte_Ogiro, IdCbteCble_Ogiro))
-                retorno = "Autorización exitosa";
+            retorno = "Autorización exitosa";
             
             return Json(retorno, JsonRequestBehavior.AllowGet);
         }

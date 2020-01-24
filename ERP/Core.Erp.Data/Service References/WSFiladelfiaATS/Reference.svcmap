@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="8e19aef3-57a0-4d14-94c1-e7a94e0f9986" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://173.244.195.35/WsSegaEcErp/WsSegaEcErp.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="WsSegaEcErp.xsd" MetadataType="Schema" ID="221df8d1-c06e-4574-a215-cd05bc50b69b" SourceId="1" SourceUrl="http://173.244.195.35/WsSegaEcErp/WsSegaEcErp.svc?xsd=xsd1" />
+    <MetadataFile FileName="WsSegaEcErp1.xsd" MetadataType="Schema" ID="c2539344-1961-4e7e-9ebc-8c952899c81f" SourceId="1" SourceUrl="http://173.244.195.35/WsSegaEcErp/WsSegaEcErp.svc?xsd=xsd0" />
+    <MetadataFile FileName="WsSegaEcErp.wsdl" MetadataType="Wsdl" ID="d85e0f62-0ee2-49df-b0fd-d0d2642b212e" SourceId="1" SourceUrl="http://173.244.195.35/WsSegaEcErp/WsSegaEcErp.svc?wsdl" />
+    <MetadataFile FileName="WsSegaEcErp.disco" MetadataType="Disco" ID="049948db-b6a7-4a48-9a35-132644f0beff" SourceId="1" SourceUrl="http://173.244.195.35/WsSegaEcErp/WsSegaEcErp.svc?disco" />
+    <MetadataFile FileName="WsSegaEcErp2.xsd" MetadataType="Schema" ID="218d6c0e-22ab-4c94-b419-b4c3c835f650" SourceId="1" SourceUrl="http://173.244.195.35/WsSegaEcErp/WsSegaEcErp.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

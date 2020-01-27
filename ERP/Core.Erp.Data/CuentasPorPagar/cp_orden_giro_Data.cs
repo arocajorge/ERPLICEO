@@ -29,21 +29,12 @@ namespace Core.Erp.Data.CuentasPorPagar
                         var pto_vta = odata_pv.get_info(info.IdEmpresa, info.IdSucursal, info.IdPuntoVta ?? 0);
                         if (pto_vta != null)
                         {
-                            string Establecimiento = info.co_serie.Substring(0, 3);
+                            string Establecimiento = pto_vta.Su_CodigoEstablecimiento;
                             var talonario = odata_tal.GetUltimoNoUsado(info.IdEmpresa, pto_vta.codDocumentoTipo, Establecimiento, pto_vta.cod_PuntoVta, true, true);
                             if (talonario != null)
                             {
+                                info.co_serie = talonario.Establecimiento + "-" + talonario.PuntoEmision;
                                 info.co_factura = talonario.NumDocumento;
-                            }
-                            var sucursal = odata_suc.get_info(info.IdEmpresa, info.IdSucursal);
-                            if (sucursal != null)
-                            {
-                                 Establecimiento = sucursal.Su_CodigoEstablecimiento;
-                                talonario = odata_tal.GetUltimoNoUsado(info.IdEmpresa, pto_vta.codDocumentoTipo, Establecimiento, pto_vta.cod_PuntoVta, true, true);
-                                if (talonario != null)
-                                {
-                                    info.co_factura = talonario.NumDocumento;
-                                }
                             }                            
                         }
                     }
@@ -238,6 +229,33 @@ namespace Core.Erp.Data.CuentasPorPagar
                 return false;
             }
         }
+
+        public bool ModificarEstadoAutorizacion(int IdEmpresa, int IdTipoCbte_Ogiro, decimal IdCbteCble_Ogiro)
+        {
+            try
+            {
+                using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
+                {
+                    var Entity = Context.cp_orden_giro.Where(q => q.IdEmpresa == IdEmpresa && q.IdTipoCbte_Ogiro == IdTipoCbte_Ogiro && q.IdCbteCble_Ogiro == IdCbteCble_Ogiro).FirstOrDefault();
+                    if (Entity != null)
+                    {
+                        var TipoDocumento = Context.cp_TipoDocumento.Where(q => q.CodTipoDocumento == Entity.IdOrden_giro_Tipo).FirstOrDefault();
+                        if (TipoDocumento != null && TipoDocumento.ManejaTalonario)
+                        {
+                            Entity.aprobada_enviar_sri = true;
+                            Context.SaveChanges();
+                        }
+                    }
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        
         public bool modificarDB(cp_orden_giro_Info info)
         {
             try

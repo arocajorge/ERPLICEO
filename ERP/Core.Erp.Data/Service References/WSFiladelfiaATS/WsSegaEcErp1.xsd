@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://173.244.195.35/WsSegaEcErp/WsSegaEcErp.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WsSegaEcErp.Models" />
+  <xs:element name="vw_importacion_ats_fixed">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id_empre" type="xs:int" />
+        <xs:element minOccurs="0" name="_fe_desde" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="_fe_hasta" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="_user" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="_password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="vw_importacion_ats_fixedResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/WsSegaEcErp.Models" minOccurs="0" name="vw_importacion_ats_fixedResult" nillable="true" type="q1:ArrayOfvw_importacion_ats_fixed" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

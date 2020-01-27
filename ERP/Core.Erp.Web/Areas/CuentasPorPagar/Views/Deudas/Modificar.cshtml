@@ -438,6 +438,22 @@
             <div role="tabpanel" class="tab-pane" style="margin-left: 1em;" id="tab_detalle">
                 <div class="row">
                     <div class="col-md-12">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                @Html.DevExpress().CheckBoxFor(q => q.MueveInventario,
+                         settings =>
+                         {
+                             settings.Name = "MueveInventario";
+                             settings.Checked = false;
+                             settings.Text = "Genera movimiento de inventario";
+                         }
+                        ).GetHtml()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="co_observacion"></label>

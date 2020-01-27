@@ -59,6 +59,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -1781,6 +1782,11 @@
     <Compile Include="seg_usuario_x_tb_sucursal.cs">
       <DependentUpon>Model_seguridad_acceso.tt</DependentUpon>
     </Compile>
+    <Compile Include="Service References\WSFiladelfiaATS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="SPACTF_004_detalle_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
@@ -3080,6 +3086,19 @@
       <DependentUpon>Model_seguridad_acceso.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
+    <None Include="Service References\WSFiladelfiaATS\Core.Erp.Data.WSFiladelfiaATS.vw_importacion_ats_fixed.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSFiladelfiaATS\WsSegaEcErp.wsdl" />
+    <None Include="Service References\WSFiladelfiaATS\WsSegaEcErp.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WSFiladelfiaATS\WsSegaEcErp1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WSFiladelfiaATS\WsSegaEcErp2.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Compras\Base\Model_compras.Context.tt">
@@ -3292,6 +3311,13 @@
       <DependentUpon>Model_seguridad_acceso.edmx</DependentUpon>
       <LastGenOutput>Model_seguridad_acceso.cs</LastGenOutput>
     </Content>
+    <None Include="Service References\WSFiladelfiaATS\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\WSFiladelfiaATS\configuration.svcinfo" />
+    <None Include="Service References\WSFiladelfiaATS\configuration91.svcinfo" />
+    <None Include="Service References\WSFiladelfiaATS\WsSegaEcErp.disco" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -3314,6 +3340,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\WSFiladelfiaATS\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

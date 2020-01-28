@@ -3,11 +3,11 @@ EXEC [dbo].[spRo_procesa_AjusteIR]
 @IdEmpresa = 1,
 @IdAnio = 2019,
 @IdAjuste = 1,
-@IdEmpleado = 222,
-@IdSucursal = 0,
+@IdEmpleado = 0,
+@IdSucursal = 1,
 @IdUsuario ='ADMIN',
 @Fecha = '2019/01/01',
-@FechaCorte ='2019/09/30',
+@FechaCorte ='2019/11/30',
 @Observacion =''
 */
 
@@ -134,13 +134,39 @@ BEGIN --INSERT DEL DETALLE
 		   FROM ro_empleado as e inner join 
 		   ro_contrato as c on c.IdEmpresa = e.IdEmpresa and c.IdEmpleado = e.IdEmpleado
 		   where e.IdEmpresa = @IdEmpresa and e.IdEmpleado between @IdEmpleado and case when @IdEmpleado = 0 then 999999999999 else @IdEmpleado end
-		   and e.IdSucursal between @IdSucursal and case when @IdSucursal = 0 then 999999999 else 0 end
+		   and isnull(e.IdSucursal, @IdSucursal) between @IdSucursal and case when @IdSucursal = 0 then 999999999 else @IdSucursal end
 		   and e.em_status NOT IN ('EST_LIQ','EST_PLQ')
 		   and C.EstadoContrato NOT IN ('ECT_LIQ','ECT_PLQ')
 		   AND E.em_estado = 'A'
 		   and isnull(c.FechaFin,@FechaCorte) >= @FechaCorte
 
 END
+
+PRINT 'INSERT DEL DETALLE DE OTROS INGRESOS'
+BEGIN --INSERT DETALLE DE OTROS INGRESOS
+	IF(@w_IdAjuste > 0)
+	BEGIN		
+		INSERT INTO [dbo].[ro_AjusteImpuestoRentaDetOI]
+				([IdEmpresa]
+				,[IdAjuste]
+				,[IdEmpleado]
+				,[Secuencia]
+				,[DescripcionOI]
+				,[Valor])
+		select A.IdEmpresa, @IdAjuste, A.IdEmpleado, ROW_NUMBER() OVER(PARTITION BY A.IdEmpresa, A.IdEmpleado order by A.IdEmpresa) Secuencia, b.DescripcionOI, B.Valor
+		from(
+			select d.IdEmpresa, d.IdEmpleado, ROW_NUMBER() over(partition by d.IdEmpresa, d.IdEmpleado order by d.IdEmpresa, d.IdEmpleado, d.IdAjuste desc) IdRow, d.IdAjuste
+			from ro_AjusteImpuestoRentaDet d inner join 
+			ro_AjusteImpuestoRenta c on d.IdEmpresa = c.IdEmpresa and d.IdAjuste = c.IdAjuste inner join
+			ro_empleado as e on d.IdEmpresa = e.IdEmpresa and d.IdEmpleado = e.IdEmpleado
+			WHERE c.Estado = 1 and c.IdEmpresa = @IdEmpresa and d.IdEmpleado between @IdEmpleado and case when @IdEmpleado = 0 then 9999999999 else @IdEmpleado end
+			and e.IdSucursal between @IdSucursal and case when @IdSucursal = 0 then 9999999999 else @IdSucursal end
+		) a INNER JOIN 
+		ro_AjusteImpuestoRentaDetOI AS B ON A.IdEmpresa = B.IdEmpresa AND A.IdAjuste = B.IdAjuste AND A.IdEmpleado = B.IdEmpleado
+		where a.IdRow = 1
+	END
+END
+
 PRINT 'UPDATE DE SUELDO A LA FECHA'
 BEGIN --UPDATE DE SUELDO A LA FECHA
 	UPDATE [dbo].[ro_AjusteImpuestoRentaDet] SET SueldoFechaCorte = a.Valor
@@ -167,25 +193,50 @@ END
 
 PRINT 'UPDATE SUELDO DESDE FECHA CORTE A DICIEMBRE'
 BEGIN --UPDATE SUELDO DESDE FECHA CORTE A DICIEMBRE
-	UPDATE [dbo].[ro_AjusteImpuestoRentaDet] SET SueldoProyectado = a.Valor * @MesesHastaDiciembre
-	FROM(
-		SELECT rd.IdEmpresa, rd.IdEmpleado, [dbo].[BankersRounding](SUM(rd.Valor),2) AS Valor, ro_rubro_tipo.ru_tipo, ro_rol.IdNominaTipoLiqui
-		FROM     ro_rol_detalle(nolock) AS rd 	
-		INNER JOIN ro_rubro_tipo ON rd.IdEmpresa = ro_rubro_tipo.IdEmpresa AND rd.IdRubro = ro_rubro_tipo.IdRubro INNER JOIN
-		ro_rol ON rd.IdEmpresa = ro_rol.IdEmpresa AND rd.IdRol = ro_rol.IdRol INNER JOIN
-		ro_rubros_calculados ON ro_rubro_tipo.IdEmpresa = ro_rubros_calculados.IdEmpresa
-		WHERE  ro_rol.IdEmpresa = @IdEmpresa
-		AND (ro_rubro_tipo.ru_tipo = 'I') AND (ro_rol.IdNominaTipoLiqui = 2) and ro_rol.IdNominaTipo = 1
-		AND ro_rol.IdPeriodo = @IdPeriodoFin
-		AND RD.IdRubro NOT IN (ro_rubros_calculados.IdRubro_fondo_reserva, ro_rubros_calculados.IdRubro_DIII, ro_rubros_calculados.IdRubro_DIV)
-		AND ro_rubro_tipo.rub_grupo = 'INGRESOS' 
-		and rd.IdEmpleado between @IdEmpleado and case when @IdEmpleado = 0 then 9999999999 else @IdEmpleado end
-		GROUP BY rd.IdEmpresa, rd.IdEmpleado, ro_rubro_tipo.ru_tipo, ro_rol.IdNominaTipoLiqui 
-	) A
-	WHERE [dbo].[ro_AjusteImpuestoRentaDet].IdEmpresa = @IdEmpresa
-	AND [dbo].[ro_AjusteImpuestoRentaDet].IdAjuste = @IdAjuste
-	and [dbo].[ro_AjusteImpuestoRentaDet].IdEmpresa = a.IdEmpresa
-	and [dbo].[ro_AjusteImpuestoRentaDet].IdEmpleado = a.IdEmpleado
+	IF(@IdPeriodoFin != CAST(CAST(@IdAnio AS VARCHAR)+'11' AS INT))
+	BEGIN
+		UPDATE [dbo].[ro_AjusteImpuestoRentaDet] SET SueldoProyectado = a.Valor * @MesesHastaDiciembre
+		FROM(
+			SELECT rd.IdEmpresa, rd.IdEmpleado, [dbo].[BankersRounding](SUM(rd.Valor),2) AS Valor, ro_rubro_tipo.ru_tipo, ro_rol.IdNominaTipoLiqui
+			FROM     ro_rol_detalle(nolock) AS rd 	
+			INNER JOIN ro_rubro_tipo ON rd.IdEmpresa = ro_rubro_tipo.IdEmpresa AND rd.IdRubro = ro_rubro_tipo.IdRubro INNER JOIN
+			ro_rol ON rd.IdEmpresa = ro_rol.IdEmpresa AND rd.IdRol = ro_rol.IdRol INNER JOIN
+			ro_rubros_calculados ON ro_rubro_tipo.IdEmpresa = ro_rubros_calculados.IdEmpresa
+			WHERE  ro_rol.IdEmpresa = @IdEmpresa
+			AND (ro_rubro_tipo.ru_tipo = 'I') AND (ro_rol.IdNominaTipoLiqui = 2) and ro_rol.IdNominaTipo = 1
+			AND ro_rol.IdPeriodo = @IdPeriodoFin
+			AND RD.IdRubro NOT IN (ro_rubros_calculados.IdRubro_fondo_reserva, ro_rubros_calculados.IdRubro_DIII, ro_rubros_calculados.IdRubro_DIV)
+			AND ro_rubro_tipo.rub_grupo = 'INGRESOS' 
+			and rd.IdEmpleado between @IdEmpleado and case when @IdEmpleado = 0 then 9999999999 else @IdEmpleado end
+			GROUP BY rd.IdEmpresa, rd.IdEmpleado, ro_rubro_tipo.ru_tipo, ro_rol.IdNominaTipoLiqui 
+		) A
+		WHERE [dbo].[ro_AjusteImpuestoRentaDet].IdEmpresa = @IdEmpresa
+		AND [dbo].[ro_AjusteImpuestoRentaDet].IdAjuste = @IdAjuste
+		and [dbo].[ro_AjusteImpuestoRentaDet].IdEmpresa = a.IdEmpresa
+		and [dbo].[ro_AjusteImpuestoRentaDet].IdEmpleado = a.IdEmpleado
+	END
+	ELSE
+	BEGIN
+		UPDATE [dbo].[ro_AjusteImpuestoRentaDet] SET SueldoProyectado = a.Valor * @MesesHastaDiciembre
+		FROM(
+			SELECT rd.IdEmpresa, rd.IdEmpleado, [dbo].[BankersRounding](SUM(rd.Valor),2) AS Valor, ro_rubro_tipo.ru_tipo, ro_rol.IdNominaTipoLiqui
+			FROM     ro_rol_detalle(nolock) AS rd 	
+			INNER JOIN ro_rubro_tipo ON rd.IdEmpresa = ro_rubro_tipo.IdEmpresa AND rd.IdRubro = ro_rubro_tipo.IdRubro INNER JOIN
+			ro_rol ON rd.IdEmpresa = ro_rol.IdEmpresa AND rd.IdRol = ro_rol.IdRol INNER JOIN
+			ro_rubros_calculados ON ro_rubro_tipo.IdEmpresa = ro_rubros_calculados.IdEmpresa
+			WHERE  ro_rol.IdEmpresa = @IdEmpresa
+			AND (ro_rubro_tipo.ru_tipo = 'I') AND (ro_rol.IdNominaTipoLiqui = 2) and ro_rol.IdNominaTipo = 1
+			AND ro_rol.IdPeriodo = CAST(CAST(@IdAnio AS VARCHAR)+'12' AS INT)
+			AND RD.IdRubro NOT IN (ro_rubros_calculados.IdRubro_fondo_reserva, ro_rubros_calculados.IdRubro_DIII, ro_rubros_calculados.IdRubro_DIV)
+			AND ro_rubro_tipo.rub_grupo = 'INGRESOS' 
+			and rd.IdEmpleado between @IdEmpleado and case when @IdEmpleado = 0 then 9999999999 else @IdEmpleado end
+			GROUP BY rd.IdEmpresa, rd.IdEmpleado, ro_rubro_tipo.ru_tipo, ro_rol.IdNominaTipoLiqui 
+		) A
+		WHERE [dbo].[ro_AjusteImpuestoRentaDet].IdEmpresa = @IdEmpresa
+		AND [dbo].[ro_AjusteImpuestoRentaDet].IdAjuste = @IdAjuste
+		and [dbo].[ro_AjusteImpuestoRentaDet].IdEmpresa = a.IdEmpresa
+		and [dbo].[ro_AjusteImpuestoRentaDet].IdEmpleado = a.IdEmpleado
+	END
 END
 
 PRINT 'UPDATE OTROS INGRESOS'

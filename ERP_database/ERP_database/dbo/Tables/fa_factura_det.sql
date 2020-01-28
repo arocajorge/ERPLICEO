@@ -4,10 +4,6 @@
     [IdBodega]            INT            NOT NULL,
     [IdCbteVta]           NUMERIC (18)   NOT NULL,
     [Secuencia]           INT            NOT NULL,
-    [aca_IdAnio]          INT            NULL,
-    [aca_IdPlantilla]     INT            NULL,
-    [aca_IdPeriodo]       INT            NULL,
-    [aca_IdRubro]         INT            NULL,
     [IdProducto]          NUMERIC (18)   NOT NULL,
     [vt_cantidad]         FLOAT (53)     NOT NULL,
     [vt_Precio]           FLOAT (53)     NOT NULL,
@@ -36,6 +32,8 @@
     CONSTRAINT [FK_fa_factura_det_in_Producto] FOREIGN KEY ([IdEmpresa], [IdProducto]) REFERENCES [dbo].[in_Producto] ([IdEmpresa], [IdProducto]),
     CONSTRAINT [FK_fa_factura_det_tb_sis_Impuesto] FOREIGN KEY ([IdCod_Impuesto_Iva]) REFERENCES [dbo].[tb_sis_Impuesto] ([IdCod_Impuesto])
 );
+
+
 
 
 

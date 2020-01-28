@@ -76,7 +76,19 @@ FROM            dbo.ro_rol_detalle_x_rubro_acumulado(nolock) INNER JOIN
 							group by IdEmpresa, IdEmpleado, IdRubro
 						 ) G ON ro_empleado.IdEmpresa = G.IdEmpresa 
 						 AND ro_empleado.IdEmpleado = G.IdEmpleado
-						 and dbo.ro_rubros_calculados.IdRubro_prov_DIII = g.IdRubro
+						 and dbo.ro_rubros_calculados.IdRubro_prov_DIII = g.IdRubro INNER JOIN
+						 (
+							select a.IdEmpresa, a.IdEmpleado, a.IdContrato, dbo.fxGetIdPeriodo(a.FechaInicio) IdPeriodoIni, dbo.fxGetIdPeriodo(a.FechaFin) IdPeriodoFin
+							from(
+							select c.idempresa, c.idempleado, c.idcontrato,c.FechaInicio, c.FechaFin,
+							ROW_NUMBER() over(Partition by c.IdEmpresa, c.IdEmpleado order by c.IdEmpresa, c.IdEmpleado, fechaInicio desc)IdRow
+							from ro_contrato as c inner join 
+							ro_empleado as e on c.IdEmpresa = e.IdEmpresa and c.IdEmpleado = e.IdEmpleado
+							where c.IdEmpresa = @IdEmpresa 
+							and c.FechaInicio <= @Fecha_fin
+							and isnull(c.FechaFin,dateadd(year,50,GETDATE())) >= @fecha_fin
+							) a where a.IdRow = 1
+						 ) AS CA ON CA.IdEmpresa = ro_empleado.IdEmpresa and ca.IdEmpleado = ro_empleado.IdEmpleado 
 
 						 where ro_rol.IdEmpresa=@idempresa
 						 and ro_rol.IdSucursal>=@IdSucursalInicio
@@ -94,8 +106,11 @@ FROM            dbo.ro_rol_detalle_x_rubro_acumulado(nolock) INNER JOIN
 						  and ro_empleado.IdDivision>=@IdDivisionInicio
 						 and ro_empleado.IdDivision<=@IdDivisionFin
 						 and ro_periodo.pe_FechaIni between @fecha_inicio and @fecha_fin
+						
 						and ro_empleado.em_status<>'EST_PLQ' --22/11/2019 by Acueva, por q salian los liquidados
 						and ro_empleado.em_status<>'EST_LIQ' --03/12/2019 by Acueva, por q salian los liquidados
+
+						and ro_rol.IdPeriodo between ca.IdPeriodoIni and ca.IdPeriodoFin
 
 union all
 
@@ -214,12 +229,12 @@ END
 /*
 
 EXEC [web].[SPROL_013]
-@idempresa =2,
+@idempresa =5,
 @idnomina=1,
 @IdSucursalInicio=1,
 @IdSucursalFin=999999,
-@IdEmpleadoInicio=1,
-@IdEmpleadoFin=9999999,
+@IdEmpleadoInicio=16,
+@IdEmpleadoFin=16,
 @IdDivisionInicio=1,
 @IdDivisionFin=99999,
 @IdAreaInicion=1,

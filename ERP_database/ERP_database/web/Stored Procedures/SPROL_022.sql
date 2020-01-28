@@ -83,7 +83,7 @@ FROM            dbo.ro_rol AS r INNER JOIN
 						 and r.IdNominaTipoLiqui=@idnomina_Tipo_liq
 						 and r.IdPeriodo=@idperiodo
 						 and rub.ru_tipo='I'
-						  and r_dt.IdRubro not in(@IdRubroMatutino,@IdRubroVespertino,@IdRubroPrmariaVespertina ,@IdRubroHorasAdicionales, @IdRubro_horas_control_salida)
+						 and r_dt.IdRubro not in(@IdRubroMatutino,@IdRubroVespertino,@IdRubroPrmariaVespertina ,@IdRubroHorasAdicionales, @IdRubro_horas_control_salida) --by Acueva 15/01/2020
 						 --and r_dt.IdRubro not in(@IdRubroMatutino,@IdRubroVespertino,@IdRubroPrmariaVespertina ,@IdRubroHorasAdicionales)--ojo AQUI 25/09/2019
 						 and not exists
 						 (
@@ -102,12 +102,12 @@ FROM            dbo.ro_rol AS r INNER JOIN
 						 and d.IdPeriodo = @idperiodo
 						 )
 
-						--delete web.ro_SPROL_022 where IdRubro=@IdRubroBrigada and Descripcion is null and IdPeriodo=@idperiodo -- SE comentareo 26/06/2019
-						 if(@idempresa<>5)-- se añadio x estas lineas del if
+						-- delete web.ro_SPROL_022 where IdRubro=@IdRubroBrigada and Descripcion is null and IdPeriodo=@idperiodo -- SE comentareo 26/06/2019
+						
+						 if(@idempresa<>5)-- se añadio x estas lineas del if -- Se comentareo esto  by Acueva 15/01/2020
 						 Begin
 						 	delete web.ro_SPROL_022 where IdRubro=@IdRubroBrigada and Descripcion is null and IdPeriodo=@idperiodo 
 						 End
-					
 
 						SELECT r.IdEmpresa, r.IdDivision, r.IdSucursal, r.IdNomina_TipoLiqui, r.IdArea, r.IdEmpleado, r.IdJornada, r.IdNomina_Tipo, r.IdPeriodo, r.Descripcion, r.ru_descripcion, r.empleado, r.ca_descripcion, r.ru_tipo, r.ru_orden, r.Valor, r.IdRubro, 
 										  ro_Nomina_Tipo.Descripcion AS NomNomina, ro_Nomina_Tipoliqui.DescripcionProcesoNomina AS NomNominaTipo, tb_sucursal.Su_Descripcion, @FechaInicio AS FechaIni, @FechaFin AS FechaFin, ro_Division.Descripcion AS NomDivision, 
@@ -130,3 +130,11 @@ FROM            dbo.ro_rol AS r INNER JOIN
 			ORDER BY r.empleado
 
 END
+
+/*
+
+select * from ro_rol where IdEmpresa=5
+select * from ro_rubros_calculados where IdEmpresa=5
+select * from ro_rol_detalle where IdEmpresa=5 and IdRubro=30
+
+*/

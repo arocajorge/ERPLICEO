@@ -1,4 +1,4 @@
-﻿CREATE VIEW web.VWACTF_008
+﻿CREATE VIEW [web].[VWACTF_008]
 AS
 SELECT        TOP (20000) af.IdEmpresa, af.IdActivoFijo, af.Af_Nombre, 'Cant:' + (CONVERT(varchar(5), ISNULL(af.Cantidad, 1)) + ' ' + RTRIM(ISNULL(af.Af_observacion, ''))) AS Af_observacion, af.Estado, af.Af_fecha_compra, 
                          af.Af_costo_compra, af.Af_Vida_Util, af.IdEmpleadoEncargado, af.IdEmpleadoCustodio, enc.pe_nombreCompleto AS EmpleadoEncargado, cusper.pe_nombreCompleto AS EmpleadoCustodio, af.IdDepartamento, 
@@ -15,8 +15,8 @@ FROM            dbo.tb_persona AS cusper INNER JOIN
                          dbo.Af_Catalogo ON af.IdTipoCatalogo_Ubicacion = dbo.Af_Catalogo.IdCatalogo LEFT OUTER JOIN
                          dbo.Af_Catalogo AS Af_Catalogo_1 ON af.IdCatalogo_Modelo = Af_Catalogo_1.IdCatalogo LEFT OUTER JOIN
                          dbo.tb_persona AS enc ON af.IdEmpleadoEncargado = enc.IdPersona
-  WHERE        (af.Estado = 'A') -- OJO, AQUI CAMBIAR Y PONER DESDE EL COMBO BOX DEL SISTEMA ESTADOS BY ACUEVA 06/12/2019
-ORDER BY af.IdActivoFijo
+WHERE        (af.Estado = 'A')
+ORDER BY af.IdActivoFijo,Af_Nombre
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWACTF_008';
 

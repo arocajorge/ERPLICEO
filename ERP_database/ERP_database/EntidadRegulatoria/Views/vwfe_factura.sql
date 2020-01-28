@@ -1,16 +1,15 @@
 ﻿
 
-
 CREATE VIEW [EntidadRegulatoria].[vwfe_factura]
 AS
 SELECT        factura.IdEmpresa, factura.IdSucursal, factura.IdBodega, factura.IdCbteVta, factura.vt_serie1, factura.vt_serie2, factura.vt_NumFactura, factura.vt_fecha, factura.pe_Naturaleza, factura.IdTipoDocumento, factura.pe_cedulaRuc, 
                          factura.Nombres, factura.Telefono, factura.Celular, factura.Correo, factura.Direccion, factura.RazonSocial, factura.NombreComercial, factura.ContribuyenteEspecial, 'SI' AS ObligadoAllevarConta, factura.em_ruc, 
                          factura.em_direccion, factura.nom_FormaPago, '20' AS IdFormaPago, factura.Dias_Vct, factura_detalle.Base_imponible, factura_detalle.impuesto, factura_detalle.totalDescuento, factura_detalle.total_sin_impuesto, 
-                         factura_detalle.importeTotal, factura.Direccion AS Expr1, factura.em_direccion AS Expr2, factura.em_telefonos
+                         factura_detalle.importeTotal, factura.Direccion AS Expr1, factura.em_direccion AS Expr2, factura.em_telefonos, vt_Observacion
 FROM            (SELECT        fac.IdEmpresa, fac.IdSucursal, fac.IdBodega, fac.IdCbteVta, fac.vt_serie1, fac.vt_serie2, fac.vt_NumFactura, fac.vt_fecha, per.pe_Naturaleza, per.IdTipoDocumento, per.pe_cedulaRuc, 
                                                     per.pe_nombreCompleto AS Nombres, cl_cont.Telefono, cl_cont.Celular, cl_cont.Correo, per.pe_direccion AS Direccion, emp.RazonSocial, emp.NombreComercial, emp.ContribuyenteEspecial, 
                                                     'SI' AS ObligadoAllevarConta, emp.em_ruc, emp.em_direccion, dbo.fa_formaPago.nom_FormaPago, dbo.fa_formaPago.IdFormaPago, dbo.fa_TerminoPago.Dias_Vct, emp.em_telefonos, 
-                                                    dbo.tb_sis_Documento_Tipo_Talonario.es_Documento_Electronico
+                                                    dbo.tb_sis_Documento_Tipo_Talonario.es_Documento_Electronico, vt_Observacion
                           FROM            dbo.fa_cliente_contactos AS cl_cont INNER JOIN
                                                     dbo.fa_factura AS fac ON cl_cont.IdEmpresa = fac.IdEmpresa AND cl_cont.IdCliente = fac.IdCliente INNER JOIN
                                                     dbo.tb_persona AS per INNER JOIN

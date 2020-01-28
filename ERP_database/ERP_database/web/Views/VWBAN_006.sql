@@ -1,15 +1,19 @@
-﻿CREATE VIEW web.VWBAN_006
-AS
-SELECT        dbo.ct_cbtecble_det.IdEmpresa, dbo.ct_cbtecble_det.IdTipoCbte, dbo.ct_cbtecble_det.IdCbteCble, dbo.ct_cbtecble_det.secuencia, dbo.ba_Cbte_Ban.cb_giradoA, dbo.ba_Cbte_Ban.ValorEnLetras, 
-                         dbo.tb_ciudad.Descripcion_Ciudad, dbo.ba_Cbte_Ban.cb_Valor, dbo.ba_Cbte_Ban.cb_Fecha, dbo.ba_Cbte_Ban.cb_Observacion, dbo.ct_cbtecble_det.IdCtaCble, dbo.ct_plancta.pc_Cuenta, dbo.ct_cbtecble_det.dc_Valor, 
-                         CASE WHEN ct_cbtecble_det.dc_Valor > 0 THEN ct_cbtecble_det.dc_Valor ELSE 0 END AS dc_Valor_Debe, CASE WHEN ct_cbtecble_det.dc_Valor < 0 THEN ABS(ct_cbtecble_det.dc_Valor) ELSE 0 END AS dc_Valor_Haber, 
-                         dbo.ba_Cbte_Ban.cb_Cheque, CAST(dbo.ba_Cbte_Ban.cb_Cheque AS NUMERIC) AS cb_Cheque_numero, dbo.ba_Cbte_Ban.IdBanco, dbo.seg_usuario.Nombre AS NombreUsuario, dbo.ba_Banco_Cuenta.ba_Num_Cuenta, 
-                         dbo.ba_Banco_Cuenta.ba_Tipo, dbo.ba_Banco_Cuenta.ba_descripcion
+﻿CREATE view [web].[VWBAN_006]
+
+as
+SELECT        dbo.ct_cbtecble_det.IdEmpresa, dbo.ct_cbtecble_det.IdTipoCbte, dbo.ct_cbtecble_det.IdCbteCble, dbo.ct_cbtecble_det.secuencia
+-- ,dbo.ba_Cbte_Ban.cb_giradoA, dbo.ba_Cbte_Ban.ValorEnLetras,  dbo.tb_ciudad.Descripcion_Ciudad,
+,+'  '+ Convert(Varchar(70),dbo.ba_Cbte_Ban.cb_giradoA)cb_giradoA,+'  '+ Convert(Varchar(90),dbo.ba_Cbte_Ban.ValorEnLetras)ValorEnLetras, +'     '+ Convert(Varchar(70),dbo.tb_ciudad.Descripcion_Ciudad)Descripcion_Ciudad
+                         , dbo.ba_Cbte_Ban.cb_Valor, dbo.ba_Cbte_Ban.cb_Fecha, dbo.ba_Cbte_Ban.cb_Observacion, dbo.ct_cbtecble_det.IdCtaCble, dbo.ct_plancta.pc_Cuenta, 
+                         dbo.ct_cbtecble_det.dc_Valor, CASE WHEN ct_cbtecble_det.dc_Valor > 0 THEN ct_cbtecble_det.dc_Valor ELSE 0 END AS dc_Valor_Debe, 
+                         CASE WHEN ct_cbtecble_det.dc_Valor < 0 THEN ABS(ct_cbtecble_det.dc_Valor) ELSE 0 END AS dc_Valor_Haber, dbo.ba_Cbte_Ban.cb_Cheque, CAST(dbo.ba_Cbte_Ban.cb_Cheque AS NUMERIC) 
+                         AS cb_Cheque_numero, dbo.ba_Cbte_Ban.IdBanco, dbo.seg_usuario.Nombre AS NombreUsuario, dbo.ba_Banco_Cuenta.ba_Num_Cuenta, dbo.ba_Banco_Cuenta.ba_Tipo, 
+                         dbo.ba_Banco_Cuenta.ba_descripcion
 FROM            dbo.ct_plancta INNER JOIN
                          dbo.ct_cbtecble_det ON dbo.ct_plancta.IdEmpresa = dbo.ct_cbtecble_det.IdEmpresa AND dbo.ct_plancta.IdCtaCble = dbo.ct_cbtecble_det.IdCtaCble INNER JOIN
                          dbo.ba_Cbte_Ban INNER JOIN
-                         dbo.tb_ciudad ON dbo.ba_Cbte_Ban.cb_ciudadChq = dbo.tb_ciudad.IdCiudad ON dbo.ct_cbtecble_det.IdEmpresa = dbo.ba_Cbte_Ban.IdEmpresa AND dbo.ct_cbtecble_det.IdTipoCbte = dbo.ba_Cbte_Ban.IdTipocbte AND 
-                         dbo.ct_cbtecble_det.IdCbteCble = dbo.ba_Cbte_Ban.IdCbteCble INNER JOIN
+                         dbo.tb_ciudad ON dbo.ba_Cbte_Ban.cb_ciudadChq = dbo.tb_ciudad.IdCiudad ON dbo.ct_cbtecble_det.IdEmpresa = dbo.ba_Cbte_Ban.IdEmpresa AND 
+                         dbo.ct_cbtecble_det.IdTipoCbte = dbo.ba_Cbte_Ban.IdTipocbte AND dbo.ct_cbtecble_det.IdCbteCble = dbo.ba_Cbte_Ban.IdCbteCble INNER JOIN
                          dbo.ba_Banco_Cuenta ON dbo.ba_Cbte_Ban.IdEmpresa = dbo.ba_Banco_Cuenta.IdEmpresa AND dbo.ba_Cbte_Ban.IdBanco = dbo.ba_Banco_Cuenta.IdBanco LEFT OUTER JOIN
                          dbo.seg_usuario ON dbo.ba_Cbte_Ban.IdUsuario = dbo.seg_usuario.IdUsuario
 GO

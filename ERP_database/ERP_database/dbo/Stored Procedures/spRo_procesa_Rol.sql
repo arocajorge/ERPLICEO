@@ -106,8 +106,8 @@ insert into ro_rol_detalle
 ,rub_visible_reporte,	Observacion		,IngresosCompartidos, PagoHora	)
 
 select 
-
-@IdEmpresa				,@IdRol				,emp.IdSucursal			,cont.IdEmpleado		,@IdRubro_calculado	,'0' ,  dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida)
+-- acueva 10/01/2020 se añadio el isnull en calculo de horas:  ej isnull(dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida),0) en las lineas de abajo tambien en rol_detalles
+@IdEmpresa				,@IdRol				,emp.IdSucursal			,cont.IdEmpleado		,@IdRubro_calculado	,'0' ,  isnull(dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida),0)
 ,1						,'Días trabajados'	,	emp.Tiene_ingresos_compartidos,emp.Pago_por_horas
 FROM            dbo.ro_contrato AS cont INNER JOIN
                 dbo.ro_empleado AS emp ON cont.IdEmpresa = emp.IdEmpresa AND cont.IdEmpleado = emp.IdEmpleado
@@ -131,7 +131,7 @@ rub_visible_reporte,	Observacion,IngresosCompartidos, PagoHora)
 
 select 
 @IdEmpresa				,@IdRol,		emp.IdSucursal			,cont.IdEmpleado		,@IdRubro_calculado	,'1' ,
-case when emp.Pago_por_horas=0 then (cont.Sueldo/30)* (dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, CONT.FechaFin)) 
+case when emp.Pago_por_horas=0 then isnull((cont.Sueldo/30)* (dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, CONT.FechaFin)),0) 
 else 0 
 end
 ,1						,'Sueldo base'	, emp.Tiene_ingresos_compartidos,emp.Pago_por_horas	
@@ -296,6 +296,10 @@ group by rol_det.IdEmpresa,rol_det.IdEmpleado,ro_rol.IdNominaTipo,ro_rol.IdNomin
 ----------------------------------------------------------------------------------------------------------------------------------------------
 -------------calculando anticipo de quincena------------------------------------------------------------------------------------------------------<
 ----------------------------------------------------------------------------------------------------------------------------------------------
+PRINT 'calculando anticipo de quincena'
+DECLARE @IdPeriodoA INT
+if(@IdPeriodo>20200101) begin set @IdPeriodoA=Substring(cast(@IdPeriodo as varchar),0,7) end   if(@IdPeriodo<20200101)begin set @IdPeriodoA=@IdPeriodo end -- 10/01/2020 by acueva
+
 select @IdRubro_calculado= IdRubro_tot_pagar, @IdRubro_anticipo=IdRubro_anticipo,@IdRubro_PagoCheque=IdRubro_novedad_proceso from ro_rubros_calculados where IdEmpresa=@IdEmpresa-- obteniendo el idrubro desde parametros
 insert into ro_rol_detalle
 (IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro,			Orden,			Valor
@@ -312,8 +316,8 @@ FROM            dbo.ro_rol_detalle AS rol_det INNER JOIN
 
 where rol_det.IdEmpresa=@IdEmpresa
 and ro_rol.IdNominaTipo=@IdNomina
-and ro_rol.IdNominaTipoLiqui=1
-and ro_rol.IdPeriodo=CAST( @IdPEriodo as varchar)+'01'
+and ro_rol.IdNominaTipoLiqui=1 
+and ro_rol.IdPeriodo=CAST( @IdPEriodoA as varchar)+'01'-- CAST( @IdPEriodo as varchar)+'01'
 and rol_det.IdRubro in(@IdRubro_calculado,@IdRubro_PagoCheque)
 and emp.IdSucursal = @IdSucursalFin
 and cont.IdNomina=@IdNomina
@@ -323,7 +327,7 @@ group by rol_det.IdEmpresa,rol_det.IdEmpleado,ro_rol.IdNominaTipo,ro_rol.IdNomin
 
 
 
-update ro_rol_detalle set Valor = round(Valor,2) where IdEmpresa = @IdEmpresa and IdRol = @IdRol
+update ro_rol_detalle set Valor = round(ISNULL(Valor,0),2) where IdEmpresa = @IdEmpresa and IdRol = @IdRol
 
 PRINT 'calculando fondo de reserva'
 ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -492,30 +496,30 @@ and emp.IdSucursal = @IdSucursalFin
 	and cont.EstadoContrato<>'ECT_LIQ'
 group by rol_det.IdEmpresa,rol_det.IdEmpleado,ro_rol.IdNominaTipo,ro_rol.IdNominaTipoLiqui,ro_rol.IdPeriodo, emp.IdSucursal
 , emp.Tiene_ingresos_compartidos,emp.Pago_por_horas	
-/*
+
 ----------------------------------------------------------------------------------------------------------------------------------------------
 -------------calculandoliquido impuesto a la renta--------------------------------------------------------------------------------------------<
 ----------------------------------------------------------------------------------------------------------------------------------------------
+
+set @IdRubro_total_ingreso = @IdRubro_calculado
 
 select @IdRubro_calculado= IdRubro_IR from ro_rubros_calculados where IdEmpresa=@IdEmpresa-- obteniendo el idrubro desde parametros
 insert into ro_rol_detalle
 (IdEmpresa,				IdRol,	IdSucursal,					IdEmpleado,			IdRubro,			Orden,			Valor
 ,rub_visible_reporte,	Observacion)
 
-select
-@IdEmpresa				,@IdRol, emp.IdSucursal				,emp.IdEmpleado		,@IdRubro_calculado	,'600'			, ISNULL( dbo.base_impuesto_renta(@IdEmpresa,@IdNomina,@IdNominaTipo,@IdPEriodo,emp.idempleado,@Anio),0),
-1						,'Provisión impuesto a la renta'	
+select a.IdEmpresa, @IdRol, a.IdSucursal, a.IdEmpleado, @IdRubro_calculado, '600', a.ValorMensual,1,'Impuesto a la renta'
+from(
+select d.IdEmpresa, d.IdEmpleado, ROW_NUMBER() over(partition by d.IdEmpresa, d.IdEmpleado order by d.IdEmpresa, d.IdEmpleado, d.IdAjuste desc) IdRow, d.IdAjuste, c.FechaCorte, d.LiquidacionFinal, 12 - month(c.FechaCorte) MesesHastaDiciembre,
+dbo.BankersRounding(d.LiquidacionFinal / (12 - month(c.FechaCorte)),2) ValorMensual, e.IdSucursal
+from ro_AjusteImpuestoRentaDet d inner join 
+ro_AjusteImpuestoRenta c on d.IdEmpresa = c.IdEmpresa and d.IdAjuste = c.IdAjuste inner join
+ro_empleado as e on d.IdEmpresa = e.IdEmpresa and d.IdEmpleado = e.IdEmpleado
+WHERE c.Estado = 1 AND C.IdEmpresa = @IdEmpresa AND C.IdAnio = @Anio AND dbo.BankersRounding(D.LiquidacionFinal,2) > 0
+) a inner join ro_rol_detalle as b 
+on a.IdEmpresa = b.IdEmpresa and a.IdEmpleado = b.IdEmpleado and a.IdSucursal = b.IdSucursal
+where a.IdRow = 1 and b.IdRol = @IdRol and b.IdRubro = @IdRubro_total_ingreso and b.Valor > 0
 
-FROM            dbo.ro_empleado AS emp INNER JOIN
-                         dbo.ro_contrato AS cont ON emp.IdEmpresa = cont.IdEmpresa AND emp.IdEmpleado = cont.IdEmpleado LEFT OUTER JOIN
-                         dbo.ro_empleado_proyeccion_gastos AS gast ON emp.IdEmpresa = gast.IdEmpresa AND emp.IdEmpleado = gast.IdEmpleado
-
-where emp.IdEmpresa=@IdEmpresa
-and cont.IdNomina=@IdNomina
-and emp.IdSucursal = @IdSucursalFin
-and cont.IdNomina=@IdNomina
-and cont.EstadoContrato!='ECT_LIQ'
-*/
 ----------------------------------------------------------------------------------------------------------------------------------------------
 -------------calculando total egreso por empleado--------------------------------------------------------------------------------------------<
 ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -610,7 +614,7 @@ select
 @IdEmpresa				,@IdRol				,emp.IdSucursal				,rol_det.IdEmpleado		,@IdRubro_calculado	,			
 
 --CASE WHEN emp.Pago_por_horas = 1 then 
-ISNULL( round( (sum(rol_det.Valor) /30) * dbo.calcular_dias_fondos_reserva(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, ISNULL(EMP.em_fechaSalida,DATEADD(YEAR,50,GETDATE())), contI.FechaAcumulacion)*0.0833 ,2),0)
+ISNULL( round( (sum(isnull(rol_det.Valor,0)) /30) * dbo.calcular_dias_fondos_reserva(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, ISNULL(EMP.em_fechaSalida,DATEADD(YEAR,50,GETDATE())), contI.FechaAcumulacion)*0.0833 ,2),0)
 --else ISNULL(round( sum(rol_det.Valor)*0.0833 ,2),0) end
 
 --CAST( ( (sum(rol_det.Valor)/30)*  dbo.calcular_dias_fondos_reserva(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, CONT.FechaFin,contI.FechaAcumulacion))*0.0833 as numeric(10,2))
@@ -662,7 +666,7 @@ insert into ro_rol_detalle_x_rubro_acumulado
 (IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro,						Valor, Estado
 )
 select
-@IdEmpresa				,@IdRol				,emp.IdSucursal				,rol_det.IdEmpleado		,@IdRubro_calculado				,round((sum(rol_det.Valor)/360)*30,2)
+@IdEmpresa				,@IdRol				,emp.IdSucursal				,rol_det.IdEmpleado		,@IdRubro_calculado				,round((sum(isnull(rol_det.Valor,0))/360)*30,2)
 /*dbo.calcular_dias_trabajados(@Fi,isnull(emp.em_fechaSalida, cast(@Ff as date)),cont.FechaInicio, emp.em_status, emp.em_fechaSalida) as numeric(10,2))*/
 ,'PEN'
 FROM            dbo.ro_rol_detalle AS rol_det INNER JOIN
@@ -697,8 +701,8 @@ insert into ro_rol_detalle_x_rubro_acumulado
 (IdEmpresa,				IdRol,			idSucursal,						IdEmpleado,			IdRubro,						Valor,	Estado
 )
 select
-@IdEmpresa				,@IdRol				,emp.IdSucursal			,emp.IdEmpleado		,@IdRubro_calculado				,round( (@SueldoBasico/360)* 
-dbo.calcular_dias_trabajados(@Fi,isnull(emp.em_fechaSalida, cast(@Ff as date)),cont.FechaInicio, emp.em_status, emp.em_fechaSalida) ,2)
+@IdEmpresa				,@IdRol				,emp.IdSucursal			,emp.IdEmpleado		,@IdRubro_calculado				,round((isnull(@SueldoBasico,0)/360)* 
+isnull(dbo.calcular_dias_trabajados(@Fi,isnull(emp.em_fechaSalida, cast(@Ff as date)),cont.FechaInicio, emp.em_status, emp.em_fechaSalida),0) ,2)
 ,'PEN'
 FROM            dbo.ro_empleado AS emp INNER JOIN
                          dbo.ro_contrato AS cont ON emp.IdEmpresa = cont.IdEmpresa AND emp.IdEmpleado = cont.IdEmpleado INNER JOIN
@@ -944,7 +948,7 @@ insert into ro_rol_detalle_x_jornada
 (IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro, IdJornada,			Orden,			Valor
 ,rub_visible_reporte,	Observacion)
 
-select IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro, IdJornada,			Orden,		ROUND(SUM(	Valor),2)
+select IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro, IdJornada,			Orden,		ROUND(SUM(isnull(Valor,0)),2)
 ,Visible,	Observacion from ( 
 select 
 @IdEmpresa	IdEmpresa			,@IdRol IdRol				,emp.IdSucursal							,novc.IdEmpleado		,@IdRubro_calculado IdRubro,ISNULL( novc.IdJornada,1)IdJornada		,0 Orden,   sum(nov.Valor)*@Por_apor_pers_iess Valor
@@ -984,7 +988,7 @@ insert into ro_rol_detalle_x_jornada
 ,rub_visible_reporte,	Observacion)
 
 
-SELECT IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro,IdJornada ,			Orden,			ROUND(sum(Valor),2)Valor
+SELECT IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro,IdJornada ,			Orden,			ROUND(sum(isnull(Valor,0)),2)Valor
 ,rub_visible_reporte,	Observacion FROM (
 select 
 @IdEmpresa	IdEmpresa			,@IdRol	IdRol			,emp.IdSucursal							,novc.IdEmpleado		,@IdRubro_calculado IdRubro, ISNULL( novc.IdJornada,1)IdJornada		,0 Orden,   sum(nov.Valor)/12 Valor
@@ -1032,7 +1036,7 @@ insert into ro_rol_detalle_x_jornada
 ,rub_visible_reporte,	Observacion)
 
 
-select IdEmpresa,				IdRol,			IdSucursal,			IdEmpleado,			IdRubro,IdJornada,			Orden,			sum(Valor)Valor
+select IdEmpresa,				IdRol,			IdSucursal,			IdEmpleado,			IdRubro,IdJornada,			Orden,			sum(isnull(Valor,0))Valor
 ,rub_visible_reporte,	Observacion from
 (
 select
@@ -1105,7 +1109,7 @@ insert into ro_rol_detalle_x_jornada
 (IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro, IdJornada,			Orden,			Valor
 ,rub_visible_reporte,	Observacion)
 select
-@IdEmpresa				,@IdRol				,emp.IdSucursal						,emp.IdEmpleado		,@IdRubro_calculado,1	,'51'			,ROUND((@SueldoBasico/360)* 
+@IdEmpresa				,@IdRol				,emp.IdSucursal						,emp.IdEmpleado		,@IdRubro_calculado,1	,'51'			,ROUND((isnull(@SueldoBasico,0)/360)* 
 dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida) *0.5,2)
 ,1						,'Decimo cuarto sueldo'	
 FROM  dbo.ro_empleado emp, ro_contrato cont
@@ -1138,7 +1142,7 @@ insert into ro_rol_detalle_x_jornada
 (IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro, IdJornada,			Orden,			Valor
 ,rub_visible_reporte,	Observacion)
 select
-@IdEmpresa				,@IdRol				,emp.IdSucursal						,emp.IdEmpleado		,@IdRubro_calculado,2	,'51'			,ROUND((@SueldoBasico/360)* 
+@IdEmpresa				,@IdRol				,emp.IdSucursal						,emp.IdEmpleado		,@IdRubro_calculado,2	,'51'			,ROUND((isnull(@SueldoBasico,0)/360)* 
 dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida) *0.5,2)
 ,1						,'Decimo cuarto sueldo'	
 FROM  dbo.ro_empleado emp, ro_contrato cont
@@ -1178,7 +1182,7 @@ insert into ro_rol_detalle_x_jornada
 ,rub_visible_reporte,	Observacion)
 
 
-SELECT IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro,IdJornada ,			Orden,			ROUND(sum(Valor),2)Valor
+SELECT IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro,IdJornada ,			Orden,			ROUND(sum(isnull(Valor,0)),2)Valor
 ,rub_visible_reporte,	Observacion FROM (
 select 
 @IdEmpresa	IdEmpresa			,@IdRol	IdRol			,emp.IdSucursal							,novc.IdEmpleado		,@IdRubro_calculado IdRubro, ISNULL( novc.IdJornada,1)IdJornada		,0 Orden,   sum(nov.Valor)/12 Valor
@@ -1224,7 +1228,7 @@ insert into ro_rol_detalle_x_jornada
 ,rub_visible_reporte,	Observacion)
 
 
-select IdEmpresa,				IdRol,			IdSucursal,			IdEmpleado,			IdRubro,IdJornada,			Orden,			ROUND(sum(Valor),2)Valor
+select IdEmpresa,				IdRol,			IdSucursal,			IdEmpleado,			IdRubro,IdJornada,			Orden,			ROUND(sum(isnull(Valor,0)),2)Valor
 ,rub_visible_reporte,	Observacion from
 (
 select
@@ -1297,8 +1301,8 @@ insert into ro_rol_detalle_x_jornada
 (IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro, IdJornada,			Orden,			Valor
 ,rub_visible_reporte,	Observacion)
 select
-@IdEmpresa				,@IdRol				,emp.IdSucursal						,emp.IdEmpleado		,@IdRubro_calculado,1	,'51'			,ROUND((@SueldoBasico/360)* 
-dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida) *0.5,2)
+@IdEmpresa				,@IdRol				,emp.IdSucursal						,emp.IdEmpleado		,@IdRubro_calculado,1	,'51'			,ROUND((isnull(@SueldoBasico,0)/360)* 
+isnull(dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida),0) *0.5,2)
 ,1						,'Provision Decimo cuarto sueldo'	
 FROM  dbo.ro_empleado emp, ro_contrato cont
 where emp.IdEmpresa=cont.IdEmpresa
@@ -1330,8 +1334,8 @@ insert into ro_rol_detalle_x_jornada
 (IdEmpresa,				IdRol,			IdSucursal,						IdEmpleado,			IdRubro, IdJornada,			Orden,			Valor
 ,rub_visible_reporte,	Observacion)
 select
-@IdEmpresa				,@IdRol				,emp.IdSucursal						,emp.IdEmpleado		,@IdRubro_calculado,2	,'51'			,ROUND((@SueldoBasico/360)* 
-dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida) *0.5,2)
+@IdEmpresa				,@IdRol				,emp.IdSucursal						,emp.IdEmpleado		,@IdRubro_calculado,2	,'51'			,ROUND((isnull(@SueldoBasico,0)/360)* 
+isnull(dbo.calcular_dias_trabajados(@Fi,@Ff,emp.em_fechaIngaRol, emp.em_status, emp.em_fechaSalida),0) *0.5,2)
 ,1						,'Provision Decimo cuarto sueldo'	
 FROM  dbo.ro_empleado emp, ro_contrato cont
 where emp.IdEmpresa=cont.IdEmpresa

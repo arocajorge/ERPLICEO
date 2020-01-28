@@ -11,7 +11,8 @@
     [IdUsuarioUltAnu] VARCHAR (20) NULL,
     [Fecha_UltAnu]    DATETIME     NULL,
     CONSTRAINT [PK_tb_TarjetaCredito_x_cp_proveedor] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdTransaccion] ASC),
-    CONSTRAINT [FK_tb_TarjetaCredito_x_cp_proveedor_cp_proveedor] FOREIGN KEY ([IdEmpresa], [IdProveedor]) REFERENCES [dbo].[cp_proveedor] ([IdEmpresa], [IdProveedor]),
-    CONSTRAINT [FK_tb_TarjetaCredito_x_cp_proveedor_tb_TarjetaCredito] FOREIGN KEY ([IdTarjeta]) REFERENCES [dbo].[tb_TarjetaCredito] ([IdTarjeta])
+    CONSTRAINT [FK_tb_TarjetaCredito_x_cp_proveedor_cp_proveedor] FOREIGN KEY ([IdEmpresa], [IdProveedor]) REFERENCES [dbo].[cp_proveedor] ([IdEmpresa], [IdProveedor])
 );
+
+
 

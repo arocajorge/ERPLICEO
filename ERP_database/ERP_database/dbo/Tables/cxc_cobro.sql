@@ -15,6 +15,7 @@
     [cr_Banco]          VARCHAR (50)  NULL,
     [cr_cuenta]         VARCHAR (100) NULL,
     [cr_NumDocumento]   VARCHAR (100) NULL,
+    [IdTarjeta]         INT           NULL,
     [cr_Tarjeta]        VARCHAR (50)  NULL,
     [cr_propietarioCta] VARCHAR (100) NULL,
     [cr_estado]         NVARCHAR (1)  NULL,
@@ -38,8 +39,11 @@
     CONSTRAINT [FK_cxc_cobro_caj_Caja] FOREIGN KEY ([IdEmpresa], [IdCaja]) REFERENCES [dbo].[caj_Caja] ([IdEmpresa], [IdCaja]),
     CONSTRAINT [FK_cxc_cobro_cxc_cobro_tipo] FOREIGN KEY ([IdCobro_tipo]) REFERENCES [dbo].[cxc_cobro_tipo] ([IdCobro_tipo]),
     CONSTRAINT [FK_cxc_cobro_fa_cliente] FOREIGN KEY ([IdEmpresa], [IdCliente]) REFERENCES [dbo].[fa_cliente] ([IdEmpresa], [IdCliente]),
-    CONSTRAINT [FK_cxc_cobro_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])
+    CONSTRAINT [FK_cxc_cobro_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal]),
+    CONSTRAINT [FK_cxc_cobro_tb_TarjetaCredito1] FOREIGN KEY ([IdEmpresa], [IdTarjeta]) REFERENCES [dbo].[tb_TarjetaCredito] ([IdEmpresa], [IdTarjeta])
 );
+
+
 
 
 

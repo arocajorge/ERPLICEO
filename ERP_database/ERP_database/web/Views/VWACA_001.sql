@@ -4,7 +4,7 @@ SELECT dbo.aca_Matricula.IdEmpresa, dbo.aca_Matricula.IdMatricula, dbo.aca_Matri
                   dbo.aca_Alumno.IdPersona AS IdPersonaAlumno, dbo.tb_persona.pe_apellido AS ApellidoAlumno, dbo.tb_persona.pe_nombre AS NombreAlumno, dbo.vwaca_AnioLectivo_Jornada_Curso.Descripcion AS Anio, 
                   dbo.vwaca_AnioLectivo_Jornada_Curso.NomSede, dbo.vwaca_AnioLectivo_Jornada_Curso.NomNivel, dbo.vwaca_AnioLectivo_Jornada_Curso.NomJornada, dbo.vwaca_AnioLectivo_Jornada_Curso.NomCurso, 
                   dbo.aca_Paralelo.NomParalelo, dbo.tb_Catalogo.ca_descripcion AS Sexo, dbo.aca_Alumno.LugarNacimiento, dbo.tb_persona.pe_fechaNacimiento, dbo.aca_Alumno.Direccion AS DireccionAlumno, 
-                  dbo.aca_Alumno.Celular AS CelularAlumno, dbo.aca_SocioEconomico.TieneElectricidad, dbo.aca_SocioEconomico.TieneHermanos, dbo.aca_SocioEconomico.NombreHermanos, 
+                  dbo.aca_Alumno.Celular AS CelularAlumno, dbo.aca_SocioEconomico.TieneElectricidad, dbo.aca_SocioEconomico.TieneHermanos, 
                   dbo.aca_CatalogoFicha.NomCatalogoFicha AS TipoVivienda, aca_CatalogoFicha_1.NomCatalogoFicha AS TenenciaVivienda, dbo.tb_persona.CodCatalogoCONADIS, dbo.tb_persona.PorcentajeDiscapacidad, 
                   dbo.tb_persona.NumeroCarnetConadis, dbo.tb_pais.Nacionalidad AS NacionalidadAlumno, dbo.tb_persona.pe_telfono_Contacto AS TelefonoAlumno, aca_CatalogoFicha_2.NomCatalogoFicha AS Agua, 
                   tb_Catalogo_1.CodCatalogo AS TipoDiscapacidadAlumno, dbo.aca_SocioEconomico.SueldoPadre, dbo.aca_SocioEconomico.SueldoMadre, dbo.aca_SocioEconomico.GastoAlimentacion, dbo.aca_SocioEconomico.GastoEducacion, 

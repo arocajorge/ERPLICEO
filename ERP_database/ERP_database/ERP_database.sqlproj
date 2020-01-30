@@ -1273,6 +1273,7 @@
     <Build Include="dbo\Tables\aca_Reporte_x_seg_usuario.sql" />
     <Build Include="dbo\Tables\aca_Reporte.sql" />
     <Build Include="dbo\Tables\fa_PuntoVta_x_seg_usuario.sql" />
+    <Build Include="dbo\Views\vwfa_factura_ParaContabilizarAcademico.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

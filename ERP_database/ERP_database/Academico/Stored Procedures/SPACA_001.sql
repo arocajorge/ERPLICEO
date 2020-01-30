@@ -1,0 +1,89 @@
+﻿
+CREATE PROCEDURE [Academico].[SPACA_001]
+(
+@IdEmpresa int,
+@IdAlumno numeric
+)
+AS
+
+DECLARE @IdMatricula numeric, @IdAnioAnterior numeric
+
+select @IdMatricula = max(IdMatricula) from aca_Matricula
+where IdEmpresa = @IdEmpresa and IdAlumno = @IdAlumno
+
+set @IdMatricula = isnull(@IdMatricula,0)
+
+select @IdAnioAnterior = max(IdAnio) from aca_Matricula
+where IdEmpresa = @IdEmpresa and IdAlumno = @IdAlumno and IdMatricula != @IdMatricula
+
+set @IdAnioAnterior = isnull(@IdAnioAnterior,0)
+
+SELECT m.IdEmpresa, m.IdMatricula, m.Codigo AS CodigoMatricula, m.IdAlumno, SedeNivel.NomSede, SedeNivel.NomNivel, dbo.aca_AnioLectivo.Descripcion AS NomAnio, a.Codigo AS CodigoAlumno, p.pe_nombre, p.pe_apellido, 
+                  CASE WHEN p.pe_sexo = 'SEXO_MAS' THEN 'MASCULINO' ELSE 'FEMENINO' END AS pe_sexo, Pais.Nacionalidad, a.Direccion, Jornada.NomJornada, Curso.NomCurso, Paralelo.NomParalelo, Paralelo.CodigoParalelo, 
+                  p.pe_fechaNacimiento, a.LugarNacimiento, a.Celular, a.Correo, m.Fecha, dbo.aca_Plantilla.NomPlantilla, cali.AntiguaInstitucion,cali.Conducta, cali.Promedio, 
+				  case when isnull(doc.CantidadTotal,0) > 0 and isnull(doc.CantidadTotal,0) - isnull(doc.CantidadEntregados,0) = 0 then 'SI' ELSE 'NO' end DocumentosCompletos, sc.NomVivienda, sc.NomTipoVivienda, sc.NomAgua, sc.TieneElectricidad, sc.NomGrupoEtnico,
+				  sc.CantidadHermanos, sc.TieneConadis, sc.NomConadis, sc.NomViveCon, sc.CantidadHermanos, sc.TotalGastos, m.Observacion, PadreMadre.Titulo, PadreMadre.NomFamiliar, PadreMadre.NomEstadoCivil, PadreMadre.Direccion as DireccionFamiliar,
+				  PadreMadre.NomInstruccion, PadreMadre.EmpresaTrabajo, PadreMadre.Correo as CorreoFamiliar, PadreMadre.VehiculoPropio, PadreMadre.Marca, PadreMadre.Modelo, PadreMadre.AnioVehiculo, PadreMadre.pe_cedulaRuc as CedulaRucFamiliar,
+				  PadreMadre.NomProfesion, PadreMadre.Celular as CelularFamiliar, PadreMadre.IngresoMensual, PadreMadre.OtrosIngresos, m.IdUsuarioCreacion
+FROM     dbo.aca_Plantilla INNER JOIN
+                  dbo.aca_Alumno AS a INNER JOIN
+                  dbo.tb_persona AS p ON a.IdPersona = p.IdPersona INNER JOIN
+                  dbo.aca_Matricula AS m ON a.IdEmpresa = m.IdEmpresa AND a.IdAlumno = m.IdAlumno INNER JOIN
+                  dbo.aca_AnioLectivo ON m.IdEmpresa = dbo.aca_AnioLectivo.IdEmpresa AND m.IdAnio = dbo.aca_AnioLectivo.IdAnio ON dbo.aca_Plantilla.IdEmpresa = m.IdEmpresa AND dbo.aca_Plantilla.IdAnio = m.IdAnio AND 
+                  dbo.aca_Plantilla.IdPlantilla = m.IdPlantilla LEFT OUTER JOIN
+                  dbo.aca_AnioLectivo_Sede_NivelAcademico AS SedeNivel INNER JOIN
+                  dbo.aca_AnioLectivo_NivelAcademico_Jornada AS Jornada ON SedeNivel.IdEmpresa = Jornada.IdEmpresa AND SedeNivel.IdAnio = Jornada.IdAnio AND SedeNivel.IdSede = Jornada.IdSede AND 
+                  SedeNivel.IdNivel = Jornada.IdNivel INNER JOIN
+                  dbo.aca_AnioLectivo_Jornada_Curso AS Curso ON Jornada.IdEmpresa = Curso.IdEmpresa AND Jornada.IdAnio = Curso.IdAnio AND Jornada.IdSede = Curso.IdSede AND Jornada.IdNivel = Curso.IdNivel AND 
+                  Jornada.IdJornada = Curso.IdJornada INNER JOIN
+                  dbo.aca_AnioLectivo_Curso_Paralelo AS Paralelo ON Curso.IdEmpresa = Paralelo.IdEmpresa AND Curso.IdAnio = Paralelo.IdAnio AND Curso.IdSede = Paralelo.IdSede AND Curso.IdNivel = Paralelo.IdNivel AND 
+                  Curso.IdJornada = Paralelo.IdJornada AND Curso.IdCurso = Paralelo.IdCurso ON m.IdEmpresa = Paralelo.IdEmpresa AND m.IdAnio = Paralelo.IdAnio AND m.IdSede = Paralelo.IdSede AND m.IdNivel = Paralelo.IdNivel AND 
+                  m.IdJornada = Paralelo.IdJornada AND m.IdCurso = Paralelo.IdCurso AND m.IdParalelo = Paralelo.IdParalelo LEFT OUTER JOIN
+                  dbo.tb_pais AS Pais ON a.IdPais = Pais.IdPais LEFT JOIN
+				  (
+					  select a.IdEmpresa, a.IdAlumno, a.AntiguaInstitucion, a.Conducta, a.Promedio
+					  from [dbo].[aca_AnioLectivoCalificacionHistorico] as a
+					  where a.IdEmpresa = @IdEmpresa and a.IdAlumno = @IdAlumno and a.IdAnio = @IdAnioAnterior
+				  ) Cali on a.IdEmpresa = Cali.IdEmpresa and a.IdAlumno = Cali.IdAlumno LEFT JOIN
+				  (
+					select A.IdEmpresa, A.IdAlumno, SUM(A.CantidadEntregados) CantidadEntregados, SUM(A.CantidadTotal) CantidadTotal from(
+						SELECT A.IdEmpresa, A.IdAlumno, CASE WHEN A.EnArchivo = 1 THEN 1 ELSE 0 END CantidadEntregados, 1 AS CantidadTotal 
+						FROM aca_AlumnoDocumento A
+						WHERE A.IdEmpresa = @IdEmpresa AND A.IdAlumno = @IdAlumno
+					) A
+					GROUP BY A.IdEmpresa, A.IdAlumno
+				  ) Doc on a.IdEmpresa = doc.IdEmpresa and a.IdAlumno = doc.IdAlumno LEFT JOIN
+				  (
+						SELECT a.IdEmpresa, a.IdAlumno, Vi.NomCatalogoFicha AS NomVivienda, TVi.NomCatalogoFicha AS NomTipoVivienda, Ag.NomCatalogoFicha AS NomAgua, CASE WHEN sc.TieneElectricidad = 1 THEN 'SI' ELSE 'NO' END AS TieneElectricidad, 
+						dbo.tb_GrupoEtnico.NomGrupoEtnico, CASE WHEN tb_persona.CodCatalogoCONADIS IS NULL THEN 'NO' ELSE 'SI' END AS TieneConadis, dbo.tb_Catalogo.ca_descripcion AS NomConadis, 
+						dbo.aca_CatalogoFicha.NomCatalogoFicha AS NomViveCon, CASE WHEN sc.TieneHermanos = 1 THEN 'SI' ELSE 'NO' END AS TieneHermanos, sc.GastoAlimentacion + sc.GastoEducacion + sc.GastoServicioBasico + sc.GastoSalud + sc.GastoArriendo +
+						sc.GastoPrestamo + sc.OtroGasto AS TotalGastos, 99 as CantidadHermanos
+						FROM     dbo.tb_GrupoEtnico INNER JOIN
+						dbo.tb_persona INNER JOIN
+						dbo.aca_Alumno AS a ON dbo.tb_persona.IdPersona = a.IdPersona INNER JOIN
+						dbo.aca_CatalogoFicha AS TVi INNER JOIN
+						dbo.aca_CatalogoFicha AS Vi INNER JOIN
+						dbo.aca_SocioEconomico AS sc ON Vi.IdCatalogoFicha = sc.IdCatalogoFichaVi ON TVi.IdCatalogoFicha = sc.IdCatalogoFichaTVi INNER JOIN
+						dbo.aca_CatalogoFicha AS Ag ON sc.IdCatalogoFichaAg = Ag.IdCatalogoFicha ON a.IdEmpresa = sc.IdEmpresa AND a.IdAlumno = sc.IdAlumno ON dbo.tb_GrupoEtnico.IdGrupoEtnico = dbo.tb_persona.IdGrupoEtnico INNER JOIN
+						dbo.aca_CatalogoFicha ON sc.IdCatalogoFichaVive = dbo.aca_CatalogoFicha.IdCatalogoFicha LEFT OUTER JOIN
+						dbo.tb_Catalogo ON dbo.tb_persona.CodCatalogoCONADIS = dbo.tb_Catalogo.CodCatalogo
+						where a.IdEmpresa = @IdEmpresa and a.IdAlumno = @IdAlumno
+				  ) AS SC ON a.IdEmpresa = sc.IdEmpresa and a.IdAlumno = sc.IdAlumno left join
+				  (
+					SELECT f.IdEmpresa, f.IdAlumno, f.Secuencia, 
+					'DATOS DE' + CASE WHEN F.IdCatalogoPAREN = 10 THEN 'L PADRE' WHEN F.IdCatalogoPAREN = 11 THEN ' LA MADRE' ELSE ' ' + C.NomCatalogo END + CASE WHEN F.EsRepresentante = 1 THEN ' -- REPRESENTANTE' ELSE '' END + CASE
+					WHEN F.SeFactura = 1 THEN ' -- SE EMITE FACTURA' ELSE '' END AS Titulo, p.pe_nombreCompleto AS NomFamiliar, dbo.tb_Catalogo.ca_descripcion AS NomEstadoCivil, f.Direccion, dbo.aca_CatalogoFicha.NomCatalogoFicha AS NomInstruccion, 
+					f.EmpresaTrabajo, f.Correo, CASE WHEN f.VehiculoPropio = 1 THEN 'SI' ELSE 'NO' END AS VehiculoPropio, f.Marca, f.Modelo, p.pe_cedulaRuc, dbo.tb_profesion.Descripcion, f.Celular, f.IngresoMensual, f.AnioVehiculo, 
+					CASE WHEN F.IdCatalogoPAREN = 11 THEN  ISNULL(dbo.aca_SocioEconomico.OtroIngresoPadre,0) WHEN F.IdCatalogoPAREN = 10 THEN ISNULL(dbo.aca_SocioEconomico.OtroIngresoMadre,0) ELSE 0 END AS OtrosIngresos,
+					tb_profesion.Descripcion as NomProfesion
+					FROM     dbo.aca_Familia AS f INNER JOIN
+					dbo.tb_persona AS p ON f.IdPersona = p.IdPersona LEFT JOIN
+					dbo.aca_SocioEconomico ON f.IdEmpresa = dbo.aca_SocioEconomico.IdEmpresa AND f.IdAlumno = dbo.aca_SocioEconomico.IdAlumno LEFT OUTER JOIN
+					dbo.aca_Catalogo AS c ON f.IdCatalogoPAREN = c.IdCatalogo LEFT OUTER JOIN
+					dbo.tb_Catalogo ON p.IdEstadoCivil = dbo.tb_Catalogo.CodCatalogo LEFT OUTER JOIN
+					dbo.tb_profesion ON p.IdProfesion = dbo.tb_profesion.IdProfesion LEFT OUTER JOIN
+					dbo.aca_CatalogoFicha ON f.IdCatalogoFichaInst = dbo.aca_CatalogoFicha.IdCatalogoFicha
+					WHERE  (f.IdCatalogoPAREN IN (10, 11)) OR (f.SeFactura = 1) OR (f.EsRepresentante = 1)
+					and f.IdEmpresa = @IdEmpresa and f.IdAlumno = @IdAlumno
+				  ) PadreMadre on a.IdEmpresa = PadreMadre.IdEmpresa and a.IdAlumno = PadreMadre.IdAlumno
+where M.IdEmpresa = @IdEmpresa AND M.IdAlumno = @IdAlumno AND M.IdMatricula = @IdMatricula

@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [Academico].[SPACA_001]
+﻿CREATE PROCEDURE [Academico].[SPACA_001]
 (
 @IdEmpresa int,
 @IdAlumno numeric
@@ -22,9 +21,9 @@ SELECT m.IdEmpresa, m.IdMatricula, m.Codigo AS CodigoMatricula, m.IdAlumno, Sede
                   CASE WHEN p.pe_sexo = 'SEXO_MAS' THEN 'MASCULINO' ELSE 'FEMENINO' END AS pe_sexo, Pais.Nacionalidad, a.Direccion, Jornada.NomJornada, Curso.NomCurso, Paralelo.NomParalelo, Paralelo.CodigoParalelo, 
                   p.pe_fechaNacimiento, a.LugarNacimiento, a.Celular, a.Correo, m.Fecha, dbo.aca_Plantilla.NomPlantilla, cali.AntiguaInstitucion,cali.Conducta, cali.Promedio, 
 				  case when isnull(doc.CantidadTotal,0) > 0 and isnull(doc.CantidadTotal,0) - isnull(doc.CantidadEntregados,0) = 0 then 'SI' ELSE 'NO' end DocumentosCompletos, sc.NomVivienda, sc.NomTipoVivienda, sc.NomAgua, sc.TieneElectricidad, sc.NomGrupoEtnico,
-				  sc.CantidadHermanos, sc.TieneConadis, sc.NomConadis, sc.NomViveCon, sc.CantidadHermanos, sc.TotalGastos, m.Observacion, PadreMadre.Titulo, PadreMadre.NomFamiliar, PadreMadre.NomEstadoCivil, PadreMadre.Direccion as DireccionFamiliar,
+				  sc.TieneHermanos, sc.TieneConadis, sc.NomConadis, sc.NomViveCon, sc.CantidadHermanos, sc.TotalGastos, m.Observacion, PadreMadre.Titulo, PadreMadre.NomFamiliar, PadreMadre.NomEstadoCivil, PadreMadre.Direccion as DireccionFamiliar,
 				  PadreMadre.NomInstruccion, PadreMadre.EmpresaTrabajo, PadreMadre.Correo as CorreoFamiliar, PadreMadre.VehiculoPropio, PadreMadre.Marca, PadreMadre.Modelo, PadreMadre.AnioVehiculo, PadreMadre.pe_cedulaRuc as CedulaRucFamiliar,
-				  PadreMadre.NomProfesion, PadreMadre.Celular as CelularFamiliar, PadreMadre.IngresoMensual, PadreMadre.OtrosIngresos, m.IdUsuarioCreacion
+				  PadreMadre.NomProfesion, PadreMadre.Celular as CelularFamiliar, PadreMadre.IngresoMensual, PadreMadre.OtrosIngresos, m.IdUsuarioCreacion, cali.NivelProcedencia
 FROM     dbo.aca_Plantilla INNER JOIN
                   dbo.aca_Alumno AS a INNER JOIN
                   dbo.tb_persona AS p ON a.IdPersona = p.IdPersona INNER JOIN
@@ -41,9 +40,12 @@ FROM     dbo.aca_Plantilla INNER JOIN
                   m.IdJornada = Paralelo.IdJornada AND m.IdCurso = Paralelo.IdCurso AND m.IdParalelo = Paralelo.IdParalelo LEFT OUTER JOIN
                   dbo.tb_pais AS Pais ON a.IdPais = Pais.IdPais LEFT JOIN
 				  (
-					  select a.IdEmpresa, a.IdAlumno, a.AntiguaInstitucion, a.Conducta, a.Promedio
-					  from [dbo].[aca_AnioLectivoCalificacionHistorico] as a
+					  select a.IdEmpresa, a.IdAlumno, a.AntiguaInstitucion, a.Conducta, a.Promedio, b.NomNivel NivelProcedencia
+					  from [dbo].[aca_AnioLectivoCalificacionHistorico] as a LEFT JOIN
+					  aca_AnioLectivo_Sede_NivelAcademico AS B ON a.IdEmpresa = b.IdEmpresa
+					  and a.IdAnio = b.IdAnio and a.IdNivel = b.IdNivel 
 					  where a.IdEmpresa = @IdEmpresa and a.IdAlumno = @IdAlumno and a.IdAnio = @IdAnioAnterior
+					  group by a.IdEmpresa, a.IdAlumno, a.AntiguaInstitucion, a.Conducta, a.Promedio, b.NomNivel
 				  ) Cali on a.IdEmpresa = Cali.IdEmpresa and a.IdAlumno = Cali.IdAlumno LEFT JOIN
 				  (
 					select A.IdEmpresa, A.IdAlumno, SUM(A.CantidadEntregados) CantidadEntregados, SUM(A.CantidadTotal) CantidadTotal from(

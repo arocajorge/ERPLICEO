@@ -7,7 +7,6 @@
     [IdCatalogoFichaAg]     INT           NOT NULL,
     [TieneElectricidad]     BIT           NOT NULL,
     [TieneHermanos]         BIT           NOT NULL,
-    [NombreHermanos]        VARCHAR (MAX) NULL,
     [SueldoPadre]           FLOAT (53)    NOT NULL,
     [SueldoMadre]           FLOAT (53)    NOT NULL,
     [OtroIngresoPadre]      FLOAT (53)    NOT NULL,
@@ -41,6 +40,8 @@
     CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha5] FOREIGN KEY ([IdCatalogoFichaFin]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
     CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha6] FOREIGN KEY ([IdCatalogoFichaVive]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha])
 );
+
+
 
 
 

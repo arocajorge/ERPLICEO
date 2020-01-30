@@ -1278,6 +1278,7 @@
     <Build Include="dbo\Views\vwfa_factura_ParaContabilizarAcademico.sql" />
     <Build Include="Academico\Views\VWACA_002.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_001.sql" />
+    <Build Include="Academico\Views\VWACA_003.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

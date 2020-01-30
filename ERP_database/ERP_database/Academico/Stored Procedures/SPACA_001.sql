@@ -57,7 +57,7 @@ FROM     dbo.aca_Plantilla INNER JOIN
 						SELECT a.IdEmpresa, a.IdAlumno, Vi.NomCatalogoFicha AS NomVivienda, TVi.NomCatalogoFicha AS NomTipoVivienda, Ag.NomCatalogoFicha AS NomAgua, CASE WHEN sc.TieneElectricidad = 1 THEN 'SI' ELSE 'NO' END AS TieneElectricidad, 
 						dbo.tb_GrupoEtnico.NomGrupoEtnico, CASE WHEN tb_persona.CodCatalogoCONADIS IS NULL THEN 'NO' ELSE 'SI' END AS TieneConadis, dbo.tb_Catalogo.ca_descripcion AS NomConadis, 
 						dbo.aca_CatalogoFicha.NomCatalogoFicha AS NomViveCon, CASE WHEN sc.TieneHermanos = 1 THEN 'SI' ELSE 'NO' END AS TieneHermanos, sc.GastoAlimentacion + sc.GastoEducacion + sc.GastoServicioBasico + sc.GastoSalud + sc.GastoArriendo +
-						sc.GastoPrestamo + sc.OtroGasto AS TotalGastos, 99 as CantidadHermanos
+						sc.GastoPrestamo + sc.OtroGasto AS TotalGastos, CantidadHermanos
 						FROM     dbo.tb_GrupoEtnico INNER JOIN
 						dbo.tb_persona INNER JOIN
 						dbo.aca_Alumno AS a ON dbo.tb_persona.IdPersona = a.IdPersona INNER JOIN

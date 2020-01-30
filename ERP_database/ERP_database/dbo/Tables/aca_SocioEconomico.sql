@@ -25,6 +25,7 @@
     [OtroMotivoIngreso]     VARCHAR (MAX) NULL,
     [OtroInformacionInst]   VARCHAR (MAX) NULL,
     [OtroFinanciamiento]    VARCHAR (MAX) NULL,
+    [CantidadHermanos]      INT           NULL,
     [Estado]                BIT           NOT NULL,
     [IdUsuarioCreacion]     VARCHAR (200) NULL,
     [FechaCreacion]         DATETIME      NULL,
@@ -40,6 +41,8 @@
     CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha5] FOREIGN KEY ([IdCatalogoFichaFin]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
     CONSTRAINT [FK_aca_SocioEconomico_aca_CatalogoFicha6] FOREIGN KEY ([IdCatalogoFichaVive]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha])
 );
+
+
 
 
 

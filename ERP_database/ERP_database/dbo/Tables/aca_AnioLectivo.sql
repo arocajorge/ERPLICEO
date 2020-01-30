@@ -7,6 +7,7 @@
     [Estado]                BIT           NOT NULL,
     [EnCurso]               BIT           NOT NULL,
     [BloquearMatricula]     BIT           NOT NULL,
+    [IdAnioLectivoAnterior] INT           NULL,
     [IdUsuarioCreacion]     VARCHAR (200) NULL,
     [FechaCreacion]         DATETIME      NULL,
     [IdUsuarioModificacion] VARCHAR (200) NULL,
@@ -16,6 +17,8 @@
     [MotivoAnulacion]       VARCHAR (MAX) NULL,
     CONSTRAINT [PK_aca_AnioLectivo] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdAnio] ASC)
 );
+
+
 
 
 

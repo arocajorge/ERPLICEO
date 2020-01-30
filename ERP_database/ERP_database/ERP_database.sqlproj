@@ -90,6 +90,7 @@
     <Folder Include="Scripts" />
     <Folder Include="Academico\" />
     <Folder Include="Academico\Views\" />
+    <Folder Include="Academico\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\in_Ing_Egr_Inven.sql" />
@@ -1262,7 +1263,6 @@
     <Build Include="dbo\Views\vwaca_AnioLectivoConductaEquivalencia.sql" />
     <Build Include="dbo\Views\vwaca_AnioLectivo_Paralelo_Profesor_NoAsignados.sql" />
     <Build Include="dbo\Views\vwaca_AnioLectivoCalificacionHistorico.sql" />
-    <Build Include="web\Views\VWACA_001_Familiares.sql" />
     <Build Include="dbo\Tables\cxc_ConciliacionNotaCreditoDet.sql" />
     <Build Include="dbo\Tables\cxc_ConciliacionNotaCredito.sql" />
     <Build Include="dbo\Views\vwcxc_ConciliacionNotaCreditoDet.sql" />
@@ -1277,6 +1277,7 @@
     <Build Include="dbo\Tables\fa_PuntoVta_x_seg_usuario.sql" />
     <Build Include="dbo\Views\vwfa_factura_ParaContabilizarAcademico.sql" />
     <Build Include="Academico\Views\VWACA_002.sql" />
+    <Build Include="Academico\Stored Procedures\SPACA_001.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\ERP_database_20180907_23-41-21.dacpac" />

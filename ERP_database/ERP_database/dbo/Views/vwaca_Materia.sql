@@ -1,9 +1,10 @@
 ﻿CREATE VIEW dbo.vwaca_Materia
 AS
-SELECT dbo.aca_Materia.IdEmpresa, dbo.aca_Materia.IdMateria, dbo.aca_Materia.IdMateriaGrupo, dbo.aca_MateriaGrupo.NomMateriaGrupo, dbo.aca_MateriaGrupo.OrdenMateriaGrupo, dbo.aca_Materia.NomMateria, 
-                  dbo.aca_Materia.EsObligatorio, dbo.aca_Materia.OrdenMateria, dbo.aca_Materia.Estado, dbo.aca_Materia.IdMateriaArea
+SELECT dbo.aca_Materia.IdEmpresa, dbo.aca_Materia.IdMateria, dbo.aca_Materia.IdMateriaArea, dbo.aca_Materia.IdMateriaGrupo, dbo.aca_Materia.OrdenMateria, dbo.aca_MateriaArea.OrdenMateriaArea, 
+                  dbo.aca_MateriaGrupo.OrdenMateriaGrupo, dbo.aca_Materia.NomMateria, dbo.aca_MateriaArea.NomMateriaArea, dbo.aca_MateriaGrupo.NomMateriaGrupo, dbo.aca_Materia.EsObligatorio, dbo.aca_Materia.Estado
 FROM     dbo.aca_Materia INNER JOIN
-                  dbo.aca_MateriaGrupo ON dbo.aca_Materia.IdEmpresa = dbo.aca_MateriaGrupo.IdEmpresa AND dbo.aca_Materia.IdMateriaGrupo = dbo.aca_MateriaGrupo.IdMateriaGrupo
+                  dbo.aca_MateriaGrupo ON dbo.aca_Materia.IdEmpresa = dbo.aca_MateriaGrupo.IdEmpresa AND dbo.aca_Materia.IdMateriaGrupo = dbo.aca_MateriaGrupo.IdMateriaGrupo INNER JOIN
+                  dbo.aca_MateriaArea ON dbo.aca_Materia.IdEmpresa = dbo.aca_MateriaArea.IdEmpresa AND dbo.aca_Materia.IdMateriaArea = dbo.aca_MateriaArea.IdMateriaArea
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Materia';
 
@@ -14,7 +15,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[41] 4[20] 2[13] 3) )"
+         Configuration = "(H (1[21] 4[46] 2[8] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -88,7 +89,7 @@ Begin DesignProperties =
                Right = 293
             End
             DisplayFlags = 280
-            TopColumn = 3
+            TopColumn = 0
          End
          Begin Table = "aca_MateriaGrupo"
             Begin Extent = 
@@ -100,6 +101,16 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
+         Begin Table = "aca_MateriaArea"
+            Begin Extent = 
+               Top = 116
+               Left = 877
+               Bottom = 279
+               Right = 1122
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
       End
    End
    Begin SQLPane = 
@@ -107,7 +118,7 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 11
+      Begin ColumnWidths = 13
          Width = 284
          Width = 1200
          Width = 1200
@@ -119,11 +130,13 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 1200
+         Width = 1200
+         Width = 1200
       End
    End
    Begin CriteriaPane = 
       Begin ColumnWidths = 11
-         Column = 1440
+         Column = 2460
          Alias = 900
          Table = 1176
          Output = 720
@@ -140,6 +153,8 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Materia';
+
+
 
 
 

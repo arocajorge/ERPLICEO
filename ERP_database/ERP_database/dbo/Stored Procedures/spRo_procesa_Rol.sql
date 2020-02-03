@@ -511,7 +511,7 @@ insert into ro_rol_detalle
 select a.IdEmpresa, @IdRol, a.IdSucursal, a.IdEmpleado, @IdRubro_calculado, '600', a.ValorMensual,1,'Impuesto a la renta'
 from(
 select d.IdEmpresa, d.IdEmpleado, ROW_NUMBER() over(partition by d.IdEmpresa, d.IdEmpleado order by d.IdEmpresa, d.IdEmpleado, d.IdAjuste desc) IdRow, d.IdAjuste, c.FechaCorte, d.LiquidacionFinal, 12 - month(c.FechaCorte) MesesHastaDiciembre,
-dbo.BankersRounding(d.LiquidacionFinal / (12 - month(c.FechaCorte)),2) ValorMensual, e.IdSucursal
+dbo.BankersRounding(d.LiquidacionFinal / (12 - (case when month(@Ff) = month(c.FechaCorte) then 0 else month(c.FechaCorte) end )),2) ValorMensual, e.IdSucursal
 from ro_AjusteImpuestoRentaDet d inner join 
 ro_AjusteImpuestoRenta c on d.IdEmpresa = c.IdEmpresa and d.IdAjuste = c.IdAjuste inner join
 ro_empleado as e on d.IdEmpresa = e.IdEmpresa and d.IdEmpleado = e.IdEmpleado

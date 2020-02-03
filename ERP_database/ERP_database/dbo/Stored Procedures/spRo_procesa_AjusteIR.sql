@@ -138,6 +138,7 @@ BEGIN --INSERT DEL DETALLE
 		   and e.em_status NOT IN ('EST_LIQ','EST_PLQ')
 		   and C.EstadoContrato NOT IN ('ECT_LIQ','ECT_PLQ')
 		   AND E.em_estado = 'A'
+		   and c.IdNomina = 1
 		   and isnull(c.FechaFin,@FechaCorte) >= @FechaCorte
 
 END
@@ -315,7 +316,9 @@ UPDATE [dbo].[ro_AjusteImpuestoRentaDet] SET FraccionBasica = dbo.BankersRoundin
 END
 
 BEGIN --UPDATE IMPUESTO A LA RENTA DESCONTADO
-	UPDATE [dbo].[ro_AjusteImpuestoRentaDet] SET DescontadoFechaCorte = dbo.BankersRounding(a.Valor,2), LiquidacionFinal = ImpuestoRentaCausado - dbo.BankersRounding(a.Valor,2)
+IF(MONTH(@FechaCorte) > 1)
+BEGIN
+	UPDATE [dbo].[ro_AjusteImpuestoRentaDet] SET DescontadoFechaCorte = dbo.BankersRounding(a.Valor,2)
 	FROM(
 		SELECT A.IdEmpresa, B.IdEmpleado, SUM(B.Valor) Valor
 		FROM ro_rol AS A INNER JOIN 
@@ -329,5 +332,15 @@ BEGIN --UPDATE IMPUESTO A LA RENTA DESCONTADO
 	AND [dbo].[ro_AjusteImpuestoRentaDet].IdAjuste = @IdAjuste
 	and [dbo].[ro_AjusteImpuestoRentaDet].IdEmpresa = a.IdEmpresa
 	and [dbo].[ro_AjusteImpuestoRentaDet].IdEmpleado = a.IdEmpleado
+END
+ELSE
+BEGIN
+	UPDATE [dbo].[ro_AjusteImpuestoRentaDet] SET DescontadoFechaCorte = 0
+	WHERE [dbo].[ro_AjusteImpuestoRentaDet].IdEmpresa = @IdEmpresa
+	AND [dbo].[ro_AjusteImpuestoRentaDet].IdAjuste = @IdAjuste
+END
+	UPDATE [dbo].[ro_AjusteImpuestoRentaDet] SET LiquidacionFinal = ImpuestoRentaCausado - DescontadoFechaCorte
+	WHERE [dbo].[ro_AjusteImpuestoRentaDet].IdEmpresa = @IdEmpresa
+	AND [dbo].[ro_AjusteImpuestoRentaDet].IdAjuste = @IdAjuste
 END
 END

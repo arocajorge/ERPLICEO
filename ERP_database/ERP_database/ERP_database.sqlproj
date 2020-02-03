@@ -1279,6 +1279,7 @@
     <Build Include="Academico\Views\VWACA_002.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_001.sql" />
     <Build Include="Academico\Views\VWACA_003.sql" />
+    <Build Include="dbo\Tables\aca_MateriaArea.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

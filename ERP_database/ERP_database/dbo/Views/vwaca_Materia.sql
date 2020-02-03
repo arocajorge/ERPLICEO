@@ -1,7 +1,7 @@
 ﻿CREATE VIEW dbo.vwaca_Materia
 AS
 SELECT dbo.aca_Materia.IdEmpresa, dbo.aca_Materia.IdMateria, dbo.aca_Materia.IdMateriaGrupo, dbo.aca_MateriaGrupo.NomMateriaGrupo, dbo.aca_MateriaGrupo.OrdenMateriaGrupo, dbo.aca_Materia.NomMateria, 
-                  dbo.aca_Materia.EsObligatorio, dbo.aca_Materia.OrdenMateria, dbo.aca_Materia.Estado
+                  dbo.aca_Materia.EsObligatorio, dbo.aca_Materia.OrdenMateria, dbo.aca_Materia.Estado, dbo.aca_Materia.IdMateriaArea
 FROM     dbo.aca_Materia INNER JOIN
                   dbo.aca_MateriaGrupo ON dbo.aca_Materia.IdEmpresa = dbo.aca_MateriaGrupo.IdEmpresa AND dbo.aca_Materia.IdMateriaGrupo = dbo.aca_MateriaGrupo.IdMateriaGrupo
 GO
@@ -107,12 +107,13 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 10
+      Begin ColumnWidths = 11
          Width = 284
          Width = 1200
          Width = 1200
          Width = 1200
          Width = 2088
+         Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -139,6 +140,8 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Materia';
+
+
 
 
 

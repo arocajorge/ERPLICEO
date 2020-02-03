@@ -16,8 +16,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'om = 417
-               Right = 264
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'tom = 331
+               Right = 1276
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -29,10 +29,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'om = 417
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 13
+      Begin ColumnWidths = 11
          Width = 284
-         Width = 1200
-         Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -70,13 +68,15 @@ End
 
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[57] 4[13] 2[18] 3) )"
+         Configuration = "(H (1[56] 4[19] 2[7] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -144,10 +144,10 @@ Begin DesignProperties =
       Begin Tables = 
          Begin Table = "aca_AnioLectivoCalificacionHistorico"
             Begin Extent = 
-               Top = 141
-               Left = 392
-               Bottom = 424
-               Right = 636
+               Top = 149
+               Left = 288
+               Bottom = 404
+               Right = 532
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -204,9 +204,11 @@ Begin DesignProperties =
          End
          Begin Table = "aca_AnioLectivoConductaEquivalencia"
             Begin Extent = 
-               Top = 209
-               Left = 20
-               Bott', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivoCalificacionHistorico';
+               Top = 168
+               Left = 1032
+               Bot', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivoCalificacionHistorico';
+
+
 
 
 

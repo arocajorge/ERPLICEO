@@ -15,7 +15,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[37] 4[31] 2[8] 3) )"
+         Configuration = "(H (1[21] 4[46] 2[8] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -94,9 +94,9 @@ Begin DesignProperties =
          Begin Table = "aca_MateriaGrupo"
             Begin Extent = 
                Top = 0
-               Left = 658
+               Left = 594
                Bottom = 163
-               Right = 903
+               Right = 839
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -153,6 +153,8 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Materia';
+
+
 
 
 

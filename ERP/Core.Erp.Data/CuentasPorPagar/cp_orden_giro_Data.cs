@@ -229,7 +229,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                 return false;
             }
         }
-
         public bool ModificarEstadoAutorizacion(int IdEmpresa, int IdTipoCbte_Ogiro, decimal IdCbteCble_Ogiro)
         {
             try
@@ -254,8 +253,6 @@ namespace Core.Erp.Data.CuentasPorPagar
                 throw;
             }
         }
-
-        
         public bool modificarDB(cp_orden_giro_Info info)
         {
             try
@@ -310,6 +307,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                         Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;
                         Entity.Fecha_UltMod = DateTime.Now;
                         Entity.SecuenciaProveedor = info.SecuenciaProveedor;
+                        Entity.MueveInventario = info.MueveInventario;
                     }
 
                     if (info.lst_det.Count > 0)
@@ -825,7 +823,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                         IdSucursal_cxp = Entity.IdSucursal_cxp,
                         SecuenciaProveedor = Entity.SecuenciaProveedor,
                         IdPuntoVta = Entity.IdPuntoVta,
-                        MueveInventario = Entity.MueveInventario
+                        MueveInventario = Entity.MueveInventario ?? false
                     };
                 }
                 return info;
@@ -976,6 +974,70 @@ namespace Core.Erp.Data.CuentasPorPagar
                     Entity.Num_Autorizacion= info.Num_Autorizacion;
                     Entity.co_serie = info.co_serie;
                     Entity.co_factura = info.co_factura;
+                    Entity.MueveInventario = info.MueveInventario;
+
+                    if (info.lst_det.Count > 0)
+                    {
+                        var lst_det = Context.cp_orden_giro_det.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdTipoCbte_Ogiro == info.IdTipoCbte_Ogiro && q.IdCbteCble_Ogiro == info.IdCbteCble_Ogiro).ToList();
+                        Context.cp_orden_giro_det.RemoveRange(lst_det);
+                        int secuencia = 1;
+                        foreach (var item in info.lst_det)
+                        {
+                            Context.cp_orden_giro_det.Add(new cp_orden_giro_det
+                            {
+                                IdEmpresa = info.IdEmpresa,
+                                IdTipoCbte_Ogiro = info.IdTipoCbte_Ogiro,
+                                IdCbteCble_Ogiro = info.IdCbteCble_Ogiro,
+                                Secuencia = secuencia++,
+                                IdProducto = item.IdProducto,
+                                Cantidad = item.Cantidad,
+                                CostoUni = item.CostoUni,
+                                PorDescuento = item.PorDescuento,
+                                PorIva = item.PorIva,
+                                DescuentoUni = item.DescuentoUni,
+                                IdUnidadMedida = item.IdUnidadMedida,
+                                CostoUniFinal = item.CostoUniFinal,
+                                IdCod_Impuesto_Iva = item.IdCod_Impuesto_Iva,
+                                Subtotal = item.Subtotal,
+                                ValorIva = item.ValorIva,
+                                Total = item.Total,
+                                IdCtaCbleInv = item.IdCtaCbleInv,
+                                IdEmpresa_oc = item.IdEmpresa_oc,
+                                IdSucursal_oc = item.IdSucursal_oc,
+                                IdOrdenCompra = item.IdOrdenCompra,
+                                Secuencia_oc = item.Secuencia_oc
+                            });
+                        }
+
+                        if (info.MueveInventario ?? false)
+                        {
+                            var rel = Context.cp_orden_giro_x_in_Ing_Egr_Inven.Where(q => q.og_IdEmpresa == info.IdEmpresa && q.og_IdTipoCbte_Ogiro == info.IdTipoCbte_Ogiro && q.og_IdCbteCble_Ogiro == info.IdCbteCble_Ogiro).FirstOrDefault();
+                            var movi = armar_movi_inven(info, rel);
+                            if (movi != null)
+                            {
+                                if (rel == null)
+                                {
+                                    if (data_inv.guardarDB(movi, "+"))
+                                    {
+                                        Context.cp_orden_giro_x_in_Ing_Egr_Inven.Add(new cp_orden_giro_x_in_Ing_Egr_Inven
+                                        {
+                                            og_IdEmpresa = info.IdEmpresa,
+                                            og_IdTipoCbte_Ogiro = info.IdTipoCbte_Ogiro,
+                                            og_IdCbteCble_Ogiro = info.IdCbteCble_Ogiro,
+
+                                            inv_IdEmpresa = movi.IdEmpresa,
+                                            inv_IdSucursal = movi.IdSucursal,
+                                            inv_IdMovi_inven_tipo = movi.IdMovi_inven_tipo,
+                                            inv_IdNumMovi = movi.IdNumMovi
+                                        });
+                                    }
+                                }
+                                else
+                                    data_inv.modificarDB(movi);
+
+                            }
+                        }
+                    }
 
                     Context.SaveChanges();
 

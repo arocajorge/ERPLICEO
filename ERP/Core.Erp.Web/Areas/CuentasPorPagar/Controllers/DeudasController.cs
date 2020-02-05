@@ -327,7 +327,8 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal),
                 IdTipoServicio = cl_enumeradores.eTipoServicioCXP.SERVI.ToString(),
                 info_retencion = new cp_retencion_Info(),
-                MostrarComboCuentas = 0
+                MostrarComboCuentas = 0,
+                MueveInventario = IdEmpresa == 2 ? true : false
             };
 
             model.info_retencion = new cp_retencion_Info();

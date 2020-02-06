@@ -1282,6 +1282,7 @@
     <Build Include="dbo\Tables\aca_MateriaArea.sql" />
     <Build Include="dbo\Views\vwfa_notaCreDeb_ParaContabilizarAcademico.sql" />
     <Build Include="dbo\Views\vwfa_notaCreDeb_ParaConciliarNC.sql" />
+    <Build Include="Academico\Stored Procedures\SPCXC_001.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

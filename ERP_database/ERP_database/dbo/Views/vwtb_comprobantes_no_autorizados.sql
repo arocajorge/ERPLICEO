@@ -27,6 +27,18 @@ SELECT     doc.IdEmpresa, 'GUIA', doc.IdGuiaRemision, doc.Serie1, doc.Serie2, do
 FROM         dbo.tb_persona AS per INNER JOIN
                       dbo.fa_cliente AS cont ON per.IdPersona = cont.IdPersona INNER JOIN
                       dbo.fa_guia_remision AS doc ON cont.IdEmpresa = doc.IdEmpresa AND cont.IdCliente = doc.IdCliente AND doc.Estado = 1 AND doc.aprobada_enviar_sri = 0
+
+					  union all
+
+SELECT     doc.IdEmpresa, 'LIQCOM', doc.IdCbteCble_Ogiro, SUBSTRING( doc.co_serie,0,4), SUBSTRING( doc.co_serie,5,3), doc.co_factura Documento, 
+                      doc.co_serie +  '-' + doc.co_factura Documento, doc.co_fechaOg, per.pe_nombreCompleto, doc.co_observacion, doc.IdSucursal       
+FROM            dbo.cp_orden_giro doc INNER JOIN
+                         dbo.cp_proveedor ON doc.IdEmpresa = dbo.cp_proveedor.IdEmpresa AND doc.IdProveedor = dbo.cp_proveedor.IdProveedor INNER JOIN
+                         dbo.tb_persona per ON dbo.cp_proveedor.IdPersona = per.IdPersona
+
+						 where doc.aprobada_enviar_sri=1
+						 and doc.Num_Autorizacion is null
+						 and doc.Estado='A'
 						 
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwtb_comprobantes_no_autorizados';

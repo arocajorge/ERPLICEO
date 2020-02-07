@@ -145,7 +145,7 @@ FROM            dbo.ro_rol AS rol INNER JOIN
                          dbo.ro_contrato AS cont ON emp.IdEmpresa = cont.IdEmpresa AND emp.IdEmpleado = cont.IdEmpleado
 						 and rol_det.idrubro in(@IdRubroMatutina,@IdRubroVespertina)
 						 and emp.Pago_por_horas=1
-						 and peri.pe_anio=case when DATEPART(MONTH, @Fi) =1 then DATEPART(year, @Fi)-1 else  DATEPART(year, peri.pe_FechaIni) end
+						 and peri.pe_anio=case when DATEPART(MONTH, @Fi) =1 then DATEPART(year, @Fi)-1 else  DATEPART(year, @Fi) end
 						 and peri.pe_mes=case when DATEPART(MONTH, @Fi)=1 then 12 else  DATEPART(MONTH, @Fi)-1 end
 						 and pe_x_nom.IdNomina_TipoLiqui=2
 where cont.IdEmpresa=@IdEmpresa 

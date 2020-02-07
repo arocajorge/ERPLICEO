@@ -1283,6 +1283,8 @@
     <Build Include="dbo\Views\vwfa_notaCreDeb_ParaContabilizarAcademico.sql" />
     <Build Include="dbo\Views\vwfa_notaCreDeb_ParaConciliarNC.sql" />
     <Build Include="Academico\Stored Procedures\SPCXC_001.sql" />
+    <Build Include="EntidadRegulatoria\Views\vwfe_liquidacion_compra_det.sql" />
+    <Build Include="EntidadRegulatoria\Views\vwfe_liquidacion_compra.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

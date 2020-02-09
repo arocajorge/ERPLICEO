@@ -12,8 +12,11 @@
     [NumDocumento]              VARCHAR (300) NULL,
     [Valor_Aplicado]            FLOAT (53)    NOT NULL,
     [fecha_cruce]               DATE          NOT NULL,
-    CONSTRAINT [PK_fa_notaCreDeb_x_fa_factura_NotaDeb] PRIMARY KEY CLUSTERED ([IdEmpresa_nt] ASC, [IdSucursal_nt] ASC, [IdBodega_nt] ASC, [IdNota_nt] ASC, [secuencia] ASC)
+    CONSTRAINT [PK_fa_notaCreDeb_x_fa_factura_NotaDeb] PRIMARY KEY CLUSTERED ([IdEmpresa_nt] ASC, [IdSucursal_nt] ASC, [IdBodega_nt] ASC, [IdNota_nt] ASC, [secuencia] ASC),
+    CONSTRAINT [FK_fa_notaCreDeb_x_fa_factura_NotaDeb_fa_notaCreDeb] FOREIGN KEY ([IdEmpresa_nt], [IdSucursal_nt], [IdBodega_nt], [IdNota_nt]) REFERENCES [dbo].[fa_notaCreDeb] ([IdEmpresa], [IdSucursal], [IdBodega], [IdNota])
 );
+
+
 
 
 

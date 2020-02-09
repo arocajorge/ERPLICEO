@@ -1285,6 +1285,15 @@
     <Build Include="Academico\Stored Procedures\SPCXC_001.sql" />
     <Build Include="EntidadRegulatoria\Views\vwfe_liquidacion_compra_det.sql" />
     <Build Include="EntidadRegulatoria\Views\vwfe_liquidacion_compra.sql" />
+    <Build Include="Academico\Views\VWFAC_004.sql" />
+    <Build Include="Academico\Views\VWFAC_003_aplicaciones.sql" />
+    <Build Include="Academico\Views\VWFAC_003.sql" />
+    <Build Include="Academico\Views\VWFAC_002.sql" />
+    <Build Include="Academico\Views\VWFAC_001.sql" />
+    <Build Include="Academico\Views\VWCXC_003.sql" />
+    <Build Include="Academico\Views\VWCXC_002_diario.sql" />
+    <Build Include="Academico\Views\VWCXC_002.sql" />
+    <Build Include="Academico\Views\VWCONTA_001.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

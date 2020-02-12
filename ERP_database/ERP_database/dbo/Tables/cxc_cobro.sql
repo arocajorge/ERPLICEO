@@ -8,6 +8,7 @@
     [IdAlumno]          NUMERIC (18)  NULL,
     [IdCliente]         NUMERIC (18)  NOT NULL,
     [cr_TotalCobro]     FLOAT (53)    NOT NULL,
+    [cr_Saldo]          FLOAT (53)    NULL,
     [cr_fecha]          DATETIME      NOT NULL,
     [cr_fechaDocu]      DATETIME      NOT NULL,
     [cr_fechaCobro]     DATETIME      NOT NULL,
@@ -42,6 +43,8 @@
     CONSTRAINT [FK_cxc_cobro_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal]),
     CONSTRAINT [FK_cxc_cobro_tb_TarjetaCredito1] FOREIGN KEY ([IdEmpresa], [IdTarjeta]) REFERENCES [dbo].[tb_TarjetaCredito] ([IdEmpresa], [IdTarjeta])
 );
+
+
 
 
 

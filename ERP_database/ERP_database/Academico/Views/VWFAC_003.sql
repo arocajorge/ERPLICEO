@@ -1,4 +1,5 @@
-﻿create view academico.VWFAC_003 AS
+﻿CREATE VIEW [Academico].[VWFAC_003]
+AS
 SELECT fa_notaCreDeb_det.IdEmpresa, fa_notaCreDeb_det.IdSucursal, fa_notaCreDeb_det.IdBodega, fa_notaCreDeb_det.IdNota, fa_notaCreDeb_det.Secuencia, fa_notaCreDeb_det.IdProducto, in_Producto.pr_descripcion, 
                   in_presentacion.nom_presentacion, in_Producto.lote_num_lote, in_Producto.lote_fecha_vcto, fa_notaCreDeb_det.sc_cantidad, fa_notaCreDeb_det.sc_Precio, fa_notaCreDeb_det.sc_descUni, fa_notaCreDeb_det.sc_PordescUni, 
                   fa_notaCreDeb_det.sc_precioFinal, fa_notaCreDeb_det.sc_descUni * fa_notaCreDeb_det.sc_cantidad AS DescTotal, fa_notaCreDeb_det.sc_subtotal, iif(fa_notaCreDeb_det.vt_por_iva > 0, fa_notaCreDeb_det.sc_subtotal, 0) 
@@ -12,4 +13,5 @@ FROM     in_presentacion INNER JOIN
                   fa_notaCreDeb.IdNota = fa_notaCreDeb_det.IdNota ON in_Producto.IdEmpresa = fa_notaCreDeb_det.IdEmpresa AND in_Producto.IdProducto = fa_notaCreDeb_det.IdProducto INNER JOIN
                   fa_cliente_contactos ON fa_notaCreDeb.IdEmpresa = fa_cliente_contactos.IdEmpresa AND fa_notaCreDeb.IdCliente = fa_cliente_contactos.IdCliente INNER JOIN
                   tb_sucursal ON fa_notaCreDeb.IdEmpresa = tb_sucursal.IdEmpresa AND fa_notaCreDeb.IdSucursal = tb_sucursal.IdSucursal INNER JOIN
-                  fa_TipoNota AS tipo ON fa_notaCreDeb.IdTipoNota = tipo.IdTipoNota
+                  fa_TipoNota AS tipo ON fa_notaCreDeb.IdTipoNota = tipo.IdTipoNota and fa_notaCreDeb.IdEmpresa = tipo.IdEmpresa
+where fa_notaCreDeb.IdAlumno is not null and fa_notaCreDeb.IdNota = 1193

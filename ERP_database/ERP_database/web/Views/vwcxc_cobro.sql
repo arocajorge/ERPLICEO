@@ -1,8 +1,8 @@
 ﻿CREATE VIEW web.vwcxc_cobro
 AS
 SELECT dbo.cxc_cobro.IdEmpresa, dbo.cxc_cobro.IdSucursal, dbo.cxc_cobro.IdCobro, dbo.cxc_cobro.IdCliente, dbo.tb_persona.pe_nombreCompleto, dbo.cxc_cobro.IdCobro_tipo, dbo.cxc_cobro.cr_fecha, dbo.cxc_cobro.cr_TotalCobro, 
-                  dbo.cxc_cobro.cr_estado, dbo.tb_sucursal.Su_Descripcion, dbo.cxc_cobro.cr_observacion, dbo.cxc_cobro.cr_NumDocumento, Tipo.nom_Motivo_tipo_cobro, dbo.cxc_cobro.IdAlumno, 
-                  tb_persona_1.pe_nombreCompleto AS NomAlumno
+                  dbo.cxc_cobro.cr_estado, dbo.tb_sucursal.Su_Descripcion, dbo.cxc_cobro.cr_observacion, dbo.cxc_cobro.cr_NumDocumento, ISNULL(Tipo.nom_Motivo_tipo_cobro, t2.nom_Motivo_tipo_cobro) AS nom_Motivo_tipo_cobro, 
+                  dbo.cxc_cobro.IdAlumno, tb_persona_1.pe_nombreCompleto AS NomAlumno, dbo.cxc_cobro.cr_Saldo
 FROM     dbo.tb_persona AS tb_persona_1 INNER JOIN
                   dbo.aca_Alumno ON tb_persona_1.IdPersona = dbo.aca_Alumno.IdPersona RIGHT OUTER JOIN
                   dbo.cxc_cobro INNER JOIN
@@ -15,7 +15,9 @@ FROM     dbo.tb_persona AS tb_persona_1 INNER JOIN
                                          dbo.cxc_cobro_tipo ON dbo.cxc_cobro_det.IdCobro_tipo = dbo.cxc_cobro_tipo.IdCobro_tipo INNER JOIN
                                          dbo.cxc_cobro_tipo_motivo ON dbo.cxc_cobro_tipo.IdMotivo_tipo_cobro = dbo.cxc_cobro_tipo_motivo.IdMotivo_tipo_cobro
                        GROUP BY dbo.cxc_cobro_det.IdEmpresa, dbo.cxc_cobro_det.IdSucursal, dbo.cxc_cobro_det.IdCobro, dbo.cxc_cobro_tipo_motivo.nom_Motivo_tipo_cobro) AS Tipo ON Tipo.IdEmpresa = dbo.cxc_cobro.IdEmpresa AND 
-                  Tipo.IdSucursal = dbo.cxc_cobro.IdSucursal AND Tipo.IdCobro = dbo.cxc_cobro.IdCobro
+                  Tipo.IdSucursal = dbo.cxc_cobro.IdSucursal AND Tipo.IdCobro = dbo.cxc_cobro.IdCobro LEFT OUTER JOIN
+                  dbo.cxc_cobro_tipo AS t1 ON dbo.cxc_cobro.IdCobro_tipo = t1.IdCobro_tipo LEFT OUTER JOIN
+                  dbo.cxc_cobro_tipo_motivo AS t2 ON t1.IdMotivo_tipo_cobro = t2.IdMotivo_tipo_cobro
 
 
 GO
@@ -90,6 +92,26 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
+         Begin Table = "tb_persona_1"
+            Begin Extent = 
+               Top = 336
+               Left = 914
+               Bottom = 499
+               Right = 1188
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "aca_Alumno"
+            Begin Extent = 
+               Top = 240
+               Left = 198
+               Bottom = 403
+               Right = 443
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "cxc_cobro"
             Begin Extent = 
                Top = 6
@@ -137,27 +159,9 @@ Begin DesignProperties =
                Bottom = 498
                Right = 344
             End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "tb_persona_1"
-            Begin Extent = 
-               Top = 336
-               Left = 914
-               Bottom = 499
-               Right = 1188
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "aca_Alumno"
-            Begin Extent = 
-               Top = 240
-               Left = 198
-               Bottom = 403
-               Right = 443
-            End
             ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwcxc_cobro';
+
+
 
 
 
@@ -166,6 +170,26 @@ Begin DesignProperties =
 
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "t1"
+            Begin Extent = 
+               Top = 504
+               Left = 48
+               Bottom = 667
+               Right = 293
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "t2"
+            Begin Extent = 
+               Top = 672
+               Left = 48
+               Bottom = 791
+               Right = 304
+            End
+            DisplayFlags = 280
             TopColumn = 0
          End
       End
@@ -213,6 +237,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'DisplayFla
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwcxc_cobro';
+
+
 
 
 

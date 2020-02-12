@@ -1298,6 +1298,7 @@
     <Build Include="Academico\Tables\cxc_SPCXC_004.sql" />
     <Build Include="Academico\Views\VWACA_004.sql" />
     <Build Include="Academico\Stored Procedures\SPCXC_004.sql" />
+    <Build Include="dbo\Tables\aca_CondicionalMatricula.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

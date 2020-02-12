@@ -1,11 +1,15 @@
 ﻿CREATE VIEW web.vwcxc_cobro
 AS
 SELECT dbo.cxc_cobro.IdEmpresa, dbo.cxc_cobro.IdSucursal, dbo.cxc_cobro.IdCobro, dbo.cxc_cobro.IdCliente, dbo.tb_persona.pe_nombreCompleto, dbo.cxc_cobro.IdCobro_tipo, dbo.cxc_cobro.cr_fecha, dbo.cxc_cobro.cr_TotalCobro, 
-                  dbo.cxc_cobro.cr_estado, dbo.tb_sucursal.Su_Descripcion, dbo.cxc_cobro.cr_observacion, dbo.cxc_cobro.cr_NumDocumento, Tipo.nom_Motivo_tipo_cobro, dbo.cxc_cobro.IdAlumno
-FROM     dbo.cxc_cobro INNER JOIN
+                  dbo.cxc_cobro.cr_estado, dbo.tb_sucursal.Su_Descripcion, dbo.cxc_cobro.cr_observacion, dbo.cxc_cobro.cr_NumDocumento, Tipo.nom_Motivo_tipo_cobro, dbo.cxc_cobro.IdAlumno, 
+                  tb_persona_1.pe_nombreCompleto AS NomAlumno
+FROM     dbo.tb_persona AS tb_persona_1 INNER JOIN
+                  dbo.aca_Alumno ON tb_persona_1.IdPersona = dbo.aca_Alumno.IdPersona RIGHT OUTER JOIN
+                  dbo.cxc_cobro INNER JOIN
                   dbo.fa_cliente ON dbo.cxc_cobro.IdEmpresa = dbo.fa_cliente.IdEmpresa AND dbo.cxc_cobro.IdCliente = dbo.fa_cliente.IdCliente INNER JOIN
                   dbo.tb_persona ON dbo.fa_cliente.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
-                  dbo.tb_sucursal ON dbo.cxc_cobro.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.cxc_cobro.IdSucursal = dbo.tb_sucursal.IdSucursal LEFT OUTER JOIN
+                  dbo.tb_sucursal ON dbo.cxc_cobro.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.cxc_cobro.IdSucursal = dbo.tb_sucursal.IdSucursal ON dbo.aca_Alumno.IdEmpresa = dbo.cxc_cobro.IdEmpresa AND 
+                  dbo.aca_Alumno.IdAlumno = dbo.cxc_cobro.IdAlumno LEFT OUTER JOIN
                       (SELECT dbo.cxc_cobro_det.IdEmpresa, dbo.cxc_cobro_det.IdSucursal, dbo.cxc_cobro_det.IdCobro, dbo.cxc_cobro_tipo_motivo.nom_Motivo_tipo_cobro
                        FROM      dbo.cxc_cobro_det INNER JOIN
                                          dbo.cxc_cobro_tipo ON dbo.cxc_cobro_det.IdCobro_tipo = dbo.cxc_cobro_tipo.IdCobro_tipo INNER JOIN
@@ -20,7 +24,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[35] 4[33] 2[3] 3) )"
+         Configuration = "(H (1[34] 4[35] 2[3] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -136,6 +140,34 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
+         Begin Table = "tb_persona_1"
+            Begin Extent = 
+               Top = 336
+               Left = 914
+               Bottom = 499
+               Right = 1188
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "aca_Alumno"
+            Begin Extent = 
+               Top = 240
+               Left = 198
+               Bottom = 403
+               Right = 443
+            End
+            ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwcxc_cobro';
+
+
+
+
+
+
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'DisplayFlags = 280
+            TopColumn = 0
+         End
       End
    End
    Begin SQLPane = 
@@ -143,7 +175,7 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 15
+      Begin ColumnWidths = 16
          Width = 284
          Width = 1500
          Width = 1500
@@ -158,13 +190,8 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 1200
-     ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwcxc_cobro';
-
-
-
-
-GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'    Width = 1200
+         Width = 1200
+         Width = 1200
       End
    End
    Begin CriteriaPane = 
@@ -186,6 +213,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'    Width 
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwcxc_cobro';
+
+
 
 
 

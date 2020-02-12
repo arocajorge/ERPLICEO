@@ -91,6 +91,7 @@
     <Folder Include="Academico\" />
     <Folder Include="Academico\Views\" />
     <Folder Include="Academico\Stored Procedures\" />
+    <Folder Include="Academico\Tables\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\in_Ing_Egr_Inven.sql" />
@@ -1294,6 +1295,9 @@
     <Build Include="Academico\Views\VWCXC_002_diario.sql" />
     <Build Include="Academico\Views\VWCXC_002.sql" />
     <Build Include="Academico\Views\VWCONTA_001.sql" />
+    <Build Include="Academico\Tables\cxc_SPCXC_004.sql" />
+    <Build Include="Academico\Views\VWACA_004.sql" />
+    <Build Include="Academico\Stored Procedures\SPCXC_004.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

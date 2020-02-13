@@ -12,7 +12,9 @@
    declare @dias int
 
    SET @Fecha_fin = CASE WHEN DAY(@Fecha_fin) = 31 THEN DATEADD(DAY,-1,@Fecha_fin) 
+   						WHEN DAY(@Fecha_fin) = 29 THEN DATEADD(DAY,1,@Fecha_fin) -- Acueva 12/02/2020
 						WHEN DAY(@Fecha_fin) = 28 THEN DATEADD(DAY,2,@Fecha_fin)
+					
 						ELSE @Fecha_fin
 						END
 

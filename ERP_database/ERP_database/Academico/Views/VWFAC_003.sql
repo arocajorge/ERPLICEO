@@ -14,4 +14,4 @@ FROM     in_presentacion INNER JOIN
                   fa_cliente_contactos ON fa_notaCreDeb.IdEmpresa = fa_cliente_contactos.IdEmpresa AND fa_notaCreDeb.IdCliente = fa_cliente_contactos.IdCliente INNER JOIN
                   tb_sucursal ON fa_notaCreDeb.IdEmpresa = tb_sucursal.IdEmpresa AND fa_notaCreDeb.IdSucursal = tb_sucursal.IdSucursal INNER JOIN
                   fa_TipoNota AS tipo ON fa_notaCreDeb.IdTipoNota = tipo.IdTipoNota and fa_notaCreDeb.IdEmpresa = tipo.IdEmpresa
-where fa_notaCreDeb.IdAlumno is not null and fa_notaCreDeb.IdNota = 1193
+where fa_notaCreDeb.IdAlumno is not null

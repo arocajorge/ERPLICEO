@@ -1302,6 +1302,7 @@
     <Build Include="dbo\Views\vwaca_CondicionalMatricula.sql" />
     <Build Include="Academico\Views\VWACA_007.sql" />
     <Build Include="Academico\Views\VWACA_006.sql" />
+    <Build Include="Academico\Stored Procedures\SPACA_005.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

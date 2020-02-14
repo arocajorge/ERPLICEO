@@ -5,7 +5,7 @@ SELECT dbo.fa_factura_det.IdEmpresa, dbo.fa_factura_det.IdSucursal, dbo.fa_factu
                   dbo.fa_factura_det.vt_detallexItems, dbo.fa_factura_det.vt_por_iva, dbo.fa_factura_det.IdPunto_Cargo, dbo.fa_factura_det.IdPunto_cargo_grupo, dbo.fa_factura_det.IdCod_Impuesto_Iva, dbo.fa_factura_det.IdCentroCosto, 
                   dbo.fa_factura_det.IdEmpresa_pf, dbo.fa_factura_det.IdSucursal_pf, dbo.fa_factura_det.IdProforma, dbo.fa_factura_det.Secuencia_pf, dbo.in_Producto.pr_descripcion, dbo.in_presentacion.nom_presentacion, 
                   dbo.in_Producto.lote_num_lote, dbo.in_Producto.lote_fecha_vcto, dbo.in_Producto.se_distribuye, dbo.in_ProductoTipo.tp_ManejaInven, dbo.fa_factura_resumen.IdAnio, dbo.fa_factura_resumen.IdPlantilla, 
-                  dbo.fa_factura_resumen.IdRubro, dbo.fa_factura_resumen.IdPeriodo
+                  dbo.fa_factura_resumen.IdRubro, dbo.fa_factura_resumen.IdPeriodo, CAST(dbo.fa_factura_resumen.ValorProntoPago AS float) AS ValorProntoPago
 FROM     dbo.fa_factura_resumen INNER JOIN
                   dbo.fa_factura_det ON dbo.fa_factura_resumen.IdEmpresa = dbo.fa_factura_det.IdEmpresa AND dbo.fa_factura_resumen.IdSucursal = dbo.fa_factura_det.IdSucursal AND 
                   dbo.fa_factura_resumen.IdBodega = dbo.fa_factura_det.IdBodega AND dbo.fa_factura_resumen.IdCbteVta = dbo.fa_factura_det.IdCbteVta LEFT OUTER JOIN
@@ -19,7 +19,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[67] 4[3] 2[11] 3) )"
+         Configuration = "(H (1[32] 4[35] 2[19] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -85,6 +85,26 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
+         Begin Table = "fa_factura_resumen"
+            Begin Extent = 
+               Top = 0
+               Left = 66
+               Bottom = 390
+               Right = 324
+            End
+            DisplayFlags = 280
+            TopColumn = 8
+         End
+         Begin Table = "fa_factura_det"
+            Begin Extent = 
+               Top = 0
+               Left = 408
+               Bottom = 332
+               Right = 671
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "in_presentacion"
             Begin Extent = 
                Top = 197
@@ -115,26 +135,6 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "fa_factura_det"
-            Begin Extent = 
-               Top = 0
-               Left = 408
-               Bottom = 332
-               Right = 671
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "fa_factura_resumen"
-            Begin Extent = 
-               Top = 0
-               Left = 66
-               Bottom = 338
-               Right = 324
-            End
-            DisplayFlags = 280
-            TopColumn = 8
-         End
       End
    End
    Begin SQLPane = 
@@ -142,7 +142,7 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 9
+      Begin ColumnWidths = 36
          Width = 284
          Width = 1500
          Width = 1500
@@ -152,11 +152,12 @@ Begin DesignProperties =
          Width = 1500
          Width = 1500
          Width = 1500
-      End
-   End
-   Begin CriteriaPane = 
-      Begin ColumnWidths = 11
-         Column =', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwfa_factura_det';
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwfa_factura_det';
+
+
 
 
 
@@ -174,7 +175,35 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' 1440
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 1440
          Alias = 900
          Table = 1176
          Output = 720
@@ -191,6 +220,10 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' 1440
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwfa_factura_det';
+
+
+
+
 
 
 

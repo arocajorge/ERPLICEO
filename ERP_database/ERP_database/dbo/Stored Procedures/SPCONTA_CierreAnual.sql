@@ -1,4 +1,4 @@
-﻿--exec SPCONTA_CierreAnual 2,8,2019
+﻿--exec SPCONTA_CierreAnual 1,1,2019
 CREATE PROCEDURE [dbo].[SPCONTA_CierreAnual]
 (
 @IdEmpresa int,
@@ -7,8 +7,8 @@ CREATE PROCEDURE [dbo].[SPCONTA_CierreAnual]
 )
 AS
 
-select d.IdEmpresa, d.IdCtaCble, ISNULL(ROW_NUMBER() over(order by d.IdEmpresa),0) as Secuencia, d.IdCtaCble + ' - '+ pc.pc_Cuenta as pc_Cuenta, round(sum(d.dc_Valor),2) dc_Valor, case when round(sum(d.dc_Valor),2) > 0 then round(sum(d.dc_Valor),2) else 0 end as dc_Valor_Debe,
-case when round(sum(d.dc_Valor),2) < 0 then abs(round(sum(d.dc_Valor),2)) else 0 end as dc_Valor_Haber, d.IdCentroCosto, cc.cc_Descripcion, d.IdPunto_cargo_grupo, pg.nom_punto_cargo_grupo,
+select d.IdEmpresa, d.IdCtaCble, ISNULL(ROW_NUMBER() over(order by d.IdEmpresa),0) as Secuencia, d.IdCtaCble + ' - '+ pc.pc_Cuenta as pc_Cuenta, round(sum(d.dc_Valor),2)*-1 dc_Valor, case when round(sum(d.dc_Valor),2)*-1 > 0 then abs(round(sum(d.dc_Valor),2)) else 0 end as dc_Valor_Debe,
+case when (round(sum(d.dc_Valor),2))*-1 < 0 then abs(round(sum(d.dc_Valor),2)) else 0 end as dc_Valor_Haber, d.IdCentroCosto, cc.cc_Descripcion, d.IdPunto_cargo_grupo, pg.nom_punto_cargo_grupo,
 d.IdPunto_cargo, pp.nom_punto_cargo
 from ct_cbtecble as c inner join 
 ct_cbtecble_det as d on c.IdEmpresa = d.IdEmpresa and c.IdTipoCbte = d.IdTipoCbte and c.IdCbteCble = d.IdCbteCble inner join 
@@ -22,8 +22,8 @@ group by d.IdEmpresa, d.IdCtaCble, pc.pc_Cuenta,d.IdCentroCosto, cc.cc_Descripci
 d.IdPunto_cargo, pp.nom_punto_cargo
 having round(sum(dc_Valor),2) <> 0
 UNION ALL
-SELECT d.IdEmpresa, ISNULL(A.IdCtaCbleCierre, '') AS Expr1, 9999999 AS Secuencia, A.IdCtaCbleCierre + ' - ' + cta.pc_Cuenta AS Expr2, ROUND(SUM(d.dc_Valor)*-1, 2) AS dc_Valor, CASE WHEN round(SUM(d .dc_Valor)*-1, 2) 
-                  > 0 THEN round(SUM(d .dc_Valor)*-1, 2) ELSE 0 END AS dc_Valor_Debe, CASE WHEN round(SUM(d .dc_Valor)*-1, 2) < 0 THEN abs(round(SUM(d .dc_Valor)*-1, 2)) ELSE 0 END AS dc_Valor_Haber, NULL AS IdCentroCosto, NULL 
+SELECT d.IdEmpresa, ISNULL(A.IdCtaCbleCierre, '') AS Expr1, 9999999 AS Secuencia, A.IdCtaCbleCierre + ' - ' + cta.pc_Cuenta AS Expr2, ROUND(SUM(d.dc_Valor), 2) AS dc_Valor, CASE WHEN round(SUM(d .dc_Valor), 2) 
+                  > 0 THEN round(SUM(d .dc_Valor), 2) ELSE 0 END AS dc_Valor_Debe, CASE WHEN round(SUM(d .dc_Valor), 2) < 0 THEN abs(round(SUM(d .dc_Valor), 2)) ELSE 0 END AS dc_Valor_Haber, NULL AS IdCentroCosto, NULL 
                   AS cc_Descripcion, NULL AS IdPunto_cargo_grupo, NULL AS nom_punto_cargo_grupo, NULL AS IdPunto_cargo, NULL AS nom_punto_cargo
 FROM     ct_cbtecble AS c INNER JOIN
                   ct_cbtecble_det AS d ON c.IdEmpresa = d.IdEmpresa AND c.IdTipoCbte = d.IdTipoCbte AND c.IdCbteCble = d.IdCbteCble INNER JOIN

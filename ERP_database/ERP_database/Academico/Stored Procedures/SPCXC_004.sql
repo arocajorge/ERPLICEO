@@ -1,5 +1,6 @@
-﻿--EXEC Academico.SPCXC_004 1,'admin','2020/2/2'
-CREATE PROCEDURE Academico.SPCXC_004
+﻿
+--EXEC Academico.SPCXC_004 1,'admin','2020/3/2'
+CREATE PROCEDURE [Academico].[SPCXC_004]
 (
 @IdEmpresa int,
 @IdUsuario varchar(200),
@@ -77,5 +78,30 @@ WHERE [Academico].[cxc_SPCXC_004].IdEmpresa = A.IdEmpresa
 AND [Academico].[cxc_SPCXC_004].IdAlumno = A.IdAlumno
 AND [Academico].[cxc_SPCXC_004].IdAnio = A.IdAnio
 END
+
+PRINT 'UPDATE SALDO ACREEDOR'
+BEGIN 
+
+update [Academico].[cxc_SPCXC_004] set SaldoAcreedor = A.Saldo
+FROM(
+	SELECT a.IdEmpresa, a.IdAlumno, isnull(b.IdAnio,0) IdAnio, b.Total - ISNULL(C.Valor_Aplicado,0) Saldo
+	FROM fa_notaCreDeb AS A inner join 
+	fa_notaCreDeb_resumen as b on a.IdEmpresa = b.IdEmpresa and a.IdSucursal = b.IdSucursal and a.IdBodega = b.IdBodega and a.IdNota = b.IdNota left join
+	(
+		select a1.IdEmpresa_nt, a1.IdSucursal_nt, a1.IdBodega_nt, a1.IdNota_nt, sum(a1.Valor_Aplicado) Valor_Aplicado
+		from fa_notaCreDeb_x_fa_factura_NotaDeb as a1 inner join 
+		fa_notaCreDeb as a2 on a1.IdEmpresa_nt = a2.IdEmpresa and a1.IdSucursal_nt = a2.IdSucursal and a1.IdBodega_nt = a2.IdBodega and a1.IdNota_nt = a2.IdNota
+		where a2.IdEmpresa = @IdEmpresa and  a2.CreDeb = 'C' and a2.no_fecha <= @FechaCorte and cast(a1.fecha_cruce as date) <= @FechaCorte
+		group by a1.IdEmpresa_nt, a1.IdSucursal_nt, a1.IdBodega_nt, a1.IdNota_nt
+	) as c on a.IdEmpresa = c.IdEmpresa_nt AND A.IdSucursal = C.IdSucursal_nt AND A.IdBodega = C.IdBodega_nt AND A.IdNota = B.IdNota
+	WHERE A.IdEmpresa = @IdEmpresa AND A.no_fecha <= @FechaCorte AND A.Estado = 'A' and a.CreDeb = 'C') A
+WHERE [Academico].[cxc_SPCXC_004].IdEmpresa = A.IdEmpresa
+AND [Academico].[cxc_SPCXC_004].IdAlumno = A.IdAlumno
+AND [Academico].[cxc_SPCXC_004].IdAnio = A.IdAnio
+END
+
+
+UPDATE [Academico].[cxc_SPCXC_004] SET SaldoFinal = SaldoDeudor - SaldoAcreedor where IdEmpresa = @IdEmpresa and IdUsuario = @IdUsuario
+DELETE [Academico].[cxc_SPCXC_004] WHERE IdEmpresa = @IdEmpresa and IdUsuario = @IdUsuario and SaldoFinal = 0
 
 select * from [Academico].[cxc_SPCXC_004] where IdEmpresa = @IdEmpresa and IdUsuario = @IdUsuario

@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[cxc_ConciliacionNotaCredito] (
     [IdEmpresa]             INT           NOT NULL,
     [IdConciliacion]        NUMERIC (18)  NOT NULL,
+    [IdAlumno]              NUMERIC (18)  NOT NULL,
     [IdSucursal]            INT           NOT NULL,
     [IdBodega]              INT           NOT NULL,
     [IdNota]                NUMERIC (18)  NOT NULL,
@@ -19,10 +20,13 @@
     [FechaAnulacion]        DATETIME      NULL,
     [MotivoAnulacion]       VARCHAR (MAX) NULL,
     CONSTRAINT [PK_cxc_ConciliacionNotaCredito] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdConciliacion] ASC),
+    CONSTRAINT [FK_cxc_ConciliacionNotaCredito_aca_Alumno] FOREIGN KEY ([IdEmpresa], [IdAlumno]) REFERENCES [dbo].[aca_Alumno] ([IdEmpresa], [IdAlumno]),
     CONSTRAINT [FK_cxc_ConciliacionNotaCredito_ct_cbtecble] FOREIGN KEY ([IdEmpresa], [IdTipoCbte], [IdCbteCble]) REFERENCES [dbo].[ct_cbtecble] ([IdEmpresa], [IdTipoCbte], [IdCbteCble]),
     CONSTRAINT [FK_cxc_ConciliacionNotaCredito_cxc_cobro] FOREIGN KEY ([IdEmpresa], [IdSucursal], [IdCobro]) REFERENCES [dbo].[cxc_cobro] ([IdEmpresa], [IdSucursal], [IdCobro]),
     CONSTRAINT [FK_cxc_ConciliacionNotaCredito_fa_notaCreDeb] FOREIGN KEY ([IdEmpresa], [IdSucursal], [IdBodega], [IdNota]) REFERENCES [dbo].[fa_notaCreDeb] ([IdEmpresa], [IdSucursal], [IdBodega], [IdNota])
 );
+
+
 
 
 

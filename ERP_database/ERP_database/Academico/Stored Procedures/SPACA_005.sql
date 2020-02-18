@@ -1,4 +1,5 @@
-﻿create PROCEDURE [Academico].[SPACA_005]
+﻿--exec [Academico].[SPACA_005] 1, 1
+CREATE PROCEDURE [Academico].[SPACA_005]
 (
 @IdEmpresa int,
 @IdAlumno numeric
@@ -20,7 +21,7 @@ SELECT dbo.aca_SocioEconomico.IdEmpresa, dbo.aca_SocioEconomico.IdSocioEconomico
 				  NomMadre,DireccionMadre,NomEstadoCivilMadre,CelularMadre,ProfesionMadre, NomInstruccionMadre,CorreoMadre,EmpresaTrabajoMadre,DireccionTrabajoMadre,TelefonoTrabajoMadre,CargoTrabajoMadre,AniosServicioMadre,
 				  IngresoMensualMadre,VehiculoPropioMadre,MarcaMadre,ModeloMadre, AnioVehiculoMadre,
 				  NomRepresentante,DireccionRepresentante,NomEstadoCivilRepresentante,CelularRepresentante,ProfesionRepresentante, NomInstruccionRepresentante,CorreoRepresentante,EmpresaTrabajoRepresentante,DireccionTrabajoRepresentante,TelefonoTrabajoRepresentante,CargoTrabajoRepresentante,AniosServicioRepresentante,
-				  IngresoMensualRepresentante,VehiculoPropioRepresentante,MarcaRepresentante,ModeloRepresentante, AnioVehiculoRepresentante
+				  IngresoMensualRepresentante,VehiculoPropioRepresentante,MarcaRepresentante,ModeloRepresentante, AnioVehiculoRepresentante, Calificacion.Conducta, Calificacion.Promedio
 FROM     dbo.aca_SocioEconomico INNER JOIN
                   dbo.aca_Alumno ON dbo.aca_SocioEconomico.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_SocioEconomico.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
                   dbo.tb_persona AS PersonaAlumno ON dbo.aca_Alumno.IdPersona = PersonaAlumno.IdPersona LEFT OUTER JOIN
@@ -52,8 +53,8 @@ FROM     dbo.aca_SocioEconomico INNER JOIN
 					dbo.tb_Catalogo ON p.IdEstadoCivil = dbo.tb_Catalogo.CodCatalogo LEFT OUTER JOIN
 					dbo.tb_profesion ON p.IdProfesion = dbo.tb_profesion.IdProfesion LEFT OUTER JOIN
 					dbo.aca_CatalogoFicha ON f.IdCatalogoFichaInst = dbo.aca_CatalogoFicha.IdCatalogoFicha
-					WHERE --f.IdEmpresa = @IdEmpresa and f.IdAlumno = @IdAlumno
-					f.IdEmpresa = 1 and f.IdAlumno = 4605 and f.IdCatalogoPAREN=10
+					WHERE f.IdEmpresa = @IdEmpresa and f.IdAlumno = @IdAlumno
+					--f.IdEmpresa = 1 and f.IdAlumno = 4605 and f.IdCatalogoPAREN=10
 				  ) 
 				  Padre on aca_Alumno.IdEmpresa = Padre.IdEmpresa and aca_Alumno.IdAlumno = Padre.IdAlumno
 				  -----MADRE------
@@ -72,8 +73,8 @@ FROM     dbo.aca_SocioEconomico INNER JOIN
 					dbo.tb_Catalogo ON p.IdEstadoCivil = dbo.tb_Catalogo.CodCatalogo LEFT OUTER JOIN
 					dbo.tb_profesion ON p.IdProfesion = dbo.tb_profesion.IdProfesion LEFT OUTER JOIN
 					dbo.aca_CatalogoFicha ON f.IdCatalogoFichaInst = dbo.aca_CatalogoFicha.IdCatalogoFicha
-					WHERE --f.IdEmpresa = @IdEmpresa and f.IdAlumno = @IdAlumno
-					f.IdEmpresa = 1 and f.IdAlumno = 4605 and f.IdCatalogoPAREN=11
+					WHERE f.IdEmpresa = @IdEmpresa and f.IdAlumno = @IdAlumno
+					--f.IdEmpresa = 1 and f.IdAlumno = 4605 and f.IdCatalogoPAREN=11
 				  ) 
 				  Madre on aca_Alumno.IdEmpresa = Madre.IdEmpresa and aca_Alumno.IdAlumno = Madre.IdAlumno
 				  -----REPRESENTANTE---------
@@ -92,10 +93,17 @@ FROM     dbo.aca_SocioEconomico INNER JOIN
 					dbo.tb_Catalogo ON p.IdEstadoCivil = dbo.tb_Catalogo.CodCatalogo LEFT OUTER JOIN
 					dbo.tb_profesion ON p.IdProfesion = dbo.tb_profesion.IdProfesion LEFT OUTER JOIN
 					dbo.aca_CatalogoFicha ON f.IdCatalogoFichaInst = dbo.aca_CatalogoFicha.IdCatalogoFicha
-					WHERE f.IdEmpresa = @IdEmpresa and f.IdAlumno = @IdAlumno
+					WHERE f.IdEmpresa = @IdEmpresa and f.IdAlumno = @IdAlumno AND F.EsRepresentante = 1
 					--f.IdEmpresa = 1 and f.IdAlumno = 4605 and f.EsRepresentante=1
 				  ) 
-				  Representante on aca_Alumno.IdEmpresa = Representante.IdEmpresa and aca_Alumno.IdAlumno = Representante.IdAlumno
+				  Representante on aca_Alumno.IdEmpresa = Representante.IdEmpresa and aca_Alumno.IdAlumno = Representante.IdAlumno left join
+				  (
+					  select a.IdEmpresa, a.IdAlumno, a.IdAnio, a.Conducta, a.Promedio
+					  from aca_AnioLectivoCalificacionHistorico as a inner join aca_AnioLectivo as b
+					  on a.IdEmpresa = b.IdEmpresa and a.IdAnio = b.IdAnio -1
+					  where a.IdEmpresa = @IdEmpresa and a.IdAlumno = @IdAlumno and b.EnCurso = 1 
+				  ) Calificacion on aca_Alumno.IdEmpresa = Calificacion.IdEmpresa and aca_Alumno.IdAlumno = Calificacion.IdAlumno 
+
 where 
 aca_SocioEconomico.IdEmpresa = @IdEmpresa AND aca_SocioEconomico.IdAlumno = @IdAlumno
 --aca_SocioEconomico.IdEmpresa = 1 AND aca_SocioEconomico.IdAlumno = 4605

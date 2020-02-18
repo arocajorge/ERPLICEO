@@ -2,7 +2,7 @@
 AS
 SELECT dbo.cxc_cobro.IdEmpresa, dbo.cxc_cobro.IdSucursal, dbo.cxc_cobro.IdCobro, dbo.cxc_cobro.IdCliente, dbo.tb_persona.pe_nombreCompleto, dbo.cxc_cobro.IdCobro_tipo, dbo.cxc_cobro.cr_fecha, dbo.cxc_cobro.cr_TotalCobro, 
                   dbo.cxc_cobro.cr_estado, dbo.tb_sucursal.Su_Descripcion, dbo.cxc_cobro.cr_observacion, dbo.cxc_cobro.cr_NumDocumento, ISNULL(Tipo.nom_Motivo_tipo_cobro, t2.nom_Motivo_tipo_cobro) AS nom_Motivo_tipo_cobro, 
-                  dbo.cxc_cobro.IdAlumno, tb_persona_1.pe_nombreCompleto AS NomAlumno, dbo.cxc_cobro.cr_Saldo
+                  dbo.cxc_cobro.IdAlumno, tb_persona_1.pe_nombreCompleto AS NomAlumno, dbo.cxc_cobro.cr_Saldo, dbo.cxc_cobro.IdUsuario
 FROM     dbo.tb_persona AS tb_persona_1 INNER JOIN
                   dbo.aca_Alumno ON tb_persona_1.IdPersona = dbo.aca_Alumno.IdPersona RIGHT OUTER JOIN
                   dbo.cxc_cobro INNER JOIN
@@ -26,7 +26,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[34] 4[35] 2[3] 3) )"
+         Configuration = "(H (1[71] 4[3] 2[3] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -120,7 +120,7 @@ Begin DesignProperties =
                Right = 788
             End
             DisplayFlags = 280
-            TopColumn = 5
+            TopColumn = 20
          End
          Begin Table = "fa_cliente"
             Begin Extent = 
@@ -160,6 +160,8 @@ Begin DesignProperties =
                Right = 344
             End
             ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwcxc_cobro';
+
+
 
 
 

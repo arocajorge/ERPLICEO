@@ -1,17 +1,10 @@
-﻿create view Academico.VWACA_002 as
-SELECT dbo.aca_Matricula.IdEmpresa, dbo.aca_Matricula.IdMatricula, 
-dbo.aca_Matricula.IdAlumno, dbo.aca_Matricula.IdAnio, 
-isnull (dbo.vwaca_AnioLectivo_Curso_Paralelo.Descripcion,'')Descripcion, dbo.aca_AnioLectivo.EnCurso, 
-                  isnull (dbo.vwaca_AnioLectivo_Curso_Paralelo.NomSede,'') NomSede, 
-				  isnull (dbo.vwaca_AnioLectivo_Curso_Paralelo.NomNivel,'')NomNivel,
-				  isnull (dbo.vwaca_AnioLectivo_Curso_Paralelo.NomJornada, '')NomJornada, 
-				  isnull (dbo.vwaca_AnioLectivo_Curso_Paralelo.NomCurso,'')NomCurso, 
-                  isnull (dbo.vwaca_AnioLectivo_Curso_Paralelo.NomParalelo,'')NomParalelo,
-				  isnull (dbo.aca_Alumno.Codigo,'') AS CodigoAlumno, 
-				  isnull (dbo.tb_persona.pe_nombreCompleto ,'')AS NombreAlumno, 
-				  tb_persona_1.pe_cedulaRuc AS CedulaRep, 
-                  isnull (tb_persona_1.pe_nombreCompleto,'') AS NombreRep, 
-				  isnull (dbo.aca_Plantilla.NomPlantilla,'')NomPlantilla
+CREATE VIEW Academico.VWACA_002
+AS
+SELECT dbo.aca_Matricula.IdEmpresa, dbo.aca_Matricula.IdMatricula, dbo.aca_Matricula.IdAlumno, dbo.aca_Matricula.IdAnio, ISNULL(dbo.vwaca_AnioLectivo_Curso_Paralelo.Descripcion, '') AS Descripcion, dbo.aca_AnioLectivo.EnCurso, 
+                  ISNULL(dbo.vwaca_AnioLectivo_Curso_Paralelo.NomSede, '') AS NomSede, ISNULL(dbo.vwaca_AnioLectivo_Curso_Paralelo.NomNivel, '') AS NomNivel, ISNULL(dbo.vwaca_AnioLectivo_Curso_Paralelo.NomJornada, '') AS NomJornada, 
+                  ISNULL(dbo.vwaca_AnioLectivo_Curso_Paralelo.NomCurso, '') AS NomCurso, ISNULL(dbo.vwaca_AnioLectivo_Curso_Paralelo.NomParalelo, '') AS NomParalelo, ISNULL(dbo.aca_Alumno.Codigo, '') AS CodigoAlumno, 
+                  ISNULL(dbo.tb_persona.pe_nombreCompleto, '') AS NombreAlumno, tb_persona_1.pe_cedulaRuc AS CedulaRep, ISNULL(tb_persona_1.pe_nombreCompleto, '') AS NombreRep, ISNULL(dbo.aca_Plantilla.NomPlantilla, '') AS NomPlantilla, 
+                  dbo.aca_Matricula.IdUsuarioCreacion, dbo.aca_Matricula.FechaCreacion
 FROM     dbo.aca_Matricula INNER JOIN
                   dbo.vwaca_AnioLectivo_Curso_Paralelo ON dbo.aca_Matricula.IdEmpresa = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdEmpresa AND dbo.aca_Matricula.IdAnio = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdAnio AND 
                   dbo.aca_Matricula.IdSede = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdSede AND dbo.aca_Matricula.IdNivel = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdNivel AND 
@@ -33,7 +26,199 @@ GO
 
 
 GO
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_002';
 
 
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'ht = 293
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+      Begin ColumnWidths = 17
+         Width = 284
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 1440
+         Alias = 900
+         Table = 1170
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1350
+         SortOrder = 1410
+         GroupBy = 1350
+         Filter = 1350
+         Or = 1350
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_002';
 
+
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
+Begin DesignProperties = 
+   Begin PaneConfigurations = 
+      Begin PaneConfiguration = 0
+         NumPanes = 4
+         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+      End
+      Begin PaneConfiguration = 1
+         NumPanes = 3
+         Configuration = "(H (1 [50] 4 [25] 3))"
+      End
+      Begin PaneConfiguration = 2
+         NumPanes = 3
+         Configuration = "(H (1 [50] 2 [25] 3))"
+      End
+      Begin PaneConfiguration = 3
+         NumPanes = 3
+         Configuration = "(H (4 [30] 2 [40] 3))"
+      End
+      Begin PaneConfiguration = 4
+         NumPanes = 2
+         Configuration = "(H (1 [56] 3))"
+      End
+      Begin PaneConfiguration = 5
+         NumPanes = 2
+         Configuration = "(H (2 [66] 3))"
+      End
+      Begin PaneConfiguration = 6
+         NumPanes = 2
+         Configuration = "(H (4 [50] 3))"
+      End
+      Begin PaneConfiguration = 7
+         NumPanes = 1
+         Configuration = "(V (3))"
+      End
+      Begin PaneConfiguration = 8
+         NumPanes = 3
+         Configuration = "(H (1[56] 4[18] 2) )"
+      End
+      Begin PaneConfiguration = 9
+         NumPanes = 2
+         Configuration = "(H (1 [75] 4))"
+      End
+      Begin PaneConfiguration = 10
+         NumPanes = 2
+         Configuration = "(H (1[66] 2) )"
+      End
+      Begin PaneConfiguration = 11
+         NumPanes = 2
+         Configuration = "(H (4 [60] 2))"
+      End
+      Begin PaneConfiguration = 12
+         NumPanes = 1
+         Configuration = "(H (1) )"
+      End
+      Begin PaneConfiguration = 13
+         NumPanes = 1
+         Configuration = "(V (4))"
+      End
+      Begin PaneConfiguration = 14
+         NumPanes = 1
+         Configuration = "(V (2))"
+      End
+      ActivePaneConfig = 0
+   End
+   Begin DiagramPane = 
+      Begin Origin = 
+         Top = 0
+         Left = 0
+      End
+      Begin Tables = 
+         Begin Table = "aca_Matricula"
+            Begin Extent = 
+               Top = 7
+               Left = 48
+               Bottom = 170
+               Right = 293
+            End
+            DisplayFlags = 280
+            TopColumn = 16
+         End
+         Begin Table = "vwaca_AnioLectivo_Curso_Paralelo"
+            Begin Extent = 
+               Top = 175
+               Left = 48
+               Bottom = 338
+               Right = 292
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "aca_Alumno"
+            Begin Extent = 
+               Top = 343
+               Left = 48
+               Bottom = 506
+               Right = 293
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "tb_persona"
+            Begin Extent = 
+               Top = 511
+               Left = 48
+               Bottom = 674
+               Right = 322
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "tb_persona_1"
+            Begin Extent = 
+               Top = 679
+               Left = 48
+               Bottom = 842
+               Right = 322
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "aca_AnioLectivo"
+            Begin Extent = 
+               Top = 847
+               Left = 48
+               Bottom = 1010
+               Right = 293
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "aca_Plantilla"
+            Begin Extent = 
+               Top = 1015
+               Left = 48
+               Bottom = 1178
+               Rig', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_002';
 

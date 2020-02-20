@@ -1,14 +1,22 @@
-﻿--exec [Academico].[SPACA_005] 1, 1
+﻿
+--exec [Academico].[SPACA_005] 1, 1
 CREATE PROCEDURE [Academico].[SPACA_005]
 (
 @IdEmpresa int,
 @IdAlumno numeric
 )
 AS
+DECLARE @IdAnioActual numeric, @IdAnioAnterior numeric
 
-SELECT dbo.aca_SocioEconomico.IdEmpresa, dbo.aca_SocioEconomico.IdSocioEconomico, dbo.aca_SocioEconomico.IdAlumno, dbo.aca_Alumno.Codigo AS CodigoAlumno, PersonaAlumno.pe_nombreCompleto AS NombreAlumno, 
+
+select @IdAnioActual = IdAnio, @IdAnioAnterior = IdAnioLectivoAnterior from aca_AnioLectivo
+where IdEmpresa = @IdEmpresa and EnCurso=1
+
+set @IdAnioAnterior = isnull(@IdAnioAnterior,0)
+
+SELECT dbo.aca_SocioEconomico.IdEmpresa, dbo.aca_SocioEconomico.IdSocioEconomico, matricula.IdAnio, matricula.Descripcion, matricula.NomNivel,matricula.NomJornada, matricula.NomCurso, dbo.aca_SocioEconomico.IdAlumno, dbo.aca_Alumno.Codigo AS CodigoAlumno, PersonaAlumno.pe_nombreCompleto AS NombreAlumno, 
                   PersonaAlumno.pe_fechaNacimiento AS FechaNacAlumno, dbo.tb_provincia.Descripcion_Prov AS ProvinciaAlumno, dbo.tb_ciudad.Descripcion_Ciudad AS CiudadAlumno, CatalogoSexo.ca_descripcion AS SexoAlumno, 
-                  PersonaAlumno.pe_cedulaRuc AS CedulaAlumno, dbo.aca_Alumno.Direccion AS DireccionAlumno, dbo.aca_Alumno.Sector AS SectorAlumno, PersonaAlumno.CodCatalogoCONADIS AS TieneDiscapacidadAlumno, 
+                  PersonaAlumno.pe_cedulaRuc AS CedulaAlumno, dbo.aca_Alumno.Direccion AS DireccionAlumno, dbo.aca_Alumno.Celular as TelefonoAlumno, dbo.aca_Alumno.Sector AS SectorAlumno, PersonaAlumno.CodCatalogoCONADIS AS TieneDiscapacidadAlumno, 
                   CatalogoDiscapacidad.ca_descripcion AS DiscapacidadAlumno, dbo.aca_Alumno.LugarNacimiento, dbo.tb_parroquia.nom_parroquia AS ParroquiaAlumno, iif((dbo.aca_SocioEconomico.TieneElectricidad = 1), 'SI', 'NO') TieneElectricidad, 
                   iif((dbo.aca_SocioEconomico.TieneHermanos = 1), 'SI', 'NO') TieneHermanos, dbo.aca_SocioEconomico.CantidadHermanos, TipoVivienda.NomCatalogoFicha AS TipoVivienda, TenenciaVivienda.NomCatalogoFicha AS TenenciaVivienda, 
                   Agua.NomCatalogoFicha AS Agua, dbo.aca_SocioEconomico.SueldoPadre, dbo.aca_SocioEconomico.SueldoMadre, dbo.aca_SocioEconomico.OtroIngresoPadre, dbo.aca_SocioEconomico.OtroIngresoMadre, 
@@ -37,6 +45,16 @@ FROM     dbo.aca_SocioEconomico INNER JOIN
                   dbo.aca_CatalogoFicha AS TenenciaVivienda ON dbo.aca_SocioEconomico.IdCatalogoFichaTVi = TenenciaVivienda.IdCatalogoFicha LEFT OUTER JOIN
                   dbo.aca_CatalogoFicha AS TipoVivienda ON dbo.aca_SocioEconomico.IdCatalogoFichaVi = TipoVivienda.IdCatalogoFicha LEFT OUTER JOIN
                   dbo.tb_Catalogo AS CatalogoDiscapacidad ON PersonaAlumno.CodCatalogoCONADIS = CatalogoSexo.CodCatalogo
+				  ----MATRICULA---
+				  inner join
+				  (
+				  select m.IdEmpresa, m.IdAlumno, m.IdAnio, a.Descripcion, n.NomNivel,j.NomJornada, c.NomCurso from aca_Matricula m 
+				  inner join aca_AnioLectivo a on m.IdAnio=a.IdAnio
+				  inner join aca_NivelAcademico n on m.IdNivel=n.IdNivel
+				  inner join aca_Jornada j on m.IdJornada=j.IdJornada
+				  inner join aca_Curso c on m.IdCurso=c.IdCurso
+				  where m.IdEmpresa=@IdEmpresa and m.IdAlumno=@IdAlumno and m.IdAnio=@IdAnioActual
+				  )matricula on matricula.IdEmpresa=@IdEmpresa and matricula.IdAlumno =@IdAlumno and matricula.IdAnio=@IdAnioActual
 				  ------PADRE------
 				  left join
 				  (
@@ -100,8 +118,8 @@ FROM     dbo.aca_SocioEconomico INNER JOIN
 				  (
 					  select a.IdEmpresa, a.IdAlumno, a.IdAnio, a.Conducta, a.Promedio
 					  from aca_AnioLectivoCalificacionHistorico as a inner join aca_AnioLectivo as b
-					  on a.IdEmpresa = b.IdEmpresa and a.IdAnio = b.IdAnio -1
-					  where a.IdEmpresa = @IdEmpresa and a.IdAlumno = @IdAlumno and b.EnCurso = 1 
+					  on a.IdEmpresa = b.IdEmpresa and a.IdAnio = b.IdAnio
+					  where a.IdEmpresa = @IdEmpresa and a.IdAlumno = @IdAlumno and a.IdAnio = @IdAnioAnterior
 				  ) Calificacion on aca_Alumno.IdEmpresa = Calificacion.IdEmpresa and aca_Alumno.IdAlumno = Calificacion.IdAlumno 
 
 where 

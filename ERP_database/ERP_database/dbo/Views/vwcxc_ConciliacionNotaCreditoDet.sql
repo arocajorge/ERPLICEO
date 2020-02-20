@@ -1,16 +1,20 @@
-﻿CREATE VIEW dbo.vwcxc_ConciliacionNotaCreditoDet
+﻿CREATE VIEW [dbo].[vwcxc_ConciliacionNotaCreditoDet]
 AS
 SELECT dbo.cxc_ConciliacionNotaCreditoDet.IdEmpresa, dbo.cxc_ConciliacionNotaCreditoDet.IdConciliacion, dbo.cxc_ConciliacionNotaCreditoDet.Secuencia, dbo.cxc_ConciliacionNotaCreditoDet.IdSucursal, 
                   dbo.cxc_ConciliacionNotaCreditoDet.IdBodega, dbo.cxc_ConciliacionNotaCreditoDet.IdCbteVtaNota, dbo.cxc_ConciliacionNotaCreditoDet.vt_TipoDoc, dbo.cxc_ConciliacionNotaCreditoDet.Valor, 
                   CASE WHEN cxc_ConciliacionNotaCreditoDet.vt_TipoDoc = 'FACT' THEN fa_factura.vt_serie1 + '-' + fa_factura.vt_serie2 + '-' + fa_factura.vt_NumFactura ELSE CASE WHEN fa_notaCreDeb.NaturalezaNota = 'SRI' THEN fa_notaCreDeb.Serie1
-                   + '-' + fa_notaCreDeb.Serie2 + '-' + fa_notaCreDeb.NumNota_Impresa ELSE fa_notaCreDeb.CodNota END END AS ReferenciaDet, dbo.cxc_ConciliacionNotaCreditoDet.secuencia_nt
+                   + '-' + fa_notaCreDeb.Serie2 + '-' + fa_notaCreDeb.NumNota_Impresa ELSE fa_notaCreDeb.CodNota END END AS ReferenciaDet, dbo.cxc_ConciliacionNotaCreditoDet.secuencia_nt, isnull(fa_factura.vt_fecha,fa_notaCreDeb.no_fecha) vt_fecha,
+				   fa_factura_resumen.IdAnio, fa_factura_resumen.IdPlantilla, isnull(fa_factura.IdPuntoVta, fa_notacredeb.IdPuntoVta)IdPuntoVta, isnull(fa_factura.IdAlumno, fa_notaCreDeb.IdAlumno)IdAlumno, isnull(fa_factura.IdCliente, fa_notaCreDeb.IdCliente) IdCliente, 
+				   cxc_ConciliacionNotaCreditoDet.ValorProntoPago, isnull(fa_factura.vt_Observacion, fa_notaCreDeb.sc_observacion) vt_Observacion
 FROM     dbo.cxc_ConciliacionNotaCreditoDet LEFT OUTER JOIN
                   dbo.fa_notaCreDeb ON dbo.cxc_ConciliacionNotaCreditoDet.IdEmpresa = dbo.fa_notaCreDeb.IdEmpresa AND dbo.cxc_ConciliacionNotaCreditoDet.IdSucursal = dbo.fa_notaCreDeb.IdSucursal AND 
                   dbo.cxc_ConciliacionNotaCreditoDet.IdBodega = dbo.fa_notaCreDeb.IdBodega AND dbo.cxc_ConciliacionNotaCreditoDet.IdCbteVtaNota = dbo.fa_notaCreDeb.IdNota AND 
                   dbo.cxc_ConciliacionNotaCreditoDet.vt_TipoDoc = dbo.fa_notaCreDeb.CodDocumentoTipo LEFT OUTER JOIN
                   dbo.fa_factura ON dbo.cxc_ConciliacionNotaCreditoDet.IdEmpresa = dbo.fa_factura.IdEmpresa AND dbo.cxc_ConciliacionNotaCreditoDet.IdSucursal = dbo.fa_factura.IdSucursal AND 
                   dbo.cxc_ConciliacionNotaCreditoDet.IdBodega = dbo.fa_factura.IdBodega AND dbo.cxc_ConciliacionNotaCreditoDet.IdCbteVtaNota = dbo.fa_factura.IdCbteVta AND 
-                  dbo.cxc_ConciliacionNotaCreditoDet.vt_TipoDoc = dbo.fa_factura.vt_tipoDoc
+                  dbo.cxc_ConciliacionNotaCreditoDet.vt_TipoDoc = dbo.fa_factura.vt_tipoDoc left join 
+				  fa_factura_resumen on fa_factura_resumen.IdEmpresa = fa_factura.IdEmpresa and fa_factura_resumen.IdSucursal = fa_factura.IdSucursal and fa_factura_resumen.IdBodega = fa_factura.IdBodega and fa_factura_resumen.IdCbteVta = fa_factura.IdCbteVta left join
+				  fa_notaCreDeb_resumen on fa_notaCreDeb_resumen.IdEmpresa = fa_notaCreDeb.IdEmpresa and fa_notaCreDeb_resumen.IdSucursal = fa_notaCreDeb.IdSucursal and fa_notaCreDeb_resumen.IdBodega = fa_notaCreDeb.IdBodega and fa_notaCreDeb_resumen.IdNota = fa_notaCreDeb.IdNota
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcxc_ConciliacionNotaCreditoDet';
 

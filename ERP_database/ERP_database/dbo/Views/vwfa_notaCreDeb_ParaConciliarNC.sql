@@ -1,6 +1,6 @@
 ﻿CREATE VIEW [dbo].[vwfa_notaCreDeb_ParaConciliarNC]
 AS
-SELECT a.IdEmpresa, a.IdSucursal, a.IdBodega, a.IdNota, c.Total, dbo.BankersRounding(ISNULL(SUM(b.Valor_Aplicado), 0), 2) AS Valor_Aplicado, 
+SELECT a.IdEmpresa, a.IdSucursal, a.IdBodega, a.IdNota, c.Total, dbo.BankersRounding(ISNULL(SUM(b.Valor_Aplicado), 0), 2) AS Valor_Aplicado, dbo.BankersRounding(c.Total - dbo.BankersRounding(ISNULL(SUM(b.Valor_Aplicado), 0), 2),2) Saldo,
                   CASE WHEN a.NaturalezaNota = 'SRI' THEN a.Serie1 + '-' + a.Serie2 + '-' + a.NumNota_Impresa ELSE a.CodNota END AS NumNota, a.no_fecha, a.sc_observacion, f.No_Descripcion, a.IdAlumno, a.IdCliente, 
                   dbo.tb_persona.pe_nombreCompleto
 FROM     dbo.fa_notaCreDeb AS a LEFT OUTER JOIN

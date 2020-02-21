@@ -71,8 +71,8 @@ FROM     dbo.aca_SocioEconomico INNER JOIN
 					dbo.tb_Catalogo ON p.IdEstadoCivil = dbo.tb_Catalogo.CodCatalogo LEFT OUTER JOIN
 					dbo.tb_profesion ON p.IdProfesion = dbo.tb_profesion.IdProfesion LEFT OUTER JOIN
 					dbo.aca_CatalogoFicha ON f.IdCatalogoFichaInst = dbo.aca_CatalogoFicha.IdCatalogoFicha
-					WHERE f.IdEmpresa = @IdEmpresa and f.IdAlumno = @IdAlumno
-					--f.IdEmpresa = 1 and f.IdAlumno = 4605 and f.IdCatalogoPAREN=10
+					WHERE f.IdEmpresa = @IdEmpresa and f.IdAlumno = @IdAlumno and f.IdCatalogoPAREN=10
+					--f.IdEmpresa = 1 and f.IdAlumno = 3932 and f.IdCatalogoPAREN=10
 				  ) 
 				  Padre on aca_Alumno.IdEmpresa = Padre.IdEmpresa and aca_Alumno.IdAlumno = Padre.IdAlumno
 				  -----MADRE------
@@ -91,7 +91,7 @@ FROM     dbo.aca_SocioEconomico INNER JOIN
 					dbo.tb_Catalogo ON p.IdEstadoCivil = dbo.tb_Catalogo.CodCatalogo LEFT OUTER JOIN
 					dbo.tb_profesion ON p.IdProfesion = dbo.tb_profesion.IdProfesion LEFT OUTER JOIN
 					dbo.aca_CatalogoFicha ON f.IdCatalogoFichaInst = dbo.aca_CatalogoFicha.IdCatalogoFicha
-					WHERE f.IdEmpresa = @IdEmpresa and f.IdAlumno = @IdAlumno
+					WHERE f.IdEmpresa = @IdEmpresa and f.IdAlumno = @IdAlumno and f.IdCatalogoPAREN=11
 					--f.IdEmpresa = 1 and f.IdAlumno = 4605 and f.IdCatalogoPAREN=11
 				  ) 
 				  Madre on aca_Alumno.IdEmpresa = Madre.IdEmpresa and aca_Alumno.IdAlumno = Madre.IdAlumno

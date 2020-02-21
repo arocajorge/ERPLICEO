@@ -2,9 +2,8 @@
 AS
 SELECT dbo.aca_AnioLectivo_Jornada_Curso.IdEmpresa, dbo.aca_AnioLectivo_Jornada_Curso.IdAnio, dbo.aca_AnioLectivo.Descripcion, dbo.aca_AnioLectivo_Jornada_Curso.IdSede, dbo.aca_Sede.NomSede, 
                   dbo.aca_AnioLectivo_Jornada_Curso.IdNivel, dbo.aca_NivelAcademico.NomNivel, dbo.aca_AnioLectivo_Jornada_Curso.IdJornada, dbo.aca_AnioLectivo_NivelAcademico_Jornada.NomJornada, 
-                  dbo.aca_AnioLectivo_Jornada_Curso.IdCurso, dbo.aca_AnioLectivo_Jornada_Curso.NomCurso, dbo.aca_AnioLectivo_Jornada_Curso.OrdenCurso, 
-                  dbo.aca_Sede.NomSede + '-' + dbo.aca_NivelAcademico.NomNivel + '-' + dbo.aca_AnioLectivo_NivelAcademico_Jornada.NomJornada + '-' + dbo.aca_AnioLectivo_Jornada_Curso.NomCurso AS ComboCurso, 
-                  dbo.aca_AnioLectivo.BloquearMatricula
+                  dbo.aca_AnioLectivo_Jornada_Curso.IdCurso, dbo.aca_AnioLectivo_Jornada_Curso.NomCurso, dbo.aca_AnioLectivo_Jornada_Curso.OrdenCurso, CAST(dbo.aca_Sede.IdSede AS varchar) 
+                  + '-' + dbo.aca_NivelAcademico.NomNivel + '-' + dbo.aca_AnioLectivo_NivelAcademico_Jornada.NomJornada + '-' + dbo.aca_AnioLectivo_Jornada_Curso.NomCurso AS ComboCurso, dbo.aca_AnioLectivo.BloquearMatricula
 FROM     dbo.aca_AnioLectivo_Jornada_Curso INNER JOIN
                   dbo.aca_Sede ON dbo.aca_AnioLectivo_Jornada_Curso.IdEmpresa = dbo.aca_Sede.IdEmpresa AND dbo.aca_AnioLectivo_Jornada_Curso.IdSede = dbo.aca_Sede.IdSede INNER JOIN
                   dbo.aca_NivelAcademico ON dbo.aca_AnioLectivo_Jornada_Curso.IdEmpresa = dbo.aca_NivelAcademico.IdEmpresa AND dbo.aca_AnioLectivo_Jornada_Curso.IdNivel = dbo.aca_NivelAcademico.IdNivel INNER JOIN
@@ -17,9 +16,10 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'        Width = 1200
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
          Width = 1200
          Width = 1200
+         Width = 4092
          Width = 1200
       End
    End
@@ -48,13 +48,15 @@ End
 
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[71] 4[3] 2[3] 3) )"
+         Configuration = "(H (1[47] 4[13] 2[18] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -188,8 +190,9 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 1200
-         Width = 1200
- ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Jornada_Curso';
+         Width = 1200', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Jornada_Curso';
+
+
 
 
 

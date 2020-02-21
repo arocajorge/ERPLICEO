@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[aca_CondicionalMatricula] (
+﻿CREATE TABLE [dbo].[aca_MatriculaCondicional] (
     [IdEmpresa]             INT           NOT NULL,
     [IdCondicional]         NUMERIC (18)  NOT NULL,
     [IdAlumno]              NUMERIC (18)  NOT NULL,
@@ -15,8 +15,8 @@
     [FechaAnulacion]        DATETIME      NULL,
     [MotivoAnulacion]       VARCHAR (MAX) NULL,
     CONSTRAINT [PK_aca_CondicionalMatricula] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdCondicional] ASC),
-    CONSTRAINT [FK_aca_CondicionalMatricula_aca_Alumno] FOREIGN KEY ([IdEmpresa], [IdAlumno]) REFERENCES [dbo].[aca_Alumno] ([IdEmpresa], [IdAlumno]),
-    CONSTRAINT [FK_aca_CondicionalMatricula_aca_AnioLectivo] FOREIGN KEY ([IdEmpresa], [IdAnio]) REFERENCES [dbo].[aca_AnioLectivo] ([IdEmpresa], [IdAnio]),
-    CONSTRAINT [FK_aca_CondicionalMatricula_aca_Catalogo] FOREIGN KEY ([IdCatalogoCONDIC]) REFERENCES [dbo].[aca_Catalogo] ([IdCatalogo])
+    CONSTRAINT [FK_aca_MatriculaCondicional_aca_Alumno] FOREIGN KEY ([IdEmpresa], [IdAlumno]) REFERENCES [dbo].[aca_Alumno] ([IdEmpresa], [IdAlumno]),
+    CONSTRAINT [FK_aca_MatriculaCondicional_aca_AnioLectivo] FOREIGN KEY ([IdEmpresa], [IdAnio]) REFERENCES [dbo].[aca_AnioLectivo] ([IdEmpresa], [IdAnio]),
+    CONSTRAINT [FK_aca_MatriculaCondicional_aca_Catalogo] FOREIGN KEY ([IdCatalogoCONDIC]) REFERENCES [dbo].[aca_Catalogo] ([IdCatalogo])
 );
 

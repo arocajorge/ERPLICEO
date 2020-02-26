@@ -1,8 +1,8 @@
 ﻿CREATE VIEW dbo.vwaca_MatriculaCondicional
 AS
-SELECT dbo.aca_MatriculaCondicional.IdEmpresa, dbo.aca_MatriculaCondicional.IdCondicional, dbo.aca_MatriculaCondicional.IdAlumno, dbo.aca_Alumno.Codigo, dbo.tb_persona.pe_nombreCompleto, dbo.aca_MatriculaCondicional.IdAnio, 
-                  dbo.aca_AnioLectivo.Descripcion, dbo.aca_MatriculaCondicional.Fecha, dbo.aca_MatriculaCondicional.IdCatalogoCONDIC, dbo.aca_Catalogo.NomCatalogo, dbo.aca_MatriculaCondicional.Observacion, 
-                  dbo.aca_MatriculaCondicional.Estado
+SELECT dbo.aca_MatriculaCondicional.IdEmpresa, dbo.aca_MatriculaCondicional.IdMatriculaCondicional, dbo.aca_MatriculaCondicional.IdAlumno, dbo.aca_Alumno.Codigo, dbo.tb_persona.pe_nombreCompleto, 
+                  dbo.aca_MatriculaCondicional.IdAnio, dbo.aca_AnioLectivo.Descripcion, dbo.aca_MatriculaCondicional.Fecha, dbo.aca_MatriculaCondicional.IdCatalogoCONDIC, dbo.aca_Catalogo.NomCatalogo, 
+                  dbo.aca_MatriculaCondicional.Observacion, dbo.aca_MatriculaCondicional.Estado
 FROM     dbo.aca_MatriculaCondicional INNER JOIN
                   dbo.aca_AnioLectivo ON dbo.aca_MatriculaCondicional.IdEmpresa = dbo.aca_AnioLectivo.IdEmpresa AND dbo.aca_MatriculaCondicional.IdAnio = dbo.aca_AnioLectivo.IdAnio INNER JOIN
                   dbo.aca_Alumno ON dbo.aca_MatriculaCondicional.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_MatriculaCondicional.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
@@ -109,6 +109,16 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
+         Begin Table = "aca_MatriculaCondicional"
+            Begin Extent = 
+               Top = 7
+               Left = 48
+               Bottom = 170
+               Right = 315
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "aca_AnioLectivo"
             Begin Extent = 
                Top = 228
@@ -149,16 +159,6 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 4
          End
-         Begin Table = "aca_MatriculaCondicional"
-            Begin Extent = 
-               Top = 7
-               Left = 48
-               Bottom = 170
-               Right = 293
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
       End
    End
    Begin SQLPane = 
@@ -180,4 +180,6 @@ Begin DesignProperties =
          Width = 1704
          Width = 1884
          Width = 1200', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCondicional';
+
+
 

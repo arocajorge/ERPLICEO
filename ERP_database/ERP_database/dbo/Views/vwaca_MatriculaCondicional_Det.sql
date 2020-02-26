@@ -1,7 +1,7 @@
 ﻿CREATE VIEW dbo.vwaca_MatriculaCondicional_Det
 AS
-SELECT dbo.aca_MatriculaCondicional_Det.IdEmpresa, dbo.aca_MatriculaCondicional_Det.IdCondicional, dbo.aca_MatriculaCondicional_Det.Secuencia, dbo.aca_MatriculaCondicionalParrafo.IdCatalogoCONDIC, dbo.aca_Catalogo.NomCatalogo, 
-                  dbo.aca_MatriculaCondicional_Det.IdParrafo, dbo.aca_MatriculaCondicionalParrafo.Nombre
+SELECT dbo.aca_MatriculaCondicional_Det.IdEmpresa, dbo.aca_MatriculaCondicional_Det.IdMatriculaCondicional, dbo.aca_MatriculaCondicional_Det.Secuencia, dbo.aca_MatriculaCondicionalParrafo.IdCatalogoCONDIC, 
+                  dbo.aca_Catalogo.NomCatalogo, dbo.aca_MatriculaCondicional_Det.IdParrafo, dbo.aca_MatriculaCondicionalParrafo.Nombre
 FROM     dbo.aca_MatriculaCondicional_Det INNER JOIN
                   dbo.aca_MatriculaCondicionalParrafo ON dbo.aca_MatriculaCondicional_Det.IdEmpresa = dbo.aca_MatriculaCondicionalParrafo.IdEmpresa AND 
                   dbo.aca_MatriculaCondicional_Det.IdParrafo = dbo.aca_MatriculaCondicionalParrafo.IdParrafo INNER JOIN
@@ -135,14 +135,14 @@ Begin DesignProperties =
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -150,4 +150,6 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCondicional_Det';
+
+
 

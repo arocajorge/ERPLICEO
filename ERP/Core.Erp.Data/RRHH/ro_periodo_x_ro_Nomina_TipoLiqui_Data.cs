@@ -100,7 +100,8 @@ namespace Core.Erp.Data.RRHH
                 Lista.ForEach(v => v.descripcion = v.pe_FechaIni.ToString().Substring(0, 10) + " " + v.pe_FechaFin.ToString().Substring(0, 10)
 
                     );
-                return Lista;
+                //return Lista;          // by acueva 27/02/2020 ordene por el ultimo en fecha ini
+                return Lista.OrderByDescending(x => x.pe_FechaIni).ToList();
             }
             catch (Exception)
             {

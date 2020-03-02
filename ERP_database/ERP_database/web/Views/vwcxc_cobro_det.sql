@@ -1,16 +1,21 @@
 ﻿CREATE VIEW [web].[vwcxc_cobro_det]
 AS
 SELECT dbo.cxc_cobro_det.IdEmpresa, dbo.cxc_cobro_det.IdSucursal, dbo.cxc_cobro_det.IdCobro, dbo.cxc_cobro_det.secuencial, dbo.cxc_cobro_det.dc_TipoDocumento, dbo.cxc_cobro_det.IdBodega_Cbte, dbo.cxc_cobro_det.IdCbte_vta_nota, 
-                  dbo.cxc_cobro_det.dc_ValorPago, dbo.cxc_cobro_det.IdCobro_tipo, dbo.cxc_cobro_det.dc_TipoDocumento + '-' + CAST(CAST(ISNULL(dbo.fa_factura.vt_NumFactura, dbo.fa_notaCreDeb.NumNota_Impresa) AS int) AS VARCHAR(20)) 
-                  AS vt_NumFactura, ISNULL(dbo.fa_factura.vt_Observacion, dbo.fa_notaCreDeb.sc_observacion) AS vt_Observacion, ISNULL(dbo.fa_factura.CodCbteVta, dbo.fa_notaCreDeb.CodNota) AS CodDoc, 
-                  ISNULL(cast(dbo.fa_factura_resumen.SubtotalConDscto as float), 0) + ISNULL(cast(fa_notaCreDeb_resumen.SubtotalConDscto as float), 0) AS vt_Subtotal, ISNULL(cast(dbo.fa_factura_resumen.ValorIVA as float), 0) + ISNULL(cast(dbo.fa_notaCreDeb_resumen.ValorIVA as float), 0) AS vt_iva, 
-                  ISNULL(cast(dbo.fa_factura_resumen.Total as float), 0) + ISNULL(cast(dbo.fa_notaCreDeb_resumen.Total as float), 0) AS vt_total, ISNULL(cobro.ValorCobrado, 0) AS ValorCobrado, ROUND(ISNULL(cast(dbo.fa_factura_resumen.Total as float), 0) 
-                  + ISNULL(cast(dbo.fa_notaCreDeb_resumen.Total as float), 0) - ISNULL(cobro.ValorCobrado, 0),2) AS saldo, ISNULL(cast(dbo.fa_factura_resumen.Total as float), 0) + ISNULL(cast(dbo.fa_notaCreDeb_resumen.Total as float), 0) - ISNULL(cobro.ValorCobrado, 0) 
-                  + dbo.cxc_cobro_det.dc_ValorPago AS saldo_sin_cobro, ISNULL(dbo.fa_factura.vt_fecha, dbo.fa_notaCreDeb.no_fecha) AS vt_fecha, ISNULL(dbo.fa_factura.vt_fech_venc, dbo.fa_notaCreDeb.no_fecha_venc) AS vt_fech_venc, 
-                  ISNULL(dbo.fa_factura.IdCliente, dbo.fa_notaCreDeb.IdCliente) AS IdCliente, ISNULL(dbo.fa_cliente_contactos.Nombres, dbo.tb_persona.pe_nombreCompleto) AS pe_nombreCompleto, dbo.cxc_cobro_det.IdNotaCredito, 
-                  dbo.cxc_cobro_det.dc_ValorProntoPago, fa_factura_resumen.IdAnio, fa_factura_resumen.IdPlantilla, isnull(fa_factura.IdPuntoVta,fa_notaCreDeb.IdPuntoVta) IdPuntoVta, isnull(fa_factura.IdAlumno,fa_notaCreDeb.IdAlumno)IdAlumno
+                  dbo.cxc_cobro_det.dc_ValorPago, dbo.cxc_cobro_det.IdCobro_tipo, 
+				  
+				  dbo.cxc_cobro_det.dc_TipoDocumento + '-' + CAST(CAST(ISNULL(dbo.fa_factura.vt_NumFactura, ISNULL(dbo.fa_notaCreDeb.NumNota_Impresa, dbo.fa_notaCreDeb.CodNota)) AS int) AS VARCHAR(20)) 
+                  AS vt_NumFactura, 
+				  
+				  ISNULL(dbo.fa_factura.vt_Observacion, dbo.fa_notaCreDeb.sc_observacion) AS vt_Observacion, ISNULL(dbo.fa_factura.CodCbteVta, dbo.fa_notaCreDeb.CodNota) AS CodDoc, 
+                  ISNULL(CAST(dbo.fa_factura_resumen.SubtotalConDscto AS float), 0) + ISNULL(CAST(dbo.fa_notaCreDeb_resumen.SubtotalConDscto AS float), 0) AS vt_Subtotal, ISNULL(CAST(dbo.fa_factura_resumen.ValorIVA AS float), 0) 
+                  + ISNULL(CAST(dbo.fa_notaCreDeb_resumen.ValorIVA AS float), 0) AS vt_iva, ISNULL(CAST(dbo.fa_factura_resumen.Total AS float), 0) + ISNULL(CAST(dbo.fa_notaCreDeb_resumen.Total AS float), 0) AS vt_total, 
+                  ISNULL(cobro.ValorCobrado, 0) AS ValorCobrado, ROUND(ISNULL(CAST(dbo.fa_factura_resumen.Total AS float), 0) + ISNULL(CAST(dbo.fa_notaCreDeb_resumen.Total AS float), 0) - ISNULL(cobro.ValorCobrado, 0), 2) AS saldo, 
+                  ISNULL(CAST(dbo.fa_factura_resumen.Total AS float), 0) + ISNULL(CAST(dbo.fa_notaCreDeb_resumen.Total AS float), 0) - ISNULL(cobro.ValorCobrado, 0) + dbo.cxc_cobro_det.dc_ValorPago AS saldo_sin_cobro, 
+                  ISNULL(dbo.fa_factura.vt_fecha, dbo.fa_notaCreDeb.no_fecha) AS vt_fecha, ISNULL(dbo.fa_factura.vt_fech_venc, dbo.fa_notaCreDeb.no_fecha_venc) AS vt_fech_venc, ISNULL(dbo.fa_factura.IdCliente, dbo.fa_notaCreDeb.IdCliente) 
+                  AS IdCliente, ISNULL(dbo.fa_cliente_contactos.Nombres, dbo.tb_persona.pe_nombreCompleto) AS pe_nombreCompleto, dbo.cxc_cobro_det.IdNotaCredito, dbo.cxc_cobro_det.dc_ValorProntoPago, dbo.fa_factura_resumen.IdAnio, 
+                  dbo.fa_factura_resumen.IdPlantilla, ISNULL(dbo.fa_factura.IdPuntoVta, dbo.fa_notaCreDeb.IdPuntoVta) AS IdPuntoVta, ISNULL(dbo.fa_factura.IdAlumno, dbo.fa_notaCreDeb.IdAlumno) AS IdAlumno
 FROM     dbo.tb_persona INNER JOIN
-                  fa_notaCreDeb_resumen INNER JOIN
+                  dbo.fa_notaCreDeb_resumen INNER JOIN
                   dbo.fa_notaCreDeb ON dbo.fa_notaCreDeb_resumen.IdEmpresa = dbo.fa_notaCreDeb.IdEmpresa AND dbo.fa_notaCreDeb_resumen.IdSucursal = dbo.fa_notaCreDeb.IdSucursal AND 
                   dbo.fa_notaCreDeb_resumen.IdBodega = dbo.fa_notaCreDeb.IdBodega AND dbo.fa_notaCreDeb_resumen.IdNota = dbo.fa_notaCreDeb.IdNota INNER JOIN
                   dbo.fa_cliente ON dbo.fa_notaCreDeb.IdEmpresa = dbo.fa_cliente.IdEmpresa AND dbo.fa_notaCreDeb.IdCliente = dbo.fa_cliente.IdCliente ON dbo.tb_persona.IdPersona = dbo.fa_cliente.IdPersona RIGHT OUTER JOIN

@@ -1,12 +1,13 @@
-﻿CREATE VIEW dbo.vwaca_MecanismoDePago
+﻿CREATE VIEW dbo.vwaca_MatriculaCondicional_Det
 AS
-SELECT        dbo.aca_MecanismoDePago.IdEmpresa, dbo.aca_MecanismoDePago.IdMecanismo, dbo.aca_MecanismoDePago.NombreMecanismo, dbo.aca_MecanismoDePago.IdTerminoPago, dbo.fa_TerminoPago.nom_TerminoPago, 
-                         dbo.aca_MecanismoDePago.Estado, dbo.fa_TipoNota.No_Descripcion
-FROM            dbo.aca_MecanismoDePago INNER JOIN
-                         dbo.fa_TerminoPago ON dbo.aca_MecanismoDePago.IdTerminoPago = dbo.fa_TerminoPago.IdTerminoPago LEFT OUTER JOIN
-                         dbo.fa_TipoNota ON dbo.aca_MecanismoDePago.IdEmpresa = dbo.fa_TipoNota.IdEmpresa AND dbo.aca_MecanismoDePago.IdTipoNotaDescuentoPorRol = dbo.fa_TipoNota.IdTipoNota
+SELECT dbo.aca_MatriculaCondicional_Det.IdEmpresa, dbo.aca_MatriculaCondicional_Det.IdMatriculaCondicional, dbo.aca_MatriculaCondicional_Det.Secuencia, dbo.aca_MatriculaCondicionalParrafo.IdCatalogoCONDIC, 
+                  dbo.aca_Catalogo.NomCatalogo, dbo.aca_MatriculaCondicional_Det.IdParrafo, dbo.aca_MatriculaCondicionalParrafo.Nombre
+FROM     dbo.aca_MatriculaCondicional_Det INNER JOIN
+                  dbo.aca_MatriculaCondicionalParrafo ON dbo.aca_MatriculaCondicional_Det.IdEmpresa = dbo.aca_MatriculaCondicionalParrafo.IdEmpresa AND 
+                  dbo.aca_MatriculaCondicional_Det.IdParrafo = dbo.aca_MatriculaCondicionalParrafo.IdParrafo INNER JOIN
+                  dbo.aca_Catalogo ON dbo.aca_MatriculaCondicionalParrafo.IdCatalogoCONDIC = dbo.aca_Catalogo.IdCatalogo
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MecanismoDePago';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCondicional_Det';
 
 
 GO
@@ -15,7 +16,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+         Configuration = "(H (1[36] 4[25] 2[20] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -81,32 +82,32 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_MecanismoDePago"
+         Begin Table = "aca_MatriculaCondicional_Det"
             Begin Extent = 
                Top = 7
                Left = 48
-               Bottom = 233
-               Right = 293
+               Bottom = 214
+               Right = 292
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "fa_TerminoPago"
+         Begin Table = "aca_MatriculaCondicionalParrafo"
             Begin Extent = 
-               Top = 27
-               Left = 528
-               Bottom = 190
-               Right = 788
+               Top = 2
+               Left = 487
+               Bottom = 239
+               Right = 732
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "fa_TipoNota"
+         Begin Table = "aca_Catalogo"
             Begin Extent = 
-               Top = 80
-               Left = 854
-               Bottom = 317
-               Right = 1036
+               Top = 7
+               Left = 780
+               Bottom = 170
+               Right = 1025
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -124,7 +125,7 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 1200
-         Width = 1830
+         Width = 1428
          Width = 1200
          Width = 1200
          Width = 1200
@@ -134,21 +135,19 @@ Begin DesignProperties =
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
       End
    End
 End
-', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MecanismoDePago';
-
-
+', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCondicional_Det';
 

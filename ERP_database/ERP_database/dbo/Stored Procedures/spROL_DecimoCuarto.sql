@@ -45,7 +45,14 @@ declare
 
 if(@Region='COSTA')
 select @fi=convert(varchar(4), (@IdPeriodo-1))+'-'+'03'+'-'+'01'
-select @ff=convert(varchar(4), (@IdPeriodo))+'-'+'02'+'-'+'28' 
+
+Declare @Elmes int,@eldia int
+select @Elmes=DatePart(MONTH,(EOMONTH( getdate()))) --2
+select @eldia=DatePart(DAY,(EOMONTH( getdate()))) -- para cuando febrero trae 29 dias by Acueva 20/02/2020.
+if(@Elmes=2 and @eldia=29) begin select @ff=convert(varchar(4), (@IdPeriodo))+'-'+'02'+'-'+'29'  End
+if(@Elmes=2 and @eldia=28) begin select @ff=convert(varchar(4), (@IdPeriodo))+'-'+'02'+'-'+'28'  End
+
+-- select @ff=convert(varchar(4), (@IdPeriodo))+'-'+'02'+'-'+'29' 
 
 SET @IdPeriodo=concat( @IdPeriodo,'02','03' ) 
 
@@ -96,7 +103,7 @@ insert into ro_rol_detalle
 ,rub_visible_reporte,      Observacion,IdSucursal)
 
 
-select
+select  -- DISTINCT
 
 
 @IdEmpresa,                       @IdRol,                                                                            emp.IdEmpleado,             @IdRubro_calculado, '1',                ROUND( SUM(acum.Valor),2),
@@ -112,6 +119,8 @@ FROM            dbo.ro_rol_detalle_x_rubro_acumulado AS acum INNER JOIN
 and acum.IdEmpleado=emp.IdEmpleado    
 and acum.Estado='PEN'
 AND emp.em_status='EST_ACT'
+AND cont.EstadoContrato IN('ECT_ACT') -- BY ACUEVA 2020-02-21
+-- -- AND acum.IdEmpleado not in (171,213,57,279,233,104) -- by acueva (ya mensualizan) 26/02/2020
 AND acum.IdRubro=@IdRubro_Provision
 AND acum.IdSucursal>=@IdSucursalInicio
 AND acum.IdSucursal<=@IdSucursalFin
@@ -120,6 +129,7 @@ and emp.IdEmpresa=@IdEmpresa
 and period.pe_FechaIni between @Fi and @Ff
 and period.pe_FechaFin between @Fi and @Ff
 and cont.IdNomina=@IdNomina
+
 group by emp.IdEmpleado , acum.IdSucursal, emp.IdEmpresa
 
 
@@ -133,7 +143,7 @@ insert into ro_rol_detalle
 ,rub_visible_reporte,      Observacion,IdSucursal)
 
 
-select
+select --DISTINCT
 
 
 @IdEmpresa,                       @IdRol,                                                                            emp.IdEmpleado,             @IdRubro_calculado, '1',                ROUND( SUM(acum.Valor),2),
@@ -149,6 +159,8 @@ FROM            dbo.ro_rol_detalle_x_rubro_acumulado AS acum INNER JOIN
 and acum.IdEmpleado=emp.IdEmpleado    
 and acum.Estado='PEN'
 AND emp.em_status='EST_ACT'
+AND cont.EstadoContrato IN('ECT_ACT') -- BY ACUEVA 2020-02-21,Solo por contratos de periodo activos, en idrol(ro_rol)
+-- -- AND acum.IdEmpleado not in (171,213,57,279,233,104) -- by acueva (ya mensualizan) 26/02/2020
 AND acum.IdRubro=@IdRubro_Provision
 AND acum.IdSucursal>=@IdSucursalInicio
 AND acum.IdSucursal<=@IdSucursalFin

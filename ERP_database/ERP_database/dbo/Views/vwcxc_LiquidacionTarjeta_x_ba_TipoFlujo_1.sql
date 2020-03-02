@@ -1,12 +1,11 @@
-﻿CREATE VIEW dbo.vwaca_MecanismoDePago
+﻿CREATE VIEW dbo.vwcxc_LiquidacionTarjeta_x_ba_TipoFlujo
 AS
-SELECT        dbo.aca_MecanismoDePago.IdEmpresa, dbo.aca_MecanismoDePago.IdMecanismo, dbo.aca_MecanismoDePago.NombreMecanismo, dbo.aca_MecanismoDePago.IdTerminoPago, dbo.fa_TerminoPago.nom_TerminoPago, 
-                         dbo.aca_MecanismoDePago.Estado, dbo.fa_TipoNota.No_Descripcion
-FROM            dbo.aca_MecanismoDePago INNER JOIN
-                         dbo.fa_TerminoPago ON dbo.aca_MecanismoDePago.IdTerminoPago = dbo.fa_TerminoPago.IdTerminoPago LEFT OUTER JOIN
-                         dbo.fa_TipoNota ON dbo.aca_MecanismoDePago.IdEmpresa = dbo.fa_TipoNota.IdEmpresa AND dbo.aca_MecanismoDePago.IdTipoNotaDescuentoPorRol = dbo.fa_TipoNota.IdTipoNota
+SELECT dbo.cxc_LiquidacionTarjeta_x_ba_TipoFlujo.IdEmpresa, dbo.cxc_LiquidacionTarjeta_x_ba_TipoFlujo.IdSucursal, dbo.cxc_LiquidacionTarjeta_x_ba_TipoFlujo.IdLiquidacion, dbo.cxc_LiquidacionTarjeta_x_ba_TipoFlujo.Secuencia, 
+                  dbo.cxc_LiquidacionTarjeta_x_ba_TipoFlujo.IdTipoFlujo, dbo.cxc_LiquidacionTarjeta_x_ba_TipoFlujo.Porcentaje, dbo.cxc_LiquidacionTarjeta_x_ba_TipoFlujo.Valor, dbo.ba_TipoFlujo.Descricion
+FROM     dbo.cxc_LiquidacionTarjeta_x_ba_TipoFlujo INNER JOIN
+                  dbo.ba_TipoFlujo ON dbo.cxc_LiquidacionTarjeta_x_ba_TipoFlujo.IdEmpresa = dbo.ba_TipoFlujo.IdEmpresa AND dbo.cxc_LiquidacionTarjeta_x_ba_TipoFlujo.IdTipoFlujo = dbo.ba_TipoFlujo.IdTipoFlujo
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MecanismoDePago';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcxc_LiquidacionTarjeta_x_ba_TipoFlujo';
 
 
 GO
@@ -81,32 +80,22 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_MecanismoDePago"
+         Begin Table = "cxc_LiquidacionTarjeta_x_ba_TipoFlujo"
             Begin Extent = 
                Top = 7
-               Left = 48
-               Bottom = 233
-               Right = 293
+               Left = 55
+               Bottom = 266
+               Right = 292
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "fa_TerminoPago"
+         Begin Table = "ba_TipoFlujo"
             Begin Extent = 
-               Top = 27
-               Left = 528
-               Bottom = 190
-               Right = 788
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "fa_TipoNota"
-            Begin Extent = 
-               Top = 80
-               Left = 854
-               Bottom = 317
-               Right = 1036
+               Top = 7
+               Left = 340
+               Bottom = 170
+               Right = 584
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -124,8 +113,8 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 1200
-         Width = 1830
          Width = 1200
+         Width = 3648
          Width = 1200
          Width = 1200
       End
@@ -148,7 +137,5 @@ Begin DesignProperties =
       End
    End
 End
-', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MecanismoDePago';
-
-
+', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcxc_LiquidacionTarjeta_x_ba_TipoFlujo';
 

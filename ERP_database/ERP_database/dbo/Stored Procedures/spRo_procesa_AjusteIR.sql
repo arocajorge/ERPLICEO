@@ -318,6 +318,12 @@ END
 BEGIN --UPDATE IMPUESTO A LA RENTA DESCONTADO
 IF(MONTH(@FechaCorte) > 1)
 BEGIN
+
+if(cast(getdate() as date) <= @FechaCorte)
+begin
+	set @IdPeriodoFin = dbo.fxGetIdPeriodo(DATEADD(month,-1, @FechaCorte))
+end
+
 	UPDATE [dbo].[ro_AjusteImpuestoRentaDet] SET DescontadoFechaCorte = dbo.BankersRounding(a.Valor,2)
 	FROM(
 		SELECT A.IdEmpresa, B.IdEmpleado, SUM(B.Valor) Valor

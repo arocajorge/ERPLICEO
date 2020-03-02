@@ -40,6 +40,7 @@ and dbo.ro_empleado.IdEmpresa = @IdEmpresa
 and dbo.ro_rol.IdSucursal >= @IdSucursalIni
 and dbo.ro_rol.IdSucursal <= @IdSucursalFin
 and dbo.ro_contrato.IdNomina = @IdNomina_Tipo
+and dbo.ro_contrato.EstadoContrato='ECT_ACT' -- by Acueva 2020-02-21
 and dbo.ro_rol.IdPeriodo = @IdPeriodo
 and dbo.ro_empleado.IdDivision >=  @IdDivisionIni
 and dbo.ro_empleado.IdDivision <=  @IdDivisionFin

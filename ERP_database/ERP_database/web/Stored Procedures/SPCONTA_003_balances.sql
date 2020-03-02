@@ -348,15 +348,67 @@ END
 ELSE
 IF(@MostrarSaldo0 = 0)
 BEGIN
+
+	update web.ct_CONTA_003_balances set EsCuentaMovimiento = 1 
+	where IdUsuario = @IdUsuario
+	and IdEmpresa = @IdEmpresa
+	and not exists(
+	select * from web.ct_CONTA_003_balances as f
+	where f.IdEmpresa = web.ct_CONTA_003_balances.IdEmpresa
+	and f.IdCtaCblePadre = web.ct_CONTA_003_balances.IdCtaCble
+	and f.IdEmpresa = @IdEmpresa
+	and f.IdUsuario = @IdUsuario
+	)
+
 	DELETE web.ct_CONTA_003_balances
 	WHERE SaldoFinal = 0
-	and IdUsuario = @IdUsuario
+	and IdUsuario = @IdUsuario 
+	and not exists(
+	select * from web.ct_CONTA_003_balances as f
+	where f.IdEmpresa = web.ct_CONTA_003_balances.IdEmpresa
+	and f.IdCtaCblePadre = web.ct_CONTA_003_balances.IdCtaCble
+	and f.IdEmpresa = @IdEmpresa
+	and f.IdUsuario = @IdUsuario
+	) and EsCuentaMovimiento = 1
+
+	DELETE web.ct_CONTA_003_balances
+	WHERE IdUsuario = @IdUsuario 
+	and not exists(
+	select * from web.ct_CONTA_003_balances as f
+	where f.IdEmpresa = web.ct_CONTA_003_balances.IdEmpresa
+	and f.IdCtaCblePadre = web.ct_CONTA_003_balances.IdCtaCble
+	and f.IdEmpresa = @IdEmpresa
+	and f.IdUsuario = @IdUsuario
+	) and EsCuentaMovimiento = 0
+
+	DELETE web.ct_CONTA_003_balances
+	WHERE IdUsuario = @IdUsuario 
+	and not exists(
+	select * from web.ct_CONTA_003_balances as f
+	where f.IdEmpresa = web.ct_CONTA_003_balances.IdEmpresa
+	and f.IdCtaCblePadre = web.ct_CONTA_003_balances.IdCtaCble
+	and f.IdEmpresa = @IdEmpresa
+	and f.IdUsuario = @IdUsuario
+	) and EsCuentaMovimiento = 0
+
+	DELETE web.ct_CONTA_003_balances
+	WHERE IdUsuario = @IdUsuario 
+	and not exists(
+	select * from web.ct_CONTA_003_balances as f
+	where f.IdEmpresa = web.ct_CONTA_003_balances.IdEmpresa
+	and f.IdCtaCblePadre = web.ct_CONTA_003_balances.IdCtaCble
+	and f.IdEmpresa = @IdEmpresa
+	and f.IdUsuario = @IdUsuario
+	) and EsCuentaMovimiento = 0
 END
 
 delete web.ct_CONTA_003_balances 
 where IdNivelCta > @IdNivel
 and IdEmpresa = @IdEmpresa
 and IdUsuario = @IdUsuario
+
+update web.ct_CONTA_003_balances set EsCuentaMovimiento = 0
+where IdUsuario = @IdUsuario
 
 update web.ct_CONTA_003_balances set EsCuentaMovimiento = 1 
 where IdUsuario = @IdUsuario

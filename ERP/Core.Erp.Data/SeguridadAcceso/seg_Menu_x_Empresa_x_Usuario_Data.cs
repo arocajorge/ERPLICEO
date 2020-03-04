@@ -192,7 +192,7 @@ namespace Core.Erp.Data.SeguridadAcceso
             }
         }
 
-        public seg_Menu_x_Empresa_x_Usuario_Info get_list_menu_accion(int IdEmpresa, int IdSede, string IdUsuario, string Area, string NomControlador, string Accion)
+        public seg_Menu_x_Empresa_x_Usuario_Info get_list_menu_accion(int IdEmpresa, string IdUsuario, string Area, string NomControlador, string Accion)
         {
             try
             {

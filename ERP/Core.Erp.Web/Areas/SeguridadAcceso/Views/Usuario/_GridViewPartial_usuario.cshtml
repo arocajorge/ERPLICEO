@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridView_usuario";
-        settings.CallbackRouteValues = new { Controller = "Usuario", Action = "GridViewPartial_usuario" };
+        settings.CallbackRouteValues = new { Controller = "Usuario", Action = "GridViewPartial_usuario", Nuevo = ViewBag.Nuevo, Modificar = ViewBag.Modificar, Anular = ViewBag.Anular };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdUsuario";
 
@@ -59,18 +59,30 @@
             {
                 if (Convert.ToString(DataBinder.Eval(tc.DataItem, "estado")) == "A")
                 {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdUsuario = DataBinder.Eval(tc.DataItem, "IdUsuario") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdUsuario = DataBinder.Eval(tc.DataItem, "IdUsuario") },
-                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
+                    if (ViewBag.Modificar == true)
+                    {
+                        ViewContext.Writer.Write(
+                        Html.ActionLink("Modificar", "Modificar", new { IdUsuario = DataBinder.Eval(tc.DataItem, "IdUsuario") }) + "&nbsp;"
+                        );
+                    }
+
+                    if (ViewBag.Anular == true)
+                    {
+                        ViewContext.Writer.Write(
+                            Html.ActionLink("Anular", "Anular", new { IdUsuario = DataBinder.Eval(tc.DataItem, "IdUsuario") },
+                                new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                        );
+                    }
                 }
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
                     Html.ActionLink("Nuevo", "Nuevo").ToHtmlString()
                 );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;

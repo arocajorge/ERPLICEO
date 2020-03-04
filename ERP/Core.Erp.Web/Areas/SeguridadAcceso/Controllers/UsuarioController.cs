@@ -24,15 +24,27 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         tb_empresa_Bus bus_empresa = new tb_empresa_Bus();
         seg_usuario_x_tb_sucursal_Bus bus_usuario_x_sucursal = new seg_usuario_x_tb_sucursal_Bus();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         public ActionResult Index()
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "SeguridadAcceso", "Usuario", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             return View();
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_usuario()
+        public ActionResult GridViewPartial_usuario(bool Nuevo = false, bool Modificar = false, bool Anular = false)
         {
             List<seg_usuario_Info> model = bus_usuario.get_list(true);
+            ViewBag.Nuevo = Nuevo;
+            ViewBag.Modificar = Modificar;
+            ViewBag.Anular = Anular;
+            
             return PartialView("_GridViewPartial_usuario", model);
         }
 
@@ -105,6 +117,12 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             var lst = bus_usuario_x_sucursal.GetList(Convert.ToString(SessionFixed.IdUsuario));
             List_det.set_list(lst, model.IdTransaccionSession);
 
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "SeguridadAcceso", "Usuario", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             cargar_combos(model);
             return View(model);
         }
@@ -145,6 +163,13 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.lst_usuario_x_sucursal = bus_usuario_x_sucursal.GetList(model.IdUsuario);
             List_det.set_list(model.lst_usuario_x_sucursal, model.IdTransaccionSession);
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "SeguridadAcceso", "Usuario", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             cargar_combos(model);
             return View(model);
         }
@@ -180,6 +205,13 @@ namespace Core.Erp.Web.Areas.SeguridadAcceso.Controllers
             model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
             model.lst_usuario_x_sucursal = bus_usuario_x_sucursal.GetList(model.IdUsuario);
             List_det.set_list(model.lst_usuario_x_sucursal, model.IdTransaccionSession);
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "SeguridadAcceso", "Usuario", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             cargar_combos(model);
             return View(model);
         }

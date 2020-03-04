@@ -26,13 +26,14 @@ namespace Core.Erp.Data
         }
     
         public DbSet<seg_Menu_x_Empresa> seg_Menu_x_Empresa { get; set; }
-        public DbSet<seg_Menu_x_Empresa_x_Usuario> seg_Menu_x_Empresa_x_Usuario { get; set; }
-        public DbSet<seg_Usuario_x_Empresa> seg_Usuario_x_Empresa { get; set; }
         public DbSet<seg_usuario_x_tb_sis_reporte> seg_usuario_x_tb_sis_reporte { get; set; }
         public DbSet<seg_Menu> seg_Menu { get; set; }
         public DbSet<seg_usuario_x_tb_sucursal> seg_usuario_x_tb_sucursal { get; set; }
         public DbSet<vwseg_usuario_x_tb_sucursal> vwseg_usuario_x_tb_sucursal { get; set; }
-        public DbSet<vwseg_Usuario_x_Empresa> vwseg_Usuario_x_Empresa { get; set; }
         public DbSet<seg_usuario> seg_usuario { get; set; }
+        public DbSet<seg_Usuario_x_Empresa> seg_Usuario_x_Empresa { get; set; }
+        public DbSet<vwseg_Usuario_x_Empresa> vwseg_Usuario_x_Empresa { get; set; }
+        public DbSet<seg_Menu_x_Empresa_x_Usuario> seg_Menu_x_Empresa_x_Usuario { get; set; }
+        public DbSet<vwseg_Menu_x_Usuario_x_Empresa> vwseg_Menu_x_Usuario_x_Empresa { get; set; }
     }
 }

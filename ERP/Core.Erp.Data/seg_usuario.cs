@@ -16,10 +16,10 @@ namespace Core.Erp.Data
     {
         public seg_usuario()
         {
-            this.seg_Menu_x_Empresa_x_Usuario = new HashSet<seg_Menu_x_Empresa_x_Usuario>();
-            this.seg_Usuario_x_Empresa = new HashSet<seg_Usuario_x_Empresa>();
             this.seg_usuario_x_tb_sis_reporte = new HashSet<seg_usuario_x_tb_sis_reporte>();
             this.seg_usuario_x_tb_sucursal = new HashSet<seg_usuario_x_tb_sucursal>();
+            this.seg_Usuario_x_Empresa = new HashSet<seg_Usuario_x_Empresa>();
+            this.seg_Menu_x_Empresa_x_Usuario = new HashSet<seg_Menu_x_Empresa_x_Usuario>();
         }
     
         public string IdUsuario { get; set; }
@@ -42,9 +42,9 @@ namespace Core.Erp.Data
         public string IPImpresora { get; set; }
     
         public virtual seg_Menu seg_Menu { get; set; }
-        public virtual ICollection<seg_Menu_x_Empresa_x_Usuario> seg_Menu_x_Empresa_x_Usuario { get; set; }
-        public virtual ICollection<seg_Usuario_x_Empresa> seg_Usuario_x_Empresa { get; set; }
         public virtual ICollection<seg_usuario_x_tb_sis_reporte> seg_usuario_x_tb_sis_reporte { get; set; }
         public virtual ICollection<seg_usuario_x_tb_sucursal> seg_usuario_x_tb_sucursal { get; set; }
+        public virtual ICollection<seg_Usuario_x_Empresa> seg_Usuario_x_Empresa { get; set; }
+        public virtual ICollection<seg_Menu_x_Empresa_x_Usuario> seg_Menu_x_Empresa_x_Usuario { get; set; }
     }
 }

@@ -17,10 +17,11 @@ namespace Core.Erp.Data
         public int IdEmpresa { get; set; }
         public string IdUsuario { get; set; }
         public int IdMenu { get; set; }
-        public bool Lectura { get; set; }
-        public bool Escritura { get; set; }
-        public bool Eliminacion { get; set; }
+        public bool Nuevo { get; set; }
+        public bool Modificar { get; set; }
+        public bool Anular { get; set; }
     
+        public virtual seg_Menu seg_Menu { get; set; }
         public virtual seg_usuario seg_usuario { get; set; }
     }
 }

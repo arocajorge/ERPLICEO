@@ -86,7 +86,9 @@ namespace Core.Erp.Web.Controllers
                 SessionFixed.EsContador = Convert.ToString(usuario.EsContador);
                 SessionFixed.EsSuperAdmin = usuario.es_super_admin.ToString();
                 SessionFixed.IdCaja = bus_caja.GetIdCajaPorUsuario(model.IdEmpresa, SessionFixed.IdUsuario).ToString();
-                seg_Menu_x_Empresa_x_Usuario_Lista.set_list(bus_MenuPorEmpresa.get_list(model.IdEmpresa, usuario.IdUsuario));
+                var lista = bus_MenuPorEmpresa.get_list(model.IdEmpresa, usuario.IdUsuario, false);
+                seg_Menu_x_Empresa_x_Usuario_Lista.set_list(bus_MenuPorEmpresa.get_list(model.IdEmpresa, usuario.IdUsuario, false));
+
                 if (usuario.IdMenu != null)
                 {
                     var menu = bus_menu.get_info((int)usuario.IdMenu);

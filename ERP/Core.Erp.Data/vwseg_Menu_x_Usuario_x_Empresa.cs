@@ -12,15 +12,8 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class seg_Menu
+    public partial class vwseg_Menu_x_Usuario_x_Empresa
     {
-        public seg_Menu()
-        {
-            this.seg_Menu_x_Empresa = new HashSet<seg_Menu_x_Empresa>();
-            this.seg_usuario = new HashSet<seg_usuario>();
-            this.seg_Menu_x_Empresa_x_Usuario = new HashSet<seg_Menu_x_Empresa_x_Usuario>();
-        }
-    
         public int IdMenu { get; set; }
         public Nullable<int> IdMenuPadre { get; set; }
         public string DescripcionMenu { get; set; }
@@ -30,14 +23,10 @@ namespace Core.Erp.Data
         public string nom_Formulario { get; set; }
         public string nom_Asembly { get; set; }
         public Nullable<int> nivel { get; set; }
-        public string web_nom_Area { get; set; }
-        public string web_nom_Controller { get; set; }
-        public string web_nom_Action { get; set; }
-        public bool es_web { get; set; }
-        public bool es_desktop { get; set; }
-    
-        public virtual ICollection<seg_Menu_x_Empresa> seg_Menu_x_Empresa { get; set; }
-        public virtual ICollection<seg_usuario> seg_usuario { get; set; }
-        public virtual ICollection<seg_Menu_x_Empresa_x_Usuario> seg_Menu_x_Empresa_x_Usuario { get; set; }
+        public int IdEmpresa { get; set; }
+        public string IdUsuario { get; set; }
+        public bool Nuevo { get; set; }
+        public bool Modificar { get; set; }
+        public bool Anular { get; set; }
     }
 }

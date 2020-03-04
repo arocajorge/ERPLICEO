@@ -42,9 +42,9 @@
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IdMenu" Type="int" Nullable="false" />
-          <Property Name="Lectura" Type="bit" Nullable="false" />
-          <Property Name="Escritura" Type="bit" Nullable="false" />
-          <Property Name="Eliminacion" Type="bit" Nullable="false" />
+          <Property Name="Nuevo" Type="bit" Nullable="false" />
+          <Property Name="Modificar" Type="bit" Nullable="false" />
+          <Property Name="Anular" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="seg_usuario">
           <Key>
@@ -99,7 +99,37 @@
           <Property Name="Observacion" Type="varchar" MaxLength="10" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_Usuario_x_Empresa' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.dbo.vwseg_Menu_x_Usuario_x_Empresa' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vwseg_Menu_x_Usuario_x_Empresa">
+          <Key>
+            <PropertyRef Name="IdMenu" />
+            <PropertyRef Name="DescripcionMenu" />
+            <PropertyRef Name="PosicionMenu" />
+            <PropertyRef Name="Habilitado" />
+            <PropertyRef Name="Tiene_FormularioAsociado" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="Nuevo" />
+            <PropertyRef Name="Modificar" />
+            <PropertyRef Name="Anular" />
+          </Key>
+          <Property Name="IdMenu" Type="int" Nullable="false" />
+          <Property Name="IdMenuPadre" Type="int" />
+          <Property Name="DescripcionMenu" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="PosicionMenu" Type="int" Nullable="false" />
+          <Property Name="Habilitado" Type="bit" Nullable="false" />
+          <Property Name="Tiene_FormularioAsociado" Type="bit" Nullable="false" />
+          <Property Name="nom_Formulario" Type="varchar" MaxLength="255" />
+          <Property Name="nom_Asembly" Type="varchar" MaxLength="200" />
+          <Property Name="nivel" Type="int" />
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nuevo" Type="bit" Nullable="false" />
+          <Property Name="Modificar" Type="bit" Nullable="false" />
+          <Property Name="Anular" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.dbo.vwseg_Usuario_x_Empresa' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwseg_Usuario_x_Empresa">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -112,10 +142,10 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_Usuario_x_Empresa' no 
           <Property Name="Observacion" Type="varchar" MaxLength="50" />
           <Property Name="em_nombre" Type="varchar" MaxLength="300" Nullable="false" />
           <Property Name="em_ruc" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Nombre" Type="varchar(max)" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_usuario_x_tb_sucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.dbo.vwseg_usuario_x_tb_sucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwseg_usuario_x_tb_sucursal">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -138,6 +168,18 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_usuario_x_tb_sucursal'
               <PropertyRef Name="IdMenu" />
             </Principal>
             <Dependent Role="seg_Menu_x_Empresa">
+              <PropertyRef Name="IdMenu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_seg_Menu_x_Empresa_x_Usuario_seg_Menu">
+          <End Role="seg_Menu" Type="Self.seg_Menu" Multiplicity="1" />
+          <End Role="seg_Menu_x_Empresa_x_Usuario" Type="Self.seg_Menu_x_Empresa_x_Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="seg_Menu">
+              <PropertyRef Name="IdMenu" />
+            </Principal>
+            <Dependent Role="seg_Menu_x_Empresa_x_Usuario">
               <PropertyRef Name="IdMenu" />
             </Dependent>
           </ReferentialConstraint>
@@ -210,6 +252,24 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_usuario_x_tb_sucursal'
           <EntitySet Name="seg_Usuario_x_Empresa" EntityType="Self.seg_Usuario_x_Empresa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="seg_usuario_x_tb_sis_reporte" EntityType="Self.seg_usuario_x_tb_sis_reporte" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="seg_usuario_x_tb_sucursal" EntityType="Self.seg_usuario_x_tb_sucursal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwseg_Menu_x_Usuario_x_Empresa" EntityType="Self.vwseg_Menu_x_Usuario_x_Empresa" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwseg_Menu_x_Usuario_x_Empresa].[IdMenu] AS [IdMenu], 
+    [vwseg_Menu_x_Usuario_x_Empresa].[IdMenuPadre] AS [IdMenuPadre], 
+    [vwseg_Menu_x_Usuario_x_Empresa].[DescripcionMenu] AS [DescripcionMenu], 
+    [vwseg_Menu_x_Usuario_x_Empresa].[PosicionMenu] AS [PosicionMenu], 
+    [vwseg_Menu_x_Usuario_x_Empresa].[Habilitado] AS [Habilitado], 
+    [vwseg_Menu_x_Usuario_x_Empresa].[Tiene_FormularioAsociado] AS [Tiene_FormularioAsociado], 
+    [vwseg_Menu_x_Usuario_x_Empresa].[nom_Formulario] AS [nom_Formulario], 
+    [vwseg_Menu_x_Usuario_x_Empresa].[nom_Asembly] AS [nom_Asembly], 
+    [vwseg_Menu_x_Usuario_x_Empresa].[nivel] AS [nivel], 
+    [vwseg_Menu_x_Usuario_x_Empresa].[IdEmpresa] AS [IdEmpresa], 
+    [vwseg_Menu_x_Usuario_x_Empresa].[IdUsuario] AS [IdUsuario], 
+    [vwseg_Menu_x_Usuario_x_Empresa].[Nuevo] AS [Nuevo], 
+    [vwseg_Menu_x_Usuario_x_Empresa].[Modificar] AS [Modificar], 
+    [vwseg_Menu_x_Usuario_x_Empresa].[Anular] AS [Anular]
+    FROM [dbo].[vwseg_Menu_x_Usuario_x_Empresa] AS [vwseg_Menu_x_Usuario_x_Empresa]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwseg_Usuario_x_Empresa" EntityType="Self.vwseg_Usuario_x_Empresa" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwseg_Usuario_x_Empresa].[IdUsuario] AS [IdUsuario], 
@@ -232,6 +292,10 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_usuario_x_tb_sucursal'
           <AssociationSet Name="FK_seg_Menu_x_Empresa_seg_Menu" Association="Self.FK_seg_Menu_x_Empresa_seg_Menu">
             <End Role="seg_Menu" EntitySet="seg_Menu" />
             <End Role="seg_Menu_x_Empresa" EntitySet="seg_Menu_x_Empresa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_seg_Menu_x_Empresa_x_Usuario_seg_Menu" Association="Self.FK_seg_Menu_x_Empresa_x_Usuario_seg_Menu">
+            <End Role="seg_Menu" EntitySet="seg_Menu" />
+            <End Role="seg_Menu_x_Empresa_x_Usuario" EntitySet="seg_Menu_x_Empresa_x_Usuario" />
           </AssociationSet>
           <AssociationSet Name="FK_seg_Menu_x_Empresa_x_Usuario_seg_usuario" Association="Self.FK_seg_Menu_x_Empresa_x_Usuario_seg_usuario">
             <End Role="seg_usuario" EntitySet="seg_usuario" />
@@ -268,30 +332,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_usuario_x_tb_sucursal'
           <Property Name="observacion" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="seg_Menu" Relationship="Model_seguridad_acceso.FK_seg_Menu_x_Empresa_seg_Menu" FromRole="seg_Menu_x_Empresa" ToRole="seg_Menu" />
         </EntityType>
-        <EntityType Name="seg_Menu_x_Empresa_x_Usuario">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdUsuario" />
-            <PropertyRef Name="IdMenu" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdMenu" Type="Int32" Nullable="false" />
-          <Property Name="Lectura" Type="Boolean" Nullable="false" />
-          <Property Name="Escritura" Type="Boolean" Nullable="false" />
-          <Property Name="Eliminacion" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="seg_usuario" Relationship="Model_seguridad_acceso.FK_seg_Menu_x_Empresa_x_Usuario_seg_usuario" FromRole="seg_Menu_x_Empresa_x_Usuario" ToRole="seg_usuario" />
-        </EntityType>
-        <EntityType Name="seg_Usuario_x_Empresa">
-          <Key>
-            <PropertyRef Name="IdUsuario" />
-            <PropertyRef Name="IdEmpresa" />
-          </Key>
-          <Property Name="IdUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="Observacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="seg_usuario" Relationship="Model_seguridad_acceso.FK_seg_Usuario_x_Empresa_seg_usuario" FromRole="seg_Usuario_x_Empresa" ToRole="seg_usuario" />
-        </EntityType>
         <EntityType Name="seg_usuario_x_tb_sis_reporte">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -304,8 +344,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_usuario_x_tb_sucursal'
         </EntityType>
         <EntityContainer Name="Entities_seguridad_acceso" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="seg_Menu_x_Empresa" EntityType="Self.seg_Menu_x_Empresa" />
-          <EntitySet Name="seg_Menu_x_Empresa_x_Usuario" EntityType="Self.seg_Menu_x_Empresa_x_Usuario" />
-          <EntitySet Name="seg_Usuario_x_Empresa" EntityType="Self.seg_Usuario_x_Empresa" />
           <EntitySet Name="seg_usuario_x_tb_sis_reporte" EntityType="Self.seg_usuario_x_tb_sis_reporte" />
           <EntitySet Name="seg_Menu" EntityType="Model_seguridad_acceso.seg_Menu" />
           <AssociationSet Name="FK_seg_Menu_x_Empresa_seg_Menu" Association="Model_seguridad_acceso.FK_seg_Menu_x_Empresa_seg_Menu">
@@ -314,19 +352,10 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_usuario_x_tb_sucursal'
           </AssociationSet>
           <EntitySet Name="seg_usuario_x_tb_sucursal" EntityType="Model_seguridad_acceso.seg_usuario_x_tb_sucursal" />
           <EntitySet Name="vwseg_usuario_x_tb_sucursal" EntityType="Model_seguridad_acceso.vwseg_usuario_x_tb_sucursal" />
-          <EntitySet Name="vwseg_Usuario_x_Empresa" EntityType="Model_seguridad_acceso.vwseg_Usuario_x_Empresa" />
           <EntitySet Name="seg_usuario" EntityType="Model_seguridad_acceso.seg_usuario" />
           <AssociationSet Name="FK_seg_usuario_seg_Menu" Association="Model_seguridad_acceso.FK_seg_usuario_seg_Menu">
             <End Role="seg_Menu" EntitySet="seg_Menu" />
             <End Role="seg_usuario" EntitySet="seg_usuario" />
-          </AssociationSet>
-          <AssociationSet Name="FK_seg_Menu_x_Empresa_x_Usuario_seg_usuario" Association="Model_seguridad_acceso.FK_seg_Menu_x_Empresa_x_Usuario_seg_usuario">
-            <End Role="seg_usuario" EntitySet="seg_usuario" />
-            <End Role="seg_Menu_x_Empresa_x_Usuario" EntitySet="seg_Menu_x_Empresa_x_Usuario" />
-          </AssociationSet>
-          <AssociationSet Name="FK_seg_Usuario_x_Empresa_seg_usuario" Association="Model_seguridad_acceso.FK_seg_Usuario_x_Empresa_seg_usuario">
-            <End Role="seg_usuario" EntitySet="seg_usuario" />
-            <End Role="seg_Usuario_x_Empresa" EntitySet="seg_Usuario_x_Empresa" />
           </AssociationSet>
           <AssociationSet Name="FK_seg_usuario_x_tb_sis_reporte_seg_usuario" Association="Model_seguridad_acceso.FK_seg_usuario_x_tb_sis_reporte_seg_usuario">
             <End Role="seg_usuario" EntitySet="seg_usuario" />
@@ -335,6 +364,22 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_usuario_x_tb_sucursal'
           <AssociationSet Name="FK_seg_usuario_x_tb_sucursal_seg_usuario" Association="Model_seguridad_acceso.FK_seg_usuario_x_tb_sucursal_seg_usuario">
             <End Role="seg_usuario" EntitySet="seg_usuario" />
             <End Role="seg_usuario_x_tb_sucursal" EntitySet="seg_usuario_x_tb_sucursal" />
+          </AssociationSet>
+          <EntitySet Name="seg_Usuario_x_Empresa" EntityType="Model_seguridad_acceso.seg_Usuario_x_Empresa" />
+          <AssociationSet Name="FK_seg_Usuario_x_Empresa_seg_usuario" Association="Model_seguridad_acceso.FK_seg_Usuario_x_Empresa_seg_usuario">
+            <End Role="seg_usuario" EntitySet="seg_usuario" />
+            <End Role="seg_Usuario_x_Empresa" EntitySet="seg_Usuario_x_Empresa" />
+          </AssociationSet>
+          <EntitySet Name="vwseg_Usuario_x_Empresa" EntityType="Model_seguridad_acceso.vwseg_Usuario_x_Empresa" />
+          <EntitySet Name="seg_Menu_x_Empresa_x_Usuario" EntityType="Model_seguridad_acceso.seg_Menu_x_Empresa_x_Usuario" />
+          <EntitySet Name="vwseg_Menu_x_Usuario_x_Empresa" EntityType="Model_seguridad_acceso.vwseg_Menu_x_Usuario_x_Empresa" />
+          <AssociationSet Name="FK_seg_Menu_x_Empresa_x_Usuario_seg_Menu" Association="Model_seguridad_acceso.FK_seg_Menu_x_Empresa_x_Usuario_seg_Menu">
+            <End Role="seg_Menu" EntitySet="seg_Menu" />
+            <End Role="seg_Menu_x_Empresa_x_Usuario" EntitySet="seg_Menu_x_Empresa_x_Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_seg_Menu_x_Empresa_x_Usuario_seg_usuario" Association="Model_seguridad_acceso.FK_seg_Menu_x_Empresa_x_Usuario_seg_usuario">
+            <End Role="seg_usuario" EntitySet="seg_usuario" />
+            <End Role="seg_Menu_x_Empresa_x_Usuario" EntitySet="seg_Menu_x_Empresa_x_Usuario" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="seg_Menu">
@@ -357,6 +402,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_usuario_x_tb_sucursal'
           <Property Name="es_desktop" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="seg_Menu_x_Empresa" Relationship="Model_seguridad_acceso.FK_seg_Menu_x_Empresa_seg_Menu" FromRole="seg_Menu" ToRole="seg_Menu_x_Empresa" />
           <NavigationProperty Name="seg_usuario" Relationship="Model_seguridad_acceso.FK_seg_usuario_seg_Menu" FromRole="seg_Menu" ToRole="seg_usuario" />
+          <NavigationProperty Name="seg_Menu_x_Empresa_x_Usuario" Relationship="Model_seguridad_acceso.FK_seg_Menu_x_Empresa_x_Usuario_seg_Menu" FromRole="seg_Menu" ToRole="seg_Menu_x_Empresa_x_Usuario" />
         </EntityType>
         <Association Name="FK_seg_Menu_x_Empresa_seg_Menu">
           <End Type="Model_seguridad_acceso.seg_Menu" Role="seg_Menu" Multiplicity="1" />
@@ -396,20 +442,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_usuario_x_tb_sucursal'
           <Property Name="Su_Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="em_nombre" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="vwseg_Usuario_x_Empresa">
-          <Key>
-            <PropertyRef Name="IdUsuario" />
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="em_nombre" />
-            <PropertyRef Name="em_ruc" />
-          </Key>
-          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="Observacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="em_nombre" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="em_ruc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="seg_usuario">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -433,10 +465,10 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_usuario_x_tb_sucursal'
           <Property Name="IPUsuario" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="IPImpresora" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="seg_Menu" Relationship="Model_seguridad_acceso.FK_seg_usuario_seg_Menu" FromRole="seg_usuario" ToRole="seg_Menu" />
-          <NavigationProperty Name="seg_Menu_x_Empresa_x_Usuario" Relationship="Model_seguridad_acceso.FK_seg_Menu_x_Empresa_x_Usuario_seg_usuario" FromRole="seg_usuario" ToRole="seg_Menu_x_Empresa_x_Usuario" />
-          <NavigationProperty Name="seg_Usuario_x_Empresa" Relationship="Model_seguridad_acceso.FK_seg_Usuario_x_Empresa_seg_usuario" FromRole="seg_usuario" ToRole="seg_Usuario_x_Empresa" />
           <NavigationProperty Name="seg_usuario_x_tb_sis_reporte" Relationship="Model_seguridad_acceso.FK_seg_usuario_x_tb_sis_reporte_seg_usuario" FromRole="seg_usuario" ToRole="seg_usuario_x_tb_sis_reporte" />
           <NavigationProperty Name="seg_usuario_x_tb_sucursal" Relationship="Model_seguridad_acceso.FK_seg_usuario_x_tb_sucursal_seg_usuario" FromRole="seg_usuario" ToRole="seg_usuario_x_tb_sucursal" />
+          <NavigationProperty Name="seg_Usuario_x_Empresa" Relationship="Model_seguridad_acceso.FK_seg_Usuario_x_Empresa_seg_usuario" FromRole="seg_usuario" ToRole="seg_Usuario_x_Empresa" />
+          <NavigationProperty Name="seg_Menu_x_Empresa_x_Usuario" Relationship="Model_seguridad_acceso.FK_seg_Menu_x_Empresa_x_Usuario_seg_usuario" FromRole="seg_usuario" ToRole="seg_Menu_x_Empresa_x_Usuario" />
         </EntityType>
         <Association Name="FK_seg_usuario_seg_Menu">
           <End Type="Model_seguridad_acceso.seg_Menu" Role="seg_Menu" Multiplicity="0..1" />
@@ -447,30 +479,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_usuario_x_tb_sucursal'
             </Principal>
             <Dependent Role="seg_usuario">
               <PropertyRef Name="IdMenu" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_seg_Menu_x_Empresa_x_Usuario_seg_usuario">
-          <End Type="Model_seguridad_acceso.seg_usuario" Role="seg_usuario" Multiplicity="1" />
-          <End Type="Model_seguridad_acceso.seg_Menu_x_Empresa_x_Usuario" Role="seg_Menu_x_Empresa_x_Usuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="seg_usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="seg_Menu_x_Empresa_x_Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_seg_Usuario_x_Empresa_seg_usuario">
-          <End Type="Model_seguridad_acceso.seg_usuario" Role="seg_usuario" Multiplicity="1" />
-          <End Type="Model_seguridad_acceso.seg_Usuario_x_Empresa" Role="seg_Usuario_x_Empresa" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="seg_usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="seg_Usuario_x_Empresa">
-              <PropertyRef Name="IdUsuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -498,6 +506,109 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_usuario_x_tb_sucursal'
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="seg_Usuario_x_Empresa">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="seg_usuario" Relationship="Model_seguridad_acceso.FK_seg_Usuario_x_Empresa_seg_usuario" FromRole="seg_Usuario_x_Empresa" ToRole="seg_usuario" />
+        </EntityType>
+        <Association Name="FK_seg_Usuario_x_Empresa_seg_usuario">
+          <End Type="Model_seguridad_acceso.seg_usuario" Role="seg_usuario" Multiplicity="1" />
+          <End Type="Model_seguridad_acceso.seg_Usuario_x_Empresa" Role="seg_Usuario_x_Empresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="seg_usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="seg_Usuario_x_Empresa">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vwseg_Usuario_x_Empresa">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="em_nombre" />
+            <PropertyRef Name="em_ruc" />
+          </Key>
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="em_nombre" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="em_ruc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="seg_Menu_x_Empresa_x_Usuario">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdMenu" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdMenu" Type="Int32" Nullable="false" />
+          <Property Name="Nuevo" Type="Boolean" Nullable="false" />
+          <Property Name="Modificar" Type="Boolean" Nullable="false" />
+          <Property Name="Anular" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="seg_Menu" Relationship="Model_seguridad_acceso.FK_seg_Menu_x_Empresa_x_Usuario_seg_Menu" FromRole="seg_Menu_x_Empresa_x_Usuario" ToRole="seg_Menu" />
+          <NavigationProperty Name="seg_usuario" Relationship="Model_seguridad_acceso.FK_seg_Menu_x_Empresa_x_Usuario_seg_usuario" FromRole="seg_Menu_x_Empresa_x_Usuario" ToRole="seg_usuario" />
+        </EntityType>
+        <EntityType Name="vwseg_Menu_x_Usuario_x_Empresa">
+          <Key>
+            <PropertyRef Name="IdMenu" />
+            <PropertyRef Name="DescripcionMenu" />
+            <PropertyRef Name="PosicionMenu" />
+            <PropertyRef Name="Habilitado" />
+            <PropertyRef Name="Tiene_FormularioAsociado" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="Nuevo" />
+            <PropertyRef Name="Modificar" />
+            <PropertyRef Name="Anular" />
+          </Key>
+          <Property Name="IdMenu" Type="Int32" Nullable="false" />
+          <Property Name="IdMenuPadre" Type="Int32" />
+          <Property Name="DescripcionMenu" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PosicionMenu" Type="Int32" Nullable="false" />
+          <Property Name="Habilitado" Type="Boolean" Nullable="false" />
+          <Property Name="Tiene_FormularioAsociado" Type="Boolean" Nullable="false" />
+          <Property Name="nom_Formulario" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="nom_Asembly" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="nivel" Type="Int32" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nuevo" Type="Boolean" Nullable="false" />
+          <Property Name="Modificar" Type="Boolean" Nullable="false" />
+          <Property Name="Anular" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_seg_Menu_x_Empresa_x_Usuario_seg_Menu">
+          <End Type="Model_seguridad_acceso.seg_Menu" Role="seg_Menu" Multiplicity="1" />
+          <End Type="Model_seguridad_acceso.seg_Menu_x_Empresa_x_Usuario" Role="seg_Menu_x_Empresa_x_Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="seg_Menu">
+              <PropertyRef Name="IdMenu" />
+            </Principal>
+            <Dependent Role="seg_Menu_x_Empresa_x_Usuario">
+              <PropertyRef Name="IdMenu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_seg_Menu_x_Empresa_x_Usuario_seg_usuario">
+          <End Type="Model_seguridad_acceso.seg_usuario" Role="seg_usuario" Multiplicity="1" />
+          <End Type="Model_seguridad_acceso.seg_Menu_x_Empresa_x_Usuario" Role="seg_Menu_x_Empresa_x_Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="seg_usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="seg_Menu_x_Empresa_x_Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -510,27 +621,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_usuario_x_tb_sucursal'
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
                 <ScalarProperty Name="observacion" ColumnName="observacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="seg_Menu_x_Empresa_x_Usuario">
-            <EntityTypeMapping TypeName="Model_seguridad_acceso.seg_Menu_x_Empresa_x_Usuario">
-              <MappingFragment StoreEntitySet="seg_Menu_x_Empresa_x_Usuario">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
-                <ScalarProperty Name="Lectura" ColumnName="Lectura" />
-                <ScalarProperty Name="Escritura" ColumnName="Escritura" />
-                <ScalarProperty Name="Eliminacion" ColumnName="Eliminacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="seg_Usuario_x_Empresa">
-            <EntityTypeMapping TypeName="Model_seguridad_acceso.seg_Usuario_x_Empresa">
-              <MappingFragment StoreEntitySet="seg_Usuario_x_Empresa">
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -584,18 +674,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_usuario_x_tb_sucursal'
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vwseg_Usuario_x_Empresa">
-            <EntityTypeMapping TypeName="Model_seguridad_acceso.vwseg_Usuario_x_Empresa">
-              <MappingFragment StoreEntitySet="vwseg_Usuario_x_Empresa">
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="em_ruc" ColumnName="em_ruc" />
-                <ScalarProperty Name="em_nombre" ColumnName="em_nombre" />
-                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="seg_usuario">
             <EntityTypeMapping TypeName="Model_seguridad_acceso.seg_usuario">
               <MappingFragment StoreEntitySet="seg_usuario">
@@ -617,6 +695,59 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwseg_usuario_x_tb_sucursal'
                 <ScalarProperty Name="estado" ColumnName="estado" />
                 <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="seg_Usuario_x_Empresa">
+            <EntityTypeMapping TypeName="Model_seguridad_acceso.seg_Usuario_x_Empresa">
+              <MappingFragment StoreEntitySet="seg_Usuario_x_Empresa">
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwseg_Usuario_x_Empresa">
+            <EntityTypeMapping TypeName="Model_seguridad_acceso.vwseg_Usuario_x_Empresa">
+              <MappingFragment StoreEntitySet="vwseg_Usuario_x_Empresa">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="em_ruc" ColumnName="em_ruc" />
+                <ScalarProperty Name="em_nombre" ColumnName="em_nombre" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="seg_Menu_x_Empresa_x_Usuario">
+            <EntityTypeMapping TypeName="Model_seguridad_acceso.seg_Menu_x_Empresa_x_Usuario">
+              <MappingFragment StoreEntitySet="seg_Menu_x_Empresa_x_Usuario">
+                <ScalarProperty Name="Anular" ColumnName="Anular" />
+                <ScalarProperty Name="Modificar" ColumnName="Modificar" />
+                <ScalarProperty Name="Nuevo" ColumnName="Nuevo" />
+                <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwseg_Menu_x_Usuario_x_Empresa">
+            <EntityTypeMapping TypeName="Model_seguridad_acceso.vwseg_Menu_x_Usuario_x_Empresa">
+              <MappingFragment StoreEntitySet="vwseg_Menu_x_Usuario_x_Empresa">
+                <ScalarProperty Name="Anular" ColumnName="Anular" />
+                <ScalarProperty Name="Modificar" ColumnName="Modificar" />
+                <ScalarProperty Name="Nuevo" ColumnName="Nuevo" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="nivel" ColumnName="nivel" />
+                <ScalarProperty Name="nom_Asembly" ColumnName="nom_Asembly" />
+                <ScalarProperty Name="nom_Formulario" ColumnName="nom_Formulario" />
+                <ScalarProperty Name="Tiene_FormularioAsociado" ColumnName="Tiene_FormularioAsociado" />
+                <ScalarProperty Name="Habilitado" ColumnName="Habilitado" />
+                <ScalarProperty Name="PosicionMenu" ColumnName="PosicionMenu" />
+                <ScalarProperty Name="DescripcionMenu" ColumnName="DescripcionMenu" />
+                <ScalarProperty Name="IdMenuPadre" ColumnName="IdMenuPadre" />
+                <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

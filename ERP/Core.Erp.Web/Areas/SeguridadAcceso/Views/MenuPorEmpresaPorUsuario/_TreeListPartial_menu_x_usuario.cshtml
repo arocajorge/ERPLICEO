@@ -1,13 +1,28 @@
 @{
-    var treeList = Html.DevExpress().TreeList(settings => {
+    var treeList = Html.DevExpress().TreeList(settings =>
+    {
         settings.Name = "TreeList_menu_x_usuario";
         settings.CallbackRouteValues = new { Controller = "MenuPorEmpresaPorUsuario", Action = "TreeListPartial_menu_x_usuario", IdEmpresa = ViewBag.IdEmpresa, IdUsuario = ViewBag.IdUsuario };
         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
         settings.KeyFieldName = "IdMenu";
-        settings.ParentFieldName = "info_menu.IdMenuPadre";
+        settings.ParentFieldName = "IdMenuPadre";
+
+        settings.SettingsEditing.UpdateNodeRouteValues = new { Controller = "MenuPorEmpresaPorUsuario", Action = "EditingUpdate", Area = "SeguridadAcceso" };
+        settings.SettingsEditing.Mode = TreeListEditMode.EditFormAndDisplayNode;
+        settings.SettingsEditing.ConfirmDelete = true;
+        settings.Settings.GridLines = System.Web.UI.WebControls.GridLines.Both;
+        settings.SettingsBehavior.ExpandCollapseAction = TreeListExpandCollapseAction.NodeDblClick;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButtonInHeader = false;
+        settings.CommandColumn.NewButton.Visible = false;
+        settings.CommandColumn.DeleteButton.Visible = false;
+        settings.CommandColumn.EditButton.Visible = true;
+
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdMenu";
+            column.EditFormSettings.Visible = DefaultBoolean.False;
             column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
         });
         settings.Columns.Add(column =>
@@ -15,15 +30,44 @@
             column.Caption = "*";
             column.FieldName = "seleccionado";
             column.ColumnType = MVCxTreeListColumnType.CheckBox;
+            column.EditFormSettings.Visible = DefaultBoolean.False;
             column.Width = System.Web.UI.WebControls.Unit.Percentage(5);
         });
+
         settings.Columns.Add(column =>
         {
             column.Caption = "Menú";
-            column.FieldName = "info_menu.DescripcionMenu";
-            column.Width = System.Web.UI.WebControls.Unit.Percentage(90);
+            column.FieldName = "DescripcionMenu";
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(50);
         });
-        
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Nuevo";
+            column.FieldName = "Nuevo";
+            column.ColumnType = MVCxTreeListColumnType.CheckBox;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Modificar";
+            column.FieldName = "Modificar";
+            column.ColumnType = MVCxTreeListColumnType.CheckBox;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Anular";
+            column.FieldName = "Anular";
+            column.ColumnType = MVCxTreeListColumnType.CheckBox;
+            column.EditFormSettings.Visible = DefaultBoolean.True;
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        });
+
         settings.SettingsCookies.StoreSelection = true;
         settings.Settings.GridLines = System.Web.UI.WebControls.GridLines.Both;
         settings.SettingsPager.Visible = true;

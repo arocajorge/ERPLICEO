@@ -9,11 +9,11 @@ namespace Core.Erp.Bus.SeguridadAcceso
     {
         seg_Menu_x_Empresa_x_Usuario_Data odata = new seg_Menu_x_Empresa_x_Usuario_Data();
 
-        public List<seg_Menu_x_Empresa_x_Usuario_Info> get_list(int IdEmpresa, string IdUsuario)
+        public List<seg_Menu_x_Empresa_x_Usuario_Info> get_list(int IdEmpresa, string IdUsuario, bool MostrarTodo)
         {
             try
             {
-                return odata.get_list(IdEmpresa, IdUsuario);
+                return odata.get_list(IdEmpresa, IdUsuario, MostrarTodo);
             }
             catch (Exception)
             {

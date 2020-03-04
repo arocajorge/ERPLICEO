@@ -1,10 +1,12 @@
 ﻿using Core.Erp.Bus.Banco;
 using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.General;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Banco;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Areas.Contabilidad.Controllers;
 using Core.Erp.Web.Helps;
 using DevExpress.Web;
@@ -30,8 +32,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Bus bus_det = new ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_Bus();
         ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List List_ing = new ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List();
         ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal = new ba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_List_x_sucursal();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
 
-        
         ba_Banco_Flujo_Det_List_Deposito List_Flujo = new ba_Banco_Flujo_Det_List_Deposito();
         ba_Cbte_Ban_x_ba_TipoFlujo_Bus bus_flujo = new ba_Cbte_Ban_x_ba_TipoFlujo_Bus();
 
@@ -47,6 +49,13 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             {
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
             };
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "DepositoBanco", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             cargar_combos_consulta();
             return View(model);
         }
@@ -54,6 +63,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         public ActionResult Index(cl_filtros_Info model)
         {
             cargar_combos_consulta();
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "DepositoBanco", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
             return View(model);
         }
         private void cargar_combos_consulta()
@@ -68,12 +83,17 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             });
             ViewBag.lst_sucursal = lst_sucursal;
         }
-        public ActionResult GridViewPartial_DepositoBanco(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0)
+        public ActionResult GridViewPartial_DepositoBanco(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0, bool Nuevo = false, bool Modificar = false, bool Anular = false)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
             ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
             ViewBag.IdSucursal = IdSucursal;
+
+            ViewBag.Nuevo = Nuevo;
+            ViewBag.Modificar = Modificar;
+            ViewBag.Anular = Anular;
+
             var model = bus_cbteban.get_list(IdEmpresa, ViewBag.Fecha_ini, ViewBag.Fecha_fin, IdSucursal, cl_enumeradores.eTipoCbteBancario.DEPO.ToString(), true);
             return PartialView("_GridViewPartial_DepositoBanco", model);
         }
@@ -190,6 +210,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "DepositoBanco", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             ba_Cbte_Ban_Info model = new ba_Cbte_Ban_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -236,6 +262,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "DepositoBanco", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             ba_Cbte_Ban_Info model = bus_cbteban.get_info(IdEmpresa, IdTipocbte, IdCbteCble);
             if (model == null)
                 return RedirectToAction("Index");
@@ -293,6 +325,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Banco", "DepositoBanco", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             ba_Cbte_Ban_Info model = bus_cbteban.get_info(IdEmpresa, IdTipocbte, IdCbteCble);
             if (model == null)
                 return RedirectToAction("Index");

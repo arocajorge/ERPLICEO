@@ -7,6 +7,7 @@ using Core.Erp.Info.Caja;
 using Core.Erp.Info.Contabilidad;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Areas.Contabilidad.Controllers;
 using Core.Erp.Web.Helps;
 using DevExpress.Web;
@@ -32,6 +33,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         tb_persona_Bus bus_persona = new tb_persona_Bus();
         cxc_cobro_tipo_Bus bus_cobro = new cxc_cobro_tipo_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
@@ -44,6 +46,14 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                 IdCaja = string.IsNullOrEmpty(SessionFixed.IdCaja) ? 0 : Convert.ToInt32(SessionFixed.IdCaja)
             };
             CargarCombosConsulta(model.IdEmpresa);
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Caja", "CajaMovimientoIngreso", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             return View(model);
         }
 
@@ -51,15 +61,27 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         public ActionResult Index(cl_filtros_caja_Info model)
         {
             CargarCombosConsulta(model.IdEmpresa);
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Caja", "CajaMovimientoIngreso", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             return View(model);
         }
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_movimiento(DateTime? fecha_ini, DateTime? fecha_fin, int IdEmpresa = 0, int IdCaja = 0 )
+        public ActionResult GridViewPartial_movimiento(DateTime? fecha_ini, DateTime? fecha_fin, int IdEmpresa = 0, int IdCaja = 0, bool Nuevo = false, bool Modificar = false, bool Anular = false)
         {
             ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : fecha_ini;
             ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : fecha_fin;
             ViewBag.IdEmpresa = IdEmpresa;
             ViewBag.IdCaja = IdCaja;
+
+            ViewBag.Nuevo = Nuevo;
+            ViewBag.Modificar = Modificar;
+            ViewBag.Anular = Anular;
+
             List<caj_Caja_Movimiento_Info> model = bus_caja_mov.get_list(IdEmpresa, IdCaja, "+", true, ViewBag.fecha_ini, ViewBag.fecha_fin);
             return PartialView("_GridViewPartial_movimiento", model);
         }
@@ -158,6 +180,12 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Caja", "CajaMovimientoIngreso", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             caj_Caja_Movimiento_Info model = new caj_Caja_Movimiento_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -221,6 +249,12 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Caja", "CajaMovimientoIngreso", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             caj_Caja_Movimiento_Info model = bus_caja_mov.get_info(IdEmpresa, IdTipocbte, IdCbteCble);
             if (model == null)
                 return RedirectToAction("Index");
@@ -285,6 +319,12 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             SessionFixed.IdTransaccionSession = (Convert.ToDecimal(SessionFixed.IdTransaccionSession) + 1).ToString();
             SessionFixed.IdTransaccionSessionActual = SessionFixed.IdTransaccionSession;
             #endregion
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Caja", "CajaMovimientoIngreso", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             caj_Caja_Movimiento_Info model = bus_caja_mov.get_info(IdEmpresa, IdTipocbte, IdCbteCble);
             if (model == null)
                 return RedirectToAction("Index");

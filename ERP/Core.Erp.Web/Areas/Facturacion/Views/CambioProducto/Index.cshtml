@@ -98,7 +98,7 @@
         </div>
     </div>
     <div class="box-body">
-        @Html.Action("GridViewPartial_CambioProducto", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdSucursal = Model.IdSucursal })
+        @Html.Action("GridViewPartial_CambioProducto", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdSucursal = Model.IdSucursal, Nuevo = ViewBag.Nuevo, Modificar = ViewBag.Modificar, Anular = ViewBag.Anular })
     </div>
     <!-- /.box-body -->
     <div class="box-footer">

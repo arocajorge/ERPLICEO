@@ -25,8 +25,8 @@ namespace Core.Erp.Data
         public Nullable<int> nivel { get; set; }
         public int IdEmpresa { get; set; }
         public string IdUsuario { get; set; }
-        public bool Nuevo { get; set; }
-        public bool Modificar { get; set; }
-        public bool Anular { get; set; }
+        public bool Eliminacion { get; set; }
+        public bool Escritura { get; set; }
+        public bool Lectura { get; set; }
     }
 }

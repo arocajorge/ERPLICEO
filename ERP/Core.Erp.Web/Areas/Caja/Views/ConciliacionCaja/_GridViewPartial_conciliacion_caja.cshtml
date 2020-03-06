@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridView_conciliacion_caja";
-        settings.CallbackRouteValues = new { Controller = "ConciliacionCaja", Action = "GridViewPartial_conciliacion_caja", fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin, IdEmpresa = ViewBag.IdEmpresa, IdCaja = ViewBag.IdCaja };
+        settings.CallbackRouteValues = new { Controller = "ConciliacionCaja", Action = "GridViewPartial_conciliacion_caja", fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin, IdEmpresa = ViewBag.IdEmpresa, IdCaja = ViewBag.IdCaja, Nuevo = ViewBag.Nuevo, Modificar = ViewBag.Modificar, Anular = ViewBag.Anular };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdConciliacion_Caja";
         //Configuración para que la grilla no muestre texto completo
@@ -61,16 +61,22 @@
             {
                 if (Convert.ToString(DataBinder.Eval(tc.DataItem, "IdEstadoCierre")) == "EST_CIE_ABI")
                 {
-                    ViewContext.Writer.Write(
-                    Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdConciliacion_caja = DataBinder.Eval(tc.DataItem, "IdConciliacion_caja")})
-                    );
+                    if (ViewBag.Modificar == true)
+                    {
+                        ViewContext.Writer.Write(
+                            Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdConciliacion_caja = DataBinder.Eval(tc.DataItem, "IdConciliacion_caja") })
+                        );
+                    }
                 }
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = ViewBag.IdEmpresa }).ToHtmlString()
-                );
+                if (ViewBag.Nuevo == true)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = ViewBag.IdEmpresa }).ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;

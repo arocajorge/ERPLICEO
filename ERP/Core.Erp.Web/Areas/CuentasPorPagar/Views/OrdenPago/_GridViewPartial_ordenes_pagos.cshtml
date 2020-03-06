@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridView_ordenes_pagos";
-        settings.CallbackRouteValues = new { Controller = "OrdenPago", Action = "GridViewPartial_ordenes_pagos", Fecha_ini= ViewBag.Fecha_ini, Fecha_fin=ViewBag.Fecha_fin, IdSucursal=ViewBag.IdSucursal };
+        settings.CallbackRouteValues = new { Controller = "OrdenPago", Action = "GridViewPartial_ordenes_pagos", Fecha_ini= ViewBag.Fecha_ini, Fecha_fin=ViewBag.Fecha_fin, IdSucursal=ViewBag.IdSucursal, Nuevo = ViewBag.Nuevo, Modificar = ViewBag.Modificar, Anular = ViewBag.Anular };
         settings.KeyFieldName = "IdOrdenPago";
         //Configuración para que la grilla no muestre texto completo
         settings.SettingsBehavior.AllowEllipsisInText = true;
@@ -66,21 +66,31 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-
                 if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
                 {
-                    ViewContext.Writer.Write(
-                    Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdOrdenPago = DataBinder.Eval(tc.DataItem, "IdOrdenPago") }) + "&nbsp;" +
-                    Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdOrdenPago = DataBinder.Eval(tc.DataItem, "IdOrdenPago") },
-                    new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
+                    if (ViewBag.Modificar)
+                    {
+                        ViewContext.Writer.Write(
+                            Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdOrdenPago = DataBinder.Eval(tc.DataItem, "IdOrdenPago") }) + "&nbsp;"
+                        );
+                    }
+                    if (ViewBag.Anular)
+                    {
+                        ViewContext.Writer.Write(
+                            Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdOrdenPago = DataBinder.Eval(tc.DataItem, "IdOrdenPago") },
+                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                        );
+                    }
                 }
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdTipoSRI = ViewBag.IdTipoSRI , IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
-                );
+                if (ViewBag.Nuevo)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdTipoSRI = ViewBag.IdTipoSRI, IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;

@@ -96,7 +96,7 @@
             </div>
         </div>
         <div class="box-body">
-            @Html.Action("GridViewPartial_NotaCreditoFacturacion", new { IdSucursal = Model.IdSucursal, fecha_ini = Model.fecha_ini, fecha_fin = Model.fecha_fin })
+            @Html.Action("GridViewPartial_NotaCreditoFacturacion", new { IdSucursal = Model.IdSucursal, fecha_ini = Model.fecha_ini, fecha_fin = Model.fecha_fin, Nuevo = ViewBag.Nuevo, Modificar = ViewBag.Modificar, Anular = ViewBag.Anular })
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

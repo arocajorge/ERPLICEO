@@ -17,7 +17,8 @@
         settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.Control;
 
         settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.ShowNewButton = false;
         settings.CommandColumn.ShowEditButton = true;
         settings.CommandColumn.ShowDeleteButton = true;
 
@@ -54,14 +55,14 @@
         {
             column.FieldName = "Monto";
             column.Caption = "Monto";
-            column.Width = Unit.Percentage(30);
-            column.EditFormSettings.Visible = DefaultBoolean.True;            
+            column.Width = Unit.Percentage(20);
+            column.EditFormSettings.Visible = DefaultBoolean.True;
         });
         settings.Columns.Add(column =>
         {
             column.FieldName = "IdRubro";
             column.Caption = "Rubro";
-            column.Width = Unit.Percentage(20);
+            column.Width = Unit.Percentage(70);
             column.Visible = false;
             column.EditFormSettings.Visible = DefaultBoolean.True;
             column.EditorProperties().ComboBox(p =>

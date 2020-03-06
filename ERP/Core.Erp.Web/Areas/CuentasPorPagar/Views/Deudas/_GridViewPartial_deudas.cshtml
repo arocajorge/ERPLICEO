@@ -68,19 +68,29 @@
             {
                 if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
                 {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdTipoCbte_Ogiro = DataBinder.Eval(tc.DataItem, "IdTipoCbte_Ogiro"), IdCbteCble_Ogiro = DataBinder.Eval(tc.DataItem, "IdCbteCble_Ogiro") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdTipoCbte_Ogiro = DataBinder.Eval(tc.DataItem, "IdTipoCbte_Ogiro"), IdCbteCble_Ogiro = DataBinder.Eval(tc.DataItem, "IdCbteCble_Ogiro") },
-                        new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-
-                            );
+                    if (ViewBag.Modificar)
+                    {
+                        ViewContext.Writer.Write(
+                            Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdTipoCbte_Ogiro = DataBinder.Eval(tc.DataItem, "IdTipoCbte_Ogiro"), IdCbteCble_Ogiro = DataBinder.Eval(tc.DataItem, "IdCbteCble_Ogiro") }) + "&nbsp;"
+                        );
+                    }
+                    if (ViewBag.Anular)
+                    {
+                        ViewContext.Writer.Write(
+                            Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdTipoCbte_Ogiro = DataBinder.Eval(tc.DataItem, "IdTipoCbte_Ogiro"), IdCbteCble_Ogiro = DataBinder.Eval(tc.DataItem, "IdCbteCble_Ogiro") },
+                            new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
+                        );
+                    }
                 }
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdTipoSRI = ViewBag.IdTipoSRI , IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa}).ToHtmlString()
-                );
+                if (ViewBag.Nuevo)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdTipoSRI = ViewBag.IdTipoSRI, IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
+                    );
+                }
             });
             c.Settings.AllowDragDrop = DefaultBoolean.False;
             c.Settings.AllowSort = DefaultBoolean.False;

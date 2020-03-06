@@ -109,9 +109,9 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.dbo.vwseg_Menu_x_Usuario_x_E
             <PropertyRef Name="Tiene_FormularioAsociado" />
             <PropertyRef Name="IdEmpresa" />
             <PropertyRef Name="IdUsuario" />
-            <PropertyRef Name="Nuevo" />
-            <PropertyRef Name="Modificar" />
-            <PropertyRef Name="Anular" />
+            <PropertyRef Name="Eliminacion" />
+            <PropertyRef Name="Escritura" />
+            <PropertyRef Name="Lectura" />
           </Key>
           <Property Name="IdMenu" Type="int" Nullable="false" />
           <Property Name="IdMenuPadre" Type="int" />
@@ -124,9 +124,9 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.dbo.vwseg_Menu_x_Usuario_x_E
           <Property Name="nivel" Type="int" />
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdUsuario" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Nuevo" Type="bit" Nullable="false" />
-          <Property Name="Modificar" Type="bit" Nullable="false" />
-          <Property Name="Anular" Type="bit" Nullable="false" />
+          <Property Name="Eliminacion" Type="bit" Nullable="false" />
+          <Property Name="Escritura" Type="bit" Nullable="false" />
+          <Property Name="Lectura" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.dbo.vwseg_Usuario_x_Empresa' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -265,9 +265,9 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.dbo.vwseg_usuario_x_tb_sucur
     [vwseg_Menu_x_Usuario_x_Empresa].[nivel] AS [nivel], 
     [vwseg_Menu_x_Usuario_x_Empresa].[IdEmpresa] AS [IdEmpresa], 
     [vwseg_Menu_x_Usuario_x_Empresa].[IdUsuario] AS [IdUsuario], 
-    [vwseg_Menu_x_Usuario_x_Empresa].[Nuevo] AS [Nuevo], 
-    [vwseg_Menu_x_Usuario_x_Empresa].[Modificar] AS [Modificar], 
-    [vwseg_Menu_x_Usuario_x_Empresa].[Anular] AS [Anular]
+    [vwseg_Menu_x_Usuario_x_Empresa].[Eliminacion] AS [Eliminacion], 
+    [vwseg_Menu_x_Usuario_x_Empresa].[Escritura] AS [Escritura], 
+    [vwseg_Menu_x_Usuario_x_Empresa].[Lectura] AS [Lectura]
     FROM [dbo].[vwseg_Menu_x_Usuario_x_Empresa] AS [vwseg_Menu_x_Usuario_x_Empresa]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwseg_Usuario_x_Empresa" EntityType="Self.vwseg_Usuario_x_Empresa" store:Type="Views" store:Schema="dbo">
@@ -566,9 +566,9 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.dbo.vwseg_usuario_x_tb_sucur
             <PropertyRef Name="Tiene_FormularioAsociado" />
             <PropertyRef Name="IdEmpresa" />
             <PropertyRef Name="IdUsuario" />
-            <PropertyRef Name="Nuevo" />
-            <PropertyRef Name="Modificar" />
-            <PropertyRef Name="Anular" />
+            <PropertyRef Name="Eliminacion" />
+            <PropertyRef Name="Escritura" />
+            <PropertyRef Name="Lectura" />
           </Key>
           <Property Name="IdMenu" Type="Int32" Nullable="false" />
           <Property Name="IdMenuPadre" Type="Int32" />
@@ -581,9 +581,9 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.dbo.vwseg_usuario_x_tb_sucur
           <Property Name="nivel" Type="Int32" />
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
           <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Nuevo" Type="Boolean" Nullable="false" />
-          <Property Name="Modificar" Type="Boolean" Nullable="false" />
-          <Property Name="Anular" Type="Boolean" Nullable="false" />
+          <Property Name="Eliminacion" Type="Boolean" Nullable="false" />
+          <Property Name="Escritura" Type="Boolean" Nullable="false" />
+          <Property Name="Lectura" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_seg_Menu_x_Empresa_x_Usuario_seg_Menu">
           <End Type="Model_seguridad_acceso.seg_Menu" Role="seg_Menu" Multiplicity="1" />
@@ -734,9 +734,9 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.dbo.vwseg_usuario_x_tb_sucur
           <EntitySetMapping Name="vwseg_Menu_x_Usuario_x_Empresa">
             <EntityTypeMapping TypeName="Model_seguridad_acceso.vwseg_Menu_x_Usuario_x_Empresa">
               <MappingFragment StoreEntitySet="vwseg_Menu_x_Usuario_x_Empresa">
-                <ScalarProperty Name="Anular" ColumnName="Anular" />
-                <ScalarProperty Name="Modificar" ColumnName="Modificar" />
-                <ScalarProperty Name="Nuevo" ColumnName="Nuevo" />
+                <ScalarProperty Name="Lectura" ColumnName="Lectura" />
+                <ScalarProperty Name="Escritura" ColumnName="Escritura" />
+                <ScalarProperty Name="Eliminacion" ColumnName="Eliminacion" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="nivel" ColumnName="nivel" />

@@ -1,9 +1,11 @@
 ﻿using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.General;
 using Core.Erp.Bus.Inventario;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.General;
 using Core.Erp.Info.Helps;
 using Core.Erp.Info.Inventario;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
@@ -29,6 +31,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         tb_bodega_Bus bus_bodega = new tb_bodega_Bus();
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         in_UnidadMedida_Equiv_conversion_Bus bus_UnidadMedidaEquivalencia = new in_UnidadMedida_Equiv_conversion_Bus();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
 
@@ -85,6 +88,13 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 IdSucursal = string.IsNullOrEmpty(SessionFixed.IdSucursal) ? 0 : Convert.ToInt32(SessionFixed.IdSucursal)
             };
             CargarCombos(model.IdEmpresa);
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "Consignacion", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             return View(model);
         }
         [HttpPost]
@@ -92,6 +102,13 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         {
             model.IdEmpresa = string.IsNullOrEmpty(SessionFixed.IdEmpresa) ? 0 : Convert.ToInt32(SessionFixed.IdEmpresa);
             CargarCombos(model.IdEmpresa);
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "Consignacion", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             return View(model);
         }
         #endregion
@@ -127,12 +144,16 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
         #endregion
-        public ActionResult GridViewPartial_Consignacion(DateTime? fecha_ini, DateTime? fecha_fin, int IdSucursal = 0)
+        public ActionResult GridViewPartial_Consignacion(DateTime? fecha_ini, DateTime? fecha_fin, int IdSucursal = 0, bool Nuevo = false, bool Modificar = false, bool Anular = false)
         {
             ViewBag.IdSucursal = IdSucursal;
             ViewBag.fecha_ini = fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(fecha_ini);
             ViewBag.fecha_fin = fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(fecha_fin);
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+
+            ViewBag.Nuevo = Nuevo;
+            ViewBag.Modificar = Modificar;
+            ViewBag.Anular = Anular;
 
             List<in_Consignacion_Info> model = bus_in_Consignacion.GetList(IdEmpresa, IdSucursal, true, ViewBag.fecha_ini, ViewBag.fecha_fin);
             return PartialView("_GridViewPartial_Consignacion", model);

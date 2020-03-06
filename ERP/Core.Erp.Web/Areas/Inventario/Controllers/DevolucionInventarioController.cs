@@ -1,8 +1,10 @@
 ﻿using Core.Erp.Bus.Contabilidad;
 using Core.Erp.Bus.General;
 using Core.Erp.Bus.Inventario;
+using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.Helps;
 using Core.Erp.Info.Inventario;
+using Core.Erp.Info.SeguridadAcceso;
 using Core.Erp.Web.Helps;
 using DevExpress.Web.Mvc;
 using System;
@@ -22,6 +24,7 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         in_devolucion_inven_det_List List_det = new in_devolucion_inven_det_List();
         in_Ing_Egr_Inven_Bus bus_inv = new in_Ing_Egr_Inven_Bus();
         in_devolucion_inven_det_Bus bus_det = new in_devolucion_inven_det_Bus();
+        seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
         string mensaje = string.Empty;
         ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         #endregion
@@ -35,15 +38,28 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
                 IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal)
             };
             CargarCombosConsulta(model.IdEmpresa);
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "DevolucionInventario", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
+
             return View(model);
         }
         [HttpPost]
         public ActionResult Index(cl_filtros_Info model)
         {
             CargarCombosConsulta(model.IdEmpresa);
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "DevolucionInventario", "Index");
+            ViewBag.Nuevo = info.Nuevo;
+            ViewBag.Modificar = info.Modificar;
+            ViewBag.Anular = info.Anular;
+            #endregion
             return View(model);
         }
-        public ActionResult GridViewPartial_devolucion( DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0)
+        public ActionResult GridViewPartial_devolucion( DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0, bool Nuevo = false, bool Modificar = false, bool Anular = false)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
 
@@ -51,6 +67,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
             ViewBag.Fecha_fin = Fecha_fin == null ? DateTime.Now.Date : Convert.ToDateTime(Fecha_fin);
             var model = bus_devolucion.get_list(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin);
+
+            ViewBag.Nuevo = Nuevo;
+            ViewBag.Modificar = Modificar;
+            ViewBag.Anular = Anular;
+
             return PartialView("_GridViewPartial_devolucion",model);
         }
         #endregion
@@ -93,6 +114,12 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         #region Acciones
         public ActionResult Nuevo(int IdEmpresa = 0)
         {
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "DevolucionInventario", "Index");
+            if (!info.Nuevo)
+                return RedirectToAction("Index");
+            #endregion
+
             in_devolucion_inven_Info model = new in_devolucion_inven_Info
             {
                 IdEmpresa = IdEmpresa,
@@ -131,6 +158,13 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             in_devolucion_inven_Info model = bus_devolucion.get_info(IdEmpresa, IdDev_Inven);
             if (model == null)
                 return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "DevolucionInventario", "Index");
+            if (!info.Modificar)
+                return RedirectToAction("Index");
+            #endregion
+
             model.lst_det = bus_det.get_list(IdEmpresa, IdDev_Inven);
             List_det.set_list(model.lst_det);
             cargar_combos(IdEmpresa);
@@ -169,6 +203,13 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
             in_devolucion_inven_Info model = bus_devolucion.get_info(IdEmpresa, IdDev_Inven);
             if (model == null)
                 return RedirectToAction("Index");
+
+            #region Permisos
+            seg_Menu_x_Empresa_x_Usuario_Info info = bus_permisos.get_list_menu_accion(Convert.ToInt32(SessionFixed.IdEmpresa), SessionFixed.IdUsuario, "Inventario", "DevolucionInventario", "Index");
+            if (!info.Anular)
+                return RedirectToAction("Index");
+            #endregion
+
             model.lst_det = bus_det.get_list(IdEmpresa, IdDev_Inven);
             List_det.set_list(model.lst_det);
             cargar_combos(IdEmpresa);

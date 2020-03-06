@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridView_transferencias";
-        settings.CallbackRouteValues = new { Controller = "TransferenciasInventario", Action = "GridViewPartial_transferencias", IdSucursal = ViewBag.IdSucursal,fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin };
+        settings.CallbackRouteValues = new { Controller = "TransferenciasInventario", Action = "GridViewPartial_transferencias", IdSucursal = ViewBag.IdSucursal,fecha_ini = ViewBag.fecha_ini, fecha_fin = ViewBag.fecha_fin, Nuevo = ViewBag.Nuevo, Modificar = ViewBag.Modificar, Anular = ViewBag.Anular };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdTransferencia";
 
@@ -63,19 +63,29 @@
             {
                 if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
                 {
-                    ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new  { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursalOrigen = DataBinder.Eval(tc.DataItem, "IdSucursalOrigen"), IdBodegaOrigen = DataBinder.Eval(tc.DataItem, "IdBodegaOrigen"), IdTransferencia = DataBinder.Eval(tc.DataItem, "IdTransferencia") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursalOrigen  = DataBinder.Eval(tc.DataItem, "IdSucursalOrigen"), IdBodegaOrigen = DataBinder.Eval(tc.DataItem, "IdBodegaOrigen"), IdTransferencia = DataBinder.Eval(tc.DataItem, "IdTransferencia") },
+                    if (ViewBag.Modificar == true)
+                    {
+                        ViewContext.Writer.Write(
+                            Html.ActionLink("Modificar", "Modificar", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursalOrigen = DataBinder.Eval(tc.DataItem, "IdSucursalOrigen"), IdBodegaOrigen = DataBinder.Eval(tc.DataItem, "IdBodegaOrigen"), IdTransferencia = DataBinder.Eval(tc.DataItem, "IdTransferencia") }) + "&nbsp;"
+                        );
+                    }
+                    if (ViewBag.Anular == true)
+                    {
+                        ViewContext.Writer.Write(
+                            Html.ActionLink("Anular", "Anular", new { IdEmpresa = DataBinder.Eval(tc.DataItem, "IdEmpresa"), IdSucursalOrigen = DataBinder.Eval(tc.DataItem, "IdSucursalOrigen"), IdBodegaOrigen = DataBinder.Eval(tc.DataItem, "IdBodegaOrigen"), IdTransferencia = DataBinder.Eval(tc.DataItem, "IdTransferencia") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
-                    );
+                        );
+                    }
                 }
             });
             c.SetHeaderTemplateContent(tc =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa  = Core.Erp.Web.Helps.SessionFixed.IdEmpresa}).ToHtmlString()
-                );
-
+                if (ViewBag.Nuevo)
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Nuevo", "Nuevo", new { IdEmpresa = Core.Erp.Web.Helps.SessionFixed.IdEmpresa }).ToHtmlString()
+                    );
+                }
             });
 
             c.Settings.AllowDragDrop = DefaultBoolean.False;

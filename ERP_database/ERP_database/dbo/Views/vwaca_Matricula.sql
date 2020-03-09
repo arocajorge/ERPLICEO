@@ -4,7 +4,7 @@ SELECT dbo.aca_Matricula.IdEmpresa, dbo.aca_Matricula.IdMatricula, dbo.aca_Matri
                   dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, dbo.aca_Matricula.IdCurso, dbo.aca_Matricula.IdParalelo, dbo.vwaca_AnioLectivo_Jornada_Curso.Descripcion, 
                   dbo.vwaca_AnioLectivo_Jornada_Curso.NomSede, dbo.vwaca_AnioLectivo_Jornada_Curso.NomNivel, dbo.vwaca_AnioLectivo_Jornada_Curso.NomJornada, dbo.vwaca_AnioLectivo_Jornada_Curso.NomCurso, 
                   dbo.aca_Paralelo.NomParalelo, dbo.vwaca_AnioLectivo_Jornada_Curso.BloquearMatricula, dbo.tb_persona.pe_cedulaRuc, dbo.aca_Matricula.IdPersonaF, dbo.aca_Matricula.IdPersonaR, dbo.aca_Matricula.IdPlantilla, 
-                  dbo.aca_Matricula.Fecha, dbo.aca_Matricula.Observacion, dbo.aca_Matricula.IdMecanismo
+                  dbo.aca_Matricula.Fecha, dbo.aca_Matricula.Observacion, dbo.aca_Matricula.IdMecanismo, dbo.aca_Matricula.IdEmpresa_rol, dbo.aca_Matricula.IdEmpleado
 FROM     dbo.aca_Matricula INNER JOIN
                   dbo.aca_Alumno ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_Matricula.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
                   dbo.tb_persona ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
@@ -60,7 +60,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[66] 4[3] 2[13] 3) )"
+         Configuration = "(H (1[60] 4[15] 2[8] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -134,7 +134,7 @@ Begin DesignProperties =
                Right = 293
             End
             DisplayFlags = 280
-            TopColumn = 14
+            TopColumn = 20
          End
          Begin Table = "aca_Alumno"
             Begin Extent = 
@@ -197,6 +197,8 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 120', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula';
+
+
 
 
 

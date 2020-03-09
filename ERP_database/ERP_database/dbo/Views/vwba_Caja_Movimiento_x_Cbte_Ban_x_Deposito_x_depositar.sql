@@ -1,9 +1,9 @@
-﻿CREATE VIEW [dbo].[vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar]
+﻿CREATE VIEW dbo.vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar
 AS
 SELECT dbo.caj_Caja_Movimiento_det.IdEmpresa, dbo.caj_Caja_Movimiento_det.IdTipocbte, dbo.caj_Caja_Movimiento_det.IdCbteCble, dbo.caj_Caja_Movimiento_det.Secuencia, dbo.cxc_cobro_tipo.tc_descripcion, 
                   dbo.caj_Caja_Movimiento_det.cr_Valor, dbo.caj_Caja_Movimiento.cm_fecha, dbo.caj_Caja_Movimiento.cm_observacion, dbo.caj_Caja_Movimiento_Tipo.tm_descripcion, dbo.caj_Caja_Movimiento.Estado, 
-                  dbo.tb_persona.pe_nombreCompleto, dbo.cxc_cobro.cr_NumDocumento, dbo.caj_Caja.IdCtaCble, dbo.caj_Caja.IdCaja, dbo.caj_Caja.ca_Descripcion, ISNULL(dbo.cxc_cobro_x_ct_cbtecble.cbr_IdSucursal , dbo.caj_Caja.IdSucursal) AS cbr_IdSucursal
-                   
+                  dbo.tb_persona.pe_nombreCompleto, dbo.cxc_cobro.cr_NumDocumento, dbo.caj_Caja.IdCtaCble, dbo.caj_Caja.IdCaja, dbo.caj_Caja.ca_Descripcion, ISNULL(dbo.cxc_cobro_x_ct_cbtecble.cbr_IdSucursal, dbo.caj_Caja.IdSucursal) 
+                  AS cbr_IdSucursal, dbo.caj_Caja_Movimiento.IdUsuario
 FROM     dbo.caj_Caja_Movimiento_det INNER JOIN
                   dbo.cxc_cobro_tipo ON dbo.caj_Caja_Movimiento_det.IdCobro_tipo = dbo.cxc_cobro_tipo.IdCobro_tipo INNER JOIN
                   dbo.caj_Caja_Movimiento ON dbo.caj_Caja_Movimiento_det.IdEmpresa = dbo.caj_Caja_Movimiento.IdEmpresa AND dbo.caj_Caja_Movimiento_det.IdCbteCble = dbo.caj_Caja_Movimiento.IdCbteCble AND 
@@ -33,7 +33,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'         R
             Begin Extent = 
                Top = 534
                Left = 38
-               Bottom = 707
+               Bottom = 875
                Right = 232
             End
             DisplayFlags = 280
@@ -46,7 +46,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'         R
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 17
+      Begin ColumnWidths = 18
          Width = 284
          Width = 1500
          Width = 1500
@@ -64,20 +64,21 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'         R
          Width = 1500
          Width = 1500
          Width = 1500
+         Width = 1200
       End
    End
    Begin CriteriaPane = 
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -87,13 +88,15 @@ End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar';
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[81] 4[5] 2[5] 3) )"
+         Configuration = "(H (1[60] 4[9] 2[5] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -161,10 +164,10 @@ Begin DesignProperties =
       Begin Tables = 
          Begin Table = "caj_Caja_Movimiento_det"
             Begin Extent = 
-               Top = 176
-               Left = 860
-               Bottom = 462
-               Right = 1170
+               Top = 284
+               Left = 865
+               Bottom = 570
+               Right = 1175
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -211,13 +214,13 @@ Begin DesignProperties =
          End
          Begin Table = "caj_Caja"
             Begin Extent = 
-               Top = 402
-               Left = 38
-               Bottom = 532
-               Right = 248
+               Top = 25
+               Left = 360
+               Bottom = 237
+               Right = 570
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 6
          End
          Begin Table = "cxc_cobro_x_ct_cbtecble"
             Begin Extent = 
@@ -225,4 +228,6 @@ Begin DesignProperties =
                Left = 0
                Bottom = 269
       ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar';
+
+
 

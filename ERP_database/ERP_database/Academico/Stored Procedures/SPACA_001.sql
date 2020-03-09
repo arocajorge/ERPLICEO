@@ -1,14 +1,19 @@
-﻿CREATE PROCEDURE [Academico].[SPACA_001]
+﻿--exec [Academico].[SPACA_001] 1,4699
+CREATE PROCEDURE [Academico].[SPACA_001]
 (
 @IdEmpresa int,
 @IdAlumno numeric
 )
 AS
 
-DECLARE @IdMatricula numeric, @IdAnioAnterior numeric
+DECLARE @IdMatricula numeric, @IdAnioAnterior numeric, @IdSocioEconomico int
 
 select @IdMatricula = max(IdMatricula) from aca_Matricula
 where IdEmpresa = @IdEmpresa and IdAlumno = @IdAlumno
+
+select  @IdSocioEconomico = IdSocioEconomico 
+from aca_SocioEconomico 
+where IdAlumno = @IdAlumno
 
 set @IdMatricula = isnull(@IdMatricula,0)
 
@@ -16,6 +21,8 @@ select @IdAnioAnterior = max(IdAnio) from aca_Matricula
 where IdEmpresa = @IdEmpresa and IdAlumno = @IdAlumno and IdMatricula != @IdMatricula
 
 set @IdAnioAnterior = isnull(@IdAnioAnterior,0)
+
+
 
 SELECT m.IdEmpresa, m.IdMatricula, m.Codigo AS CodigoMatricula, m.IdAlumno, SedeNivel.NomSede, SedeNivel.NomNivel, dbo.aca_AnioLectivo.Descripcion AS NomAnio, a.Codigo AS CodigoAlumno, p.pe_nombre, p.pe_apellido, 
                   CASE WHEN p.pe_sexo = 'SEXO_MAS' THEN 'MASCULINO' ELSE 'FEMENINO' END AS pe_sexo, Pais.Nacionalidad, a.Direccion, Jornada.NomJornada, Curso.NomCurso, Paralelo.NomParalelo, Paralelo.CodigoParalelo, 
@@ -85,7 +92,7 @@ FROM     dbo.aca_Plantilla INNER JOIN
 					dbo.tb_Catalogo ON p.IdEstadoCivil = dbo.tb_Catalogo.CodCatalogo LEFT OUTER JOIN
 					dbo.tb_profesion ON p.IdProfesion = dbo.tb_profesion.IdProfesion LEFT OUTER JOIN
 					dbo.aca_CatalogoFicha ON f.IdCatalogoFichaInst = dbo.aca_CatalogoFicha.IdCatalogoFicha
-					WHERE  (f.IdCatalogoPAREN IN (10, 11)) OR (f.SeFactura = 1) OR (f.EsRepresentante = 1)
-					and f.IdEmpresa = @IdEmpresa and f.IdAlumno = @IdAlumno
+					WHERE  ((f.IdCatalogoPAREN IN (10, 11)) or (f.SeFactura = 1) OR (f.EsRepresentante = 1))
+					and f.IdEmpresa = @IdEmpresa and f.IdAlumno = @IdAlumno and aca_SocioEconomico.IdSocioEconomico = @IdSocioEconomico
 				  ) PadreMadre on a.IdEmpresa = PadreMadre.IdEmpresa and a.IdAlumno = PadreMadre.IdAlumno
 where M.IdEmpresa = @IdEmpresa AND M.IdAlumno = @IdAlumno AND M.IdMatricula = @IdMatricula

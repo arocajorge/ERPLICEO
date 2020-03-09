@@ -1,4 +1,5 @@
-﻿CREATE VIEW dbo.vwaca_MecanismoDePago
+﻿
+CREATE VIEW dbo.vwaca_MecanismoDePago
 AS
 SELECT        dbo.aca_MecanismoDePago.IdEmpresa, dbo.aca_MecanismoDePago.IdMecanismo, dbo.aca_MecanismoDePago.NombreMecanismo, dbo.aca_MecanismoDePago.IdTerminoPago, dbo.fa_TerminoPago.nom_TerminoPago, 
                          dbo.aca_MecanismoDePago.Estado, dbo.fa_TipoNota.No_Descripcion
@@ -101,16 +102,6 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "fa_TipoNota"
-            Begin Extent = 
-               Top = 80
-               Left = 854
-               Bottom = 317
-               Right = 1036
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
       End
    End
    Begin SQLPane = 
@@ -124,7 +115,7 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 1200
-         Width = 1830
+         Width = 1836
          Width = 1200
          Width = 1200
          Width = 1200
@@ -149,6 +140,8 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MecanismoDePago';
+
+
 
 
 

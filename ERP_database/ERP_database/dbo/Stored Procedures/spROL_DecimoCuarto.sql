@@ -46,13 +46,21 @@ declare
 if(@Region='COSTA')
 select @fi=convert(varchar(4), (@IdPeriodo-1))+'-'+'03'+'-'+'01'
 
-Declare @Elmes int,@eldia int
-select @Elmes=DatePart(MONTH,(EOMONTH( getdate()))) --2
-select @eldia=DatePart(DAY,(EOMONTH( getdate()))) -- para cuando febrero trae 29 dias by Acueva 20/02/2020.
-if(@Elmes=2 and @eldia=29) begin select @ff=convert(varchar(4), (@IdPeriodo))+'-'+'02'+'-'+'29'  End
-if(@Elmes=2 and @eldia=28) begin select @ff=convert(varchar(4), (@IdPeriodo))+'-'+'02'+'-'+'28'  End
+Declare @elano int --,@Elmes int,@eldia int
+--select @Elmes=DatePart(MONTH,(EOMONTH( getdate()))) -- para cuando febrero trae 29 dias by Acueva 20/02/2020.
+--select @eldia=DatePart(DAY,(EOMONTH( getdate()))) -- para cuando febrero trae 29 dias by Acueva 20/02/2020.
+select @elano=Right(DatePart(YEAR,(EOMONTH( getdate()))),2)-- para cuando febrero trae 29 dias by Acueva 20/02/2020.
 
--- select @ff=convert(varchar(4), (@IdPeriodo))+'-'+'02'+'-'+'29' 
+	if(@elano=20 or @elano=24 or @elano=28 or @elano=32 or @elano=36 or @elano=40 or @elano=44 or @elano=48 or @elano=52)
+	Begin
+		select @ff=convert(varchar(4), (@IdPeriodo))+'-'+'02'+'-'+'29'  
+	End
+	else
+	Begin 
+			select @ff=convert(varchar(4), (@IdPeriodo))+'-'+'02'+'-'+'28'  
+	End
+
+ --  select @ff=convert(varchar(4), (@IdPeriodo))+'-'+'02'+'-'+'29' 
 
 SET @IdPeriodo=concat( @IdPeriodo,'02','03' ) 
 
@@ -103,7 +111,7 @@ insert into ro_rol_detalle
 ,rub_visible_reporte,      Observacion,IdSucursal)
 
 
-select  -- DISTINCT
+select  
 
 
 @IdEmpresa,                       @IdRol,                                                                            emp.IdEmpleado,             @IdRubro_calculado, '1',                ROUND( SUM(acum.Valor),2),
@@ -120,7 +128,6 @@ and acum.IdEmpleado=emp.IdEmpleado
 and acum.Estado='PEN'
 AND emp.em_status='EST_ACT'
 AND cont.EstadoContrato IN('ECT_ACT') -- BY ACUEVA 2020-02-21
--- -- AND acum.IdEmpleado not in (171,213,57,279,233,104) -- by acueva (ya mensualizan) 26/02/2020
 AND acum.IdRubro=@IdRubro_Provision
 AND acum.IdSucursal>=@IdSucursalInicio
 AND acum.IdSucursal<=@IdSucursalFin
@@ -143,7 +150,7 @@ insert into ro_rol_detalle
 ,rub_visible_reporte,      Observacion,IdSucursal)
 
 
-select --DISTINCT
+select 
 
 
 @IdEmpresa,                       @IdRol,                                                                            emp.IdEmpleado,             @IdRubro_calculado, '1',                ROUND( SUM(acum.Valor),2),
@@ -160,7 +167,6 @@ and acum.IdEmpleado=emp.IdEmpleado
 and acum.Estado='PEN'
 AND emp.em_status='EST_ACT'
 AND cont.EstadoContrato IN('ECT_ACT') -- BY ACUEVA 2020-02-21,Solo por contratos de periodo activos, en idrol(ro_rol)
--- -- AND acum.IdEmpleado not in (171,213,57,279,233,104) -- by acueva (ya mensualizan) 26/02/2020
 AND acum.IdRubro=@IdRubro_Provision
 AND acum.IdSucursal>=@IdSucursalInicio
 AND acum.IdSucursal<=@IdSucursalFin

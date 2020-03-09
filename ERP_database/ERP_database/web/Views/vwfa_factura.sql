@@ -3,7 +3,7 @@ AS
 SELECT dbo.fa_factura.IdEmpresa, dbo.fa_factura.IdSucursal, dbo.fa_factura.IdBodega, dbo.fa_factura.IdCbteVta, dbo.fa_factura.vt_NumFactura, dbo.fa_factura.vt_fecha, dbo.tb_persona.pe_nombreCompleto AS Nombres, 
                   dbo.fa_Vendedor.Ve_Vendedor, det.vt_Subtotal0, det.vt_SubtotalIVA, det.vt_iva, det.vt_total, dbo.fa_factura.Estado, dbo.fa_factura.esta_impresa, dbo.fa_factura_x_in_Ing_Egr_Inven.IdEmpresa_in_eg_x_inv, 
                   dbo.fa_factura_x_in_Ing_Egr_Inven.IdSucursal_in_eg_x_inv, dbo.fa_factura_x_in_Ing_Egr_Inven.IdMovi_inven_tipo_in_eg_x_inv, dbo.fa_factura_x_in_Ing_Egr_Inven.IdNumMovi_in_eg_x_inv, dbo.fa_factura.Fecha_Autorizacion, 
-                  dbo.fa_factura.vt_autorizacion, dbo.fa_factura.IdAlumno, tb_persona_1.pe_nombreCompleto AS NombresAlumno
+                  dbo.fa_factura.vt_autorizacion, dbo.fa_factura.IdAlumno, tb_persona_1.pe_nombreCompleto AS NombresAlumno, dbo.fa_factura.IdUsuario
 FROM     dbo.tb_persona AS tb_persona_1 INNER JOIN
                   dbo.aca_Alumno ON tb_persona_1.IdPersona = dbo.aca_Alumno.IdPersona RIGHT OUTER JOIN
                   dbo.fa_factura INNER JOIN
@@ -24,26 +24,27 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'         End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "aca_Alumno"
-            Begin Extent = 
-               Top = 0
-               Left = 1202
-               Bottom = 163
-               Right = 1447
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "tb_persona_1"
+         Begin Table = "fa_cliente"
             Begin Extent = 
-               Top = 219
-               Left = 1097
-               Bottom = 382
-               Right = 1371
+               Top = 196
+               Left = 672
+               Bottom = 359
+               Right = 928
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "tb_persona"
+            Begin Extent = 
+               Top = 387
+               Left = 667
+               Bottom = 550
+               Right = 941
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -55,8 +56,9 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'         E
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 23
+      Begin ColumnWidths = 24
          Width = 284
+         Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -100,6 +102,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'         E
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwfa_factura';
+
+
 
 
 
@@ -176,15 +180,35 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
+         Begin Table = "tb_persona_1"
+            Begin Extent = 
+               Top = 219
+               Left = 1097
+               Bottom = 382
+               Right = 1371
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "aca_Alumno"
+            Begin Extent = 
+               Top = 0
+               Left = 1202
+               Bottom = 163
+               Right = 1447
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "fa_factura"
             Begin Extent = 
                Top = 7
                Left = 48
-               Bottom = 170
+               Bottom = 227
                Right = 299
             End
             DisplayFlags = 280
-            TopColumn = 8
+            TopColumn = 19
          End
          Begin Table = "fa_Vendedor"
             Begin Extent = 
@@ -221,28 +245,9 @@ Begin DesignProperties =
                Top = 391
                Left = 321
                Bottom = 554
-               Right = 615
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "fa_cliente"
-            Begin Extent = 
-               Top = 196
-               Left = 672
-               Bottom = 359
-               Right = 928
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "tb_persona"
-            Begin Extent = 
-               Top = 387
-               Left = 667
-               Bottom = 550
-               Right = 941
-   ', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwfa_factura';
+               Right = 615', @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'vwfa_factura';
+
+
 
 
 

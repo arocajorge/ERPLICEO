@@ -1318,6 +1318,10 @@
     <Build Include="Academico\Views\VWCAJ_002_ingresos_1.sql" />
     <Build Include="Academico\Views\VWCAJ_002_1.sql" />
     <Build Include="Academico\Views\VWCAJ_001_1.sql" />
+    <Build Include="dbo\Tables\tb_visor_video_aca.sql" />
+    <Build Include="Academico\Views\VWACA_008.sql" />
+    <Build Include="Academico\Stored Procedures\SPFAC_005.sql" />
+    <Build Include="Academico\Views\VWACA_009.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

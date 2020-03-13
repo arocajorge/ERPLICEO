@@ -63,8 +63,8 @@
                 if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new { IdPais = DataBinder.Eval(tc.DataItem, "IdPais"), IdProvincia = DataBinder.Eval(tc.DataItem, "IdProvincia") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdPais = DataBinder.Eval(tc.DataItem, "IdPais"), IdProvincia = DataBinder.Eval(tc.DataItem, "IdProvincia") },
+                Html.ActionLink("Modificar", "Modificar", new { IdProvincia = DataBinder.Eval(tc.DataItem, "IdProvincia") }) + "&nbsp;" +
+                        Html.ActionLink("Anular", "Anular", new { IdProvincia = DataBinder.Eval(tc.DataItem, "IdProvincia") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
                 }
@@ -104,7 +104,7 @@
                     var IdPais = DataBinder.Eval(container.DataItem, "IdPais");
                     var IdProvincia = DataBinder.Eval(container.DataItem, "IdProvincia");
                     hyperlink.Properties.Text = "Ciudad";
-                    hyperlink.NavigateUrl = Url.Action("Index", "Ciudad", new { IdPais = IdPais, IdProvincia = IdProvincia });
+                    hyperlink.NavigateUrl = Url.Action("Index", "Ciudad", new { IdProvincia = IdProvincia, IdPais = IdPais });
                 }).Render();
             });
         });

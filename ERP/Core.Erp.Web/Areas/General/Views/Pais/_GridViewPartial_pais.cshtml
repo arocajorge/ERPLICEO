@@ -80,7 +80,7 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = Unit.Pixel(150);
         });
-        
+
         settings.Columns.Add("CodPais", "Codigo").Width = Unit.Percentage(20);
         settings.Columns.Add("Nombre", "Nombre").Width = Unit.Percentage(35);
         settings.Columns.Add("Nacionalidad", "Nacionalidad").Width = Unit.Percentage(35);
@@ -102,9 +102,12 @@
             {
                 Html.DevExpress().HyperLink(hyperlink =>
                 {
-                    var keyValue = DataBinder.Eval(container.DataItem, "IdPais");
-                    hyperlink.Properties.Text = "Región";
-                    hyperlink.NavigateUrl = Url.Action("Index", "Region", new { IdPais = keyValue });
+                    if (Convert.ToString(DataBinder.Eval(container.DataItem, "estado")) == "A")
+                    {
+                        var keyValue = DataBinder.Eval(container.DataItem, "IdPais");
+                        hyperlink.Properties.Text = "Región";
+                        hyperlink.NavigateUrl = Url.Action("Index", "Region", new { IdPais = keyValue });
+                    }
                 }).Render();
             });
         });
@@ -116,9 +119,12 @@
             {
                 Html.DevExpress().HyperLink(hyperlink =>
                 {
-                    var keyValue = DataBinder.Eval(container.DataItem, "IdPais");
-                    hyperlink.Properties.Text = "Provincias";
-                    hyperlink.NavigateUrl = Url.Action("Index", "Provincia", new { IdPais = keyValue });
+                    if (Convert.ToString(DataBinder.Eval(container.DataItem, "estado")) == "A")
+                    {
+                        var keyValue = DataBinder.Eval(container.DataItem, "IdPais");
+                        hyperlink.Properties.Text = "Provincias";
+                        hyperlink.NavigateUrl = Url.Action("Index", "Provincia", new { IdPais = keyValue });
+                    }
                 }).Render();
             });
         });

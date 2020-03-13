@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridView_Parroquia";
-        settings.CallbackRouteValues = new { Controller = "Parroquia", Action = "GridViewPartial_Parroquia", IdCiudad = ViewBag.IdCiudad_Canton , IdProvincia = ViewBag.IdProvincia, IdPais = ViewBag.IdPais};
+        settings.CallbackRouteValues = new { Controller = "Parroquia", Action = "GridViewPartial_Parroquia", IdCiudad = ViewBag.IdCiudad_Canton, IdProvincia = ViewBag.IdProvincia, IdPais = ViewBag.IdPais };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdParroquia";
         //Configuración para que la grilla no muestre texto completo
@@ -63,8 +63,8 @@
                 if (Convert.ToBoolean(DataBinder.Eval(tc.DataItem, "estado")) == true)
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new {IdParroquia = DataBinder.Eval(tc.DataItem, "IdParroquia"), IdCiudad = ViewBag.IdCiudad_Canton , IdProvincia = ViewBag.IdProvincia, IdPais = ViewBag.IdPais }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new { IdParroquia = DataBinder.Eval(tc.DataItem, "IdParroquia"), IdCiudad = ViewBag.IdCiudad_Canton, IdProvincia = ViewBag.IdProvincia, IdPais = ViewBag.IdPais },
+                Html.ActionLink("Modificar", "Modificar", new {IdParroquia = DataBinder.Eval(tc.DataItem, "IdParroquia") }) + "&nbsp;" +
+                        Html.ActionLink("Anular", "Anular", new { IdParroquia = DataBinder.Eval(tc.DataItem, "IdParroquia") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
                 }

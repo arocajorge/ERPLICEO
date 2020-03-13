@@ -12,8 +12,8 @@
 @using (Html.BeginForm("Modificar", "Ciudad", FormMethod.Post, new { @class = "form", @role = "form" }))
 {
     @Html.HiddenFor(q => q.IdCiudad)
+    @Html.HiddenFor(q => q.IdPais)
     @Html.HiddenFor(q => q.IdProvincia)
-
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-3">
@@ -50,7 +50,7 @@
 
     <div class="box-footer">
         <button type="submit" class="btn btn-primary">Guardar</button>
-        <a class="btn btn-default" href="@Url.Action("Index","Ciudad",new {IdProvincia = Model.IdProvincia, IdPais = Model.IdPais,Area = "General" },null)">Cancelar</a>
+        <a class="btn btn-default" href="@Url.Action("Index","Ciudad", new {IdProvincia = Model.IdProvincia, IdPais = ViewBag.IdPais, Area = "General" },null)">Cancelar</a>
     </div>
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")

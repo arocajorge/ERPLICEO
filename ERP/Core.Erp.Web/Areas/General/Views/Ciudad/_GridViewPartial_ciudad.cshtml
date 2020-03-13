@@ -2,7 +2,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "GridView_Ciudad";
-        settings.CallbackRouteValues = new { Controller = "Ciudad", Action = "GridViewPartial_Ciudad" , IdProvincia = ViewBag.IdProvincia , IdPais = ViewBag.IdPais };
+        settings.CallbackRouteValues = new { Controller = "Ciudad", Action = "GridViewPartial_Ciudad" , IdProvincia = ViewBag.IdProvincia, IdPais = ViewBag.IdPais };
         settings.Width = Unit.Percentage(100);
         settings.KeyFieldName = "IdCiudad";
         //Configuración para que la grilla no muestre texto completo
@@ -63,8 +63,8 @@
                 if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
                 {
                     ViewContext.Writer.Write(
-                Html.ActionLink("Modificar", "Modificar", new {  IdCiudad = DataBinder.Eval(tc.DataItem, "IdCiudad"), IdProvincia = DataBinder.Eval(tc.DataItem, "IdProvincia"), IdPais = DataBinder.Eval(tc.DataItem, "IdPais") }) + "&nbsp;" +
-                        Html.ActionLink("Anular", "Anular", new {  IdCiudad = DataBinder.Eval(tc.DataItem, "IdCiudad"), IdProvincia = DataBinder.Eval(tc.DataItem, "IdProvincia"), IdPais = DataBinder.Eval(tc.DataItem, "IdPais") },
+                Html.ActionLink("Modificar", "Modificar", new {  IdCiudad = DataBinder.Eval(tc.DataItem, "IdCiudad") }) + "&nbsp;" +
+                        Html.ActionLink("Anular", "Anular", new {  IdCiudad = DataBinder.Eval(tc.DataItem, "IdCiudad") },
                             new { onclick = "return confirm('¿Está seguro de que desea anular el registro?')" })
                     );
                 }
@@ -104,7 +104,7 @@
                     var IdProvincia = DataBinder.Eval(container.DataItem, "IdProvincia");
                     var IdCiudad = DataBinder.Eval(container.DataItem, "IdCiudad");
                     hyperlink.Properties.Text = "Parroquia";
-                    hyperlink.NavigateUrl = Url.Action("Index", "Parroquia", new {IdPais = IdPais, IdProvincia= IdProvincia, IdCiudad = IdCiudad });
+                    hyperlink.NavigateUrl = Url.Action("Index", "Parroquia", new {IdCiudad = IdCiudad, IdProvincia = IdProvincia, IdPais = IdPais });
                 }).Render();
             });
         });

@@ -11,10 +11,10 @@
 @using (Html.BeginForm())
 {
 
-    @Html.Action("GridViewPartial_ciudad", new { IdProvincia = ViewBag.IdProvincia, IdPais = ViewBag.IdPais });
+    @Html.Action("GridViewPartial_ciudad", new { IdProvincia = ViewBag.IdProvincia });
 
     <div class="box-footer">
-        <a class="btn btn-default" href="@Url.Action("Index","Provincia",new {  IdProvincia = ViewBag.IdProvincia, IdPais = ViewBag.IdPais, Area = "General" },null)">Volver</a>
+        <a class="btn btn-default" href="@Url.Action("Index","Provincia",new {  IdPais = ViewBag.IdPais, Area = "General" },null)">Volver</a>
     </div>
 
 }

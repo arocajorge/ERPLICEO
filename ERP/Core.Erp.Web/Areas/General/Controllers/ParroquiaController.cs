@@ -15,8 +15,8 @@ namespace Core.Erp.Web.Areas.General.Controllers
 
         tb_parroquia_Bus bus_parroquia = new tb_parroquia_Bus();
         tb_ciudad_Bus bus_ciudad = new tb_ciudad_Bus();
-
-        public ActionResult Index(string IdPais, string IdProvincia = "",string IdCiudad = "")
+        tb_provincia_Bus bus_provincia = new tb_provincia_Bus();
+        public ActionResult Index(string IdCiudad = "", string IdProvincia = "", string IdPais = "")
         {
             ViewBag.IdPais = IdPais;
             ViewBag.IdProvincia = IdProvincia;
@@ -25,11 +25,13 @@ namespace Core.Erp.Web.Areas.General.Controllers
         }
         
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_parroquia(string IdCiudad)
+        public ActionResult GridViewPartial_parroquia(string IdCiudad, string IdProvincia, string IdPais)
         {
             List<tb_parroquia_Info> model = new List<tb_parroquia_Info>();
             model = bus_parroquia.get_list(IdCiudad, true);
             ViewBag.IdCiudad_Canton = IdCiudad;
+            ViewBag.IdPais = IdPais;
+            ViewBag.IdProvincia = IdProvincia;
             return PartialView("_GridViewPartial_parroquia", model);
         }
         private void cargar_combos()
@@ -39,11 +41,13 @@ namespace Core.Erp.Web.Areas.General.Controllers
         }
         #endregion
         #region Acciones
-        public ActionResult Nuevo(string IdCiudad = "")
+        public ActionResult Nuevo(string IdCiudad = "", string IdProvincia = "", string IdPais = "")
         {
             tb_parroquia_Info model = new tb_parroquia_Info
             {
-                IdCiudad_Canton = IdCiudad
+                IdCiudad_Canton = IdCiudad,
+                IdProvincia=IdProvincia,
+                IdPais=IdPais
             };
             ViewBag.IdCiudad = model.IdCiudad_Canton;
             ViewBag.IdProvincia = model.IdProvincia;
@@ -62,24 +66,30 @@ namespace Core.Erp.Web.Areas.General.Controllers
                 cargar_combos();
                 return View(model);
             }
-            return RedirectToAction("Index", ViewBag.IdPais = model.IdPais, ViewBag.IdProvincia = model.IdProvincia, ViewBag.IdCiudad = model.IdCiudad_Canton );
+            return RedirectToAction("Index", new { IdCiudad = ViewBag.IdCiudad_Canton, IdProvincia = ViewBag.IdProvincia, IdPais = ViewBag.IdPais });
         }
 
-        private ActionResult RedirectToAction(string v, dynamic dynamic, object p1, object p2)
-        {
-            throw new NotImplementedException();
-        }
+        //private ActionResult RedirectToAction(string v, dynamic dynamic, object p1, object p2)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public ActionResult Modificar( string IdParroquia = "")
         {
             tb_parroquia_Info model = bus_parroquia.get_info( IdParroquia);
+            var info_ciudad = bus_ciudad.get_info(model.IdCiudad_Canton);
+            var info_provincia = bus_provincia.get_info(info_ciudad.IdProvincia);
+            model.IdPais = info_provincia.IdPais;
+            model.IdProvincia = info_ciudad.IdProvincia;
+            ViewBag.IdCiudad = model.IdCiudad_Canton;
+            ViewBag.IdProvincia = model.IdProvincia;
+            ViewBag.IdPais = model.IdPais;
+
             if (model == null)
             {
-                ViewBag.IdCiudad = model.IdCiudad_Canton;
-                ViewBag.IdProvincia = model.IdProvincia;
-                ViewBag.IdPais = model.IdPais;
-                return RedirectToAction("Index", new { IdPais = model.IdPais, IdProvincia = model.IdProvincia, IdCiudad = model.IdCiudad_Canton });
+                return RedirectToAction("Index", new { IdCiudad = ViewBag.IdCiudad_Canton, IdProvincia = ViewBag.IdProvincia, IdPais = ViewBag.IdPais });
             }
+
             cargar_combos();
             return View(model);
         }
@@ -94,18 +104,22 @@ namespace Core.Erp.Web.Areas.General.Controllers
                 cargar_combos();
                 return View(model);
             }
-            return RedirectToAction("Index", ViewBag.IdPais = model.IdPais, ViewBag.IdProvincia = model.IdProvincia, ViewBag.IdCiudad = model.IdCiudad_Canton);
+            return RedirectToAction("Index", new { IdCiudad = model.IdCiudad_Canton, IdProvincia = model.IdProvincia, IdPais = model.IdPais });
         }
 
 
         public ActionResult Anular( string IdParroquia = "")
         {
             tb_parroquia_Info model = bus_parroquia.get_info( IdParroquia);
+            var info_ciudad = bus_ciudad.get_info(model.IdCiudad_Canton);
+            var info_provincia = bus_provincia.get_info(info_ciudad.IdProvincia);
+            model.IdPais = info_provincia.IdPais;
+            model.IdProvincia = info_ciudad.IdProvincia;
+            ViewBag.IdCiudad = model.IdCiudad_Canton;
+            ViewBag.IdProvincia = model.IdProvincia;
+            ViewBag.IdPais = model.IdPais;
             if (model == null)
             {
-                ViewBag.IdCiudad = model.IdCiudad_Canton;
-                ViewBag.IdProvincia = model.IdProvincia;
-                ViewBag.IdPais = model.IdPais;
                 return RedirectToAction("Index", new { IdPais = model.IdPais, IdProvincia = model.IdProvincia, IdCiudad = model.IdCiudad_Canton });
             }
             cargar_combos();
@@ -122,7 +136,7 @@ namespace Core.Erp.Web.Areas.General.Controllers
                 cargar_combos();
                 return View(model);
             }
-            return RedirectToAction("Index", ViewBag.IdPais = model.IdPais, ViewBag.IdProvincia = model.IdProvincia, ViewBag.IdCiudad = model.IdCiudad_Canton);
+            return RedirectToAction("Index", new { IdCiudad = model.IdCiudad_Canton, IdProvincia = model.IdProvincia, IdPais = model.IdPais });
         }
 
         #endregion

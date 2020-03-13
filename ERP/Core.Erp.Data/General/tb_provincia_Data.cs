@@ -24,6 +24,7 @@ namespace Core.Erp.Data.General
                              where q.IdPais == IdPais
                              select new tb_provincia_Info
                              {
+                                 IdPais = q.IdPais,
                                  IdProvincia = q.IdProvincia,
                                  Cod_Provincia = q.Cod_Provincia,
                                  Descripcion_Prov = q.Descripcion_Prov,
@@ -43,6 +44,7 @@ namespace Core.Erp.Data.General
                                  && q.Estado == "A"
                                  select new tb_provincia_Info
                                  {
+                                     IdPais = q.IdPais,
                                      IdProvincia = q.IdProvincia,
                                      Cod_Provincia = q.Cod_Provincia,
                                      Descripcion_Prov = q.Descripcion_Prov,

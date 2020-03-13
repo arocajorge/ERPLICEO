@@ -23,6 +23,7 @@ namespace Core.Erp.Data.General
                                  where q.IdProvincia.Contains(IdProvincia)
                                  select new tb_ciudad_Info
                                  {
+                                     IdPais = p.IdPais,
                                      IdProvincia = q.IdProvincia,
                                      IdCiudad = q.IdCiudad,
                                      Cod_Ciudad = q.Cod_Ciudad,
@@ -40,6 +41,7 @@ namespace Core.Erp.Data.General
                                  && q.Estado == "A"
                                  select new tb_ciudad_Info
                                  {
+                                     IdPais = p.IdPais,
                                      IdProvincia = q.IdProvincia,
                                      IdCiudad = q.IdCiudad,
                                      Cod_Ciudad = q.Cod_Ciudad,

@@ -14,7 +14,7 @@
     @Html.Action("GridViewPartial_parroquia", new { IdCiudad_canton = ViewBag.IdCiudad_canton, IdProvincia = ViewBag.IdProvincia, IdPais = ViewBag.IdPais })
 
     <div class="box-footer">
-        <a class="btn btn-default" href="@Url.Action("Index","Ciudad",new { IdCiudad_canton = ViewBag.IdCiudad_canton, IdProvincia = ViewBag.IdProvincia, IdPais = ViewBag.IdPais, Area = "General" },null)">Volver</a>
+        <a class="btn btn-default" href="@Url.Action("Index","Ciudad",new { IdProvincia = ViewBag.IdProvincia, IdPais=ViewBag.IdPais, Area = "General" },null)">Volver</a>
     </div>
 
 }

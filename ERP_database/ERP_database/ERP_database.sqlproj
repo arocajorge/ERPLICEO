@@ -1322,6 +1322,9 @@
     <Build Include="Academico\Views\VWACA_008.sql" />
     <Build Include="Academico\Stored Procedures\SPFAC_005.sql" />
     <Build Include="Academico\Views\VWACA_009.sql" />
+    <Build Include="dbo\Tables\aca_MatriculaCalificacionParcial.sql" />
+    <Build Include="dbo\Tables\aca_AnioLectivoParcial.sql" />
+    <Build Include="dbo\Views\vwaca_MatriculaCalificacion.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

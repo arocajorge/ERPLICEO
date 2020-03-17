@@ -1333,6 +1333,7 @@
     <Build Include="Academico\Stored Procedures\SPACA_ContabilizacionNotas.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_ContabilizacionFacturas.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_ContabilizacionCobros.sql" />
+    <Build Include="dbo\Views\vwaca_AnioLectivoParcial.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

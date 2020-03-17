@@ -15,8 +15,10 @@ CREATE PROCEDURE [web].[SPCONTA_003_balances]
 AS
 delete web.ct_CONTA_003_balances where IdUsuario = @IdUsuario
 
-DECLARE @IdCtaCbleUtilidad varchar(20) 
+DECLARE @IdCtaCbleUtilidad varchar(20), @IdTipoCbteCierre int, @IdCbteCbleCierre int
 SELECT @IdCtaCbleUtilidad = IdCtaCble FROM ct_anio_fiscal_x_cuenta_utilidad WHERE IdanioFiscal = @IdAnio and IdEmpresa = @IdEmpresa
+select @IdTipoCbteCierre = IdTipoCbte_AsientoCierre_Anual from ct_parametro where IdEmpresa = @IdEmpresa
+select @IdCbteCbleCierre = IdCbteCble from ct_cbtecble where IdEmpresa = @IdEmpresa and @IdTipoCbteCierre= @IdTipoCbteCierre and year(cb_Fecha) = @IdAnio
 
 BEGIN --INSERTO PLAN DE CUENTAS
 INSERT INTO [web].[ct_CONTA_003_balances]
@@ -77,7 +79,13 @@ FROM(
 							ct_grupocble ON ct_plancta.IdGrupoCble = ct_grupocble.IdGrupoCble LEFT JOIN
 							web.tb_FiltroReportes AS F ON ct_cbtecble.IdEmpresa = F.IdEmpresa AND ct_cbtecble.IdSucursal = F.IdSucursal AND F.IdUsuario = @IdUsuario
 			WHERE        ct_cbtecble.IdEmpresa = @IdEmpresa and (ct_grupocble.gc_estado_financiero = 'BG') AND ct_cbtecble.cb_Fecha < @FechaIni and ct_cbtecble_det.dc_Valor > 0
-			and f.IdUsuario = @IdUsuario
+			and f.IdUsuario = @IdUsuario and not exists(
+			select f.IdEmpresa from ct_anio_fiscal_x_tb_sucursal as f 
+			where f.IdEmpresa = ct_cbtecble.IdEmpresa
+			and f.IdTipoCbte = ct_cbtecble.IdTipoCbte
+			and f.IdCbteCble = ct_cbtecble.IdCbteCble
+			and f.IdanioFiscal = @IdAnio
+			)
 			GROUP BY ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble
 			UNION ALL
 			SELECT        ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble, ABS(SUM(ct_cbtecble_det.dc_Valor)) AS DebitosSaldoInicial, 0
@@ -87,7 +95,13 @@ FROM(
 							ct_grupocble ON ct_plancta.IdGrupoCble = ct_grupocble.IdGrupoCble LEFT JOIN
 							web.tb_FiltroReportes AS F ON ct_cbtecble.IdEmpresa = F.IdEmpresa AND ct_cbtecble.IdSucursal = F.IdSucursal AND F.IdUsuario = @IdUsuario
 			WHERE        ct_cbtecble.IdEmpresa = @IdEmpresa and (ct_grupocble.gc_estado_financiero = 'ER') AND ct_cbtecble.cb_Fecha < @FechaIni and ct_cbtecble_det.dc_Valor > 0 AND @IdAnio = YEAR(ct_cbtecble.cb_Fecha)
-			and f.IdUsuario = @IdUsuario
+			and f.IdUsuario = @IdUsuario and not exists(
+			select f.IdEmpresa from ct_anio_fiscal_x_tb_sucursal as f 
+			where f.IdEmpresa = ct_cbtecble.IdEmpresa
+			and f.IdTipoCbte = ct_cbtecble.IdTipoCbte
+			and f.IdCbteCble = ct_cbtecble.IdCbteCble
+			and f.IdanioFiscal = @IdAnio
+			)
 			GROUP BY ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble
 			UNION ALL
 			SELECT        ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble, 0, ABS(SUM(ct_cbtecble_det.dc_Valor)) AS DebitosSaldoInicial
@@ -97,7 +111,13 @@ FROM(
 							ct_grupocble ON ct_plancta.IdGrupoCble = ct_grupocble.IdGrupoCble LEFT JOIN
 							web.tb_FiltroReportes AS F ON ct_cbtecble.IdEmpresa = F.IdEmpresa AND ct_cbtecble.IdSucursal = F.IdSucursal AND F.IdUsuario = @IdUsuario
 			WHERE        ct_cbtecble.IdEmpresa = @IdEmpresa and (ct_grupocble.gc_estado_financiero = 'BG') AND ct_cbtecble.cb_Fecha < @FechaIni and ct_cbtecble_det.dc_Valor < 0
-			and f.IdUsuario = @IdUsuario
+			and f.IdUsuario = @IdUsuario and not exists(
+			select f.IdEmpresa from ct_anio_fiscal_x_tb_sucursal as f 
+			where f.IdEmpresa = ct_cbtecble.IdEmpresa
+			and f.IdTipoCbte = ct_cbtecble.IdTipoCbte
+			and f.IdCbteCble = ct_cbtecble.IdCbteCble
+			and f.IdanioFiscal = @IdAnio
+			)
 			GROUP BY ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble
 			UNION ALL
 			SELECT        ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble, 0, ABS(SUM(ct_cbtecble_det.dc_Valor)) AS DebitosSaldoInicial
@@ -107,7 +127,13 @@ FROM(
 							ct_grupocble ON ct_plancta.IdGrupoCble = ct_grupocble.IdGrupoCble LEFT JOIN
 							web.tb_FiltroReportes AS F ON ct_cbtecble.IdEmpresa = F.IdEmpresa AND ct_cbtecble.IdSucursal = F.IdSucursal AND F.IdUsuario = @IdUsuario
 			WHERE        ct_cbtecble.IdEmpresa = @IdEmpresa and (ct_grupocble.gc_estado_financiero = 'ER') AND ct_cbtecble.cb_Fecha < @FechaIni and ct_cbtecble_det.dc_Valor < 0 AND @IdAnio = YEAR(ct_cbtecble.cb_Fecha)
-			and f.IdUsuario = @IdUsuario
+			and f.IdUsuario = @IdUsuario and not exists(
+			select f.IdEmpresa from ct_anio_fiscal_x_tb_sucursal as f 
+			where f.IdEmpresa = ct_cbtecble.IdEmpresa
+			and f.IdTipoCbte = ct_cbtecble.IdTipoCbte
+			and f.IdCbteCble = ct_cbtecble.IdCbteCble
+			and f.IdanioFiscal = @IdAnio
+			)
 			GROUP BY ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble
 			UNION ALL
 			--UTILIDAD
@@ -118,7 +144,13 @@ FROM(
 							ct_grupocble ON ct_plancta.IdGrupoCble = ct_grupocble.IdGrupoCble LEFT JOIN
 							web.tb_FiltroReportes AS F ON ct_cbtecble.IdEmpresa = F.IdEmpresa AND ct_cbtecble.IdSucursal = F.IdSucursal AND F.IdUsuario = @IdUsuario
 			WHERE        ct_cbtecble.IdEmpresa = @IdEmpresa and (ct_grupocble.gc_estado_financiero = 'ER') AND ct_cbtecble.cb_Fecha < @FechaIni and ct_cbtecble_det.dc_Valor > 0 AND @IdAnio = YEAR(ct_cbtecble.cb_Fecha)
-			and f.IdUsuario = @IdUsuario
+			and f.IdUsuario = @IdUsuario and not exists(
+			select f.IdEmpresa from ct_anio_fiscal_x_tb_sucursal as f 
+			where f.IdEmpresa = ct_cbtecble.IdEmpresa
+			and f.IdTipoCbte = ct_cbtecble.IdTipoCbte
+			and f.IdCbteCble = ct_cbtecble.IdCbteCble
+			and f.IdanioFiscal = @IdAnio
+			)
 			GROUP BY ct_cbtecble_det.IdEmpresa
 			UNION ALL
 			SELECT        ct_cbtecble_det.IdEmpresa, @IdCtaCbleUtilidad, 0, ABS(SUM(ct_cbtecble_det.dc_Valor)) AS DebitosSaldoInicial
@@ -128,7 +160,13 @@ FROM(
 							ct_grupocble ON ct_plancta.IdGrupoCble = ct_grupocble.IdGrupoCble LEFT JOIN
 							web.tb_FiltroReportes AS F ON ct_cbtecble.IdEmpresa = F.IdEmpresa AND ct_cbtecble.IdSucursal = F.IdSucursal AND F.IdUsuario = @IdUsuario
 			WHERE        ct_cbtecble.IdEmpresa = @IdEmpresa and (ct_grupocble.gc_estado_financiero = 'ER') AND ct_cbtecble.cb_Fecha < @FechaIni and ct_cbtecble_det.dc_Valor < 0 AND @IdAnio = YEAR(ct_cbtecble.cb_Fecha)
-			and f.IdUsuario = @IdUsuario
+			and f.IdUsuario = @IdUsuario and not exists(
+			select f.IdEmpresa from ct_anio_fiscal_x_tb_sucursal as f 
+			where f.IdEmpresa = ct_cbtecble.IdEmpresa
+			and f.IdTipoCbte = ct_cbtecble.IdTipoCbte
+			and f.IdCbteCble = ct_cbtecble.IdCbteCble
+			and f.IdanioFiscal = @IdAnio
+			)
 			GROUP BY ct_cbtecble_det.IdEmpresa
 			) C
 	GROUP BY IdEmpresa, IdCtaCble
@@ -148,7 +186,13 @@ FROM(
 			 				ct_grupocble ON ct_plancta.IdGrupoCble = ct_grupocble.IdGrupoCble LEFT JOIN
 							web.tb_FiltroReportes AS F ON ct_cbtecble.IdEmpresa = F.IdEmpresa AND ct_cbtecble.IdSucursal = F.IdSucursal AND F.IdUsuario = @IdUsuario
 			WHERE        ct_cbtecble.IdEmpresa = @IdEmpresa and (ct_grupocble.gc_estado_financiero = 'BG') AND ct_cbtecble.cb_Fecha BETWEEN @FechaIni AND @FechaFin and ct_cbtecble_det.dc_Valor > 0
-			and f.IdUsuario = @IdUsuario
+			and f.IdUsuario = @IdUsuario and not exists(
+			select f.IdEmpresa from ct_anio_fiscal_x_tb_sucursal as f 
+			where f.IdEmpresa = ct_cbtecble.IdEmpresa
+			and f.IdTipoCbte = ct_cbtecble.IdTipoCbte
+			and f.IdCbteCble = ct_cbtecble.IdCbteCble
+			and f.IdanioFiscal = @IdAnio
+			)
 			GROUP BY ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble
 			UNION ALL
 			SELECT        ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble, ABS(SUM(ct_cbtecble_det.dc_Valor)) AS DebitosSaldoInicial, 0
@@ -158,7 +202,13 @@ FROM(
 							ct_grupocble ON ct_plancta.IdGrupoCble = ct_grupocble.IdGrupoCble LEFT JOIN
 							web.tb_FiltroReportes AS F ON ct_cbtecble.IdEmpresa = F.IdEmpresa AND ct_cbtecble.IdSucursal = F.IdSucursal AND F.IdUsuario = @IdUsuario
 			WHERE        ct_cbtecble.IdEmpresa = @IdEmpresa and (ct_grupocble.gc_estado_financiero = 'ER') AND ct_cbtecble.cb_Fecha BETWEEN @FechaIni AND @FechaFin and ct_cbtecble_det.dc_Valor > 0 AND @IdAnio = YEAR(ct_cbtecble.cb_Fecha)
-			and f.IdUsuario = @IdUsuario
+			and f.IdUsuario = @IdUsuario and not exists(
+			select f.IdEmpresa from ct_anio_fiscal_x_tb_sucursal as f 
+			where f.IdEmpresa = ct_cbtecble.IdEmpresa
+			and f.IdTipoCbte = ct_cbtecble.IdTipoCbte
+			and f.IdCbteCble = ct_cbtecble.IdCbteCble
+			and f.IdanioFiscal = @IdAnio
+			)
 			GROUP BY ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble
 			UNION ALL
 			SELECT        ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble, 0, ABS(SUM(ct_cbtecble_det.dc_Valor)) AS DebitosSaldoInicial
@@ -168,7 +218,13 @@ FROM(
 							ct_grupocble ON ct_plancta.IdGrupoCble = ct_grupocble.IdGrupoCble LEFT JOIN
 							web.tb_FiltroReportes AS F ON ct_cbtecble.IdEmpresa = F.IdEmpresa AND ct_cbtecble.IdSucursal = F.IdSucursal AND F.IdUsuario = @IdUsuario
 			WHERE        ct_cbtecble.IdEmpresa = @IdEmpresa and (ct_grupocble.gc_estado_financiero = 'BG') AND ct_cbtecble.cb_Fecha BETWEEN @FechaIni AND @FechaFin and ct_cbtecble_det.dc_Valor < 0
-			and f.IdUsuario = @IdUsuario
+			and f.IdUsuario = @IdUsuario and not exists(
+			select f.IdEmpresa from ct_anio_fiscal_x_tb_sucursal as f 
+			where f.IdEmpresa = ct_cbtecble.IdEmpresa
+			and f.IdTipoCbte = ct_cbtecble.IdTipoCbte
+			and f.IdCbteCble = ct_cbtecble.IdCbteCble
+			and f.IdanioFiscal = @IdAnio
+			)
 			GROUP BY ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble
 			UNION ALL
 			SELECT        ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble, 0, ABS(SUM(ct_cbtecble_det.dc_Valor)) AS DebitosSaldoInicial
@@ -178,7 +234,13 @@ FROM(
 							ct_grupocble ON ct_plancta.IdGrupoCble = ct_grupocble.IdGrupoCble LEFT JOIN
 							web.tb_FiltroReportes AS F ON ct_cbtecble.IdEmpresa = F.IdEmpresa AND ct_cbtecble.IdSucursal = F.IdSucursal AND F.IdUsuario = @IdUsuario
 			WHERE        ct_cbtecble.IdEmpresa = @IdEmpresa and (ct_grupocble.gc_estado_financiero = 'ER') AND ct_cbtecble.cb_Fecha BETWEEN @FechaIni AND @FechaFin and ct_cbtecble_det.dc_Valor < 0 AND @IdAnio = YEAR(ct_cbtecble.cb_Fecha)
-			and f.IdUsuario = @IdUsuario
+			and f.IdUsuario = @IdUsuario and not exists(
+			select f.IdEmpresa from ct_anio_fiscal_x_tb_sucursal as f 
+			where f.IdEmpresa = ct_cbtecble.IdEmpresa
+			and f.IdTipoCbte = ct_cbtecble.IdTipoCbte
+			and f.IdCbteCble = ct_cbtecble.IdCbteCble
+			and f.IdanioFiscal = @IdAnio
+			)
 			GROUP BY ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble
 			UNION ALL
 			--UTILIDAD
@@ -199,7 +261,13 @@ FROM(
 							ct_grupocble ON ct_plancta.IdGrupoCble = ct_grupocble.IdGrupoCble LEFT JOIN
 							web.tb_FiltroReportes AS F ON ct_cbtecble.IdEmpresa = F.IdEmpresa AND ct_cbtecble.IdSucursal = F.IdSucursal AND F.IdUsuario = @IdUsuario
 			WHERE        ct_cbtecble.IdEmpresa = @IdEmpresa and (ct_grupocble.gc_estado_financiero = 'ER') AND ct_cbtecble.cb_Fecha BETWEEN @FechaIni AND @FechaFin and ct_cbtecble_det.dc_Valor < 0 AND @IdAnio = YEAR(ct_cbtecble.cb_Fecha)
-			and f.IdUsuario = @IdUsuario
+			and f.IdUsuario = @IdUsuario and not exists(
+			select f.IdEmpresa from ct_anio_fiscal_x_tb_sucursal as f 
+			where f.IdEmpresa = ct_cbtecble.IdEmpresa
+			and f.IdTipoCbte = ct_cbtecble.IdTipoCbte
+			and f.IdCbteCble = ct_cbtecble.IdCbteCble
+			and f.IdanioFiscal = @IdAnio
+			)
 			GROUP BY ct_cbtecble_det.IdEmpresa
 			) C
 	GROUP BY IdEmpresa, IdCtaCble
@@ -219,7 +287,13 @@ FROM(
 							ct_grupocble ON ct_plancta.IdGrupoCble = ct_grupocble.IdGrupoCble LEFT JOIN
 							web.tb_FiltroReportes AS F ON ct_cbtecble.IdEmpresa = F.IdEmpresa AND ct_cbtecble.IdSucursal = F.IdSucursal AND F.IdUsuario = @IdUsuario
 			WHERE        ct_cbtecble.IdEmpresa = @IdEmpresa and (ct_grupocble.gc_estado_financiero = 'BG') AND ct_cbtecble.cb_Fecha <= @FechaFin and ct_cbtecble_det.dc_Valor > 0
-			and f.IdUsuario = @IdUsuario
+			and f.IdUsuario = @IdUsuario and not exists(
+			select f.IdEmpresa from ct_anio_fiscal_x_tb_sucursal as f 
+			where f.IdEmpresa = ct_cbtecble.IdEmpresa
+			and f.IdTipoCbte = ct_cbtecble.IdTipoCbte
+			and f.IdCbteCble = ct_cbtecble.IdCbteCble
+			and f.IdanioFiscal = @IdAnio
+			)
 			GROUP BY ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble
 			UNION ALL
 			SELECT        ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble, ABS(SUM(ct_cbtecble_det.dc_Valor)) AS DebitosSaldoInicial, 0
@@ -229,7 +303,13 @@ FROM(
 							ct_grupocble ON ct_plancta.IdGrupoCble = ct_grupocble.IdGrupoCble LEFT JOIN
 							web.tb_FiltroReportes AS F ON ct_cbtecble.IdEmpresa = F.IdEmpresa AND ct_cbtecble.IdSucursal = F.IdSucursal AND F.IdUsuario = @IdUsuario
 			WHERE        ct_cbtecble.IdEmpresa = @IdEmpresa and (ct_grupocble.gc_estado_financiero = 'ER') AND ct_cbtecble.cb_Fecha <= @FechaFin and ct_cbtecble_det.dc_Valor > 0 AND @IdAnio = YEAR(ct_cbtecble.cb_Fecha)
-			and f.IdUsuario = @IdUsuario
+			and f.IdUsuario = @IdUsuario and not exists(
+			select f.IdEmpresa from ct_anio_fiscal_x_tb_sucursal as f 
+			where f.IdEmpresa = ct_cbtecble.IdEmpresa
+			and f.IdTipoCbte = ct_cbtecble.IdTipoCbte
+			and f.IdCbteCble = ct_cbtecble.IdCbteCble
+			and f.IdanioFiscal = @IdAnio
+			)
 			GROUP BY ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble
 			UNION ALL
 			SELECT        ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble, 0, ABS(SUM(ct_cbtecble_det.dc_Valor)) AS DebitosSaldoInicial
@@ -239,7 +319,13 @@ FROM(
 							ct_grupocble ON ct_plancta.IdGrupoCble = ct_grupocble.IdGrupoCble LEFT JOIN
 							web.tb_FiltroReportes AS F ON ct_cbtecble.IdEmpresa = F.IdEmpresa AND ct_cbtecble.IdSucursal = F.IdSucursal AND F.IdUsuario = @IdUsuario
 			WHERE        ct_cbtecble.IdEmpresa = @IdEmpresa and (ct_grupocble.gc_estado_financiero = 'BG') AND ct_cbtecble.cb_Fecha <= @FechaFin and ct_cbtecble_det.dc_Valor < 0
-			and f.IdUsuario = @IdUsuario
+			and f.IdUsuario = @IdUsuario and not exists(
+			select f.IdEmpresa from ct_anio_fiscal_x_tb_sucursal as f 
+			where f.IdEmpresa = ct_cbtecble.IdEmpresa
+			and f.IdTipoCbte = ct_cbtecble.IdTipoCbte
+			and f.IdCbteCble = ct_cbtecble.IdCbteCble
+			and f.IdanioFiscal = @IdAnio
+			)
 			GROUP BY ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble
 			UNION ALL
 			SELECT        ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble, 0, ABS(SUM(ct_cbtecble_det.dc_Valor)) AS DebitosSaldoInicial
@@ -249,7 +335,13 @@ FROM(
 							ct_grupocble ON ct_plancta.IdGrupoCble = ct_grupocble.IdGrupoCble LEFT JOIN
 							web.tb_FiltroReportes AS F ON ct_cbtecble.IdEmpresa = F.IdEmpresa AND ct_cbtecble.IdSucursal = F.IdSucursal 
 			WHERE        ct_cbtecble.IdEmpresa = @IdEmpresa and (ct_grupocble.gc_estado_financiero = 'ER') AND ct_cbtecble.cb_Fecha <= @FechaFin and ct_cbtecble_det.dc_Valor < 0 AND @IdAnio = YEAR(ct_cbtecble.cb_Fecha)
-			and f.IdUsuario = @IdUsuario
+			and f.IdUsuario = @IdUsuario and not exists(
+			select f.IdEmpresa from ct_anio_fiscal_x_tb_sucursal as f 
+			where f.IdEmpresa = ct_cbtecble.IdEmpresa
+			and f.IdTipoCbte = ct_cbtecble.IdTipoCbte
+			and f.IdCbteCble = ct_cbtecble.IdCbteCble
+			and f.IdanioFiscal = @IdAnio
+			)
 			
 			GROUP BY ct_cbtecble_det.IdEmpresa, ct_cbtecble_det.IdCtaCble
 			UNION ALL
@@ -261,7 +353,13 @@ FROM(
 							ct_grupocble ON ct_plancta.IdGrupoCble = ct_grupocble.IdGrupoCble LEFT JOIN
 							web.tb_FiltroReportes AS F ON ct_cbtecble.IdEmpresa = F.IdEmpresa AND ct_cbtecble.IdSucursal = F.IdSucursal AND F.IdUsuario = @IdUsuario
 			WHERE        ct_cbtecble.IdEmpresa = @IdEmpresa and (ct_grupocble.gc_estado_financiero = 'ER') AND cb_Fecha <= @FechaFin and ct_cbtecble_det.dc_Valor > 0 AND @IdAnio = YEAR(ct_cbtecble.cb_Fecha)
-			and f.IdUsuario = @IdUsuario
+			and f.IdUsuario = @IdUsuario and not exists(
+			select f.IdEmpresa from ct_anio_fiscal_x_tb_sucursal as f 
+			where f.IdEmpresa = ct_cbtecble.IdEmpresa
+			and f.IdTipoCbte = ct_cbtecble.IdTipoCbte
+			and f.IdCbteCble = ct_cbtecble.IdCbteCble
+			and f.IdanioFiscal = @IdAnio
+			)
 			GROUP BY ct_cbtecble_det.IdEmpresa
 			UNION ALL
 			SELECT        ct_cbtecble_det.IdEmpresa, @IdCtaCbleUtilidad, 0, ABS(SUM(ct_cbtecble_det.dc_Valor)) AS DebitosSaldoInicial
@@ -271,7 +369,13 @@ FROM(
 							ct_grupocble ON ct_plancta.IdGrupoCble = ct_grupocble.IdGrupoCble LEFT JOIN
 							web.tb_FiltroReportes AS F ON ct_cbtecble.IdEmpresa = F.IdEmpresa AND ct_cbtecble.IdSucursal = F.IdSucursal AND F.IdUsuario = @IdUsuario
 			WHERE        ct_cbtecble.IdEmpresa = @IdEmpresa and (ct_grupocble.gc_estado_financiero = 'ER') AND cb_Fecha <= @FechaFin and ct_cbtecble_det.dc_Valor < 0 AND @IdAnio = YEAR(ct_cbtecble.cb_Fecha)
-			and f.IdUsuario = @IdUsuario
+			and f.IdUsuario = @IdUsuario and not exists(
+			select f.IdEmpresa from ct_anio_fiscal_x_tb_sucursal as f 
+			where f.IdEmpresa = ct_cbtecble.IdEmpresa
+			and f.IdTipoCbte = ct_cbtecble.IdTipoCbte
+			and f.IdCbteCble = ct_cbtecble.IdCbteCble
+			and f.IdanioFiscal = @IdAnio
+			)
 			GROUP BY ct_cbtecble_det.IdEmpresa
 			) C
 	GROUP BY IdEmpresa, IdCtaCble

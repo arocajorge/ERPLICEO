@@ -14,9 +14,13 @@
     [FechaAnulacion]        DATETIME        NULL,
     [MotivoAnulacion]       VARCHAR (MAX)   NULL,
     [IdTipoNota]            INT             NOT NULL,
+    [IdTipoPlantilla]       INT             NULL,
     CONSTRAINT [PK_aca_Plantilla] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdAnio] ASC, [IdPlantilla] ASC),
+    CONSTRAINT [FK_aca_Plantilla_aca_PlantillaTipo] FOREIGN KEY ([IdEmpresa], [IdTipoPlantilla]) REFERENCES [dbo].[aca_PlantillaTipo] ([IdEmpresa], [IdTipoPlantilla]),
     CONSTRAINT [FK_aca_Plantilla_fa_TipoNota] FOREIGN KEY ([IdEmpresa], [IdTipoNota]) REFERENCES [dbo].[fa_TipoNota] ([IdEmpresa], [IdTipoNota])
 );
+
+
 
 
 

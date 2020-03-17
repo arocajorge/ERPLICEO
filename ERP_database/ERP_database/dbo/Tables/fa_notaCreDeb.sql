@@ -6,7 +6,7 @@
     [dev_IdEmpresa]       INT           NULL,
     [dev_IdDev_Inven]     NUMERIC (18)  NULL,
     [CodNota]             VARCHAR (50)  NULL,
-    [CreDeb]              CHAR (3)      NOT NULL,
+    [CreDeb]              VARCHAR (1)   NOT NULL,
     [CodDocumentoTipo]    VARCHAR (20)  NOT NULL,
     [Serie1]              VARCHAR (3)   NULL,
     [Serie2]              VARCHAR (3)   NULL,
@@ -32,6 +32,7 @@
     [aprobada_enviar_sri] BIT           NOT NULL,
     [Generado]            BIT           NULL,
     [IdCobro_tipo]        VARCHAR (20)  NULL,
+    [FechaTransaccion]    DATETIME      NULL,
     CONSTRAINT [PK_fa_notaCreDeb] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSucursal] ASC, [IdBodega] ASC, [IdNota] ASC),
     CONSTRAINT [FK_fa_notaCreDeb_aca_Alumno] FOREIGN KEY ([IdEmpresa], [IdAlumno]) REFERENCES [dbo].[aca_Alumno] ([IdEmpresa], [IdAlumno]),
     CONSTRAINT [FK_fa_notaCreDeb_ct_plancta] FOREIGN KEY ([IdEmpresa], [IdCtaCble_TipoNota]) REFERENCES [dbo].[ct_plancta] ([IdEmpresa], [IdCtaCble]),
@@ -43,6 +44,8 @@
     CONSTRAINT [FK_fa_notaCreDeb_tb_bodega] FOREIGN KEY ([IdEmpresa], [IdSucursal], [IdBodega]) REFERENCES [dbo].[tb_bodega] ([IdEmpresa], [IdSucursal], [IdBodega]),
     CONSTRAINT [FK_fa_notaCreDeb_tb_sis_Documento_Tipo_Talonario] FOREIGN KEY ([IdEmpresa], [CodDocumentoTipo], [Serie2], [Serie1], [NumNota_Impresa]) REFERENCES [dbo].[tb_sis_Documento_Tipo_Talonario] ([IdEmpresa], [CodDocumentoTipo], [PuntoEmision], [Establecimiento], [NumDocumento])
 );
+
+
 
 
 

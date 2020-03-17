@@ -1325,6 +1325,14 @@
     <Build Include="dbo\Tables\aca_MatriculaCalificacionParcial.sql" />
     <Build Include="dbo\Tables\aca_AnioLectivoParcial.sql" />
     <Build Include="dbo\Views\vwaca_MatriculaCalificacion.sql" />
+    <Build Include="dbo\Tables\aca_PlantillaTipo.sql" />
+    <Build Include="Academico\Views\VWCXC_005_Diario.sql" />
+    <Build Include="Academico\Views\VWCXC_005_Cobros.sql" />
+    <Build Include="Academico\Views\VWCXC_005.sql" />
+    <Build Include="Academico\Stored Procedures\SPFAC_006.sql" />
+    <Build Include="Academico\Stored Procedures\SPACA_ContabilizacionNotas.sql" />
+    <Build Include="Academico\Stored Procedures\SPACA_ContabilizacionFacturas.sql" />
+    <Build Include="Academico\Stored Procedures\SPACA_ContabilizacionCobros.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

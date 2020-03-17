@@ -60,7 +60,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[60] 4[15] 2[8] 3) )"
+         Configuration = "(H (1[66] 4[3] 2[13] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -134,7 +134,7 @@ Begin DesignProperties =
                Right = 293
             End
             DisplayFlags = 280
-            TopColumn = 20
+            TopColumn = 14
          End
          Begin Table = "aca_Alumno"
             Begin Extent = 
@@ -197,6 +197,8 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 120', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula';
+
+
 
 
 

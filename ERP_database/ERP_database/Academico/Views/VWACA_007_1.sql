@@ -2,7 +2,7 @@
 AS
 SELECT sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.OrdenCurso, jc.NomCurso, cp.CodigoParalelo, cp.NomParalelo, cp.OrdenParalelo, p.pe_sexo, 1 AS Cantidad, dbo.aca_Matricula.IdEmpresa, 
                   dbo.aca_Matricula.IdMatricula, dbo.aca_Matricula.IdAnio, dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, dbo.aca_Matricula.IdCurso, dbo.aca_Matricula.IdParalelo, dbo.aca_Matricula.Fecha, 
-                  dbo.aca_Plantilla.NomPlantilla, dbo.aca_Plantilla.IdPlantilla, a.Descripcion
+                  dbo.aca_Plantilla.NomPlantilla, dbo.aca_Plantilla.IdPlantilla, a.Descripcion, dbo.aca_Plantilla.IdTipoPlantilla, dbo.aca_PlantillaTipo.NomPlantillaTipo
 FROM     dbo.aca_AnioLectivo AS a INNER JOIN
                   dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn ON a.IdEmpresa = sn.IdEmpresa AND a.IdAnio = sn.IdAnio INNER JOIN
                   dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel INNER JOIN
@@ -12,13 +12,14 @@ FROM     dbo.aca_AnioLectivo AS a INNER JOIN
                   cp.IdJornada = dbo.aca_Matricula.IdJornada AND cp.IdCurso = dbo.aca_Matricula.IdCurso AND cp.IdParalelo = dbo.aca_Matricula.IdParalelo INNER JOIN
                   dbo.aca_Alumno AS alu ON dbo.aca_Matricula.IdEmpresa = alu.IdEmpresa AND dbo.aca_Matricula.IdAlumno = alu.IdAlumno INNER JOIN
                   dbo.tb_persona AS p ON alu.IdPersona = p.IdPersona INNER JOIN
-                  dbo.aca_Plantilla ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Plantilla.IdEmpresa AND dbo.aca_Matricula.IdAnio = dbo.aca_Plantilla.IdAnio AND dbo.aca_Matricula.IdPlantilla = dbo.aca_Plantilla.IdPlantilla
+                  dbo.aca_Plantilla ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Plantilla.IdEmpresa AND dbo.aca_Matricula.IdAnio = dbo.aca_Plantilla.IdAnio AND dbo.aca_Matricula.IdPlantilla = dbo.aca_Plantilla.IdPlantilla LEFT OUTER JOIN
+                  dbo.aca_PlantillaTipo ON dbo.aca_Plantilla.IdEmpresa = dbo.aca_PlantillaTipo.IdEmpresa AND dbo.aca_Plantilla.IdTipoPlantilla = dbo.aca_PlantillaTipo.IdTipoPlantilla
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_007';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'= 0
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' = 0
          End
          Begin Table = "p"
             Begin Extent = 
@@ -34,8 +35,18 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'= 0
             Begin Extent = 
                Top = 1351
                Left = 48
-               Bottom = 1514
+               Bottom = 1627
                Right = 293
+            End
+            DisplayFlags = 280
+            TopColumn = 7
+         End
+         Begin Table = "aca_PlantillaTipo"
+            Begin Extent = 
+               Top = 1271
+               Left = 667
+               Bottom = 1434
+               Right = 912
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -47,19 +58,30 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'= 0
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
+      Begin ColumnWidths = 9
+         Width = 284
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+      End
    End
    Begin CriteriaPane = 
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -69,13 +91,15 @@ End
 ', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_007';
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+         Configuration = "(H (1[30] 4[3] 2[3] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -137,7 +161,7 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = 0
+         Top = -960
          Left = 0
       End
       Begin Tables = 
@@ -209,5 +233,7 @@ Begin DesignProperties =
                Right = 293
             End
             DisplayFlags = 280
-            TopColumn ', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_007';
+            TopColumn', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_007';
+
+
 

@@ -103,6 +103,6 @@ END
 
 
 UPDATE [Academico].[cxc_SPCXC_004] SET SaldoFinal = SaldoDeudor - SaldoAcreedor where IdEmpresa = @IdEmpresa and IdUsuario = @IdUsuario
-DELETE [Academico].[cxc_SPCXC_004] WHERE IdEmpresa = @IdEmpresa and IdUsuario = @IdUsuario and SaldoFinal = 0
+DELETE [Academico].[cxc_SPCXC_004] WHERE IdEmpresa = @IdEmpresa and IdUsuario = @IdUsuario and SaldoFinal = 0 and SaldoDeudor = 0 AND SaldoAcreedor = 0
 
 select * from [Academico].[cxc_SPCXC_004] where IdEmpresa = @IdEmpresa and IdUsuario = @IdUsuario

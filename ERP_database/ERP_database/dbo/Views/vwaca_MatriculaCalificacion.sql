@@ -1,7 +1,7 @@
 ﻿CREATE VIEW dbo.vwaca_MatriculaCalificacion
 AS
-SELECT dbo.aca_MatriculaCalificacion.IdEmpresa, dbo.aca_MatriculaCalificacion.IdMatricula, dbo.aca_Matricula.IdAlumno, tb_persona_1.pe_nombreCompleto AS pe_nombreCompletoAlumno, dbo.aca_Matricula.IdAnio, dbo.aca_Matricula.IdSede, 
-                  dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, dbo.aca_Matricula.IdCurso, dbo.aca_Matricula.IdParalelo, dbo.aca_MatriculaCalificacion.IdMateria, dbo.aca_MatriculaCalificacion.IdProfesor, 
+SELECT dbo.aca_MatriculaCalificacion.IdEmpresa, dbo.aca_MatriculaCalificacion.IdMatricula, dbo.aca_Matricula.IdAlumno, dbo.aca_Alumno.Codigo, tb_persona_1.pe_nombreCompleto AS pe_nombreCompletoAlumno, dbo.aca_Matricula.IdAnio, 
+                  dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, dbo.aca_Matricula.IdCurso, dbo.aca_Matricula.IdParalelo, dbo.aca_MatriculaCalificacion.IdMateria, dbo.aca_MatriculaCalificacion.IdProfesor, 
                   dbo.tb_persona.pe_nombreCompleto
 FROM     dbo.tb_persona INNER JOIN
                   dbo.aca_Profesor ON dbo.tb_persona.IdPersona = dbo.aca_Profesor.IdPersona RIGHT OUTER JOIN

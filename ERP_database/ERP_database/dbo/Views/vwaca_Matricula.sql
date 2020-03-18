@@ -4,7 +4,8 @@ SELECT dbo.aca_Matricula.IdEmpresa, dbo.aca_Matricula.IdMatricula, dbo.aca_Matri
                   dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, dbo.aca_Matricula.IdCurso, dbo.aca_Matricula.IdParalelo, dbo.vwaca_AnioLectivo_Jornada_Curso.Descripcion, 
                   dbo.vwaca_AnioLectivo_Jornada_Curso.NomSede, dbo.vwaca_AnioLectivo_Jornada_Curso.NomNivel, dbo.vwaca_AnioLectivo_Jornada_Curso.NomJornada, dbo.vwaca_AnioLectivo_Jornada_Curso.NomCurso, 
                   dbo.aca_Paralelo.NomParalelo, dbo.vwaca_AnioLectivo_Jornada_Curso.BloquearMatricula, dbo.tb_persona.pe_cedulaRuc, dbo.aca_Matricula.IdPersonaF, dbo.aca_Matricula.IdPersonaR, dbo.aca_Matricula.IdPlantilla, 
-                  dbo.aca_Matricula.Fecha, dbo.aca_Matricula.Observacion, dbo.aca_Matricula.IdMecanismo, dbo.aca_Matricula.IdEmpresa_rol, dbo.aca_Matricula.IdEmpleado
+                  dbo.aca_Matricula.Fecha, dbo.aca_Matricula.Observacion, dbo.aca_Matricula.IdMecanismo, dbo.aca_Matricula.IdEmpresa_rol, dbo.aca_Matricula.IdEmpleado, dbo.vwaca_AnioLectivo_Jornada_Curso.OrdenCurso, 
+                  dbo.aca_Paralelo.OrdenParalelo
 FROM     dbo.aca_Matricula INNER JOIN
                   dbo.aca_Alumno ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_Matricula.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
                   dbo.tb_persona ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
@@ -18,6 +19,16 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'0
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -46,6 +57,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'0
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula';
+
+
 
 
 
@@ -174,7 +187,7 @@ Begin DesignProperties =
                Right = 731
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 1
          End
       End
    End
@@ -183,7 +196,7 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 20
+      Begin ColumnWidths = 30
          Width = 284
          Width = 1200
          Width = 1200
@@ -197,6 +210,8 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 120', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula';
+
+
 
 
 

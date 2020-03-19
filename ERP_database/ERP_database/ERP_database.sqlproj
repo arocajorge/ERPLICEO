@@ -1336,6 +1336,7 @@
     <Build Include="dbo\Views\vwaca_AnioLectivoParcial.sql" />
     <Build Include="dbo\Views\vwaca_MatriculaCalificacionParcial.sql" />
     <Build Include="dbo\Views\vwaca_AnioLectivo_Paralelo_Profesor_Calificaciones.sql" />
+    <Build Include="Academico\Stored Procedures\SPCXC_006.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

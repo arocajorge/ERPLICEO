@@ -4,7 +4,7 @@ SELECT dbo.aca_Profesor.IdEmpresa, dbo.aca_Profesor.IdProfesor, dbo.aca_Profesor
                   dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_razonSocial, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.tb_persona.IdTipoDocumento, dbo.tb_persona.pe_cedulaRuc, dbo.tb_persona.pe_direccion, 
                   dbo.tb_persona.pe_telfono_Contacto, dbo.tb_persona.pe_celular, dbo.tb_persona.pe_sexo, dbo.tb_persona.IdEstadoCivil, dbo.tb_persona.pe_fechaNacimiento, dbo.tb_persona.pe_estado, dbo.tb_persona.pe_correo, 
                   dbo.aca_Profesor.Correo, dbo.aca_Profesor.Direccion, dbo.aca_Profesor.Telefonos, dbo.aca_Profesor.EsProfesor, dbo.aca_Profesor.EsInspector, dbo.tb_persona.CodCatalogoSangre, dbo.tb_persona.CodCatalogoCONADIS, 
-                  dbo.tb_persona.PorcentajeDiscapacidad, dbo.tb_persona.NumeroCarnetConadis, dbo.tb_persona.IdProfesion
+                  dbo.tb_persona.PorcentajeDiscapacidad, dbo.tb_persona.NumeroCarnetConadis, dbo.tb_persona.IdProfesion, dbo.aca_Profesor.IdUsuario
 FROM     dbo.aca_Profesor INNER JOIN
                   dbo.tb_persona ON dbo.aca_Profesor.IdPersona = dbo.tb_persona.IdPersona
 GO

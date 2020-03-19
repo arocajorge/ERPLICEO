@@ -2,7 +2,7 @@
 AS
 SELECT dbo.aca_AnioLectivo_Paralelo_Profesor.IdEmpresa, dbo.aca_AnioLectivo_Paralelo_Profesor.IdAnio, dbo.aca_AnioLectivo_Paralelo_Profesor.IdSede, dbo.aca_AnioLectivo_Paralelo_Profesor.IdNivel, 
                   dbo.aca_AnioLectivo_Paralelo_Profesor.IdJornada, dbo.aca_AnioLectivo_Paralelo_Profesor.IdCurso, dbo.aca_AnioLectivo_Paralelo_Profesor.IdMateria, dbo.aca_AnioLectivo_Paralelo_Profesor.IdParalelo, 
-                  dbo.aca_AnioLectivo_Paralelo_Profesor.IdProfesor, dbo.aca_Profesor.IdPersona, dbo.tb_persona.pe_nombreCompleto, dbo.aca_AnioLectivo_Curso_Materia.NomMateria
+                  dbo.aca_AnioLectivo_Paralelo_Profesor.IdProfesor, dbo.aca_Profesor.IdPersona, dbo.tb_persona.pe_nombreCompleto, dbo.aca_AnioLectivo_Curso_Materia.NomMateria, dbo.aca_Profesor.IdUsuario
 FROM     dbo.tb_persona INNER JOIN
                   dbo.aca_Profesor ON dbo.tb_persona.IdPersona = dbo.aca_Profesor.IdPersona RIGHT OUTER JOIN
                   dbo.aca_AnioLectivo_Paralelo_Profesor ON dbo.aca_Profesor.IdEmpresa = dbo.aca_AnioLectivo_Paralelo_Profesor.IdEmpresa AND dbo.aca_Profesor.IdProfesor = dbo.aca_AnioLectivo_Paralelo_Profesor.IdProfesor LEFT OUTER JOIN
@@ -88,26 +88,6 @@ Begin DesignProperties =
          Left = -270
       End
       Begin Tables = 
-         Begin Table = "aca_AnioLectivo_Paralelo_Profesor"
-            Begin Extent = 
-               Top = 8
-               Left = 415
-               Bottom = 381
-               Right = 654
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "aca_Profesor"
-            Begin Extent = 
-               Top = 280
-               Left = 749
-               Bottom = 553
-               Right = 994
-            End
-            DisplayFlags = 280
-            TopColumn = 2
-         End
          Begin Table = "tb_persona"
             Begin Extent = 
                Top = 262
@@ -117,6 +97,26 @@ Begin DesignProperties =
             End
             DisplayFlags = 280
             TopColumn = 1
+         End
+         Begin Table = "aca_Profesor"
+            Begin Extent = 
+               Top = 1
+               Left = 1011
+               Bottom = 274
+               Right = 1256
+            End
+            DisplayFlags = 280
+            TopColumn = 2
+         End
+         Begin Table = "aca_AnioLectivo_Paralelo_Profesor"
+            Begin Extent = 
+               Top = 8
+               Left = 415
+               Bottom = 381
+               Right = 654
+            End
+            DisplayFlags = 280
+            TopColumn = 0
          End
          Begin Table = "aca_AnioLectivo_Curso_Materia"
             Begin Extent = 
@@ -160,6 +160,8 @@ Begin DesignProperties =
          Table = 1176
          Output = 720
          Append = 1400', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Paralelo_Profesor';
+
+
 
 
 

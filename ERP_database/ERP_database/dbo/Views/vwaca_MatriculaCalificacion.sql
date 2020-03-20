@@ -2,7 +2,10 @@
 AS
 SELECT dbo.aca_MatriculaCalificacion.IdEmpresa, dbo.aca_MatriculaCalificacion.IdMatricula, dbo.aca_Matricula.IdAlumno, dbo.aca_Alumno.Codigo, tb_persona_1.pe_nombreCompleto AS pe_nombreCompletoAlumno, dbo.aca_Matricula.IdAnio, 
                   dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, dbo.aca_Matricula.IdCurso, dbo.aca_Matricula.IdParalelo, dbo.aca_MatriculaCalificacion.IdMateria, dbo.aca_MatriculaCalificacion.IdProfesor, 
-                  dbo.tb_persona.pe_nombreCompleto
+                  dbo.tb_persona.pe_nombreCompleto, dbo.aca_MatriculaCalificacion.CalificacionP1, dbo.aca_MatriculaCalificacion.CalificacionP2, dbo.aca_MatriculaCalificacion.CalificacionP3, dbo.aca_MatriculaCalificacion.PromedioQ1, 
+                  dbo.aca_MatriculaCalificacion.ExamenQ1, dbo.aca_MatriculaCalificacion.PromedioFinalQ1, dbo.aca_MatriculaCalificacion.CalificacionP4, dbo.aca_MatriculaCalificacion.CalificacionP5, dbo.aca_MatriculaCalificacion.CalificacionP6, 
+                  dbo.aca_MatriculaCalificacion.PromedioQ2, dbo.aca_MatriculaCalificacion.ExamenQ2, dbo.aca_MatriculaCalificacion.PromedioFinalQ2, dbo.aca_MatriculaCalificacion.ExamenMejoramiento, 
+                  dbo.aca_MatriculaCalificacion.ExamenSupletorio, dbo.aca_MatriculaCalificacion.ExamenRemedial, dbo.aca_MatriculaCalificacion.ExamenGracia, dbo.aca_MatriculaCalificacion.PromedioFinal
 FROM     dbo.tb_persona INNER JOIN
                   dbo.aca_Profesor ON dbo.tb_persona.IdPersona = dbo.aca_Profesor.IdPersona RIGHT OUTER JOIN
                   dbo.aca_Matricula INNER JOIN
@@ -15,7 +18,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' Width = 1200
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'  Width = 1200
          Width = 1200
          Width = 1200
          Width = 1896
@@ -60,6 +63,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' Width = 1
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacion';
+
+
 
 
 GO
@@ -192,7 +197,7 @@ Begin DesignProperties =
                Right = 613
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 13
          End
       End
    End
@@ -203,5 +208,7 @@ Begin DesignProperties =
       End
       Begin ColumnWidths = 25
          Width = 284
-        ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacion';
+       ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacion';
+
+
 

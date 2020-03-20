@@ -181,3 +181,5 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Paralelo_Profesor';
 
+
+

@@ -12,22 +12,20 @@ namespace Core.Erp.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class vwcp_orden_giro_SinRetencion
+    public partial class vwcp_orden_giro_LiquidacionDeCompras
     {
         public int IdEmpresa { get; set; }
         public int IdTipoCbte_Ogiro { get; set; }
         public decimal IdCbteCble_Ogiro { get; set; }
-        public string pe_nombreCompleto { get; set; }
-        public string pe_cedulaRuc { get; set; }
-        public System.DateTime co_fechaOg { get; set; }
-        public string co_serie { get; set; }
+        public System.DateTime co_FechaFactura { get; set; }
         public string co_factura { get; set; }
-        public string co_observacion { get; set; }
-        public double co_subtotal_iva { get; set; }
-        public double co_subtotal_siniva { get; set; }
-        public double co_baseImponible { get; set; }
-        public double co_valoriva { get; set; }
+        public string pe_nombreCompleto { get; set; }
+        public string Num_Autorizacion { get; set; }
+        public string Codigo { get; set; }
+        public string Estado { get; set; }
         public double co_total { get; set; }
+        public string co_observacion { get; set; }
         public int IdSucursal { get; set; }
+        public string Descripcion { get; set; }
     }
 }

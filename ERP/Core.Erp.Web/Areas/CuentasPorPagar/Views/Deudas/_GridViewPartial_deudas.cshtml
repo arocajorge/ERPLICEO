@@ -3,7 +3,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "GridView_deudas";
-        settings.CallbackRouteValues = new { Controller = "Deudas", Action = "GridViewPartial_deudas", Fecha_ini = ViewBag.fecha_ini, Fecha_fin = ViewBag.fecha_fin, IdSucursal = ViewBag.IdSucursal };
+        settings.CallbackRouteValues = new { Controller = "Deudas", Action = "GridViewPartial_deudas", Fecha_ini = ViewBag.fecha_ini, Fecha_fin = ViewBag.fecha_fin, IdSucursal = ViewBag.IdSucursal, MostrarDocumentosElectronicos = ViewBag.MostrarDocumentosElectronicos, Nuevo = ViewBag.Nuevo, Modificar = ViewBag.Modificar, Anular = ViewBag.Anular };
 
         //Configuración para que la grilla no muestre texto completo
         settings.SettingsBehavior.AllowEllipsisInText = true;
@@ -96,10 +96,9 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Width = Unit.Pixel(150);
         });
-        settings.Columns.Add("IdCbteCble_Ogiro", "ID").Width = Unit.Percentage(10);
-        settings.Columns.Add("co_factura", "Documento").Width = Unit.Percentage(10);
-        settings.Columns.Add("info_proveedor.info_persona.pe_nombreCompleto", "Proveedor").Width = Unit.Percentage(30);
-        settings.Columns.Add("co_observacion", "Observación").Width = Unit.Percentage(35);
+        settings.Columns.Add("IdCbteCble_Ogiro", "ID").Width = Unit.Percentage(7);
+        settings.Columns.Add("Descripcion", "Tipo").Width = Unit.Percentage(15);
+        settings.Columns.Add("co_factura", "Documento").Width = Unit.Percentage(15);
         settings.Columns.Add(column =>
         {
             column.FieldName = "co_fechaOg";
@@ -112,9 +111,12 @@
                 sp.Width = Unit.Percentage(100);
             });
         });
-        settings.Columns.Add("co_subtotal_iva", "SubIVA").Width = Unit.Percentage(10);
+        settings.Columns.Add("info_proveedor.info_persona.pe_nombreCompleto", "Proveedor").Width = Unit.Percentage(20);
+        settings.Columns.Add("co_observacion", "Observación").Width = Unit.Percentage(20);
+
+        /*settings.Columns.Add("co_subtotal_iva", "SubIVA").Width = Unit.Percentage(10);
         settings.Columns.Add("co_valoriva", " IVA").Width = Unit.Percentage(10);
-        settings.Columns.Add("co_subtotal_siniva", " SubSin IVA").Width = Unit.Percentage(10);
+        settings.Columns.Add("co_subtotal_siniva", " SubSin IVA").Width = Unit.Percentage(10);*/
         settings.Columns.Add("co_total", "Total").Width = Unit.Percentage(10);
         settings.Columns.Add(column =>
         {

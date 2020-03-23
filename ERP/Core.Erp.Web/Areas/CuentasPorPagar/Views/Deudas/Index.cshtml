@@ -79,6 +79,20 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label >      </label>
+                            @Html.DevExpress().CheckBoxFor(q => q.mostrarAnulados,
+                         settings =>
+                         {
+                             settings.Name = "mostrarAnulados";
+                             settings.Checked = false;
+                             settings.Text = "Mostrar documentos electrónicos";
+                         }
+                     ).GetHtml()
+                        </div>
+                             
+                    </div>
                 </div>
             </div>
         </div>
@@ -98,7 +112,7 @@
             </div>
         </div>
         <div class="box-body">
-            @Html.Action("GridViewPartial_deudas", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdSucursal = Model.IdSucursal, Nuevo = ViewBag.Nuevo, Modificar = ViewBag.Modificar, Anular = ViewBag.Anular })
+            @Html.Action("GridViewPartial_deudas", new { Fecha_ini = Model.fecha_ini, Fecha_fin = Model.fecha_fin, IdSucursal = Model.IdSucursal, Nuevo = ViewBag.Nuevo, Modificar = ViewBag.Modificar, Anular = ViewBag.Anular, MostrarDocumentosElectronicos = Model.mostrarAnulados})
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

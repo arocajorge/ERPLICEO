@@ -2204,6 +2204,9 @@
     <Compile Include="vwcp_orden_giro_det_ing_x_os_x_cruzar.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwcp_orden_giro_LiquidacionDeCompras.cs">
+      <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwcp_orden_giro_SinRetencion.cs">
       <DependentUpon>Model_cuentas_por_pagar.tt</DependentUpon>
     </Compile>

@@ -181,7 +181,7 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         }
 
         [ValidateInput(false)]
-        public ActionResult GridViewPartial_deudas(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0, bool Nuevo = false, bool Modificar = false, bool Anular = false)
+        public ActionResult GridViewPartial_deudas(DateTime? Fecha_ini, DateTime? Fecha_fin, int IdSucursal = 0, bool Nuevo = false, bool Modificar = false, bool Anular = false, bool MostrarDocumentosElectronicos = false)
         {
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             ViewBag.Fecha_ini = Fecha_ini == null ? DateTime.Now.Date.AddMonths(-1) : Convert.ToDateTime(Fecha_ini);
@@ -193,8 +193,9 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             ViewBag.Nuevo = Nuevo;
             ViewBag.Modificar = Modificar;
             ViewBag.Anular = Anular;
+            ViewBag.MostrarDocumentosElectronicos = MostrarDocumentosElectronicos;
 
-            var model = bus_orden_giro.get_lst(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin);
+            var model = bus_orden_giro.get_lst(IdEmpresa, IdSucursal, ViewBag.Fecha_ini, ViewBag.Fecha_fin, MostrarDocumentosElectronicos);
             return PartialView("_GridViewPartial_deudas", model);
         }
 

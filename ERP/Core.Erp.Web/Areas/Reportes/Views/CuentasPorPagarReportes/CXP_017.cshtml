@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Documento electrónico por proveedor";
+    if (string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdUsuario) || string.IsNullOrEmpty(Core.Erp.Web.Helps.SessionFixed.IdEmpresa))
+    {
+        Response.Redirect("~/Account/Login");
+    }
+    Layout = "~/Areas/Reportes/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+   @Html.DevExpress().WebDocumentViewer(settings =>
+           {
+               settings.ClientSideEvents.Init = "function(s, e) {s.previewModel.reportPreview.zoom(1);}";
+               settings.MobileMode = false;
+               settings.Name = "webDocumentViewer";
+           }).Bind(Model).GetHtml()
+}   

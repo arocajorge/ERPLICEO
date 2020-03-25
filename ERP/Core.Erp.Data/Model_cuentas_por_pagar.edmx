@@ -1102,6 +1102,7 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.dbo.vwcp_orden_giro_Liquidac
           <Property Name="co_observacion" Type="varchar" MaxLength="1000" />
           <Property Name="IdSucursal" Type="int" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="fecha_autorizacion" Type="datetime" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.dbo.vwcp_orden_giro_SinRetencion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -2373,7 +2374,8 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.vwcp_retencion_det' no t
     [vwcp_orden_giro_LiquidacionDeCompras].[co_total] AS [co_total], 
     [vwcp_orden_giro_LiquidacionDeCompras].[co_observacion] AS [co_observacion], 
     [vwcp_orden_giro_LiquidacionDeCompras].[IdSucursal] AS [IdSucursal], 
-    [vwcp_orden_giro_LiquidacionDeCompras].[Descripcion] AS [Descripcion]
+    [vwcp_orden_giro_LiquidacionDeCompras].[Descripcion] AS [Descripcion], 
+    [vwcp_orden_giro_LiquidacionDeCompras].[fecha_autorizacion] AS [fecha_autorizacion]
     FROM [dbo].[vwcp_orden_giro_LiquidacionDeCompras] AS [vwcp_orden_giro_LiquidacionDeCompras]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwcp_orden_giro_SinRetencion" EntityType="Self.vwcp_orden_giro_SinRetencion" store:Type="Views" store:Schema="dbo">
@@ -3376,7 +3378,6 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.vwcp_retencion_det' no t
             <End Role="cp_orden_pago_det" EntitySet="cp_orden_pago_det" />
           </AssociationSet>
           <EntitySet Name="cp_orden_giro" EntityType="Model_cuentas_por_pagar.cp_orden_giro" />
-          <EntitySet Name="vwcp_orden_giro_LiquidacionDeCompras" EntityType="Model_cuentas_por_pagar.vwcp_orden_giro_LiquidacionDeCompras" />
           <EntitySet Name="vwcp_orden_giro" EntityType="Model_cuentas_por_pagar.vwcp_orden_giro" />
           <AssociationSet Name="FK_cp_orden_giro_cp_codigo_SRI" Association="Model_cuentas_por_pagar.FK_cp_orden_giro_cp_codigo_SRI">
             <End Role="cp_codigo_SRI" EntitySet="cp_codigo_SRI" />
@@ -3426,6 +3427,7 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.vwcp_retencion_det' no t
             <End Role="cp_orden_giro" EntitySet="cp_orden_giro" />
             <End Role="cp_retencion" EntitySet="cp_retencion" />
           </AssociationSet>
+          <EntitySet Name="vwcp_orden_giro_LiquidacionDeCompras" EntityType="Model_cuentas_por_pagar.vwcp_orden_giro_LiquidacionDeCompras" />
           </EntityContainer>
         <ComplexType Name="spcp_Get_Data_orden_pago_con_cancelacion_x_pago_Result">
           <Property Type="Int64" Name="IdRow" Nullable="false" />
@@ -5011,34 +5013,6 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.vwcp_retencion_det' no t
           <NavigationProperty Name="cp_orden_giro_x_in_Ing_Egr_Inven" Relationship="Model_cuentas_por_pagar.FK_cp_orden_giro_x_in_Ing_Egr_Inven_cp_orden_giro" FromRole="cp_orden_giro" ToRole="cp_orden_giro_x_in_Ing_Egr_Inven" />
           <NavigationProperty Name="cp_retencion" Relationship="Model_cuentas_por_pagar.FK_cp_retencion_cp_orden_giro" FromRole="cp_orden_giro" ToRole="cp_retencion" />
         </EntityType>
-        <EntityType Name="vwcp_orden_giro_LiquidacionDeCompras">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdTipoCbte_Ogiro" />
-            <PropertyRef Name="IdCbteCble_Ogiro" />
-            <PropertyRef Name="co_FechaFactura" />
-            <PropertyRef Name="co_factura" />
-            <PropertyRef Name="pe_nombreCompleto" />
-            <PropertyRef Name="Codigo" />
-            <PropertyRef Name="Estado" />
-            <PropertyRef Name="co_total" />
-            <PropertyRef Name="IdSucursal" />
-            <PropertyRef Name="Descripcion" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoCbte_Ogiro" Type="Int32" Nullable="false" />
-          <Property Name="IdCbteCble_Ogiro" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="co_FechaFactura" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="co_factura" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Num_Autorizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="co_total" Type="Double" Nullable="false" />
-          <Property Name="co_observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="vwcp_orden_giro">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -5293,6 +5267,35 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.vwcp_retencion_det' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vwcp_orden_giro_LiquidacionDeCompras">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdTipoCbte_Ogiro" />
+            <PropertyRef Name="IdCbteCble_Ogiro" />
+            <PropertyRef Name="co_FechaFactura" />
+            <PropertyRef Name="co_factura" />
+            <PropertyRef Name="pe_nombreCompleto" />
+            <PropertyRef Name="Codigo" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="co_total" />
+            <PropertyRef Name="IdSucursal" />
+            <PropertyRef Name="Descripcion" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbte_Ogiro" Type="Int32" Nullable="false" />
+          <Property Name="IdCbteCble_Ogiro" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="co_FechaFactura" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="co_factura" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Num_Autorizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="co_total" Type="Double" Nullable="false" />
+          <Property Name="co_observacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_autorizacion" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6557,25 +6560,6 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.vwcp_retencion_det' no t
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vwcp_orden_giro_LiquidacionDeCompras">
-            <EntityTypeMapping TypeName="Model_cuentas_por_pagar.vwcp_orden_giro_LiquidacionDeCompras">
-              <MappingFragment StoreEntitySet="vwcp_orden_giro_LiquidacionDeCompras">
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="co_observacion" ColumnName="co_observacion" />
-                <ScalarProperty Name="co_total" ColumnName="co_total" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="Num_Autorizacion" ColumnName="Num_Autorizacion" />
-                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
-                <ScalarProperty Name="co_factura" ColumnName="co_factura" />
-                <ScalarProperty Name="co_FechaFactura" ColumnName="co_FechaFactura" />
-                <ScalarProperty Name="IdCbteCble_Ogiro" ColumnName="IdCbteCble_Ogiro" />
-                <ScalarProperty Name="IdTipoCbte_Ogiro" ColumnName="IdTipoCbte_Ogiro" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="vwcp_orden_giro">
             <EntityTypeMapping TypeName="Model_cuentas_por_pagar.vwcp_orden_giro">
               <MappingFragment StoreEntitySet="vwcp_orden_giro">
@@ -6629,6 +6613,26 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.vwcp_retencion_det' no t
                 <ScalarProperty Name="IdOrden_giro_Tipo" ColumnName="IdOrden_giro_Tipo" />
                 <ScalarProperty Name="IdTipoCbte_Ogiro" ColumnName="IdTipoCbte_Ogiro" />
                 <ScalarProperty Name="IdCbteCble_Ogiro" ColumnName="IdCbteCble_Ogiro" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwcp_orden_giro_LiquidacionDeCompras">
+            <EntityTypeMapping TypeName="Model_cuentas_por_pagar.vwcp_orden_giro_LiquidacionDeCompras">
+              <MappingFragment StoreEntitySet="vwcp_orden_giro_LiquidacionDeCompras">
+                <ScalarProperty Name="fecha_autorizacion" ColumnName="fecha_autorizacion" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="co_observacion" ColumnName="co_observacion" />
+                <ScalarProperty Name="co_total" ColumnName="co_total" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Num_Autorizacion" ColumnName="Num_Autorizacion" />
+                <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
+                <ScalarProperty Name="co_factura" ColumnName="co_factura" />
+                <ScalarProperty Name="co_FechaFactura" ColumnName="co_FechaFactura" />
+                <ScalarProperty Name="IdCbteCble_Ogiro" ColumnName="IdCbteCble_Ogiro" />
+                <ScalarProperty Name="IdTipoCbte_Ogiro" ColumnName="IdTipoCbte_Ogiro" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -56,6 +56,11 @@
         //Evento para pintar de rojo las filas anuladas
         settings.HtmlRowPrepared = (s, e) =>
         {
+            if (Convert.ToString(e.GetValue("Estado")) != "I" && e.GetValue("fecha_autorizacion") != null)
+            {
+                e.Row.ForeColor = System.Drawing.Color.Blue;
+            }
+
             if (Convert.ToString(e.GetValue("Estado")) == "I")
             {
                 e.Row.ForeColor = System.Drawing.Color.Red;
@@ -66,7 +71,7 @@
             c.Caption = "#";
             c.SetDataItemTemplateContent(tc =>
             {
-                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A")
+                if (Convert.ToString(DataBinder.Eval(tc.DataItem, "Estado")) == "A" && DataBinder.Eval(tc.DataItem, "fecha_autorizacion") == null)
                 {
                     if (ViewBag.Modificar)
                     {
@@ -101,7 +106,7 @@
         settings.Columns.Add("co_factura", "Documento").Width = Unit.Percentage(15);
         settings.Columns.Add(column =>
         {
-            column.FieldName = "co_fechaOg";
+            column.FieldName = "co_FechaFactura";
             column.Caption = "Fecha";
             column.Width = Unit.Percentage(10);
             column.PropertiesEdit.DisplayFormatString = "d";
@@ -135,6 +140,19 @@
             column.SetDataItemTemplateContent(c =>
             {
                 ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("CXP_001", "CuentasPorPagarReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdTipoCbte_Ogiro = DataBinder.Eval(c.DataItem, "IdTipoCbte_Ogiro").ToString(), IdCbteCble_Ogiro = DataBinder.Eval(c.DataItem, "IdCbteCble_Ogiro").ToString() }, Request.Url.Scheme) + "');\"></span>");
+            });
+            column.Width = Unit.Percentage(5);
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.SetDataItemTemplateContent(c =>
+            {
+                if (DataBinder.Eval(c.DataItem, "fecha_autorizacion") != null)
+                {
+                    ViewContext.Writer.Write("<span class=\"glyphicon  glyphicon-print\" onclick=\"OpenInNewTabWinBrowser('" + Url.Action("CXP_017", "CuentasPorPagarReportes", new { Area = "Reportes", IdEmpresa = DataBinder.Eval(c.DataItem, "IdEmpresa").ToString(), IdTipoCbte_Ogiro = DataBinder.Eval(c.DataItem, "IdTipoCbte_Ogiro").ToString(), IdCbteCble_Ogiro = DataBinder.Eval(c.DataItem, "IdCbteCble_Ogiro").ToString() }, Request.Url.Scheme) + "');\"></span>");
+                }
+                
             });
             column.Width = Unit.Percentage(5);
         });

@@ -1355,6 +1355,7 @@
     <Compile Include="Reportes\CuentasPorPagar\CXP_014_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_015_Data.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_016_Data.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_017_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_001_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_003_Data.cs" />
     <Compile Include="Reportes\Facturacion\FAC_004_Data.cs" />
@@ -2361,6 +2362,9 @@
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="VWCXP_014.cs">
+      <DependentUpon>Model_reportes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VWCXP_017.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
     <Compile Include="vwFacturas_fac_electronica.cs">

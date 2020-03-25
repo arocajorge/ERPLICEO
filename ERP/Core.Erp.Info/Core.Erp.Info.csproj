@@ -392,6 +392,7 @@
     <Compile Include="Reportes\CuentasPorPagar\CXP_014_Info.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_015_Info.cs" />
     <Compile Include="Reportes\CuentasPorPagar\CXP_016_Info.cs" />
+    <Compile Include="Reportes\CuentasPorPagar\CXP_017_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_001_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_003_Info.cs" />
     <Compile Include="Reportes\Facturacion\FAC_004_Info.cs" />

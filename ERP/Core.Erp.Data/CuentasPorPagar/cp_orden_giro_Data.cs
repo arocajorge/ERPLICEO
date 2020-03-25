@@ -645,7 +645,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                 co_total = q.co_total,
                                 Num_Autorizacion = q.Num_Autorizacion,
                                 Descripcion = q.Descripcion,
-                                
+                                fecha_autorizacion = q.fecha_autorizacion,
                                 Estado = q.Estado,
                                 info_proveedor = new cp_proveedor_Info
                                 {

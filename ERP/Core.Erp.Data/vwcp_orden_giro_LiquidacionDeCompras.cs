@@ -27,5 +27,6 @@ namespace Core.Erp.Data
         public string co_observacion { get; set; }
         public int IdSucursal { get; set; }
         public string Descripcion { get; set; }
+        public Nullable<System.DateTime> fecha_autorizacion { get; set; }
     }
 }

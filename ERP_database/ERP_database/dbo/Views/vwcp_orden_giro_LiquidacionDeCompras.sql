@@ -1,7 +1,8 @@
 ﻿/*order by a.IdEmpresa*/
 CREATE VIEW dbo.vwcp_orden_giro_LiquidacionDeCompras
 AS
-SELECT a.IdEmpresa, a.IdTipoCbte_Ogiro, a.IdCbteCble_Ogiro, a.co_FechaFactura, a.co_factura, d.pe_nombreCompleto, a.Num_Autorizacion, b.Codigo, a.Estado, a.co_total, a.co_observacion, a.IdSucursal, b.Descripcion
+SELECT a.IdEmpresa, a.IdTipoCbte_Ogiro, a.IdCbteCble_Ogiro, a.co_FechaFactura, a.co_factura, d.pe_nombreCompleto, a.Num_Autorizacion, b.Codigo, a.Estado, a.co_total, a.co_observacion, a.IdSucursal, b.Descripcion, 
+                  a.fecha_autorizacion
 FROM     dbo.cp_orden_giro AS a INNER JOIN
                   dbo.cp_TipoDocumento AS b ON a.IdOrden_giro_Tipo = b.CodTipoDocumento INNER JOIN
                   dbo.cp_proveedor AS c ON a.IdEmpresa = c.IdEmpresa AND a.IdProveedor = c.IdProveedor INNER JOIN
@@ -13,8 +14,9 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
-', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_orden_giro_LiquidacionDeCompras';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_orden_giro_LiquidacionDeCompras';
+
+
 
 
 GO
@@ -85,7 +87,7 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = -480
+         Top = 0
          Left = 0
       End
       Begin Tables = 
@@ -93,11 +95,11 @@ Begin DesignProperties =
             Begin Extent = 
                Top = 7
                Left = 48
-               Bottom = 170
+               Bottom = 239
                Right = 355
             End
             DisplayFlags = 280
-            TopColumn = 6
+            TopColumn = 38
          End
          Begin Table = "b"
             Begin Extent = 
@@ -164,5 +166,8 @@ Begin DesignProperties =
          Or = 1350
       End
    End
-End', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_orden_giro_LiquidacionDeCompras';
+End
+', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_orden_giro_LiquidacionDeCompras';
+
+
 

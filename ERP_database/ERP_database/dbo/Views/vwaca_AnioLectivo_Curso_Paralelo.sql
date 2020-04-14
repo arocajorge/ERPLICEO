@@ -4,7 +4,7 @@ SELECT dbo.aca_AnioLectivo_Curso_Paralelo.IdEmpresa, dbo.aca_AnioLectivo_Curso_P
                   dbo.aca_AnioLectivo_Curso_Paralelo.IdNivel, dbo.aca_NivelAcademico.NomNivel, dbo.aca_AnioLectivo_Curso_Paralelo.IdJornada, dbo.aca_Jornada.NomJornada, dbo.aca_AnioLectivo_Curso_Paralelo.IdCurso, 
                   dbo.aca_Curso.NomCurso, dbo.aca_AnioLectivo_Curso_Paralelo.IdParalelo, dbo.aca_AnioLectivo_Curso_Paralelo.CodigoParalelo, dbo.aca_AnioLectivo_Curso_Paralelo.NomParalelo, dbo.aca_AnioLectivo_Curso_Paralelo.OrdenParalelo, 
                   dbo.aca_AnioLectivo_Curso_Paralelo.IdProfesorTutor, dbo.aca_AnioLectivo_Curso_Paralelo.IdProfesorInspector, dbo.aca_Profesor.IdPersona AS IdPersonaTutor, aca_Profesor_1.IdPersona AS IdPersonaInpector, 
-                  dbo.tb_persona.pe_nombreCompleto AS NomTutor, tb_persona_1.pe_nombreCompleto AS NomInspector
+                  dbo.tb_persona.pe_nombreCompleto AS NomTutor, tb_persona_1.pe_nombreCompleto AS NomInspector, dbo.aca_NivelAcademico.Orden AS OrdenNivel, dbo.aca_Jornada.OrdenJornada, dbo.aca_Curso.OrdenCurso
 FROM     dbo.tb_persona AS tb_persona_1 INNER JOIN
                   dbo.aca_Profesor AS aca_Profesor_1 ON tb_persona_1.IdPersona = aca_Profesor_1.IdPersona RIGHT OUTER JOIN
                   dbo.aca_AnioLectivo_Curso_Paralelo INNER JOIN
@@ -22,20 +22,20 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'ht = 668
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'390
+            End
+            DisplayFlags = 280
+            TopColumn = 1
+         End
+         Begin Table = "aca_NivelAcademico"
+            Begin Extent = 
+               Top = 0
+               Left = 877
+               Bottom = 163
+               Right = 1122
             End
             DisplayFlags = 280
             TopColumn = 0
-         End
-         Begin Table = "aca_Profesor_1"
-            Begin Extent = 
-               Top = 365
-               Left = 425
-               Bottom = 528
-               Right = 670
-            End
-            DisplayFlags = 280
-            TopColumn = 3
          End
          Begin Table = "tb_persona"
             Begin Extent = 
@@ -47,12 +47,12 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'ht = 668
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "tb_persona_1"
+         Begin Table = "aca_Profesor"
             Begin Extent = 
-               Top = 341
-               Left = 880
-               Bottom = 504
-               Right = 1154
+               Top = 206
+               Left = 423
+               Bottom = 369
+               Right = 668
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -64,7 +64,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'ht = 668
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 22
+      Begin ColumnWidths = 25
          Width = 284
          Width = 1200
          Width = 1200
@@ -73,6 +73,9 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'ht = 668
          Width = 1200
          Width = 1200
          Width = 1500
+         Width = 1200
+         Width = 1200
+         Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -112,13 +115,15 @@ End
 
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[54] 4[3] 2[14] 3) )"
+         Configuration = "(H (1[35] 4[23] 2[14] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -180,10 +185,30 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = -120
+         Top = 0
          Left = 0
       End
       Begin Tables = 
+         Begin Table = "tb_persona_1"
+            Begin Extent = 
+               Top = 341
+               Left = 880
+               Bottom = 504
+               Right = 1154
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "aca_Profesor_1"
+            Begin Extent = 
+               Top = 365
+               Left = 425
+               Bottom = 528
+               Right = 670
+            End
+            DisplayFlags = 280
+            TopColumn = 3
+         End
          Begin Table = "aca_AnioLectivo_Curso_Paralelo"
             Begin Extent = 
                Top = 7
@@ -212,7 +237,7 @@ Begin DesignProperties =
                Right = 878
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 2
          End
          Begin Table = "aca_Jornada"
             Begin Extent = 
@@ -226,30 +251,12 @@ Begin DesignProperties =
          End
          Begin Table = "aca_Curso"
             Begin Extent = 
-               Top = 18
-               Left = 1056
-               Bottom = 181
-               Right = 1301
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "aca_NivelAcademico"
-            Begin Extent = 
                Top = 0
-               Left = 877
+               Left = 1145
                Bottom = 163
-               Right = 1122
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "aca_Profesor"
-            Begin Extent = 
-               Top = 206
-               Left = 423
-               Bottom = 369
-               Rig', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Curso_Paralelo';
+               Right = 1', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Curso_Paralelo';
+
+
 
 
 

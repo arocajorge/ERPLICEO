@@ -1,7 +1,8 @@
 ﻿CREATE VIEW dbo.vwaca_Plantilla_Rubro
 AS
 SELECT dbo.aca_Plantilla_Rubro.IdEmpresa, dbo.aca_Plantilla_Rubro.IdAnio, dbo.aca_Plantilla_Rubro.IdPlantilla, dbo.aca_Plantilla_Rubro.IdRubro, dbo.aca_AnioLectivo_Rubro.NomRubro, dbo.aca_Plantilla_Rubro.IdProducto, 
-                  dbo.in_Producto.pr_descripcion, dbo.aca_Plantilla_Rubro.Subtotal, dbo.aca_Plantilla_Rubro.IdCod_Impuesto_Iva, dbo.aca_Plantilla_Rubro.Porcentaje, dbo.aca_Plantilla_Rubro.ValorIVA, dbo.aca_Plantilla_Rubro.Total
+                  dbo.in_Producto.pr_descripcion, dbo.aca_Plantilla_Rubro.Subtotal, dbo.aca_Plantilla_Rubro.IdCod_Impuesto_Iva, dbo.aca_Plantilla_Rubro.Porcentaje, dbo.aca_Plantilla_Rubro.ValorIVA, dbo.aca_Plantilla_Rubro.Total, 
+                  dbo.aca_Plantilla_Rubro.TipoDescuento_descuentoDet, dbo.aca_Plantilla_Rubro.Valor_descuentoDet, dbo.aca_Plantilla_Rubro.IdTipoNota_descuentoDet
 FROM     dbo.aca_Plantilla_Rubro INNER JOIN
                   dbo.aca_AnioLectivo_Rubro ON dbo.aca_Plantilla_Rubro.IdEmpresa = dbo.aca_AnioLectivo_Rubro.IdEmpresa AND dbo.aca_Plantilla_Rubro.IdAnio = dbo.aca_AnioLectivo_Rubro.IdAnio AND 
                   dbo.aca_Plantilla_Rubro.IdRubro = dbo.aca_AnioLectivo_Rubro.IdRubro INNER JOIN
@@ -90,7 +91,7 @@ Begin DesignProperties =
                Right = 265
             End
             DisplayFlags = 280
-            TopColumn = 1
+            TopColumn = 4
          End
          Begin Table = "aca_AnioLectivo_Rubro"
             Begin Extent = 
@@ -135,14 +136,14 @@ Begin DesignProperties =
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -150,4 +151,6 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Plantilla_Rubro';
+
+
 

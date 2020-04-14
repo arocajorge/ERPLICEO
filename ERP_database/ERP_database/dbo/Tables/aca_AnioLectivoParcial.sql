@@ -6,6 +6,7 @@
     [EsExamen]              BIT           NULL,
     [FechaInicio]           DATETIME      NULL,
     [FechaFin]              DATETIME      NULL,
+    [ValidaEstadoAlumno]    BIT           NOT NULL,
     [IdUsuarioCreacion]     VARCHAR (200) NULL,
     [FechaCreacion]         DATETIME      NULL,
     [IdUsuarioModificacion] VARCHAR (200) NULL,
@@ -18,6 +19,8 @@
     CONSTRAINT [FK_aca_AnioLectivoParcial_aca_Catalogo] FOREIGN KEY ([IdCatalogoParcial]) REFERENCES [dbo].[aca_Catalogo] ([IdCatalogo]),
     CONSTRAINT [FK_aca_AnioLectivoParcial_aca_Sede] FOREIGN KEY ([IdEmpresa], [IdSede]) REFERENCES [dbo].[aca_Sede] ([IdEmpresa], [IdSede])
 );
+
+
 
 
 

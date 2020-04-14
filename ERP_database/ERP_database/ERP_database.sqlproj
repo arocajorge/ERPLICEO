@@ -1339,7 +1339,7 @@
     <Build Include="Academico\Stored Procedures\SPCXC_006.sql" />
     <Build Include="dbo\Views\vwcp_orden_giro_LiquidacionDeCompras.sql" />
     <Build Include="web\Views\VWCXP_017.sql" />
-    <Build Include="web\Views\VWCXP_020.sql" />
+    <Build Include="Academico\Views\VWFAC_007.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

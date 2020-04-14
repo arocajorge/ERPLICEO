@@ -159,7 +159,10 @@ Begin DesignProperties =
          Alias = 900
          Table = 1176
          Output = 720
-         Append = 1400', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Paralelo_Profesor';
+         Append = 1400
+', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Paralelo_Profesor';
+
+
 
 
 

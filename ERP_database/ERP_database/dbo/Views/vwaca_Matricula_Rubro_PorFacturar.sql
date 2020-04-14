@@ -1,14 +1,17 @@
-﻿CREATE VIEW [dbo].[vwaca_Matricula_Rubro_PorFacturar]
+﻿CREATE VIEW  [dbo].[vwaca_Matricula_Rubro_PorFacturar]
 AS
-SELECT dbo.aca_Matricula_Rubro.IdEmpresa, dbo.aca_Matricula_Rubro.IdMatricula, dbo.aca_Matricula_Rubro.IdPeriodo, dbo.aca_Matricula_Rubro.IdRubro, dbo.aca_Matricula_Rubro.IdMecanismo, dbo.aca_Matricula_Rubro.IdProducto, 
-                  dbo.aca_Matricula_Rubro.EnMatricula, CAST(dbo.aca_Matricula_Rubro.Subtotal AS float) AS Subtotal, dbo.aca_Matricula_Rubro.IdCod_Impuesto_Iva, CAST(dbo.aca_Matricula_Rubro.Porcentaje AS float) AS Porcentaje, 
-                  CAST(dbo.aca_Matricula_Rubro.ValorIVA AS float) AS ValorIVA, CAST(dbo.aca_Matricula_Rubro.Total AS float) AS Total, dbo.aca_Matricula_Rubro.IdSucursal, dbo.aca_Matricula_Rubro.IdBodega, dbo.aca_Matricula_Rubro.IdCbteVta, 
+SELECT dbo.aca_Matricula_Rubro.IdEmpresa, dbo.aca_Matricula_Rubro.IdMatricula, dbo.aca_Matricula_Rubro.IdPeriodo, dbo.aca_Matricula_Rubro.IdRubro, dbo.aca_Matricula_Rubro.IdMecanismo, dbo.aca_Plantilla_Rubro.IdProducto, 
+                  dbo.aca_Matricula_Rubro.EnMatricula, CAST(dbo.aca_Plantilla_Rubro.Subtotal AS float) AS Subtotal, dbo.aca_Plantilla_Rubro.IdCod_Impuesto_Iva, CAST(dbo.aca_Plantilla_Rubro.Porcentaje AS float) AS Porcentaje, 
+                  CAST(dbo.aca_Plantilla_Rubro.ValorIVA AS float) AS ValorIVA, CAST(dbo.aca_Plantilla_Rubro.Total AS float) AS Total, dbo.aca_Matricula_Rubro.IdSucursal, dbo.aca_Matricula_Rubro.IdBodega, dbo.aca_Matricula_Rubro.IdCbteVta, 
                   dbo.aca_Matricula_Rubro.FechaFacturacion, dbo.aca_Matricula.IdAnio, dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdAlumno, dbo.aca_AnioLectivo_Rubro.AplicaProntoPago, dbo.aca_AnioLectivo_Rubro.NomRubro, 
                   dbo.in_Producto.pr_descripcion, dbo.aca_AnioLectivo_Periodo.FechaDesde, CASE WHEN dbo.aca_AnioLectivo_Rubro.NumeroCuotas = 1 THEN '' ELSE CAST(dbo.aca_AnioLectivo_Rubro_Periodo.Secuencia AS varchar) 
-                  + '/' + CAST(dbo.aca_AnioLectivo_Rubro.NumeroCuotas AS varchar) END AS DescripcionCuotas, CASE WHEN aca_AnioLectivo_Rubro.AplicaProntoPago = 1 and dbo.aca_AnioLectivo_Periodo.FechaProntoPago > CAST(getdate() AS date) 
-                  THEN CAST(dbo.aca_Matricula_Rubro.Subtotal AS float) - CASE WHEN dbo.aca_Plantilla.TipoDescuento = '$' THEN CAST(dbo.aca_Plantilla.Valor AS FLOAT) ELSE ROUND(CAST(dbo.aca_Matricula_Rubro.Subtotal AS float) 
-                  * (dbo.aca_Plantilla.Valor / 100), 2) END ELSE CAST(dbo.aca_Matricula_Rubro.Subtotal AS float) + CAST(dbo.aca_Matricula_Rubro.ValorIVA AS FLOAT) END + dbo.aca_Matricula_Rubro.ValorIVA AS ValorProntoPago, 
-                  dbo.aca_AnioLectivo_Periodo.FechaProntoPago, CAST(YEAR(dbo.aca_AnioLectivo_Periodo.FechaHasta) AS VARCHAR) + ' - ' + dbo.tb_mes.smes AS Periodo, dbo.aca_Plantilla.IdPlantilla
+                  + '/' + CAST(dbo.aca_AnioLectivo_Rubro.NumeroCuotas AS varchar) END AS DescripcionCuotas, CASE WHEN aca_AnioLectivo_Rubro.AplicaProntoPago = 1 AND dbo.aca_AnioLectivo_Periodo.FechaProntoPago > CAST(getdate() 
+                  AS date) THEN CAST(dbo.aca_Plantilla_Rubro.Subtotal AS float) - (CASE WHEN dbo.aca_Plantilla.AplicaParaTodo = 1 THEN (CASE WHEN dbo.aca_Plantilla.TipoDescuento = '$' THEN CAST(dbo.aca_Plantilla.Valor AS FLOAT) 
+                  ELSE ROUND(CAST(dbo.aca_Plantilla_Rubro.Subtotal AS float) * (dbo.aca_Plantilla.Valor / 100), 2) END) 
+                  ELSE (CASE WHEN dbo.aca_Plantilla_Rubro.TipoDescuento_descuentoDet = '$' THEN CAST(dbo.aca_Plantilla_Rubro.Valor_descuentoDet AS FLOAT) ELSE ROUND(CAST(dbo.aca_Plantilla_Rubro.Subtotal AS float) 
+                  * (dbo.aca_Plantilla_Rubro.Valor_descuentoDet / 100), 2) END) END) ELSE CAST(dbo.aca_Plantilla_Rubro.Subtotal AS float) + CAST(dbo.aca_Plantilla_Rubro.ValorIVA AS FLOAT) 
+                  END + dbo.aca_Plantilla_Rubro.ValorIVA AS ValorProntoPago, dbo.aca_AnioLectivo_Periodo.FechaProntoPago, CAST(YEAR(dbo.aca_AnioLectivo_Periodo.FechaHasta) AS VARCHAR) + ' - ' + dbo.tb_mes.smes AS Periodo, 
+                  dbo.aca_Plantilla.IdPlantilla
 FROM     dbo.aca_Matricula INNER JOIN
                   dbo.aca_Matricula_Rubro ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Matricula_Rubro.IdEmpresa AND dbo.aca_Matricula.IdMatricula = dbo.aca_Matricula_Rubro.IdMatricula INNER JOIN
                   dbo.aca_AnioLectivo_Rubro ON dbo.aca_Matricula.IdAnio = dbo.aca_AnioLectivo_Rubro.IdAnio AND dbo.aca_Matricula.IdEmpresa = dbo.aca_AnioLectivo_Rubro.IdEmpresa AND 
@@ -19,7 +22,9 @@ FROM     dbo.aca_Matricula INNER JOIN
                   dbo.aca_AnioLectivo_Rubro.IdRubro = dbo.aca_AnioLectivo_Rubro_Periodo.IdRubro AND dbo.aca_AnioLectivo_Periodo.IdEmpresa = dbo.aca_AnioLectivo_Rubro_Periodo.IdEmpresa AND 
                   dbo.aca_AnioLectivo_Periodo.IdPeriodo = dbo.aca_AnioLectivo_Rubro_Periodo.IdPeriodo INNER JOIN
                   dbo.aca_Plantilla ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Plantilla.IdEmpresa AND dbo.aca_Matricula.IdAnio = dbo.aca_Plantilla.IdAnio AND dbo.aca_Matricula.IdPlantilla = dbo.aca_Plantilla.IdPlantilla INNER JOIN
-                  dbo.tb_mes ON dbo.aca_AnioLectivo_Periodo.IdMes = dbo.tb_mes.idMes
+                  dbo.tb_mes ON dbo.aca_AnioLectivo_Periodo.IdMes = dbo.tb_mes.idMes INNER JOIN
+                  dbo.aca_Plantilla_Rubro ON dbo.aca_Matricula_Rubro.IdEmpresa = dbo.aca_Plantilla_Rubro.IdEmpresa AND dbo.aca_Matricula_Rubro.IdAnio = dbo.aca_Plantilla_Rubro.IdAnio AND 
+                  dbo.aca_Matricula_Rubro.IdPlantilla = dbo.aca_Plantilla_Rubro.IdPlantilla AND dbo.aca_Matricula_Rubro.IdRubro = dbo.aca_Plantilla_Rubro.IdRubro
 WHERE  (dbo.aca_Matricula_Rubro.FechaFacturacion IS NULL)
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula_Rubro_PorFacturar';

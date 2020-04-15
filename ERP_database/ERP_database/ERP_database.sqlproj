@@ -1341,6 +1341,8 @@
     <Build Include="web\Views\VWCXP_017.sql" />
     <Build Include="Academico\Views\VWFAC_007.sql" />
     <Build Include="dbo\Views\vwaca_MatriculaConducta.sql" />
+    <Build Include="Academico\Views\VWACA_011.sql" />
+    <Build Include="Academico\Views\VWACA_010.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

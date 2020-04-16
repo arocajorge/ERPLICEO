@@ -5,7 +5,8 @@ SELECT dbo.aca_MatriculaCalificacion.IdEmpresa, dbo.aca_MatriculaCalificacion.Id
                   dbo.tb_persona.pe_nombreCompleto, dbo.aca_MatriculaCalificacion.CalificacionP1, dbo.aca_MatriculaCalificacion.CalificacionP2, dbo.aca_MatriculaCalificacion.CalificacionP3, dbo.aca_MatriculaCalificacion.PromedioQ1, 
                   dbo.aca_MatriculaCalificacion.ExamenQ1, dbo.aca_MatriculaCalificacion.PromedioFinalQ1, dbo.aca_MatriculaCalificacion.CalificacionP4, dbo.aca_MatriculaCalificacion.CalificacionP5, dbo.aca_MatriculaCalificacion.CalificacionP6, 
                   dbo.aca_MatriculaCalificacion.PromedioQ2, dbo.aca_MatriculaCalificacion.ExamenQ2, dbo.aca_MatriculaCalificacion.PromedioFinalQ2, dbo.aca_MatriculaCalificacion.ExamenMejoramiento, 
-                  dbo.aca_MatriculaCalificacion.ExamenSupletorio, dbo.aca_MatriculaCalificacion.ExamenRemedial, dbo.aca_MatriculaCalificacion.ExamenGracia, dbo.aca_MatriculaCalificacion.PromedioFinal
+                  dbo.aca_MatriculaCalificacion.CampoMejoramiento, dbo.aca_MatriculaCalificacion.ExamenSupletorio, dbo.aca_MatriculaCalificacion.ExamenRemedial, dbo.aca_MatriculaCalificacion.ExamenGracia, 
+                  dbo.aca_MatriculaCalificacion.PromedioFinal
 FROM     dbo.tb_persona INNER JOIN
                   dbo.aca_Profesor ON dbo.tb_persona.IdPersona = dbo.aca_Profesor.IdPersona RIGHT OUTER JOIN
                   dbo.aca_Matricula INNER JOIN

@@ -1,8 +1,8 @@
-﻿CREATE VIEW Academico.VWFAC_007
+﻿CREATE VIEW [Academico].[VWFAC_007]
 AS
-SELECT a.IdEmpresa, a.IdSucursal, a.IdBodega, a.IdCbteVta, a.vt_serie1+'-'+a.vt_serie2+'-'+ a.vt_NumFactura AS vt_NumFactura, a.vt_fecha, a.vt_tipo_venta, c.nom_TerminoPago, c.Num_Coutas, b.Total, a.vt_Observacion, e.pe_nombreCompleto AS NomAlumno, e.pe_cedulaRuc AS CedulaAlumno, 
-                  d.Codigo AS CodigoAlumno, isnull(g.pe_nombreCompleto,'NO ESPECIFICADO') AS NomEmpleado, g.pe_cedulaRuc AS CedulaEmpleado, ISNULL(h.em_nombre, 'NO ESPECIFICADO') AS em_nombre, j.pe_nombreCompleto AS NomCliente, j.pe_cedulaRuc, 
-                  a.IdEmpresa_rol
+SELECT a.IdEmpresa, a.IdSucursal, a.IdBodega, a.IdCbteVta, a.vt_serie1 + '-' + a.vt_serie2 + '-' + a.vt_NumFactura AS vt_NumFactura, a.vt_fecha, a.vt_tipo_venta, c.nom_TerminoPago, c.Num_Coutas,  ISNULL(k.Total,0) Total, a.vt_Observacion, 
+                  e.pe_nombreCompleto AS NomAlumno, e.pe_cedulaRuc AS CedulaAlumno, d.Codigo AS CodigoAlumno, ISNULL(g.pe_nombreCompleto, 'NO ESPECIFICADO') AS NomEmpleado, g.pe_cedulaRuc AS CedulaEmpleado, ISNULL(h.em_nombre, 
+                  'NO ESPECIFICADO') AS em_nombre, j.pe_nombreCompleto AS NomCliente, j.pe_cedulaRuc, a.IdEmpresa_rol
 FROM     dbo.fa_factura AS a INNER JOIN
                   dbo.fa_factura_resumen AS b ON a.IdEmpresa = b.IdEmpresa AND a.IdSucursal = b.IdSucursal AND a.IdBodega = b.IdBodega AND a.IdCbteVta = b.IdCbteVta INNER JOIN
                   dbo.fa_TerminoPago AS c ON a.vt_tipo_venta = c.IdTerminoPago INNER JOIN
@@ -12,7 +12,15 @@ FROM     dbo.fa_factura AS a INNER JOIN
                   dbo.tb_persona AS g ON f.IdPersona = g.IdPersona LEFT OUTER JOIN
                   dbo.tb_empresa AS h ON a.IdEmpresa_rol = h.IdEmpresa INNER JOIN
                   dbo.fa_cliente AS i ON a.IdEmpresa = i.IdEmpresa AND a.IdCliente = i.IdCliente INNER JOIN
-                  dbo.tb_persona AS j ON i.IdPersona = j.IdPersona
+                  dbo.tb_persona AS j ON i.IdPersona = j.IdPersona left join
+				  (
+				  select a.IdEmpresa_fac_nd_doc_mod, a.IdSucursal_fac_nd_doc_mod, a.IdBodega_fac_nd_doc_mod, a.IdCbteVta_fac_nd_doc_mod, a.vt_tipoDoc, e.Total
+				  from fa_notaCreDeb_x_fa_factura_NotaDeb as a inner join 
+				  fa_notaCreDeb as b on a.IdEmpresa_nt = b.IdEmpresa and a.IdSucursal_nt = b.IdSucursal and a.IdBodega_nt = b.IdBodega and a.IdNota_nt = b.IdNota inner join
+				  aca_MecanismoDePago as c on b.IdEmpresa = c.IdEmpresa and b.IdTipoNota = c.IdTipoNotaDescuentoPorRol inner join 
+				  fa_factura as d on a.IdEmpresa_fac_nd_doc_mod = d.IdEmpresa and a.IdSucursal_fac_nd_doc_mod = d.IdSucursal and a.IdBodega_fac_nd_doc_mod = d.IdBodega and a.IdCbteVta_fac_nd_doc_mod = d.IdCbteVta and a.vt_tipoDoc = d.vt_tipoDoc and c.IdTerminoPago = d.vt_tipo_venta inner join
+				  fa_notaCreDeb_resumen as e on b.IdEmpresa = e.IdEmpresa and b.IdSucursal = e.IdSucursal and b.IdBodega = e.IdBodega and e.IdNota = b.IdNota
+ 				  ) as k on a.IdEmpresa = k.IdEmpresa_fac_nd_doc_mod and a.IdSucursal = k.IdSucursal_fac_nd_doc_mod and a.IdBodega = k.IdBodega_fac_nd_doc_mod and a.IdCbteVta = k.IdCbteVta_fac_nd_doc_mod
 WHERE  (c.AplicaDescuentoNomina = 1) AND (a.Estado = 'A')
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWFAC_007';
@@ -77,6 +85,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWFAC_007';
+
+
 
 
 GO

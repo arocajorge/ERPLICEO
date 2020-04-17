@@ -1,8 +1,9 @@
 ﻿CREATE VIEW [Academico].[VWACA_012]
 AS
-SELECT a.IdEmpresa, a.IdMatricula, b.IdPeriodo, b.IdRubro,c.IdSucursal, c.IdBodega, c.IdCbteVta,  a.IdAlumno, a.IdAnio, a.IdSede, a.IdNivel, a.IdJornada, a.IdCurso, a.IdParalelo, c.vt_serie1 + '-' + c.vt_serie2 + '-' + c.vt_NumFactura AS vt_NumFactura, c.vt_fecha, 
-                  c.vt_Observacion, dbo.cxc_cobro.cr_fecha, dbo.cxc_cobro_det.dc_ValorPago, sn.NomSede, sn.OrdenNivel, sn.NomNivel, nj.OrdenJornada, nj.NomJornada, jc.OrdenCurso, jc.NomCurso, cp.OrdenParalelo, cp.NomParalelo, 
-                  d.Codigo AS CodigoAlumno, e.pe_cedulaRuc, e.pe_nombreCompleto, e.pe_fechaNacimiento, h.Nacionalidad, i.NomRubro, j.Descripcion AS DescripcionAnio, case when dbo.cxc_cobro_det.dc_ValorPago is null then 'NO' ELSE 'SI' END AS EstadoPago
+SELECT a.IdEmpresa, a.IdMatricula, b.IdPeriodo, b.IdRubro, c.IdSucursal, c.IdBodega, c.IdCbteVta, a.IdAlumno, a.IdAnio, a.IdSede, a.IdNivel, a.IdJornada, a.IdCurso, a.IdParalelo, 
+                  c.vt_serie1 + '-' + c.vt_serie2 + '-' + c.vt_NumFactura AS vt_NumFactura, c.vt_fecha, c.vt_Observacion, max(dbo.cxc_cobro.cr_fecha) cr_fecha, sum(dbo.cxc_cobro_det.dc_ValorPago) dc_ValorPago, sn.NomSede, sn.OrdenNivel, sn.NomNivel, nj.OrdenJornada, nj.NomJornada, 
+                  jc.OrdenCurso, jc.NomCurso, cp.OrdenParalelo, cp.NomParalelo, d.Codigo AS CodigoAlumno, e.pe_cedulaRuc, e.pe_nombreCompleto, e.pe_fechaNacimiento, h.Nacionalidad, i.NomRubro, j.Descripcion AS DescripcionAnio, 
+                  CASE WHEN dbo.cxc_cobro_det.IdCbte_vta_nota IS NULL THEN 'NO' ELSE 'SI' END AS EstadoPago
 FROM     dbo.tb_persona AS e INNER JOIN
                   dbo.aca_Alumno AS d INNER JOIN
                   dbo.aca_Matricula AS a INNER JOIN
@@ -19,4 +20,8 @@ FROM     dbo.tb_persona AS e INNER JOIN
                   dbo.tb_pais AS h ON d.IdPais = h.IdPais LEFT OUTER JOIN
                   dbo.aca_AnioLectivo_Rubro AS i ON b.IdEmpresa = i.IdEmpresa AND b.IdAnio = i.IdAnio AND b.IdRubro = i.IdRubro LEFT OUTER JOIN
                   dbo.aca_AnioLectivo AS j ON a.IdEmpresa = j.IdEmpresa AND a.IdAnio = j.IdAnio
-WHERE  (ISNULL(dbo.cxc_cobro.cr_estado, N'A') = 'A') --and b.IdRubro = 3
+WHERE  (ISNULL(dbo.cxc_cobro.cr_estado, N'A') = 'A') --and pe_cedulaRuc = '0959770447'
+group by a.IdEmpresa, a.IdMatricula, b.IdPeriodo, b.IdRubro, c.IdSucursal, c.IdBodega, c.IdCbteVta, a.IdAlumno, a.IdAnio, a.IdSede, a.IdNivel, a.IdJornada, a.IdCurso, a.IdParalelo, 
+                  c.vt_serie1 + '-' + c.vt_serie2 + '-' + c.vt_NumFactura, c.vt_fecha, c.vt_Observacion, sn.NomSede, sn.OrdenNivel, sn.NomNivel, nj.OrdenJornada, nj.NomJornada, 
+                  jc.OrdenCurso, jc.NomCurso, cp.OrdenParalelo, cp.NomParalelo, d.Codigo, e.pe_cedulaRuc, e.pe_nombreCompleto, e.pe_fechaNacimiento, h.Nacionalidad, i.NomRubro, j.Descripcion, 
+                  dbo.cxc_cobro_det.IdCbte_vta_nota

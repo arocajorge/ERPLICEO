@@ -1,6 +1,7 @@
 ﻿CREATE VIEW Academico.VWACA_011
 AS
-SELECT TOP (100) PERCENT dbo.aca_MatriculaCalificacion.IdEmpresa, dbo.aca_MatriculaCalificacion.IdMatricula, dbo.aca_Matricula.IdAlumno, dbo.tb_persona.pe_nombreCompleto, dbo.aca_Alumno.LugarNacimiento, 
+SELECT ROW_NUMBER() OVER(PARTITION BY dbo.aca_Matricula.IdMatricula ORDER BY dbo.aca_AnioLectivo_Curso_Materia.OrdenMateria ASC) AS RowNumber,
+	dbo.aca_MatriculaCalificacion.IdEmpresa, dbo.aca_MatriculaCalificacion.IdMatricula, dbo.aca_Matricula.IdAlumno, dbo.tb_persona.pe_nombreCompleto, dbo.aca_Alumno.LugarNacimiento, 
                   dbo.tb_persona.pe_fechaNacimiento, YEAR(GETDATE()) - YEAR(dbo.tb_persona.pe_fechaNacimiento) AS Edad, dbo.aca_Matricula.IdPersonaR, dbo.aca_Catalogo.NomCatalogo AS Parentezco, 
                   tb_persona_1.pe_nombreCompleto AS Representante, dbo.aca_Familia.Direccion, dbo.aca_Familia.Celular, dbo.aca_Matricula.IdAnio, dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, 
                   dbo.aca_Matricula.IdCurso, dbo.aca_Matricula.IdParalelo, dbo.aca_MatriculaCalificacion.IdMateria, dbo.aca_AnioLectivo_Curso_Materia.NomMateria, dbo.aca_AnioLectivo_Curso_Materia.OrdenMateria, 

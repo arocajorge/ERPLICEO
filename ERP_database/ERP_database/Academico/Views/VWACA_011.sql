@@ -1,13 +1,17 @@
 ﻿CREATE VIEW Academico.VWACA_011
 AS
 SELECT TOP (100) PERCENT dbo.aca_MatriculaCalificacion.IdEmpresa, dbo.aca_MatriculaCalificacion.IdMatricula, dbo.aca_Matricula.IdAlumno, dbo.tb_persona.pe_nombreCompleto, dbo.aca_Alumno.LugarNacimiento, 
-                  dbo.tb_persona.pe_fechaNacimiento, dbo.aca_Matricula.IdPersonaR, dbo.aca_Catalogo.NomCatalogo AS Parentezco, tb_persona_1.pe_nombreCompleto AS Representante, dbo.aca_Familia.Direccion, dbo.aca_Familia.Celular, 
-                  dbo.aca_Matricula.IdAnio, dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, dbo.aca_Matricula.IdCurso, dbo.aca_Matricula.IdParalelo, dbo.aca_MatriculaCalificacion.IdMateria, 
-                  dbo.aca_AnioLectivo_Curso_Materia.NomMateria, dbo.aca_AnioLectivo_Curso_Materia.OrdenMateria, dbo.aca_MatriculaCalificacion.IdProfesor, dbo.aca_MatriculaCalificacion.CalificacionP1, dbo.aca_MatriculaCalificacion.CalificacionP2, 
-                  dbo.aca_MatriculaCalificacion.CalificacionP3, dbo.aca_MatriculaCalificacion.PromedioQ1, dbo.aca_MatriculaCalificacion.ExamenQ1, dbo.aca_MatriculaCalificacion.PromedioFinalQ1, dbo.aca_MatriculaCalificacion.CalificacionP4, 
-                  dbo.aca_MatriculaCalificacion.CalificacionP5, dbo.aca_MatriculaCalificacion.CalificacionP6, dbo.aca_MatriculaCalificacion.PromedioQ2, dbo.aca_MatriculaCalificacion.ExamenQ2, dbo.aca_MatriculaCalificacion.PromedioFinalQ2, 
-                  dbo.aca_MatriculaCalificacion.ExamenMejoramiento, dbo.aca_MatriculaCalificacion.ExamenSupletorio, dbo.aca_MatriculaCalificacion.ExamenRemedial, dbo.aca_MatriculaCalificacion.ExamenGracia, 
-                  dbo.aca_MatriculaCalificacion.PromedioFinal
+                  dbo.tb_persona.pe_fechaNacimiento, YEAR(GETDATE()) - YEAR(dbo.tb_persona.pe_fechaNacimiento) AS Edad, dbo.aca_Matricula.IdPersonaR, dbo.aca_Catalogo.NomCatalogo AS Parentezco, 
+                  tb_persona_1.pe_nombreCompleto AS Representante, dbo.aca_Familia.Direccion, dbo.aca_Familia.Celular, dbo.aca_Matricula.IdAnio, dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, 
+                  dbo.aca_Matricula.IdCurso, dbo.aca_Matricula.IdParalelo, dbo.aca_MatriculaCalificacion.IdMateria, dbo.aca_AnioLectivo_Curso_Materia.NomMateria, dbo.aca_AnioLectivo_Curso_Materia.OrdenMateria, 
+                  dbo.aca_MatriculaCalificacion.IdProfesor, dbo.aca_MatriculaCalificacion.CalificacionP1, dbo.aca_MatriculaCalificacion.CalificacionP2, dbo.aca_MatriculaCalificacion.CalificacionP3, dbo.aca_MatriculaCalificacion.PromedioQ1, 
+                  dbo.aca_MatriculaCalificacion.ExamenQ1, dbo.aca_MatriculaCalificacion.PromedioFinalQ1, dbo.aca_MatriculaCalificacion.CalificacionP4, dbo.aca_MatriculaCalificacion.CalificacionP5, dbo.aca_MatriculaCalificacion.CalificacionP6, 
+                  dbo.aca_MatriculaCalificacion.PromedioQ2, dbo.aca_MatriculaCalificacion.ExamenQ2, dbo.aca_MatriculaCalificacion.PromedioFinalQ2, dbo.aca_MatriculaCalificacion.ExamenMejoramiento, 
+                  dbo.aca_MatriculaCalificacion.CampoMejoramiento, CASE WHEN (dbo.aca_MatriculaCalificacion.CampoMejoramiento IS NULL OR
+                  dbo.aca_MatriculaCalificacion.CampoMejoramiento = '') THEN ROUND(((dbo.aca_MatriculaCalificacion.PromedioFinalQ1 + dbo.aca_MatriculaCalificacion.PromedioFinalQ2) / 2), 2) 
+                  ELSE CASE WHEN (dbo.aca_MatriculaCalificacion.CampoMejoramiento = 'Q1') THEN ROUND(((dbo.aca_MatriculaCalificacion.ExamenMejoramiento + dbo.aca_MatriculaCalificacion.PromedioFinalQ2) / 2), 2) 
+                  ELSE CASE WHEN (dbo.aca_MatriculaCalificacion.CampoMejoramiento = 'Q2') THEN ROUND(((dbo.aca_MatriculaCalificacion.PromedioFinalQ1 + dbo.aca_MatriculaCalificacion.ExamenMejoramiento) / 2), 2) 
+                  END END END AS PromedioQuimestral, dbo.aca_MatriculaCalificacion.ExamenSupletorio, dbo.aca_MatriculaCalificacion.ExamenRemedial, dbo.aca_MatriculaCalificacion.ExamenGracia, dbo.aca_MatriculaCalificacion.PromedioFinal
 FROM     dbo.aca_MatriculaCalificacion INNER JOIN
                   dbo.aca_Matricula ON dbo.aca_MatriculaCalificacion.IdEmpresa = dbo.aca_Matricula.IdEmpresa AND dbo.aca_MatriculaCalificacion.IdMatricula = dbo.aca_Matricula.IdMatricula INNER JOIN
                   dbo.aca_Alumno ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_Matricula.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
@@ -20,13 +24,12 @@ FROM     dbo.aca_MatriculaCalificacion INNER JOIN
                   dbo.aca_Matricula.IdJornada = dbo.aca_AnioLectivo_Curso_Materia.IdJornada AND dbo.aca_Matricula.IdCurso = dbo.aca_AnioLectivo_Curso_Materia.IdCurso AND 
                   dbo.aca_MatriculaCalificacion.IdMateria = dbo.aca_AnioLectivo_Curso_Materia.IdMateria AND dbo.aca_MatriculaCalificacion.IdEmpresa = dbo.aca_AnioLectivo_Curso_Materia.IdEmpresa
 WHERE  (dbo.aca_Familia.EsRepresentante = 1)
-ORDER BY dbo.tb_persona.pe_nombreCompleto, dbo.aca_AnioLectivo_Curso_Materia.OrdenMateria
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_011';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'2
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'322
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -48,7 +51,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'2
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 40
+      Begin ColumnWidths = 42
          Width = 284
          Width = 1200
          Width = 1200
@@ -69,6 +72,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'2
          Width = 1200
          Width = 1200
          Width = 1200
+         Width = 1200
+         Width = 2100
          Width = 1200
          Width = 1200
          Width = 1200
@@ -95,14 +100,14 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'2
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1548
          Or = 1350
          Or = 1350
@@ -112,13 +117,15 @@ End
 ', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_011';
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[33] 4[13] 2[32] 3) )"
+         Configuration = "(H (1[28] 4[18] 2[25] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -180,19 +187,19 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = -845
+         Top = 0
          Left = 0
       End
       Begin Tables = 
          Begin Table = "aca_MatriculaCalificacion"
             Begin Extent = 
-               Top = 7
-               Left = 48
-               Bottom = 170
-               Right = 292
+               Top = 22
+               Left = 1010
+               Bottom = 300
+               Right = 1254
             End
             DisplayFlags = 280
-            TopColumn = 1
+            TopColumn = 13
          End
          Begin Table = "aca_Matricula"
             Begin Extent = 
@@ -249,5 +256,7 @@ Begin DesignProperties =
                Top = 1183
                Left = 48
                Bottom = 1346
-               Right = 32', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_011';
+               Right = ', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_011';
+
+
 

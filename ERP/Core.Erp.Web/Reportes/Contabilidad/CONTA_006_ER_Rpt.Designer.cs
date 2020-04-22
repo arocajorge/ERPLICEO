@@ -48,6 +48,7 @@
             this.xrTableCell31 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell34 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell35 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.fr_negrita = new DevExpress.XtraReports.UI.FormattingRule();
             this.CtaMov = new DevExpress.XtraReports.UI.FormattingRule();
             this.TopMargin = new DevExpress.XtraReports.UI.TopMarginBand();
             this.BottomMargin = new DevExpress.XtraReports.UI.BottomMarginBand();
@@ -104,13 +105,13 @@
             this.p_balance = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_mostrarSaldo0 = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_mostrarAcumulado = new DevExpress.XtraReports.Parameters.Parameter();
-            this.p_IdAnio = new DevExpress.XtraReports.Parameters.Parameter();
             this.ReportFooter = new DevExpress.XtraReports.UI.ReportFooterBand();
             this.xrTable4 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow5 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell39 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell40 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.fr_negrita = new DevExpress.XtraReports.UI.FormattingRule();
+            this.p_FechaIni = new DevExpress.XtraReports.Parameters.Parameter();
+            this.p_FechaFin = new DevExpress.XtraReports.Parameters.Parameter();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable8)).BeginInit();
@@ -189,7 +190,6 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Name", "Iif([EsCuentaMovimiento]=False, \'Verdana\', \'Verdana\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Size", "Iif([EsCuentaMovimiento]=False, \'6\', \'6\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "Iif([EsCuentaMovimiento]=False, \'True\', \'False\')")});
-            this.xrTableCell19.FormattingRules.Add(this.fr_negrita);
             this.xrTableCell19.Name = "xrTableCell19";
             this.xrTableCell19.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 0, 0, 0, 100F);
             this.xrTableCell19.StylePriority.UsePadding = false;
@@ -205,7 +205,6 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Name", "Iif([EsCuentaMovimiento]=False, \'Verdana\', \'Verdana\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Size", "Iif([EsCuentaMovimiento]=False, \'6\', \'6\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "Iif([EsCuentaMovimiento]=False, \'True\', \'False\')")});
-            this.xrTableCell20.FormattingRules.Add(this.fr_negrita);
             this.xrTableCell20.Name = "xrTableCell20";
             this.xrTableCell20.Text = "Enero";
             this.xrTableCell20.TextFormatString = "{0:n2}";
@@ -218,7 +217,6 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "Iif([EsCuentaMovimiento]=False, \'True\', \'False\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Name", "Iif([EsCuentaMovimiento]=False, \'Verdana\', \'Verdana\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Size", "Iif([EsCuentaMovimiento]=False, \'6\', \'6\')")});
-            this.xrTableCell21.FormattingRules.Add(this.fr_negrita);
             this.xrTableCell21.Name = "xrTableCell21";
             this.xrTableCell21.Text = "Febrero";
             this.xrTableCell21.TextFormatString = "{0:n2}";
@@ -231,7 +229,6 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Name", "Iif([EsCuentaMovimiento]=False, \'Verdana\', \'Verdana\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Size", "Iif([EsCuentaMovimiento]=False, \'6\', \'6\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "Iif([EsCuentaMovimiento]=False, \'True\', \'False\')")});
-            this.xrTableCell22.FormattingRules.Add(this.fr_negrita);
             this.xrTableCell22.Name = "xrTableCell22";
             this.xrTableCell22.Text = "Marzo";
             this.xrTableCell22.TextFormatString = "{0:n2}";
@@ -244,7 +241,6 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Name", "Iif([EsCuentaMovimiento]=False, \'Verdana\', \'Verdana\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Size", "Iif([EsCuentaMovimiento]=False, \'6\', \'6\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "Iif([EsCuentaMovimiento]=False, \'True\', \'False\')")});
-            this.xrTableCell23.FormattingRules.Add(this.fr_negrita);
             this.xrTableCell23.Name = "xrTableCell23";
             this.xrTableCell23.Text = "Abril";
             this.xrTableCell23.TextFormatString = "{0:n2}";
@@ -257,7 +253,6 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "Iif([EsCuentaMovimiento]=False, \'True\', \'False\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Size", "Iif([EsCuentaMovimiento]=False, \'6\', \'6\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Name", "Iif([EsCuentaMovimiento]=False, \'Verdana\', \'Verdana\')")});
-            this.xrTableCell24.FormattingRules.Add(this.fr_negrita);
             this.xrTableCell24.Name = "xrTableCell24";
             this.xrTableCell24.Text = "Mayo";
             this.xrTableCell24.TextFormatString = "{0:n2}";
@@ -270,7 +265,6 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Name", "Iif([EsCuentaMovimiento]=False, \'Verdana\', \'Verdana\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Size", "Iif([EsCuentaMovimiento]=False, \'6\', \'6\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "Iif([EsCuentaMovimiento]=False, \'True\', \'False\')")});
-            this.xrTableCell26.FormattingRules.Add(this.fr_negrita);
             this.xrTableCell26.Name = "xrTableCell26";
             this.xrTableCell26.Text = "Junio";
             this.xrTableCell26.TextFormatString = "{0:n2}";
@@ -283,7 +277,6 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Name", "Iif([EsCuentaMovimiento]=False, \'Verdana\', \'Verdana\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Size", "Iif([EsCuentaMovimiento]=False, \'6\', \'6\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "Iif([EsCuentaMovimiento]=False, \'True\', \'False\')")});
-            this.xrTableCell27.FormattingRules.Add(this.fr_negrita);
             this.xrTableCell27.Name = "xrTableCell27";
             this.xrTableCell27.Text = "Julio";
             this.xrTableCell27.TextFormatString = "{0:n2}";
@@ -296,7 +289,6 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "Iif([EsCuentaMovimiento]=False, \'True\', \'False\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Size", "Iif([EsCuentaMovimiento]=False, \'6\', \'6\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Name", "Iif([EsCuentaMovimiento]=False, \'Verdana\', \'Verdana\')")});
-            this.xrTableCell28.FormattingRules.Add(this.fr_negrita);
             this.xrTableCell28.Name = "xrTableCell28";
             this.xrTableCell28.Text = "Agosto";
             this.xrTableCell28.TextFormatString = "{0:n2}";
@@ -309,7 +301,6 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Name", "Iif([EsCuentaMovimiento]=False, \'Verdana\', \'Verdana\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Size", "Iif([EsCuentaMovimiento]=False, \'6\', \'6\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "Iif([EsCuentaMovimiento]=False, \'True\', \'False\')")});
-            this.xrTableCell29.FormattingRules.Add(this.fr_negrita);
             this.xrTableCell29.Name = "xrTableCell29";
             this.xrTableCell29.Text = "Septiembre";
             this.xrTableCell29.TextFormatString = "{0:n2}";
@@ -322,7 +313,6 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "Iif([EsCuentaMovimiento]=False, \'True\', \'False\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Size", "Iif([EsCuentaMovimiento]=False, \'6\', \'6\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Name", "Iif([EsCuentaMovimiento]=False, \'Verdana\', \'Verdana\')")});
-            this.xrTableCell30.FormattingRules.Add(this.fr_negrita);
             this.xrTableCell30.Name = "xrTableCell30";
             this.xrTableCell30.Text = "Octubre";
             this.xrTableCell30.TextFormatString = "{0:n2}";
@@ -335,7 +325,6 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Name", "Iif([EsCuentaMovimiento]=False, \'Verdana\', \'Verdana\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Size", "Iif([EsCuentaMovimiento]=False, \'6\', \'6\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "Iif([EsCuentaMovimiento]=False, \'True\', \'False\')")});
-            this.xrTableCell31.FormattingRules.Add(this.fr_negrita);
             this.xrTableCell31.Name = "xrTableCell31";
             this.xrTableCell31.Text = "Noviembre";
             this.xrTableCell31.TextFormatString = "{0:n2}";
@@ -348,7 +337,6 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "Iif([EsCuentaMovimiento]=False, \'True\', \'False\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Size", "Iif([EsCuentaMovimiento]=False, \'6\', \'6\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Name", "Iif([EsCuentaMovimiento]=False, \'Verdana\', \'Verdana\')")});
-            this.xrTableCell34.FormattingRules.Add(this.fr_negrita);
             this.xrTableCell34.Name = "xrTableCell34";
             this.xrTableCell34.Text = "Diciembre";
             this.xrTableCell34.TextFormatString = "{0:n2}";
@@ -361,11 +349,15 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Name", "Iif([EsCuentaMovimiento]=False, \'Verdana\', \'Verdana\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Size", "Iif([EsCuentaMovimiento]=False, \'6\', \'6\')"),
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Font.Bold", "Iif([EsCuentaMovimiento]=False, \'True\', \'False\')")});
-            this.xrTableCell35.FormattingRules.Add(this.fr_negrita);
             this.xrTableCell35.Name = "xrTableCell35";
             this.xrTableCell35.Text = "Total";
             this.xrTableCell35.TextFormatString = "{0:n2}";
             this.xrTableCell35.Weight = 0.693503213870515D;
+            // 
+            // fr_negrita
+            // 
+            this.fr_negrita.Formatting.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fr_negrita.Name = "fr_negrita";
             // 
             // CtaMov
             // 
@@ -626,17 +618,17 @@
             // 
             this.lbl_imagen.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
             this.lbl_imagen.Name = "lbl_imagen";
-            this.lbl_imagen.SizeF = new System.Drawing.SizeF(150F, 75F);
+            this.lbl_imagen.SizeF = new System.Drawing.SizeF(125F, 75F);
             this.lbl_imagen.Sizing = DevExpress.XtraPrinting.ImageSizeMode.StretchImage;
             // 
             // xrTable1
             // 
-            this.xrTable1.LocationFloat = new DevExpress.Utils.PointFloat(149.9999F, 0F);
+            this.xrTable1.LocationFloat = new DevExpress.Utils.PointFloat(125F, 0F);
             this.xrTable1.Name = "xrTable1";
             this.xrTable1.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.xrTableRow1,
             this.xrTableRow2});
-            this.xrTable1.SizeF = new System.Drawing.SizeF(969.0001F, 50F);
+            this.xrTable1.SizeF = new System.Drawing.SizeF(994F, 50F);
             // 
             // xrTableRow1
             // 
@@ -650,13 +642,13 @@
             // 
             this.lbl_empresa.Font = new System.Drawing.Font("Verdana", 12F);
             this.lbl_empresa.Name = "lbl_empresa";
-            this.lbl_empresa.Padding = new DevExpress.XtraPrinting.PaddingInfo(71, 150, 0, 0, 100F);
+            this.lbl_empresa.Padding = new DevExpress.XtraPrinting.PaddingInfo(74, 125, 0, 0, 100F);
             this.lbl_empresa.StylePriority.UseFont = false;
             this.lbl_empresa.StylePriority.UsePadding = false;
             this.lbl_empresa.StylePriority.UseTextAlignment = false;
             this.lbl_empresa.Text = "lbl_empresa";
             this.lbl_empresa.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.lbl_empresa.Weight = 1.853457176994312D;
+            this.lbl_empresa.Weight = 1.8511066480393321D;
             // 
             // xrTableCell2
             // 
@@ -666,7 +658,7 @@
             this.xrTableCell2.StylePriority.UseTextAlignment = false;
             this.xrTableCell2.Text = "CONTA_006_ER";
             this.xrTableCell2.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.xrTableCell2.Weight = 0.14654282300568794D;
+            this.xrTableCell2.Weight = 0.14889335196066783D;
             // 
             // xrTableRow2
             // 
@@ -677,13 +669,13 @@
             // 
             // xrTableCell1
             // 
-            this.xrTableCell1.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Italic);
+            this.xrTableCell1.Font = new System.Drawing.Font("Times New Roman", 14F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
             this.xrTableCell1.Name = "xrTableCell1";
-            this.xrTableCell1.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 150, 0, 0, 100F);
+            this.xrTableCell1.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 125, 0, 0, 100F);
             this.xrTableCell1.StylePriority.UseFont = false;
             this.xrTableCell1.StylePriority.UsePadding = false;
             this.xrTableCell1.StylePriority.UseTextAlignment = false;
-            this.xrTableCell1.Text = "ESTADO DE RESULTADO COMPARATIVO ANUAL";
+            this.xrTableCell1.Text = "ESTADO DE RESULTADOS COMPARATIVO ANUAL";
             this.xrTableCell1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.xrTableCell1.Weight = 2D;
             // 
@@ -872,11 +864,6 @@
             this.p_mostrarAcumulado.Name = "p_mostrarAcumulado";
             this.p_mostrarAcumulado.Visible = false;
             // 
-            // p_IdAnio
-            // 
-            this.p_IdAnio.Name = "p_IdAnio";
-            this.p_IdAnio.Visible = false;
-            // 
             // ReportFooter
             // 
             this.ReportFooter.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
@@ -916,7 +903,8 @@
             // 
             this.xrTableCell40.Borders = DevExpress.XtraPrinting.BorderSide.Top;
             this.xrTableCell40.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum(Iif([EsCuentaMovimiento] = 1,[Total]*-1,0))")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "sumSum(Iif([EsCuentaMovimiento] = 1,Iif([Naturaleza] = \'D\', [Total]*-1 ,[Total] )" +
+                    ",0))")});
             this.xrTableCell40.Font = new System.Drawing.Font("Verdana", 7F);
             this.xrTableCell40.Name = "xrTableCell40";
             this.xrTableCell40.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 5, 0, 0, 100F);
@@ -930,11 +918,15 @@
             this.xrTableCell40.TextFormatString = "{0:n2}";
             this.xrTableCell40.Weight = 0.93833770789062876D;
             // 
-            // fr_negrita
+            // p_FechaIni
             // 
-            this.fr_negrita.Condition = "[EsCuentaMovimiento]=False";
-            this.fr_negrita.Formatting.Font = new System.Drawing.Font("Verdana", 6F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fr_negrita.Name = "fr_negrita";
+            this.p_FechaIni.Name = "p_FechaIni";
+            this.p_FechaIni.Visible = false;
+            // 
+            // p_FechaFin
+            // 
+            this.p_FechaFin.Name = "p_FechaFin";
+            this.p_FechaFin.Visible = false;
             // 
             // CONTA_006_ER_Rpt
             // 
@@ -962,8 +954,9 @@
             this.p_balance,
             this.p_mostrarSaldo0,
             this.p_mostrarAcumulado,
-            this.p_IdAnio});
-            this.Version = "17.2";
+            this.p_FechaIni,
+            this.p_FechaFin});
+            this.Version = "19.1";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.CONTA_006_ER_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
@@ -1030,7 +1023,6 @@
         public DevExpress.XtraReports.Parameters.Parameter p_balance;
         public DevExpress.XtraReports.Parameters.Parameter p_mostrarSaldo0;
         public DevExpress.XtraReports.Parameters.Parameter p_mostrarAcumulado;
-        public DevExpress.XtraReports.Parameters.Parameter p_IdAnio;
         private DevExpress.XtraReports.UI.FormattingRule CtaMov;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell38;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell37;
@@ -1060,5 +1052,7 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell36;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell64;
         private DevExpress.XtraReports.UI.FormattingRule fr_negrita;
+        public DevExpress.XtraReports.Parameters.Parameter p_FechaIni;
+        public DevExpress.XtraReports.Parameters.Parameter p_FechaFin;
     }
 }

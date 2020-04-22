@@ -25,7 +25,6 @@ namespace Core.Erp.Data
         {
             ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
         }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -1242,39 +1241,6 @@ namespace Core.Erp.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCONTA_005_Result>("SPCONTA_005", idEmpresaParameter, idPunto_cargo_grupoParameter, idUsuarioParameter, fechaIniParameter, fechaFinParameter, mostrarSaldo0Parameter);
         }
     
-        public virtual ObjectResult<SPCONTA_006_Result> SPCONTA_006(Nullable<int> idEmpresa, Nullable<int> idAnio, Nullable<bool> mostrarSaldo0, string idUsuario, Nullable<int> idNivel, Nullable<bool> mostrarAcumulado, string balance)
-        {
-            var idEmpresaParameter = idEmpresa.HasValue ?
-                new ObjectParameter("IdEmpresa", idEmpresa) :
-                new ObjectParameter("IdEmpresa", typeof(int));
-    
-            var idAnioParameter = idAnio.HasValue ?
-                new ObjectParameter("IdAnio", idAnio) :
-                new ObjectParameter("IdAnio", typeof(int));
-    
-            var mostrarSaldo0Parameter = mostrarSaldo0.HasValue ?
-                new ObjectParameter("MostrarSaldo0", mostrarSaldo0) :
-                new ObjectParameter("MostrarSaldo0", typeof(bool));
-    
-            var idUsuarioParameter = idUsuario != null ?
-                new ObjectParameter("IdUsuario", idUsuario) :
-                new ObjectParameter("IdUsuario", typeof(string));
-    
-            var idNivelParameter = idNivel.HasValue ?
-                new ObjectParameter("IdNivel", idNivel) :
-                new ObjectParameter("IdNivel", typeof(int));
-    
-            var mostrarAcumuladoParameter = mostrarAcumulado.HasValue ?
-                new ObjectParameter("MostrarAcumulado", mostrarAcumulado) :
-                new ObjectParameter("MostrarAcumulado", typeof(bool));
-    
-            var balanceParameter = balance != null ?
-                new ObjectParameter("Balance", balance) :
-                new ObjectParameter("Balance", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCONTA_006_Result>("SPCONTA_006", idEmpresaParameter, idAnioParameter, mostrarSaldo0Parameter, idUsuarioParameter, idNivelParameter, mostrarAcumuladoParameter, balanceParameter);
-        }
-    
         public virtual ObjectResult<SPCXC_005_Result> SPCXC_005(Nullable<int> idEmpresa, Nullable<int> idSucursalIni, Nullable<int> idSucursalFin, Nullable<decimal> idClienteIni, Nullable<decimal> idClienteFin, Nullable<System.DateTime> fechaCorte, Nullable<bool> mostrarSaldo0)
         {
             var idEmpresaParameter = idEmpresa.HasValue ?
@@ -1553,6 +1519,43 @@ namespace Core.Erp.Data
                 new ObjectParameter("fecha_fin", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPROL_013_Result>("SPROL_013", idempresaParameter, idnominaParameter, idSucursalInicioParameter, idSucursalFinParameter, idEmpleadoInicioParameter, idEmpleadoFinParameter, idDivisionInicioParameter, idDivisionFinParameter, idAreaInicionParameter, idAreafinParameter, fecha_inicioParameter, fecha_finParameter);
+        }
+    
+        public virtual ObjectResult<SPCONTA_006_Result> SPCONTA_006(Nullable<int> idEmpresa, Nullable<System.DateTime> fechaIni, Nullable<System.DateTime> fechaFin, Nullable<bool> mostrarSaldo0, string idUsuario, Nullable<int> idNivel, Nullable<bool> mostrarAcumulado, string balance)
+        {
+            var idEmpresaParameter = idEmpresa.HasValue ?
+                new ObjectParameter("IdEmpresa", idEmpresa) :
+                new ObjectParameter("IdEmpresa", typeof(int));
+    
+            var fechaIniParameter = fechaIni.HasValue ?
+                new ObjectParameter("FechaIni", fechaIni) :
+                new ObjectParameter("FechaIni", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            var mostrarSaldo0Parameter = mostrarSaldo0.HasValue ?
+                new ObjectParameter("MostrarSaldo0", mostrarSaldo0) :
+                new ObjectParameter("MostrarSaldo0", typeof(bool));
+    
+            var idUsuarioParameter = idUsuario != null ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(string));
+    
+            var idNivelParameter = idNivel.HasValue ?
+                new ObjectParameter("IdNivel", idNivel) :
+                new ObjectParameter("IdNivel", typeof(int));
+    
+            var mostrarAcumuladoParameter = mostrarAcumulado.HasValue ?
+                new ObjectParameter("MostrarAcumulado", mostrarAcumulado) :
+                new ObjectParameter("MostrarAcumulado", typeof(bool));
+    
+            var balanceParameter = balance != null ?
+                new ObjectParameter("Balance", balance) :
+                new ObjectParameter("Balance", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPCONTA_006_Result>("SPCONTA_006", idEmpresaParameter, fechaIniParameter, fechaFinParameter, mostrarSaldo0Parameter, idUsuarioParameter, idNivelParameter, mostrarAcumuladoParameter, balanceParameter);
         }
     }
 }

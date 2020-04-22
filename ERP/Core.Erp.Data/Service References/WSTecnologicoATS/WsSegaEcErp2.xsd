@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/WsSegaEcErp.Models" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WsSegaEcErp.Models" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfvw_importacion_ats_fixed">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="vw_importacion_ats_fixed" nillable="true" type="tns:vw_importacion_ats_fixed" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfvw_importacion_ats_fixed" nillable="true" type="tns:ArrayOfvw_importacion_ats_fixed" />
+  <xs:complexType name="vw_importacion_ats_fixed">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="NoObjIva" type="xs:int" />
+      <xs:element minOccurs="0" name="RUC_LCG" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="baseImpGrav" type="xs:int" />
+      <xs:element minOccurs="0" name="cedulaRuc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="fe_factura" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="nu_comp" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="total" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="valorBaseIva" nillable="true" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="vw_importacion_ats_fixed" nillable="true" type="tns:vw_importacion_ats_fixed" />
+</xs:schema>

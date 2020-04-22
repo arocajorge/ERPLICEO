@@ -22,7 +22,7 @@ namespace Core.Erp.Data.SeguridadAcceso
                              on m.IdMenu equals me.IdMenu
                              join meu in Context.seg_Menu_x_Empresa_x_Usuario
                              on new { me.IdEmpresa, me.IdMenu } equals new { meu.IdEmpresa, meu.IdMenu }
-                             where m.Habilitado == true && meu.IdEmpresa == IdEmpresa
+                             where m.es_web == true && m.Habilitado == true && meu.IdEmpresa == IdEmpresa
                              && meu.IdUsuario == IdUsuario
                              orderby m.PosicionMenu
                              select new seg_Menu_x_Empresa_x_Usuario_Info
@@ -52,7 +52,7 @@ namespace Core.Erp.Data.SeguridadAcceso
                         Lista.AddRange((from q in Context.seg_Menu
                                         join me in Context.seg_Menu_x_Empresa
                                         on q.IdMenu equals me.IdMenu
-                                        where q.Habilitado==true && me.IdEmpresa == IdEmpresa && me.IdMenu== q.IdMenu
+                                        where q.es_web == true && q.Habilitado==true && me.IdEmpresa == IdEmpresa && me.IdMenu== q.IdMenu
                                         && !Context.seg_Menu_x_Empresa_x_Usuario.Any(meu => meu.IdMenu == q.IdMenu && meu.IdEmpresa == IdEmpresa & meu.IdUsuario == IdUsuario)
                                         /*from q in Context.seg_Menu
                                                 join me in Context.seg_Menu_x_Empresa

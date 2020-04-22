@@ -10228,7 +10228,6 @@
     <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\Modificar.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\Anular.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_CmbProveedor_readonly.cshtml" />
-    <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_006.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_004.cshtml" />
     <Content Include="Areas\Contabilidad\Views\CierreAnual\Index.cshtml" />
     <Content Include="Areas\Contabilidad\Views\CierreAnual\Nuevo.cshtml" />
@@ -10277,6 +10276,7 @@
     <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_029.cshtml" />
     <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\Anular.cshtml" />
     <Content Include="Areas\Reportes\Views\CuentasPorPagarReportes\CXP_017.cshtml" />
+    <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_006.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="139a6b38-0b47-434d-8fbb-c2ee0032377f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://www.tecnologicoliceocristiano.edu.ec/Wsconsultafacturas/WsSegaEcErp.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="WsSegaEcErp.wsdl" MetadataType="Wsdl" ID="973af805-0788-45f3-9315-bce205f2617c" SourceId="1" SourceUrl="https://www.tecnologicoliceocristiano.edu.ec/WsConsultaFacturas/WsSegaEcErp.svc?wsdl" />
+    <MetadataFile FileName="WsSegaEcErp.xsd" MetadataType="Schema" ID="620cf682-5d1b-46b0-82d7-cf12de3e4caa" SourceId="1" SourceUrl="https://www.tecnologicoliceocristiano.edu.ec/WsConsultaFacturas/WsSegaEcErp.svc?xsd=xsd1" />
+    <MetadataFile FileName="WsSegaEcErp.disco" MetadataType="Disco" ID="00736436-bf27-4c97-84c9-42116f09c80e" SourceId="1" SourceUrl="https://www.tecnologicoliceocristiano.edu.ec/WsConsultaFacturas/WsSegaEcErp.svc?disco" />
+    <MetadataFile FileName="WsSegaEcErp1.xsd" MetadataType="Schema" ID="d03294ca-b4e3-4e3d-bb1e-9e1ed50e9ea1" SourceId="1" SourceUrl="https://www.tecnologicoliceocristiano.edu.ec/WsConsultaFacturas/WsSegaEcErp.svc?xsd=xsd0" />
+    <MetadataFile FileName="WsSegaEcErp2.xsd" MetadataType="Schema" ID="ec3de804-6550-45d0-b7cd-5b4c256bb85a" SourceId="1" SourceUrl="https://www.tecnologicoliceocristiano.edu.ec/WsConsultaFacturas/WsSegaEcErp.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

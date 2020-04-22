@@ -445,7 +445,7 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
         {
             cl_filtros_contabilidad_Info model = new cl_filtros_contabilidad_Info
             {
-                IdEmpresa =  Convert.ToInt32(SessionFixed.IdEmpresa),
+                IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdNivel = 6,
                 balance = "ER",
                 IntArray = new int[] { Convert.ToInt32(SessionFixed.IdSucursal) }
@@ -456,7 +456,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             CONTA_006_ER_Rpt report = new CONTA_006_ER_Rpt();
             report.IntArray = model.IntArray;
             report.p_IdEmpresa.Value = model.IdEmpresa;
-            report.p_IdAnio.Value = model.IdAnio;
+            report.p_FechaIni.Value = model.fecha_ini;
+            report.p_FechaFin.Value = model.fecha_fin;
             report.p_IdUsuario.Value = model.IdUsuario;
             report.p_IdNivel.Value = model.IdNivel;
             report.p_mostrarSaldo0.Value = model.mostrar_saldos_en_0;
@@ -480,7 +481,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 CONTA_006_BG_Rpt report = new CONTA_006_BG_Rpt();
                 report.IntArray = model.IntArray;
                 report.p_IdEmpresa.Value = model.IdEmpresa;
-                report.p_IdAnio.Value = model.IdAnio;
+                report.p_FechaIni.Value = model.fecha_ini;
+                report.p_FechaFin.Value = model.fecha_fin;
                 report.p_IdUsuario.Value = model.IdUsuario;
                 report.p_IdNivel.Value = model.IdNivel;
                 report.p_mostrarSaldo0.Value = model.mostrar_saldos_en_0;
@@ -495,7 +497,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
                 CONTA_006_ER_Rpt report = new CONTA_006_ER_Rpt();
                 report.IntArray = model.IntArray;
                 report.p_IdEmpresa.Value = model.IdEmpresa;
-                report.p_IdAnio.Value = model.IdAnio;
+                report.p_FechaIni.Value = model.fecha_ini;
+                report.p_FechaFin.Value = model.fecha_fin;
                 report.p_IdUsuario.Value = model.IdUsuario;
                 report.p_IdNivel.Value = model.IdNivel;
                 report.p_mostrarSaldo0.Value = model.mostrar_saldos_en_0;

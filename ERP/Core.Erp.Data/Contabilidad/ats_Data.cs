@@ -41,7 +41,10 @@ namespace Core.Erp.Data.Contabilidad
 
                     if (IdEmpresa == 5)
                         Migrar_ats_Filadelfia(empresa_info.IdEmpresa, empresa_info.em_ruc, perido_info.pe_FechaIni, perido_info.pe_FechaFin, IdPeriodo, 1);
-                    
+
+                    if (IdEmpresa == 3)
+                        Migrar_ats_Tecnologico(empresa_info.IdEmpresa, empresa_info.em_ruc, perido_info.pe_FechaIni, perido_info.pe_FechaFin, IdPeriodo, 1);
+
                     info.lst_compras = (from q in Context.ATS_compras
                                         where q.IdEmpresa==IdEmpresa
                                         && q.IdPeriodo==IdPeriodo
@@ -416,13 +419,13 @@ namespace Core.Erp.Data.Contabilidad
         {
             try
             {
-                if (IdEmpresa != 5)
+                if (IdEmpresa != 3)
                     return;
                 FechaInicio = FechaInicio.Date;
                 FechaFin = FechaFin.Date;
 
-                /*WSTecnologicoATS.WsTecnoClient ClienteWS = new WSTecnologicoATS.WsTecnoClient();
-                var lst = ClienteWS.CreateDocumento(1, FechaInicio, FechaFin, "fixed", "fixed2020*");
+                WSTecnologicoATS.WsSegaEcErpClient ClienteWS = new WSTecnologicoATS.WsSegaEcErpClient();
+                var lst = ClienteWS.vw_importacion_ats_fixed(1, FechaInicio, FechaFin, "fixed", "fixed2020*");
                 if (lst == null)
                     return;
                 var queryLinq = (from fac in lst
@@ -432,7 +435,7 @@ namespace Core.Erp.Data.Contabilidad
                                  /*group fac by new
                                  {
                                      ID = fac.nu_ced_ruc.Trim()
-                                 } into g
+                                 } into g*/
                                  select new ATS_ventas_eventos
                                  {
                                      IdEmpresa = IdEmpresa,
@@ -472,7 +475,6 @@ namespace Core.Erp.Data.Contabilidad
 
                     Context.SPATS_MigrarEventos();
                 }
-                */
             }
             catch (Exception ex)
             {

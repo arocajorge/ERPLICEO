@@ -28,7 +28,8 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             lbl_empresa.Text = empresa;
             lbl_usuario.Text = usuario;
             int IdEmpresa = string.IsNullOrEmpty(p_IdEmpresa.Value.ToString()) ? 0 : Convert.ToInt32(p_IdEmpresa.Value);
-            int IdAnio = string.IsNullOrEmpty(p_IdAnio.Value.ToString()) ? 0 : Convert.ToInt32(p_IdAnio.Value);
+            DateTime FechaIni = string.IsNullOrEmpty(p_FechaIni.Value.ToString()) ? DateTime.Now.Date : Convert.ToDateTime(p_FechaIni.Value);
+            DateTime FechaFin = string.IsNullOrEmpty(p_FechaFin.Value.ToString()) ? DateTime.Now.Date : Convert.ToDateTime(p_FechaFin.Value);
             bool mostrarSaldo0 = p_mostrarSaldo0.Value == null ? false : Convert.ToBoolean(p_mostrarSaldo0.Value);
             string IdUsuario = string.IsNullOrEmpty(p_IdUsuario.Value.ToString()) ? "" : Convert.ToString(p_IdUsuario.Value);
             int IdNivel = string.IsNullOrEmpty(p_IdNivel.Value.ToString()) ? 0 : Convert.ToInt32(p_IdNivel.Value);
@@ -40,7 +41,7 @@ namespace Core.Erp.Web.Reportes.Contabilidad
             tb_FiltroReportes_Bus bus_filtro = new tb_FiltroReportes_Bus();
             Sucursal = bus_filtro.GuardarDB(IdEmpresa, IntArray, IdUsuario);
 
-            lst_rpt.AddRange(bus_rpt.GetList(IdEmpresa, IdAnio, mostrarSaldo0, IdUsuario, IdNivel, mostrarAcumulado, balance));
+            lst_rpt.AddRange(bus_rpt.GetList(IdEmpresa, mostrarSaldo0, IdUsuario, IdNivel, mostrarAcumulado, balance, FechaIni, FechaFin));
             lst_rpt.ForEach(q => q.Su_Descripcion = Sucursal);
             this.DataSource = lst_rpt;
 

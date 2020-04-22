@@ -4536,7 +4536,8 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.VWROL_029' no tiene defi
         </Function>
         <Function Name="SPCONTA_006" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="web">
           <Parameter Name="IdEmpresa" Type="int" Mode="In" />
-          <Parameter Name="IdAnio" Type="int" Mode="In" />
+          <Parameter Name="FechaIni" Type="date" Mode="In" />
+          <Parameter Name="FechaFin" Type="date" Mode="In" />
           <Parameter Name="MostrarSaldo0" Type="bit" Mode="In" />
           <Parameter Name="IdUsuario" Type="varchar" Mode="In" />
           <Parameter Name="IdNivel" Type="int" Mode="In" />
@@ -8746,15 +8747,6 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.VWROL_029' no tiene defi
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
             <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <FunctionImport Name="SPCONTA_006" ReturnType="Collection(Model_reportes.SPCONTA_006_Result)">
-            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
-            <Parameter Name="IdAnio" Mode="In" Type="Int32" />
-            <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
-            <Parameter Name="IdUsuario" Mode="In" Type="String" />
-            <Parameter Name="IdNivel" Mode="In" Type="Int32" />
-            <Parameter Name="MostrarAcumulado" Mode="In" Type="Boolean" />
-            <Parameter Name="Balance" Mode="In" Type="String" />
-          </FunctionImport>
           <EntitySet Name="VWCXC_002" EntityType="Model_reportes.VWCXC_002" />
           <EntitySet Name="VWFAC_003" EntityType="Model_reportes.VWFAC_003" />
           <EntitySet Name="VWFAC_005" EntityType="Model_reportes.VWFAC_005" />
@@ -8870,6 +8862,16 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.VWROL_029' no tiene defi
           </FunctionImport>
           <EntitySet Name="VWROL_029" EntityType="Model_reportes.VWROL_029" />
           <EntitySet Name="VWCXP_017" EntityType="Model_reportes.VWCXP_017" />
+          <FunctionImport Name="SPCONTA_006" ReturnType="Collection(Model_reportes.SPCONTA_006_Result)">
+            <Parameter Name="IdEmpresa" Mode="In" Type="Int32" />
+            <Parameter Name="FechaIni" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="MostrarSaldo0" Mode="In" Type="Boolean" />
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+            <Parameter Name="IdNivel" Mode="In" Type="Int32" />
+            <Parameter Name="MostrarAcumulado" Mode="In" Type="Boolean" />
+            <Parameter Name="Balance" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SPACTF_004_detalle_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -11173,34 +11175,6 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.VWROL_029' no tiene defi
           <Property Type="Double" Name="Creditos" Nullable="false" />
           <Property Type="Double" Name="SaldoFinal" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="SPCONTA_006_Result">
-          <Property Type="String" Name="IdUsuario" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
-          <Property Type="String" Name="IdCtaCble" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="pc_Cuenta" Nullable="false" MaxLength="1000" />
-          <Property Type="String" Name="IdCtaCblePadre" Nullable="true" MaxLength="20" />
-          <Property Type="Boolean" Name="EsCtaUtilidad" Nullable="false" />
-          <Property Type="Int32" Name="IdNivelCta" Nullable="false" />
-          <Property Type="String" Name="IdGrupoCble" Nullable="false" MaxLength="5" />
-          <Property Type="String" Name="gc_GrupoCble" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="gc_estado_financiero" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="gc_Orden" Nullable="false" />
-          <Property Type="Boolean" Name="EsCuentaMovimiento" Nullable="false" />
-          <Property Type="String" Name="Naturaleza" Nullable="false" MaxLength="2" />
-          <Property Type="Decimal" Name="Enero" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="Febrero" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="Marzo" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="Abril" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="Mayo" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="Junio" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="Julio" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="Agosto" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="Septiembre" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="Octubre" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="Noviembre" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="Diciembre" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="Total" Nullable="false" Precision="18" Scale="2" />
-        </ComplexType>
         <EntityType Name="VWCXC_002">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -13114,6 +13088,34 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.VWROL_029' no tiene defi
           <Property Name="Cantidad" Type="Double" Nullable="false" />
           <Property Name="CostoUni" Type="Double" Nullable="false" />
         </EntityType>
+        <ComplexType Name="SPCONTA_006_Result">
+          <Property Type="String" Name="IdUsuario" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
+          <Property Type="String" Name="IdCtaCble" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="pc_Cuenta" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="IdCtaCblePadre" Nullable="true" MaxLength="20" />
+          <Property Type="Boolean" Name="EsCtaUtilidad" Nullable="false" />
+          <Property Type="Int32" Name="IdNivelCta" Nullable="false" />
+          <Property Type="String" Name="IdGrupoCble" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="gc_GrupoCble" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="gc_estado_financiero" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="gc_Orden" Nullable="false" />
+          <Property Type="Boolean" Name="EsCuentaMovimiento" Nullable="false" />
+          <Property Type="String" Name="Naturaleza" Nullable="false" MaxLength="2" />
+          <Property Type="Decimal" Name="Enero" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Febrero" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Marzo" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Abril" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Mayo" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Junio" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Julio" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Agosto" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Septiembre" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Octubre" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Noviembre" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Diciembre" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Total" Nullable="false" Precision="18" Scale="2" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -15636,38 +15638,6 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.VWROL_029' no tiene defi
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SPCONTA_006" FunctionName="Model_reportes.Store.SPCONTA_006">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Model_reportes.SPCONTA_006_Result">
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
-                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
-                <ScalarProperty Name="IdCtaCblePadre" ColumnName="IdCtaCblePadre" />
-                <ScalarProperty Name="EsCtaUtilidad" ColumnName="EsCtaUtilidad" />
-                <ScalarProperty Name="IdNivelCta" ColumnName="IdNivelCta" />
-                <ScalarProperty Name="IdGrupoCble" ColumnName="IdGrupoCble" />
-                <ScalarProperty Name="gc_GrupoCble" ColumnName="gc_GrupoCble" />
-                <ScalarProperty Name="gc_estado_financiero" ColumnName="gc_estado_financiero" />
-                <ScalarProperty Name="gc_Orden" ColumnName="gc_Orden" />
-                <ScalarProperty Name="EsCuentaMovimiento" ColumnName="EsCuentaMovimiento" />
-                <ScalarProperty Name="Naturaleza" ColumnName="Naturaleza" />
-                <ScalarProperty Name="Enero" ColumnName="Enero" />
-                <ScalarProperty Name="Febrero" ColumnName="Febrero" />
-                <ScalarProperty Name="Marzo" ColumnName="Marzo" />
-                <ScalarProperty Name="Abril" ColumnName="Abril" />
-                <ScalarProperty Name="Mayo" ColumnName="Mayo" />
-                <ScalarProperty Name="Junio" ColumnName="Junio" />
-                <ScalarProperty Name="Julio" ColumnName="Julio" />
-                <ScalarProperty Name="Agosto" ColumnName="Agosto" />
-                <ScalarProperty Name="Septiembre" ColumnName="Septiembre" />
-                <ScalarProperty Name="Octubre" ColumnName="Octubre" />
-                <ScalarProperty Name="Noviembre" ColumnName="Noviembre" />
-                <ScalarProperty Name="Diciembre" ColumnName="Diciembre" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="VWCXC_002">
             <EntityTypeMapping TypeName="Model_reportes.VWCXC_002">
               <MappingFragment StoreEntitySet="VWCXC_002">
@@ -17080,6 +17050,38 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.VWROL_029' no tiene defi
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SPCONTA_006" FunctionName="Model_reportes.Store.SPCONTA_006">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model_reportes.SPCONTA_006_Result">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="pc_Cuenta" ColumnName="pc_Cuenta" />
+                <ScalarProperty Name="IdCtaCblePadre" ColumnName="IdCtaCblePadre" />
+                <ScalarProperty Name="EsCtaUtilidad" ColumnName="EsCtaUtilidad" />
+                <ScalarProperty Name="IdNivelCta" ColumnName="IdNivelCta" />
+                <ScalarProperty Name="IdGrupoCble" ColumnName="IdGrupoCble" />
+                <ScalarProperty Name="gc_GrupoCble" ColumnName="gc_GrupoCble" />
+                <ScalarProperty Name="gc_estado_financiero" ColumnName="gc_estado_financiero" />
+                <ScalarProperty Name="gc_Orden" ColumnName="gc_Orden" />
+                <ScalarProperty Name="EsCuentaMovimiento" ColumnName="EsCuentaMovimiento" />
+                <ScalarProperty Name="Naturaleza" ColumnName="Naturaleza" />
+                <ScalarProperty Name="Enero" ColumnName="Enero" />
+                <ScalarProperty Name="Febrero" ColumnName="Febrero" />
+                <ScalarProperty Name="Marzo" ColumnName="Marzo" />
+                <ScalarProperty Name="Abril" ColumnName="Abril" />
+                <ScalarProperty Name="Mayo" ColumnName="Mayo" />
+                <ScalarProperty Name="Junio" ColumnName="Junio" />
+                <ScalarProperty Name="Julio" ColumnName="Julio" />
+                <ScalarProperty Name="Agosto" ColumnName="Agosto" />
+                <ScalarProperty Name="Septiembre" ColumnName="Septiembre" />
+                <ScalarProperty Name="Octubre" ColumnName="Octubre" />
+                <ScalarProperty Name="Noviembre" ColumnName="Noviembre" />
+                <ScalarProperty Name="Diciembre" ColumnName="Diciembre" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -40,6 +40,14 @@ namespace Core.Erp.Data
         public string IdTipoCta_acreditacion_cat { get; set; }
         public string num_cta_acreditacion { get; set; }
         public Nullable<int> IdBanco_acreditacion { get; set; }
+        public string CodCatalogoSangre { get; set; }
+        public string CodCatalogoCONADIS { get; set; }
+        public Nullable<double> PorcentajeDiscapacidad { get; set; }
+        public string NumeroCarnetConadis { get; set; }
+        public Nullable<int> IdProfesion { get; set; }
+        public Nullable<int> IdReligion { get; set; }
+        public Nullable<bool> AsisteCentroCristiano { get; set; }
+        public Nullable<int> IdGrupoEtnico { get; set; }
     
         public virtual tb_banco tb_banco { get; set; }
         public virtual tb_Catalogo tb_Catalogo { get; set; }
@@ -49,5 +57,10 @@ namespace Core.Erp.Data
         public virtual tb_Catalogo tb_Catalogo4 { get; set; }
         public virtual tb_Catalogo tb_Catalogo5 { get; set; }
         public virtual tb_Catalogo tb_Catalogo6 { get; set; }
+        public virtual tb_Catalogo tb_Catalogo7 { get; set; }
+        public virtual tb_Catalogo tb_Catalogo8 { get; set; }
+        public virtual tb_GrupoEtnico tb_GrupoEtnico { get; set; }
+        public virtual tb_profesion tb_profesion { get; set; }
+        public virtual tb_Religion tb_Religion { get; set; }
     }
 }

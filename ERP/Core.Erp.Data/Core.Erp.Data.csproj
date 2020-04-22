@@ -753,6 +753,7 @@
     <Compile Include="General\tb_comprobantes_sin_autorizacion_Data.cs" />
     <Compile Include="General\tb_empresa_Data.cs" />
     <Compile Include="General\tb_FiltroReportes_Data.cs" />
+    <Compile Include="General\tb_GrupoEtnico_Data.cs" />
     <Compile Include="General\tb_LogError_Data.cs" />
     <Compile Include="General\tb_mes_Data.cs" />
     <Compile Include="General\tb_modulo_Data.cs" />
@@ -762,8 +763,10 @@
     <Compile Include="General\tb_parroquia_Data.cs" />
     <Compile Include="General\tb_persona_Data.cs" />
     <Compile Include="General\tb_persona_tipo_Data.cs" />
+    <Compile Include="General\tb_profesion_Data.cs" />
     <Compile Include="General\tb_provincia_Data.cs" />
     <Compile Include="General\tb_region_Data.cs" />
+    <Compile Include="General\tb_Religion_Data.cs" />
     <Compile Include="General\tb_sis_Documento_Tipo_Data.cs" />
     <Compile Include="General\tb_sis_Documento_Tipo_Talonario_Data.cs" />
     <Compile Include="General\tb_sis_Impuesto_Data.cs" />
@@ -1977,6 +1980,9 @@
     <Compile Include="tb_FiltroReportes.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
+    <Compile Include="tb_GrupoEtnico.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
     <Compile Include="tb_LogError.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
@@ -2004,10 +2010,16 @@
     <Compile Include="tb_persona_tipo.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
+    <Compile Include="tb_profesion.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
     <Compile Include="tb_provincia.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="tb_region.cs">
+      <DependentUpon>Model_general.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Religion.cs">
       <DependentUpon>Model_general.tt</DependentUpon>
     </Compile>
     <Compile Include="tb_sis_Documento_Tipo.cs">

@@ -70,5 +70,8 @@ namespace Core.Erp.Data
         public DbSet<tb_sucursal_FormaPago_x_fa_NivelDescuento> tb_sucursal_FormaPago_x_fa_NivelDescuento { get; set; }
         public DbSet<tb_FiltroReportes> tb_FiltroReportes { get; set; }
         public DbSet<tb_LogError> tb_LogError { get; set; }
+        public DbSet<tb_GrupoEtnico> tb_GrupoEtnico { get; set; }
+        public DbSet<tb_profesion> tb_profesion { get; set; }
+        public DbSet<tb_Religion> tb_Religion { get; set; }
     }
 }

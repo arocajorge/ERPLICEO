@@ -78,6 +78,14 @@
         <AssociationConnector Association="Model_general.FK_tb_sucursal_FormaPago_x_fa_NivelDescuento_tb_sucursal" />
         <EntityTypeShape EntityType="Model_general.tb_FiltroReportes" Width="1.5" PointX="19.375" PointY="12.75" />
         <EntityTypeShape EntityType="Model_general.tb_LogError" Width="1.5" PointX="21.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_general.tb_GrupoEtnico" Width="1.5" PointX="0.75" PointY="11" />
+        <EntityTypeShape EntityType="Model_general.tb_profesion" Width="1.5" PointX="0.75" PointY="14.875" />
+        <EntityTypeShape EntityType="Model_general.tb_Religion" Width="1.5" PointX="21.375" PointY="5" />
+        <AssociationConnector Association="Model_general.FK_tb_persona_tb_Catalogo7" />
+        <AssociationConnector Association="Model_general.FK_tb_persona_tb_Catalogo8" />
+        <AssociationConnector Association="Model_general.FK_tb_persona_tb_GrupoEtnico" />
+        <AssociationConnector Association="Model_general.FK_tb_persona_tb_profesion" />
+        <AssociationConnector Association="Model_general.FK_tb_persona_tb_Religion" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

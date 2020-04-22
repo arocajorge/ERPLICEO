@@ -191,6 +191,33 @@ namespace Core.Erp.Data.General
                 throw;
             }
         }
+
+        public decimal validar_existe_cedula(string IdTipoDocumento, string pe_CedulaRuc, decimal IdPersona)
+        {
+            try
+            {
+                using (Entities_general Context = new Entities_general())
+                {
+                    pe_CedulaRuc = pe_CedulaRuc == null ? "" : pe_CedulaRuc.Trim();
+
+                    var lst = from q in Context.tb_persona
+                              where q.pe_cedulaRuc == pe_CedulaRuc
+                              && q.IdTipoDocumento == IdTipoDocumento
+                              && q.IdPersona != IdPersona
+                              select q;
+
+                    if (lst.Count() > 0)
+                        return lst.FirstOrDefault().IdPersona;
+                    else
+                        return 0;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         private decimal get_id()
         {
             try
@@ -315,7 +342,15 @@ namespace Core.Erp.Data.General
                         pe_estado = Entity.pe_estado,
                         IdTipoCta_acreditacion_cat = Entity.IdTipoCta_acreditacion_cat,
                         num_cta_acreditacion = Entity.num_cta_acreditacion,
-                        IdBanco_acreditacion = Entity.IdBanco_acreditacion
+                        IdBanco_acreditacion = Entity.IdBanco_acreditacion,
+                        IdProfesion = Entity.IdProfesion,
+                        IdReligion = Entity.IdReligion,
+                        AsisteCentroCristiano = Entity.AsisteCentroCristiano,
+                        CodCatalogoSangre = Entity.CodCatalogoSangre,
+                        CodCatalogoCONADIS = Entity.CodCatalogoCONADIS,
+                        NumeroCarnetConadis = Entity.NumeroCarnetConadis,
+                        PorcentajeDiscapacidad = Entity.PorcentajeDiscapacidad,
+                        IdGrupoEtnico = Entity.IdGrupoEtnico
                     };
                 }
 
@@ -356,6 +391,14 @@ namespace Core.Erp.Data.General
                         IdTipoCta_acreditacion_cat = info.IdTipoCta_acreditacion_cat,
                         num_cta_acreditacion = info.num_cta_acreditacion,
                         IdBanco_acreditacion = info.IdBanco_acreditacion,
+                        CodCatalogoSangre = info.CodCatalogoSangre,
+                        CodCatalogoCONADIS = info.CodCatalogoCONADIS,
+                        NumeroCarnetConadis = info.NumeroCarnetConadis,
+                        PorcentajeDiscapacidad = info.PorcentajeDiscapacidad,
+                        IdProfesion = ((info.IdProfesion == 0 || info.IdProfesion == null) ? null : info.IdProfesion),
+                        IdReligion = ((info.IdReligion == 0 || info.IdReligion == null) ? null : info.IdReligion),
+                        IdGrupoEtnico = ((info.IdGrupoEtnico == 0 || info.IdGrupoEtnico == null) ? null : info.IdGrupoEtnico),
+                        AsisteCentroCristiano = info.AsisteCentroCristiano
                     };
                     Context.tb_persona.Add(Entity);
                     Context.SaveChanges();
@@ -394,6 +437,16 @@ namespace Core.Erp.Data.General
                     Entity.IdTipoCta_acreditacion_cat = info.IdTipoCta_acreditacion_cat;
                     Entity.num_cta_acreditacion = info.num_cta_acreditacion;
                     Entity.IdBanco_acreditacion = info.IdBanco_acreditacion;
+                    Entity.CodCatalogoSangre = info.CodCatalogoSangre;
+                    Entity.CodCatalogoCONADIS = info.CodCatalogoCONADIS;
+                    Entity.NumeroCarnetConadis = info.NumeroCarnetConadis;
+                    Entity.PorcentajeDiscapacidad = info.PorcentajeDiscapacidad;
+                    Entity.IdProfesion = (info.IdProfesion == 0 ? null : info.IdProfesion);
+                    Entity.IdReligion = (info.IdReligion == 0 ? null : info.IdReligion);
+                    Entity.IdGrupoEtnico = (info.IdGrupoEtnico == 0 ? null : info.IdGrupoEtnico);
+                    Entity.AsisteCentroCristiano = info.AsisteCentroCristiano;
+                    Entity.pe_fechaModificacion = DateTime.Now;
+                    Entity.pe_UltUsuarioModi = info.pe_UltUsuarioModi;
 
                     Entity.pe_fechaModificacion = DateTime.Now;
                     Entity.pe_UltUsuarioModi = info.pe_UltUsuarioModi;
@@ -449,9 +502,18 @@ namespace Core.Erp.Data.General
                 pe_celular = info.pe_celular,
                 pe_correo = info.pe_correo,
                 pe_fechaNacimiento = info.pe_fechaNacimiento,
+                CodCatalogoSangre = (info.CodCatalogoSangre == "" ? null : info.CodCatalogoSangre),
+
+                CodCatalogoCONADIS = (info.CodCatalogoCONADIS == "" ? null : info.CodCatalogoCONADIS),
+                NumeroCarnetConadis = info.NumeroCarnetConadis,
+                PorcentajeDiscapacidad = info.PorcentajeDiscapacidad,
 
                 //Si vienen null se pone un valor default
                 IdEstadoCivil = string.IsNullOrEmpty(info.IdEstadoCivil) ? "SOLTE" : info.IdEstadoCivil,
+                IdProfesion = (info.IdProfesion == 0 || info.IdProfesion == null) ? null : info.IdProfesion,
+                IdReligion = (info.IdReligion == 0 || info.IdReligion == null) ? null : info.IdReligion,
+                IdGrupoEtnico = (info.IdGrupoEtnico == 0 || info.IdGrupoEtnico == null) ? null : info.IdGrupoEtnico,
+                AsisteCentroCristiano = info.AsisteCentroCristiano,
                 pe_sexo = string.IsNullOrEmpty(info.pe_sexo) ? "SEXO_MAS" : info.pe_sexo,
             };
             return info_retorno;

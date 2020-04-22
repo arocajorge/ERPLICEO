@@ -248,6 +248,7 @@
     <Compile Include="General\tb_comprobantes_sin_autorizacion_Info.cs" />
     <Compile Include="General\tb_empresa_Info.cs" />
     <Compile Include="General\tb_FiltroReportes_Info.cs" />
+    <Compile Include="General\tb_GrupoEtnico_Info.cs" />
     <Compile Include="General\tb_LogError_Info.cs" />
     <Compile Include="General\tb_mes_Info.cs" />
     <Compile Include="General\tb_modulo_Info.cs" />
@@ -257,8 +258,10 @@
     <Compile Include="General\tb_parroquia_Info.cs" />
     <Compile Include="General\tb_persona_Info.cs" />
     <Compile Include="General\tb_persona_tipo_Info.cs" />
+    <Compile Include="General\tb_profesion_Info.cs" />
     <Compile Include="General\tb_provincia_Info.cs" />
     <Compile Include="General\tb_region_Info.cs" />
+    <Compile Include="General\tb_Religion_Info.cs" />
     <Compile Include="General\tb_sis_Documento_Tipo_Info.cs" />
     <Compile Include="General\tb_sis_Documento_Tipo_Talonario_Info.cs" />
     <Compile Include="General\tb_sis_Impuesto_Info.cs" />

@@ -53,6 +53,14 @@ namespace Core.Erp.Info.General
         [StringLength(50, MinimumLength = 0, ErrorMessage = "el campo número de cuenta debe tener máximo 50 caracteres")]
         public string num_cta_acreditacion { get; set; }
         public Nullable<int> IdBanco_acreditacion { get; set; }
+        public string CodCatalogoSangre { get; set; }
+        public string CodCatalogoCONADIS { get; set; }
+        public Nullable<double> PorcentajeDiscapacidad { get; set; }
+        public string NumeroCarnetConadis { get; set; }
+        public Nullable<int> IdProfesion { get; set; }
+        public Nullable<int> IdReligion { get; set; }
+        public Nullable<bool> AsisteCentroCristiano { get; set; }
+        public Nullable<int> IdGrupoEtnico { get; set; }
 
         //Campos que no existen en la base
         public decimal IdEntidad { get; set; }

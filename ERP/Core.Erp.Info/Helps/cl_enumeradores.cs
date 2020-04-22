@@ -30,7 +30,9 @@
             ESTCIVIL = 2,
             TIPODOC = 3,
             TIPONATPER = 5,
-            TIP_CTA_AC = 27
+            TIP_CTA_AC = 27,
+            TIPOSANGRE = 6,
+            TIPODISCAP = 7
         }
 
         public enum eTipoSexoGeneral

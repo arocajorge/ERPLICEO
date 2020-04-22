@@ -166,6 +166,21 @@
           <Property Name="cod_entidad_dinardap" Type="varchar" MaxLength="50" />
           <Property Name="em_Email" Type="varchar" MaxLength="300" />
         </EntityType>
+        <EntityType Name="tb_GrupoEtnico">
+          <Key>
+            <PropertyRef Name="IdGrupoEtnico" />
+          </Key>
+          <Property Name="IdGrupoEtnico" Type="int" Nullable="false" />
+          <Property Name="NomGrupoEtnico" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="varchar" MaxLength="200" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="IdUsuarioModificacion" Type="varchar" MaxLength="200" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="IdUsuarioAnulacion" Type="varchar" MaxLength="200" />
+          <Property Name="FechaAnulacion" Type="datetime" />
+          <Property Name="MotivoAnulacion" Type="varchar(max)" />
+        </EntityType>
         <EntityType Name="tb_mes">
           <Key>
             <PropertyRef Name="idMes" />
@@ -271,6 +286,14 @@
           <Property Name="IdTipoCta_acreditacion_cat" Type="varchar" MaxLength="25" />
           <Property Name="num_cta_acreditacion" Type="varchar" MaxLength="50" />
           <Property Name="IdBanco_acreditacion" Type="int" />
+          <Property Name="CodCatalogoSangre" Type="varchar" MaxLength="25" />
+          <Property Name="CodCatalogoCONADIS" Type="varchar" MaxLength="25" />
+          <Property Name="PorcentajeDiscapacidad" Type="float" />
+          <Property Name="NumeroCarnetConadis" Type="varchar" MaxLength="200" />
+          <Property Name="IdProfesion" Type="int" />
+          <Property Name="IdReligion" Type="int" />
+          <Property Name="AsisteCentroCristiano" Type="bit" />
+          <Property Name="IdGrupoEtnico" Type="int" />
         </EntityType>
         <EntityType Name="tb_persona_tipo">
           <Key>
@@ -278,6 +301,21 @@
           </Key>
           <Property Name="IdTipo_Persona" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Descricpion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_profesion">
+          <Key>
+            <PropertyRef Name="IdProfesion" />
+          </Key>
+          <Property Name="IdProfesion" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="varchar" MaxLength="200" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="IdUsuarioModificacion" Type="varchar" MaxLength="200" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="IdUsuarioAnulacion" Type="varchar" MaxLength="200" />
+          <Property Name="FechaAnulacion" Type="datetime" />
+          <Property Name="MotivoAnulacion" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="tb_provincia">
           <Key>
@@ -308,6 +346,21 @@
           <Property Name="codigo" Type="varchar" MaxLength="10" />
           <Property Name="estado" Type="bit" Nullable="false" />
           <Property Name="IdPais" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_Religion">
+          <Key>
+            <PropertyRef Name="IdReligion" />
+          </Key>
+          <Property Name="IdReligion" Type="int" Nullable="false" />
+          <Property Name="NomReligion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="varchar" MaxLength="200" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="IdUsuarioModificacion" Type="varchar" MaxLength="200" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="IdUsuarioAnulacion" Type="varchar" MaxLength="200" />
+          <Property Name="FechaAnulacion" Type="datetime" />
+          <Property Name="MotivoAnulacion" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="tb_sis_Documento_Tipo">
           <Key>
@@ -542,7 +595,7 @@
           <Property Name="FechaTransaccion" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_banco_procesos_bancarios_x_empresa' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.dbo.vwtb_banco_procesos_bancarios_x_empresa' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_banco_procesos_bancarios_x_empresa">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -568,7 +621,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_banco_procesos_bancarios_x_em
           <Property Name="Expr1" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_Ciudad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.dbo.vwtb_Ciudad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_Ciudad">
           <Key>
             <PropertyRef Name="IdCiudad" />
@@ -586,7 +639,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_Ciudad' no tiene definida nin
           <Property Name="IdProvincia" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_ciudad_id' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.dbo.vwtb_ciudad_id' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_ciudad_id">
           <Key>
             <PropertyRef Name="IdCiudad" />
@@ -594,7 +647,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_ciudad_id' no tiene definida 
           <Property Name="IdCiudad" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_pais' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.dbo.vwtb_pais' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_pais">
           <Key>
             <PropertyRef Name="Nombre" />
@@ -603,7 +656,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_pais' no tiene definida ningu
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_parroquia' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.dbo.vwtb_parroquia' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_parroquia">
           <Key>
             <PropertyRef Name="IdParroquia" />
@@ -611,7 +664,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_parroquia' no tiene definida 
           <Property Name="IdParroquia" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_provincia' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.dbo.vwtb_provincia' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_provincia">
           <Key>
             <PropertyRef Name="IdProvincia" />
@@ -619,7 +672,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_provincia' no tiene definida 
           <Property Name="IdProvincia" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_TarjetaCredito_x_cp_proveedor' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.dbo.vwtb_TarjetaCredito_x_cp_proveedor' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_TarjetaCredito_x_cp_proveedor">
           <Key>
             <PropertyRef Name="IdTarjeta" />
@@ -644,7 +697,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwtb_TarjetaCredito_x_cp_proveedor
           <Property Name="IdTransaccion" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwtb_bodega_x_sucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.vwtb_bodega_x_sucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_bodega_x_sucursal">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -666,7 +719,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_bodega_x_sucursal' no tiene d
           <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.vwtb_comprobantes_no_autorizados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwtb_comprobantes_no_autorizados">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -677,12 +730,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             <PropertyRef Name="IdSucursal" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
-          <Property Name="Tipo_documento" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Tipo_documento" Type="varchar" MaxLength="6" Nullable="false" />
           <Property Name="IdCbteVta" Type="numeric" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="vt_serie1" Type="varchar" MaxLength="3" />
+          <Property Name="vt_serie1" Type="varchar" MaxLength="4" />
           <Property Name="vt_serie2" Type="varchar" MaxLength="3" />
-          <Property Name="DocumentoDoc" Type="varchar" MaxLength="20" />
-          <Property Name="Documento" Type="varchar" MaxLength="28" />
+          <Property Name="DocumentoDoc" Type="varchar" MaxLength="50" />
+          <Property Name="Documento" Type="varchar" MaxLength="61" />
           <Property Name="vt_fecha" Type="datetime" Nullable="false" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="vt_Observacion" Type="varchar(max)" />
@@ -855,6 +908,66 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             </Principal>
             <Dependent Role="tb_persona">
               <PropertyRef Name="IdTipoCta_acreditacion_cat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_persona_tb_Catalogo7">
+          <End Role="tb_Catalogo" Type="Self.tb_Catalogo" Multiplicity="0..1" />
+          <End Role="tb_persona" Type="Self.tb_persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Catalogo">
+              <PropertyRef Name="CodCatalogo" />
+            </Principal>
+            <Dependent Role="tb_persona">
+              <PropertyRef Name="CodCatalogoSangre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_persona_tb_Catalogo8">
+          <End Role="tb_Catalogo" Type="Self.tb_Catalogo" Multiplicity="0..1" />
+          <End Role="tb_persona" Type="Self.tb_persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Catalogo">
+              <PropertyRef Name="CodCatalogo" />
+            </Principal>
+            <Dependent Role="tb_persona">
+              <PropertyRef Name="CodCatalogoCONADIS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_persona_tb_GrupoEtnico">
+          <End Role="tb_GrupoEtnico" Type="Self.tb_GrupoEtnico" Multiplicity="0..1" />
+          <End Role="tb_persona" Type="Self.tb_persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_GrupoEtnico">
+              <PropertyRef Name="IdGrupoEtnico" />
+            </Principal>
+            <Dependent Role="tb_persona">
+              <PropertyRef Name="IdGrupoEtnico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_persona_tb_profesion">
+          <End Role="tb_profesion" Type="Self.tb_profesion" Multiplicity="0..1" />
+          <End Role="tb_persona" Type="Self.tb_persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_profesion">
+              <PropertyRef Name="IdProfesion" />
+            </Principal>
+            <Dependent Role="tb_persona">
+              <PropertyRef Name="IdProfesion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_persona_tb_Religion">
+          <End Role="tb_Religion" Type="Self.tb_Religion" Multiplicity="0..1" />
+          <End Role="tb_persona" Type="Self.tb_persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Religion">
+              <PropertyRef Name="IdReligion" />
+            </Principal>
+            <Dependent Role="tb_persona">
+              <PropertyRef Name="IdReligion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1052,6 +1165,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <EntitySet Name="tb_ColaImpresionDirecta" EntityType="Self.tb_ColaImpresionDirecta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_dia" EntityType="Self.tb_dia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_empresa" EntityType="Self.tb_empresa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_GrupoEtnico" EntityType="Self.tb_GrupoEtnico" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_mes" EntityType="Self.tb_mes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_modulo" EntityType="Self.tb_modulo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_moneda" EntityType="Self.tb_moneda" Schema="dbo" store:Type="Tables" />
@@ -1060,8 +1174,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <EntitySet Name="tb_parroquia" EntityType="Self.tb_parroquia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_persona" EntityType="Self.tb_persona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_persona_tipo" EntityType="Self.tb_persona_tipo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_profesion" EntityType="Self.tb_profesion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_provincia" EntityType="Self.tb_provincia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_region" EntityType="Self.tb_region" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Religion" EntityType="Self.tb_Religion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_sis_Documento_Tipo" EntityType="Self.tb_sis_Documento_Tipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_sis_Documento_Tipo_Talonario" EntityType="Self.tb_sis_Documento_Tipo_Talonario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_sis_Documento_Tipo_x_Empresa" EntityType="Self.tb_sis_Documento_Tipo_x_Empresa" Schema="dbo" store:Type="Tables" />
@@ -1224,6 +1340,26 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           </AssociationSet>
           <AssociationSet Name="FK_tb_persona_tb_Catalogo6" Association="Self.FK_tb_persona_tb_Catalogo6">
             <End Role="tb_Catalogo" EntitySet="tb_Catalogo" />
+            <End Role="tb_persona" EntitySet="tb_persona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_persona_tb_Catalogo7" Association="Self.FK_tb_persona_tb_Catalogo7">
+            <End Role="tb_Catalogo" EntitySet="tb_Catalogo" />
+            <End Role="tb_persona" EntitySet="tb_persona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_persona_tb_Catalogo8" Association="Self.FK_tb_persona_tb_Catalogo8">
+            <End Role="tb_Catalogo" EntitySet="tb_Catalogo" />
+            <End Role="tb_persona" EntitySet="tb_persona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_persona_tb_GrupoEtnico" Association="Self.FK_tb_persona_tb_GrupoEtnico">
+            <End Role="tb_GrupoEtnico" EntitySet="tb_GrupoEtnico" />
+            <End Role="tb_persona" EntitySet="tb_persona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_persona_tb_profesion" Association="Self.FK_tb_persona_tb_profesion">
+            <End Role="tb_profesion" EntitySet="tb_profesion" />
+            <End Role="tb_persona" EntitySet="tb_persona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_persona_tb_Religion" Association="Self.FK_tb_persona_tb_Religion">
+            <End Role="tb_Religion" EntitySet="tb_Religion" />
             <End Role="tb_persona" EntitySet="tb_persona" />
           </AssociationSet>
           <AssociationSet Name="FK_tb_provincia_tb_pais" Association="Self.FK_tb_provincia_tb_pais">
@@ -1453,6 +1589,29 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           </AssociationSet>
           <EntitySet Name="tb_FiltroReportes" EntityType="Model_general.tb_FiltroReportes" />
           <EntitySet Name="tb_LogError" EntityType="Model_general.tb_LogError" />
+          <EntitySet Name="tb_GrupoEtnico" EntityType="Model_general.tb_GrupoEtnico" />
+          <EntitySet Name="tb_profesion" EntityType="Model_general.tb_profesion" />
+          <EntitySet Name="tb_Religion" EntityType="Model_general.tb_Religion" />
+          <AssociationSet Name="FK_tb_persona_tb_Catalogo7" Association="Model_general.FK_tb_persona_tb_Catalogo7">
+            <End Role="tb_Catalogo" EntitySet="tb_Catalogo" />
+            <End Role="tb_persona" EntitySet="tb_persona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_persona_tb_Catalogo8" Association="Model_general.FK_tb_persona_tb_Catalogo8">
+            <End Role="tb_Catalogo" EntitySet="tb_Catalogo" />
+            <End Role="tb_persona" EntitySet="tb_persona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_persona_tb_GrupoEtnico" Association="Model_general.FK_tb_persona_tb_GrupoEtnico">
+            <End Role="tb_GrupoEtnico" EntitySet="tb_GrupoEtnico" />
+            <End Role="tb_persona" EntitySet="tb_persona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_persona_tb_profesion" Association="Model_general.FK_tb_persona_tb_profesion">
+            <End Role="tb_profesion" EntitySet="tb_profesion" />
+            <End Role="tb_persona" EntitySet="tb_persona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_persona_tb_Religion" Association="Model_general.FK_tb_persona_tb_Religion">
+            <End Role="tb_Religion" EntitySet="tb_Religion" />
+            <End Role="tb_persona" EntitySet="tb_persona" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="tb_banco">
           <Key>
@@ -1542,6 +1701,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <NavigationProperty Name="tb_persona4" Relationship="Model_general.FK_tb_persona_tb_Catalogo4" FromRole="tb_Catalogo" ToRole="tb_persona" />
           <NavigationProperty Name="tb_persona5" Relationship="Model_general.FK_tb_persona_tb_Catalogo5" FromRole="tb_Catalogo" ToRole="tb_persona" />
           <NavigationProperty Name="tb_persona6" Relationship="Model_general.FK_tb_persona_tb_Catalogo6" FromRole="tb_Catalogo" ToRole="tb_persona" />
+          <NavigationProperty Name="tb_persona7" Relationship="Model_general.FK_tb_persona_tb_Catalogo7" FromRole="tb_Catalogo" ToRole="tb_persona" />
+          <NavigationProperty Name="tb_persona8" Relationship="Model_general.FK_tb_persona_tb_Catalogo8" FromRole="tb_Catalogo" ToRole="tb_persona" />
         </EntityType>
         <EntityType Name="tb_CatalogoTipo">
           <Key>
@@ -1697,6 +1858,19 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <NavigationProperty Name="tb_Catalogo4" Relationship="Model_general.FK_tb_persona_tb_Catalogo4" FromRole="tb_persona" ToRole="tb_Catalogo" />
           <NavigationProperty Name="tb_Catalogo5" Relationship="Model_general.FK_tb_persona_tb_Catalogo5" FromRole="tb_persona" ToRole="tb_Catalogo" />
           <NavigationProperty Name="tb_Catalogo6" Relationship="Model_general.FK_tb_persona_tb_Catalogo6" FromRole="tb_persona" ToRole="tb_Catalogo" />
+          <Property Name="CodCatalogoSangre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CodCatalogoCONADIS" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="PorcentajeDiscapacidad" Type="Double" />
+          <Property Name="NumeroCarnetConadis" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdProfesion" Type="Int32" />
+          <Property Name="IdReligion" Type="Int32" />
+          <Property Name="AsisteCentroCristiano" Type="Boolean" />
+          <Property Name="IdGrupoEtnico" Type="Int32" />
+          <NavigationProperty Name="tb_Catalogo7" Relationship="Model_general.FK_tb_persona_tb_Catalogo7" FromRole="tb_persona" ToRole="tb_Catalogo" />
+          <NavigationProperty Name="tb_Catalogo8" Relationship="Model_general.FK_tb_persona_tb_Catalogo8" FromRole="tb_persona" ToRole="tb_Catalogo" />
+          <NavigationProperty Name="tb_GrupoEtnico" Relationship="Model_general.FK_tb_persona_tb_GrupoEtnico" FromRole="tb_persona" ToRole="tb_GrupoEtnico" />
+          <NavigationProperty Name="tb_profesion" Relationship="Model_general.FK_tb_persona_tb_profesion" FromRole="tb_persona" ToRole="tb_profesion" />
+          <NavigationProperty Name="tb_Religion" Relationship="Model_general.FK_tb_persona_tb_Religion" FromRole="tb_persona" ToRole="tb_Religion" />
         </EntityType>
         <EntityType Name="tb_provincia">
           <Key>
@@ -2452,12 +2626,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
             <PropertyRef Name="IdSucursal" />
           </Key>
           <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="Tipo_documento" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo_documento" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
           <Property Name="IdCbteVta" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="vt_serie1" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="vt_serie1" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="vt_serie2" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="DocumentoDoc" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Documento" Type="String" MaxLength="28" FixedLength="false" Unicode="false" />
+          <Property Name="DocumentoDoc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Documento" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
           <Property Name="vt_fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="vt_Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -2531,6 +2705,114 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <Property Name="Metodo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="InnerException" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="tb_GrupoEtnico">
+          <Key>
+            <PropertyRef Name="IdGrupoEtnico" />
+          </Key>
+          <Property Name="IdGrupoEtnico" Type="Int32" Nullable="false" />
+          <Property Name="NomGrupoEtnico" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioModificacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioAnulacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_persona" Relationship="Model_general.FK_tb_persona_tb_GrupoEtnico" FromRole="tb_GrupoEtnico" ToRole="tb_persona" />
+        </EntityType>
+        <EntityType Name="tb_profesion">
+          <Key>
+            <PropertyRef Name="IdProfesion" />
+          </Key>
+          <Property Name="IdProfesion" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioModificacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioAnulacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_persona" Relationship="Model_general.FK_tb_persona_tb_profesion" FromRole="tb_profesion" ToRole="tb_persona" />
+        </EntityType>
+        <EntityType Name="tb_Religion">
+          <Key>
+            <PropertyRef Name="IdReligion" />
+          </Key>
+          <Property Name="IdReligion" Type="Int32" Nullable="false" />
+          <Property Name="NomReligion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioModificacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioAnulacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAnulacion" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_persona" Relationship="Model_general.FK_tb_persona_tb_Religion" FromRole="tb_Religion" ToRole="tb_persona" />
+        </EntityType>
+        <Association Name="FK_tb_persona_tb_Catalogo7">
+          <End Type="Model_general.tb_Catalogo" Role="tb_Catalogo" Multiplicity="0..1" />
+          <End Type="Model_general.tb_persona" Role="tb_persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Catalogo">
+              <PropertyRef Name="CodCatalogo" />
+            </Principal>
+            <Dependent Role="tb_persona">
+              <PropertyRef Name="CodCatalogoSangre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_persona_tb_Catalogo8">
+          <End Type="Model_general.tb_Catalogo" Role="tb_Catalogo" Multiplicity="0..1" />
+          <End Type="Model_general.tb_persona" Role="tb_persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Catalogo">
+              <PropertyRef Name="CodCatalogo" />
+            </Principal>
+            <Dependent Role="tb_persona">
+              <PropertyRef Name="CodCatalogoCONADIS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_persona_tb_GrupoEtnico">
+          <End Type="Model_general.tb_GrupoEtnico" Role="tb_GrupoEtnico" Multiplicity="0..1" />
+          <End Type="Model_general.tb_persona" Role="tb_persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_GrupoEtnico">
+              <PropertyRef Name="IdGrupoEtnico" />
+            </Principal>
+            <Dependent Role="tb_persona">
+              <PropertyRef Name="IdGrupoEtnico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_persona_tb_profesion">
+          <End Type="Model_general.tb_profesion" Role="tb_profesion" Multiplicity="0..1" />
+          <End Type="Model_general.tb_persona" Role="tb_persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_profesion">
+              <PropertyRef Name="IdProfesion" />
+            </Principal>
+            <Dependent Role="tb_persona">
+              <PropertyRef Name="IdProfesion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_persona_tb_Religion">
+          <End Type="Model_general.tb_Religion" Role="tb_Religion" Multiplicity="0..1" />
+          <End Type="Model_general.tb_persona" Role="tb_persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_Religion">
+              <PropertyRef Name="IdReligion" />
+            </Principal>
+            <Dependent Role="tb_persona">
+              <PropertyRef Name="IdReligion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2735,6 +3017,14 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
           <EntitySetMapping Name="tb_persona">
             <EntityTypeMapping TypeName="Model_general.tb_persona">
               <MappingFragment StoreEntitySet="tb_persona">
+                <ScalarProperty Name="IdGrupoEtnico" ColumnName="IdGrupoEtnico" />
+                <ScalarProperty Name="AsisteCentroCristiano" ColumnName="AsisteCentroCristiano" />
+                <ScalarProperty Name="IdReligion" ColumnName="IdReligion" />
+                <ScalarProperty Name="IdProfesion" ColumnName="IdProfesion" />
+                <ScalarProperty Name="NumeroCarnetConadis" ColumnName="NumeroCarnetConadis" />
+                <ScalarProperty Name="PorcentajeDiscapacidad" ColumnName="PorcentajeDiscapacidad" />
+                <ScalarProperty Name="CodCatalogoCONADIS" ColumnName="CodCatalogoCONADIS" />
+                <ScalarProperty Name="CodCatalogoSangre" ColumnName="CodCatalogoSangre" />
                 <ScalarProperty Name="IdBanco_acreditacion" ColumnName="IdBanco_acreditacion" />
                 <ScalarProperty Name="num_cta_acreditacion" ColumnName="num_cta_acreditacion" />
                 <ScalarProperty Name="IdTipoCta_acreditacion_cat" ColumnName="IdTipoCta_acreditacion_cat" />
@@ -3195,6 +3485,54 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwtb_comprobantes_no_autorizados' 
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="IdError" ColumnName="IdError" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_GrupoEtnico">
+            <EntityTypeMapping TypeName="Model_general.tb_GrupoEtnico">
+              <MappingFragment StoreEntitySet="tb_GrupoEtnico">
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="IdUsuarioAnulacion" ColumnName="IdUsuarioAnulacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="NomGrupoEtnico" ColumnName="NomGrupoEtnico" />
+                <ScalarProperty Name="IdGrupoEtnico" ColumnName="IdGrupoEtnico" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_profesion">
+            <EntityTypeMapping TypeName="Model_general.tb_profesion">
+              <MappingFragment StoreEntitySet="tb_profesion">
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="IdUsuarioAnulacion" ColumnName="IdUsuarioAnulacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdProfesion" ColumnName="IdProfesion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Religion">
+            <EntityTypeMapping TypeName="Model_general.tb_Religion">
+              <MappingFragment StoreEntitySet="tb_Religion">
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="FechaAnulacion" ColumnName="FechaAnulacion" />
+                <ScalarProperty Name="IdUsuarioAnulacion" ColumnName="IdUsuarioAnulacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="NomReligion" ColumnName="NomReligion" />
+                <ScalarProperty Name="IdReligion" ColumnName="IdReligion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

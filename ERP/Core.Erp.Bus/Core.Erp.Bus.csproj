@@ -204,6 +204,7 @@
     <Compile Include="General\tb_comprobantes_sin_autorizacion_Bus.cs" />
     <Compile Include="General\tb_empresa_Bus.cs" />
     <Compile Include="General\tb_FiltroReportes_Bus.cs" />
+    <Compile Include="General\tb_GrupoEtnico_Bus.cs" />
     <Compile Include="General\tb_LogError_Bus.cs" />
     <Compile Include="General\tb_mes_Bus.cs" />
     <Compile Include="General\tb_modulo_Bus.cs" />
@@ -213,8 +214,10 @@
     <Compile Include="General\tb_parroquia_Bus.cs" />
     <Compile Include="General\tb_persona_Bus.cs" />
     <Compile Include="General\tb_persona_tipo_Bus.cs" />
+    <Compile Include="General\tb_profesion_Bus.cs" />
     <Compile Include="General\tb_provincia_Bus.cs" />
     <Compile Include="General\tb_region_Bus.cs" />
+    <Compile Include="General\tb_Religion_Bus.cs" />
     <Compile Include="General\tb_sis_Documento_Tipo_Bus.cs" />
     <Compile Include="General\tb_sis_Documento_Tipo_Talonario_Bus.cs" />
     <Compile Include="General\tb_sis_Impuesto_Bus.cs" />

@@ -2,7 +2,8 @@
 CREATE PROCEDURE [web].[SPCONTA_006]
 (
 @IdEmpresa int,
-@IdAnio int,
+@FechaIni date,
+@FechaFin date,
 @MostrarSaldo0 bit,
 @IdUsuario varchar(50),
 @IdNivel int,
@@ -10,6 +11,10 @@ CREATE PROCEDURE [web].[SPCONTA_006]
 @Balance varchar(2)
 )
 AS
+
+DECLARE @IdTipoCbte int, @IdCbteCble numeric
+SELECT @IdTipoCbte = IdTipoCbte, @IdCbteCble = IdCbteCble FROM ct_anio_fiscal_x_tb_sucursal WHERE IdEmpresa = @IdEmpresa AND IdanioFiscal = YEAR(@FechaIni)
+
 DELETE [web].[ct_CONTA_006] WHERE IdUsuario = @IdUsuario
 
 INSERT INTO [web].[ct_CONTA_006]
@@ -55,7 +60,7 @@ ct_grupocble.gc_Orden,
 FROM            ct_anio_fiscal_x_cuenta_utilidad RIGHT OUTER JOIN
         ct_plancta ON ct_anio_fiscal_x_cuenta_utilidad.IdEmpresa = ct_plancta.IdEmpresa AND ct_anio_fiscal_x_cuenta_utilidad.IdCtaCble = ct_plancta.IdCtaCble LEFT OUTER JOIN
         ct_grupocble ON ct_plancta.IdGrupoCble = ct_grupocble.IdGrupoCble
-WHERE        (ISNULL(ct_anio_fiscal_x_cuenta_utilidad.IdanioFiscal, @IdAnio) = @IdAnio) AND ct_plancta.IdEmpresa = @IdEmpresa
+WHERE        (ISNULL(ct_anio_fiscal_x_cuenta_utilidad.IdanioFiscal, year(@FechaIni)) = year(@FechaIni)) AND ct_plancta.IdEmpresa = @IdEmpresa
 
 UPDATE [web].[ct_CONTA_006] SET 
 ENERO = A.Enero, 
@@ -78,57 +83,63 @@ from(
 SELECT D.IdEmpresa, D.IdCtaCble, 
 
 CASE WHEN @MostrarAcumulado = 1 THEN 
-CASE WHEN C.cb_Fecha <= DATEFROMPARTS(@IdAnio,1,31) THEN D.dc_Valor ELSE 0 END
+CASE WHEN C.cb_Fecha <= DATEFROMPARTS(year(@FechaFin),1,31) THEN D.dc_Valor ELSE 0 END
 WHEN MONTH(C.cb_Fecha) = 1 then D.dc_Valor else 0 end as Enero,
 
 CASE WHEN @MostrarAcumulado = 1 THEN 
-CASE WHEN C.cb_Fecha <= DATEFROMPARTS(@IdAnio,2,28) THEN D.dc_Valor ELSE 0 END
+CASE WHEN C.cb_Fecha <= DATEFROMPARTS(year(@FechaFin),2,28) THEN D.dc_Valor ELSE 0 END
 WHEN MONTH(C.cb_Fecha) = 2 then D.dc_Valor else 0 end as Febrero,
 
 CASE WHEN @MostrarAcumulado = 1 THEN 
-CASE WHEN C.cb_Fecha <= DATEFROMPARTS(@IdAnio,3,31) THEN D.dc_Valor ELSE 0 END
+CASE WHEN C.cb_Fecha <= DATEFROMPARTS(year(@FechaFin),3,31) THEN D.dc_Valor ELSE 0 END
 WHEN MONTH(C.cb_Fecha) = 3 then D.dc_Valor else 0 end as Marzo,
 
 CASE WHEN @MostrarAcumulado = 1 THEN 
-CASE WHEN C.cb_Fecha <= DATEFROMPARTS(@IdAnio,4,30) THEN D.dc_Valor ELSE 0 END
+CASE WHEN C.cb_Fecha <= DATEFROMPARTS(year(@FechaFin),4,30) THEN D.dc_Valor ELSE 0 END
 WHEN MONTH(C.cb_Fecha) = 4 then D.dc_Valor else 0 end as Abril,
 
 CASE WHEN @MostrarAcumulado = 1 THEN 
-CASE WHEN C.cb_Fecha <= DATEFROMPARTS(@IdAnio,5,31) THEN D.dc_Valor ELSE 0 END
+CASE WHEN C.cb_Fecha <= DATEFROMPARTS(year(@FechaFin),5,31) THEN D.dc_Valor ELSE 0 END
 WHEN MONTH(C.cb_Fecha) = 5 then D.dc_Valor else 0 end as Mayo,
 
 CASE WHEN @MostrarAcumulado = 1 THEN 
-CASE WHEN C.cb_Fecha <= DATEFROMPARTS(@IdAnio,6,30) THEN D.dc_Valor ELSE 0 END
+CASE WHEN C.cb_Fecha <= DATEFROMPARTS(year(@FechaFin),6,30) THEN D.dc_Valor ELSE 0 END
 WHEN MONTH(C.cb_Fecha) = 6 then D.dc_Valor else 0 end as Junio,
 
 CASE WHEN @MostrarAcumulado = 1 THEN 
-CASE WHEN C.cb_Fecha <= DATEFROMPARTS(@IdAnio,7,31) THEN D.dc_Valor ELSE 0 END
+CASE WHEN C.cb_Fecha <= DATEFROMPARTS(year(@FechaFin),7,31) THEN D.dc_Valor ELSE 0 END
 WHEN MONTH(C.cb_Fecha) = 7 then D.dc_Valor else 0 end as Julio,
 
 CASE WHEN @MostrarAcumulado = 1 THEN 
-CASE WHEN C.cb_Fecha <= DATEFROMPARTS(@IdAnio,8,31) THEN D.dc_Valor ELSE 0 END
+CASE WHEN C.cb_Fecha <= DATEFROMPARTS(year(@FechaFin),8,31) THEN D.dc_Valor ELSE 0 END
 WHEN MONTH(C.cb_Fecha) = 8 then D.dc_Valor else 0 end as Agosto,
 
 CASE WHEN @MostrarAcumulado = 1 THEN 
-CASE WHEN C.cb_Fecha <= DATEFROMPARTS(@IdAnio,9,30) THEN D.dc_Valor ELSE 0 END
+CASE WHEN C.cb_Fecha <= DATEFROMPARTS(year(@FechaFin),9,30) THEN D.dc_Valor ELSE 0 END
 WHEN MONTH(C.cb_Fecha) = 9 then D.dc_Valor else 0 end as Septiembre,
 
 CASE WHEN @MostrarAcumulado = 1 THEN 
-CASE WHEN C.cb_Fecha <= DATEFROMPARTS(@IdAnio,10,31) THEN D.dc_Valor ELSE 0 END
+CASE WHEN C.cb_Fecha <= DATEFROMPARTS(year(@FechaFin),10,31) THEN D.dc_Valor ELSE 0 END
 WHEN MONTH(C.cb_Fecha) = 10 then D.dc_Valor else 0 end as Octubre,
 
 CASE WHEN @MostrarAcumulado = 1 THEN 
-CASE WHEN C.cb_Fecha <= DATEFROMPARTS(@IdAnio,11,30) THEN D.dc_Valor ELSE 0 END
+CASE WHEN C.cb_Fecha <= DATEFROMPARTS(year(@FechaFin),11,30) THEN D.dc_Valor ELSE 0 END
 WHEN MONTH(C.cb_Fecha) = 11 then D.dc_Valor else 0 end as Noviembre,
 
 CASE WHEN @MostrarAcumulado = 1 THEN 
-CASE WHEN C.cb_Fecha <= DATEFROMPARTS(@IdAnio,12,31) THEN D.dc_Valor ELSE 0 END
+CASE WHEN C.cb_Fecha <= DATEFROMPARTS(year(@FechaFin),12,31) THEN D.dc_Valor ELSE 0 END
 WHEN MONTH(C.cb_Fecha) = 12 then D.dc_Valor else 0 end as Diciembre
 
 FROM ct_cbtecble AS C INNER JOIN 
 ct_cbtecble_det AS D ON C.IdEmpresa = D.IdEmpresa AND C.IdTipoCbte = D.IdTipoCbte AND C.IdCbteCble = D.IdCbteCble INNER JOIN 
 WEB.tb_FiltroReportes AS F ON C.IdEmpresa = F.IdEmpresa AND C.IdSucursal = F.IdSucursal AND F.IdUsuario = @IdUsuario 
-WHERE C.IdEmpresa = @IdEmpresa AND YEAR(C.cb_Fecha) between case when @MostrarAcumulado = 1 then 0 else @IdAnio end and @IdAnio
+WHERE C.IdEmpresa = @IdEmpresa AND C.cb_Fecha between case when @MostrarAcumulado = 1 then c.cb_Fecha else @FechaIni end and @FechaFin AND NOT EXISTS(
+	SELECT F.IdEmpresa, F.IdTipoCbte, F.IdCbteCble 
+	FROM ct_anio_fiscal_x_tb_sucursal F WHERE F.IdEmpresa = @IdEmpresa
+	AND C.IdEmpresa = F.IdEmpresa
+	AND C.IdTipoCbte = F.IdTipoCbte
+	AND C.IdCbteCble = F.IdCbteCble
+	)
 )G 
 GROUP BY G.IdEmpresa, G.IdCtaCble
 

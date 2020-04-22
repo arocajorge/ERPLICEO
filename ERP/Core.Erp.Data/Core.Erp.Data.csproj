@@ -1791,11 +1791,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Service References\WSTecnologicoATS\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="SPACTF_004_detalle_Result.cs">
       <DependentUpon>Model_reportes.tt</DependentUpon>
     </Compile>
@@ -3126,13 +3121,6 @@
     <None Include="Service References\WSFiladelfiaATS\WsSegaEcErp2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WSTecnologicoATS\Service1.wsdl" />
-    <None Include="Service References\WSTecnologicoATS\WsTecno.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\WSTecnologicoATS\WsTecno1.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Compras\Base\Model_compras.Context.tt">
@@ -3345,13 +3333,6 @@
       <DependentUpon>Model_seguridad_acceso.edmx</DependentUpon>
       <LastGenOutput>Model_seguridad_acceso.cs</LastGenOutput>
     </Content>
-    <None Include="Service References\WSTecnologicoATS\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\WSTecnologicoATS\configuration.svcinfo" />
-    <None Include="Service References\WSTecnologicoATS\configuration91.svcinfo" />
-    <None Include="Service References\WSTecnologicoATS\WsTecno.disco" />
     <None Include="Service References\WSFiladelfiaATS\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -3386,7 +3367,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\WSFiladelfiaATS\" />
-    <WCFMetadataStorage Include="Service References\WSTecnologicoATS\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

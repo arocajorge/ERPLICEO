@@ -421,8 +421,8 @@ namespace Core.Erp.Data.Contabilidad
                 FechaInicio = FechaInicio.Date;
                 FechaFin = FechaFin.Date;
 
-                WSTecnologicoATS.WsTecnoClient ClienteWS = new WSTecnologicoATS.WsTecnoClient();
-                /*var lst = ClienteWS.CreateDocumento(1, FechaInicio, FechaFin, "fixed", "fixed2020*");
+                /*WSTecnologicoATS.WsTecnoClient ClienteWS = new WSTecnologicoATS.WsTecnoClient();
+                var lst = ClienteWS.CreateDocumento(1, FechaInicio, FechaFin, "fixed", "fixed2020*");
                 if (lst == null)
                     return;
                 var queryLinq = (from fac in lst

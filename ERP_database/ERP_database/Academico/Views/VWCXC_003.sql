@@ -3,7 +3,7 @@ AS
 SELECT B.IdEmpresa, B.IdSucursal, B.IdCobro, B.secuencial, A.IdUsuario, c.Nombre AS NombreUsuario, B.IdBodega_Cbte, B.IdCbte_vta_nota, B.dc_TipoDocumento, 
                   CASE WHEN b.IdCobro_tipo <> 'NTCR' THEN b.dc_ValorPago ELSE 0 END AS dc_ValorPago, CASE WHEN b.IdCobro_tipo = 'NTCR' THEN b.dc_ValorPago ELSE 0 END AS dc_ValorPagoNC, f.Codigo AS CodigAlumno, g.pe_nombreCompleto, 
                   CASE WHEN b.dc_TipoDocumento = 'FACT' THEN d .vt_NumFactura ELSE CASE WHEN e.NaturalezaNota = 'SRI' THEN e.NumNota_Impresa ELSE e.CodNota END END AS NumFactura, LEFT(B.IdCobro_tipo, 2) AS IdCobro_tipo, A.cr_fecha, 
-                  A.IdTarjeta, ISNULL(h.NombreTarjeta, A.cr_Banco) AS NombreTarjeta, A.cr_Banco, YEAR(j.FechaDesde) AS AnioFactura, A.IdAlumno, CASE WHEN k.IdMotivo_tipo_cobro IN ('CHEQ', 'EFEC') 
+                  A.IdTarjeta, ISNULL(h.NombreTarjeta, isnull(A.cr_Banco, m.ba_descripcion)) AS NombreTarjeta, isnull(A.cr_Banco, m.ba_descripcion) cr_Banco, YEAR(j.FechaDesde) AS AnioFactura, A.IdAlumno, CASE WHEN k.IdMotivo_tipo_cobro IN ('CHEQ', 'EFEC') 
                   THEN 'EFECTIVO' WHEN k.IdMotivo_tipo_cobro IN ('TARJ') THEN 'TARJETA DE CREDITO' WHEN k.IdMotivo_tipo_cobro IN ('NTCR') THEN 'NOTA DE CREDITO' END AS GrupoTipoCobro, k.tc_descripcion AS NombreTipoCobro, 
                   B.dc_ValorPago AS TotalPago
 FROM     dbo.cxc_cobro AS A INNER JOIN
@@ -16,18 +16,22 @@ FROM     dbo.cxc_cobro AS A INNER JOIN
                   dbo.tb_TarjetaCredito AS h ON A.IdEmpresa = h.IdEmpresa AND A.IdTarjeta = h.IdTarjeta LEFT OUTER JOIN
                   dbo.fa_factura_resumen AS i ON d .IdEmpresa = i.IdEmpresa AND d .IdSucursal = i.IdSucursal AND d .IdBodega = i.IdBodega AND d .IdCbteVta = i.IdCbteVta LEFT OUTER JOIN
                   dbo.aca_AnioLectivo AS j ON i.IdEmpresa = j.IdEmpresa AND i.IdAnio = j.IdAnio LEFT OUTER JOIN
-                  dbo.cxc_cobro_tipo AS k ON B.IdCobro_tipo = k.IdCobro_tipo
-WHERE (A.cr_estado = 'A')
+                  dbo.cxc_cobro_tipo AS k ON B.IdCobro_tipo = k.IdCobro_tipo LEFT JOIN
+				  ba_Banco_Cuenta AS l on a.IdEmpresa = l.IdEmpresa and a.IdBanco = l.IdBanco left join
+				  tb_banco as m on l.IdBanco_Financiero = m.IdBanco
+WHERE  (A.cr_estado = 'A')
 UNION ALL
-SELECT A.IdEmpresa, A.IdSucursal, A.IdCobro, 0, A.IdUsuario, C.Nombre, 0, 0, 'ANTI', A.cr_TotalCobro, 0, D .Codigo, E.pe_nombreCompleto, 'ANTI', LEFT(A.IdCobro_tipo, 2), A.CR_FECHA, A.IdTarjeta, ISNULL(G.NombreTarjeta, A.cr_Banco), 
-                  A.cr_Banco, YEAR(A.cr_fecha), A.IdAlumno, CASE WHEN f.IdMotivo_tipo_cobro IN ('CHEQ', 'EFEC') THEN 'EFECTIVO' WHEN f.IdMotivo_tipo_cobro IN ('TARJ') THEN 'TARJETA DE CREDITO' WHEN f.IdMotivo_tipo_cobro IN ('NTCR') 
+SELECT A.IdEmpresa, A.IdSucursal, A.IdCobro, 0, A.IdUsuario, C.Nombre, 0, 0, 'ANTI', A.cr_TotalCobro, 0, D .Codigo, E.pe_nombreCompleto, 'ANTI', LEFT(A.IdCobro_tipo, 2), A.CR_FECHA, A.IdTarjeta, ISNULL(G.NombreTarjeta, isnull(A.cr_Banco, m.ba_descripcion)), 
+                  isnull(A.cr_Banco, m.ba_descripcion) cr_Banco, YEAR(A.cr_fecha), A.IdAlumno, CASE WHEN f.IdMotivo_tipo_cobro IN ('CHEQ', 'EFEC') THEN 'EFECTIVO' WHEN f.IdMotivo_tipo_cobro IN ('TARJ') THEN 'TARJETA DE CREDITO' WHEN f.IdMotivo_tipo_cobro IN ('NTCR') 
                   THEN 'NOTA DE CREDITO' END AS GrupoTipoCobro, f.tc_descripcion AS NombreTipoCobro, a.cr_TotalCobro AS TotalPago
 FROM     cxc_cobro AS A LEFT JOIN
                   seg_usuario AS C ON A.IdUsuario = C.IdUsuario INNER JOIN
                   aca_Alumno AS D ON D .IdEmpresa = A.IdEmpresa AND D .IdAlumno = A.IdAlumno INNER JOIN
                   tb_persona AS E ON E.IdPersona = D .IdPersona INNER JOIN
                   cxc_cobro_tipo AS F ON F.IdCobro_tipo = A.IdCobro_tipo LEFT JOIN
-                  tb_TarjetaCredito AS G ON A.IdEmpresa = G.IdEmpresa AND A.IdTarjeta = G.IdTarjeta
+                  tb_TarjetaCredito AS G ON A.IdEmpresa = G.IdEmpresa AND A.IdTarjeta = G.IdTarjeta LEFT JOIN
+				  ba_Banco_Cuenta AS l on a.IdEmpresa = l.IdEmpresa and a.IdBanco = l.IdBanco left join
+				  tb_banco as m on l.IdBanco_Financiero = m.IdBanco
 WHERE  NOT EXISTS
                       (SELECT B.IdEmpresa
                        FROM      cxc_cobro_det AS B

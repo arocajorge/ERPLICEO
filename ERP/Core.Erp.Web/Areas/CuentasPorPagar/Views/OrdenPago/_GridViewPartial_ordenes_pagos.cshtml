@@ -55,9 +55,14 @@
                 e.Row.ForeColor = System.Drawing.Color.Red;
             }
 
-            if (Convert.ToString(e.GetValue("IdEstadoAprobacion")) == "APRO")
+            if ((Convert.ToString(e.GetValue("IdEstadoAprobacion")) == "APRO" || Convert.ToString(e.GetValue("EstadoCancelacion")) != "CANCELADA") && Convert.ToString(e.GetValue("Estado")) == "A")
             {
                 e.Row.ForeColor = System.Drawing.Color.Blue;
+            }
+
+            if ((Convert.ToString(e.GetValue("EstadoCancelacion")) == "CANCELADA") && Convert.ToString(e.GetValue("Estado")) == "A")
+            {
+                e.Row.ForeColor = System.Drawing.Color.Green;
             }
         };
         settings.Columns.Add(c =>
@@ -97,13 +102,13 @@
             c.Width = Unit.Pixel(125);
         });
 
-        settings.Columns.Add("IdOrdenPago","ID").Width=Unit.Percentage(10);
+        settings.Columns.Add("IdOrdenPago", "ID").Width = Unit.Percentage(5);
         settings.Columns.Add("Su_Descripcion", "Sucursal").Width = Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
             column.FieldName = "Fecha";
             column.Caption = "Fecha pago";
-            column.Width = Unit.Percentage(10);
+            column.Width = Unit.Percentage(8);
             column.PropertiesEdit.DisplayFormatString = "d";
             column.EditorProperties().DateEdit(sp =>
             {
@@ -115,8 +120,8 @@
         settings.Columns.Add(column =>
         {
             column.FieldName = "Total_OP";
-            column.Caption = "$Valor";
-            column.Width = Unit.Percentage(10);
+            column.Caption = "Valor";
+            column.Width = Unit.Percentage(7);
             column.EditorProperties().SpinEdit(sp =>
             {
                 sp.MinValue = 0;
@@ -126,13 +131,14 @@
 
             });
         });
-        settings.Columns.Add("Observacion","Observación").Width = Unit.Percentage(20);
-        settings.Columns.Add("Descripcion", "Estado Aprobación").Width = Unit.Percentage(10);
+        settings.Columns.Add("Observacion", "Observación").Width = Unit.Percentage(10);
+        settings.Columns.Add("EstadoCancelacion", "Estado").Width = Unit.Percentage(7);
+        settings.Columns.Add("Descripcion", "Estado Aprobación").Width = Unit.Percentage(7);
         settings.Columns.Add(column =>
         {
             column.FieldName = "EstadoBool";
             column.Caption = "Estado";
-            column.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            column.Width = System.Web.UI.WebControls.Unit.Percentage(7);
             column.EditorProperties().CheckBox(sp =>
             {
 
@@ -146,7 +152,8 @@
             });
             column.Width = Unit.Percentage(5);
         });
-
+        settings.Settings.ShowFooter = true;
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Total_OP").DisplayFormat = "{0:n2}";
     });
 }
 @grid.Bind(Model).GetHtml()

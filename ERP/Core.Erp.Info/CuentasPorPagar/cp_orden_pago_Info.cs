@@ -56,7 +56,8 @@ namespace Core.Erp.Info.CuentasPorPagar
         public string Nom_Beneficiario { get; set; }
         public Nullable<double> Total_OP { get; set; }
         public ct_cbtecble_Info info_comprobante { get; set; }
-       
+        public string EstadoCancelacion { get; set; }
+
         public cp_orden_pago_Info()
         {
             detalle = new List<cp_orden_pago_det_Info>();

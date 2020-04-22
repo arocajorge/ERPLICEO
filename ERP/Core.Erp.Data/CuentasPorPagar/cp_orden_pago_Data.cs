@@ -47,6 +47,7 @@ namespace Core.Erp.Data.CuentasPorPagar
                                  Estado =q.Estado,
                                  Nom_Beneficiario=q.pe_nombreCompleto,
                                  Total_OP=q.Total_OP,
+                                 EstadoCancelacion = q.EstadoCancelacion,
                                  EstadoBool = q.Estado == "A" ? true : false
 
                              }).ToList();

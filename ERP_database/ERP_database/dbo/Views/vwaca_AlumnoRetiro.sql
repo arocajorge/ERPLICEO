@@ -1,12 +1,21 @@
 ﻿CREATE VIEW dbo.vwaca_AlumnoRetiro
 AS
-SELECT dbo.aca_AlumnoRetiro.IdEmpresa, dbo.aca_AlumnoRetiro.IdRetiro, dbo.aca_AlumnoRetiro.IdAlumno, dbo.aca_Alumno.IdPersona, dbo.tb_persona.pe_cedulaRuc, dbo.tb_persona.pe_nombreCompleto, dbo.aca_AlumnoRetiro.Fecha, 
-                  dbo.aca_AlumnoRetiro.Observacion, dbo.aca_AlumnoRetiro.IdCatalogoESTALU, dbo.aca_AlumnoRetiro.IdUsuarioAnulacion
+SELECT dbo.aca_AlumnoRetiro.IdEmpresa, dbo.aca_AlumnoRetiro.IdRetiro, dbo.aca_AlumnoRetiro.IdMatricula, dbo.aca_AlumnoRetiro.Fecha, dbo.aca_AlumnoRetiro.Observacion, dbo.aca_AlumnoRetiro.IdCatalogoESTALU, 
+                  dbo.aca_AlumnoRetiro.IdUsuarioAnulacion, dbo.aca_Matricula.IdAlumno, dbo.aca_Alumno.Codigo, dbo.tb_persona.pe_nombreCompleto, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomSede, 
+                  dbo.vwaca_AnioLectivo_Curso_Paralelo.NomNivel, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomJornada, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomCurso, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomParalelo, 
+                  dbo.aca_Matricula.IdAnio, dbo.tb_persona.pe_cedulaRuc, dbo.vwaca_AnioLectivo_Curso_Paralelo.Descripcion
 FROM     dbo.aca_AlumnoRetiro INNER JOIN
-                  dbo.aca_Alumno ON dbo.aca_AlumnoRetiro.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_AlumnoRetiro.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
-                  dbo.tb_persona ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona
+                  dbo.aca_Matricula ON dbo.aca_AlumnoRetiro.IdEmpresa = dbo.aca_Matricula.IdEmpresa AND dbo.aca_AlumnoRetiro.IdMatricula = dbo.aca_Matricula.IdMatricula INNER JOIN
+                  dbo.aca_Alumno ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_Matricula.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
+                  dbo.tb_persona ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
+                  dbo.vwaca_AnioLectivo_Curso_Paralelo ON dbo.aca_Matricula.IdEmpresa = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdEmpresa AND dbo.aca_Matricula.IdAnio = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdAnio AND 
+                  dbo.aca_Matricula.IdSede = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdSede AND dbo.aca_Matricula.IdNivel = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdNivel AND 
+                  dbo.aca_Matricula.IdJornada = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdJornada AND dbo.aca_Matricula.IdCurso = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdCurso AND 
+                  dbo.aca_Matricula.IdParalelo = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdParalelo
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AlumnoRetiro';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AlumnoRetiro';
+
+
 
 
 GO
@@ -15,7 +24,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[41] 4[28] 2[12] 3) )"
+         Configuration = "(H (1[54] 4[16] 2[12] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -91,6 +100,16 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
+         Begin Table = "aca_Matricula"
+            Begin Extent = 
+               Top = 7
+               Left = 955
+               Bottom = 314
+               Right = 1200
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "aca_Alumno"
             Begin Extent = 
                Top = 7
@@ -109,7 +128,17 @@ Begin DesignProperties =
                Right = 907
             End
             DisplayFlags = 280
-            TopColumn = 1
+            TopColumn = 2
+         End
+         Begin Table = "vwaca_AnioLectivo_Curso_Paralelo"
+            Begin Extent = 
+               Top = 175
+               Left = 340
+               Bottom = 338
+               Right = 584
+            End
+            DisplayFlags = 280
+            TopColumn = 0
          End
       End
    End
@@ -132,7 +161,13 @@ Begin DesignProperties =
       End
    End
    Begin CriteriaPane = 
-      Begin ColumnWidths = 11
+      Begin Colum', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AlumnoRetiro';
+
+
+
+
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'nWidths = 11
          Column = 1440
          Alias = 900
          Table = 1176

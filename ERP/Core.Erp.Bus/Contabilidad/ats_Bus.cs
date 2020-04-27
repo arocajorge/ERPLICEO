@@ -249,7 +249,7 @@ namespace Core.Erp.Bus.Contabilidad
                                        montoIce = g.Sum(y => y.montoIce),
                                        valorRetIva = g.Sum(y => y.valorRetIva),
                                        valorRetRenta = g.Sum(y => y.valorRetRenta),
-                                       numeroComprobantes = info_ats.lst_ventas.Count()
+                                       numeroComprobantes = g.Sum(q=> q.numeroComprobantes)
                                    }).ToList();
 
 

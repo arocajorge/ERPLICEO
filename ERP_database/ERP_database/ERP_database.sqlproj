@@ -1346,6 +1346,7 @@
     <Build Include="Academico\Views\VWACA_012.sql" />
     <Build Include="Academico\Stored Procedures\SPCXC_007.sql" />
     <Build Include="Academico\Stored Procedures\SPCXC_008.sql" />
+    <Build Include="dbo\Views\vwaca_AnioLectivo_Paralelo_Conducta.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

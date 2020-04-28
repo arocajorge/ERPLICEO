@@ -3,6 +3,7 @@
     [IdAnio]                INT           NOT NULL,
     [IdSede]                INT           NOT NULL,
     [IdCatalogoParcial]     INT           NOT NULL,
+    [Orden]                 INT           NULL,
     [EsExamen]              BIT           NULL,
     [FechaInicio]           DATETIME      NULL,
     [FechaFin]              DATETIME      NULL,
@@ -19,6 +20,8 @@
     CONSTRAINT [FK_aca_AnioLectivoParcial_aca_Catalogo] FOREIGN KEY ([IdCatalogoParcial]) REFERENCES [dbo].[aca_Catalogo] ([IdCatalogo]),
     CONSTRAINT [FK_aca_AnioLectivoParcial_aca_Sede] FOREIGN KEY ([IdEmpresa], [IdSede]) REFERENCES [dbo].[aca_Sede] ([IdEmpresa], [IdSede])
 );
+
+
 
 
 

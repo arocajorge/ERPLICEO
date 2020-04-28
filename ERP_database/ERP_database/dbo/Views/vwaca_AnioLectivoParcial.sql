@@ -1,7 +1,8 @@
 ﻿CREATE VIEW dbo.vwaca_AnioLectivoParcial
 AS
 SELECT dbo.aca_AnioLectivoParcial.IdEmpresa, dbo.aca_AnioLectivoParcial.IdAnio, dbo.aca_AnioLectivoParcial.IdSede, dbo.aca_AnioLectivoParcial.IdCatalogoParcial, dbo.aca_Catalogo.NomCatalogo, dbo.aca_AnioLectivoParcial.FechaInicio, 
-                  dbo.aca_AnioLectivoParcial.FechaFin, dbo.aca_AnioLectivoParcial.EsExamen, dbo.aca_Catalogo.IdCatalogoTipo, dbo.aca_CatalogoTipo.NomCatalogoTipo, dbo.aca_AnioLectivoParcial.ValidaEstadoAlumno
+                  dbo.aca_AnioLectivoParcial.FechaFin, dbo.aca_AnioLectivoParcial.Orden, dbo.aca_AnioLectivoParcial.EsExamen, dbo.aca_Catalogo.IdCatalogoTipo, dbo.aca_CatalogoTipo.NomCatalogoTipo, 
+                  dbo.aca_AnioLectivoParcial.ValidaEstadoAlumno
 FROM     dbo.aca_AnioLectivoParcial INNER JOIN
                   dbo.aca_Catalogo ON dbo.aca_AnioLectivoParcial.IdCatalogoParcial = dbo.aca_Catalogo.IdCatalogo INNER JOIN
                   dbo.aca_CatalogoTipo ON dbo.aca_Catalogo.IdCatalogoTipo = dbo.aca_CatalogoTipo.IdCatalogoTipo
@@ -15,7 +16,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+         Configuration = "(H (1[28] 4[33] 2[20] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -149,6 +150,8 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivoParcial';
+
+
 
 
 

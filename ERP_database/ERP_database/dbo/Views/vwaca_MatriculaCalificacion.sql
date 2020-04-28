@@ -6,23 +6,51 @@ SELECT dbo.aca_MatriculaCalificacion.IdEmpresa, dbo.aca_MatriculaCalificacion.Id
                   dbo.aca_MatriculaCalificacion.ExamenQ1, dbo.aca_MatriculaCalificacion.PromedioFinalQ1, dbo.aca_MatriculaCalificacion.CalificacionP4, dbo.aca_MatriculaCalificacion.CalificacionP5, dbo.aca_MatriculaCalificacion.CalificacionP6, 
                   dbo.aca_MatriculaCalificacion.PromedioQ2, dbo.aca_MatriculaCalificacion.ExamenQ2, dbo.aca_MatriculaCalificacion.PromedioFinalQ2, dbo.aca_MatriculaCalificacion.ExamenMejoramiento, 
                   dbo.aca_MatriculaCalificacion.CampoMejoramiento, dbo.aca_MatriculaCalificacion.ExamenSupletorio, dbo.aca_MatriculaCalificacion.ExamenRemedial, dbo.aca_MatriculaCalificacion.ExamenGracia, 
-                  dbo.aca_MatriculaCalificacion.PromedioFinal
+                  dbo.aca_MatriculaCalificacion.PromedioFinal, dbo.aca_MatriculaCalificacion.IdEquivalenciaPromedio, dbo.aca_AnioLectivoEquivalenciaPromedio.Descripcion, 
+                  dbo.aca_AnioLectivoEquivalenciaPromedio.Codigo AS CodigoEquivalencia
 FROM     dbo.tb_persona INNER JOIN
                   dbo.aca_Profesor ON dbo.tb_persona.IdPersona = dbo.aca_Profesor.IdPersona RIGHT OUTER JOIN
                   dbo.aca_Matricula INNER JOIN
                   dbo.aca_Alumno ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_Matricula.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
                   dbo.tb_persona AS tb_persona_1 ON dbo.aca_Alumno.IdPersona = tb_persona_1.IdPersona INNER JOIN
                   dbo.aca_MatriculaCalificacion ON dbo.aca_Matricula.IdEmpresa = dbo.aca_MatriculaCalificacion.IdEmpresa AND dbo.aca_Matricula.IdMatricula = dbo.aca_MatriculaCalificacion.IdMatricula ON 
-                  dbo.aca_Profesor.IdEmpresa = dbo.aca_MatriculaCalificacion.IdEmpresa AND dbo.aca_Profesor.IdProfesor = dbo.aca_MatriculaCalificacion.IdProfesor
+                  dbo.aca_Profesor.IdEmpresa = dbo.aca_MatriculaCalificacion.IdEmpresa AND dbo.aca_Profesor.IdProfesor = dbo.aca_MatriculaCalificacion.IdProfesor LEFT OUTER JOIN
+                  dbo.aca_AnioLectivoEquivalenciaPromedio ON dbo.aca_MatriculaCalificacion.IdEmpresa = dbo.aca_AnioLectivoEquivalenciaPromedio.IdEmpresa AND 
+                  dbo.aca_MatriculaCalificacion.IdEquivalenciaPromedio = dbo.aca_AnioLectivoEquivalenciaPromedio.IdEquivalenciaPromedio
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacion';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'  Width = 1200
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'          Right = 920
+            End
+            DisplayFlags = 280
+            TopColumn = 1
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+      Begin ColumnWidths = 36
+         Width = 284
+         Width = 1200
          Width = 1200
          Width = 1200
          Width = 1896
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -68,13 +96,15 @@ End
 
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[39] 4[37] 2[8] 3) )"
+         Configuration = "(H (1[47] 4[30] 2[8] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -192,24 +222,22 @@ Begin DesignProperties =
          End
          Begin Table = "aca_MatriculaCalificacion"
             Begin Extent = 
-               Top = 43
-               Left = 369
-               Bottom = 302
-               Right = 613
+               Top = 0
+               Left = 342
+               Bottom = 259
+               Right = 586
             End
             DisplayFlags = 280
-            TopColumn = 13
+            TopColumn = 15
          End
-      End
-   End
-   Begin SQLPane = 
-   End
-   Begin DataPane = 
-      Begin ParameterDefaults = ""
-      End
-      Begin ColumnWidths = 25
-         Width = 284
-       ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacion';
+         Begin Table = "aca_AnioLectivoEquivalenciaPromedio"
+            Begin Extent = 
+               Top = 329
+               Left = 664
+               Bottom = 492
+     ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacion';
+
+
 
 
 

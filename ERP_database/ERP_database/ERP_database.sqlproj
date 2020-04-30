@@ -1349,6 +1349,7 @@
     <Build Include="dbo\Views\vwaca_AnioLectivo_Paralelo_Conducta.sql" />
     <Build Include="dbo\Tables\aca_AnioLectivoEquivalenciaPromedio.sql" />
     <Build Include="dbo\Views\vwaca_AnioLectivoEquivalenciaPromedio.sql" />
+    <Build Include="Academico\Views\VWFAC_008.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

@@ -3,7 +3,8 @@ AS
 SELECT dbo.aca_Matricula_Rubro.IdEmpresa, dbo.aca_Matricula_Rubro.IdMatricula, dbo.aca_Matricula_Rubro.IdPeriodo, dbo.aca_AnioLectivo_Periodo.FechaDesde, dbo.aca_Matricula_Rubro.IdRubro, dbo.aca_AnioLectivo_Rubro.NomRubro, 
                   dbo.aca_Matricula_Rubro.IdProducto, dbo.aca_Matricula_Rubro.Subtotal, dbo.aca_Matricula_Rubro.IdCod_Impuesto_Iva, dbo.aca_Matricula_Rubro.Porcentaje, dbo.aca_Matricula_Rubro.ValorIVA, dbo.aca_Matricula_Rubro.Total, 
                   dbo.in_Producto.pr_descripcion, dbo.aca_Matricula_Rubro.IdSucursal, dbo.aca_Matricula_Rubro.IdBodega, dbo.aca_Matricula_Rubro.IdCbteVta, dbo.aca_Matricula_Rubro.FechaFacturacion, dbo.aca_Matricula_Rubro.IdMecanismo, 
-                  dbo.aca_Matricula_Rubro.EnMatricula, dbo.aca_Matricula_Rubro.IdAnio, dbo.aca_Matricula_Rubro.IdPlantilla
+                  dbo.aca_Matricula_Rubro.EnMatricula, dbo.aca_Matricula_Rubro.IdAnio, dbo.aca_Matricula_Rubro.IdPlantilla, dbo.aca_Matricula_Rubro.IdSede, dbo.aca_Matricula_Rubro.IdNivel, dbo.aca_Matricula_Rubro.IdJornada, 
+                  dbo.aca_Matricula_Rubro.IdCurso, dbo.aca_Matricula_Rubro.IdParalelo
 FROM     dbo.aca_AnioLectivo_Rubro INNER JOIN
                   dbo.aca_AnioLectivo_Rubro_Periodo ON dbo.aca_AnioLectivo_Rubro.IdEmpresa = dbo.aca_AnioLectivo_Rubro_Periodo.IdEmpresa AND dbo.aca_AnioLectivo_Rubro.IdAnio = dbo.aca_AnioLectivo_Rubro_Periodo.IdAnio AND 
                   dbo.aca_AnioLectivo_Rubro.IdRubro = dbo.aca_AnioLectivo_Rubro_Periodo.IdRubro INNER JOIN
@@ -17,6 +18,15 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -44,6 +54,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' = 1200
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula_Rubro';
+
+
 
 
 
@@ -160,7 +172,7 @@ Begin DesignProperties =
                Right = 292
             End
             DisplayFlags = 280
-            TopColumn = 4
+            TopColumn = 3
          End
          Begin Table = "in_Producto"
             Begin Extent = 
@@ -179,7 +191,7 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 18
+      Begin ColumnWidths = 27
          Width = 284
          Width = 1200
          Width = 1200
@@ -192,6 +204,8 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula_Rubro';
+
+
 
 
 

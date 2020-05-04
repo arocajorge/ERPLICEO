@@ -11,10 +11,13 @@
     [IdPlantilla]       INT           NOT NULL,
     [IdUsuarioCreacion] VARCHAR (200) NULL,
     [FechaCreacion]     DATETIME      NULL,
+    [TipoCambio]        VARCHAR (50)  NULL,
     [Observacion]       VARCHAR (MAX) NULL,
     CONSTRAINT [PK_aca_MatriculaCambios] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdMatricula] ASC, [Secuencia] ASC),
     CONSTRAINT [FK_aca_MatriculaCambios_aca_Matricula] FOREIGN KEY ([IdEmpresa], [IdMatricula]) REFERENCES [dbo].[aca_Matricula] ([IdEmpresa], [IdMatricula])
 );
+
+
 
 
 

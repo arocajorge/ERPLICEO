@@ -1,10 +1,13 @@
-﻿CREATE VIEW dbo.vwaca_Matricula_AlumnosPorParalelo
+﻿CREATE VIEW [dbo].[vwaca_Matricula_AlumnosPorParalelo]
 AS
-SELECT a.IdEmpresa, a.IdAnio, a.IdSede, a.IdNivel, a.IdJornada, a.IdCurso, a.IdParalelo, a.IdMatricula, a.IdAlumno, b.Codigo, p.pe_cedulaRuc, p.pe_nombreCompleto, a.Fecha
+SELECT a.IdEmpresa, a.IdAnio, a.IdSede, a.IdNivel, a.IdJornada, a.IdCurso, a.IdParalelo, a.IdMatricula, a.IdAlumno, b.Codigo, p.pe_cedulaRuc, p.pe_nombreCompleto, a.Fecha, 
+CASE WHEN r.IdRetiro is null THEN CAST(0 AS BIT) ELSE CAST(1 AS BIT) END AS EsRetirado,
+CASE WHEN r.IdRetiro is null THEN '' ELSE 'RETIRADO' END AS EsRetiradoString
 FROM     dbo.aca_Matricula AS a INNER JOIN
                   dbo.aca_Alumno AS b ON a.IdEmpresa = b.IdEmpresa AND a.IdAlumno = b.IdAlumno INNER JOIN
-                  dbo.tb_persona AS p ON b.IdPersona = p.IdPersona
-WHERE  (b.Estado = 1)
+                  dbo.tb_persona AS p ON b.IdPersona = p.IdPersona left join
+				  aca_AlumnoRetiro AS r on a.IdEmpresa = r.IdEmpresa and a.IdMatricula = r.IdMatricula 
+WHERE  (b.Estado = 1) and isnull(r.Estado,1) = 1
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula_AlumnosPorParalelo';
 

@@ -3,7 +3,7 @@ AS
 SELECT dbo.aca_AlumnoRetiro.IdEmpresa, dbo.aca_AlumnoRetiro.IdRetiro, dbo.aca_AlumnoRetiro.IdMatricula, dbo.aca_AlumnoRetiro.Fecha, dbo.aca_AlumnoRetiro.Observacion, dbo.aca_AlumnoRetiro.IdCatalogoESTALU, 
                   dbo.aca_AlumnoRetiro.IdUsuarioAnulacion, dbo.aca_Matricula.IdAlumno, dbo.aca_Alumno.Codigo, dbo.tb_persona.pe_nombreCompleto, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomSede, 
                   dbo.vwaca_AnioLectivo_Curso_Paralelo.NomNivel, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomJornada, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomCurso, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomParalelo, 
-                  dbo.aca_Matricula.IdAnio, dbo.tb_persona.pe_cedulaRuc, dbo.vwaca_AnioLectivo_Curso_Paralelo.Descripcion
+                  dbo.aca_Matricula.IdAnio, dbo.tb_persona.pe_cedulaRuc, dbo.vwaca_AnioLectivo_Curso_Paralelo.Descripcion, dbo.aca_AlumnoRetiro.Estado
 FROM     dbo.aca_AlumnoRetiro INNER JOIN
                   dbo.aca_Matricula ON dbo.aca_AlumnoRetiro.IdEmpresa = dbo.aca_Matricula.IdEmpresa AND dbo.aca_AlumnoRetiro.IdMatricula = dbo.aca_Matricula.IdMatricula INNER JOIN
                   dbo.aca_Alumno ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_Matricula.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN

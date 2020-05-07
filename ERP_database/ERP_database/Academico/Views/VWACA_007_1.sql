@@ -1,25 +1,30 @@
-﻿CREATE VIEW Academico.VWACA_007
+﻿CREATE VIEW [Academico].[VWACA_007]
 AS
 SELECT sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.OrdenCurso, jc.NomCurso, cp.CodigoParalelo, cp.NomParalelo, cp.OrdenParalelo, p.pe_sexo, 1 AS Cantidad, dbo.aca_Matricula.IdEmpresa, 
                   dbo.aca_Matricula.IdMatricula, dbo.aca_Matricula.IdAnio, dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, dbo.aca_Matricula.IdCurso, dbo.aca_Matricula.IdParalelo, dbo.aca_Matricula.Fecha, 
-                  dbo.aca_Plantilla.NomPlantilla, dbo.aca_Plantilla.IdPlantilla, a.Descripcion, dbo.aca_Plantilla.IdTipoPlantilla, dbo.aca_PlantillaTipo.NomPlantillaTipo
-FROM     dbo.aca_AnioLectivo AS a INNER JOIN
-                  dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn ON a.IdEmpresa = sn.IdEmpresa AND a.IdAnio = sn.IdAnio INNER JOIN
-                  dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel INNER JOIN
-                  dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada INNER JOIN
-                  dbo.aca_AnioLectivo_Curso_Paralelo AS cp ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND jc.IdCurso = cp.IdCurso INNER JOIN
-                  dbo.aca_Matricula ON cp.IdEmpresa = dbo.aca_Matricula.IdEmpresa AND cp.IdAnio = dbo.aca_Matricula.IdAnio AND cp.IdSede = dbo.aca_Matricula.IdSede AND cp.IdNivel = dbo.aca_Matricula.IdNivel AND 
-                  cp.IdJornada = dbo.aca_Matricula.IdJornada AND cp.IdCurso = dbo.aca_Matricula.IdCurso AND cp.IdParalelo = dbo.aca_Matricula.IdParalelo INNER JOIN
-                  dbo.aca_Alumno AS alu ON dbo.aca_Matricula.IdEmpresa = alu.IdEmpresa AND dbo.aca_Matricula.IdAlumno = alu.IdAlumno INNER JOIN
-                  dbo.tb_persona AS p ON alu.IdPersona = p.IdPersona INNER JOIN
+                  dbo.aca_Plantilla.NomPlantilla, dbo.aca_Plantilla.IdPlantilla, a.Descripcion, dbo.aca_Plantilla.IdTipoPlantilla, dbo.aca_PlantillaTipo.NomPlantillaTipo, CASE WHEN ret.IdEmpresa IS NULL THEN CAST(0 AS bit) ELSE CAST(1 AS bit) 
+                  END AS EsRetirado, CASE WHEN ret.IdEmpresa IS NULL THEN '' ELSE 'RETIRADO' END AS EsRetiradoString
+FROM     dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj RIGHT OUTER JOIN
+                  dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada LEFT OUTER JOIN
+                  dbo.aca_Alumno AS alu INNER JOIN
+                  dbo.aca_Matricula ON alu.IdEmpresa = dbo.aca_Matricula.IdEmpresa AND alu.IdAlumno = dbo.aca_Matricula.IdAlumno INNER JOIN
+                  dbo.tb_persona AS p ON alu.IdPersona = p.IdPersona LEFT OUTER JOIN
                   dbo.aca_Plantilla ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Plantilla.IdEmpresa AND dbo.aca_Matricula.IdAnio = dbo.aca_Plantilla.IdAnio AND dbo.aca_Matricula.IdPlantilla = dbo.aca_Plantilla.IdPlantilla LEFT OUTER JOIN
-                  dbo.aca_PlantillaTipo ON dbo.aca_Plantilla.IdEmpresa = dbo.aca_PlantillaTipo.IdEmpresa AND dbo.aca_Plantilla.IdTipoPlantilla = dbo.aca_PlantillaTipo.IdTipoPlantilla
+                  dbo.aca_AnioLectivo_Curso_Paralelo AS cp ON dbo.aca_Matricula.IdEmpresa = cp.IdEmpresa AND dbo.aca_Matricula.IdAnio = cp.IdAnio AND dbo.aca_Matricula.IdSede = cp.IdSede AND dbo.aca_Matricula.IdNivel = cp.IdNivel AND 
+                  dbo.aca_Matricula.IdJornada = cp.IdJornada AND dbo.aca_Matricula.IdCurso = cp.IdCurso AND dbo.aca_Matricula.IdParalelo = cp.IdParalelo ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND 
+                  jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND jc.IdCurso = cp.IdCurso LEFT OUTER JOIN
+                  dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn ON nj.IdEmpresa = sn.IdEmpresa AND nj.IdAnio = sn.IdAnio AND nj.IdSede = sn.IdSede AND nj.IdNivel = sn.IdNivel LEFT OUTER JOIN
+                  dbo.aca_AnioLectivo AS a ON sn.IdEmpresa = a.IdEmpresa AND sn.IdAnio = a.IdAnio LEFT OUTER JOIN
+                  dbo.aca_PlantillaTipo ON dbo.aca_Plantilla.IdEmpresa = dbo.aca_PlantillaTipo.IdEmpresa AND dbo.aca_Plantilla.IdTipoPlantilla = dbo.aca_PlantillaTipo.IdTipoPlantilla LEFT OUTER JOIN
+                      (SELECT IdEmpresa, IdMatricula
+                       FROM      dbo.aca_AlumnoRetiro AS f
+                       WHERE   (Estado = 1)) AS ret ON dbo.aca_Matricula.IdEmpresa = ret.IdEmpresa AND dbo.aca_Matricula.IdMatricula = ret.IdMatricula
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_007';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' = 0
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'n = 0
          End
          Begin Table = "p"
             Begin Extent = 
@@ -47,6 +52,16 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' = 0
                Left = 667
                Bottom = 1434
                Right = 912
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "aca_AlumnoRetiro"
+            Begin Extent = 
+               Top = 967
+               Left = 341
+               Bottom = 1130
+               Right = 585
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -91,15 +106,13 @@ End
 ', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_007';
 
 
-
-
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[30] 4[3] 2[3] 3) )"
+         Configuration = "(H (1[31] 4[3] 2[26] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -233,7 +246,5 @@ Begin DesignProperties =
                Right = 293
             End
             DisplayFlags = 280
-            TopColumn', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_007';
-
-
+            TopColum', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_007';
 

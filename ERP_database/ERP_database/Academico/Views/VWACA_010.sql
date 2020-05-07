@@ -1,13 +1,14 @@
 ﻿CREATE VIEW Academico.VWACA_010
 AS
-SELECT ROW_NUMBER() OVER(PARTITION BY dbo.aca_Matricula.IdEmpresa, dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdAnio, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, dbo.aca_Matricula.IdCurso, dbo.aca_Matricula.IdParalelo, dbo.aca_MatriculaCalificacionParcial.IdCatalogoParcial, dbo.aca_Materia.IdMateria ORDER BY dbo.tb_persona.pe_nombreCompleto ) AS RowNumber,
-dbo.aca_MatriculaCalificacionParcial.IdEmpresa, dbo.aca_MatriculaCalificacionParcial.IdMatricula, dbo.aca_Matricula.IdAnio, dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, dbo.aca_Matricula.IdCurso, 
-                  dbo.aca_Matricula.IdParalelo, dbo.aca_MatriculaCalificacionParcial.IdMateria, dbo.aca_Materia.NomMateria, dbo.aca_MatriculaCalificacionParcial.IdCatalogoParcial, dbo.aca_Catalogo.NomCatalogo, 
-                  dbo.aca_MatriculaCalificacionParcial.IdProfesor, tb_persona_1.pe_nombreCompleto AS Profesor, dbo.aca_Matricula.IdAlumno, dbo.aca_Alumno.IdPersona, dbo.tb_persona.pe_nombreCompleto AS Alumno, 
-                  dbo.aca_MatriculaCalificacionParcial.Calificacion1, dbo.aca_MatriculaCalificacionParcial.Calificacion2, dbo.aca_MatriculaCalificacionParcial.Calificacion3, dbo.aca_MatriculaCalificacionParcial.Calificacion4, 
-                  dbo.aca_MatriculaCalificacionParcial.Evaluacion, dbo.aca_MatriculaCalificacionParcial.Remedial1, dbo.aca_MatriculaCalificacionParcial.Remedial2, dbo.aca_MatriculaCalificacionParcial.Conducta, 
-                  dbo.aca_MatriculaCalificacionParcial.MotivoCalificacion, dbo.aca_MatriculaCalificacionParcial.MotivoConducta, dbo.aca_MatriculaCalificacionParcial.AccionRemedial, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomNivel, 
-                  dbo.vwaca_AnioLectivo_Curso_Paralelo.NomJornada, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomCurso, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomParalelo, dbo.aca_Alumno.Codigo
+SELECT ROW_NUMBER() OVER (PARTITION BY dbo.aca_Matricula.IdEmpresa, dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdAnio, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, dbo.aca_Matricula.IdCurso, 
+                  dbo.aca_Matricula.IdParalelo, dbo.aca_MatriculaCalificacionParcial.IdCatalogoParcial, dbo.aca_Materia.IdMateria
+ORDER BY dbo.tb_persona.pe_nombreCompleto) AS RowNumber, dbo.aca_MatriculaCalificacionParcial.IdEmpresa, dbo.aca_MatriculaCalificacionParcial.IdMatricula, dbo.aca_Matricula.IdAnio, dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdNivel, 
+dbo.aca_Matricula.IdJornada, dbo.aca_Matricula.IdCurso, dbo.aca_Matricula.IdParalelo, dbo.aca_MatriculaCalificacionParcial.IdMateria, dbo.aca_Materia.NomMateria, dbo.aca_MatriculaCalificacionParcial.IdCatalogoParcial, 
+dbo.aca_Catalogo.NomCatalogo, dbo.aca_MatriculaCalificacionParcial.IdProfesor, tb_persona_1.pe_nombreCompleto AS Profesor, dbo.aca_Matricula.IdAlumno, dbo.aca_Alumno.IdPersona, dbo.tb_persona.pe_nombreCompleto AS Alumno, 
+dbo.aca_MatriculaCalificacionParcial.Calificacion1, dbo.aca_MatriculaCalificacionParcial.Calificacion2, dbo.aca_MatriculaCalificacionParcial.Calificacion3, dbo.aca_MatriculaCalificacionParcial.Calificacion4, 
+dbo.aca_MatriculaCalificacionParcial.Evaluacion, dbo.aca_MatriculaCalificacionParcial.Remedial1, dbo.aca_MatriculaCalificacionParcial.Remedial2, dbo.aca_MatriculaCalificacionParcial.Conducta, 
+dbo.aca_MatriculaCalificacionParcial.MotivoCalificacion, dbo.aca_MatriculaCalificacionParcial.MotivoConducta, dbo.aca_MatriculaCalificacionParcial.AccionRemedial, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomNivel, 
+dbo.vwaca_AnioLectivo_Curso_Paralelo.NomJornada, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomCurso, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomParalelo, dbo.aca_Alumno.Codigo
 FROM     dbo.aca_Materia INNER JOIN
                   dbo.aca_Catalogo INNER JOIN
                   dbo.aca_MatriculaCalificacionParcial ON dbo.aca_Catalogo.IdCatalogo = dbo.aca_MatriculaCalificacionParcial.IdCatalogoParcial ON dbo.aca_Materia.IdEmpresa = dbo.aca_MatriculaCalificacionParcial.IdEmpresa AND 
@@ -37,7 +38,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[37] 4[25] 2[20] 3) )"
+         Configuration = "(H (1[47] 4[20] 2[12] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -110,8 +111,15 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 34
+      Begin ColumnWidths = 41
          Width = 284
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -166,6 +174,8 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_010';
+
+
 
 
 

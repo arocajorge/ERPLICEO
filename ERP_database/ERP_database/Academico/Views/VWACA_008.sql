@@ -135,34 +135,36 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_AlumnoRetiro"
-            Begin Extent = 
-               Top = 175
-               Left = 48
-               Bottom = 338
-               Right = 292
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
          Begin Table = "aca_PlantillaTipo"
             Begin Extent = 
-               Top = 175
-               Left = 340
-               Bottom = 338
-               Right = 585
+               Top = 157
+               Left = 186
+               Bottom = 320
+               Right = 431
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "a"
             Begin Extent = 
+               Top = 120
+               Left = 1203
+               Bottom = 283
+               Right = 1486
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "sn"
+            Begin Extent = 
                Top = 175
-               Left = 633
+               Left = 672
                Bottom = 338
                Right = 916
             End
-            Displa', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_008';
+            DisplayFlags = 28', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_008';
+
+
 
 
 
@@ -170,10 +172,10 @@ Begin DesignProperties =
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'yFlags = 280
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'0
             TopColumn = 0
          End
-         Begin Table = "sn"
+         Begin Table = "nj"
             Begin Extent = 
                Top = 175
                Left = 964
@@ -183,7 +185,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'yFlags = 2
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "nj"
+         Begin Table = "jc"
             Begin Extent = 
                Top = 343
                Left = 48
@@ -193,22 +195,12 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'yFlags = 2
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "jc"
+         Begin Table = "cp"
             Begin Extent = 
                Top = 343
                Left = 340
                Bottom = 506
                Right = 584
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "cp"
-            Begin Extent = 
-               Top = 343
-               Left = 632
-               Bottom = 506
-               Right = 876
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -220,10 +212,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'yFlags = 2
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 32
+      Begin ColumnWidths = 30
          Width = 284
-         Width = 1200
-         Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -274,6 +264,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'yFlags = 2
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_008';
+
+
 
 
 

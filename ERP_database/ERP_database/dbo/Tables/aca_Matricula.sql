@@ -38,3 +38,10 @@
 
 
 
+
+
+
+GO
+CREATE NONCLUSTERED INDEX [NonClusteredIndex-20200507-113016]
+    ON [dbo].[aca_Matricula]([IdEmpresa] ASC, [IdAnio] ASC, [IdSede] ASC, [IdNivel] ASC, [IdJornada] ASC, [IdCurso] ASC, [IdParalelo] ASC);
+

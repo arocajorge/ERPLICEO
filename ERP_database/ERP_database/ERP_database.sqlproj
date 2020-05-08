@@ -1347,12 +1347,13 @@
     <Build Include="dbo\Tables\aca_AnioLectivoEquivalenciaPromedio.sql" />
     <Build Include="dbo\Views\vwaca_AnioLectivoEquivalenciaPromedio.sql" />
     <Build Include="Academico\Views\VWFAC_008.sql" />
-    <Build Include="Academico\Views\VWACA_014.sql" />
     <Build Include="Academico\Views\VWACA_013.sql" />
     <Build Include="Academico\Views\VWACA_007_1.sql" />
     <Build Include="Academico\Views\VWACA_006_1.sql" />
     <Build Include="Academico\Views\VWACA_004_1.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_007.sql" />
+    <Build Include="Academico\Stored Procedures\SPACA_013.sql" />
+    <Build Include="Academico\Stored Procedures\SPACA_010.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

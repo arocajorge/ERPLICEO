@@ -1,4 +1,4 @@
-﻿create PROCEDURE [Academico].[SPACA_013]
+﻿CREATE PROCEDURE [Academico].[SPACA_013]
 (
 @IdEmpresa int,
 @IdAnio int,
@@ -14,7 +14,7 @@ SELECT mp.IdEmpresa, mp.IdMatricula, mp.IdMateria, mp.IdCatalogoParcial, m.IdAni
                   jc.OrdenCurso, cp.CodigoParalelo, cp.NomParalelo, cp.OrdenParalelo, m.IdAlumno, p.pe_nombreCompleto AS NombreAlumno, a.Codigo AS CodigoAlumno, p.pe_cedulaRuc, cm.NomMateria, cm.NomMateriaArea, cm.NomMateriaGrupo, 
                   cm.EsObligatorio, cm.OrdenMateria, cm.OrdenMateriaGrupo, cm.OrdenMateriaArea,c.NomCatalogo, AN.Descripcion, mp.Calificacion1, mp.Calificacion2, mp.Calificacion3, mp.Calificacion4, 
 				  mp.Remedial1, mp.Remedial2,
-                  mp.Evaluacion, equiv.Letra, equiv.Calificacion, 
+                  mp.Evaluacion, equiv.Letra, equiv.Calificacion, mp.MotivoCalificacion,mp.AccionRemedial,
 				  case when mp.IdCatalogoParcial = 28 then 
 				  prom.CalificacionP1 
 				  when mp.IdCatalogoParcial = 29 then 

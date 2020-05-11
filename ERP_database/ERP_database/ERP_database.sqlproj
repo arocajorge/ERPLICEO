@@ -1356,6 +1356,7 @@
     <Build Include="Academico\Stored Procedures\SPACA_010.sql" />
     <Build Include="Academico\Views\VWACA_013_EquivalenciaPromedio.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_014.sql" />
+    <Build Include="dbo\Views\vwaca_AnioLectivo_Curso_Materia.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

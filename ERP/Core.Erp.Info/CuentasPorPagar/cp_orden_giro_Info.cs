@@ -94,6 +94,7 @@ namespace Core.Erp.Info.CuentasPorPagar
         public string num_cta_acreditacion { get; set; }
         public int? IdPuntoVta { get; set; }
         public bool? MueveInventario { get; set; }
+        public string EstadoCancelacion { get; set; }
 
         public cp_orden_giro_Info()
 

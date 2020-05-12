@@ -65,5 +65,7 @@ namespace Core.Erp.Data
         public string Descripcion { get; set; }
         public bool ManejaTalonario { get; set; }
         public Nullable<System.DateTime> FechaInicioTalonario { get; set; }
+        public Nullable<decimal> Saldo { get; set; }
+        public string EstadoCancelacion { get; set; }
     }
 }

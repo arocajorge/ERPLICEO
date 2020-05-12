@@ -65,6 +65,11 @@
             {
                 e.Row.ForeColor = System.Drawing.Color.Red;
             }
+
+            if (Convert.ToString(e.GetValue("EstadoCancelacion")) == "CANCELADO")
+            {
+                e.Row.ForeColor = System.Drawing.Color.Green;
+            }
         };
         settings.Columns.Add(c =>
         {
@@ -102,8 +107,8 @@
             c.Width = Unit.Pixel(150);
         });
         settings.Columns.Add("IdCbteCble_Ogiro", "ID").Width = Unit.Percentage(7);
-        settings.Columns.Add("Descripcion", "Tipo").Width = Unit.Percentage(15);
-        settings.Columns.Add("co_factura", "Documento").Width = Unit.Percentage(15);
+        settings.Columns.Add("Descripcion", "Tipo").Width = Unit.Percentage(10);
+        settings.Columns.Add("co_factura", "Documento").Width = Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
             column.FieldName = "co_FechaFactura";
@@ -123,6 +128,7 @@
         settings.Columns.Add("co_valoriva", " IVA").Width = Unit.Percentage(10);
         settings.Columns.Add("co_subtotal_siniva", " SubSin IVA").Width = Unit.Percentage(10);*/
         settings.Columns.Add("co_total", "Total").Width = Unit.Percentage(10);
+        settings.Columns.Add("EstadoCancelacion", "Cancelado").Width = Unit.Percentage(10);
         settings.Columns.Add(column =>
         {
             column.FieldName = "EstadoBool";

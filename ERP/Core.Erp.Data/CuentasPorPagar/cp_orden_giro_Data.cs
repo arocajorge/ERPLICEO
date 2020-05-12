@@ -613,6 +613,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                                 aut_doc_Modificar = q.aut_doc_Modificar,
                                 IdTipoMovi = q.IdTipoMovi,
                                 Estado = q.Estado,
+                                Saldo_OG = Convert.ToDouble(q.Saldo),
+                                EstadoCancelacion = q.EstadoCancelacion,
                                 info_proveedor = new cp_proveedor_Info
                                 {
                                     info_persona = new Info.General.tb_persona_Info
@@ -647,6 +649,8 @@ namespace Core.Erp.Data.CuentasPorPagar
                                 Descripcion = q.Descripcion,
                                 fecha_autorizacion = q.fecha_autorizacion,
                                 Estado = q.Estado,
+                                Saldo_OG = Convert.ToDouble(q.Saldo),
+                                EstadoCancelacion = q.EstadoCancelacion,
                                 info_proveedor = new cp_proveedor_Info
                                 {
                                     info_persona = new Info.General.tb_persona_Info

@@ -21,10 +21,7 @@ namespace Core.Erp.Data
             : base("name=Entities_cuentas_por_pagar")
         {
         }
-        public void SetCommandTimeOut(int TimeOut)
-        {
-            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
-        }
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -81,9 +78,9 @@ namespace Core.Erp.Data
         public DbSet<vwcp_orden_giro_x_pagar> vwcp_orden_giro_x_pagar { get; set; }
         public DbSet<cp_orden_pago> cp_orden_pago { get; set; }
         public DbSet<cp_orden_giro> cp_orden_giro { get; set; }
-        public DbSet<vwcp_orden_giro> vwcp_orden_giro { get; set; }
-        public DbSet<vwcp_orden_giro_LiquidacionDeCompras> vwcp_orden_giro_LiquidacionDeCompras { get; set; }
         public DbSet<vwcp_orden_pago> vwcp_orden_pago { get; set; }
+        public DbSet<vwcp_orden_giro_LiquidacionDeCompras> vwcp_orden_giro_LiquidacionDeCompras { get; set; }
+        public DbSet<vwcp_orden_giro> vwcp_orden_giro { get; set; }
     
         public virtual ObjectResult<spcp_Get_Data_orden_pago_con_cancelacion_x_pago_Result> spcp_Get_Data_orden_pago_con_cancelacion_x_pago(Nullable<int> idEmpresa_pago, Nullable<int> idTipoCbte_pago, Nullable<decimal> idCbteCble_pago, string idUsuario)
         {

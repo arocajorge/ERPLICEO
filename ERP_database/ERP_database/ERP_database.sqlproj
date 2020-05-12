@@ -1358,6 +1358,7 @@
     <Build Include="Academico\Stored Procedures\SPACA_014.sql" />
     <Build Include="dbo\Views\vwaca_AnioLectivo_Curso_Materia.sql" />
     <Build Include="Academico\Stored Procedures\SPCXC_009.sql" />
+    <Build Include="Academico\Stored Procedures\SPACA_014_Conducta.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

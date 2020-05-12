@@ -17,14 +17,15 @@ SELECT mp.IdEmpresa, mp.IdMatricula, mp.IdMateria, mp.IdCatalogoParcial, m.IdAni
                   CASE WHEN mp.IdCatalogoParcial = 28 THEN prom.CalificacionP1 WHEN mp.IdCatalogoParcial = 29 THEN prom.CalificacionP2 WHEN mp.IdCatalogoParcial = 30 THEN prom.CalificacionP3 WHEN mp.IdCatalogoParcial = 31 THEN prom.CalificacionP4
                    WHEN mp.IdCatalogoParcial = 32 THEN prom.CalificacionP5 WHEN mp.IdCatalogoParcial = 33 THEN prom.CalificacionP6 END AS PromedioParcial,
 
-CASE 
-WHEN mp.IdCatalogoParcial = 28 THEN case when mc.SecuenciaPromedioFinalP1 is null then mc.SecuenciaPromedioP1 else mc.SecuenciaPromedioFinalP1 end
-WHEN mp.IdCatalogoParcial = 29 THEN case when mc.SecuenciaPromedioFinalP2 is null then mc.SecuenciaPromedioP2 else mc.SecuenciaPromedioFinalP2 end
-WHEN mp.IdCatalogoParcial = 30 THEN case when mc.SecuenciaPromedioFinalP3 is null then mc.SecuenciaPromedioP3 else mc.SecuenciaPromedioFinalP3 end
-WHEN mp.IdCatalogoParcial = 31 THEN case when mc.SecuenciaPromedioFinalP4 is null then mc.SecuenciaPromedioP4 else mc.SecuenciaPromedioFinalP4 end
-WHEN mp.IdCatalogoParcial = 32 THEN case when mc.SecuenciaPromedioFinalP5 is null then mc.SecuenciaPromedioP5 else mc.SecuenciaPromedioFinalP5 end
-WHEN mp.IdCatalogoParcial = 33 THEN case when mc.SecuenciaPromedioFinalP6 is null then mc.SecuenciaPromedioP6 else mc.SecuenciaPromedioFinalP6 end
-END AS PromedioConductaParcial
+--CASE 
+--WHEN mp.IdCatalogoParcial = 28 THEN case when mc.SecuenciaPromedioFinalP1 is null then mc.SecuenciaPromedioP1 else mc.SecuenciaPromedioFinalP1 end
+--WHEN mp.IdCatalogoParcial = 29 THEN case when mc.SecuenciaPromedioFinalP2 is null then mc.SecuenciaPromedioP2 else mc.SecuenciaPromedioFinalP2 end
+--WHEN mp.IdCatalogoParcial = 30 THEN case when mc.SecuenciaPromedioFinalP3 is null then mc.SecuenciaPromedioP3 else mc.SecuenciaPromedioFinalP3 end
+--WHEN mp.IdCatalogoParcial = 31 THEN case when mc.SecuenciaPromedioFinalP4 is null then mc.SecuenciaPromedioP4 else mc.SecuenciaPromedioFinalP4 end
+--WHEN mp.IdCatalogoParcial = 32 THEN case when mc.SecuenciaPromedioFinalP5 is null then mc.SecuenciaPromedioP5 else mc.SecuenciaPromedioFinalP5 end
+--WHEN mp.IdCatalogoParcial = 33 THEN case when mc.SecuenciaPromedioFinalP6 is null then mc.SecuenciaPromedioP6 else mc.SecuenciaPromedioFinalP6 end
+--END AS PromedioConductaParcial,
+EquivM.Secuencia as SecuenciaPromedioConducta, EquivM.Letra as LetraPromedioConducta
 FROM     dbo.aca_MatriculaConducta AS mc RIGHT OUTER JOIN
                   dbo.aca_AnioLectivo_Curso_Materia AS cm INNER JOIN
                   dbo.tb_persona AS p INNER JOIN
@@ -41,7 +42,15 @@ FROM     dbo.aca_MatriculaConducta AS mc RIGHT OUTER JOIN
                   dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
                   dbo.aca_AnioLectivo_Curso_Paralelo AS cp ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND jc.IdCurso = cp.IdCurso ON 
                   m.IdEmpresa = cp.IdEmpresa AND m.IdAnio = cp.IdAnio AND m.IdSede = cp.IdSede AND m.IdNivel = cp.IdNivel AND m.IdJornada = cp.IdJornada AND m.IdCurso = cp.IdCurso AND m.IdParalelo = cp.IdParalelo
-
+LEFT JOIN
+				  dbo.aca_AnioLectivoConductaEquivalencia AS EquivM ON m.IdEmpresa = EquivM.IdEmpresa AND m.IdAnio = EquivM.IdAnio AND EquivM.Secuencia = CASE 
+					WHEN mp.IdCatalogoParcial = 28 THEN case when mc.SecuenciaPromedioFinalP1 is null then mc.SecuenciaPromedioP1 else mc.SecuenciaPromedioFinalP1 end
+					WHEN mp.IdCatalogoParcial = 29 THEN case when mc.SecuenciaPromedioFinalP2 is null then mc.SecuenciaPromedioP2 else mc.SecuenciaPromedioFinalP2 end
+					WHEN mp.IdCatalogoParcial = 30 THEN case when mc.SecuenciaPromedioFinalP3 is null then mc.SecuenciaPromedioP3 else mc.SecuenciaPromedioFinalP3 end
+					WHEN mp.IdCatalogoParcial = 31 THEN case when mc.SecuenciaPromedioFinalP4 is null then mc.SecuenciaPromedioP4 else mc.SecuenciaPromedioFinalP4 end
+					WHEN mp.IdCatalogoParcial = 32 THEN case when mc.SecuenciaPromedioFinalP5 is null then mc.SecuenciaPromedioP5 else mc.SecuenciaPromedioFinalP5 end
+					WHEN mp.IdCatalogoParcial = 33 THEN case when mc.SecuenciaPromedioFinalP6 is null then mc.SecuenciaPromedioP6 else mc.SecuenciaPromedioFinalP6 end
+					END
 where mp.IdEmpresa = @IdEmpresa 
 and m.IdAnio = @IdAnio
 and mp.IdCatalogoParcial = @IdParcial

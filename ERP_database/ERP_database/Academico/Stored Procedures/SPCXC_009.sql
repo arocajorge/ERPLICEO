@@ -33,7 +33,7 @@ fa_notaCreDeb as h on b.IdEmpresa = h.IdEmpresa and b.IdSucursal = h.IdSucursal 
 where a.cr_estado = 'A' AND B.estado = 'A' and b.IdCobro_tipo in ('CHQF','CHQV','DEPO','EFEC','TARJ') and a.cr_fecha between @FechaIni and @FechaFin
 UNION ALL
 select a.IdEmpresa, a.IdSucursal, a.IdCobro, 1, null, null, null, a.cr_TotalCobro, a.cr_fecha, a.cr_fecha, cast(year(a.cr_fecha) as varchar) +' / '+ right('00'+cast(b.idMes as varchar),2) Periodo,
-d.pe_nombreCompleto, c.Codigo, a.IdCobro_tipo, 'PAGOS ANTICIPADOS', 2 as Orden, 'PAGOS ANTICIPADOS '+cast(year(a.cr_fecha) as varchar) +' / '+ right('00'+cast(b.idMes as varchar),2),'PAGOS ANTICIPADOS '+cast(year(a.cr_fecha) as varchar) +' / '+ right('00'+cast(b.idMes as varchar),2)
+d.pe_nombreCompleto, c.Codigo, a.IdCobro_tipo, 'PAGOS ANTICIPADOS', 2 as Orden, cast(year(a.cr_fecha) as varchar) +' / '+ right('00'+cast(b.idMes as varchar),2),'PAGOS ANTICIPADOS '+cast(year(a.cr_fecha) as varchar) +' / '+ right('00'+cast(b.idMes as varchar),2)
 from cxc_cobro as a inner join
 tb_mes as b on b.idMes = month(a.cr_fecha) inner join
 aca_Alumno as c on a.IdEmpresa = c.IdEmpresa and a.IdAlumno = c.IdAlumno inner join

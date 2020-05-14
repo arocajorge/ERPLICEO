@@ -17,8 +17,11 @@
     [em_fechaInicioActividad] DATE           NOT NULL,
     [cod_entidad_dinardap]    VARCHAR (50)   NULL,
     [em_Email]                VARCHAR (300)  NULL,
+    [TieneAcademico]          BIT            NULL,
     CONSTRAINT [PK_tb_empresa] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC)
 );
+
+
 
 
 

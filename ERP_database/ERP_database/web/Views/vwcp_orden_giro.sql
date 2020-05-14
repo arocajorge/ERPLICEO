@@ -1,4 +1,4 @@
-﻿CREATE VIEW web.vwcp_orden_giro
+﻿CREATE VIEW [web].[vwcp_orden_giro]
 AS
 SELECT dbo.cp_orden_giro.IdEmpresa, dbo.cp_orden_giro.IdCbteCble_Ogiro, dbo.cp_orden_giro.IdTipoCbte_Ogiro, dbo.cp_orden_giro.IdOrden_giro_Tipo, dbo.cp_orden_giro.IdProveedor, dbo.cp_orden_giro.co_fechaOg, 
                   dbo.cp_orden_giro.co_serie, dbo.cp_orden_giro.co_factura, dbo.cp_orden_giro.co_FechaFactura, dbo.cp_orden_giro.co_FechaContabilizacion, dbo.cp_orden_giro.co_FechaFactura_vct, dbo.cp_orden_giro.co_plazo, 
@@ -8,11 +8,24 @@ SELECT dbo.cp_orden_giro.IdEmpresa, dbo.cp_orden_giro.IdCbteCble_Ogiro, dbo.cp_o
                   dbo.cp_orden_giro.PagoSujetoRetencion, dbo.cp_orden_giro.BseImpNoObjDeIva, dbo.cp_orden_giro.fecha_autorizacion, dbo.cp_orden_giro.Num_Autorizacion, dbo.cp_orden_giro.Num_Autorizacion_Imprenta, 
                   dbo.cp_orden_giro.cp_es_comprobante_electronico, dbo.cp_orden_giro.Tipodoc_a_Modificar, dbo.cp_orden_giro.estable_a_Modificar, dbo.cp_orden_giro.ptoEmi_a_Modificar, dbo.cp_orden_giro.num_docu_Modificar, 
                   dbo.cp_orden_giro.aut_doc_Modificar, dbo.cp_orden_giro.IdTipoMovi, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.tb_persona.pe_razonSocial, dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_cedulaRuc, 
-                  dbo.cp_TipoDocumento.Descripcion, dbo.cp_TipoDocumento.ManejaTalonario, dbo.cp_TipoDocumento.FechaInicioTalonario
+                  dbo.cp_TipoDocumento.Descripcion, dbo.cp_TipoDocumento.ManejaTalonario, dbo.cp_TipoDocumento.FechaInicioTalonario, dbo.BankersRounding(cp_orden_giro.co_total - isnull(can.MontoAplicado,0) - ISNULL(RET.re_valor_retencion,0),0) AS Saldo,
+				  case when dbo.BankersRounding(cp_orden_giro.co_total - isnull(can.MontoAplicado,0) - ISNULL(RET.re_valor_retencion,0),0) <= 0 THEN 'CANCELADO' ELSE 'PENDIENTE' END AS EstadoCancelacion
 FROM     dbo.cp_orden_giro INNER JOIN
                   dbo.cp_proveedor ON dbo.cp_orden_giro.IdEmpresa = dbo.cp_proveedor.IdEmpresa AND dbo.cp_orden_giro.IdProveedor = dbo.cp_proveedor.IdProveedor INNER JOIN
                   dbo.tb_persona ON dbo.cp_proveedor.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
-                  dbo.cp_TipoDocumento ON dbo.cp_orden_giro.IdOrden_giro_Tipo = dbo.cp_TipoDocumento.CodTipoDocumento
+                  dbo.cp_TipoDocumento ON dbo.cp_orden_giro.IdOrden_giro_Tipo = dbo.cp_TipoDocumento.CodTipoDocumento left join
+				  (
+					  select f.IdEmpresa_cxp, f.IdTipoCbte_cxp, f.IdCbteCble_cxp, sum(f.MontoAplicado) MontoAplicado 
+					  from cp_orden_pago_cancelaciones as f
+					  group by f.IdEmpresa_cxp, f.IdTipoCbte_cxp, f.IdCbteCble_cxp				  
+				  ) as can on cp_orden_giro.IdEmpresa= can.IdEmpresa_cxp and cp_orden_giro.IdTipoCbte_Ogiro = can.IdTipoCbte_cxp and cp_orden_giro.IdCbteCble_Ogiro = can.IdCbteCble_cxp left join
+				  (
+					select a.IdEmpresa_Ogiro, a.IdTipoCbte_Ogiro, a.IdCbteCble_Ogiro, sum(b.re_valor_retencion) re_valor_retencion
+					from cp_retencion as a inner join
+					cp_retencion_det as b on a.IdEmpresa = b.IdEmpresa and a.IdRetencion = b.IdRetencion
+					where a.Estado = 'A'
+					group by a.IdEmpresa_Ogiro, a.IdTipoCbte_Ogiro, a.IdCbteCble_Ogiro
+				  ) as ret on cp_orden_giro.IdEmpresa = ret.IdEmpresa_Ogiro and cp_orden_giro.IdTipoCbte_Ogiro = ret.IdTipoCbte_Ogiro and cp_orden_giro.IdCbteCble_Ogiro = ret.IdCbteCble_Ogiro
 
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]

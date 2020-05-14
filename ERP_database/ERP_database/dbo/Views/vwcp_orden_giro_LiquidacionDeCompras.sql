@@ -1,14 +1,26 @@
-﻿/*order by a.IdEmpresa*/
-CREATE VIEW dbo.vwcp_orden_giro_LiquidacionDeCompras
+﻿CREATE VIEW [dbo].[vwcp_orden_giro_LiquidacionDeCompras]
 AS
 SELECT a.IdEmpresa, a.IdTipoCbte_Ogiro, a.IdCbteCble_Ogiro, a.co_FechaFactura, a.co_factura, d.pe_nombreCompleto, a.Num_Autorizacion, b.Codigo, a.Estado, a.co_total, a.co_observacion, a.IdSucursal, b.Descripcion, 
-                  a.fecha_autorizacion
+                  a.fecha_autorizacion,dbo.BankersRounding(a.co_total - isnull(can.MontoAplicado,0) - ISNULL(RET.re_valor_retencion,0),0) AS Saldo,
+				  case when dbo.BankersRounding(a.co_total - isnull(can.MontoAplicado,0) - ISNULL(RET.re_valor_retencion,0),0) <= 0 THEN 'CANCELADO' ELSE 'PENDIENTE' END AS EstadoCancelacion
 FROM     dbo.cp_orden_giro AS a INNER JOIN
                   dbo.cp_TipoDocumento AS b ON a.IdOrden_giro_Tipo = b.CodTipoDocumento INNER JOIN
                   dbo.cp_proveedor AS c ON a.IdEmpresa = c.IdEmpresa AND a.IdProveedor = c.IdProveedor INNER JOIN
                   dbo.tb_persona AS d ON c.IdPersona = d.IdPersona INNER JOIN
-                  dbo.tb_sis_Documento_Tipo_Talonario AS e ON a.IdEmpresa = e.IdEmpresa AND a.co_serie = e.Establecimiento + '-' + e.PuntoEmision AND e.NumDocumento = a.co_factura AND b.Codigo = e.CodDocumentoTipo
-WHERE  (b.ManejaTalonario = 1) AND (e.es_Documento_Electronico = 1) AND (YEAR(a.co_FechaFactura) >= 2020)
+                  dbo.tb_sis_Documento_Tipo_Talonario AS e ON a.IdEmpresa = e.IdEmpresa AND a.co_serie = e.Establecimiento + '-' + e.PuntoEmision AND e.NumDocumento = a.co_factura AND b.Codigo = e.CodDocumentoTipo left join
+				  (
+					  select f.IdEmpresa_cxp, f.IdTipoCbte_cxp, f.IdCbteCble_cxp, sum(f.MontoAplicado) MontoAplicado 
+					  from cp_orden_pago_cancelaciones as f
+					  group by f.IdEmpresa_cxp, f.IdTipoCbte_cxp, f.IdCbteCble_cxp				  
+				  ) as can on a.IdEmpresa= can.IdEmpresa_cxp and a.IdTipoCbte_Ogiro = can.IdTipoCbte_cxp and a.IdCbteCble_Ogiro = can.IdCbteCble_cxp left join
+				  (
+					select a.IdEmpresa_Ogiro, a.IdTipoCbte_Ogiro, a.IdCbteCble_Ogiro, sum(b.re_valor_retencion) re_valor_retencion
+					from cp_retencion as a inner join
+					cp_retencion_det as b on a.IdEmpresa = b.IdEmpresa and a.IdRetencion = b.IdRetencion
+					where a.Estado = 'A'
+					group by a.IdEmpresa_Ogiro, a.IdTipoCbte_Ogiro, a.IdCbteCble_Ogiro
+				  ) as ret on a.IdEmpresa = ret.IdEmpresa_Ogiro and a.IdTipoCbte_Ogiro = ret.IdTipoCbte_Ogiro and a.IdCbteCble_Ogiro = ret.IdCbteCble_Ogiro
+WHERE  (b.ManejaTalonario = 1) AND (e.es_Documento_Electronico = 1) AND (a.co_FechaFactura >= b.FechaInicioTalonario)
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcp_orden_giro_LiquidacionDeCompras';
 

@@ -1,0 +1,26 @@
+﻿CREATE TABLE [dbo].[ba_ArchivoRecaudacion] (
+    [IdEmpresa]             INT           NOT NULL,
+    [IdArchivo]             NUMERIC (18)  NOT NULL,
+    [IdBanco]               INT           NOT NULL,
+    [IdProceso_bancario]    INT           NOT NULL,
+    [Nom_Archivo]           VARCHAR (200) NOT NULL,
+    [SecuencialDescarga]    INT           NOT NULL,
+    [Fecha]                 DATE          NOT NULL,
+    [Estado]                BIT           NOT NULL,
+    [Observacion]           VARCHAR (MAX) NULL,
+    [Valor]                 FLOAT (53)    NOT NULL,
+    [ValorProntoPago]       FLOAT (53)    NOT NULL,
+    [IdUsuarioCreacion]     VARCHAR (200) NULL,
+    [FechaCreacion]         DATETIME      NULL,
+    [IdUsuarioModificacion] VARCHAR (200) NULL,
+    [FechaModificacion]     DATETIME      NULL,
+    [IdUsuarioAnulacion]    VARCHAR (200) NULL,
+    [FechaAnulacion]        DATETIME      NULL,
+    [MotivoAnulacion]       VARCHAR (MAX) NULL,
+    [FechaProceso]          DATE          NULL,
+    [IdUsuarioProceso]      VARCHAR (200) NULL,
+    CONSTRAINT [PK_ba_ArchivoRecaudacion] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdArchivo] ASC),
+    CONSTRAINT [FK_ba_ArchivoRecaudacion_ba_Banco_Cuenta] FOREIGN KEY ([IdEmpresa], [IdBanco]) REFERENCES [dbo].[ba_Banco_Cuenta] ([IdEmpresa], [IdBanco]),
+    CONSTRAINT [FK_ba_ArchivoRecaudacion_tb_banco_procesos_bancarios_x_empresa] FOREIGN KEY ([IdEmpresa], [IdProceso_bancario]) REFERENCES [dbo].[tb_banco_procesos_bancarios_x_empresa] ([IdEmpresa], [IdProceso])
+);
+

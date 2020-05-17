@@ -1361,6 +1361,7 @@
     <Build Include="Academico\Stored Procedures\SPACA_014_Conducta.sql" />
     <Build Include="dbo\Tables\ba_ArchivoRecaudacionDet.sql" />
     <Build Include="dbo\Tables\ba_ArchivoRecaudacion.sql" />
+    <Build Include="dbo\Views\vwba_ArchivoRecaudacionDet_Saldos.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

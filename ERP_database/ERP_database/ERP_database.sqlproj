@@ -1362,6 +1362,8 @@
     <Build Include="dbo\Tables\ba_ArchivoRecaudacionDet.sql" />
     <Build Include="dbo\Tables\ba_ArchivoRecaudacion.sql" />
     <Build Include="dbo\Views\vwba_ArchivoRecaudacionDet_Saldos.sql" />
+    <Build Include="dbo\Views\vwba_ArchivoRecaudacionDet.sql" />
+    <Build Include="dbo\Views\vwba_ArchivoRecaudacion_Archivo.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

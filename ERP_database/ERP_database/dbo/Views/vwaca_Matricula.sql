@@ -1,24 +1,70 @@
 ﻿CREATE VIEW dbo.vwaca_Matricula
 AS
-SELECT dbo.aca_Matricula.IdEmpresa, dbo.aca_Matricula.IdMatricula, dbo.aca_Matricula.Codigo, dbo.aca_Matricula.IdAlumno, dbo.aca_Alumno.IdPersona, dbo.tb_persona.pe_nombreCompleto, dbo.aca_Matricula.IdAnio, 
-                  dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, dbo.aca_Matricula.IdCurso, dbo.aca_Matricula.IdParalelo, dbo.vwaca_AnioLectivo_Jornada_Curso.Descripcion, 
-                  dbo.vwaca_AnioLectivo_Jornada_Curso.NomSede, dbo.vwaca_AnioLectivo_Jornada_Curso.NomNivel, dbo.vwaca_AnioLectivo_Jornada_Curso.NomJornada, dbo.vwaca_AnioLectivo_Jornada_Curso.NomCurso, 
-                  dbo.aca_Paralelo.NomParalelo, dbo.vwaca_AnioLectivo_Jornada_Curso.BloquearMatricula, dbo.tb_persona.pe_cedulaRuc, dbo.aca_Matricula.IdPersonaF, dbo.aca_Matricula.IdPersonaR, dbo.aca_Matricula.IdPlantilla, 
-                  dbo.aca_Matricula.Fecha, dbo.aca_Matricula.Observacion, dbo.aca_Matricula.IdMecanismo, dbo.aca_Matricula.IdEmpresa_rol, dbo.aca_Matricula.IdEmpleado, dbo.vwaca_AnioLectivo_Jornada_Curso.OrdenCurso, 
-                  dbo.aca_Paralelo.OrdenParalelo
-FROM     dbo.aca_Matricula INNER JOIN
-                  dbo.aca_Alumno ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_Matricula.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
-                  dbo.tb_persona ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
-                  dbo.vwaca_AnioLectivo_Jornada_Curso ON dbo.aca_Matricula.IdEmpresa = dbo.vwaca_AnioLectivo_Jornada_Curso.IdEmpresa AND dbo.aca_Matricula.IdAnio = dbo.vwaca_AnioLectivo_Jornada_Curso.IdAnio AND 
-                  dbo.aca_Matricula.IdSede = dbo.vwaca_AnioLectivo_Jornada_Curso.IdSede AND dbo.aca_Matricula.IdNivel = dbo.vwaca_AnioLectivo_Jornada_Curso.IdNivel AND 
-                  dbo.aca_Matricula.IdJornada = dbo.vwaca_AnioLectivo_Jornada_Curso.IdJornada AND dbo.aca_Matricula.IdCurso = dbo.vwaca_AnioLectivo_Jornada_Curso.IdCurso INNER JOIN
-                  dbo.aca_Paralelo ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Paralelo.IdEmpresa AND dbo.aca_Matricula.IdParalelo = dbo.aca_Paralelo.IdParalelo
+SELECT m.IdEmpresa, m.IdMatricula, al.Codigo, m.IdAlumno, pa.IdPersona, pa.pe_nombreCompleto, pa.pe_cedulaRuc, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, sn.NomSede, a.Descripcion, sn.NomNivel, sn.OrdenNivel, 
+                  nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.NomParalelo, cp.OrdenParalelo, a.BloquearMatricula, m.IdPersonaF, m.IdPersonaR, m.IdPlantilla, m.Fecha, m.Observacion, m.IdMecanismo, m.IdEmpresa_rol, 
+                  m.IdEmpleado, CASE WHEN r.IdRetiro IS NULL THEN CAST(0 AS BIT) ELSE CAST(1 AS BIT) END AS EsRetirado
+FROM     dbo.aca_Matricula AS m INNER JOIN
+                  dbo.aca_AnioLectivo AS a ON m.IdEmpresa = a.IdEmpresa AND m.IdAnio = a.IdAnio LEFT OUTER JOIN
+                  dbo.tb_persona AS pa INNER JOIN
+                  dbo.aca_Alumno AS al ON pa.IdPersona = al.IdPersona ON m.IdEmpresa = al.IdEmpresa AND m.IdAlumno = al.IdAlumno LEFT OUTER JOIN
+                  dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn RIGHT OUTER JOIN
+                  dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel RIGHT OUTER JOIN
+                  dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
+                  dbo.aca_AnioLectivo_Curso_Paralelo AS cp ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND jc.IdCurso = cp.IdCurso ON 
+                  m.IdEmpresa = cp.IdEmpresa AND m.IdAnio = cp.IdAnio AND m.IdSede = cp.IdSede AND m.IdNivel = cp.IdNivel AND m.IdJornada = cp.IdJornada AND m.IdCurso = cp.IdCurso AND m.IdParalelo = cp.IdParalelo LEFT OUTER JOIN
+                  dbo.aca_AlumnoRetiro AS r ON m.IdEmpresa = r.IdEmpresa AND m.IdMatricula = r.IdMatricula
+WHERE  (al.Estado = 1) AND (ISNULL(r.Estado, 1) = 1)
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'0
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
+         Begin Table = "cp"
+            Begin Extent = 
+               Top = 175
+               Left = 341
+               Bottom = 338
+               Right = 585
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "r"
+            Begin Extent = 
+               Top = 175
+               Left = 633
+               Bottom = 338
+               Right = 877
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+      Begin ColumnWidths = 34
+         Width = 284
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -57,6 +103,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'0
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula';
+
+
 
 
 
@@ -139,7 +187,7 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_Matricula"
+         Begin Table = "m"
             Begin Extent = 
                Top = 7
                Left = 48
@@ -149,7 +197,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 14
          End
-         Begin Table = "aca_Alumno"
+         Begin Table = "al"
             Begin Extent = 
                Top = 199
                Left = 65
@@ -159,7 +207,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 3
          End
-         Begin Table = "tb_persona"
+         Begin Table = "pa"
             Begin Extent = 
                Top = 377
                Left = 48
@@ -169,47 +217,48 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 6
          End
-         Begin Table = "vwaca_AnioLectivo_Jornada_Curso"
+         Begin Table = "a"
             Begin Extent = 
-               Top = 0
-               Left = 480
-               Bottom = 361
-               Right = 847
+               Top = 7
+               Left = 341
+               Bottom = 170
+               Right = 624
             End
             DisplayFlags = 280
-            TopColumn = 1
+            TopColumn = 0
          End
-         Begin Table = "aca_Paralelo"
+         Begin Table = "sn"
             Begin Extent = 
-               Top = 361
-               Left = 486
-               Bottom = 524
-               Right = 731
+               Top = 7
+               Left = 672
+               Bottom = 170
+               Right = 916
             End
             DisplayFlags = 280
-            TopColumn = 1
+            TopColumn = 0
          End
-      End
-   End
-   Begin SQLPane = 
-   End
-   Begin DataPane = 
-      Begin ParameterDefaults = ""
-      End
-      Begin ColumnWidths = 30
-         Width = 284
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 120', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula';
+         Begin Table = "nj"
+            Begin Extent = 
+               Top = 7
+               Left = 964
+               Bottom = 170
+               Right = 1208
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "jc"
+            Begin Extent = 
+               Top = 7
+               Left = 1256
+               Bottom = 170
+               Right = 1500
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula';
+
+
 
 
 

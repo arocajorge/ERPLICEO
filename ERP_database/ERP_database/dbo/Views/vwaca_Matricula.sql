@@ -12,8 +12,8 @@ FROM     dbo.aca_Matricula AS m INNER JOIN
                   dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
                   dbo.aca_AnioLectivo_Curso_Paralelo AS cp ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND jc.IdCurso = cp.IdCurso ON 
                   m.IdEmpresa = cp.IdEmpresa AND m.IdAnio = cp.IdAnio AND m.IdSede = cp.IdSede AND m.IdNivel = cp.IdNivel AND m.IdJornada = cp.IdJornada AND m.IdCurso = cp.IdCurso AND m.IdParalelo = cp.IdParalelo LEFT OUTER JOIN
-                  dbo.aca_AlumnoRetiro AS r ON m.IdEmpresa = r.IdEmpresa AND m.IdMatricula = r.IdMatricula
-WHERE  (al.Estado = 1) AND (ISNULL(r.Estado, 1) = 1)
+                  dbo.aca_AlumnoRetiro AS r ON m.IdEmpresa = r.IdEmpresa AND m.IdMatricula = r.IdMatricula AND r.Estado = 1
+WHERE  (al.Estado = 1)
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula';
 
@@ -121,7 +121,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[66] 4[3] 2[13] 3) )"
+         Configuration = "(H (1[58] 4[4] 2[21] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -197,15 +197,15 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 14
          End
-         Begin Table = "al"
+         Begin Table = "a"
             Begin Extent = 
-               Top = 199
-               Left = 65
-               Bottom = 362
-               Right = 310
+               Top = 7
+               Left = 341
+               Bottom = 170
+               Right = 624
             End
             DisplayFlags = 280
-            TopColumn = 3
+            TopColumn = 0
          End
          Begin Table = "pa"
             Begin Extent = 
@@ -217,15 +217,15 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 6
          End
-         Begin Table = "a"
+         Begin Table = "al"
             Begin Extent = 
-               Top = 7
-               Left = 341
-               Bottom = 170
-               Right = 624
+               Top = 199
+               Left = 65
+               Bottom = 362
+               Right = 310
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 3
          End
          Begin Table = "sn"
             Begin Extent = 
@@ -257,6 +257,8 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula';
+
+
 
 
 

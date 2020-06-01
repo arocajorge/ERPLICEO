@@ -32,7 +32,7 @@ namespace Core.Erp.Info.CuentasPorPagar
         public string IdFormaPago { get; set; }
         public string Estado { get; set; }
         public bool EstadoBool { get; set; }
-
+        [StringLength(50,ErrorMessage = "El campo referencia debe tener una longitud máxima de 50 caracteres")]
         public string ReferenciaGen { get; set; }
         public Nullable<int> SecuenciaProveedor { get; set; }
         public int MostrarComboCuentas { get; set; }

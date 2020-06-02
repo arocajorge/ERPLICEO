@@ -1281,7 +1281,6 @@
     <Build Include="Academico\Stored Procedures\SPACA_001.sql" />
     <Build Include="Academico\Views\VWACA_003.sql" />
     <Build Include="dbo\Tables\aca_MateriaArea.sql" />
-    <Build Include="dbo\Views\vwfa_notaCreDeb_ParaContabilizarAcademico.sql" />
     <Build Include="dbo\Views\vwfa_notaCreDeb_ParaConciliarNC.sql" />
     <Build Include="Academico\Stored Procedures\SPCXC_001.sql" />
     <Build Include="EntidadRegulatoria\Views\vwfe_liquidacion_compra_det.sql" />
@@ -1366,6 +1365,7 @@
     <Build Include="dbo\Views\vwba_ArchivoRecaudacion_Archivo.sql" />
     <Build Include="Academico\Views\VWBAN_004.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_015.sql" />
+    <Build Include="dbo\Stored Procedures\spfa_notaCreDeb_ParaContabilizarAcademico.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

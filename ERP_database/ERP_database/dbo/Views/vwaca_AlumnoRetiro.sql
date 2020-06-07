@@ -1,9 +1,9 @@
 ﻿CREATE VIEW dbo.vwaca_AlumnoRetiro
 AS
-SELECT dbo.aca_AlumnoRetiro.IdEmpresa, dbo.aca_AlumnoRetiro.IdRetiro, dbo.aca_AlumnoRetiro.IdMatricula, dbo.aca_AlumnoRetiro.Fecha, dbo.aca_AlumnoRetiro.Observacion, dbo.aca_AlumnoRetiro.IdCatalogoESTALU, 
-                  dbo.aca_AlumnoRetiro.IdUsuarioAnulacion, dbo.aca_Matricula.IdAlumno, dbo.aca_Alumno.Codigo, dbo.tb_persona.pe_nombreCompleto, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomSede, 
+SELECT dbo.aca_AlumnoRetiro.IdEmpresa, dbo.aca_AlumnoRetiro.IdRetiro, dbo.aca_AlumnoRetiro.IdMatricula, dbo.aca_Matricula.IdAnio, dbo.aca_Matricula.IdSede, dbo.aca_AlumnoRetiro.Fecha, dbo.aca_AlumnoRetiro.Observacion, 
+                  dbo.aca_AlumnoRetiro.IdCatalogoESTALU, dbo.aca_AlumnoRetiro.IdUsuarioAnulacion, dbo.aca_Matricula.IdAlumno, dbo.aca_Alumno.Codigo, dbo.tb_persona.pe_nombreCompleto, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomSede, 
                   dbo.vwaca_AnioLectivo_Curso_Paralelo.NomNivel, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomJornada, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomCurso, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomParalelo, 
-                  dbo.aca_Matricula.IdAnio, dbo.tb_persona.pe_cedulaRuc, dbo.vwaca_AnioLectivo_Curso_Paralelo.Descripcion, dbo.aca_AlumnoRetiro.Estado
+                  dbo.tb_persona.pe_cedulaRuc, dbo.vwaca_AnioLectivo_Curso_Paralelo.Descripcion, dbo.aca_AlumnoRetiro.Estado
 FROM     dbo.aca_AlumnoRetiro INNER JOIN
                   dbo.aca_Matricula ON dbo.aca_AlumnoRetiro.IdEmpresa = dbo.aca_Matricula.IdEmpresa AND dbo.aca_AlumnoRetiro.IdMatricula = dbo.aca_Matricula.IdMatricula INNER JOIN
                   dbo.aca_Alumno ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_Matricula.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
@@ -24,7 +24,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[54] 4[16] 2[12] 3) )"
+         Configuration = "(H (1[24] 4[47] 2[12] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -162,6 +162,8 @@ Begin DesignProperties =
    End
    Begin CriteriaPane = 
       Begin Colum', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AlumnoRetiro';
+
+
 
 
 

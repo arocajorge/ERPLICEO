@@ -2,7 +2,8 @@
 AS
 SELECT dbo.fa_notaCreDeb_MasivaDet.IdEmpresa, dbo.fa_notaCreDeb_MasivaDet.IdNCMasivo, dbo.fa_notaCreDeb_MasivaDet.Secuencia, dbo.fa_notaCreDeb_MasivaDet.IdAlumno, dbo.fa_notaCreDeb_MasivaDet.Subtotal, 
                   dbo.fa_notaCreDeb_MasivaDet.IVA, dbo.fa_notaCreDeb_MasivaDet.vt_por_iva, dbo.fa_notaCreDeb_MasivaDet.IdCod_Impuesto_Iva, dbo.fa_notaCreDeb_MasivaDet.Total, dbo.fa_notaCreDeb_MasivaDet.ObservacionDet, 
-                  dbo.fa_notaCreDeb_MasivaDet.IdSucursal, dbo.fa_notaCreDeb_MasivaDet.IdBodega, dbo.fa_notaCreDeb_MasivaDet.IdNota, dbo.fa_notaCreDeb.IdCliente, dbo.aca_Alumno.Codigo, dbo.tb_persona.pe_nombreCompleto
+                  dbo.fa_notaCreDeb_MasivaDet.IdSucursal, dbo.fa_notaCreDeb_MasivaDet.IdBodega, dbo.fa_notaCreDeb_MasivaDet.IdNota, dbo.fa_notaCreDeb.IdCliente, dbo.aca_Alumno.Codigo, dbo.tb_persona.pe_nombreCompleto, 
+                  dbo.tb_persona.pe_cedulaRuc
 FROM     dbo.fa_notaCreDeb_MasivaDet INNER JOIN
                   dbo.fa_notaCreDeb ON dbo.fa_notaCreDeb_MasivaDet.IdEmpresa = dbo.fa_notaCreDeb.IdEmpresa AND dbo.fa_notaCreDeb_MasivaDet.IdSucursal = dbo.fa_notaCreDeb.IdSucursal AND 
                   dbo.fa_notaCreDeb_MasivaDet.IdBodega = dbo.fa_notaCreDeb.IdBodega AND dbo.fa_notaCreDeb_MasivaDet.IdNota = dbo.fa_notaCreDeb.IdNota INNER JOIN
@@ -16,10 +17,10 @@ GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -27,6 +28,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' Output = 
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwfa_notaCreDeb_MasivaDet';
+
+
 
 
 GO
@@ -135,11 +138,11 @@ Begin DesignProperties =
             Begin Extent = 
                Top = 42
                Left = 1334
-               Bottom = 205
+               Bottom = 302
                Right = 1608
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 1
          End
       End
    End
@@ -173,6 +176,8 @@ Begin DesignProperties =
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
         ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwfa_notaCreDeb_MasivaDet';
+
+
 

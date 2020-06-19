@@ -6,6 +6,7 @@
     [IdBodega]              INT           NOT NULL,
     [IdNota]                NUMERIC (18)  NOT NULL,
     [IdCobro]               NUMERIC (18)  NOT NULL,
+    [IdAplicacion]          NUMERIC (18)  NULL,
     [Fecha]                 DATE          NOT NULL,
     [Valor]                 FLOAT (53)    NOT NULL,
     [Observacion]           VARCHAR (MAX) NULL,
@@ -25,6 +26,10 @@
     CONSTRAINT [FK_cxc_ConciliacionNotaCredito_cxc_cobro] FOREIGN KEY ([IdEmpresa], [IdSucursal], [IdCobro]) REFERENCES [dbo].[cxc_cobro] ([IdEmpresa], [IdSucursal], [IdCobro]),
     CONSTRAINT [FK_cxc_ConciliacionNotaCredito_fa_notaCreDeb] FOREIGN KEY ([IdEmpresa], [IdSucursal], [IdBodega], [IdNota]) REFERENCES [dbo].[fa_notaCreDeb] ([IdEmpresa], [IdSucursal], [IdBodega], [IdNota])
 );
+
+
+
+
 
 
 

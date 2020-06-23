@@ -50,7 +50,9 @@ namespace Core.Erp.Web.Reportes.Banco
 
                 }
             }
+
             this.DataSource = lst_rpt;
+
             ListaAgrupada = (from q in lst_rpt
                              group q by new
                              {

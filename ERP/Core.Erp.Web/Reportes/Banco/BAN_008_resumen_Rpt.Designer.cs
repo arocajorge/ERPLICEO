@@ -165,7 +165,7 @@
             // 
             this.PageHeader.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.xrTable4});
-            this.PageHeader.HeightF = 20.00002F;
+            this.PageHeader.HeightF = 39.50002F;
             this.PageHeader.Name = "PageHeader";
             // 
             // xrTable4
@@ -289,7 +289,7 @@
             this.p_IdBanco,
             this.p_fecha_fin,
             this.p_fecha_ini});
-            this.Version = "17.2";
+            this.Version = "19.1";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.BAN_008_resumen_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();

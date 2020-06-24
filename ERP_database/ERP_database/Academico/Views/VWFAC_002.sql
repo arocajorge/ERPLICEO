@@ -7,7 +7,7 @@ SELECT d.IdEmpresa, d.IdSucursal, d.IdBodega, d.IdCbteVta, d.Secuencia, d.IdProd
                   c.vt_autorizacion, c.Fecha_Autorizacion, c.vt_Observacion, dbo.fa_factura_resumen.SubtotalIVASinDscto, dbo.fa_factura_resumen.SubtotalSinIVASinDscto, dbo.fa_factura_resumen.SubtotalSinDscto AS T_SubtotalSinDscto, 
                   dbo.fa_factura_resumen.Descuento, dbo.fa_factura_resumen.SubtotalIVAConDscto, dbo.fa_factura_resumen.SubtotalSinIVAConDscto, dbo.fa_factura_resumen.SubtotalConDscto AS T_SubtotalConDscto, 
                   dbo.fa_factura_resumen.ValorIVA, dbo.fa_factura_resumen.Total, dbo.fa_factura_resumen.ValorEfectivo, dbo.fa_factura_resumen.Cambio, e.NomSede, e.NomNivel, e.NomJornada, e.NomCurso, e.NomParalelo, e.NomPlantilla, 
-                  p.pe_nombreCompleto AS NomAlumno, c.IdAlumno, c.IdCliente
+                  p.pe_nombreCompleto AS NomAlumno, c.IdAlumno, c.IdCliente, f.Codigo
 FROM     dbo.fa_cliente_contactos AS con INNER JOIN
                   dbo.fa_factura AS c ON con.IdEmpresa = c.IdEmpresa AND con.IdCliente = c.IdCliente INNER JOIN
                   dbo.fa_factura_det AS d ON c.IdEmpresa = d.IdEmpresa AND c.IdSucursal = d.IdSucursal AND c.IdBodega = d.IdBodega AND c.IdCbteVta = d.IdCbteVta INNER JOIN
@@ -39,7 +39,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'        End
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
+         End
          Begin Table = "fa_factura_resumen"
             Begin Extent = 
                Top = 1183
@@ -113,14 +114,14 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'        En
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -128,6 +129,10 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'        En
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWFAC_002';
+
+
+
+
 
 
 GO
@@ -198,7 +203,7 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = -64
+         Top = -1587
          Left = 0
       End
       Begin Tables = 
@@ -270,6 +275,7 @@ Begin DesignProperties =
                Right = 320
             End
             DisplayFlags = 280
-            TopColumn = 0
- ', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWFAC_002';
+            TopColumn = 0', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWFAC_002';
+
+
 

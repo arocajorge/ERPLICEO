@@ -1374,6 +1374,7 @@
     <Build Include="dbo\Views\vwfa_AplicacionMasivaDet.sql" />
     <Build Include="Academico\Views\VWCXC_010.sql" />
     <Build Include="Academico\Stored Procedures\SPCXC_010.sql" />
+    <Build Include="Academico\Stored Procedures\SPCXC_011.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

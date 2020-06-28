@@ -5,7 +5,7 @@ SELECT dbo.ba_ArchivoRecaudacionDet.IdEmpresa, dbo.ba_ArchivoRecaudacionDet.IdAr
                   dbo.aca_Alumno.Codigo AS CodigoAlumno, dbo.tb_persona.pe_nombreCompleto AS NomAlumno, dbo.ba_ArchivoRecaudacionDet.Valor, dbo.ba_ArchivoRecaudacionDet.ValorProntoPago, 
                   dbo.ba_ArchivoRecaudacion.SecuencialDescarga, dbo.ba_ArchivoRecaudacion.Fecha, dbo.ba_ArchivoRecaudacion.Observacion
 FROM     dbo.ba_ArchivoRecaudacion INNER JOIN
-                  dbo.ba_ArchivoRecaudacionDet ON dbo.ba_ArchivoRecaudacion.IdEmpresa = dbo.ba_ArchivoRecaudacionDet.IdEmpresa INNER JOIN
+                  dbo.ba_ArchivoRecaudacionDet ON dbo.ba_ArchivoRecaudacion.IdEmpresa = dbo.ba_ArchivoRecaudacionDet.IdEmpresa AND dbo.ba_ArchivoRecaudacion.IdArchivo = dbo.ba_ArchivoRecaudacionDet.IdArchivo INNER JOIN
                   dbo.ba_Banco_Cuenta ON dbo.ba_ArchivoRecaudacion.IdEmpresa = dbo.ba_Banco_Cuenta.IdEmpresa AND dbo.ba_ArchivoRecaudacion.IdBanco = dbo.ba_Banco_Cuenta.IdBanco LEFT OUTER JOIN
                   dbo.tb_banco ON dbo.ba_Banco_Cuenta.IdBanco_Financiero = dbo.tb_banco.IdBanco LEFT OUTER JOIN
                   dbo.tb_persona INNER JOIN
@@ -15,7 +15,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'    Width = 1764
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'     Width = 1764
          Width = 1200
          Width = 1584
          Width = 1200
@@ -53,13 +53,15 @@ End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwba_ArchivoRecaudacion_Archivo';
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[28] 4[41] 2[13] 3) )"
+         Configuration = "(H (1[62] 4[8] 2[13] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -133,24 +135,24 @@ Begin DesignProperties =
                Right = 271
             End
             DisplayFlags = 280
-            TopColumn = 4
+            TopColumn = 0
          End
          Begin Table = "ba_ArchivoRecaudacionDet"
             Begin Extent = 
-               Top = 185
-               Left = 39
-               Bottom = 400
-               Right = 283
+               Top = 285
+               Left = 183
+               Bottom = 500
+               Right = 427
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "ba_Banco_Cuenta"
             Begin Extent = 
-               Top = 190
-               Left = 389
-               Bottom = 353
-               Right = 679
+               Top = 202
+               Left = 428
+               Bottom = 365
+               Right = 718
             End
             DisplayFlags = 280
             TopColumn = 2
@@ -177,10 +179,10 @@ Begin DesignProperties =
          End
          Begin Table = "aca_Alumno"
             Begin Extent = 
-               Top = 0
-               Left = 383
-               Bottom = 163
-               Right = 628
+               Top = 84
+               Left = 401
+               Bottom = 247
+               Right = 646
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -194,5 +196,7 @@ Begin DesignProperties =
       End
       Begin ColumnWidths = 16
          Width = 284
-     ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwba_ArchivoRecaudacion_Archivo';
+    ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwba_ArchivoRecaudacion_Archivo';
+
+
 

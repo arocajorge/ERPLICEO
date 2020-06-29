@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE Academico.SPACA_ContabilizacionFacturas
+﻿CREATE PROCEDURE [Academico].[SPACA_ContabilizacionFacturas]
 (
 @IdEmpresa int,
 @FechaIni date,
@@ -18,3 +18,4 @@ FROM     aca_Matricula_Rubro AS f INNER JOIN
                   aca_AnioLectivo_Curso_Plantilla_Parametrizacion AS h ON f.IdPlantilla = h.IdPlantilla AND g.IdEmpresa = h.IdEmpresa AND g.IdAnio = h.IdAnio AND g.IdSede = h.IdSede AND g.IdNivel = h.IdNivel AND g.IdJornada = h.IdJornada AND 
                   g.IdCurso = h.IdCurso AND f.IdRubro = h.IdRubro
 WHERE  A.IdEmpresa = @IdEmpresa AND (a.Estado = 'A') and isnull(ct.dc_Valor,1) > 0 and a.vt_fecha between @FechaIni and @FechaFin
+--and dbo.BankersRounding( b.Total - isnull(ct.dc_Valor,0),2) <> 0

@@ -3,7 +3,7 @@ AS
 SELECT dbo.ba_ArchivoRecaudacionDet.IdEmpresa, dbo.ba_ArchivoRecaudacionDet.IdArchivo, dbo.ba_ArchivoRecaudacionDet.Secuencia, dbo.ba_ArchivoRecaudacion.Nom_Archivo, dbo.ba_ArchivoRecaudacion.IdBanco, 
                   dbo.ba_Banco_Cuenta.ba_Num_Cuenta, dbo.tb_banco.CodigoLegal, dbo.ba_ArchivoRecaudacionDet.IdMatricula, dbo.ba_ArchivoRecaudacionDet.IdAlumno, dbo.tb_persona.IdTipoDocumento, dbo.tb_persona.pe_cedulaRuc, 
                   dbo.aca_Alumno.Codigo AS CodigoAlumno, dbo.tb_persona.pe_nombreCompleto AS NomAlumno, dbo.ba_ArchivoRecaudacionDet.Valor, dbo.ba_ArchivoRecaudacionDet.ValorProntoPago, 
-                  dbo.ba_ArchivoRecaudacion.SecuencialDescarga, dbo.ba_ArchivoRecaudacion.Fecha, dbo.ba_ArchivoRecaudacion.Observacion
+                  dbo.ba_ArchivoRecaudacion.SecuencialDescarga, dbo.ba_ArchivoRecaudacion.Fecha, dbo.ba_ArchivoRecaudacion.Observacion, dbo.ba_ArchivoRecaudacionDet.FechaProceso, dbo.ba_ArchivoRecaudacionDet.FechaProntoPago
 FROM     dbo.ba_ArchivoRecaudacion INNER JOIN
                   dbo.ba_ArchivoRecaudacionDet ON dbo.ba_ArchivoRecaudacion.IdEmpresa = dbo.ba_ArchivoRecaudacionDet.IdEmpresa AND dbo.ba_ArchivoRecaudacion.IdArchivo = dbo.ba_ArchivoRecaudacionDet.IdArchivo INNER JOIN
                   dbo.ba_Banco_Cuenta ON dbo.ba_ArchivoRecaudacion.IdEmpresa = dbo.ba_Banco_Cuenta.IdEmpresa AND dbo.ba_ArchivoRecaudacion.IdBanco = dbo.ba_Banco_Cuenta.IdBanco LEFT OUTER JOIN
@@ -15,7 +15,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'     Width = 1764
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'    Width = 1764
          Width = 1200
          Width = 1584
          Width = 1200
@@ -51,6 +51,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'     Width
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwba_ArchivoRecaudacion_Archivo';
+
+
 
 
 
@@ -139,13 +141,13 @@ Begin DesignProperties =
          End
          Begin Table = "ba_ArchivoRecaudacionDet"
             Begin Extent = 
-               Top = 285
-               Left = 183
-               Bottom = 500
-               Right = 427
+               Top = 244
+               Left = 14
+               Bottom = 459
+               Right = 328
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 3
          End
          Begin Table = "ba_Banco_Cuenta"
             Begin Extent = 
@@ -196,7 +198,9 @@ Begin DesignProperties =
       End
       Begin ColumnWidths = 16
          Width = 284
-    ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwba_ArchivoRecaudacion_Archivo';
+     ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwba_ArchivoRecaudacion_Archivo';
+
+
 
 
 

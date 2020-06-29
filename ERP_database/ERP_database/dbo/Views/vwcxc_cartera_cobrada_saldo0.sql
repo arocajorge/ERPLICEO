@@ -1,4 +1,5 @@
-﻿CREATE VIEW vwcxc_cartera_cobrada_saldo0
+
+	CREATE VIEW vwcxc_cartera_cobrada_saldo0
 	AS
 	select a.IdEmpresa, a.IdSucursal, a.IdBodega, a.vt_tipoDoc, a.vt_tipoDoc+'-'+ CAST(cast(a.vt_NumFactura as numeric) AS VARCHAR) vt_NunDocumento, a.vt_Observacion, a.IdCbteVta, a.CodCbteVta, c.Su_Descripcion, a.IdCliente, a.IdAlumno, a.vt_fecha, b.Total, a.vt_fech_venc, e.pe_nombreCompleto, B.IdAnio, B.IdPlantilla, A.IdPuntoVta,
 	isnull(sum(f.dc_ValorPago),0) dc_ValorPago

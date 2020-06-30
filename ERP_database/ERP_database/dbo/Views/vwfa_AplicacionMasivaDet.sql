@@ -3,7 +3,7 @@ AS
 SELECT dbo.fa_AplicacionMasivaDet.IdEmpresa, dbo.fa_AplicacionMasivaDet.IdAplicacion, dbo.fa_AplicacionMasivaDet.Secuencia, dbo.fa_AplicacionMasivaDet.IdAlumno, dbo.aca_Alumno.Codigo, dbo.tb_persona.pe_nombreCompleto, 
                   dbo.fa_AplicacionMasivaDet.Saldo
 FROM     dbo.aca_Alumno INNER JOIN
-                  dbo.fa_AplicacionMasivaDet ON dbo.aca_Alumno.IdEmpresa = dbo.fa_AplicacionMasivaDet.IdEmpresa INNER JOIN
+                  dbo.fa_AplicacionMasivaDet ON dbo.aca_Alumno.IdEmpresa = dbo.fa_AplicacionMasivaDet.IdEmpresa AND dbo.aca_Alumno.IdAlumno = dbo.fa_AplicacionMasivaDet.IdAlumno INNER JOIN
                   dbo.tb_persona ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwfa_AplicacionMasivaDet';
@@ -83,30 +83,30 @@ Begin DesignProperties =
       Begin Tables = 
          Begin Table = "aca_Alumno"
             Begin Extent = 
-               Top = 7
-               Left = 48
-               Bottom = 170
-               Right = 293
+               Top = 0
+               Left = 20
+               Bottom = 163
+               Right = 265
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "fa_AplicacionMasivaDet"
             Begin Extent = 
-               Top = 7
-               Left = 341
-               Bottom = 254
-               Right = 585
+               Top = 9
+               Left = 519
+               Bottom = 256
+               Right = 763
             End
             DisplayFlags = 280
             TopColumn = 0
          End
          Begin Table = "tb_persona"
             Begin Extent = 
-               Top = 7
-               Left = 633
-               Bottom = 170
-               Right = 907
+               Top = 192
+               Left = 149
+               Bottom = 355
+               Right = 423
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -134,14 +134,14 @@ Begin DesignProperties =
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -149,4 +149,6 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwfa_AplicacionMasivaDet';
+
+
 

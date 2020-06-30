@@ -1,11 +1,13 @@
 ﻿CREATE VIEW dbo.vwba_ArchivoRecaudacionDet
 AS
-SELECT dbo.ba_ArchivoRecaudacionDet.IdEmpresa, dbo.ba_ArchivoRecaudacionDet.IdArchivo, dbo.ba_ArchivoRecaudacionDet.Secuencia, dbo.ba_ArchivoRecaudacionDet.IdMatricula, dbo.ba_ArchivoRecaudacionDet.IdAlumno, 
-                  dbo.aca_Alumno.Codigo, dbo.tb_persona.pe_nombreCompleto, dbo.ba_ArchivoRecaudacionDet.Valor, dbo.ba_ArchivoRecaudacionDet.ValorProntoPago, dbo.ba_ArchivoRecaudacionDet.FechaProceso, 
-                  dbo.ba_ArchivoRecaudacionDet.FechaProntoPago
-FROM     dbo.ba_ArchivoRecaudacionDet INNER JOIN
-                  dbo.aca_Alumno ON dbo.ba_ArchivoRecaudacionDet.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.ba_ArchivoRecaudacionDet.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
-                  dbo.tb_persona ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona
+SELECT     dbo.ba_ArchivoRecaudacionDet.IdEmpresa, dbo.ba_ArchivoRecaudacionDet.IdArchivo, dbo.ba_ArchivoRecaudacionDet.Secuencia, 
+                      dbo.ba_ArchivoRecaudacionDet.IdMatricula, dbo.ba_ArchivoRecaudacionDet.IdAlumno, dbo.aca_Alumno.Codigo, dbo.tb_persona.pe_nombreCompleto, 
+                      dbo.ba_ArchivoRecaudacionDet.Valor, dbo.ba_ArchivoRecaudacionDet.ValorProntoPago, dbo.ba_ArchivoRecaudacionDet.FechaProceso, 
+                      dbo.ba_ArchivoRecaudacionDet.FechaProntoPago
+FROM         dbo.ba_ArchivoRecaudacionDet INNER JOIN
+                      dbo.aca_Alumno ON dbo.ba_ArchivoRecaudacionDet.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND 
+                      dbo.ba_ArchivoRecaudacionDet.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
+                      dbo.tb_persona ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwba_ArchivoRecaudacionDet';
 
@@ -82,6 +84,16 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
+         Begin Table = "ba_ArchivoRecaudacionDet"
+            Begin Extent = 
+               Top = 7
+               Left = 48
+               Bottom = 289
+               Right = 292
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "aca_Alumno"
             Begin Extent = 
                Top = 7
@@ -98,16 +110,6 @@ Begin DesignProperties =
                Left = 633
                Bottom = 170
                Right = 907
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "ba_ArchivoRecaudacionDet"
-            Begin Extent = 
-               Top = 7
-               Left = 48
-               Bottom = 289
-               Right = 292
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -136,14 +138,14 @@ Begin DesignProperties =
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1176
+         Table = 1170
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1356
-         SortOrder = 1416
+         SortType = 1350
+         SortOrder = 1410
          GroupBy = 1350
-         Filter = 1356
+         Filter = 1350
          Or = 1350
          Or = 1350
          Or = 1350
@@ -151,6 +153,8 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwba_ArchivoRecaudacionDet';
+
+
 
 
 

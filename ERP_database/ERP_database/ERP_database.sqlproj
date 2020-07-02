@@ -1379,6 +1379,8 @@
     <Build Include="dbo\Views\vwaca_Matricula_Rubro_PorFacturarMasiva.sql" />
     <Build Include="dbo\Views\vwcxc_cartera_cobrada_saldo0.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_011.sql" />
+    <Build Include="dbo\Tables\tb_ColaCorreoParametros.sql" />
+    <Build Include="dbo\Tables\tb_ColaCorreo.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

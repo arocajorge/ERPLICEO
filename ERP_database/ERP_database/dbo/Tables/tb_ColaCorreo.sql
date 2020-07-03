@@ -7,9 +7,11 @@
     [Cuerpo]            VARCHAR (MAX)  NOT NULL,
     [Parametros]        VARCHAR (200)  NOT NULL,
     [IdUsuarioCreacion] VARCHAR (50)   NOT NULL,
-    [FechaCreacion]     DATETIME       NOT NULL,
+    [FechaCreacion]     DATE           NOT NULL,
     [FechaEnvio]        DATETIME       NULL,
     [Error]             VARCHAR (MAX)  NULL,
     CONSTRAINT [PK_tb_ColaCorreo] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdCorreo] ASC)
 );
+
+
 

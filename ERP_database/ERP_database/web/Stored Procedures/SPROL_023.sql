@@ -1,4 +1,4 @@
-﻿--exec [web].[SPROL_023] 2,8,8,1,2,201906,1,99999,1,99999,1,99999
+﻿--exec [web].[SPROL_023] 5,1,1,1,2,201901,1,1,1,1,2,2
 CREATE PROCEDURE [web].[SPROL_023]
 (
 @IdEmpresa int,
@@ -15,36 +15,6 @@ CREATE PROCEDURE [web].[SPROL_023]
 @IdDepartamentoFin int
 )
 AS
-
-
---declare
---@IdEmpresa int,
---@IdSucursalIni int,
---@IdSucursalFin int,
---@IdNomina int,
---@IdNominaTipoLiqui int,
---@IdPeriodo int,
---@IdDivisionIni int,
---@IdDivisionFin int,
---@IdAreaIni int,
---@IdAreaFin int,
---@IdDepartamentoIni int,
---@IdDepartamentoFin int
-
-
---set @IdEmpresa =1
---set @IdSucursalIni =1
---set @IdSucursalFin =99
---set @IdNomina =1
---set @IdNominaTipoLiqui =2
---set @IdPeriodo =201902
---set @IdDivisionIni =1
---set @IdDivisionFin =99
---set @IdAreaIni= 0
---set @IdAreaFin =99
---set @IdDepartamentoIni =0
---set @IdDepartamentoFin= 99
-
 
 DECLARE 
 @ValorFR float
@@ -100,7 +70,8 @@ FROM (
 		dbo.ro_catalogo ON dbo.ro_rubro_tipo.rub_GrupoResumen = dbo.ro_catalogo.CodCatalogo INNER JOIN
 		dbo.tb_sucursal ON dbo.tb_sucursal.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.tb_sucursal.IdSucursal = dbo.ro_rol.IdSucursal INNER JOIN
 		dbo.ro_cargo ON dbo.ro_empleado.IdEmpresa = dbo.ro_cargo.IdEmpresa AND dbo.ro_empleado.IdCargo = dbo.ro_cargo.IdCargo INNER JOIN
-		dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado and dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ'
+		dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado 
+		--and dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ'
 		--and dbo.ro_contrato.EstadoContrato <>'ECT_PLQ'  --16/07/2019
 		
 
@@ -124,6 +95,8 @@ FROM (
 
 		and  ro_empleado.Tiene_ingresos_compartidos=1
 		AND ro_empleado.Pago_por_horas=1
+						  and  cast(year(ro_contrato.FechaInicio) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaInicio) as varchar),2)  <= ro_rol.IdPeriodo
+				  and  cast(year(ro_contrato.FechaFin) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaFin) as varchar),2)  <= ro_rol.IdPeriodo
 		) A
 		GROUP BY IdEmpresa, IdRol,IdEmpleado,IdDivision,IdArea,Descripcion,DescripcionProcesoNomina,IdDepartamento,IdSucursal,IdNominaTipo,IdNominaTipoLiqui,IdPeriodo,pe_nombreCompleto,NombreDivision,NombreArea,NombreDepartamento,Su_Descripcion,NombreCargo, JORNADA
 ) A
@@ -215,8 +188,9 @@ FROM            dbo.tb_persona INNER JOIN
                          dbo.ro_catalogo ON dbo.ro_rubro_tipo.rub_GrupoResumen = dbo.ro_catalogo.CodCatalogo INNER JOIN
                          dbo.tb_sucursal ON dbo.tb_sucursal.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.tb_sucursal.IdSucursal = dbo.ro_rol.IdSucursal INNER JOIN
                          dbo.ro_cargo ON dbo.ro_empleado.IdEmpresa = dbo.ro_cargo.IdEmpresa AND dbo.ro_empleado.IdCargo = dbo.ro_cargo.IdCargo INNER JOIN
-                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado and dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ'
-						 and dbo.ro_contrato.EstadoContrato <>'ECT_PLQ'  --16/07/2019
+                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado 
+						 --and dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ'
+						 --and dbo.ro_contrato.EstadoContrato <>'ECT_PLQ'  --16/07/2019
 						 LEFT JOIN (
 						 SELECT X.IdEmpresa, IdEmpleado, MAX(Y.Descripcion) NomJornada, COUNT(*) CONT FROM ro_empleado_x_jornada AS X
 						 INNER JOIN ro_jornada AS Y ON X.IDEMPRESA = Y.IdEmpresa AND X.IdJornada = Y.IdJornada
@@ -245,6 +219,8 @@ FROM            dbo.tb_persona INNER JOIN
 				  
 				  and  ro_empleado.Tiene_ingresos_compartidos=0
 				  AND ro_empleado.Pago_por_horas=1
+				  				  and  cast(year(ro_contrato.FechaInicio) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaInicio) as varchar),2)  <= ro_rol.IdPeriodo
+				  and  cast(year(ro_contrato.FechaFin) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaFin) as varchar),2)  <= ro_rol.IdPeriodo
 
 				  and ro_contrato.IdNomina = @IdNomina
 				  ) A
@@ -335,7 +311,9 @@ FROM            dbo.tb_persona INNER JOIN
                          dbo.ro_catalogo ON dbo.ro_rubro_tipo.rub_GrupoResumen = dbo.ro_catalogo.CodCatalogo INNER JOIN
                          dbo.tb_sucursal ON dbo.tb_sucursal.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.tb_sucursal.IdSucursal = dbo.ro_rol.IdSucursal INNER JOIN
                          dbo.ro_cargo ON dbo.ro_empleado.IdEmpresa = dbo.ro_cargo.IdEmpresa AND dbo.ro_empleado.IdCargo = dbo.ro_cargo.IdCargo INNER JOIN
-                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado and dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ' LEFT JOIN
+                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado 
+						 --and dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ' 
+						 LEFT JOIN
 						 ro_rol_detalle_x_ro_rubro_fijo AS ROLF ON ROLF.IdEmpresa = ro_rol_detalle.IdEmpresa AND ROLF.IdRol = ro_rol_detalle.IdRol AND ROLF.IdEmpleado = ro_rol_detalle.IdEmpleado AND ROLF.IdRubro = ro_rol_detalle.IdRubro
 						 --and dbo.ro_contrato.EstadoContrato <>'ECT_PLQ'  --16/07/2019
 
@@ -359,6 +337,8 @@ FROM            dbo.tb_persona INNER JOIN
 				  and ro_empleado.IdDepartamento<=@IdDepartamentoFin
 
 				  and  ro_empleado.Tiene_ingresos_compartidos=1
+				  and  cast(year(ro_contrato.FechaInicio) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaInicio) as varchar),2)  <= ro_rol.IdPeriodo
+				  and  cast(year(ro_contrato.FechaFin) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaFin) as varchar),2)  <= ro_rol.IdPeriodo
 				  AND ro_empleado.Pago_por_horas=0
 				  ) A
 				  GROUP BY IdEmpresa, IdRol,IdEmpleado,IdDivision,IdArea,Descripcion,DescripcionProcesoNomina,IdDepartamento,IdSucursal,IdNominaTipo,IdNominaTipoLiqui,IdPeriodo,pe_nombreCompleto,NombreDivision,NombreArea,NombreDepartamento,Su_Descripcion,NombreCargo, JORNADA
@@ -457,7 +437,8 @@ FROM            dbo.tb_persona INNER JOIN
                          dbo.ro_catalogo ON dbo.ro_rubro_tipo.rub_GrupoResumen = dbo.ro_catalogo.CodCatalogo INNER JOIN
                          dbo.tb_sucursal ON dbo.tb_sucursal.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.tb_sucursal.IdSucursal = dbo.ro_rol.IdSucursal INNER JOIN
                          dbo.ro_cargo ON dbo.ro_empleado.IdEmpresa = dbo.ro_cargo.IdEmpresa AND dbo.ro_empleado.IdCargo = dbo.ro_cargo.IdCargo INNER JOIN
-                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado  and dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ'
+                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado  
+						 --and dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ'
 						 --and dbo.ro_contrato.EstadoContrato <>'ECT_PLQ'  --16/07/2019
 
 				  where ro_rol_detalle.IdEmpresa=@IdEmpresa
@@ -480,6 +461,8 @@ FROM            dbo.tb_persona INNER JOIN
 				  AND ro_empleado.Pago_por_horas=0
 				  
 				  and  ro_empleado.Tiene_ingresos_compartidos=0
+				  				  and  cast(year(ro_contrato.FechaInicio) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaInicio) as varchar),2)  <= ro_rol.IdPeriodo
+				  and  cast(year(ro_contrato.FechaFin) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaFin) as varchar),2)  <= ro_rol.IdPeriodo
 				  ) A
 				  LEFT JOIN(
 					SELECT G.IdEmpresa, G.IdRol, G.IdEmpleado, SUM(G.IESS_TOTAL)IESS_TOTAL, SUM(G.FRESERVA_TOTAL) FRESERVA_TOTAL
@@ -554,7 +537,8 @@ FROM            dbo.tb_persona INNER JOIN
                          dbo.ro_catalogo ON dbo.ro_rubro_tipo.rub_GrupoResumen = dbo.ro_catalogo.CodCatalogo INNER JOIN
                          dbo.tb_sucursal ON dbo.tb_sucursal.IdEmpresa = dbo.ro_rol.IdEmpresa AND dbo.tb_sucursal.IdSucursal = dbo.ro_rol.IdSucursal INNER JOIN
                          dbo.ro_cargo ON dbo.ro_empleado.IdEmpresa = dbo.ro_cargo.IdEmpresa AND dbo.ro_empleado.IdCargo = dbo.ro_cargo.IdCargo INNER JOIN
-                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado and dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ'
+                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado 
+						 --and dbo.ro_contrato.EstadoContrato <> 'ECT_LIQ'
 						 --and dbo.ro_contrato.EstadoContrato <>'ECT_PLQ'  --16/07/2019
 
 				  
@@ -578,6 +562,8 @@ FROM            dbo.tb_persona INNER JOIN
 
 				  and  ro_empleado.Tiene_ingresos_compartidos=1
 				  AND ro_empleado.Pago_por_horas=0
+					and  cast(year(ro_contrato.FechaInicio) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaInicio) as varchar),2)  <= ro_rol.IdPeriodo
+				  and  cast(year(ro_contrato.FechaFin) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaFin) as varchar),2)  <= ro_rol.IdPeriodo
 				  ) A
 				  GROUP BY IdEmpresa, IdRol,IdEmpleado,IdDivision,IdArea,Descripcion,DescripcionProcesoNomina,IdDepartamento,IdSucursal,IdNominaTipo,IdNominaTipoLiqui,IdPeriodo,pe_nombreCompleto,NombreDivision,NombreArea,NombreDepartamento,Su_Descripcion,NombreCargo, JORNADA
 				  ) A

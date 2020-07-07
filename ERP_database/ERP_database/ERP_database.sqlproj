@@ -1384,6 +1384,8 @@
     <Build Include="dbo\Tables\tb_ColaCorreoCodigo.sql" />
     <Build Include="dbo\Views\vwaca_Matricula_Rubro_FacturaMasiva.sql" />
     <Build Include="dbo\Views\vwaca_Alumno_PeriodoActual.sql" />
+    <Build Include="dbo\Tables\cxc_CobroMasivoDet.sql" />
+    <Build Include="dbo\Tables\cxc_CobroMasivo.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

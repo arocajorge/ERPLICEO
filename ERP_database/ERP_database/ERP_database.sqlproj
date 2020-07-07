@@ -1381,6 +1381,8 @@
     <Build Include="Academico\Stored Procedures\SPACA_011.sql" />
     <Build Include="dbo\Tables\tb_ColaCorreoParametros.sql" />
     <Build Include="dbo\Tables\tb_ColaCorreo.sql" />
+    <Build Include="dbo\Tables\tb_ColaCorreoCodigo.sql" />
+    <Build Include="dbo\Views\vwaca_Matricula_Rubro_FacturaMasiva.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

@@ -221,8 +221,8 @@ tb_sucursal as e on a.IdEmpresa = e.IdEmpresa and a.IdSucursal = e.IdSucursal le
 fa_cliente_contactos as g on g.IdEmpresa = c.IdEmpresa and g.IdCliente = c.IdCliente left join
 fa_cliente_tipo as h on h.IdEmpresa = c.IdEmpresa and h.Idtipo_cliente = c.Idtipo_cliente
 where A.Estado = 'A' AND A.CreDeb = 'D' AND  a.IdAlumno is null and a.IdEmpresa = @IdEmpresa and a.IdSucursal between @SucursalIni and @SucursalFin and a.IdCliente between @IdClienteIni and @IdClienteFin and c.Idtipo_cliente between @IdTipoClienteIni and @IdTipoClienteFin
-and a.no_fecha <= @fechaCorte
+and a.no_fecha <= @fechaCorte 
 group by f.Total_Pagado, a.IdEmpresa, a.IdSucursal, a.IdBodega, a.IdNota, a.IdCliente, c.Codigo, a.CodDocumentoTipo, a.Serie1, a.Serie2, a.NumNota_Impresa, e.Su_Descripcion, d.pe_nombreCompleto, d.pe_cedulaRuc, a.no_fecha_venc,
 a.no_fecha, c.Idtipo_cliente, g.Telefono, a.sc_observacion, h.Descripcion_tip_cliente
-
+having dbo.BankersRounding(sum(b.sc_total) - isnull(f.Total_Pagado,0),2) > 0
 END

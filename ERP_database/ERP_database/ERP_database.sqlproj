@@ -1386,6 +1386,7 @@
     <Build Include="dbo\Views\vwaca_Alumno_PeriodoActual.sql" />
     <Build Include="dbo\Tables\cxc_CobroMasivoDet.sql" />
     <Build Include="dbo\Tables\cxc_CobroMasivo.sql" />
+    <Build Include="dbo\Views\vwcxc_CobroMasivoDet.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

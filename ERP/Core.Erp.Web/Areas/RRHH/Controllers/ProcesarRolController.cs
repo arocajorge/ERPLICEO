@@ -362,6 +362,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     lst_provisiones = new List<ct_cbtecble_det_Info>(),
                 };
                 model = bus_rol.get_info_contabilizar(Convert.ToInt32(SessionFixed.IdEmpresa), IdNomina_Tipo, IdNomina_TipoLiqui, IdPeriodo, IdRol);
+                /*
+                model.lst_sueldo_x_pagar.ForEach(q => q.IdCtaCble = (string.IsNullOrEmpty(q.IdCtaCble) ? "0101001001" : q.IdCtaCble));
+                model.lst_provisiones.ForEach(q => q.IdCtaCble = (string.IsNullOrEmpty(q.IdCtaCble) ? "0101001001" : q.IdCtaCble));
+                */
                 list_det.set_list_cta(model.lst_sueldo_x_pagar, model.IdTransaccionSession=Convert.ToDecimal(SessionFixed.IdTransaccionSession));
                 list_prov.set_list(model.lst_provisiones, model.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession));
                 model.Fechacontabilizacion = DateTime.Now;

@@ -1,8 +1,8 @@
-﻿CREATE VIEW dbo.vwcxc_ConciliacionNotaCredito
+﻿CREATE VIEW[dbo].[vwcxc_ConciliacionNotaCredito]
 AS
 SELECT dbo.cxc_ConciliacionNotaCredito.IdEmpresa, dbo.cxc_ConciliacionNotaCredito.IdConciliacion, dbo.cxc_ConciliacionNotaCredito.IdSucursal, dbo.cxc_ConciliacionNotaCredito.IdBodega, dbo.cxc_ConciliacionNotaCredito.IdNota, 
                   dbo.cxc_ConciliacionNotaCredito.IdCobro, dbo.cxc_ConciliacionNotaCredito.Fecha, dbo.cxc_ConciliacionNotaCredito.Valor, dbo.cxc_ConciliacionNotaCredito.Observacion, dbo.cxc_ConciliacionNotaCredito.Estado, 
-                  CASE WHEN fa_notaCreDeb.NaturalezaNota = 'SRI' THEN fa_notaCreDeb.Serie1 + '-' + fa_notaCreDeb.Serie2 + '-' + fa_notaCreDeb.NumNota_Impresa ELSE fa_notaCreDeb.CodNota END AS Referencia, 
+                  CASE WHEN fa_notaCreDeb.NaturalezaNota = 'SRI' THEN fa_notaCreDeb.Serie1 + '-' + fa_notaCreDeb.Serie2 + '-' + fa_notaCreDeb.NumNota_Impresa ELSE cast(fa_notaCreDeb.IdNota as varchar) END AS Referencia, 
                   dbo.tb_persona.pe_nombreCompleto, dbo.cxc_ConciliacionNotaCredito.IdTipoCbte, dbo.cxc_ConciliacionNotaCredito.IdCbteCble, dbo.cxc_ConciliacionNotaCredito.IdAlumno, dbo.aca_Alumno.Codigo
 FROM     dbo.tb_persona INNER JOIN
                   dbo.aca_Alumno ON dbo.tb_persona.IdPersona = dbo.aca_Alumno.IdPersona INNER JOIN

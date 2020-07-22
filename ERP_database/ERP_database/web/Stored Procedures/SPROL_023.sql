@@ -95,8 +95,8 @@ FROM (
 
 		and  ro_empleado.Tiene_ingresos_compartidos=1
 		AND ro_empleado.Pago_por_horas=1
-						  and  cast(year(ro_contrato.FechaInicio) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaInicio) as varchar),2)  <= ro_rol.IdPeriodo
-				  and  cast(year(ro_contrato.FechaFin) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaFin) as varchar),2)  <= ro_rol.IdPeriodo
+				 and  cast(year(ro_contrato.FechaInicio) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaInicio) as varchar),2)  <= ro_rol.IdPeriodo
+				  and  cast(year(ro_contrato.FechaFin) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaFin) as varchar),2)  >= ro_rol.IdPeriodo
 		) A
 		GROUP BY IdEmpresa, IdRol,IdEmpleado,IdDivision,IdArea,Descripcion,DescripcionProcesoNomina,IdDepartamento,IdSucursal,IdNominaTipo,IdNominaTipoLiqui,IdPeriodo,pe_nombreCompleto,NombreDivision,NombreArea,NombreDepartamento,Su_Descripcion,NombreCargo, JORNADA
 ) A
@@ -220,7 +220,7 @@ FROM            dbo.tb_persona INNER JOIN
 				  and  ro_empleado.Tiene_ingresos_compartidos=0
 				  AND ro_empleado.Pago_por_horas=1
 				  				  and  cast(year(ro_contrato.FechaInicio) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaInicio) as varchar),2)  <= ro_rol.IdPeriodo
-				  and  cast(year(ro_contrato.FechaFin) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaFin) as varchar),2)  <= ro_rol.IdPeriodo
+				  and  cast(year(ro_contrato.FechaFin) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaFin) as varchar),2)  >= ro_rol.IdPeriodo
 
 				  and ro_contrato.IdNomina = @IdNomina
 				  ) A
@@ -338,7 +338,7 @@ FROM            dbo.tb_persona INNER JOIN
 
 				  and  ro_empleado.Tiene_ingresos_compartidos=1
 				  and  cast(year(ro_contrato.FechaInicio) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaInicio) as varchar),2)  <= ro_rol.IdPeriodo
-				  and  cast(year(ro_contrato.FechaFin) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaFin) as varchar),2)  <= ro_rol.IdPeriodo
+				  and  cast(year(ro_contrato.FechaFin) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaFin) as varchar),2)  >= ro_rol.IdPeriodo
 				  AND ro_empleado.Pago_por_horas=0
 				  ) A
 				  GROUP BY IdEmpresa, IdRol,IdEmpleado,IdDivision,IdArea,Descripcion,DescripcionProcesoNomina,IdDepartamento,IdSucursal,IdNominaTipo,IdNominaTipoLiqui,IdPeriodo,pe_nombreCompleto,NombreDivision,NombreArea,NombreDepartamento,Su_Descripcion,NombreCargo, JORNADA
@@ -462,7 +462,7 @@ FROM            dbo.tb_persona INNER JOIN
 				  
 				  and  ro_empleado.Tiene_ingresos_compartidos=0
 				  				  and  cast(year(ro_contrato.FechaInicio) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaInicio) as varchar),2)  <= ro_rol.IdPeriodo
-				  and  cast(year(ro_contrato.FechaFin) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaFin) as varchar),2)  <= ro_rol.IdPeriodo
+				  and  cast(year(ro_contrato.FechaFin) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaFin) as varchar),2)  >= ro_rol.IdPeriodo
 				  ) A
 				  LEFT JOIN(
 					SELECT G.IdEmpresa, G.IdRol, G.IdEmpleado, SUM(G.IESS_TOTAL)IESS_TOTAL, SUM(G.FRESERVA_TOTAL) FRESERVA_TOTAL
@@ -563,7 +563,7 @@ FROM            dbo.tb_persona INNER JOIN
 				  and  ro_empleado.Tiene_ingresos_compartidos=1
 				  AND ro_empleado.Pago_por_horas=0
 					and  cast(year(ro_contrato.FechaInicio) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaInicio) as varchar),2)  <= ro_rol.IdPeriodo
-				  and  cast(year(ro_contrato.FechaFin) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaFin) as varchar),2)  <= ro_rol.IdPeriodo
+				  and  cast(year(ro_contrato.FechaFin) as varchar) + RIGHT('00'+cast(month(ro_contrato.FechaFin) as varchar),2)  >= ro_rol.IdPeriodo
 				  ) A
 				  GROUP BY IdEmpresa, IdRol,IdEmpleado,IdDivision,IdArea,Descripcion,DescripcionProcesoNomina,IdDepartamento,IdSucursal,IdNominaTipo,IdNominaTipoLiqui,IdPeriodo,pe_nombreCompleto,NombreDivision,NombreArea,NombreDepartamento,Su_Descripcion,NombreCargo, JORNADA
 				  ) A

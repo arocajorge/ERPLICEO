@@ -1390,6 +1390,7 @@
     <Build Include="dbo\Tables\cxc_SeguimientoCartera.sql" />
     <Build Include="Academico\Stored Procedures\SPCXC_007_Resumen.sql" />
     <Build Include="dbo\Views\vwcxc_SeguimientoCartera.sql" />
+    <Build Include="Academico\Views\VWCXC_012.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

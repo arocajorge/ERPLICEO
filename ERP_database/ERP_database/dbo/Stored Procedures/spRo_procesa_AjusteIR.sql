@@ -1,16 +1,4 @@
-﻿/*
-EXEC [dbo].[spRo_procesa_AjusteIR]
-@IdEmpresa = 1,
-@IdAnio = 2019,
-@IdAjuste = 1,
-@IdEmpleado = 0,
-@IdSucursal = 1,
-@IdUsuario ='ADMIN',
-@Fecha = '2019/01/01',
-@FechaCorte ='2019/11/30',
-@Observacion =''
-*/
-
+﻿
 CREATE PROCEDURE [dbo].[spRo_procesa_AjusteIR]
 (
 @IdEmpresa int,
@@ -140,6 +128,7 @@ BEGIN --INSERT DEL DETALLE
 		   AND E.em_estado = 'A'
 		   and c.IdNomina = 1
 		   and isnull(c.FechaFin,@FechaCorte) >= @FechaCorte
+		   and c.FechaInicio <= @FechaCorte
 
 END
 
@@ -272,7 +261,7 @@ BEGIN --UPDATE GASTOS PERSONALES
 		FROM ro_empleado_gatos_x_anio A
 		WHERE A.IdEmpresa = @IdEmpresa
 		AND A.AnioFiscal = @IdAnio
-		AND A.IdEmpleado BETWEEN @IdEmpresa AND CASE WHEN @IdEmpleado = 0 THEN 999999999 ELSE @IdEmpleado END
+		AND A.IdEmpleado BETWEEN @IdEmpleado AND CASE WHEN @IdEmpleado = 0 THEN 999999999 ELSE @IdEmpleado END
 		group by A.IdEmpresa, A.IdEmpleado
 	) A
 	WHERE [dbo].[ro_AjusteImpuestoRentaDet].IdEmpresa = @IdEmpresa
@@ -286,7 +275,7 @@ BEGIN --UPDATE APORTE PATRONAL
 	UPDATE [dbo].[ro_AjusteImpuestoRentaDet] SET AporteFechaCorte = dbo.BankersRounding((SueldoFechaCorte + SueldoProyectado)*0.0945,2)
 	WHERE [dbo].[ro_AjusteImpuestoRentaDet].IdEmpresa = @IdEmpresa
 	AND [dbo].[ro_AjusteImpuestoRentaDet].IdAjuste = @IdAjuste	
-	and [dbo].[ro_AjusteImpuestoRentaDet].IdEmpleado between @IdEmpresa AND CASE WHEN @IdEmpleado = 0 THEN 999999999 ELSE @IdEmpleado END
+	and [dbo].[ro_AjusteImpuestoRentaDet].IdEmpleado between @IdEmpleado AND CASE WHEN @IdEmpleado = 0 THEN 999999999 ELSE @IdEmpleado END
 END
 
 PRINT 'UPDATE BASE IMPONIBLE'
@@ -294,7 +283,7 @@ BEGIN --UPDATE BASE IMPONIBLE
 	UPDATE [dbo].[ro_AjusteImpuestoRentaDet] SET BaseImponible = dbo.BankersRounding(IngresosLiquidos - GastosPersonales - AporteFechaCorte,2)
 	WHERE [dbo].[ro_AjusteImpuestoRentaDet].IdEmpresa = @IdEmpresa
 	AND [dbo].[ro_AjusteImpuestoRentaDet].IdAjuste = @IdAjuste	
-	and [dbo].[ro_AjusteImpuestoRentaDet].IdEmpleado between @IdEmpresa AND CASE WHEN @IdEmpleado = 0 THEN 999999999 ELSE @IdEmpleado END
+	and [dbo].[ro_AjusteImpuestoRentaDet].IdEmpleado between @IdEmpleado AND CASE WHEN @IdEmpleado = 0 THEN 999999999 ELSE @IdEmpleado END
 END
 
 PRINT 'UPDATE DATOS TABLA DE IMPUESTO A LA RENTA'

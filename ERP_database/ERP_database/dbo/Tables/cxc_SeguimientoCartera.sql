@@ -2,6 +2,8 @@
     [IdEmpresa]             INT           NOT NULL,
     [IdSeguimiento]         INT           NOT NULL,
     [IdAlumno]              NUMERIC (18)  NOT NULL,
+    [IdMatricula]           NUMERIC (18)  NULL,
+    [CorreoEnviado]         BIT           NOT NULL,
     [Fecha]                 DATETIME      NOT NULL,
     [Observacion]           VARCHAR (MAX) NOT NULL,
     [Estado]                BIT           NOT NULL,
@@ -13,6 +15,9 @@
     [FechaAnulacion]        DATETIME      NULL,
     [MotivoAnulacion]       VARCHAR (MAX) NULL,
     CONSTRAINT [PK_cxc_SeguimientoCartera] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSeguimiento] ASC),
-    CONSTRAINT [FK_cxc_SeguimientoCartera_aca_Alumno] FOREIGN KEY ([IdEmpresa], [IdAlumno]) REFERENCES [dbo].[aca_Alumno] ([IdEmpresa], [IdAlumno])
+    CONSTRAINT [FK_cxc_SeguimientoCartera_aca_Alumno] FOREIGN KEY ([IdEmpresa], [IdAlumno]) REFERENCES [dbo].[aca_Alumno] ([IdEmpresa], [IdAlumno]),
+    CONSTRAINT [FK_cxc_SeguimientoCartera_aca_Matricula] FOREIGN KEY ([IdEmpresa], [IdMatricula]) REFERENCES [dbo].[aca_Matricula] ([IdEmpresa], [IdMatricula])
 );
+
+
 

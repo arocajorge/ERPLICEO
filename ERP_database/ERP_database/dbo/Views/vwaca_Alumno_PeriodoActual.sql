@@ -1,8 +1,11 @@
-﻿CREATE VIEW [dbo].[vwaca_Alumno_PeriodoActual]
+﻿
+
+CREATE VIEW [dbo].[vwaca_Alumno_PeriodoActual]
 AS
-SELECT a.IdEmpresa, a.Codigo, a.IdAlumno, E.IdMatricula, b.pe_nombreCompleto AS NombreAlumno, b.pe_cedulaRuc, c.pe_nombreCompleto AS NombreRepresentante, c.Correo AS CorreoRepresentante, d.pe_nombreCompleto AS NombreEmiteFactura, 
-                  d.Correo AS CorreoEmiteFactura, c.Celular AS CelularRepresentante, d.Celular AS CelularEmiteFactura, e.IdAnio, e.IdSede, e.IdNivel, e.IdJornada, e.IdCurso, e.IdParalelo, sn.NomSede, sn.NomNivel, nj.NomJornada, jc.NomCurso, 
-                  cp.NomParalelo, isnull(g.Saldo,0) Saldo, isnull(g.SaldoProntoPago,0) SaldoProntoPago
+SELECT a.IdEmpresa, a.Codigo, a.IdAlumno, e.IdMatricula, b.pe_nombreCompleto AS NombreAlumno, b.pe_cedulaRuc, c.pe_nombreCompleto AS NombreRepresentante, c.Correo AS CorreoRepresentante, 
+                  d.pe_nombreCompleto AS NombreEmiteFactura, d.Correo AS CorreoEmiteFactura, c.Celular AS CelularRepresentante, d.Celular AS CelularEmiteFactura, e.IdAnio, e.IdSede, e.IdNivel, e.IdJornada, e.IdCurso, e.IdParalelo, sn.NomSede, 
+                  sn.NomNivel, nj.NomJornada, jc.NomCurso, cp.NomParalelo, ISNULL(g.Saldo, 0) AS Saldo, ISNULL(g.SaldoProntoPago, 0) AS SaldoProntoPago,
+				  ISNULL(g.CantDeudas,0) CantDeudas
 FROM     dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn RIGHT OUTER JOIN
                   dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel RIGHT OUTER JOIN
                   dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
@@ -20,12 +23,10 @@ FROM     dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn RIGHT OUTER JOIN
                        WHERE   (xx.SeFactura = 1) AND (xx.Estado = 1)) AS d ON a.IdEmpresa = d.IdEmpresa AND a.IdAlumno = d.IdAlumno INNER JOIN
                   dbo.aca_Matricula AS e ON a.IdEmpresa = e.IdEmpresa AND a.IdAlumno = e.IdAlumno INNER JOIN
                   dbo.aca_AnioLectivo AS f ON e.IdEmpresa = f.IdEmpresa AND e.IdAnio = f.IdAnio ON cp.IdEmpresa = e.IdEmpresa AND cp.IdAnio = e.IdAnio AND cp.IdSede = e.IdSede AND cp.IdNivel = e.IdNivel AND cp.IdJornada = e.IdJornada AND 
-                  cp.IdCurso = e.IdCurso AND cp.IdParalelo = e.IdParalelo left join
-				  (
-				  select xy.IdEmpresa, xy.IdAlumno, sum(xy.Saldo) Saldo, sum(xy.ValorProntoPago - xy.TotalxCobrado) SaldoProntoPago 
-				  from vwcxc_cartera_x_cobrar as xy 
-				  group by xy.IdEmpresa, xy.IdAlumno
-				  ) as g on g.IdEmpresa = a.IdEmpresa and g.IdAlumno = a.IdAlumno
+                  cp.IdCurso = e.IdCurso AND cp.IdParalelo = e.IdParalelo LEFT OUTER JOIN
+                      (SELECT IdEmpresa, IdAlumno, SUM(Saldo) AS Saldo, SUM(ValorProntoPago - TotalxCobrado) AS SaldoProntoPago, count(*) as CantDeudas
+                       FROM      dbo.vwcxc_cartera_x_cobrar AS xy
+                       GROUP BY IdEmpresa, IdAlumno) AS g ON g.IdEmpresa = a.IdEmpresa AND g.IdAlumno = a.IdAlumno
 WHERE  (f.EnCurso = 1) AND (f.Estado = 1) AND (a.Estado = 1) AND (NOT EXISTS
                       (SELECT IdEmpresa
                        FROM      dbo.aca_AlumnoRetiro AS xx

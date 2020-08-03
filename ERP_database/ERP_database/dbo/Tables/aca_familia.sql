@@ -5,6 +5,7 @@
     [IdCatalogoPAREN]       INT            NOT NULL,
     [IdPersona]             NUMERIC (18)   NOT NULL,
     [Direccion]             VARCHAR (1000) NULL,
+    [Telefono]              VARCHAR (500)  NULL,
     [Celular]               VARCHAR (500)  NULL,
     [Correo]                VARCHAR (500)  NULL,
     [IdCatalogoFichaInst]   INT            NULL,
@@ -45,6 +46,8 @@
     CONSTRAINT [FK_aca_familia_tb_persona] FOREIGN KEY ([IdPersona]) REFERENCES [dbo].[tb_persona] ([IdPersona]),
     CONSTRAINT [FK_aca_Familia_tb_region] FOREIGN KEY ([Cod_Region]) REFERENCES [dbo].[tb_region] ([Cod_Region])
 );
+
+
 
 
 

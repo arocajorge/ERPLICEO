@@ -1,7 +1,7 @@
 ﻿CREATE VIEW dbo.vwcxc_SeguimientoCartera
 AS
 SELECT dbo.cxc_SeguimientoCartera.IdEmpresa, dbo.cxc_SeguimientoCartera.IdSeguimiento, dbo.cxc_SeguimientoCartera.IdAlumno, dbo.aca_Alumno.Codigo, dbo.tb_persona.pe_nombreCompleto, dbo.cxc_SeguimientoCartera.Fecha, 
-                  dbo.cxc_SeguimientoCartera.Observacion, dbo.cxc_SeguimientoCartera.Estado, dbo.cxc_SeguimientoCartera.IdMatricula, dbo.cxc_SeguimientoCartera.CorreoEnviado
+                  dbo.cxc_SeguimientoCartera.Observacion, dbo.cxc_SeguimientoCartera.Estado, dbo.cxc_SeguimientoCartera.IdMatricula, dbo.cxc_SeguimientoCartera.CorreoEnviado, dbo.cxc_SeguimientoCartera.IdUsuarioCreacion
 FROM     dbo.aca_Alumno INNER JOIN
                   dbo.cxc_SeguimientoCartera ON dbo.aca_Alumno.IdEmpresa = dbo.cxc_SeguimientoCartera.IdEmpresa AND dbo.aca_Alumno.IdAlumno = dbo.cxc_SeguimientoCartera.IdAlumno INNER JOIN
                   dbo.tb_persona ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona
@@ -15,7 +15,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+         Configuration = "(H (1[46] 4[3] 2[32] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -149,4 +149,6 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwcxc_SeguimientoCartera';
+
+
 

@@ -1,4 +1,4 @@
-﻿--EXEC Academico.SPCXC_008 1 ,'2020/4/20',1,0,0,0,0,0,0
+﻿--EXEC Academico.SPCXC_008 1 ,'2020/8/20',1,0,0,0,0,0,0,4,9999
 CREATE PROCEDURE [Academico].[SPCXC_008]
 (
 @IdEmpresa int,
@@ -9,10 +9,14 @@ CREATE PROCEDURE [Academico].[SPCXC_008]
 @IdJornada int,
 @IdCurso int,
 @IdParalelo int,
-@IdAlumno numeric
+@IdAlumno numeric,
+@CantIni int,
+@CantFin int
 )
 AS
 
+
+select a.*, b.Cont from(
 select a.IdEmpresa, a.IdSucursal, a.IdBodega, a.IdCbteVta, a.vt_fecha, a.vt_Observacion, A.vt_serie1+'-'+A.vt_serie2+'-'+ A.vt_NumFactura vt_NumFactura, c.IdAlumno, c.Codigo as CodigoAlumno, d.pe_nombreCompleto, year(isnull(e.FechaDesde,a.vt_fecha)) as Periodo, b.Total, isnull(f.dc_ValorPago,0) as TotalPagado, round(b.Total - isnull(f.dc_ValorPago,0),2) as Saldo,
 a.vt_fech_venc, DATEDIFF(day,a.vt_fech_venc,@FechaCorte) as Plazo, 
 g.IdMatricula, g.IdAnio, g.IdSede, g.IdNivel, g.IdJornada, g.IdCurso, g.IdParalelo,
@@ -92,3 +96,26 @@ aca_AnioLectivo as e on b.IdEmpresa = e.IdEmpresa and b.IdAnio = e.IdAnio left j
 ) as g on a.IdEmpresa = g.IdEmpresa and a.IdAlumno = g.IdAlumno
 where a.IdEmpresa = @IdEmpresa and a.Estado = 'A' AND a.no_fecha <= @FechaCorte and round(b.Total - isnull(f.dc_ValorPago,0),2) > 0 and a.CreDeb = 'D'
 and a.IdAlumno = iif(@IdAlumno = 0, a.IdAlumno, @IdAlumno) --and g.IdMatricula is not null
+) a inner join
+(
+SELECT XX.IdEmpresa, XX.IdAlumno, COUNT(xx.IdEmpresa) Cont
+FROM(
+	select c.IdEmpresa, c.IdAlumno, c.IdSucursal, c.IdBodega, c.IdCbteVta, c.vt_tipoDoc, a.Total
+	from fa_factura_resumen as a INNER JOIN
+	fa_factura AS c on a.IdEmpresa = c.IdEmpresa and a.IdSucursal = c.IdSucursal and a.IdBodega = c.IdBodega and a.IdCbteVta = c.IdCbteVta left join
+	cxc_cobro_det as b on a.IdEmpresa = b.IdEmpresa and a.IdSucursal = b.IdSucursal and a.IdBodega = b.IdBodega_Cbte and a.IdCbteVta = b.IdCbte_vta_nota and b.dc_TipoDocumento = 'FACT' AND B.estado = 'A' 
+	WHERE A.IdEmpresa = @IdEmpresa  AND C.Estado = 'A' and c.IdAlumno is not null
+	group by c.IdEmpresa, c.IdAlumno, c.IdSucursal, c.IdBodega, c.IdCbteVta, c.vt_tipoDoc, a.Total
+	having dbo.BankersRounding(a.Total - isnull(sum(b.dc_ValorPago),0),2) > 0
+	union all
+	select c.IdEmpresa, c.IdAlumno, c.IdSucursal, c.IdBodega, c.IdNota, c.CodDocumentoTipo, a.Total
+	from fa_notaCreDeb_resumen as a INNER JOIN
+	fa_notaCreDeb AS c on a.IdEmpresa = c.IdEmpresa and a.IdSucursal = c.IdSucursal and a.IdBodega = c.IdBodega and a.IdNota = c.IdNota left join
+	cxc_cobro_det as b on a.IdEmpresa = b.IdEmpresa and a.IdSucursal = b.IdSucursal and a.IdBodega = b.IdBodega_Cbte and a.IdNota = b.IdCbte_vta_nota and b.dc_TipoDocumento = 'NTDB' AND B.estado = 'A' 
+	WHERE A.IdEmpresa = @IdEmpresa AND C.Estado = 'A' and c.IdAlumno is not null and c.CreDeb= 'D'
+	group by c.IdEmpresa, c.IdAlumno, c.IdSucursal, c.IdBodega, c.IdNota, c.CodDocumentoTipo, a.Total
+	having dbo.BankersRounding(a.Total - isnull(sum(b.dc_ValorPago),0),2) > 0
+) XX GROUP BY XX.IdEmpresa, XX.IdAlumno 
+HAVING COUNT(xx.IdEmpresa) BETWEEN @CantIni AND @CantFin 
+) B ON A.IdEmpresa = b.IdEmpresa and a.IdAlumno = b.IdAlumno
+--where b.Cont between @CantIni and @CantFin

@@ -22,6 +22,7 @@
     [IdCatalogoEstadoAjuste]                            VARCHAR (15) NULL,
     [IdMotivo_Inv_ajuste_ing]                           INT          NULL,
     [IdMotivo_Inv_ajuste_egr]                           INT          NULL,
+    [DiasTransaccionesAPasado]                          INT          NULL,
     CONSTRAINT [PK_in_parametro] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC),
     CONSTRAINT [FK_in_parametro_ct_plancta2] FOREIGN KEY ([IdEmpresa], [P_IdCtaCble_transitoria_transf_inven]) REFERENCES [dbo].[ct_plancta] ([IdEmpresa], [IdCtaCble]),
     CONSTRAINT [FK_in_parametro_in_Catalogo2] FOREIGN KEY ([IdCatalogoEstadoAjuste]) REFERENCES [dbo].[in_Catalogo] ([IdCatalogo]),
@@ -41,6 +42,8 @@
     CONSTRAINT [FK_in_parametro_in_movi_inven_tipo6] FOREIGN KEY ([IdEmpresa], [IdMovi_Inven_tipo_x_Dev_Inv_x_Ing]) REFERENCES [dbo].[in_movi_inven_tipo] ([IdEmpresa], [IdMovi_inven_tipo]),
     CONSTRAINT [FK_in_parametro_in_movi_inven_tipo7] FOREIGN KEY ([IdEmpresa], [IdMovi_Inven_tipo_x_Dev_Inv_x_Erg]) REFERENCES [dbo].[in_movi_inven_tipo] ([IdEmpresa], [IdMovi_inven_tipo])
 );
+
+
 
 
 

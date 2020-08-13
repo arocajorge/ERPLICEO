@@ -16,6 +16,7 @@
     [DiasTransaccionesAFuturo]          INT           NOT NULL,
     [IdClienteConsumidorFinal]          NUMERIC (18)  NULL,
     [MontoMaximoConsumidorFinal]        FLOAT (53)    NULL,
+    [DiasTransaccionesAPasado]          INT           NULL,
     CONSTRAINT [PK_fa_parametro] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC),
     CONSTRAINT [FK_fa_parametro_caj_Caja] FOREIGN KEY ([IdEmpresa], [IdCaja_Default_Factura]) REFERENCES [dbo].[caj_Caja] ([IdEmpresa], [IdCaja]),
     CONSTRAINT [FK_fa_parametro_ct_cbtecble_tipo] FOREIGN KEY ([IdEmpresa], [IdTipoCbteCble_Factura]) REFERENCES [dbo].[ct_cbtecble_tipo] ([IdEmpresa], [IdTipoCbte]),
@@ -26,6 +27,8 @@
     CONSTRAINT [FK_fa_parametro_fa_cliente] FOREIGN KEY ([IdEmpresa], [IdClienteConsumidorFinal]) REFERENCES [dbo].[fa_cliente] ([IdEmpresa], [IdCliente]),
     CONSTRAINT [FK_fa_parametro_tb_empresa] FOREIGN KEY ([IdEmpresa]) REFERENCES [dbo].[tb_empresa] ([IdEmpresa])
 );
+
+
 
 
 

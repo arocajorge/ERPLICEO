@@ -16,6 +16,7 @@
     [pa_ctacble_x_RetIva_default]      VARCHAR (20) NULL,
     [pa_ctacble_x_RetFte_default]      VARCHAR (20) NULL,
     [DiasTransaccionesAFuturo]         INT          NOT NULL,
+    [DiasTransaccionesAPasado]         INT          NULL,
     CONSTRAINT [PK_cp_parametros] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC),
     CONSTRAINT [FK_cp_parametros_ct_cbtecble_tipo] FOREIGN KEY ([IdEmpresa], [pa_TipoCbte_OG]) REFERENCES [dbo].[ct_cbtecble_tipo] ([IdEmpresa], [IdTipoCbte]),
     CONSTRAINT [FK_cp_parametros_ct_cbtecble_tipo2] FOREIGN KEY ([IdEmpresa], [pa_IdTipoCbte_x_Retencion]) REFERENCES [dbo].[ct_cbtecble_tipo] ([IdEmpresa], [IdTipoCbte]),
@@ -29,6 +30,8 @@
     CONSTRAINT [FK_cp_parametros_ct_plancta4] FOREIGN KEY ([IdEmpresa], [pa_ctacble_x_RetIva_default]) REFERENCES [dbo].[ct_plancta] ([IdEmpresa], [IdCtaCble]),
     CONSTRAINT [FK_cp_parametros_tb_empresa] FOREIGN KEY ([IdEmpresa]) REFERENCES [dbo].[tb_empresa] ([IdEmpresa])
 );
+
+
 
 
 

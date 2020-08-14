@@ -42,7 +42,8 @@ namespace Core.Erp.Info.RRHH
         public List<ro_Config_Param_contable_Info> lst_cta_x_provisiones { get; set; }
 
         public List<ro_parametro_contable_x_Nomina_Tipoliqui_Sueldo_x_Pagar_Info> lst_cta_x_sueldo_pagar { get; set; }
-
+        public Nullable<int> DiasTransaccionesAFuturo { get; set; }
+        public Nullable<int> DiasTransaccionesAPasado { get; set; }
         public ro_Parametros_Info()
         {
             lst_cta_x_rubros = new List<ro_Config_Param_contable_Info>();

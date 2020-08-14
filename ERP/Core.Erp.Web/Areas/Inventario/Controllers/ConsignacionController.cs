@@ -328,6 +328,11 @@ namespace Core.Erp.Web.Areas.Inventario.Controllers
         {
             i_validar.lst_producto_consignacion = in_ConsignacionDet_List.get_list(i_validar.IdTransaccionSession);
 
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.Fecha, cl_enumeradores.eModulo.INV, i_validar.IdSucursal, ref msg))
+            {
+                return false;
+            }
+
             if (i_validar.lst_producto_consignacion.Count == 0)
             {
                 mensaje = "Debe ingresar un detalle en la consignación";

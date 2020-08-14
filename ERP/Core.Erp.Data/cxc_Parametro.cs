@@ -18,10 +18,14 @@ namespace Core.Erp.Data
         public int pa_IdCaja_x_cobros_x_CXC { get; set; }
         public int pa_IdTipoMoviCaja_x_Cobros_x_cliente { get; set; }
         public int pa_IdTipoCbteCble_CxC { get; set; }
+        public Nullable<int> IdTipoCbte_ConciliacionNC { get; set; }
         public int DiasTransaccionesAFuturo { get; set; }
         public string IdUsuario { get; set; }
         public Nullable<System.DateTime> FechaTransac { get; set; }
         public string IdUsuarioUltMod { get; set; }
         public Nullable<System.DateTime> FechaUltMod { get; set; }
+        public Nullable<int> IdTipoNotaProntoPago { get; set; }
+        public Nullable<int> IdTipoNotaPagoAnticipado { get; set; }
+        public Nullable<int> DiasTransaccionesAPasado { get; set; }
     }
 }

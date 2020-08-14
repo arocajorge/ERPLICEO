@@ -117,6 +117,7 @@
           <Property Name="Fecha_Transac" Type="datetime" />
           <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
           <Property Name="FechaUltMod" Type="datetime" />
+          <Property Name="DiasTransaccionesAPasado" Type="int" />
         </EntityType>
         <EntityType Name="cp_conciliacion_Caja">
           <Key>
@@ -217,7 +218,7 @@
           <Property Name="Valor" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwcaj_Caja_Movimiento_por_conciliar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwcaj_Caja_Movimiento_por_conciliar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwcaj_Caja_Movimiento_por_conciliar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -249,7 +250,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwcaj_Caja_Movimiento_por_co
           <Property Name="SecuenciaCaja" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwcaj_Caja_Movimiento_ValesNoConciliados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwcaj_Caja_Movimiento_ValesNoConciliados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwcaj_Caja_Movimiento_ValesNoConciliados">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -265,7 +266,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwcaj_Caja_Movimiento_ValesN
           <Property Name="cm_valor" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwcaj_Caja_Movimiento_x_Conciliar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwcaj_Caja_Movimiento_x_Conciliar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwcaj_Caja_Movimiento_x_Conciliar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -292,7 +293,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwcaj_Caja_Movimiento_x_Conc
           <Property Name="Saldo" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcaj_Caja_Movimiento' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.web.vwcaj_Caja_Movimiento' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwcaj_Caja_Movimiento">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -324,7 +325,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcaj_Caja_Movimiento' no ti
           <Property Name="SecuenciaCaja" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_conciliacion_Caja_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwcp_conciliacion_Caja_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -374,7 +375,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_conciliacion_Caja_det' 
           <Property Name="co_total" Type="float" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_conciliacion_Caja_det_x_ValeCaja' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.web.vwcp_conciliacion_Caja_det_x_ValeCaja' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwcp_conciliacion_Caja_det_x_ValeCaja">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -401,7 +402,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_conciliacion_Caja_det_x
           <Property Name="IdTipoMovi" Type="int" Nullable="false" />
           <Property Name="IdPersona" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="cm_fecha" Type="datetime" Nullable="false" />
+          <Property Name="cm_fecha" Type="date" Nullable="false" />
           <Property Name="cm_observacion" Type="varchar(max)" />
         </EntityType>
         <Association Name="FK_caj_Caja_Movimiento_caj_Caja">
@@ -794,7 +795,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_conciliacion_Caja_det_x
           <EntitySet Name="caj_Caja_Movimiento_det" EntityType="Self.caj_Caja_Movimiento_det" />
           <EntitySet Name="vwcaj_Caja_Movimiento_x_Conciliar" EntityType="Self.vwcaj_Caja_Movimiento_x_Conciliar" />
           <EntitySet Name="vwcp_conciliacion_Caja_det_x_ValeCaja" EntityType="Model_caja.vwcp_conciliacion_Caja_det_x_ValeCaja" />
-          <EntitySet Name="caj_parametro" EntityType="Model_caja.caj_parametro" />
           <EntitySet Name="caj_Caja_Movimiento_Tipo" EntityType="Model_caja.caj_Caja_Movimiento_Tipo" />
           <EntitySet Name="vwcaj_Caja_Movimiento_ValesNoConciliados" EntityType="Model_caja.vwcaj_Caja_Movimiento_ValesNoConciliados" />
           <EntitySet Name="caj_Caja_Movimiento" EntityType="Model_caja.caj_Caja_Movimiento" />
@@ -852,6 +852,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_conciliacion_Caja_det_x
           <EntitySet Name="vwcp_conciliacion_Caja_det" EntityType="Model_caja.vwcp_conciliacion_Caja_det" />
           <EntitySet Name="vwcaj_Caja_Movimiento_por_conciliar" EntityType="Model_caja.vwcaj_Caja_Movimiento_por_conciliar" />
           <EntitySet Name="caj_Caja_x_seg_usuario" EntityType="Model_caja.caj_Caja_x_seg_usuario" />
+          <EntitySet Name="caj_parametro" EntityType="Model_caja.caj_parametro" />
           <AssociationSet Name="FK_caj_Caja_x_seg_usuario_caj_Caja" Association="Model_caja.FK_caj_Caja_x_seg_usuario_caj_Caja">
             <End Role="caj_Caja" EntitySet="caj_Caja" />
             <End Role="caj_Caja_x_seg_usuario" EntitySet="caj_Caja_x_seg_usuario" />
@@ -883,22 +884,8 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_conciliacion_Caja_det_x
           <Property Name="IdTipoMovi" Type="Int32" Nullable="false" />
           <Property Name="IdPersona" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="cm_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="cm_fecha" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="cm_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="caj_parametro">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoCbteCble_MoviCaja_Ing" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoCbteCble_MoviCaja_Egr" Type="Int32" Nullable="false" />
-          <Property Name="IdTipo_movi_ing_x_reposicion" Type="Int32" />
-          <Property Name="DiasTransaccionesAFuturo" Type="Int32" Nullable="false" />
-          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="FechaUltMod" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="caj_Caja_Movimiento_Tipo">
           <Key>
@@ -1390,6 +1377,21 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_conciliacion_Caja_det_x
           <Property Name="IdUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="caj_Caja" Relationship="Model_caja.FK_caj_Caja_x_seg_usuario_caj_Caja" FromRole="caj_Caja_x_seg_usuario" ToRole="caj_Caja" />
         </EntityType>
+        <EntityType Name="caj_parametro">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbteCble_MoviCaja_Ing" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbteCble_MoviCaja_Egr" Type="Int32" Nullable="false" />
+          <Property Name="IdTipo_movi_ing_x_reposicion" Type="Int32" />
+          <Property Name="DiasTransaccionesAFuturo" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaUltMod" Type="DateTime" Precision="3" />
+          <Property Name="DiasTransaccionesAPasado" Type="Int32" />
+        </EntityType>
         <Association Name="FK_caj_Caja_x_seg_usuario_caj_Caja">
           <End Type="Model_caja.caj_Caja" Role="caj_Caja" Multiplicity="1" />
           <End Type="Model_caja.caj_Caja_x_seg_usuario" Role="caj_Caja_x_seg_usuario" Multiplicity="*" />
@@ -1454,21 +1456,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_conciliacion_Caja_det_x
                 <ScalarProperty Name="IdEmpresa_movcaja" ColumnName="IdEmpresa_movcaja" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdConciliacion_Caja" ColumnName="IdConciliacion_Caja" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="caj_parametro">
-            <EntityTypeMapping TypeName="Model_caja.caj_parametro">
-              <MappingFragment StoreEntitySet="caj_parametro">
-                <ScalarProperty Name="FechaUltMod" ColumnName="FechaUltMod" />
-                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
-                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="DiasTransaccionesAFuturo" ColumnName="DiasTransaccionesAFuturo" />
-                <ScalarProperty Name="IdTipo_movi_ing_x_reposicion" ColumnName="IdTipo_movi_ing_x_reposicion" />
-                <ScalarProperty Name="IdTipoCbteCble_MoviCaja_Egr" ColumnName="IdTipoCbteCble_MoviCaja_Egr" />
-                <ScalarProperty Name="IdTipoCbteCble_MoviCaja_Ing" ColumnName="IdTipoCbteCble_MoviCaja_Ing" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1727,6 +1714,22 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.web.vwcp_conciliacion_Caja_det_x
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="Secuencia" ColumnName="Secuencia" />
                 <ScalarProperty Name="IdCaja" ColumnName="IdCaja" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="caj_parametro">
+            <EntityTypeMapping TypeName="Model_caja.caj_parametro">
+              <MappingFragment StoreEntitySet="caj_parametro">
+                <ScalarProperty Name="DiasTransaccionesAPasado" ColumnName="DiasTransaccionesAPasado" />
+                <ScalarProperty Name="FechaUltMod" ColumnName="FechaUltMod" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="Fecha_Transac" ColumnName="Fecha_Transac" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="DiasTransaccionesAFuturo" ColumnName="DiasTransaccionesAFuturo" />
+                <ScalarProperty Name="IdTipo_movi_ing_x_reposicion" ColumnName="IdTipo_movi_ing_x_reposicion" />
+                <ScalarProperty Name="IdTipoCbteCble_MoviCaja_Egr" ColumnName="IdTipoCbteCble_MoviCaja_Egr" />
+                <ScalarProperty Name="IdTipoCbteCble_MoviCaja_Ing" ColumnName="IdTipoCbteCble_MoviCaja_Ing" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

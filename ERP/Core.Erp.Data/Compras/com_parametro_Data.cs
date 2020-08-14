@@ -26,7 +26,8 @@ namespace Core.Erp.Data.Compras
                         IdEstadoAprobacion_OC = Entity.IdEstadoAprobacion_OC,
                         IdEstado_cierre = Entity.IdEstado_cierre,
                         IdMovi_inven_tipo_OC = Entity.IdMovi_inven_tipo_OC,
-                        DiasTransaccionesAFuturo = Entity.DiasTransaccionesAFuturo
+                        DiasTransaccionesAFuturo = Entity.DiasTransaccionesAFuturo,
+                        DiasTransaccionesAPasado = Entity.DiasTransaccionesAPasado
                     };
                 }
                 return info;
@@ -54,7 +55,8 @@ namespace Core.Erp.Data.Compras
                             IdEstadoAprobacion_OC = info.IdEstadoAprobacion_OC,
                             IdEstado_cierre = info.IdEstado_cierre,
                             IdMovi_inven_tipo_OC = info.IdMovi_inven_tipo_OC,
-                            DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo
+                            DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo,
+                            DiasTransaccionesAPasado = info.DiasTransaccionesAPasado
                         };
                         Context.com_parametro.Add(Entity);
                     }
@@ -65,6 +67,7 @@ namespace Core.Erp.Data.Compras
                         Entity.IdEstado_cierre = info.IdEstado_cierre;
                         Entity.IdMovi_inven_tipo_OC = info.IdMovi_inven_tipo_OC;
                         Entity.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
+                        Entity.DiasTransaccionesAPasado = info.DiasTransaccionesAPasado;
                     }
                     Context.SaveChanges();
                 }

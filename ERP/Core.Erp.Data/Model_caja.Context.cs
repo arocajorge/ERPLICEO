@@ -28,7 +28,6 @@ namespace Core.Erp.Data
         public DbSet<caj_Caja_Movimiento_det> caj_Caja_Movimiento_det { get; set; }
         public DbSet<vwcaj_Caja_Movimiento_x_Conciliar> vwcaj_Caja_Movimiento_x_Conciliar { get; set; }
         public DbSet<vwcp_conciliacion_Caja_det_x_ValeCaja> vwcp_conciliacion_Caja_det_x_ValeCaja { get; set; }
-        public DbSet<caj_parametro> caj_parametro { get; set; }
         public DbSet<caj_Caja_Movimiento_Tipo> caj_Caja_Movimiento_Tipo { get; set; }
         public DbSet<vwcaj_Caja_Movimiento_ValesNoConciliados> vwcaj_Caja_Movimiento_ValesNoConciliados { get; set; }
         public DbSet<caj_Caja_Movimiento> caj_Caja_Movimiento { get; set; }
@@ -42,5 +41,6 @@ namespace Core.Erp.Data
         public DbSet<vwcp_conciliacion_Caja_det> vwcp_conciliacion_Caja_det { get; set; }
         public DbSet<vwcaj_Caja_Movimiento_por_conciliar> vwcaj_Caja_Movimiento_por_conciliar { get; set; }
         public DbSet<caj_Caja_x_seg_usuario> caj_Caja_x_seg_usuario { get; set; }
+        public DbSet<caj_parametro> caj_parametro { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace Core.Erp.Data.Compras.Base
         public string IdEstadoAnulacion_OC { get; set; }
         public string IdEstado_cierre { get; set; }
         public int DiasTransaccionesAFuturo { get; set; }
+        public Nullable<int> DiasTransaccionesAPasado { get; set; }
     
         public virtual com_catalogo com_catalogo { get; set; }
         public virtual com_catalogo com_catalogo1 { get; set; }

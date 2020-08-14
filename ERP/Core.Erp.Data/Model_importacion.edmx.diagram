@@ -13,7 +13,6 @@
         <EntityTypeShape EntityType="Model_importacion.imp_orden_compra_ext_ct_cbteble_det_gastos" Width="1.5" PointX="10.5" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_importacion.imp_orden_compra_ext_det" Width="1.5" PointX="7.5" PointY="13.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_importacion.imp_orden_compra_ext_recepcion" Width="1.5" PointX="7.5" PointY="18.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_importacion.imp_parametro" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_importacion.vwimp_liquidacion" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_importacion.vwimp_orden_compra_ext" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_importacion.vwimp_orden_compra_ext_con_saldo" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
@@ -33,6 +32,7 @@
         <AssociationConnector Association="Model_importacion.FK_imp_orden_compra_ext_det_imp_orden_compra_ext" />
         <AssociationConnector Association="Model_importacion.FK_imp_orden_compra_ext_recepcion_imp_orden_compra_ext" />
         <EntityTypeShape EntityType="Model_importacion.imp_partida_arancelaria" Width="1.5" PointX="14.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model_importacion.imp_parametro" Width="1.5" PointX="15.375" PointY="3.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

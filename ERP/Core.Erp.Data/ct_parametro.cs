@@ -19,6 +19,7 @@ namespace Core.Erp.Data
         public int IdTipoCbte_AsientoCierre_Anual { get; set; }
         public bool P_Se_Muestra_Todas_las_ctas_en_combos { get; set; }
         public int DiasTransaccionesAFuturo { get; set; }
+        public Nullable<int> DiasTransaccionesAPasado { get; set; }
     
         public virtual ct_cbtecble_tipo ct_cbtecble_tipo { get; set; }
         public virtual ct_cbtecble_tipo ct_cbtecble_tipo1 { get; set; }

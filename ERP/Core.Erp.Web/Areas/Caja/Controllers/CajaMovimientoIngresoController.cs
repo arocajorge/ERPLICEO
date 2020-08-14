@@ -97,6 +97,11 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         #region Metodos
         private bool validar(caj_Caja_Movimiento_Info i_validar, ref string msg)
         {
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cm_fecha, cl_enumeradores.eModulo.CAJA, Convert.ToInt32(SessionFixed.IdSucursal), ref msg))
+            {
+                return false;
+            }
+
             if (i_validar.lst_ct_cbtecble_det.Count == 0)
             {
                 mensaje = "Debe ingresar registros en el detalle, por favor verifique";

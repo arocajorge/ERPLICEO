@@ -16,5 +16,6 @@ namespace Core.Erp.Info.ActivoFijo
         public int IdTipoCbteRetiro { get; set; }
         public int DiasTransaccionesAFuturo { get; set; }
         public bool ContabilizaDepreciacionPorActivo { get; set; }
+        public Nullable<int> DiasTransaccionesAPasado { get; set; }
     }
 }

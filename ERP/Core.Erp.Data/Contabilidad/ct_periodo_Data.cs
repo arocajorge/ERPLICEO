@@ -280,15 +280,22 @@ namespace Core.Erp.Data.Contabilidad
                                 return false;
                             }
                             */
+                            var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : param.DiasTransaccionesAFuturo));
+                            var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
 
-                            CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "INV" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
-                            if(CierreModulo != null)
+                            if (!(Fecha >= FechaPasada && Fecha <= FechaFutura))
                             {
-                                if (Fecha.Date <= CierreModulo.FechaFin)
-                                {
-                                    mensaje = "El periodo de la transacción se encuentra cerrado para el módulo de inventario";
-                                    return false;
-                                }
+                                mensaje = "La fecha de la transacción no está permitida por los parámetros del módulo de inventario";
+                                return false;
+                            }
+                        }
+                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "INV" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                        if (CierreModulo != null)
+                        {
+                            if (Fecha.Date <= CierreModulo.FechaFin)
+                            {
+                                mensaje = "El periodo de la transacción se encuentra cerrado para el módulo de inventario";
+                                return false;
                             }
                         }
                         break;
@@ -301,19 +308,29 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "No existen parámetros para el módulo de facturación";
                                 return false;
                             }
+
+                            var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : param.DiasTransaccionesAFuturo));
+                            var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
+
+                            if (!(Fecha >= FechaPasada && Fecha <= FechaFutura))
+                            {
+                                mensaje = "La fecha de la transacción no está permitida por los parámetros del módulo de facturación";
+                                return false;
+                            }
+
                             if (param.DiasTransaccionesAFuturo > 0 && DateTime.Now.Date.AddDays(param.DiasTransaccionesAFuturo) < Fecha)
                             {
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de facturación";
                                 return false;
                             }
-                            CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "FAC" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
-                            if (CierreModulo != null)
+                        }
+                        CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "FAC" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
+                        if (CierreModulo != null)
+                        {
+                            if (Fecha.Date <= CierreModulo.FechaFin)
                             {
-                                if (Fecha.Date <= CierreModulo.FechaFin)
-                                {
-                                    mensaje = "El periodo de la transacción se encuentra cerrado para el módulo de facturación";
-                                    return false;
-                                }
+                                mensaje = "El periodo de la transacción se encuentra cerrado para el módulo de facturación";
+                                return false;
                             }
                         }
                         break;
@@ -326,6 +343,16 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "No existen parámetros para el módulo de compras";
                                 return false;
                             }
+
+                            var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : param.DiasTransaccionesAFuturo));
+                            var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
+
+                            if (!(Fecha >= FechaPasada && Fecha <= FechaFutura))
+                            {
+                                mensaje = "La fecha de la transacción no está permitida por los parámetros del módulo de compras";
+                                return false;
+                            }
+
                             if (param.DiasTransaccionesAFuturo > 0 && DateTime.Now.Date.AddDays(param.DiasTransaccionesAFuturo) < Fecha)
                             {
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de compras";
@@ -351,6 +378,16 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "No existen parámetros para el módulo de activo fijo";
                                 return false;
                             }
+
+                            var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : param.DiasTransaccionesAFuturo));
+                            var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
+
+                            if (!(Fecha >= FechaPasada && Fecha <= FechaFutura))
+                            {
+                                mensaje = "La fecha de la transacción no está permitida por los parámetros del módulo de activo fijo";
+                                return false;
+                            }
+
                             if (param.DiasTransaccionesAFuturo > 0 && DateTime.Now.Date.AddDays(param.DiasTransaccionesAFuturo) < Fecha)
                             {
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de activo fijo";
@@ -370,7 +407,21 @@ namespace Core.Erp.Data.Contabilidad
                     case cl_enumeradores.eModulo.RRHH:
                         using (Entities_rrhh db = new Entities_rrhh())
                         {
+                            var param = db.ro_Parametros.Where(q => q.IdEmpresa == IdEmpresa).FirstOrDefault();
+                            if (param == null)
+                            {
+                                mensaje = "No existen parámetros para el módulo de importación";
+                                return false;
+                            }
 
+                            var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : (param.DiasTransaccionesAFuturo==null ? 0 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
+                            var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
+
+                            if (!(Fecha >= FechaPasada && Fecha <= FechaFutura))
+                            {
+                                mensaje = "La fecha de la transacción no está permitida por los parámetros del módulo de recursos humanos";
+                                return false;
+                            }
                         }
                         CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "ROL" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
                         if (CierreModulo != null)
@@ -391,6 +442,16 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "No existen parámetros para el módulo de importación";
                                 return false;
                             }
+
+                            var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : (param.DiasTransaccionesAFuturo == null ? 0 : Convert.ToInt32(param.DiasTransaccionesAFuturo))));
+                            var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
+
+                            if (!(Fecha >= FechaPasada && Fecha <= FechaFutura))
+                            {
+                                mensaje = "La fecha de la transacción no está permitida por los parámetros del módulo de importación";
+                                return false;
+                            }
+
                             /*
                             if (param.DiasTransaccionesAFuturo > 0 && DateTime.Now.Date.AddDays(param.DiasTransaccionesAFuturo) < Fecha)
                             {
@@ -409,6 +470,16 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "No existen parámetros para el módulo de contabilidad";
                                 return false;
                             }
+
+                            var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : param.DiasTransaccionesAFuturo));
+                            var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
+
+                            if (!(Fecha >= FechaPasada && Fecha <= FechaFutura))
+                            {
+                                mensaje = "La fecha de la transacción no está permitida por los parámetros del módulo de contabilidad";
+                                return false;
+                            }
+
                             if (param.DiasTransaccionesAFuturo > 0 && DateTime.Now.Date.AddDays(param.DiasTransaccionesAFuturo) < Fecha)
                             {
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de contabilidad";
@@ -434,6 +505,16 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "No existen parámetros para el módulo de caja";
                                 return false;
                             }
+
+                            var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : param.DiasTransaccionesAFuturo));
+                            var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
+
+                            if (!(Fecha >= FechaPasada && Fecha <= FechaFutura))
+                            {
+                                mensaje = "La fecha de la transacción no está permitida por los parámetros del módulo de caja";
+                                return false;
+                            }
+
                             if (param.DiasTransaccionesAFuturo > 0 && DateTime.Now.Date.AddDays(param.DiasTransaccionesAFuturo) < Fecha)
                             {
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de caja";
@@ -459,6 +540,16 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "No existen parámetros para el módulo de bancos";
                                 return false;
                             }
+
+                            var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : param.DiasTransaccionesAFuturo));
+                            var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
+
+                            if (!(Fecha >= FechaPasada && Fecha <= FechaFutura))
+                            {
+                                mensaje = "La fecha de la transacción no está permitida por los parámetros del módulo de bancos";
+                                return false;
+                            }
+
                             if (param.DiasTransaccionesAFuturo > 0 && DateTime.Now.Date.AddDays(param.DiasTransaccionesAFuturo) < Fecha)
                             {
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de bancos";
@@ -484,6 +575,16 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "No existen parámetros para el módulo de cuentas por cobrar";
                                 return false;
                             }
+
+                            var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : param.DiasTransaccionesAFuturo));
+                            var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
+
+                            if (!(Fecha >= FechaPasada && Fecha <= FechaFutura))
+                            {
+                                mensaje = "La fecha de la transacción no está permitida por los parámetros del módulo de cuentas por cobrar";
+                                return false;
+                            }
+
                             if (param.DiasTransaccionesAFuturo > 0 && DateTime.Now.Date.AddDays(param.DiasTransaccionesAFuturo) < Fecha)
                             {
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de cuentas por cobrar";
@@ -509,6 +610,16 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "No existen parámetros para el módulo de cuentas por pagar";
                                 return false;
                             }
+
+                            var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : param.DiasTransaccionesAFuturo));
+                            var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
+
+                            if (!(Fecha >= FechaPasada && Fecha <= FechaFutura))
+                            {
+                                mensaje = "La fecha de la transacción no está permitida por los parámetros del módulo de cuentas por pagar";
+                                return false;
+                            }
+
                             if (param.DiasTransaccionesAFuturo > 0 && DateTime.Now.Date.AddDays(param.DiasTransaccionesAFuturo) < Fecha)
                             {
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de cuentas por pagar";

@@ -25,7 +25,7 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
         ct_plancta_Bus bus_cuenta = new ct_plancta_Bus();
         string mensaje = string.Empty;
         string MensajeSuccess = "La transacción se ha realizado con éxito";
-               ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
+        ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
  #endregion
 
         #region Index
@@ -68,6 +68,10 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
             if (i_validar.lst_ct_cbtecble_det.Where(q=>q.dc_Valor == 0).Count()>0)
             {
                 mensaje = "Existen detalles con valor 0 en el debe o haber, por favor verifique";
+                return false;
+            }
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.Fecha_MejBaj, cl_enumeradores.eModulo.ACF, Convert.ToInt32(SessionFixed.IdSucursal), ref msg))
+            {
                 return false;
             }
             return true;

@@ -166,8 +166,11 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             if (!string.IsNullOrEmpty(i_validar.IdCobro_tipo))
                 i_validar.lst_det.ForEach(q => q.IdCobro_tipo_det = i_validar.IdCobro_tipo);
 
-            
-            
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cr_fecha, cl_enumeradores.eModulo.CXC, i_validar.IdSucursal, ref msg))
+            {
+                return false;
+            }
+
             switch (i_validar.IdCobro_tipo)
             {
                 case "DEPO":

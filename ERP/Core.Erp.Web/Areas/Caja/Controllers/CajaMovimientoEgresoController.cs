@@ -133,9 +133,13 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
         #endregion
 
         #region Metodos
-
         private bool validar(caj_Caja_Movimiento_Info i_validar, ref string msg)
         {
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cm_fecha, cl_enumeradores.eModulo.CAJA, Convert.ToInt32(SessionFixed.IdSucursal), ref msg))
+            {
+                return false;
+            }
+
             if (i_validar.lst_ct_cbtecble_det.Count == 0)
             {
                 mensaje = "Debe ingresar registros en el detalle, por favor verifique";
@@ -177,6 +181,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
 
             i_validar.cm_valor = i_validar.info_caj_Caja_Movimiento_det.cr_Valor;
             i_validar.lst_det_canc_op = List_op.get_list(i_validar.IdTransaccionSession);
+
             return true;
         }
         private void cargar_combos(int IdEmpresa)

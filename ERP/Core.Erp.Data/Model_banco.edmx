@@ -296,6 +296,7 @@
           <Property Name="FechaTransac" Type="datetime" />
           <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
           <Property Name="FechaUltMod" Type="datetime" />
+          <Property Name="DiasTransaccionesAPasado" Type="int" />
         </EntityType>
         <EntityType Name="ba_Talonario_cheques_x_banco">
           <Key>
@@ -414,12 +415,12 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Archivo_Transferencia_Det' no
             <PropertyRef Name="Secuencial_reg_x_proceso" />
             <PropertyRef Name="IdTipoDocumento" />
             <PropertyRef Name="pe_cedulaRuc" />
-            <PropertyRef Name="pe_nombreCompleto" />
             <PropertyRef Name="CodigoLegalBanco" />
             <PropertyRef Name="IdTipo_Persona" />
             <PropertyRef Name="IdPersona" />
             <PropertyRef Name="IdEntidad" />
             <PropertyRef Name="cb_Fecha" />
+            <PropertyRef Name="pe_nombreCompleto" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdArchivo" Type="numeric" Precision="18" Scale="0" Nullable="false" />
@@ -434,10 +435,10 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Archivo_Transferencia_Det' no
           <Property Name="num_cta_acreditacion" Type="varchar" MaxLength="50" />
           <Property Name="IdBanco_acreditacion" Type="int" />
           <Property Name="pr_direccion" Type="varchar" MaxLength="500" />
-          <Property Name="pr_correo" Type="varchar" MaxLength="200" />
+          <Property Name="pr_correo" Type="varchar(max)" />
           <Property Name="IdTipoDocumento" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="pe_nombreCompleto" Type="varchar(max)" Nullable="false" />
           <Property Name="CodigoLegalBanco" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Referencia" Type="varchar(max)" />
           <Property Name="IdTipo_Persona" Type="varchar" MaxLength="20" Nullable="false" />
@@ -476,7 +477,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Caja_Movimiento_x_Cbte_Ban_x_
           <Property Name="Secuencia" Type="int" Nullable="false" />
           <Property Name="tc_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="cr_Valor" Type="float" Nullable="false" />
-          <Property Name="cm_fecha" Type="datetime" Nullable="false" />
+          <Property Name="cm_fecha" Type="date" Nullable="false" />
           <Property Name="cm_observacion" Type="varchar(max)" />
           <Property Name="tm_descripcion" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="1" Nullable="false" />
@@ -513,7 +514,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Caja_Movimiento_x_Cbte_Ban_x_
           <Property Name="Secuencia" Type="int" Nullable="false" />
           <Property Name="tc_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="cr_Valor" Type="float" Nullable="false" />
-          <Property Name="cm_fecha" Type="datetime" Nullable="false" />
+          <Property Name="cm_fecha" Type="date" Nullable="false" />
           <Property Name="cm_observacion" Type="varchar(max)" />
           <Property Name="tm_descripcion" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="1" Nullable="false" />
@@ -523,6 +524,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Caja_Movimiento_x_Cbte_Ban_x_
           <Property Name="IdCaja" Type="int" Nullable="false" />
           <Property Name="ca_Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="cbr_IdSucursal" Type="int" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwba_Cbte_Ban_x_ba_TipoFlujo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1165,7 +1167,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
     [vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar].[IdCtaCble] AS [IdCtaCble], 
     [vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar].[IdCaja] AS [IdCaja], 
     [vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar].[ca_Descripcion] AS [ca_Descripcion], 
-    [vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar].[cbr_IdSucursal] AS [cbr_IdSucursal]
+    [vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar].[cbr_IdSucursal] AS [cbr_IdSucursal], 
+    [vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar].[IdUsuario] AS [IdUsuario]
     FROM [dbo].[vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar] AS [vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwba_Cbte_Ban_x_ba_TipoFlujo" EntityType="Self.vwba_Cbte_Ban_x_ba_TipoFlujo" store:Type="Views" store:Schema="dbo">
@@ -1555,7 +1558,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <Property Name="Secuencia" Type="Int32" Nullable="false" />
           <Property Name="tc_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="cr_Valor" Type="Double" Nullable="false" />
-          <Property Name="cm_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="cm_fecha" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="cm_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="tm_descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
@@ -2253,7 +2256,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <Property Name="Secuencia" Type="Int32" Nullable="false" />
           <Property Name="tc_descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="cr_Valor" Type="Double" Nullable="false" />
-          <Property Name="cm_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="cm_fecha" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="cm_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="tm_descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
@@ -2263,6 +2266,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <Property Name="IdCaja" Type="Int32" Nullable="false" />
           <Property Name="ca_Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="cbr_IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ba_Banco_Cuenta">
           <Key>
@@ -2505,10 +2509,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <Property Name="num_cta_acreditacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IdBanco_acreditacion" Type="Int32" />
           <Property Name="pr_direccion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="pr_correo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="pr_correo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IdTipoDocumento" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="pe_cedulaRuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CodigoLegalBanco" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Referencia" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IdTipo_Persona" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -2611,6 +2615,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <Property Name="FechaTransac" Type="DateTime" Precision="3" />
           <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="FechaUltMod" Type="DateTime" Precision="3" />
+          <Property Name="DiasTransaccionesAPasado" Type="Int32" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -3036,6 +3041,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <EntitySetMapping Name="vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar">
             <EntityTypeMapping TypeName="Model_banco.vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar">
               <MappingFragment StoreEntitySet="vwba_Caja_Movimiento_x_Cbte_Ban_x_Deposito_x_depositar">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="cbr_IdSucursal" ColumnName="cbr_IdSucursal" />
                 <ScalarProperty Name="ca_Descripcion" ColumnName="ca_Descripcion" />
                 <ScalarProperty Name="IdCaja" ColumnName="IdCaja" />
@@ -3205,6 +3211,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwba_Talonario_cheques_x_banco_ID'
           <EntitySetMapping Name="ba_parametros">
             <EntityTypeMapping TypeName="Model_banco.ba_parametros">
               <MappingFragment StoreEntitySet="ba_parametros">
+                <ScalarProperty Name="DiasTransaccionesAPasado" ColumnName="DiasTransaccionesAPasado" />
                 <ScalarProperty Name="FechaUltMod" ColumnName="FechaUltMod" />
                 <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
                 <ScalarProperty Name="FechaTransac" ColumnName="FechaTransac" />

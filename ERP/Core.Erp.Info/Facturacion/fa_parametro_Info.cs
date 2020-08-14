@@ -25,5 +25,6 @@ namespace Core.Erp.Info.Facturacion
         public int DiasTransaccionesAFuturo { get; set; }
         public Nullable<decimal> IdClienteConsumidorFinal { get; set; }
         public Nullable<double> MontoMaximoConsumidorFinal { get; set; }
+        public Nullable<int> DiasTransaccionesAPasado { get; set; }
     }
 }

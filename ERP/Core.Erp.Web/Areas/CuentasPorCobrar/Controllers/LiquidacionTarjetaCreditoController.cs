@@ -51,6 +51,11 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             i_validar.IdUsuarioCreacion = SessionFixed.IdUsuario;
             i_validar.IdUsuarioModificacion = SessionFixed.IdUsuario;
 
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.Fecha, cl_enumeradores.eModulo.CXC, i_validar.IdSucursal, ref mensaje))
+            {
+                return false;
+            }
+
             if (i_validar.ListaCobros.Count == 0)
             {
                 msg = "Seleccione al menos un cobro por tarjeta de crédito para liquidar";
@@ -261,6 +266,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             {
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model.IdEmpresa, model.IdSucursal);
+                ViewBag.mensaje = mensaje;
                 return View(model);
             }
             if (!bus_LiquidacionTarjeta.guardarDB(model))
@@ -325,6 +331,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
             {
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 cargar_combos(model.IdEmpresa, model.IdSucursal);
+                ViewBag.mensaje = mensaje;
                 return View(model);
             }
             if (!bus_LiquidacionTarjeta.modificarDB(model))

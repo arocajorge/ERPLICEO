@@ -25,5 +25,6 @@ namespace Core.Erp.Info.CuentasPorPagar
         public string pa_ctacble_x_RetIva_default { get; set; }
         public string pa_ctacble_x_RetFte_default { get; set; }
         public int DiasTransaccionesAFuturo { get; set; }
+        public Nullable<int> DiasTransaccionesAPasado { get; set; }
     }
 }

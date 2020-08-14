@@ -28,7 +28,10 @@ namespace Core.Erp.Data.Importacion
                         IdBodega=Entity.IdBodega,
                         IdMotivo_Inv_ing=Entity.IdMotivo_Inv_ing,
                         IdMovi_inven_tipo_ing=Entity.IdMovi_inven_tipo_ing,
-                        IdCtaCble_invntario=Entity.IdCtaCble_invntario
+                        IdCtaCble_invntario=Entity.IdCtaCble_invntario,
+                        DiasTransaccionesAFuturo = Entity.DiasTransaccionesAFuturo,
+                        DiasTransaccionesAPasado = Entity.DiasTransaccionesAPasado
+
                     };
                 }
                 return info;
@@ -60,7 +63,9 @@ namespace Core.Erp.Data.Importacion
                             IdBodega = info.IdBodega,
                             IdMotivo_Inv_ing = info.IdMotivo_Inv_ing,
                             IdMovi_inven_tipo_ing = info.IdMovi_inven_tipo_ing,
-                            IdCtaCble_invntario = info.IdCtaCble_invntario
+                            IdCtaCble_invntario = info.IdCtaCble_invntario,
+                            DiasTransaccionesAPasado = info.DiasTransaccionesAPasado,
+                            DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo
                         };
                         Context.imp_parametro.Add(Entity);
                     }
@@ -74,12 +79,14 @@ namespace Core.Erp.Data.Importacion
                         Entity.IdMovi_inven_tipo_ing = info.IdMovi_inven_tipo_ing;
                         Entity.IdCtaCble = info.IdCtaCble;
                         Entity.IdCtaCble_invntario = info.IdCtaCble_invntario;
+                        Entity.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
+                        Entity.DiasTransaccionesAPasado = info.DiasTransaccionesAPasado;
                     }
                     Context.SaveChanges();
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

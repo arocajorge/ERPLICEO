@@ -97,6 +97,13 @@
         <div class="col-md-12">
             <div class="col-md-3">
                 <div class="form-group">
+                    <label for="DiasTransaccionesAFuturo">Dias máximos para transacciones a pasado</label>
+                    @Html.TextBoxFor(q => q.DiasTransaccionesAPasado, new { @class = "form-control", @id = "DiasTransaccionesAPasado" })
+                    @Html.ValidationMessageFor(q => q.DiasTransaccionesAPasado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
                     <label for="DiasTransaccionesAFuturo">Dias máximos para transacciones a futuro</label>
                     @Html.TextBoxFor(q => q.DiasTransaccionesAFuturo, new { @class = "form-control", @id = "DiasTransaccionesAFuturo" })
                     @Html.ValidationMessageFor(q => q.DiasTransaccionesAFuturo, "", new { @class = "text-danger" })

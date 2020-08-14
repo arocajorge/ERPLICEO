@@ -162,7 +162,21 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             return PartialView("_GridViewPartial_ordenes_pagos_con_saldo", model);
         }
 
-         #endregion
+        #endregion
+        #region Metodos
+        private bool validar(cp_nota_DebCre_Info i_validar, ref string msg)
+        {
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cn_fecha, cl_enumeradores.eModulo.CXP, i_validar.IdSucursal, ref msg))
+            {
+                return false;
+            }
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cn_fecha, cl_enumeradores.eModulo.CONTA, i_validar.IdSucursal, ref msg))
+            {
+                return false;
+            }
+            return true;
+        }
+        #endregion
         #region funciones
         public ActionResult Nuevo(int IdEmpresa = 0 )
         {
@@ -220,6 +234,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             {
                 cargar_combos(model.IdEmpresa, model.IdProveedor, model.IdIden_credito.ToString());
                 cargar_combos_detalle();
+                ViewBag.mensaje = mensaje;
+                return View(model);
+            }
+
+            if (!validar(model, ref mensaje))
+            {
+                cargar_combos(model.IdEmpresa, model.IdProveedor, model.IdIden_credito.ToString());
                 ViewBag.mensaje = mensaje;
                 return View(model);
             }
@@ -298,6 +319,13 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
                 return View(model);
             }
             model.IdUsuario = SessionFixed.IdUsuario;
+
+            if (!validar(model, ref mensaje))
+            {
+                cargar_combos(model.IdEmpresa, model.IdProveedor, model.IdIden_credito.ToString());
+                ViewBag.mensaje = mensaje;
+                return View(model);
+            }
 
             if (!bus_orden_giro.modificarDB(model))
             {

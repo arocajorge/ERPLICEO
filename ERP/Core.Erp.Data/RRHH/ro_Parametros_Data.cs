@@ -37,7 +37,9 @@ namespace Core.Erp.Data.RRHH
                         Porcentaje_aporte_pers = q.Porcentaje_aporte_pers,
                         IdRubro_acta_finiquito = q.IdRubro_acta_finiquito,
                         EstadoCreacionPrestamos=q.EstadoCreacionPrestamos,
-                        Porcentaje_anticipo=q.Porcentaje_anticipo
+                        Porcentaje_anticipo=q.Porcentaje_anticipo,
+                        DiasTransaccionesAFuturo = q.DiasTransaccionesAFuturo,
+                        DiasTransaccionesAPasado = q.DiasTransaccionesAPasado
                     };
                 }
 
@@ -96,7 +98,9 @@ namespace Core.Erp.Data.RRHH
                         Porcentaje_aporte_pers = info.Porcentaje_aporte_pers,
                         IdRubro_acta_finiquito = info.IdRubro_acta_finiquito,
                         EstadoCreacionPrestamos=info.EstadoCreacionPrestamos,
-                        Porcentaje_anticipo = info.Porcentaje_anticipo
+                        Porcentaje_anticipo = info.Porcentaje_anticipo,
+                        DiasTransaccionesAPasado = info.DiasTransaccionesAPasado,
+                        DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo
 
                     };
                     Context.ro_Parametros.Add(Entity);
@@ -137,6 +141,8 @@ namespace Core.Erp.Data.RRHH
                     Entity.Genera_op_x_pago_x_empleao = info.Genera_op_x_pago_x_empleao;
                     Entity.EstadoCreacionPrestamos = info.EstadoCreacionPrestamos;
                     Entity.Porcentaje_anticipo = info.Porcentaje_anticipo;
+                    Entity.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
+                    Entity.DiasTransaccionesAPasado = info.DiasTransaccionesAPasado;
                     Context.SaveChanges();
                 }
 

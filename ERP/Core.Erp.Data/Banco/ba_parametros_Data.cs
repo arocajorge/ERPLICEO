@@ -20,6 +20,7 @@ namespace Core.Erp.Data.Banco
                         IdEmpresa = Entity.IdEmpresa,
                         CiudadDefaultParaCrearCheques = Entity.CiudadDefaultParaCrearCheques,
                         DiasTransaccionesAFuturo = Entity.DiasTransaccionesAFuturo,
+                        DiasTransaccionesAPasado = Entity.DiasTransaccionesAPasado,
                         CantidadChequesAlerta = Entity.CantidadChequesAlerta,
                         ValidarSoloCuentasArchivo = Entity.ValidarSoloCuentasArchivo,
                         PermitirSobreGiro = Entity.PermitirSobreGiro
@@ -48,6 +49,7 @@ namespace Core.Erp.Data.Banco
                             IdEmpresa = info.IdEmpresa,
                             CiudadDefaultParaCrearCheques = info.CiudadDefaultParaCrearCheques,
                             DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo,
+                            DiasTransaccionesAPasado = info.DiasTransaccionesAPasado,
                             IdUsuario = info.IdUsuario,
                             FechaTransac = DateTime.Now,
                             PermitirSobreGiro = info.PermitirSobreGiro,
@@ -61,6 +63,7 @@ namespace Core.Erp.Data.Banco
                         {
                         Entity.CiudadDefaultParaCrearCheques = info.CiudadDefaultParaCrearCheques;
                         Entity.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
+                        Entity.DiasTransaccionesAPasado = info.DiasTransaccionesAPasado;
                         Entity.CantidadChequesAlerta = info.CantidadChequesAlerta;
                         Entity.PermitirSobreGiro = info.PermitirSobreGiro;
                         Entity.IdUsuarioUltMod = info.IdUsuarioUltMod;

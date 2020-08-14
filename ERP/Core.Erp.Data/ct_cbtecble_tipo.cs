@@ -16,10 +16,10 @@ namespace Core.Erp.Data
     {
         public ct_cbtecble_tipo()
         {
-            this.ct_parametro = new HashSet<ct_parametro>();
-            this.ct_parametro1 = new HashSet<ct_parametro>();
             this.ct_cbtecble = new HashSet<ct_cbtecble>();
             this.ct_cbtecble_Plantilla = new HashSet<ct_cbtecble_Plantilla>();
+            this.ct_parametro = new HashSet<ct_parametro>();
+            this.ct_parametro1 = new HashSet<ct_parametro>();
         }
     
         public int IdEmpresa { get; set; }
@@ -38,9 +38,9 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string MotiAnula { get; set; }
     
-        public virtual ICollection<ct_parametro> ct_parametro { get; set; }
-        public virtual ICollection<ct_parametro> ct_parametro1 { get; set; }
         public virtual ICollection<ct_cbtecble> ct_cbtecble { get; set; }
         public virtual ICollection<ct_cbtecble_Plantilla> ct_cbtecble_Plantilla { get; set; }
+        public virtual ICollection<ct_parametro> ct_parametro { get; set; }
+        public virtual ICollection<ct_parametro> ct_parametro1 { get; set; }
     }
 }

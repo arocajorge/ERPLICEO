@@ -24,5 +24,6 @@ namespace Core.Erp.Info.Caja
         public Nullable<System.DateTime> Fecha_Transac { get; set; }
         public string IdUsuarioUltMod { get; set; }
         public Nullable<System.DateTime> FechaUltMod { get; set; }
+        public Nullable<int> DiasTransaccionesAPasado { get; set; }
     }
 }

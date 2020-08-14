@@ -27,6 +27,7 @@ namespace Core.Erp.Data.ActivoFijo
                         IdTipoCbteRetiro = Entity.IdTipoCbteRetiro,
                         IdTipoCbteVenta =Entity.IdTipoCbteVenta,
                         DiasTransaccionesAFuturo = Entity.DiasTransaccionesAFuturo,
+                        DiasTransaccionesAPasado = Entity.DiasTransaccionesAPasado,
                         ContabilizaDepreciacionPorActivo = Entity.ContabilizaDepreciacionPorActivo
                     };
                 }
@@ -58,6 +59,7 @@ namespace Core.Erp.Data.ActivoFijo
                             IdTipoCbteRetiro = info.IdTipoCbteRetiro,
                             IdTipoCbteVenta = info.IdTipoCbteVenta,
                             DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo,
+                            DiasTransaccionesAPasado = info.DiasTransaccionesAPasado,
                             ContabilizaDepreciacionPorActivo = info.ContabilizaDepreciacionPorActivo
 
                         };
@@ -71,6 +73,7 @@ namespace Core.Erp.Data.ActivoFijo
                         Entity.IdTipoCbteRetiro = info.IdTipoCbteRetiro;
                         Entity.IdTipoCbteVenta = info.IdTipoCbteVenta;
                         Entity.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
+                        Entity.DiasTransaccionesAPasado = info.DiasTransaccionesAPasado;
                         Entity.ContabilizaDepreciacionPorActivo = info.ContabilizaDepreciacionPorActivo;
 
                     }

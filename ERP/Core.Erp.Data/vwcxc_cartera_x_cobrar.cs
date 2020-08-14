@@ -38,5 +38,11 @@ namespace Core.Erp.Data
         public string NomCliente { get; set; }
         public string em_nombre { get; set; }
         public string Estado { get; set; }
+        public Nullable<decimal> IdAlumno { get; set; }
+        public Nullable<double> ValorProntoPago { get; set; }
+        public Nullable<System.DateTime> FechaProntoPago { get; set; }
+        public Nullable<int> IdAnio { get; set; }
+        public Nullable<int> IdPlantilla { get; set; }
+        public Nullable<int> IdPuntoVta { get; set; }
     }
 }

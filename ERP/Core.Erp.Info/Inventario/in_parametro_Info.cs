@@ -27,5 +27,6 @@ namespace Core.Erp.Info.Inventario
         public string IdCatalogoEstadoAjuste { get; set; }
         public Nullable<int> IdMotivo_Inv_ajuste_ing { get; set; }
         public Nullable<int> IdMotivo_Inv_ajuste_egr { get; set; }
+        public Nullable<int> DiasTransaccionesAPasado { get; set; }
     }
 }

@@ -30,6 +30,7 @@ namespace Core.Erp.Data.Inventario
                         P_Dias_menores_alerta_desde_fecha_actual_rojo = Entity.P_Dias_menores_alerta_desde_fecha_actual_rojo,
                         P_Dias_menores_alerta_desde_fecha_actual_amarillo = Entity.P_Dias_menores_alerta_desde_fecha_actual_amarillo,
                         DiasTransaccionesAFuturo = Entity.DiasTransaccionesAFuturo,
+                        DiasTransaccionesAPasado = Entity.DiasTransaccionesAPasado,
                         IdMovi_inven_tipo_Cambio = Entity.IdMovi_inven_tipo_Cambio,
                         IdMovi_inven_tipo_Consignacion = Entity.IdMovi_inven_tipo_Consignacion,
                         IdMovi_inven_tipo_elaboracion_egr = Entity.IdMovi_inven_tipo_elaboracion_egr,
@@ -76,6 +77,7 @@ namespace Core.Erp.Data.Inventario
                             P_Dias_menores_alerta_desde_fecha_actual_rojo = info.P_Dias_menores_alerta_desde_fecha_actual_rojo,
                             P_Dias_menores_alerta_desde_fecha_actual_amarillo = info.P_Dias_menores_alerta_desde_fecha_actual_amarillo,
                             DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo,
+                            DiasTransaccionesAPasado = info.DiasTransaccionesAPasado,
                             IdMovi_inven_tipo_Cambio = info.IdMovi_inven_tipo_Cambio,
                             IdMovi_inven_tipo_Consignacion = info.IdMovi_inven_tipo_Consignacion,
                             IdMovi_inven_tipo_elaboracion_egr = info.IdMovi_inven_tipo_elaboracion_egr,
@@ -103,6 +105,7 @@ namespace Core.Erp.Data.Inventario
                         Entity.P_Dias_menores_alerta_desde_fecha_actual_rojo = info.P_Dias_menores_alerta_desde_fecha_actual_rojo;
                         Entity.P_Dias_menores_alerta_desde_fecha_actual_amarillo = info.P_Dias_menores_alerta_desde_fecha_actual_amarillo;
                         Entity.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
+                        Entity.DiasTransaccionesAPasado = info.DiasTransaccionesAPasado;
                         Entity.IdMovi_inven_tipo_Cambio = info.IdMovi_inven_tipo_Cambio;
                         Entity.IdMovi_inven_tipo_Consignacion = info.IdMovi_inven_tipo_Consignacion;
                         Entity.IdMovi_inven_tipo_elaboracion_egr = info.IdMovi_inven_tipo_elaboracion_egr;

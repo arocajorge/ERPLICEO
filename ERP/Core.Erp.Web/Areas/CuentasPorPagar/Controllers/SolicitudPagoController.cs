@@ -115,6 +115,16 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
             return bus_persona.get_info_bajo_demanda(args, Convert.ToInt32(SessionFixed.IdEmpresa), cl_enumeradores.eTipoPersona.PROVEE.ToString());
         }
         #endregion
+        #region Metodos
+        private bool validar(cp_SolicitudPago_Info i_validar, ref string msg)
+        {
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.Fecha, cl_enumeradores.eModulo.CXP, i_validar.IdSucursal, ref msg))
+            {
+                return false;
+            }
+            return true;
+        }
+        #endregion
         #region Acciones
         public ActionResult Nuevo()
         {
@@ -146,6 +156,14 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         public ActionResult Nuevo(cp_SolicitudPago_Info model)
         {
             model.IdUsuarioCreacion = SessionFixed.IdUsuario;
+
+            if (!validar(model, ref mensaje))
+            {
+                cargar_combos(model.IdEmpresa);
+                ViewBag.mensaje = mensaje;
+                return View(model);
+            }
+
             if (!bus_solicitud.GuardarDB(model))
             {
                 cargar_combos(model.IdEmpresa);
@@ -189,6 +207,14 @@ namespace Core.Erp.Web.Areas.CuentasPorPagar.Controllers
         public ActionResult Modificar(cp_SolicitudPago_Info model)
         {
             model.IdUsuarioModificacion = SessionFixed.IdUsuario;
+
+            if (!validar(model, ref mensaje))
+            {
+                cargar_combos(model.IdEmpresa);
+                ViewBag.mensaje = mensaje;
+                return View(model);
+            }
+
             if (!bus_solicitud.ModificarDB(model))
             {
                 cargar_combos(model.IdEmpresa);

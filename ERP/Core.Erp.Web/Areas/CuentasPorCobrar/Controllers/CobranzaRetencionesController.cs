@@ -1,4 +1,5 @@
-﻿using Core.Erp.Bus.CuentasPorCobrar;
+﻿using Core.Erp.Bus.Contabilidad;
+using Core.Erp.Bus.CuentasPorCobrar;
 using Core.Erp.Bus.General;
 using Core.Erp.Bus.SeguridadAcceso;
 using Core.Erp.Info.CuentasPorCobrar;
@@ -23,6 +24,7 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
         cxc_cobro_tipo_Bus bus_cobro_tipo = new cxc_cobro_tipo_Bus();
         cxc_cobro_det_ret_List List_det = new cxc_cobro_det_ret_List();
         cxc_cobro_sinret_List ListaSinRetencion = new cxc_cobro_sinret_List();
+        ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         string mensaje = string.Empty;
         tb_sucursal_Bus bus_sucursal = new tb_sucursal_Bus();
         seg_Menu_x_Empresa_x_Usuario_Bus bus_permisos = new seg_Menu_x_Empresa_x_Usuario_Bus();
@@ -97,6 +99,12 @@ namespace Core.Erp.Web.Areas.CuentasPorCobrar.Controllers
                 msg = "Existen documentos con valor aplicado 0";
                 return false;
             }
+
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.cr_fecha, cl_enumeradores.eModulo.CXC, i_validar.IdSucursal, ref mensaje))
+            {
+                return false;
+            }
+
             string observacion = "Retención./ "+i_validar.vt_NumFactura+" # Ret./"+i_validar.cr_NumDocumento;
             
             i_validar.cr_observacion = observacion;

@@ -36,5 +36,11 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> vt_fech_venc { get; set; }
         public Nullable<decimal> IdCliente { get; set; }
         public string pe_nombreCompleto { get; set; }
+        public Nullable<decimal> IdNotaCredito { get; set; }
+        public Nullable<double> dc_ValorProntoPago { get; set; }
+        public Nullable<int> IdAnio { get; set; }
+        public Nullable<int> IdPlantilla { get; set; }
+        public Nullable<int> IdPuntoVta { get; set; }
+        public Nullable<decimal> IdAlumno { get; set; }
     }
 }

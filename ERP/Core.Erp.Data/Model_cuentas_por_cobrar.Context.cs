@@ -35,7 +35,6 @@ namespace Core.Erp.Data
         public DbSet<vwcxc_cobro> vwcxc_cobro { get; set; }
         public DbSet<vwcxc_cobro_det_retencion> vwcxc_cobro_det_retencion { get; set; }
         public DbSet<vwcxc_cartera_x_cobrar> vwcxc_cartera_x_cobrar { get; set; }
-        public DbSet<cxc_Parametro> cxc_Parametro { get; set; }
         public DbSet<cxc_cobro_tipo> cxc_cobro_tipo { get; set; }
         public DbSet<cxc_MotivoLiquidacionTarjeta> cxc_MotivoLiquidacionTarjeta { get; set; }
         public DbSet<cxc_MotivoLiquidacionTarjeta_x_tb_sucursal> cxc_MotivoLiquidacionTarjeta_x_tb_sucursal { get; set; }
@@ -47,5 +46,6 @@ namespace Core.Erp.Data
         public DbSet<vwcxc_LiquidacionTarjeta> vwcxc_LiquidacionTarjeta { get; set; }
         public DbSet<vwcxc_cobro_det> vwcxc_cobro_det { get; set; }
         public DbSet<vwcxc_cobro_para_retencion> vwcxc_cobro_para_retencion { get; set; }
+        public DbSet<cxc_Parametro> cxc_Parametro { get; set; }
     }
 }

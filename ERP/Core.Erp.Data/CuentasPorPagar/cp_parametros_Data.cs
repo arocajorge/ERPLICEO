@@ -8,110 +8,205 @@ namespace Core.Erp.Data.CuentasPorPagar
 {
    public class cp_parametros_Data
     {
-        public Boolean modificarDB(cp_parametros_Info info)
-        {
-            try
-            {
-                using (Entities_cuentas_por_pagar context = new Entities_cuentas_por_pagar())
-                {
-                    var selectBaParam = (from C in context.cp_parametros
-                                         where C.IdEmpresa == info.IdEmpresa
-                                         select C).Count();
-
-                    if (selectBaParam == 0)
-                    {
-                        cp_parametros addressG = new cp_parametros();
-                        addressG.IdEmpresa = info.IdEmpresa;
-                        addressG.pa_TipoCbte_OG = info.pa_TipoCbte_OG;
-                        addressG.pa_ctacble_deudora = (info.pa_ctacble_deudora == "") ? null : info.pa_ctacble_deudora;
-                        addressG.pa_ctacble_iva = (info.pa_ctacble_iva == "") ? null : info.pa_ctacble_iva;
-                        addressG.pa_TipoEgrMoviCaja_Conciliacion = info.pa_TipoEgrMoviCaja_Conciliacion;
-                        addressG.IdUsuario = info.IdUsuario;
-                        addressG.pa_ctacble_Proveedores_default = info.pa_ctacble_Proveedores_default;
-                        addressG.pa_TipoCbte_NC = info.pa_TipoCbte_NC;
-                        addressG.pa_TipoCbte_ND = info.pa_TipoCbte_ND;
-                        addressG.pa_IdTipoCbte_x_Retencion = info.pa_IdTipoCbte_x_Retencion;
-                        addressG.pa_TipoCbte_para_conci_x_antcipo = info.pa_TipoCbte_para_conci_x_antcipo;
-                        addressG.pa_ctacble_x_RetIva_default = info.pa_ctacble_x_RetIva_default;
-                        addressG.pa_ctacble_x_RetIva_default = info.pa_ctacble_x_RetIva_default;
-                        addressG.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
-
-                        context.cp_parametros.Add(addressG);
-                        context.SaveChanges();
-                    }
-                    else
-                    {
-                        var contact = context.cp_parametros.FirstOrDefault(para => para.IdEmpresa == info.IdEmpresa);
-                        if (contact != null)
-                        {
-                            contact.IdEmpresa = info.IdEmpresa;
-                            contact.pa_TipoCbte_OG = info.pa_TipoCbte_OG;
-                            contact.pa_ctacble_deudora = (info.pa_ctacble_deudora == "") ? null : info.pa_ctacble_deudora;
-                            contact.pa_ctacble_iva = (info.pa_ctacble_iva == "") ? null : info.pa_ctacble_iva;
-                            contact.pa_ctacble_Proveedores_default = info.pa_ctacble_Proveedores_default;
-                            contact.pa_TipoEgrMoviCaja_Conciliacion = info.pa_TipoEgrMoviCaja_Conciliacion;
-                            contact.pa_TipoCbte_NC = info.pa_TipoCbte_NC;
-                            contact.pa_TipoCbte_ND = info.pa_TipoCbte_ND;
-                            contact.FechaUltMod = DateTime.Now;
-                            contact.IdUsuarioUltMod = info.IdUsuario;
-                            contact.pa_IdTipoCbte_x_Retencion = info.pa_IdTipoCbte_x_Retencion;
-                            contact.pa_TipoCbte_para_conci_x_antcipo = info.pa_TipoCbte_para_conci_x_antcipo;
-                            contact.pa_ctacble_x_RetFte_default = info.pa_ctacble_x_RetFte_default;
-                            contact.pa_ctacble_x_RetIva_default = info.pa_ctacble_x_RetIva_default;
-                            contact.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
-                            context.SaveChanges();
-                        }
-                    }
-                }
-                return true;
-            }
-            catch (Exception )
-            {
-                
-                throw ;
-            }
-        }
         public cp_parametros_Info get_info(int IdEmpresa)
         {
             try
             {
-                cp_parametros_Info Cbt = new cp_parametros_Info();
-                using (Entities_cuentas_por_pagar Contex = new Entities_cuentas_por_pagar())
+                cp_parametros_Info info = new cp_parametros_Info();
+                using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
                 {
-                    var selectBaParam = from C in Contex.cp_parametros
-                                        where C.IdEmpresa == IdEmpresa
-                                        select C;
-
-                    foreach (var item in selectBaParam)
-                    {
-
-                        Cbt.pa_TipoCbte_OG = Convert.ToInt32(item.pa_TipoCbte_OG);
-                        Cbt.pa_ctacble_deudora = item.pa_ctacble_deudora;
-                        Cbt.pa_ctacble_iva = item.pa_ctacble_iva;
-                        Cbt.pa_TipoEgrMoviCaja_Conciliacion = item.pa_TipoEgrMoviCaja_Conciliacion;
-                        Cbt.pa_ctacble_Proveedores_default = item.pa_ctacble_Proveedores_default;
-                        Cbt.pa_TipoEgrMoviCaja_Conciliacion = item.pa_TipoEgrMoviCaja_Conciliacion;
-                        Cbt.pa_TipoCbte_NC = item.pa_TipoCbte_NC;
-                        Cbt.pa_TipoCbte_ND = item.pa_TipoCbte_ND;
-                        Cbt.pa_IdTipoCbte_x_Retencion = item.pa_IdTipoCbte_x_Retencion;
-                        Cbt.pa_TipoCbte_para_conci_x_antcipo = Convert.ToInt32(item.pa_TipoCbte_para_conci_x_antcipo);
-                        Cbt.pa_ctacble_x_RetFte_default = item.pa_ctacble_x_RetFte_default;
-                        Cbt.pa_ctacble_x_RetIva_default = item.pa_ctacble_x_RetIva_default;
-                        Cbt.DiasTransaccionesAFuturo = item.DiasTransaccionesAFuturo;
-                        Cbt.IdEmpresa = IdEmpresa;
-
-                    }
-
-                    if (selectBaParam.Count() == 0)
-                        Cbt = null;
+                    cp_parametros Entity = Context.cp_parametros.FirstOrDefault(q => q.IdEmpresa == IdEmpresa);
+                    if (Entity != null)
+                        info = new cp_parametros_Info
+                        {
+                            pa_TipoCbte_OG = Convert.ToInt32(Entity.pa_TipoCbte_OG),
+                            pa_ctacble_deudora = Entity.pa_ctacble_deudora,
+                            pa_ctacble_iva = Entity.pa_ctacble_iva,
+                            pa_TipoEgrMoviCaja_Conciliacion = Entity.pa_TipoEgrMoviCaja_Conciliacion,
+                            pa_ctacble_Proveedores_default = Entity.pa_ctacble_Proveedores_default,
+                            pa_TipoCbte_NC = Entity.pa_TipoCbte_NC,
+                            pa_TipoCbte_ND = Entity.pa_TipoCbte_ND,
+                            pa_IdTipoCbte_x_Retencion = Entity.pa_IdTipoCbte_x_Retencion,
+                            pa_TipoCbte_para_conci_x_antcipo = Convert.ToInt32(Entity.pa_TipoCbte_para_conci_x_antcipo),
+                            pa_ctacble_x_RetFte_default = Entity.pa_ctacble_x_RetFte_default,
+                            pa_ctacble_x_RetIva_default = Entity.pa_ctacble_x_RetIva_default,
+                            DiasTransaccionesAFuturo = Entity.DiasTransaccionesAFuturo,
+                            DiasTransaccionesAPasado = Entity.DiasTransaccionesAPasado,
+                            IdEmpresa = Entity.IdEmpresa
+                        };
+                    else
+                        info = null;
                 }
-                return (Cbt);
+                return info;
             }
             catch (Exception)
             {
+
                 throw;
             }
         }
+
+        public bool modificarDB(cp_parametros_Info info)
+        {
+            try
+            {
+                using (Entities_cuentas_por_pagar Context = new Entities_cuentas_por_pagar())
+                {
+                    cp_parametros Entity = Context.cp_parametros.FirstOrDefault(q => q.IdEmpresa == info.IdEmpresa);
+                    if (Entity == null)
+                    {
+                        Entity = new cp_parametros
+                        {
+                            IdEmpresa = info.IdEmpresa,
+                            pa_TipoCbte_OG = info.pa_TipoCbte_OG,
+                            pa_ctacble_deudora = (info.pa_ctacble_deudora == "") ? null : info.pa_ctacble_deudora,
+                            pa_ctacble_iva = (info.pa_ctacble_iva == "") ? null : info.pa_ctacble_iva,
+                            pa_TipoEgrMoviCaja_Conciliacion = info.pa_TipoEgrMoviCaja_Conciliacion,
+                            IdUsuario = info.IdUsuario,
+                            pa_ctacble_Proveedores_default = info.pa_ctacble_Proveedores_default,
+                            pa_TipoCbte_NC = info.pa_TipoCbte_NC,
+                            pa_TipoCbte_ND = info.pa_TipoCbte_ND,
+                            pa_IdTipoCbte_x_Retencion = info.pa_IdTipoCbte_x_Retencion,
+                            pa_TipoCbte_para_conci_x_antcipo = info.pa_TipoCbte_para_conci_x_antcipo,
+                            pa_ctacble_x_RetIva_default = info.pa_ctacble_x_RetIva_default,
+                            DiasTransaccionesAPasado = info.DiasTransaccionesAPasado,
+                            DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo,
+                        };
+                        Context.cp_parametros.Add(Entity);
+                    }
+                    else
+                    {
+                        Entity.pa_TipoCbte_OG = info.pa_TipoCbte_OG;
+                        Entity.pa_ctacble_deudora = (info.pa_ctacble_deudora == "") ? null : info.pa_ctacble_deudora;
+                        Entity.pa_ctacble_iva = (info.pa_ctacble_iva == "") ? null : info.pa_ctacble_iva;
+                        Entity.pa_ctacble_Proveedores_default = info.pa_ctacble_Proveedores_default;
+                        Entity.pa_TipoEgrMoviCaja_Conciliacion = info.pa_TipoEgrMoviCaja_Conciliacion;
+                        Entity.pa_TipoCbte_NC = info.pa_TipoCbte_NC;
+                        Entity.pa_TipoCbte_ND = info.pa_TipoCbte_ND;
+                        Entity.FechaUltMod = DateTime.Now;
+                        Entity.IdUsuarioUltMod = info.IdUsuario;
+                        Entity.pa_IdTipoCbte_x_Retencion = info.pa_IdTipoCbte_x_Retencion;
+                        Entity.pa_TipoCbte_para_conci_x_antcipo = info.pa_TipoCbte_para_conci_x_antcipo;
+                        Entity.pa_ctacble_x_RetFte_default = info.pa_ctacble_x_RetFte_default;
+                        Entity.pa_ctacble_x_RetIva_default = info.pa_ctacble_x_RetIva_default;
+                        Entity.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
+                        Entity.DiasTransaccionesAPasado = info.DiasTransaccionesAPasado;
+                    }
+
+                    Context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+        //public Boolean modificarDB(cp_parametros_Info info)
+        //{
+        //    try
+        //    {
+        //        using (Entities_cuentas_por_pagar context = new Entities_cuentas_por_pagar())
+        //        {
+        //            var selectBaParam = (from C in context.cp_parametros
+        //                                 where C.IdEmpresa == info.IdEmpresa
+        //                                 select C).Count();
+
+        //            if (selectBaParam == 0)
+        //            {
+        //                cp_parametros addressG = new cp_parametros();
+        //                addressG.IdEmpresa = info.IdEmpresa;
+        //                addressG.pa_TipoCbte_OG = info.pa_TipoCbte_OG;
+        //                addressG.pa_ctacble_deudora = (info.pa_ctacble_deudora == "") ? null : info.pa_ctacble_deudora;
+        //                addressG.pa_ctacble_iva = (info.pa_ctacble_iva == "") ? null : info.pa_ctacble_iva;
+        //                addressG.pa_TipoEgrMoviCaja_Conciliacion = info.pa_TipoEgrMoviCaja_Conciliacion;
+        //                addressG.IdUsuario = info.IdUsuario;
+        //                addressG.pa_ctacble_Proveedores_default = info.pa_ctacble_Proveedores_default;
+        //                addressG.pa_TipoCbte_NC = info.pa_TipoCbte_NC;
+        //                addressG.pa_TipoCbte_ND = info.pa_TipoCbte_ND;
+        //                addressG.pa_IdTipoCbte_x_Retencion = info.pa_IdTipoCbte_x_Retencion;
+        //                addressG.pa_TipoCbte_para_conci_x_antcipo = info.pa_TipoCbte_para_conci_x_antcipo;
+        //                addressG.pa_ctacble_x_RetIva_default = info.pa_ctacble_x_RetIva_default;
+        //                addressG.pa_ctacble_x_RetIva_default = info.pa_ctacble_x_RetIva_default;
+        //                addressG.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
+
+        //                context.cp_parametros.Add(addressG);
+        //                context.SaveChanges();
+        //            }
+        //            else
+        //            {
+        //                var contact = context.cp_parametros.FirstOrDefault(para => para.IdEmpresa == info.IdEmpresa);
+        //                if (contact != null)
+        //                {
+        //                    contact.IdEmpresa = info.IdEmpresa;
+        //                    contact.pa_TipoCbte_OG = info.pa_TipoCbte_OG;
+        //                    contact.pa_ctacble_deudora = (info.pa_ctacble_deudora == "") ? null : info.pa_ctacble_deudora;
+        //                    contact.pa_ctacble_iva = (info.pa_ctacble_iva == "") ? null : info.pa_ctacble_iva;
+        //                    contact.pa_ctacble_Proveedores_default = info.pa_ctacble_Proveedores_default;
+        //                    contact.pa_TipoEgrMoviCaja_Conciliacion = info.pa_TipoEgrMoviCaja_Conciliacion;
+        //                    contact.pa_TipoCbte_NC = info.pa_TipoCbte_NC;
+        //                    contact.pa_TipoCbte_ND = info.pa_TipoCbte_ND;
+        //                    contact.FechaUltMod = DateTime.Now;
+        //                    contact.IdUsuarioUltMod = info.IdUsuario;
+        //                    contact.pa_IdTipoCbte_x_Retencion = info.pa_IdTipoCbte_x_Retencion;
+        //                    contact.pa_TipoCbte_para_conci_x_antcipo = info.pa_TipoCbte_para_conci_x_antcipo;
+        //                    contact.pa_ctacble_x_RetFte_default = info.pa_ctacble_x_RetFte_default;
+        //                    contact.pa_ctacble_x_RetIva_default = info.pa_ctacble_x_RetIva_default;
+        //                    contact.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
+        //                    context.SaveChanges();
+        //                }
+        //            }
+        //        }
+        //        return true;
+        //    }
+        //    catch (Exception )
+        //    {
+
+        //        throw ;
+        //    }
+        //}
+        //public cp_parametros_Info get_info(int IdEmpresa)
+        //{
+        //    try
+        //    {
+        //        cp_parametros_Info Cbt = new cp_parametros_Info();
+        //        using (Entities_cuentas_por_pagar Contex = new Entities_cuentas_por_pagar())
+        //        {
+        //            var selectBaParam = from C in Contex.cp_parametros
+        //                                where C.IdEmpresa == IdEmpresa
+        //                                select C;
+
+        //            foreach (var item in selectBaParam)
+        //            {
+
+        //                Cbt.pa_TipoCbte_OG = Convert.ToInt32(item.pa_TipoCbte_OG);
+        //                Cbt.pa_ctacble_deudora = item.pa_ctacble_deudora;
+        //                Cbt.pa_ctacble_iva = item.pa_ctacble_iva;
+        //                Cbt.pa_TipoEgrMoviCaja_Conciliacion = item.pa_TipoEgrMoviCaja_Conciliacion;
+        //                Cbt.pa_ctacble_Proveedores_default = item.pa_ctacble_Proveedores_default;
+        //                Cbt.pa_TipoEgrMoviCaja_Conciliacion = item.pa_TipoEgrMoviCaja_Conciliacion;
+        //                Cbt.pa_TipoCbte_NC = item.pa_TipoCbte_NC;
+        //                Cbt.pa_TipoCbte_ND = item.pa_TipoCbte_ND;
+        //                Cbt.pa_IdTipoCbte_x_Retencion = item.pa_IdTipoCbte_x_Retencion;
+        //                Cbt.pa_TipoCbte_para_conci_x_antcipo = Convert.ToInt32(item.pa_TipoCbte_para_conci_x_antcipo);
+        //                Cbt.pa_ctacble_x_RetFte_default = item.pa_ctacble_x_RetFte_default;
+        //                Cbt.pa_ctacble_x_RetIva_default = item.pa_ctacble_x_RetIva_default;
+        //                Cbt.DiasTransaccionesAFuturo = item.DiasTransaccionesAFuturo;
+        //                Cbt.IdEmpresa = IdEmpresa;
+
+        //            }
+
+        //            if (selectBaParam.Count() == 0)
+        //                Cbt = null;
+        //        }
+        //        return (Cbt);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
 
         public List<cp_parametros_Info> get_list(int IdEmpresa)
         {

@@ -39,15 +39,19 @@
           <Property Name="IdCobro_a_aplicar" Type="numeric" Precision="18" Scale="0" />
           <Property Name="cr_Codigo" Type="varchar" MaxLength="10" />
           <Property Name="IdCobro_tipo" Type="varchar" MaxLength="20" />
+          <Property Name="IdAlumno" Type="numeric" Precision="18" Scale="0" />
           <Property Name="IdCliente" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="cr_TotalCobro" Type="float" Nullable="false" />
+          <Property Name="cr_Saldo" Type="float" />
           <Property Name="cr_fecha" Type="datetime" Nullable="false" />
           <Property Name="cr_fechaDocu" Type="datetime" Nullable="false" />
           <Property Name="cr_fechaCobro" Type="datetime" Nullable="false" />
           <Property Name="cr_observacion" Type="varchar" MaxLength="700" Nullable="false" />
+          <Property Name="cr_ObservacionPantalla" Type="varchar(max)" />
           <Property Name="cr_Banco" Type="varchar" MaxLength="50" />
           <Property Name="cr_cuenta" Type="varchar" MaxLength="100" />
           <Property Name="cr_NumDocumento" Type="varchar" MaxLength="100" />
+          <Property Name="IdTarjeta" Type="int" />
           <Property Name="cr_Tarjeta" Type="varchar" MaxLength="50" />
           <Property Name="cr_propietarioCta" Type="varchar" MaxLength="100" />
           <Property Name="cr_estado" Type="nvarchar" MaxLength="1" />
@@ -81,6 +85,7 @@
           <Property Name="IdBodega_Cbte" Type="int" />
           <Property Name="IdCbte_vta_nota" Type="numeric" Precision="18" Scale="0" Nullable="false" />
           <Property Name="dc_ValorPago" Type="float" Nullable="false" />
+          <Property Name="dc_ValorProntoPago" Type="float" />
           <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
           <Property Name="Fecha_Transac" Type="datetime" />
           <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
@@ -91,6 +96,7 @@
           <Property Name="ip" Type="varchar" MaxLength="50" />
           <Property Name="estado" Type="varchar" MaxLength="1" />
           <Property Name="IdCobro_tipo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IdNotaCredito" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="cxc_cobro_tipo">
           <Key>
@@ -246,11 +252,15 @@
           <Property Name="pa_IdCaja_x_cobros_x_CXC" Type="int" Nullable="false" />
           <Property Name="pa_IdTipoMoviCaja_x_Cobros_x_cliente" Type="int" Nullable="false" />
           <Property Name="pa_IdTipoCbteCble_CxC" Type="int" Nullable="false" />
+          <Property Name="IdTipoCbte_ConciliacionNC" Type="int" />
           <Property Name="DiasTransaccionesAFuturo" Type="int" Nullable="false" />
           <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
           <Property Name="FechaTransac" Type="datetime" />
           <Property Name="IdUsuarioUltMod" Type="varchar" MaxLength="20" />
           <Property Name="FechaUltMod" Type="datetime" />
+          <Property Name="IdTipoNotaProntoPago" Type="int" />
+          <Property Name="IdTipoNotaPagoAnticipado" Type="int" />
+          <Property Name="DiasTransaccionesAPasado" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwcxc_cartera_x_cobrar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -267,11 +277,11 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwcxc_cartera_x_cobrar' no tiene d
             <PropertyRef Name="TotalxCobrado" />
             <PropertyRef Name="Bodega" />
             <PropertyRef Name="vt_fech_venc" />
-            <PropertyRef Name="dc_ValorRetFu" />
-            <PropertyRef Name="dc_ValorRetIva" />
             <PropertyRef Name="NomCliente" />
             <PropertyRef Name="em_nombre" />
             <PropertyRef Name="Estado" />
+            <PropertyRef Name="dc_ValorRetFu" />
+            <PropertyRef Name="dc_ValorRetIva" />
           </Key>
           <Property Name="IdEmpresa" Type="int" Nullable="false" />
           <Property Name="IdSucursal" Type="int" Nullable="false" />
@@ -283,6 +293,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwcxc_cartera_x_cobrar' no tiene d
           <Property Name="CodComprobante" Type="varchar" MaxLength="50" />
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="IdCliente" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdAlumno" Type="numeric" Precision="18" Scale="0" />
           <Property Name="vt_fecha" Type="datetime" Nullable="false" />
           <Property Name="vt_total" Type="float" />
           <Property Name="Saldo" Type="float" />
@@ -297,6 +308,11 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwcxc_cartera_x_cobrar' no tiene d
           <Property Name="NomCliente" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="em_nombre" Type="varchar" MaxLength="300" Nullable="false" />
           <Property Name="Estado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ValorProntoPago" Type="float" />
+          <Property Name="FechaProntoPago" Type="datetime" />
+          <Property Name="IdAnio" Type="int" />
+          <Property Name="IdPlantilla" Type="int" />
+          <Property Name="IdPuntoVta" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwcxc_LiquidacionTarjeta' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -347,6 +363,7 @@ advertencia 6002: La tabla o vista 'DBERP.dbo.vwcxc_LiquidacionTarjeta_x_cxc_cob
           <Property Name="cr_fecha" Type="datetime" Nullable="false" />
           <Property Name="cr_observacion" Type="varchar" MaxLength="700" Nullable="false" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.dbo.vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -391,8 +408,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro' no tiene definida nin
           <Property Name="cr_estado" Type="nvarchar" MaxLength="1" />
           <Property Name="Su_Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="cr_observacion" Type="varchar" MaxLength="700" Nullable="false" />
-          <Property Name="cr_NumDocumento" Type="varchar" MaxLength="100" />
+          <Property Name="cr_NumDocumento" Type="varchar" MaxLength="50" />
           <Property Name="nom_Motivo_tipo_cobro" Type="varchar" MaxLength="50" />
+          <Property Name="IdAlumno" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="NomAlumno" Type="varchar" MaxLength="200" />
+          <Property Name="cr_Saldo" Type="float" />
+          <Property Name="IdUsuario" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -434,6 +455,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_det' no tiene definida
           <Property Name="vt_fech_venc" Type="datetime" />
           <Property Name="IdCliente" Type="numeric" Precision="18" Scale="0" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="1000" />
+          <Property Name="IdNotaCredito" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="dc_ValorProntoPago" Type="float" />
+          <Property Name="IdAnio" Type="int" />
+          <Property Name="IdPlantilla" Type="int" />
+          <Property Name="IdPuntoVta" Type="int" />
+          <Property Name="IdAlumno" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_det_retencion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -447,6 +474,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_det_retencion' no tien
             <PropertyRef Name="IdCobro_tipo" />
             <PropertyRef Name="dc_ValorPago" />
             <PropertyRef Name="tc_descripcion" />
+            
+            
             <PropertyRef Name="PorcentajeRet" />
             <PropertyRef Name="cr_fecha" />
           </Key>
@@ -460,8 +489,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_det_retencion' no tien
           <Property Name="IdCobro_tipo" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="dc_ValorPago" Type="float" Nullable="false" />
           <Property Name="tc_descripcion" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ESRetenIVA" Type="char" MaxLength="1" />
-          <Property Name="ESRetenFTE" Type="char" MaxLength="1" />
+          <Property Name="ESRetenIVA" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ESRetenFTE" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="PorcentajeRet" Type="float" Nullable="false" />
           <Property Name="cr_NumDocumento" Type="varchar" MaxLength="100" />
           <Property Name="cr_fecha" Type="datetime" Nullable="false" />
@@ -696,6 +725,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
     [vwcxc_cartera_x_cobrar].[CodComprobante] AS [CodComprobante], 
     [vwcxc_cartera_x_cobrar].[Su_Descripcion] AS [Su_Descripcion], 
     [vwcxc_cartera_x_cobrar].[IdCliente] AS [IdCliente], 
+    [vwcxc_cartera_x_cobrar].[IdAlumno] AS [IdAlumno], 
     [vwcxc_cartera_x_cobrar].[vt_fecha] AS [vt_fecha], 
     [vwcxc_cartera_x_cobrar].[vt_total] AS [vt_total], 
     [vwcxc_cartera_x_cobrar].[Saldo] AS [Saldo], 
@@ -709,7 +739,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
     [vwcxc_cartera_x_cobrar].[CodCliente] AS [CodCliente], 
     [vwcxc_cartera_x_cobrar].[NomCliente] AS [NomCliente], 
     [vwcxc_cartera_x_cobrar].[em_nombre] AS [em_nombre], 
-    [vwcxc_cartera_x_cobrar].[Estado] AS [Estado]
+    [vwcxc_cartera_x_cobrar].[Estado] AS [Estado], 
+    [vwcxc_cartera_x_cobrar].[ValorProntoPago] AS [ValorProntoPago], 
+    [vwcxc_cartera_x_cobrar].[FechaProntoPago] AS [FechaProntoPago], 
+    [vwcxc_cartera_x_cobrar].[IdAnio] AS [IdAnio], 
+    [vwcxc_cartera_x_cobrar].[IdPlantilla] AS [IdPlantilla], 
+    [vwcxc_cartera_x_cobrar].[IdPuntoVta] AS [IdPuntoVta]
     FROM [dbo].[vwcxc_cartera_x_cobrar] AS [vwcxc_cartera_x_cobrar]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwcxc_LiquidacionTarjeta" EntityType="Self.vwcxc_LiquidacionTarjeta" store:Type="Views" store:Schema="dbo">
@@ -739,7 +774,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
     [vwcxc_LiquidacionTarjeta_x_cxc_cobro].[cr_TotalCobro] AS [cr_TotalCobro], 
     [vwcxc_LiquidacionTarjeta_x_cxc_cobro].[cr_fecha] AS [cr_fecha], 
     [vwcxc_LiquidacionTarjeta_x_cxc_cobro].[cr_observacion] AS [cr_observacion], 
-    [vwcxc_LiquidacionTarjeta_x_cxc_cobro].[pe_nombreCompleto] AS [pe_nombreCompleto]
+    [vwcxc_LiquidacionTarjeta_x_cxc_cobro].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [vwcxc_LiquidacionTarjeta_x_cxc_cobro].[IdUsuario] AS [IdUsuario]
     FROM [dbo].[vwcxc_LiquidacionTarjeta_x_cxc_cobro] AS [vwcxc_LiquidacionTarjeta_x_cxc_cobro]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal" EntityType="Self.vwcxc_MotivoLiquidacionTarjeta_x_tb_sucursal" store:Type="Views" store:Schema="dbo">
@@ -767,7 +803,11 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
     [vwcxc_cobro].[Su_Descripcion] AS [Su_Descripcion], 
     [vwcxc_cobro].[cr_observacion] AS [cr_observacion], 
     [vwcxc_cobro].[cr_NumDocumento] AS [cr_NumDocumento], 
-    [vwcxc_cobro].[nom_Motivo_tipo_cobro] AS [nom_Motivo_tipo_cobro]
+    [vwcxc_cobro].[nom_Motivo_tipo_cobro] AS [nom_Motivo_tipo_cobro], 
+    [vwcxc_cobro].[IdAlumno] AS [IdAlumno], 
+    [vwcxc_cobro].[NomAlumno] AS [NomAlumno], 
+    [vwcxc_cobro].[cr_Saldo] AS [cr_Saldo], 
+    [vwcxc_cobro].[IdUsuario] AS [IdUsuario]
     FROM [web].[vwcxc_cobro] AS [vwcxc_cobro]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwcxc_cobro_det" EntityType="Self.vwcxc_cobro_det" store:Type="Views" store:Schema="web">
@@ -793,7 +833,13 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
     [vwcxc_cobro_det].[vt_fecha] AS [vt_fecha], 
     [vwcxc_cobro_det].[vt_fech_venc] AS [vt_fech_venc], 
     [vwcxc_cobro_det].[IdCliente] AS [IdCliente], 
-    [vwcxc_cobro_det].[pe_nombreCompleto] AS [pe_nombreCompleto]
+    [vwcxc_cobro_det].[pe_nombreCompleto] AS [pe_nombreCompleto], 
+    [vwcxc_cobro_det].[IdNotaCredito] AS [IdNotaCredito], 
+    [vwcxc_cobro_det].[dc_ValorProntoPago] AS [dc_ValorProntoPago], 
+    [vwcxc_cobro_det].[IdAnio] AS [IdAnio], 
+    [vwcxc_cobro_det].[IdPlantilla] AS [IdPlantilla], 
+    [vwcxc_cobro_det].[IdPuntoVta] AS [IdPuntoVta], 
+    [vwcxc_cobro_det].[IdAlumno] AS [IdAlumno]
     FROM [web].[vwcxc_cobro_det] AS [vwcxc_cobro_det]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwcxc_cobro_det_retencion" EntityType="Self.vwcxc_cobro_det_retencion" store:Type="Views" store:Schema="web">
@@ -954,6 +1000,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <NavigationProperty Name="cxc_cobro_x_ct_cbtecble" Relationship="Self.FK_cxc_cobro_x_ct_cbtecble_cxc_cobro" FromRole="cxc_cobro" ToRole="cxc_cobro_x_ct_cbtecble" />
           <NavigationProperty Name="cxc_cobro_tipo" Relationship="Model_cuentas_por_cobrar.FK_cxc_cobro_cxc_cobro_tipo" FromRole="cxc_cobro" ToRole="cxc_cobro_tipo" />
           <NavigationProperty Name="cxc_LiquidacionTarjeta_x_cxc_cobro" Relationship="Model_cuentas_por_cobrar.FK_cxc_LiquidacionTarjeta_x_cxc_cobro_cxc_cobro" FromRole="cxc_cobro" ToRole="cxc_LiquidacionTarjeta_x_cxc_cobro" />
+          <Property Name="IdAlumno" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="cr_Saldo" Type="Double" />
+          <Property Name="cr_ObservacionPantalla" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdTarjeta" Type="Int32" />
         </EntityType>
         <EntityType Name="cxc_cobro_det">
           <Key>
@@ -982,6 +1032,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <Property Name="IdCobro_tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="cxc_cobro" Relationship="Self.FK_cxc_cobro_det_cxc_cobro" FromRole="cxc_cobro_det" ToRole="cxc_cobro" />
           <NavigationProperty Name="cxc_cobro_tipo" Relationship="Model_cuentas_por_cobrar.FK_cxc_cobro_det_cxc_cobro_tipo" FromRole="cxc_cobro_det" ToRole="cxc_cobro_tipo" />
+          <Property Name="dc_ValorProntoPago" Type="Double" />
+          <Property Name="IdNotaCredito" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="cxc_cobro_tipo_motivo">
           <Key>
@@ -1045,8 +1097,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <Property Name="cr_estado" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="Su_Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="cr_observacion" Type="String" MaxLength="700" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="cr_NumDocumento" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="cr_NumDocumento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="nom_Motivo_tipo_cobro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdAlumno" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="NomAlumno" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="cr_Saldo" Type="Double" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vwcxc_cobro_det_retencion">
           <Key>
@@ -1071,8 +1127,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <Property Name="IdCobro_tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="dc_ValorPago" Type="Double" Nullable="false" />
           <Property Name="tc_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ESRetenIVA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="ESRetenFTE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ESRetenIVA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ESRetenFTE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="PorcentajeRet" Type="Double" Nullable="false" />
           <Property Name="cr_NumDocumento" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="cr_fecha" Type="DateTime" Nullable="false" Precision="3" />
@@ -1144,7 +1200,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
             <End Role="cxc_cobro_x_ct_cbtecble" EntitySet="cxc_cobro_x_ct_cbtecble" />
           </AssociationSet>
           <EntitySet Name="vwcxc_cartera_x_cobrar" EntityType="Model_cuentas_por_cobrar.vwcxc_cartera_x_cobrar" />
-          <EntitySet Name="cxc_Parametro" EntityType="Model_cuentas_por_cobrar.cxc_Parametro" />
           <EntitySet Name="cxc_cobro_tipo" EntityType="Model_cuentas_por_cobrar.cxc_cobro_tipo" />
           <AssociationSet Name="FK_cxc_cobro_cxc_cobro_tipo" Association="Model_cuentas_por_cobrar.FK_cxc_cobro_cxc_cobro_tipo">
             <End Role="cxc_cobro_tipo" EntitySet="cxc_cobro_tipo" />
@@ -1192,6 +1247,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <EntitySet Name="vwcxc_LiquidacionTarjeta" EntityType="Model_cuentas_por_cobrar.vwcxc_LiquidacionTarjeta" />
           <EntitySet Name="vwcxc_cobro_det" EntityType="Model_cuentas_por_cobrar.vwcxc_cobro_det" />
           <EntitySet Name="vwcxc_cobro_para_retencion" EntityType="Model_cuentas_por_cobrar.vwcxc_cobro_para_retencion" />
+          <EntitySet Name="cxc_Parametro" EntityType="Model_cuentas_por_cobrar.cxc_Parametro" />
           </EntityContainer>
         <EntityType Name="vwcxc_cartera_x_cobrar">
           <Key>
@@ -1236,20 +1292,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <Property Name="NomCliente" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="em_nombre" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
-        <EntityType Name="cxc_Parametro">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="pa_IdCaja_x_cobros_x_CXC" Type="Int32" Nullable="false" />
-          <Property Name="pa_IdTipoMoviCaja_x_Cobros_x_cliente" Type="Int32" Nullable="false" />
-          <Property Name="pa_IdTipoCbteCble_CxC" Type="Int32" Nullable="false" />
-          <Property Name="DiasTransaccionesAFuturo" Type="Int32" Nullable="false" />
-          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="FechaTransac" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="FechaUltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdAlumno" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ValorProntoPago" Type="Double" />
+          <Property Name="FechaProntoPago" Type="DateTime" Precision="3" />
+          <Property Name="IdAnio" Type="Int32" />
+          <Property Name="IdPlantilla" Type="Int32" />
+          <Property Name="IdPuntoVta" Type="Int32" />
         </EntityType>
         <EntityType Name="cxc_cobro_tipo">
           <Key>
@@ -1472,6 +1520,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <Property Name="cr_fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="cr_observacion" Type="String" Nullable="false" MaxLength="700" FixedLength="false" Unicode="false" />
           <Property Name="pe_nombreCompleto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="cxc_LiquidacionTarjeta">
           <Key>
@@ -1598,6 +1647,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <Property Name="vt_fech_venc" Type="DateTime" Precision="3" />
           <Property Name="IdCliente" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="pe_nombreCompleto" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="IdNotaCredito" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="dc_ValorProntoPago" Type="Double" />
+          <Property Name="IdAnio" Type="Int32" />
+          <Property Name="IdPlantilla" Type="Int32" />
+          <Property Name="IdPuntoVta" Type="Int32" />
+          <Property Name="IdAlumno" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="vwcxc_cobro_para_retencion">
           <Key>
@@ -1632,6 +1687,24 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <Property Name="IdCliente" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="TieneRetencion" Type="Boolean" />
         </EntityType>
+        <EntityType Name="cxc_Parametro">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="pa_IdCaja_x_cobros_x_CXC" Type="Int32" Nullable="false" />
+          <Property Name="pa_IdTipoMoviCaja_x_Cobros_x_cliente" Type="Int32" Nullable="false" />
+          <Property Name="pa_IdTipoCbteCble_CxC" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbte_ConciliacionNC" Type="Int32" />
+          <Property Name="DiasTransaccionesAFuturo" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaTransac" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltMod" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaUltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdTipoNotaProntoPago" Type="Int32" />
+          <Property Name="IdTipoNotaPagoAnticipado" Type="Int32" />
+          <Property Name="DiasTransaccionesAPasado" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1665,6 +1738,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <EntitySetMapping Name="cxc_cobro">
             <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_cobro">
               <MappingFragment StoreEntitySet="cxc_cobro">
+                <ScalarProperty Name="IdTarjeta" ColumnName="IdTarjeta" />
+                <ScalarProperty Name="cr_ObservacionPantalla" ColumnName="cr_ObservacionPantalla" />
+                <ScalarProperty Name="cr_Saldo" ColumnName="cr_Saldo" />
+                <ScalarProperty Name="IdAlumno" ColumnName="IdAlumno" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdCobro" ColumnName="IdCobro" />
@@ -1703,6 +1780,8 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <EntitySetMapping Name="cxc_cobro_det">
             <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_cobro_det">
               <MappingFragment StoreEntitySet="cxc_cobro_det">
+                <ScalarProperty Name="IdNotaCredito" ColumnName="IdNotaCredito" />
+                <ScalarProperty Name="dc_ValorProntoPago" ColumnName="dc_ValorProntoPago" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdCobro" ColumnName="IdCobro" />
@@ -1759,6 +1838,10 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <EntitySetMapping Name="vwcxc_cobro">
             <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_cobro">
               <MappingFragment StoreEntitySet="vwcxc_cobro">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="cr_Saldo" ColumnName="cr_Saldo" />
+                <ScalarProperty Name="NomAlumno" ColumnName="NomAlumno" />
+                <ScalarProperty Name="IdAlumno" ColumnName="IdAlumno" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
                 <ScalarProperty Name="IdCobro" ColumnName="IdCobro" />
@@ -1799,6 +1882,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <EntitySetMapping Name="vwcxc_cartera_x_cobrar">
             <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_cartera_x_cobrar">
               <MappingFragment StoreEntitySet="vwcxc_cartera_x_cobrar">
+                <ScalarProperty Name="IdPuntoVta" ColumnName="IdPuntoVta" />
+                <ScalarProperty Name="IdPlantilla" ColumnName="IdPlantilla" />
+                <ScalarProperty Name="IdAnio" ColumnName="IdAnio" />
+                <ScalarProperty Name="FechaProntoPago" ColumnName="FechaProntoPago" />
+                <ScalarProperty Name="ValorProntoPago" ColumnName="ValorProntoPago" />
+                <ScalarProperty Name="IdAlumno" ColumnName="IdAlumno" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="em_nombre" ColumnName="em_nombre" />
                 <ScalarProperty Name="NomCliente" ColumnName="NomCliente" />
@@ -1822,21 +1911,6 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
                 <ScalarProperty Name="vt_tipoDoc" ColumnName="vt_tipoDoc" />
                 <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="cxc_Parametro">
-            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_Parametro">
-              <MappingFragment StoreEntitySet="cxc_Parametro">
-                <ScalarProperty Name="FechaUltMod" ColumnName="FechaUltMod" />
-                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
-                <ScalarProperty Name="FechaTransac" ColumnName="FechaTransac" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="DiasTransaccionesAFuturo" ColumnName="DiasTransaccionesAFuturo" />
-                <ScalarProperty Name="pa_IdTipoCbteCble_CxC" ColumnName="pa_IdTipoCbteCble_CxC" />
-                <ScalarProperty Name="pa_IdTipoMoviCaja_x_Cobros_x_cliente" ColumnName="pa_IdTipoMoviCaja_x_Cobros_x_cliente" />
-                <ScalarProperty Name="pa_IdCaja_x_cobros_x_CXC" ColumnName="pa_IdCaja_x_cobros_x_CXC" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1937,6 +2011,7 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <EntitySetMapping Name="vwcxc_LiquidacionTarjeta_x_cxc_cobro">
             <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_LiquidacionTarjeta_x_cxc_cobro">
               <MappingFragment StoreEntitySet="vwcxc_LiquidacionTarjeta_x_cxc_cobro">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
                 <ScalarProperty Name="cr_observacion" ColumnName="cr_observacion" />
                 <ScalarProperty Name="cr_fecha" ColumnName="cr_fecha" />
@@ -1996,6 +2071,12 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
           <EntitySetMapping Name="vwcxc_cobro_det">
             <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.vwcxc_cobro_det">
               <MappingFragment StoreEntitySet="vwcxc_cobro_det">
+                <ScalarProperty Name="IdAlumno" ColumnName="IdAlumno" />
+                <ScalarProperty Name="IdPuntoVta" ColumnName="IdPuntoVta" />
+                <ScalarProperty Name="IdPlantilla" ColumnName="IdPlantilla" />
+                <ScalarProperty Name="IdAnio" ColumnName="IdAnio" />
+                <ScalarProperty Name="dc_ValorProntoPago" ColumnName="dc_ValorProntoPago" />
+                <ScalarProperty Name="IdNotaCredito" ColumnName="IdNotaCredito" />
                 <ScalarProperty Name="pe_nombreCompleto" ColumnName="pe_nombreCompleto" />
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
                 <ScalarProperty Name="vt_fech_venc" ColumnName="vt_fech_venc" />
@@ -2039,6 +2120,25 @@ advertencia 6002: La tabla o vista 'DBERP.web.vwcxc_cobro_para_retencion' no tie
                 <ScalarProperty Name="IdCbteVta" ColumnName="IdCbteVta" />
                 <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
                 <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cxc_Parametro">
+            <EntityTypeMapping TypeName="Model_cuentas_por_cobrar.cxc_Parametro">
+              <MappingFragment StoreEntitySet="cxc_Parametro">
+                <ScalarProperty Name="DiasTransaccionesAPasado" ColumnName="DiasTransaccionesAPasado" />
+                <ScalarProperty Name="IdTipoNotaPagoAnticipado" ColumnName="IdTipoNotaPagoAnticipado" />
+                <ScalarProperty Name="IdTipoNotaProntoPago" ColumnName="IdTipoNotaProntoPago" />
+                <ScalarProperty Name="FechaUltMod" ColumnName="FechaUltMod" />
+                <ScalarProperty Name="IdUsuarioUltMod" ColumnName="IdUsuarioUltMod" />
+                <ScalarProperty Name="FechaTransac" ColumnName="FechaTransac" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="DiasTransaccionesAFuturo" ColumnName="DiasTransaccionesAFuturo" />
+                <ScalarProperty Name="IdTipoCbte_ConciliacionNC" ColumnName="IdTipoCbte_ConciliacionNC" />
+                <ScalarProperty Name="pa_IdTipoCbteCble_CxC" ColumnName="pa_IdTipoCbteCble_CxC" />
+                <ScalarProperty Name="pa_IdTipoMoviCaja_x_Cobros_x_cliente" ColumnName="pa_IdTipoMoviCaja_x_Cobros_x_cliente" />
+                <ScalarProperty Name="pa_IdCaja_x_cobros_x_CXC" ColumnName="pa_IdCaja_x_cobros_x_CXC" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

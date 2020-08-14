@@ -32,6 +32,8 @@ namespace Core.Erp.Data
         public string ip { get; set; }
         public string estado { get; set; }
         public string IdCobro_tipo { get; set; }
+        public Nullable<double> dc_ValorProntoPago { get; set; }
+        public Nullable<decimal> IdNotaCredito { get; set; }
     
         public virtual cxc_cobro cxc_cobro { get; set; }
         public virtual cxc_cobro_tipo cxc_cobro_tipo { get; set; }

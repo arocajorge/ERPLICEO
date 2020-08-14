@@ -31,6 +31,8 @@ namespace Core.Erp.Data
         public string IdTipo_op_sueldo_por_pagar { get; set; }
         public string EstadoCreacionPrestamos { get; set; }
         public double Porcentaje_anticipo { get; set; }
+        public Nullable<int> DiasTransaccionesAFuturo { get; set; }
+        public Nullable<int> DiasTransaccionesAPasado { get; set; }
     
         public virtual ro_catalogo ro_catalogo { get; set; }
     }

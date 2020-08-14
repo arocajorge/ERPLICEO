@@ -33,6 +33,7 @@ namespace Core.Erp.Data.Compras.Base
         public string IdUnidadMedida { get; set; }
         public double Por_Iva { get; set; }
         public string IdCod_Impuesto { get; set; }
+        public string IdCentroCosto { get; set; }
     
         public virtual com_ordencompra_local com_ordencompra_local { get; set; }
     }

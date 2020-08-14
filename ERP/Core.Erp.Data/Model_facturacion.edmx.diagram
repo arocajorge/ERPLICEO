@@ -42,13 +42,11 @@
         <EntityTypeShape EntityType="Model_facturacion.vwfa_factura" Width="1.5" PointX="7.375" PointY="9.75" />
         <EntityTypeShape EntityType="Model_facturacion.fa_cliente" Width="1.5" PointX="21.625" PointY="28.25" />
         <EntityTypeShape EntityType="Model_facturacion.fa_cliente_tipo" Width="1.5" PointX="19.375" PointY="27.875" />
-        <EntityTypeShape EntityType="Model_facturacion.fa_parametro" Width="1.5" PointX="23.875" PointY="36.5" />
         <AssociationConnector Association="Model_facturacion.FK_fa_cliente_contactos_fa_cliente" />
         <AssociationConnector Association="Model_facturacion.FK_fa_cliente_fa_cliente_tipo" />
         <AssociationConnector Association="Model_facturacion.FK_fa_cliente_fa_forma_pago" />
         <AssociationConnector Association="Model_facturacion.FK_fa_cliente_fa_NivelDescuento" />
         <AssociationConnector Association="Model_facturacion.FK_fa_cliente_x_fa_Vendedor_x_sucursal_fa_cliente" />
-        <AssociationConnector Association="Model_facturacion.FK_fa_parametro_fa_cliente" />
         <EntityTypeShape EntityType="Model_facturacion.fa_notaCreDeb_x_fa_factura_NotaDeb" Width="1.5" PointX="0.75" PointY="21.75" />
         <EntityTypeShape EntityType="Model_facturacion.fa_guia_remision" Width="1.5" PointX="26.875" PointY="18.5" />
         <AssociationConnector Association="Model_facturacion.FK_fa_guia_remision_fa_cliente" />
@@ -107,6 +105,9 @@
         <AssociationConnector Association="Model_facturacion.FK_fa_cliente_fa_TerminoPago" />
         <AssociationConnector Association="Model_facturacion.FK_fa_proforma_fa_TerminoPago" />
         <AssociationConnector Association="Model_facturacion.FK_fa_TerminoPago_Distribucion_fa_TerminoPago" />
+        <EntityTypeShape EntityType="Model_facturacion.fa_parametro" Width="1.5" PointX="23.875" PointY="36.375" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_parametro_fa_cliente" />
+        <AssociationConnector Association="Model_facturacion.FK_fa_notaCreDeb_x_fa_factura_NotaDeb_fa_notaCreDeb" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

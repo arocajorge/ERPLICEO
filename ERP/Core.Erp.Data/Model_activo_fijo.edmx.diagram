@@ -11,7 +11,6 @@
         <EntityTypeShape EntityType="Model_activo_fijo.Af_Mej_Baj_Activo" Width="1.5" PointX="7.5" PointY="9" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_activo_fijo.Af_Retiro_Activo" Width="1.5" PointX="7.5" PointY="16.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Model_activo_fijo.Af_Venta_Activo" Width="1.5" PointX="7.5" PointY="23.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model_activo_fijo.Af_Parametros" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model_activo_fijo.Af_Activo_fijo_Categoria" Width="1.5" PointX="6" PointY="15.375" />
         <EntityTypeShape EntityType="Model_activo_fijo.Af_Activo_fijo_tipo" Width="1.5" PointX="0.75" PointY="14.375" />
         <AssociationConnector Association="Model_activo_fijo.FK_Af_Activo_fijo_Categoria_Af_Activo_fijo_tipo" />
@@ -34,6 +33,7 @@
         <AssociationConnector Association="Model_activo_fijo.FK_Af_Retiro_Activo_Af_Activo_fijo" />
         <AssociationConnector Association="Model_activo_fijo.FK_Af_Venta_Activo_Af_Activo_fijo" />
         <EntityTypeShape EntityType="Model_activo_fijo.vwAf_Activo_fijo" Width="1.5" PointX="3.375" PointY="9.75" />
+        <EntityTypeShape EntityType="Model_activo_fijo.Af_Parametros" Width="1.5" PointX="3.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

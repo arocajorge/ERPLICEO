@@ -44,5 +44,10 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> lote_fecha_vcto { get; set; }
         public Nullable<bool> se_distribuye { get; set; }
         public string tp_ManejaInven { get; set; }
+        public Nullable<int> IdAnio { get; set; }
+        public Nullable<int> IdPlantilla { get; set; }
+        public Nullable<int> IdRubro { get; set; }
+        public Nullable<int> IdPeriodo { get; set; }
+        public Nullable<double> ValorProntoPago { get; set; }
     }
 }

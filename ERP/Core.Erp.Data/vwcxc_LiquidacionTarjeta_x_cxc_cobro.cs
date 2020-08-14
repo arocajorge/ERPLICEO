@@ -22,5 +22,6 @@ namespace Core.Erp.Data
         public System.DateTime cr_fecha { get; set; }
         public string cr_observacion { get; set; }
         public string pe_nombreCompleto { get; set; }
+        public string IdUsuario { get; set; }
     }
 }

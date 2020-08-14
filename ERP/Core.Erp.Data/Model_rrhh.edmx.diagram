@@ -123,8 +123,6 @@
         <EntityTypeShape EntityType="Model_rrhh.vwro_nomina_x_horas_extras_aprobadas" Width="1.5" PointX="7.375" PointY="13.75" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_nomina_x_horas_extras_det" Width="1.5" PointX="25.375" PointY="27.75" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_empleados_consulta" Width="1.5" PointX="5.375" PointY="17.75" />
-        <EntityTypeShape EntityType="Model_rrhh.ro_Parametros" Width="1.5" PointX="9" PointY="75" />
-        <AssociationConnector Association="Model_rrhh.FK_ro_Parametros_ro_catalogo" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_archivos_bancos_generacion" Width="1.5" PointX="7.375" PointY="17.75" />
         <EntityTypeShape EntityType="Model_rrhh.ro_archivos_bancos_generacion" Width="1.5" PointX="15" PointY="26.375" />
         <AssociationConnector Association="Model_rrhh.FK_ro_archivos_bancos_generacion_ro_periodo_x_ro_Nomina_TipoLiqui" />
@@ -275,6 +273,8 @@
         <AssociationConnector Association="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_AjusteImpuestoRenta" />
         <AssociationConnector Association="Model_rrhh.FK_ro_AjusteImpuestoRentaDet_ro_empleado" />
         <EntityTypeShape EntityType="Model_rrhh.vwro_AjusteImpuestoRentaDet" Width="1.5" PointX="7.375" PointY="31.75" />
+        <EntityTypeShape EntityType="Model_rrhh.ro_Parametros" Width="1.5" PointX="9" PointY="75.75" />
+        <AssociationConnector Association="Model_rrhh.FK_ro_Parametros_ro_catalogo" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

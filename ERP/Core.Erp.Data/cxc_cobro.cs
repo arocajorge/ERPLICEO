@@ -53,6 +53,10 @@ namespace Core.Erp.Data
         public int IdCaja { get; set; }
         public string MotiAnula { get; set; }
         public Nullable<int> IdTipoNotaCredito { get; set; }
+        public Nullable<decimal> IdAlumno { get; set; }
+        public Nullable<double> cr_Saldo { get; set; }
+        public string cr_ObservacionPantalla { get; set; }
+        public Nullable<int> IdTarjeta { get; set; }
     
         public virtual ICollection<cxc_cobro_det> cxc_cobro_det { get; set; }
         public virtual ICollection<cxc_cobro_x_ct_cbtecble> cxc_cobro_x_ct_cbtecble { get; set; }

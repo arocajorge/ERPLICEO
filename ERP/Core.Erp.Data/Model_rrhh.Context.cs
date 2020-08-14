@@ -107,7 +107,6 @@ namespace Core.Erp.Data
         public DbSet<vwro_nomina_x_horas_extras_aprobadas> vwro_nomina_x_horas_extras_aprobadas { get; set; }
         public DbSet<vwro_nomina_x_horas_extras_det> vwro_nomina_x_horas_extras_det { get; set; }
         public DbSet<vwro_empleados_consulta> vwro_empleados_consulta { get; set; }
-        public DbSet<ro_Parametros> ro_Parametros { get; set; }
         public DbSet<vwro_archivos_bancos_generacion> vwro_archivos_bancos_generacion { get; set; }
         public DbSet<ro_archivos_bancos_generacion> ro_archivos_bancos_generacion { get; set; }
         public DbSet<ro_empleado_x_jornada> ro_empleado_x_jornada { get; set; }
@@ -159,6 +158,7 @@ namespace Core.Erp.Data
         public DbSet<ro_AjusteImpuestoRentaDetOI> ro_AjusteImpuestoRentaDetOI { get; set; }
         public DbSet<ro_AjusteImpuestoRentaDet> ro_AjusteImpuestoRentaDet { get; set; }
         public DbSet<vwro_AjusteImpuestoRentaDet> vwro_AjusteImpuestoRentaDet { get; set; }
+        public DbSet<ro_Parametros> ro_Parametros { get; set; }
     
         public virtual int spRo_LiquidarEmpleado(Nullable<int> idEmpresa, Nullable<decimal> idActaFiniquito)
         {

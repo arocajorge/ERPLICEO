@@ -14,5 +14,6 @@ namespace Core.Erp.Info.Compras
         public string IdEstadoAnulacion_OC { get; set; }
         public string IdEstado_cierre { get; set; }
         public int DiasTransaccionesAFuturo { get; set; }
+        public Nullable<int> DiasTransaccionesAPasado { get; set; }
     }
 }

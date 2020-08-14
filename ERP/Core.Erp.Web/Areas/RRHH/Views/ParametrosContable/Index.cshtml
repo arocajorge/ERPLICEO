@@ -144,8 +144,6 @@
                                 @Html.ValidationMessageFor(q => q.Porcentaje_aporte_pers, "", new { @class = "text-danger" })
                             </div>
                         </div>
-
-
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="IdTipo_op">Estado prestamos*</label>
@@ -167,8 +165,6 @@
                                 @Html.ValidationMessageFor(q => q.EstadoCreacionPrestamos, "", new { @class = "text-danger" })
                             </div>
                         </div>
-
-
                     </div>
                 </div>
 
@@ -331,8 +327,24 @@
                     </div>
                 </div>
 
-
-                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="DiasTransaccionesAFuturo">Dias máximos para transacciones a pasado</label>
+                                @Html.TextBoxFor(q => q.DiasTransaccionesAPasado, new { @class = "form-control", @id = "DiasTransaccionesAPasado" })
+                                @Html.ValidationMessageFor(q => q.DiasTransaccionesAPasado, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="DiasTransaccionesAFuturo">Dias máximos para transacciones a futuro</label>
+                                @Html.TextBoxFor(q => q.DiasTransaccionesAFuturo, new { @class = "form-control", @id = "DiasTransaccionesAFuturo" })
+                                @Html.ValidationMessageFor(q => q.DiasTransaccionesAFuturo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div role="tabpanel" class="tab-pane" id="tab_param_rubros">

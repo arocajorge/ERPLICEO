@@ -31,6 +31,7 @@ namespace Core.Erp.Data
         public int DiasTransaccionesAFuturo { get; set; }
         public Nullable<decimal> IdClienteConsumidorFinal { get; set; }
         public Nullable<double> MontoMaximoConsumidorFinal { get; set; }
+        public Nullable<int> DiasTransaccionesAPasado { get; set; }
     
         public virtual fa_cliente fa_cliente { get; set; }
     }

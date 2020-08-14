@@ -17,6 +17,7 @@ namespace Core.Erp.Info.Importacion
         public int IdSucursal { get; set; }
         public int IdBodega { get; set; }
         public string IdCtaCble_invntario { get; set; }
-
+        public Nullable<int> DiasTransaccionesAFuturo { get; set; }
+        public Nullable<int> DiasTransaccionesAPasado { get; set; }
     }
 }

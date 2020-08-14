@@ -34,6 +34,8 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> Fecha_UltAnu { get; set; }
         public string Estado { get; set; }
         public string MotiAnula { get; set; }
+        public string IdCtaCbleCXC { get; set; }
+        public Nullable<decimal> IdProducto { get; set; }
     
         public virtual ICollection<fa_notaCreDeb> fa_notaCreDeb { get; set; }
     }

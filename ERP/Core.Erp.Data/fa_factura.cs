@@ -58,6 +58,10 @@ namespace Core.Erp.Data
         public Nullable<double> valor_abono { get; set; }
         public bool aprobada_enviar_sri { get; set; }
         public Nullable<bool> Generado { get; set; }
+        public Nullable<decimal> IdAlumno { get; set; }
+        public Nullable<int> IdEmpresa_rol { get; set; }
+        public Nullable<decimal> IdEmpleado { get; set; }
+        public Nullable<bool> AplicacionMasiva { get; set; }
     
         public virtual fa_catalogo fa_catalogo { get; set; }
         public virtual fa_cliente fa_cliente { get; set; }

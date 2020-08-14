@@ -23,11 +23,15 @@
         </ul>
         <div class="tab-content" style="padding-top: 20px">
             <div role="tabpanel" class="tab-pane active" style="margin-left: 1em;" id="tab_datos_generales">
-
-              
-
                 <div class="row">
                     <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="DiasTransaccionesAFuturo">Dias máximos para transacciones a pasado</label>
+                                @Html.TextBoxFor(q => q.DiasTransaccionesAPasado, new { @class = "form-control", @id = "DiasTransaccionesAPasado" })
+                                @Html.ValidationMessageFor(q => q.DiasTransaccionesAPasado, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="DiasTransaccionesAFuturo">Dias máximos para transacciones a futuro</label>

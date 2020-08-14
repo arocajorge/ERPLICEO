@@ -248,6 +248,7 @@
           <Property Name="IdTipoCbteRetiro" Type="int" Nullable="false" />
           <Property Name="DiasTransaccionesAFuturo" Type="int" Nullable="false" />
           <Property Name="ContabilizaDepreciacionPorActivo" Type="bit" Nullable="false" />
+          <Property Name="DiasTransaccionesAPasado" Type="int" />
         </EntityType>
         <EntityType Name="Af_Retiro_Activo">
           <Key>
@@ -314,7 +315,7 @@
           <Property Name="IdCbteCble" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwAf_Activo_fijo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwAf_Activo_fijo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwAf_Activo_fijo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -813,7 +814,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwAf_Activo_fijo' no tiene d
             <Parameter Name="Fecha_fin" Mode="In" Type="DateTime" />
             <Parameter Name="IdUsuario" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="Af_Parametros" EntityType="Model_activo_fijo.Af_Parametros" />
           <EntitySet Name="Af_Activo_fijo_Categoria" EntityType="Model_activo_fijo.Af_Activo_fijo_Categoria" />
           <EntitySet Name="Af_Activo_fijo_tipo" EntityType="Model_activo_fijo.Af_Activo_fijo_tipo" />
           <AssociationSet Name="FK_Af_Activo_fijo_Categoria_Af_Activo_fijo_tipo" Association="Model_activo_fijo.FK_Af_Activo_fijo_Categoria_Af_Activo_fijo_tipo">
@@ -881,6 +881,7 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwAf_Activo_fijo' no tiene d
             <End Role="Af_Venta_Activo" EntitySet="Af_Venta_Activo" />
           </AssociationSet>
           <EntitySet Name="vwAf_Activo_fijo" EntityType="Model_activo_fijo.vwAf_Activo_fijo" />
+          <EntitySet Name="Af_Parametros" EntityType="Model_activo_fijo.Af_Parametros" />
           </EntityContainer>
         <ComplexType Name="spACTF_activos_a_depreciar_Result">
           <Property Type="Int32" Name="IdEmpresa" Nullable="false" />
@@ -901,19 +902,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwAf_Activo_fijo' no tiene d
           <Property Type="String" Name="IdCtaCble_Dep_Acum" Nullable="true" MaxLength="30" />
           <Property Type="String" Name="IdCtaCble_Gastos_Depre" Nullable="true" MaxLength="30" />
         </ComplexType>
-        <EntityType Name="Af_Parametros">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoCbte" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoCbteMejora" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoCbteBaja" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoCbteVenta" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoCbteRetiro" Type="Int32" Nullable="false" />
-          <Property Name="DiasTransaccionesAFuturo" Type="Int32" Nullable="false" />
-          <Property Name="ContabilizaDepreciacionPorActivo" Type="Boolean" Nullable="false" />
-        </EntityType>
         <EntityType Name="Af_Activo_fijo_Categoria">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -1307,6 +1295,20 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwAf_Activo_fijo' no tiene d
           <Property Name="Cantidad" Type="Int32" Nullable="false" />
           <Property Name="Estado_Proceso" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Af_Parametros">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbte" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbteMejora" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbteBaja" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbteVenta" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbteRetiro" Type="Int32" Nullable="false" />
+          <Property Name="DiasTransaccionesAFuturo" Type="Int32" Nullable="false" />
+          <Property Name="ContabilizaDepreciacionPorActivo" Type="Boolean" Nullable="false" />
+          <Property Name="DiasTransaccionesAPasado" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1487,20 +1489,6 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwAf_Activo_fijo' no tiene d
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="Af_Parametros">
-            <EntityTypeMapping TypeName="Model_activo_fijo.Af_Parametros">
-              <MappingFragment StoreEntitySet="Af_Parametros">
-                <ScalarProperty Name="ContabilizaDepreciacionPorActivo" ColumnName="ContabilizaDepreciacionPorActivo" />
-                <ScalarProperty Name="DiasTransaccionesAFuturo" ColumnName="DiasTransaccionesAFuturo" />
-                <ScalarProperty Name="IdTipoCbteRetiro" ColumnName="IdTipoCbteRetiro" />
-                <ScalarProperty Name="IdTipoCbteVenta" ColumnName="IdTipoCbteVenta" />
-                <ScalarProperty Name="IdTipoCbteBaja" ColumnName="IdTipoCbteBaja" />
-                <ScalarProperty Name="IdTipoCbteMejora" ColumnName="IdTipoCbteMejora" />
-                <ScalarProperty Name="IdTipoCbte" ColumnName="IdTipoCbte" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Af_Activo_fijo_Categoria">
             <EntityTypeMapping TypeName="Model_activo_fijo.Af_Activo_fijo_Categoria">
               <MappingFragment StoreEntitySet="Af_Activo_fijo_Categoria">
@@ -1661,6 +1649,21 @@ advertencia 6002: La tabla o vista 'DBERP_LICEO.dbo.vwAf_Activo_fijo' no tiene d
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Af_Nombre" ColumnName="Af_Nombre" />
                 <ScalarProperty Name="IdActivoFijo" ColumnName="IdActivoFijo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Af_Parametros">
+            <EntityTypeMapping TypeName="Model_activo_fijo.Af_Parametros">
+              <MappingFragment StoreEntitySet="Af_Parametros">
+                <ScalarProperty Name="DiasTransaccionesAPasado" ColumnName="DiasTransaccionesAPasado" />
+                <ScalarProperty Name="ContabilizaDepreciacionPorActivo" ColumnName="ContabilizaDepreciacionPorActivo" />
+                <ScalarProperty Name="DiasTransaccionesAFuturo" ColumnName="DiasTransaccionesAFuturo" />
+                <ScalarProperty Name="IdTipoCbteRetiro" ColumnName="IdTipoCbteRetiro" />
+                <ScalarProperty Name="IdTipoCbteVenta" ColumnName="IdTipoCbteVenta" />
+                <ScalarProperty Name="IdTipoCbteBaja" ColumnName="IdTipoCbteBaja" />
+                <ScalarProperty Name="IdTipoCbteMejora" ColumnName="IdTipoCbteMejora" />
+                <ScalarProperty Name="IdTipoCbte" ColumnName="IdTipoCbte" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -69,6 +69,11 @@ namespace Core.Erp.Web.Areas.ActivoFijo.Controllers
                 mensaje = "Existen detalles con valor 0 en el debe o haber, por favor verifique";
                 return false;
             }
+
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.Fecha_Venta, cl_enumeradores.eModulo.ACF, Convert.ToInt32(SessionFixed.IdSucursal), ref msg))
+            {
+                return false;
+            }
             return true;
         }
         [ValidateInput(false)]

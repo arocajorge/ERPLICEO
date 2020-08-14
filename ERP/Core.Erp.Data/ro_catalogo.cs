@@ -17,11 +17,11 @@ namespace Core.Erp.Data
         public ro_catalogo()
         {
             this.ro_cargaFamiliar = new HashSet<ro_cargaFamiliar>();
-            this.ro_Parametros = new HashSet<ro_Parametros>();
             this.ro_contrato = new HashSet<ro_contrato>();
             this.ro_contrato1 = new HashSet<ro_contrato>();
             this.ro_prestamo = new HashSet<ro_prestamo>();
             this.ro_rubro_tipo = new HashSet<ro_rubro_tipo>();
+            this.ro_Parametros = new HashSet<ro_Parametros>();
         }
     
         public string CodCatalogo { get; set; }
@@ -42,10 +42,10 @@ namespace Core.Erp.Data
     
         public virtual ICollection<ro_cargaFamiliar> ro_cargaFamiliar { get; set; }
         public virtual ro_catalogoTipo ro_catalogoTipo { get; set; }
-        public virtual ICollection<ro_Parametros> ro_Parametros { get; set; }
         public virtual ICollection<ro_contrato> ro_contrato { get; set; }
         public virtual ICollection<ro_contrato> ro_contrato1 { get; set; }
         public virtual ICollection<ro_prestamo> ro_prestamo { get; set; }
         public virtual ICollection<ro_rubro_tipo> ro_rubro_tipo { get; set; }
+        public virtual ICollection<ro_Parametros> ro_Parametros { get; set; }
     }
 }

@@ -61,24 +61,25 @@
                 <div class="form-group">
                     <label for="IdActivoFijo">Activo fijo*</label>
                     @Html.DevExpress().ComboBoxFor(q => q.IdActivoFijo, settings =>
-                    {
-                        settings.Name = "IdActivoFijo";
-                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                        settings.Properties.DisplayFormatString = "[{0}] - {1}";
-                        settings.Properties.Columns.Add("IdActivoFijo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
-                        settings.Properties.Columns.Add("Af_Nombre", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
-                       //Campo ID
-                       settings.Properties.ValueField = "IdActivoFijo";
-                        settings.Properties.ValueType = typeof(int);
-                        settings.Properties.TextField = "Af_Nombre";
-                       //Boton para seleccionar ningun registro
-                       settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
-                        settings.Properties.NullText = "== Seleccione ==";
-                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                        settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e,){get_valores()}";
-                    }).BindList(ViewBag.lst_fijo).GetHtml()
+               {
+                   settings.Name = "IdActivoFijo";
+                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                   settings.Properties.DisplayFormatString = "[{0}] - {1}";
+                   settings.Properties.Columns.Add("IdActivoFijo", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(10);
+                   settings.Properties.Columns.Add("Af_Nombre", "Descripción").Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                   //Campo ID
+                   settings.Properties.ValueField = "IdActivoFijo";
+                   settings.Properties.ValueType = typeof(int);
+                   settings.Properties.TextField = "Af_Nombre";
+                   //Boton para seleccionar ningun registro
+                   settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.Always;
+                   settings.Properties.NullText = "== Seleccione ==";
+                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e,){get_valores()}";
+               }).BindList(ViewBag.lst_fijo).GetHtml()
                     @Html.ValidationMessageFor(q => q.IdActivoFijo, "", new { @class = "text-danger" })
                 </div>
+
             </div>
         </div>
     </div>
@@ -182,42 +183,41 @@
         @Scripts.Render("~/bundles/jqueryval")
     }
 }
-<script>
+<script type="text/javascript">
     $(function () {
 
-        $("#IdActivoFijo").change(function () {
-            get_valores();
-        });
-
-        function get_valores() {
-
-            var id = IdActivoFijo.GetValue();
-            var datos = {
-                IdActivoFijo: id
-            }
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(datos),
-                url: '@Url.Action("get_valores", "RetiroActivo", new { Area = "ActivoFijo" })',
-                async: false,
-                bDeferRender: true,
-                bProcessing: true,
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-
-                    $("#ValorActivo").val(data.v_activo);
-                    $("#Valor_Tot_Bajas").val(data.v_baja);
-                    $("#Valor_Tot_Mejora").val(data.v_mejora);
-                    $("#Valor_Depre_Acu").val(data.v_depr_acum);
-                    $("#Valor_Neto").val(data.v_neto);
-
-                },
-                error: function (error) {
-                }
-            });
-        };
+        //$("#IdActivoFijo").change(function () {
+        //    get_valores();
+        //});
     });
+
+    function get_valores() {
+        var id = IdActivoFijo.GetValue();
+        var datos = {
+            IdActivoFijo: id
+        }
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(datos),
+            url: '@Url.Action("get_valores", "RetiroActivo", new { Area = "ActivoFijo" })',
+            async: false,
+            bDeferRender: true,
+            bProcessing: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+                $("#ValorActivo").val(data.v_activo);
+                $("#Valor_Tot_Bajas").val(data.v_baja);
+                $("#Valor_Tot_Mejora").val(data.v_mejora);
+                $("#Valor_Depre_Acu").val(data.v_depr_acum);
+                $("#Valor_Neto").val(data.v_neto);
+
+            },
+            error: function (error) {
+            }
+        });
+    };
 
     function OnSelectedCtaCbleChanged() {
         GridView_comprobante_detalle.GetEditor("IdGrupoPresupuesto").PerformCallback();

@@ -32,11 +32,11 @@ namespace Core.Erp.Data.Compras.Base
         public virtual DbSet<com_estado_cierre> com_estado_cierre { get; set; }
         public virtual DbSet<com_ordencompra_local> com_ordencompra_local { get; set; }
         public virtual DbSet<com_ordencompra_local_det> com_ordencompra_local_det { get; set; }
-        public virtual DbSet<com_parametro> com_parametro { get; set; }
         public virtual DbSet<com_solicitante> com_solicitante { get; set; }
         public virtual DbSet<com_TerminoPago> com_TerminoPago { get; set; }
         public virtual DbSet<vwcom_ordencompra_local> vwcom_ordencompra_local { get; set; }
         public virtual DbSet<vwcom_ordencompra_local_detPorIngresar> vwcom_ordencompra_local_detPorIngresar { get; set; }
         public virtual DbSet<vwcom_ordencompra_local_det> vwcom_ordencompra_local_det { get; set; }
+        public virtual DbSet<com_parametro> com_parametro { get; set; }
     }
 }

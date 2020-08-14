@@ -177,6 +177,8 @@
           <Property Name="IdSucursal" Type="int" Nullable="false" />
           <Property Name="IdBodega" Type="int" Nullable="false" />
           <Property Name="IdCtaCble_invntario" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="DiasTransaccionesAFuturo" Type="int" />
+          <Property Name="DiasTransaccionesAPasado" Type="int" />
         </EntityType>
         <EntityType Name="imp_partida_arancelaria">
           <Key>
@@ -189,8 +191,8 @@
           <Property Name="Observacion" Type="varchar(max)" />
           <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBERP_RAPI_PRODUCCION.dbo.vwimp_liquidacion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwimp_liquidacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwimp_liquidacion">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -225,12 +227,12 @@ warning 6002: The table/view 'DBERP_RAPI_PRODUCCION.dbo.vwimp_liquidacion' does 
           <Property Name="oe_fecha_embarque_est" Type="datetime" />
           <Property Name="oe_fecha_desaduanizacion_est" Type="datetime" />
           <Property Name="IdCtaCble_importacion" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="oe_observacion" Type="varchar" MaxLength="100" />
+          <Property Name="oe_observacion" Type="varchar(max)" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBERP_RAPI_PRODUCCION.dbo.vwimp_orden_compra_ext' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwimp_orden_compra_ext' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwimp_orden_compra_ext">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -260,7 +262,7 @@ warning 6002: The table/view 'DBERP_RAPI_PRODUCCION.dbo.vwimp_orden_compra_ext' 
           <Property Name="oe_fecha_embarque_est" Type="datetime" />
           <Property Name="oe_fecha_desaduanizacion_est" Type="datetime" />
           <Property Name="IdCtaCble_importacion" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="oe_observacion" Type="varchar" MaxLength="100" />
+          <Property Name="oe_observacion" Type="varchar(max)" />
           <Property Name="oe_codigo" Type="varchar" MaxLength="30" />
           <Property Name="estado" Type="bit" Nullable="false" />
           <Property Name="oe_fecha_llegada" Type="datetime" />
@@ -275,8 +277,8 @@ warning 6002: The table/view 'DBERP_RAPI_PRODUCCION.dbo.vwimp_orden_compra_ext' 
           <Property Name="IdMoneda_destino" Type="int" />
           <Property Name="Estado_cierre" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBERP_RAPI_PRODUCCION.dbo.vwimp_orden_compra_ext_con_saldo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwimp_orden_compra_ext_con_saldo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwimp_orden_compra_ext_con_saldo">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -287,8 +289,8 @@ warning 6002: The table/view 'DBERP_RAPI_PRODUCCION.dbo.vwimp_orden_compra_ext_c
           <Property Name="cantidad_x_recibir" Type="float" />
           <Property Name="cantidad_global" Type="float" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBERP_RAPI_PRODUCCION.dbo.vwimp_orden_compra_ext_ct_cbteble_det_gastos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwimp_orden_compra_ext_ct_cbteble_det_gastos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwimp_orden_compra_ext_ct_cbteble_det_gastos">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -308,12 +310,12 @@ warning 6002: The table/view 'DBERP_RAPI_PRODUCCION.dbo.vwimp_orden_compra_ext_c
           <Property Name="secuencia_ct" Type="int" Nullable="false" />
           <Property Name="IdGasto_tipo" Type="int" />
           <Property Name="dc_Valor" Type="float" Nullable="false" />
-          <Property Name="pc_Cuenta" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="pc_Cuenta" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="dc_Observacion" Type="varchar(max)" />
           <Property Name="IdCtaCble" Type="varchar" MaxLength="20" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBERP_RAPI_PRODUCCION.dbo.vwimp_orden_compra_ext_det' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwimp_orden_compra_ext_det' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwimp_orden_compra_ext_det">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -357,8 +359,8 @@ warning 6002: The table/view 'DBERP_RAPI_PRODUCCION.dbo.vwimp_orden_compra_ext_d
           <Property Name="lote_num_lote" Type="varchar" MaxLength="50" />
           <Property Name="lote_fecha_fab" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBERP_RAPI_PRODUCCION.dbo.vwimp_orden_compra_ext_por_liquidar' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwimp_orden_compra_ext_por_liquidar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwimp_orden_compra_ext_por_liquidar">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -388,7 +390,7 @@ warning 6002: The table/view 'DBERP_RAPI_PRODUCCION.dbo.vwimp_orden_compra_ext_p
           <Property Name="oe_fecha_embarque_est" Type="datetime" />
           <Property Name="oe_fecha_desaduanizacion_est" Type="datetime" />
           <Property Name="IdCtaCble_importacion" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="oe_observacion" Type="varchar" MaxLength="100" />
+          <Property Name="oe_observacion" Type="varchar(max)" />
           <Property Name="oe_codigo" Type="varchar" MaxLength="30" />
           <Property Name="estado" Type="bit" Nullable="false" />
           <Property Name="oe_fecha_llegada" Type="datetime" />
@@ -397,8 +399,8 @@ warning 6002: The table/view 'DBERP_RAPI_PRODUCCION.dbo.vwimp_orden_compra_ext_p
           <Property Name="pe_cedulaRuc" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="pe_nombreCompleto" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBERP_RAPI_PRODUCCION.dbo.vwimp_orden_compra_ext_recepcion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.dbo.vwimp_orden_compra_ext_recepcion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwimp_orden_compra_ext_recepcion">
           <Key>
             <PropertyRef Name="IdRecepcion" />
@@ -431,8 +433,8 @@ warning 6002: The table/view 'DBERP_RAPI_PRODUCCION.dbo.vwimp_orden_compra_ext_r
           <Property Name="oe_fecha_embarque_est" Type="datetime" />
           <Property Name="Estado_cierre" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBERP_RAPI_PRODUCCION.web.vwimp_gastos_no_asignados' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBERP.web.vwimp_gastos_no_asignados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vwimp_gastos_no_asignados">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -450,7 +452,7 @@ warning 6002: The table/view 'DBERP_RAPI_PRODUCCION.web.vwimp_gastos_no_asignado
           <Property Name="IdCtaCble" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="dc_Valor" Type="float" Nullable="false" />
           <Property Name="dc_Observacion" Type="varchar(max)" />
-          <Property Name="pc_Cuenta" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="pc_Cuenta" Type="varchar" MaxLength="500" Nullable="false" />
         </EntityType>
         <Association Name="FK_imp_catalogo_imp_catalogo_tipo">
           <End Role="imp_catalogo_tipo" Type="Self.imp_catalogo_tipo" Multiplicity="1" />
@@ -922,20 +924,6 @@ FROM [web].[vwimp_gastos_no_asignados] AS [vwimp_gastos_no_asignados]</DefiningQ
           <Property Name="fecha_anulacion" Type="DateTime" Precision="3" />
           <NavigationProperty Name="imp_orden_compra_ext" Relationship="Model_importacion.FK_imp_orden_compra_ext_recepcion_imp_orden_compra_ext" FromRole="imp_orden_compra_ext_recepcion" ToRole="imp_orden_compra_ext" />
         </EntityType>
-        <EntityType Name="imp_parametro">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdCtaCble" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdTipoCbte_liquidacion" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoCbte_liquidacion_anu" Type="Int32" Nullable="false" />
-          <Property Name="IdMotivo_Inv_ing" Type="Int32" Nullable="false" />
-          <Property Name="IdMovi_inven_tipo_ing" Type="Int32" Nullable="false" />
-          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
-          <Property Name="IdBodega" Type="Int32" Nullable="false" />
-          <Property Name="IdCtaCble_invntario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
         <EntityType Name="vwimp_liquidacion">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -970,7 +958,7 @@ FROM [web].[vwimp_gastos_no_asignados] AS [vwimp_gastos_no_asignados]</DefiningQ
           <Property Name="oe_fecha_embarque_est" Type="DateTime" Precision="3" />
           <Property Name="oe_fecha_desaduanizacion_est" Type="DateTime" Precision="3" />
           <Property Name="IdCtaCble_importacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="oe_observacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="oe_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="pe_nombreCompleto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="pe_cedulaRuc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
@@ -1003,7 +991,7 @@ FROM [web].[vwimp_gastos_no_asignados] AS [vwimp_gastos_no_asignados]</DefiningQ
           <Property Name="oe_fecha_embarque_est" Type="DateTime" Precision="3" />
           <Property Name="oe_fecha_desaduanizacion_est" Type="DateTime" Precision="3" />
           <Property Name="IdCtaCble_importacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="oe_observacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="oe_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="oe_codigo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="estado" Type="Boolean" Nullable="false" />
           <Property Name="oe_fecha_llegada" Type="DateTime" Precision="3" />
@@ -1047,7 +1035,7 @@ FROM [web].[vwimp_gastos_no_asignados] AS [vwimp_gastos_no_asignados]</DefiningQ
           <Property Name="secuencia_ct" Type="Int32" Nullable="false" />
           <Property Name="IdGasto_tipo" Type="Int32" />
           <Property Name="dc_Valor" Type="Double" Nullable="false" />
-          <Property Name="pc_Cuenta" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pc_Cuenta" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="dc_Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IdCtaCble" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
@@ -1123,7 +1111,7 @@ FROM [web].[vwimp_gastos_no_asignados] AS [vwimp_gastos_no_asignados]</DefiningQ
           <Property Name="oe_fecha_embarque_est" Type="DateTime" Precision="3" />
           <Property Name="oe_fecha_desaduanizacion_est" Type="DateTime" Precision="3" />
           <Property Name="IdCtaCble_importacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="oe_observacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="oe_observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="oe_codigo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="estado" Type="Boolean" Nullable="false" />
           <Property Name="oe_fecha_llegada" Type="DateTime" Precision="3" />
@@ -1181,7 +1169,7 @@ FROM [web].[vwimp_gastos_no_asignados] AS [vwimp_gastos_no_asignados]</DefiningQ
           <Property Name="IdCtaCble" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="dc_Valor" Type="Double" Nullable="false" />
           <Property Name="dc_Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="pc_Cuenta" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pc_Cuenta" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <Association Name="FK_imp_catalogo_imp_catalogo_tipo">
           <End Role="imp_catalogo_tipo" Type="Self.imp_catalogo_tipo" Multiplicity="1" />
@@ -1228,7 +1216,6 @@ FROM [web].[vwimp_gastos_no_asignados] AS [vwimp_gastos_no_asignados]</DefiningQ
           <EntitySet Name="imp_orden_compra_ext_ct_cbteble_det_gastos" EntityType="Self.imp_orden_compra_ext_ct_cbteble_det_gastos" />
           <EntitySet Name="imp_orden_compra_ext_det" EntityType="Self.imp_orden_compra_ext_det" />
           <EntitySet Name="imp_orden_compra_ext_recepcion" EntityType="Self.imp_orden_compra_ext_recepcion" />
-          <EntitySet Name="imp_parametro" EntityType="Self.imp_parametro" />
           <EntitySet Name="vwimp_liquidacion" EntityType="Self.vwimp_liquidacion" />
           <EntitySet Name="vwimp_orden_compra_ext" EntityType="Self.vwimp_orden_compra_ext" />
           <EntitySet Name="vwimp_orden_compra_ext_con_saldo" EntityType="Self.vwimp_orden_compra_ext_con_saldo" />
@@ -1275,6 +1262,7 @@ FROM [web].[vwimp_gastos_no_asignados] AS [vwimp_gastos_no_asignados]</DefiningQ
             <End Role="imp_orden_compra_ext_recepcion" EntitySet="imp_orden_compra_ext_recepcion" />
           </AssociationSet>
           <EntitySet Name="imp_partida_arancelaria" EntityType="Model_importacion.imp_partida_arancelaria" />
+          <EntitySet Name="imp_parametro" EntityType="Model_importacion.imp_parametro" />
           </EntityContainer>
         <EntityType Name="imp_orden_compra_ext">
           <Key>
@@ -1407,6 +1395,22 @@ FROM [web].[vwimp_gastos_no_asignados] AS [vwimp_gastos_no_asignados]</DefiningQ
           <Property Name="Observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="imp_parametro">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdCtaCble" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoCbte_liquidacion" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoCbte_liquidacion_anu" Type="Int32" Nullable="false" />
+          <Property Name="IdMotivo_Inv_ing" Type="Int32" Nullable="false" />
+          <Property Name="IdMovi_inven_tipo_ing" Type="Int32" Nullable="false" />
+          <Property Name="IdSucursal" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="IdCtaCble_invntario" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DiasTransaccionesAFuturo" Type="Int32" />
+          <Property Name="DiasTransaccionesAPasado" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1533,21 +1537,6 @@ FROM [web].[vwimp_gastos_no_asignados] AS [vwimp_gastos_no_asignados]</DefiningQ
                 <ScalarProperty Name="fecha_modificacion" ColumnName="fecha_modificacion" />
                 <ScalarProperty Name="IdUsuario_anulacion" ColumnName="IdUsuario_anulacion" />
                 <ScalarProperty Name="fecha_anulacion" ColumnName="fecha_anulacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="imp_parametro">
-            <EntityTypeMapping TypeName="Model_importacion.imp_parametro">
-              <MappingFragment StoreEntitySet="imp_parametro">
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
-                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
-                <ScalarProperty Name="IdTipoCbte_liquidacion" ColumnName="IdTipoCbte_liquidacion" />
-                <ScalarProperty Name="IdTipoCbte_liquidacion_anu" ColumnName="IdTipoCbte_liquidacion_anu" />
-                <ScalarProperty Name="IdMotivo_Inv_ing" ColumnName="IdMotivo_Inv_ing" />
-                <ScalarProperty Name="IdMovi_inven_tipo_ing" ColumnName="IdMovi_inven_tipo_ing" />
-                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
-                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
-                <ScalarProperty Name="IdCtaCble_invntario" ColumnName="IdCtaCble_invntario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1774,6 +1763,23 @@ FROM [web].[vwimp_gastos_no_asignados] AS [vwimp_gastos_no_asignados]</DefiningQ
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="CodigoPartidaArancelaria" ColumnName="CodigoPartidaArancelaria" />
                 <ScalarProperty Name="IdArancel" ColumnName="IdArancel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="imp_parametro">
+            <EntityTypeMapping TypeName="Model_importacion.imp_parametro">
+              <MappingFragment StoreEntitySet="imp_parametro">
+                <ScalarProperty Name="DiasTransaccionesAPasado" ColumnName="DiasTransaccionesAPasado" />
+                <ScalarProperty Name="DiasTransaccionesAFuturo" ColumnName="DiasTransaccionesAFuturo" />
+                <ScalarProperty Name="IdCtaCble_invntario" ColumnName="IdCtaCble_invntario" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdSucursal" ColumnName="IdSucursal" />
+                <ScalarProperty Name="IdMovi_inven_tipo_ing" ColumnName="IdMovi_inven_tipo_ing" />
+                <ScalarProperty Name="IdMotivo_Inv_ing" ColumnName="IdMotivo_Inv_ing" />
+                <ScalarProperty Name="IdTipoCbte_liquidacion_anu" ColumnName="IdTipoCbte_liquidacion_anu" />
+                <ScalarProperty Name="IdTipoCbte_liquidacion" ColumnName="IdTipoCbte_liquidacion" />
+                <ScalarProperty Name="IdCtaCble" ColumnName="IdCtaCble" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

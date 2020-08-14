@@ -21,7 +21,8 @@ namespace Core.Erp.Data.Contabilidad
                         IdTipoCbte_AsientoCierre_Anual = Entity.IdTipoCbte_AsientoCierre_Anual,
                         IdTipoCbte_SaldoInicial = Entity.IdTipoCbte_SaldoInicial,
                         P_Se_Muestra_Todas_las_ctas_en_combos = Entity.P_Se_Muestra_Todas_las_ctas_en_combos,
-                        DiasTransaccionesAFuturo = Entity.DiasTransaccionesAFuturo
+                        DiasTransaccionesAFuturo = Entity.DiasTransaccionesAFuturo,
+                        DiasTransaccionesAPasado = Entity.DiasTransaccionesAPasado
                     };
                 }
                 return info;
@@ -48,7 +49,8 @@ namespace Core.Erp.Data.Contabilidad
                             IdTipoCbte_SaldoInicial = info.IdTipoCbte_SaldoInicial,
                             IdTipoCbte_AsientoCierre_Anual = info.IdTipoCbte_AsientoCierre_Anual,
                             P_Se_Muestra_Todas_las_ctas_en_combos = info.P_Se_Muestra_Todas_las_ctas_en_combos,
-                            DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo
+                            DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo,
+                            DiasTransaccionesAPasado = info.DiasTransaccionesAPasado
                         };
                     Context.ct_parametro.Add(Entity);
                     }
@@ -58,6 +60,7 @@ namespace Core.Erp.Data.Contabilidad
                         Entity.IdTipoCbte_AsientoCierre_Anual = info.IdTipoCbte_AsientoCierre_Anual;
                         Entity.P_Se_Muestra_Todas_las_ctas_en_combos = info.P_Se_Muestra_Todas_las_ctas_en_combos;
                         Entity.DiasTransaccionesAFuturo = info.DiasTransaccionesAFuturo;
+                        Entity.DiasTransaccionesAPasado = info.DiasTransaccionesAPasado;
                     }
                     Context.SaveChanges();
                 }

@@ -38,5 +38,7 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> vt_fech_venc { get; set; }
         public Nullable<decimal> IdCliente { get; set; }
         public string pe_nombreCompleto { get; set; }
+        public System.DateTime fecha_cruce { get; set; }
+        public Nullable<double> ValorProntoPago { get; set; }
     }
 }

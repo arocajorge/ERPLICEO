@@ -15,6 +15,7 @@ using DevExpress.Web;
 using Core.Erp.Info.Inventario;
 using Core.Erp.Bus.Inventario;
 using Core.Erp.Info.CuentasPorPagar;
+using Core.Erp.Bus.Contabilidad;
 
 namespace Core.Erp.Web.Areas.Compras.Controllers
 {
@@ -35,6 +36,7 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         com_ordencompra_local_det_List List_det = new com_ordencompra_local_det_List();
         com_ordencompra_local_det_Bus bus_det = new com_ordencompra_local_det_Bus();
         com_parametro_Bus bus_param = new com_parametro_Bus();
+        ct_periodo_Bus bus_periodo = new ct_periodo_Bus();
         string mensaje = string.Empty;
         string MensajeSuccess = "La transacción se ha realizado con éxito";
         #endregion
@@ -367,6 +369,11 @@ namespace Core.Erp.Web.Areas.Compras.Controllers
         #region Metodos
         private bool Validar(com_ordencompra_local_Info i_validar, ref string msg)
         {
+            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.oc_fecha, cl_enumeradores.eModulo.BANCO, i_validar.IdSucursal, ref msg))
+            {
+                return false;
+            }
+
             i_validar.lst_det = List_det.get_list(i_validar.IdTransaccionSession);
 
             if (i_validar.IdComprador == 0)

@@ -28,7 +28,8 @@ SELECT mc.IdEmpresa, mc.IdMatricula, mc.IdMateria, alu.Codigo, p.pe_nombreComple
 				  mc.PromedioFinal, mc.IdEquivalenciaPromedioPF, epPF.Codigo AS EquivalenciaPromedioPF,
                   dbo.aca_AnioLectivo_Curso_Materia.NomMateria, dbo.aca_AnioLectivo_Curso_Materia.NomMateriaArea, dbo.aca_AnioLectivo_Curso_Materia.NomMateriaGrupo, 
                   dbo.aca_AnioLectivo_Curso_Materia.EsObligatorio, dbo.aca_AnioLectivo_Curso_Materia.OrdenMateria, 
-				  dbo.aca_AnioLectivo_Curso_Materia.OrdenMateriaGrupo, dbo.aca_AnioLectivo_Curso_Materia.OrdenMateriaArea
+				  dbo.aca_AnioLectivo_Curso_Materia.OrdenMateriaGrupo, dbo.aca_AnioLectivo_Curso_Materia.OrdenMateriaArea,
+				  cp.IdProfesorInspector,pins.pe_nombreCompleto as NombreInspector, pre.pe_nombreCompleto as NombreRepresentante
 FROM     dbo.aca_MatriculaCalificacion AS mc INNER JOIN
                   dbo.aca_Matricula AS m ON mc.IdEmpresa = m.IdEmpresa AND mc.IdMatricula = m.IdMatricula INNER JOIN
                   dbo.aca_Alumno AS alu ON m.IdEmpresa = alu.IdEmpresa AND m.IdAlumno = alu.IdAlumno INNER JOIN
@@ -47,7 +48,6 @@ FROM     dbo.aca_MatriculaCalificacion AS mc INNER JOIN
 				  LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS epEQ2 ON m.IdAnio = epEQ2.IdAnio AND mc.IdEmpresa = epEQ2.IdEmpresa AND mc.IdEquivalenciaPromedioEQ2 = epEQ2.IdEquivalenciaPromedio 
 				  LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS epQ2 ON m.IdAnio = epQ2.IdAnio AND mc.IdEmpresa = epQ2.IdEmpresa AND mc.IdEquivalenciaPromedioQ2 = epQ2.IdEquivalenciaPromedio 
 				  LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS epPF ON m.IdAnio = epPF.IdAnio AND mc.IdEmpresa = epPF.IdEmpresa AND mc.IdEquivalenciaPromedioPF = epPF.IdEquivalenciaPromedio
-
 				  LEFT OUTER JOIN
                   dbo.aca_AnioLectivo AS AN ON m.IdEmpresa = AN.IdEmpresa AND m.IdAnio = AN.IdAnio LEFT OUTER JOIN
                   dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn RIGHT OUTER JOIN
@@ -55,9 +55,16 @@ FROM     dbo.aca_MatriculaCalificacion AS mc INNER JOIN
                   dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
                   dbo.aca_AnioLectivo_Curso_Paralelo AS cp ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND jc.IdCurso = cp.IdCurso ON 
                   m.IdEmpresa = cp.IdEmpresa AND m.IdAnio = cp.IdAnio AND m.IdSede = cp.IdSede AND m.IdNivel = cp.IdNivel AND m.IdJornada = cp.IdJornada AND m.IdCurso = cp.IdCurso AND m.IdParalelo = cp.IdParalelo
-
+				  LEFT OUTER JOIN aca_Profesor AS pro ON cp.IdEmpresa = pro.IdEmpresa and cp.IdProfesorInspector = pro.IdProfesor
+				  LEFT OUTER JOIN tb_persona as pins on pins.IdPersona = pro.IdPersona
+				  LEFT OUTER JOIN tb_persona as pre on pre.IdPersona = m.IdPersonaR
 where mc.IdEmpresa = @IdEmpresa 
 and m.IdAnio = @IdAnio
+--and m.IdSede = @IdSede
+--and m.IdNivel = @IdNivel
+--and m.IdJornada = @IdJornada
+--and m.IdCurso = @IdCurso
+--and m.IdParalelo = @IdParalelo
 and m.IdSede = case when @IdSede = 0 then m.IdSede else @IdSede end
 and m.IdNivel = case when @IdNivel = 0 then m.IdNivel else @IdNivel end
 and m.IdJornada = case when @IdJornada = 0 then m.IdJornada else @IdJornada end

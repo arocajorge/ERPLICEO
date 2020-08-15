@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[XXX_USUARIO] (
+    [ID]     VARCHAR (50)  NULL,
+    [NOMBRE] VARCHAR (200) NULL
+);
+

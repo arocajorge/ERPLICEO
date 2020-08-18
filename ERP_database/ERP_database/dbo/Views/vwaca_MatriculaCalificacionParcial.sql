@@ -1,24 +1,26 @@
 ﻿CREATE VIEW dbo.vwaca_MatriculaCalificacionParcial
 AS
-SELECT dbo.aca_MatriculaCalificacionParcial.IdEmpresa, dbo.aca_MatriculaCalificacionParcial.IdMatricula, dbo.aca_Matricula.IdAnio, dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, dbo.aca_Matricula.IdCurso, 
-                  dbo.aca_Matricula.IdParalelo, dbo.aca_Matricula.IdAlumno, dbo.tb_persona.pe_nombreCompleto, dbo.aca_MatriculaCalificacionParcial.IdCatalogoParcial, dbo.aca_MatriculaCalificacionParcial.IdProfesor, 
-                  dbo.aca_MatriculaCalificacionParcial.IdMateria, dbo.aca_MatriculaCalificacionParcial.Calificacion1, dbo.aca_MatriculaCalificacionParcial.Calificacion2, dbo.aca_MatriculaCalificacionParcial.Calificacion3, 
-                  dbo.aca_MatriculaCalificacionParcial.Calificacion4, dbo.aca_MatriculaCalificacionParcial.Evaluacion, dbo.aca_MatriculaCalificacionParcial.Remedial1, dbo.aca_MatriculaCalificacionParcial.Remedial2, 
-                  dbo.aca_MatriculaCalificacionParcial.Conducta, dbo.aca_MatriculaCalificacionParcial.MotivoCalificacion, dbo.aca_MatriculaCalificacionParcial.MotivoConducta, dbo.aca_MatriculaCalificacionParcial.AccionRemedial, 
-                  dbo.aca_Alumno.Codigo, dbo.aca_MatriculaCalificacion.CalificacionP1, dbo.aca_MatriculaCalificacion.CalificacionP2, dbo.aca_MatriculaCalificacion.CalificacionP3, dbo.aca_MatriculaCalificacion.CalificacionP4, 
-                  dbo.aca_MatriculaCalificacion.CalificacionP5, dbo.aca_MatriculaCalificacion.CalificacionP6
-FROM     dbo.aca_MatriculaCalificacionParcial INNER JOIN
-                  dbo.aca_Matricula ON dbo.aca_MatriculaCalificacionParcial.IdEmpresa = dbo.aca_Matricula.IdEmpresa AND dbo.aca_MatriculaCalificacionParcial.IdMatricula = dbo.aca_Matricula.IdMatricula INNER JOIN
-                  dbo.aca_Alumno ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_Matricula.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
-                  dbo.tb_persona ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
-                  dbo.aca_MatriculaCalificacion ON dbo.aca_MatriculaCalificacionParcial.IdEmpresa = dbo.aca_MatriculaCalificacion.IdEmpresa AND dbo.aca_MatriculaCalificacionParcial.IdMatricula = dbo.aca_MatriculaCalificacion.IdMatricula AND 
-                  dbo.aca_MatriculaCalificacionParcial.IdMateria = dbo.aca_MatriculaCalificacion.IdMateria AND dbo.aca_MatriculaCalificacionParcial.IdProfesor = dbo.aca_MatriculaCalificacion.IdProfesor
+SELECT mcp.IdEmpresa, mcp.IdMatricula, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, p.pe_nombreCompleto, mcp.IdCatalogoParcial, mcp.IdProfesor, mcp.IdMateria, mcp.Calificacion1, mcp.Calificacion2, 
+                  mcp.Calificacion3, mcp.Calificacion4, mcp.Evaluacion, mcp.Remedial1, mcp.Remedial2, mcp.Conducta, mcp.MotivoCalificacion, mcp.MotivoConducta, mcp.AccionRemedial, a.Codigo, mc.CalificacionP1, mc.CalificacionP2, mc.CalificacionP3, 
+                  mc.CalificacionP4, mc.CalificacionP5, mc.CalificacionP6
+FROM     dbo.aca_MatriculaCalificacionParcial AS mcp INNER JOIN
+                  dbo.aca_Matricula AS m ON mcp.IdEmpresa = m.IdEmpresa AND mcp.IdMatricula = m.IdMatricula AND mcp.IdEmpresa = m.IdEmpresa AND mcp.IdEmpresa = m.IdEmpresa INNER JOIN
+                  dbo.aca_Alumno AS a ON m.IdEmpresa = a.IdEmpresa AND m.IdAlumno = a.IdAlumno INNER JOIN
+                  dbo.tb_persona AS p ON a.IdPersona = p.IdPersona INNER JOIN
+                  dbo.aca_MatriculaCalificacion AS mc ON mcp.IdEmpresa = mc.IdEmpresa AND mcp.IdMatricula = mc.IdMatricula AND mcp.IdMateria = mc.IdMateria AND mcp.IdProfesor = mc.IdProfesor
+WHERE  (NOT EXISTS
+                      (SELECT IdEmpresa
+                       FROM      dbo.aca_AlumnoRetiro AS f
+                       WHERE   (IdEmpresa = mcp.IdEmpresa) AND (IdMatricula = mcp.IdMatricula) AND (Estado = 1)))
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacionParcial';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'   Width = 1200
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'00
+         Width = 1200
+         Width = 1200
+         Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -53,6 +55,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'   Width =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacionParcial';
+
+
 
 
 
@@ -129,7 +133,7 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_MatriculaCalificacionParcial"
+         Begin Table = "mcp"
             Begin Extent = 
                Top = 7
                Left = 48
@@ -139,7 +143,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_Matricula"
+         Begin Table = "m"
             Begin Extent = 
                Top = 226
                Left = 768
@@ -149,7 +153,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_Alumno"
+         Begin Table = "a"
             Begin Extent = 
                Top = 7
                Left = 633
@@ -159,7 +163,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "tb_persona"
+         Begin Table = "p"
             Begin Extent = 
                Top = 7
                Left = 926
@@ -169,7 +173,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_MatriculaCalificacion"
+         Begin Table = "mc"
             Begin Extent = 
                Top = 36
                Left = 360
@@ -186,7 +190,7 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 26
+      Begin ColumnWidths = 32
          Width = 284
          Width = 1200
          Width = 1200
@@ -199,7 +203,12 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 1200
-      ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacionParcial';
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 12', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacionParcial';
+
+
 
 
 

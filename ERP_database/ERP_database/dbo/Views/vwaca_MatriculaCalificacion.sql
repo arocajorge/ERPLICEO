@@ -1,33 +1,27 @@
 ﻿CREATE VIEW dbo.vwaca_MatriculaCalificacion
 AS
-SELECT dbo.aca_MatriculaCalificacion.IdEmpresa, dbo.aca_MatriculaCalificacion.IdMatricula, dbo.aca_Matricula.IdAlumno, dbo.aca_Alumno.Codigo, tb_persona_1.pe_nombreCompleto AS pe_nombreCompletoAlumno, dbo.aca_Matricula.IdAnio, 
-                  dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, dbo.aca_Matricula.IdCurso, dbo.aca_Matricula.IdParalelo, dbo.aca_MatriculaCalificacion.IdMateria, dbo.aca_MatriculaCalificacion.IdProfesor, 
-                  dbo.tb_persona.pe_nombreCompleto, dbo.aca_MatriculaCalificacion.CalificacionP1, dbo.aca_MatriculaCalificacion.CalificacionP2, dbo.aca_MatriculaCalificacion.CalificacionP3, dbo.aca_MatriculaCalificacion.PromedioQ1, 
-                  dbo.aca_MatriculaCalificacion.ExamenQ1, dbo.aca_MatriculaCalificacion.PromedioFinalQ1, dbo.aca_MatriculaCalificacion.CalificacionP4, dbo.aca_MatriculaCalificacion.CalificacionP5, dbo.aca_MatriculaCalificacion.CalificacionP6, 
-                  dbo.aca_MatriculaCalificacion.PromedioQ2, dbo.aca_MatriculaCalificacion.ExamenQ2, dbo.aca_MatriculaCalificacion.PromedioFinalQ2, dbo.aca_MatriculaCalificacion.ExamenMejoramiento, 
-                  dbo.aca_MatriculaCalificacion.CampoMejoramiento, dbo.aca_MatriculaCalificacion.ExamenSupletorio, dbo.aca_MatriculaCalificacion.ExamenRemedial, dbo.aca_MatriculaCalificacion.ExamenGracia, 
-                  dbo.aca_MatriculaCalificacion.PromedioFinal, dbo.aca_AnioLectivoEquivalenciaPromedio.Descripcion, dbo.aca_AnioLectivoEquivalenciaPromedio.Codigo AS CodigoEquivalencia, dbo.aca_MatriculaCalificacion.IdEquivalenciaPromedioP1, 
-                  dbo.aca_MatriculaCalificacion.IdEquivalenciaPromedioP2, dbo.aca_MatriculaCalificacion.IdEquivalenciaPromedioP3, dbo.aca_MatriculaCalificacion.IdEquivalenciaPromedioEQ1, dbo.aca_MatriculaCalificacion.IdEquivalenciaPromedioQ1, 
-                  dbo.aca_MatriculaCalificacion.IdEquivalenciaPromedioP4, dbo.aca_MatriculaCalificacion.IdEquivalenciaPromedioP5, dbo.aca_MatriculaCalificacion.IdEquivalenciaPromedioP6, dbo.aca_MatriculaCalificacion.IdEquivalenciaPromedioEQ2, 
-                  dbo.aca_MatriculaCalificacion.IdEquivalenciaPromedioQ2, dbo.aca_MatriculaCalificacion.IdEquivalenciaPromedioPF
-FROM     dbo.tb_persona INNER JOIN
-                  dbo.aca_Profesor ON dbo.tb_persona.IdPersona = dbo.aca_Profesor.IdPersona RIGHT OUTER JOIN
-                  dbo.aca_Matricula INNER JOIN
-                  dbo.aca_Alumno ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_Matricula.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
-                  dbo.tb_persona AS tb_persona_1 ON dbo.aca_Alumno.IdPersona = tb_persona_1.IdPersona INNER JOIN
-                  dbo.aca_MatriculaCalificacion ON dbo.aca_Matricula.IdEmpresa = dbo.aca_MatriculaCalificacion.IdEmpresa AND dbo.aca_Matricula.IdMatricula = dbo.aca_MatriculaCalificacion.IdMatricula ON 
-                  dbo.aca_Profesor.IdEmpresa = dbo.aca_MatriculaCalificacion.IdEmpresa AND dbo.aca_Profesor.IdProfesor = dbo.aca_MatriculaCalificacion.IdProfesor LEFT OUTER JOIN
-                  dbo.aca_AnioLectivoEquivalenciaPromedio ON dbo.aca_MatriculaCalificacion.IdEmpresa = dbo.aca_AnioLectivoEquivalenciaPromedio.IdEmpresa AND 
-                  dbo.aca_MatriculaCalificacion.IdEquivalenciaPromedioPF = dbo.aca_AnioLectivoEquivalenciaPromedio.IdEquivalenciaPromedio
+SELECT mc.IdEmpresa, mc.IdMatricula, m.IdAlumno, a.Codigo, per.pe_nombreCompleto AS pe_nombreCompletoAlumno, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, mc.IdMateria, mc.IdProfesor, pprof.pe_nombreCompleto, 
+                  mc.CalificacionP1, mc.CalificacionP2, mc.CalificacionP3, mc.PromedioQ1, mc.ExamenQ1, mc.PromedioFinalQ1, mc.CalificacionP4, mc.CalificacionP5, mc.CalificacionP6, mc.PromedioQ2, mc.ExamenQ2, mc.PromedioFinalQ2, 
+                  mc.ExamenMejoramiento, mc.CampoMejoramiento, mc.ExamenSupletorio, mc.ExamenRemedial, mc.ExamenGracia, mc.PromedioFinal, equiv.Descripcion, equiv.Codigo AS CodigoEquivalencia, mc.IdEquivalenciaPromedioP1, 
+                  mc.IdEquivalenciaPromedioP2, mc.IdEquivalenciaPromedioP3, mc.IdEquivalenciaPromedioEQ1, mc.IdEquivalenciaPromedioQ1, mc.IdEquivalenciaPromedioP4, mc.IdEquivalenciaPromedioP5, mc.IdEquivalenciaPromedioP6, 
+                  mc.IdEquivalenciaPromedioEQ2, mc.IdEquivalenciaPromedioQ2, mc.IdEquivalenciaPromedioPF
+FROM     dbo.tb_persona AS pprof INNER JOIN
+                  dbo.aca_Profesor AS pro ON pprof.IdPersona = pro.IdPersona RIGHT OUTER JOIN
+                  dbo.aca_Matricula AS m INNER JOIN
+                  dbo.aca_Alumno AS a ON m.IdEmpresa = a.IdEmpresa AND m.IdAlumno = a.IdAlumno INNER JOIN
+                  dbo.tb_persona AS per ON a.IdPersona = per.IdPersona INNER JOIN
+                  dbo.aca_MatriculaCalificacion AS mc ON m.IdEmpresa = mc.IdEmpresa AND m.IdMatricula = mc.IdMatricula AND m.IdEmpresa = mc.IdEmpresa ON pro.IdEmpresa = mc.IdEmpresa AND pro.IdProfesor = mc.IdProfesor LEFT OUTER JOIN
+                  dbo.aca_AnioLectivoEquivalenciaPromedio AS equiv ON mc.IdEmpresa = equiv.IdEmpresa AND mc.IdEquivalenciaPromedioPF = equiv.IdEquivalenciaPromedio
+WHERE  (NOT EXISTS
+                      (SELECT IdEmpresa
+                       FROM      dbo.aca_AlumnoRetiro AS f
+                       WHERE   (IdEmpresa = mc.IdEmpresa) AND (IdMatricula = mc.IdMatricula) AND (Estado = 1)))
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacion';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'           Right = 920
-            End
-            DisplayFlags = 280
-            TopColumn = 1
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'1
          End
       End
    End
@@ -94,6 +88,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'          
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacion';
+
+
 
 
 
@@ -174,17 +170,17 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "tb_persona"
+         Begin Table = "pprof"
             Begin Extent = 
-               Top = 194
-               Left = 1056
-               Bottom = 357
-               Right = 1330
+               Top = 211
+               Left = 1053
+               Bottom = 374
+               Right = 1327
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_Profesor"
+         Begin Table = "pro"
             Begin Extent = 
                Top = 202
                Left = 723
@@ -194,7 +190,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_Matricula"
+         Begin Table = "m"
             Begin Extent = 
                Top = 7
                Left = 48
@@ -204,7 +200,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 1
          End
-         Begin Table = "aca_Alumno"
+         Begin Table = "a"
             Begin Extent = 
                Top = 0
                Left = 707
@@ -214,7 +210,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "tb_persona_1"
+         Begin Table = "per"
             Begin Extent = 
                Top = 70
                Left = 1117
@@ -224,7 +220,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_MatriculaCalificacion"
+         Begin Table = "mc"
             Begin Extent = 
                Top = 0
                Left = 342
@@ -234,12 +230,17 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 25
          End
-         Begin Table = "aca_AnioLectivoEquivalenciaPromedio"
+         Begin Table = "equiv"
             Begin Extent = 
-               Top = 329
-               Left = 664
-               Bottom = 492
-    ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacion';
+               Top = 284
+               Left = 545
+               Bottom = 447
+               Right = 801
+            End
+            DisplayFlags = 280
+            TopColumn = ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacion';
+
+
 
 
 

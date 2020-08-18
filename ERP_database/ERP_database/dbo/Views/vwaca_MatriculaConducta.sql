@@ -1,32 +1,38 @@
 ﻿CREATE VIEW dbo.vwaca_MatriculaConducta
 AS
-SELECT dbo.aca_MatriculaConducta.IdEmpresa, dbo.aca_MatriculaConducta.IdMatricula, dbo.aca_Matricula.IdAlumno, dbo.aca_Matricula.IdAnio, dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, 
-                  dbo.aca_Matricula.IdCurso, dbo.aca_Matricula.IdParalelo, dbo.vwaca_AnioLectivo_Curso_Paralelo.Descripcion, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomSede, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomNivel, 
-                  dbo.vwaca_AnioLectivo_Curso_Paralelo.NomJornada, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomCurso, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomParalelo, dbo.vwaca_AnioLectivo_Curso_Paralelo.OrdenParalelo, 
-                  dbo.vwaca_AnioLectivo_Curso_Paralelo.OrdenCurso, dbo.vwaca_AnioLectivo_Curso_Paralelo.OrdenJornada, dbo.vwaca_AnioLectivo_Curso_Paralelo.OrdenNivel, dbo.tb_persona.pe_nombreCompleto, 
-                  dbo.aca_MatriculaConducta.SecuenciaPromedioP1, dbo.aca_MatriculaConducta.PromedioP1, dbo.aca_MatriculaConducta.SecuenciaPromedioFinalP1, dbo.aca_MatriculaConducta.PromedioFinalP1, 
-                  dbo.aca_MatriculaConducta.SecuenciaPromedioP2, dbo.aca_MatriculaConducta.PromedioP2, dbo.aca_MatriculaConducta.SecuenciaPromedioFinalP2, dbo.aca_MatriculaConducta.PromedioFinalP2, 
-                  dbo.aca_MatriculaConducta.SecuenciaPromedioP3, dbo.aca_MatriculaConducta.PromedioP3, dbo.aca_MatriculaConducta.SecuenciaPromedioFinalP3, dbo.aca_MatriculaConducta.PromedioFinalP3, 
-                  dbo.aca_MatriculaConducta.SecuenciaPromedioQ1, dbo.aca_MatriculaConducta.PromedioQ1, dbo.aca_MatriculaConducta.SecuenciaPromedioFinalQ1, dbo.aca_MatriculaConducta.PromedioFinalQ1, 
-                  dbo.aca_MatriculaConducta.SecuenciaPromedioP4, dbo.aca_MatriculaConducta.PromedioP4, dbo.aca_MatriculaConducta.SecuenciaPromedioFinalP4, dbo.aca_MatriculaConducta.PromedioFinalP4, 
-                  dbo.aca_MatriculaConducta.SecuenciaPromedioP5, dbo.aca_MatriculaConducta.PromedioP5, dbo.aca_MatriculaConducta.SecuenciaPromedioFinalP5, dbo.aca_MatriculaConducta.PromedioFinalP5, 
-                  dbo.aca_MatriculaConducta.SecuenciaPromedioP6, dbo.aca_MatriculaConducta.PromedioP6, dbo.aca_MatriculaConducta.SecuenciaPromedioFinalP6, dbo.aca_MatriculaConducta.PromedioFinalP6, 
-                  dbo.aca_MatriculaConducta.SecuenciaPromedioQ2, dbo.aca_MatriculaConducta.PromedioQ2, dbo.aca_MatriculaConducta.SecuenciaPromedioFinalQ2, dbo.aca_MatriculaConducta.PromedioFinalQ2, 
-                  dbo.aca_MatriculaConducta.SecuenciaPromedioGeneral, dbo.aca_MatriculaConducta.PromedioGeneral, dbo.aca_MatriculaConducta.SecuenciaPromedioFinal, dbo.aca_MatriculaConducta.PromedioFinal
-FROM     dbo.aca_Matricula INNER JOIN
-                  dbo.aca_MatriculaConducta ON dbo.aca_Matricula.IdEmpresa = dbo.aca_MatriculaConducta.IdEmpresa AND dbo.aca_Matricula.IdMatricula = dbo.aca_MatriculaConducta.IdMatricula INNER JOIN
-                  dbo.tb_persona INNER JOIN
-                  dbo.aca_Alumno ON dbo.tb_persona.IdPersona = dbo.aca_Alumno.IdPersona ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_Matricula.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
-                  dbo.vwaca_AnioLectivo_Curso_Paralelo ON dbo.aca_Matricula.IdEmpresa = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdEmpresa AND dbo.aca_Matricula.IdAnio = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdAnio AND 
-                  dbo.aca_Matricula.IdSede = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdSede AND dbo.aca_Matricula.IdNivel = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdNivel AND 
-                  dbo.aca_Matricula.IdJornada = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdJornada AND dbo.aca_Matricula.IdCurso = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdCurso AND 
-                  dbo.aca_Matricula.IdParalelo = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdParalelo
+SELECT mc.IdEmpresa, mc.IdMatricula, m.IdAlumno, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, dbo.vwaca_AnioLectivo_Curso_Paralelo.Descripcion, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomSede, 
+                  dbo.vwaca_AnioLectivo_Curso_Paralelo.NomNivel, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomJornada, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomCurso, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomParalelo, 
+                  dbo.vwaca_AnioLectivo_Curso_Paralelo.OrdenParalelo, dbo.vwaca_AnioLectivo_Curso_Paralelo.OrdenCurso, dbo.vwaca_AnioLectivo_Curso_Paralelo.OrdenJornada, dbo.vwaca_AnioLectivo_Curso_Paralelo.OrdenNivel, 
+                  p.pe_nombreCompleto, mc.SecuenciaPromedioP1, mc.PromedioP1, mc.SecuenciaPromedioFinalP1, mc.PromedioFinalP1, mc.SecuenciaPromedioP2, mc.PromedioP2, mc.SecuenciaPromedioFinalP2, mc.PromedioFinalP2, 
+                  mc.SecuenciaPromedioP3, mc.PromedioP3, mc.SecuenciaPromedioFinalP3, mc.PromedioFinalP3, mc.SecuenciaPromedioQ1, mc.PromedioQ1, mc.SecuenciaPromedioFinalQ1, mc.PromedioFinalQ1, mc.SecuenciaPromedioP4, 
+                  mc.PromedioP4, mc.SecuenciaPromedioFinalP4, mc.PromedioFinalP4, mc.SecuenciaPromedioP5, mc.PromedioP5, mc.SecuenciaPromedioFinalP5, mc.PromedioFinalP5, mc.SecuenciaPromedioP6, mc.PromedioP6, 
+                  mc.SecuenciaPromedioFinalP6, mc.PromedioFinalP6, mc.SecuenciaPromedioQ2, mc.PromedioQ2, mc.SecuenciaPromedioFinalQ2, mc.PromedioFinalQ2, mc.SecuenciaPromedioGeneral, mc.PromedioGeneral, mc.SecuenciaPromedioFinal, 
+                  mc.PromedioFinal, mc.MotivoPromedioFinalP1, mc.MotivoPromedioFinalP2, mc.MotivoPromedioFinalP3, mc.MotivoPromedioFinalQ1, mc.MotivoPromedioFinalP4, mc.MotivoPromedioFinalP5, mc.MotivoPromedioFinalP6, 
+                  mc.MotivoPromedioFinalQ2, mc.MotivoPromedioFinal
+FROM     dbo.aca_Matricula AS m INNER JOIN
+                  dbo.aca_MatriculaConducta AS mc ON m.IdEmpresa = mc.IdEmpresa AND m.IdMatricula = mc.IdMatricula INNER JOIN
+                  dbo.tb_persona AS p INNER JOIN
+                  dbo.aca_Alumno AS a ON p.IdPersona = a.IdPersona ON m.IdEmpresa = a.IdEmpresa AND m.IdAlumno = a.IdAlumno INNER JOIN
+                  dbo.vwaca_AnioLectivo_Curso_Paralelo ON m.IdEmpresa = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdEmpresa AND m.IdAnio = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdAnio AND 
+                  m.IdSede = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdSede AND m.IdNivel = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdNivel AND m.IdJornada = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdJornada AND 
+                  m.IdCurso = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdCurso AND m.IdParalelo = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdParalelo
+WHERE  (NOT EXISTS
+                      (SELECT IdEmpresa
+                       FROM      dbo.aca_AlumnoRetiro AS f
+                       WHERE   (IdEmpresa = mc.IdEmpresa) AND (IdMatricula = mc.IdMatricula) AND (Estado = 1)))
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaConducta';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'     Width = 1200
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'      Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -96,13 +102,15 @@ End
 
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[27] 4[50] 2[8] 3) )"
+         Configuration = "(H (1[53] 4[13] 2[23] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -164,11 +172,31 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = 0
+         Top = -240
          Left = -40
       End
       Begin Tables = 
-         Begin Table = "tb_persona"
+         Begin Table = "m"
+            Begin Extent = 
+               Top = 0
+               Left = 420
+               Bottom = 317
+               Right = 665
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "mc"
+            Begin Extent = 
+               Top = 3
+               Left = 87
+               Bottom = 522
+               Right = 331
+            End
+            DisplayFlags = 280
+            TopColumn = 27
+         End
+         Begin Table = "p"
             Begin Extent = 
                Top = 13
                Left = 1172
@@ -178,7 +206,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_Alumno"
+         Begin Table = "a"
             Begin Extent = 
                Top = 11
                Left = 831
@@ -198,26 +226,6 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_Matricula"
-            Begin Extent = 
-               Top = 0
-               Left = 420
-               Bottom = 317
-               Right = 665
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "aca_MatriculaConducta"
-            Begin Extent = 
-               Top = 3
-               Left = 87
-               Bottom = 522
-               Right = 331
-            End
-            DisplayFlags = 280
-            TopColumn = 18
-         End
       End
    End
    Begin SQLPane = 
@@ -225,7 +233,7 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 57
+      Begin ColumnWidths = 66
          Width = 284
          Width = 1200
          Width = 1200
@@ -238,7 +246,11 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 1200
-    ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaConducta';
+         Width = 1200
+         Width = 1200
+   ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaConducta';
+
+
 
 
 

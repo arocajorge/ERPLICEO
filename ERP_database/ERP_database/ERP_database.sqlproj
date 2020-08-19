@@ -1392,6 +1392,8 @@
     <Build Include="dbo\Views\vwcxc_SeguimientoCartera.sql" />
     <Build Include="Academico\Views\VWCXC_012.sql" />
     <Build Include="dbo\Tables\XXX_USUARIO.sql" />
+    <Build Include="dbo\Tables\aca_MatriculaAsistencia.sql" />
+    <Build Include="dbo\Views\vwaca_MatriculaAsistencia.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

@@ -16,15 +16,6 @@ SELECT mp.IdEmpresa, mp.IdMatricula, mp.IdMateria, mp.IdCatalogoParcial, m.IdAni
                   equiv.Letra, equiv.Calificacion, mp.MotivoCalificacion, mp.AccionRemedial, 
                   CASE WHEN mp.IdCatalogoParcial = 28 THEN prom.CalificacionP1 WHEN mp.IdCatalogoParcial = 29 THEN prom.CalificacionP2 WHEN mp.IdCatalogoParcial = 30 THEN prom.CalificacionP3 WHEN mp.IdCatalogoParcial = 31 THEN prom.CalificacionP4
                    WHEN mp.IdCatalogoParcial = 32 THEN prom.CalificacionP5 WHEN mp.IdCatalogoParcial = 33 THEN prom.CalificacionP6 END AS PromedioParcial,
-
---CASE 
---WHEN mp.IdCatalogoParcial = 28 THEN case when mc.SecuenciaPromedioFinalP1 is null then mc.SecuenciaPromedioP1 else mc.SecuenciaPromedioFinalP1 end
---WHEN mp.IdCatalogoParcial = 29 THEN case when mc.SecuenciaPromedioFinalP2 is null then mc.SecuenciaPromedioP2 else mc.SecuenciaPromedioFinalP2 end
---WHEN mp.IdCatalogoParcial = 30 THEN case when mc.SecuenciaPromedioFinalP3 is null then mc.SecuenciaPromedioP3 else mc.SecuenciaPromedioFinalP3 end
---WHEN mp.IdCatalogoParcial = 31 THEN case when mc.SecuenciaPromedioFinalP4 is null then mc.SecuenciaPromedioP4 else mc.SecuenciaPromedioFinalP4 end
---WHEN mp.IdCatalogoParcial = 32 THEN case when mc.SecuenciaPromedioFinalP5 is null then mc.SecuenciaPromedioP5 else mc.SecuenciaPromedioFinalP5 end
---WHEN mp.IdCatalogoParcial = 33 THEN case when mc.SecuenciaPromedioFinalP6 is null then mc.SecuenciaPromedioP6 else mc.SecuenciaPromedioFinalP6 end
---END AS PromedioConductaParcial,
 EquivM.Secuencia as SecuenciaPromedioConducta, EquivM.Letra as LetraPromedioConducta, cp.IdProfesorTutor,pp.pe_nombreCompleto as NombreTutor, pre.pe_nombreCompleto as NombreRepresentante
 FROM     dbo.aca_MatriculaConducta AS mc RIGHT OUTER JOIN
                   dbo.aca_AnioLectivo_Curso_Materia AS cm INNER JOIN
@@ -46,22 +37,25 @@ FROM     dbo.aca_MatriculaConducta AS mc RIGHT OUTER JOIN
 				  LEFT OUTER JOIN tb_persona as pp on pp.IdPersona = pro.IdPersona
 				  LEFT OUTER JOIN tb_persona as pre on pre.IdPersona = m.IdPersonaR
 					LEFT JOIN
-				  dbo.aca_AnioLectivoConductaEquivalencia AS EquivM ON m.IdEmpresa = EquivM.IdEmpresa AND m.IdAnio = EquivM.IdAnio AND EquivM.Secuencia = CASE 
-					WHEN mp.IdCatalogoParcial = 28 THEN case when mc.SecuenciaPromedioFinalP1 is null then mc.SecuenciaPromedioP1 else mc.SecuenciaPromedioFinalP1 end
-					WHEN mp.IdCatalogoParcial = 29 THEN case when mc.SecuenciaPromedioFinalP2 is null then mc.SecuenciaPromedioP2 else mc.SecuenciaPromedioFinalP2 end
-					WHEN mp.IdCatalogoParcial = 30 THEN case when mc.SecuenciaPromedioFinalP3 is null then mc.SecuenciaPromedioP3 else mc.SecuenciaPromedioFinalP3 end
-					WHEN mp.IdCatalogoParcial = 31 THEN case when mc.SecuenciaPromedioFinalP4 is null then mc.SecuenciaPromedioP4 else mc.SecuenciaPromedioFinalP4 end
-					WHEN mp.IdCatalogoParcial = 32 THEN case when mc.SecuenciaPromedioFinalP5 is null then mc.SecuenciaPromedioP5 else mc.SecuenciaPromedioFinalP5 end
-					WHEN mp.IdCatalogoParcial = 33 THEN case when mc.SecuenciaPromedioFinalP6 is null then mc.SecuenciaPromedioP6 else mc.SecuenciaPromedioFinalP6 end
-					END
+				  dbo.aca_AnioLectivoConductaEquivalencia AS EquivM ON m.IdEmpresa = EquivM.IdEmpresa AND m.IdAnio = EquivM.IdAnio 
+				  AND EquivM.Secuencia = 
+				  CASE 
+					WHEN mp.IdCatalogoParcial = 28 THEN mc.SecuenciaPromedioFinalP1 
+						else
+						case WHEN mp.IdCatalogoParcial = 29 THEN mc.SecuenciaPromedioFinalP2 else
+							case WHEN mp.IdCatalogoParcial = 30 THEN mc.SecuenciaPromedioFinalP3 else
+								case WHEN mp.IdCatalogoParcial = 31 THEN mc.SecuenciaPromedioFinalP4 else
+									case WHEN mp.IdCatalogoParcial = 32 THEN mc.SecuenciaPromedioFinalP5 else
+										case WHEN mp.IdCatalogoParcial = 33 THEN mc.SecuenciaPromedioFinalP6 else null
+										end
+									end
+								end
+							end
+						end
+				  END
 where mp.IdEmpresa = @IdEmpresa 
 and m.IdAnio = @IdAnio
 and mp.IdCatalogoParcial = @IdParcial
---and m.IdSede = @IdSede
---and m.IdNivel = @IdNivel
---and m.IdJornada = @IdJornada
---and m.IdCurso = @IdCurso
---and m.IdParalelo = @IdParalelo
 and m.IdSede = case when @IdSede = 0 then m.IdSede else @IdSede end
 and m.IdNivel = case when @IdNivel = 0 then m.IdNivel else @IdNivel end
 and m.IdJornada = case when @IdJornada = 0 then m.IdJornada else @IdJornada end

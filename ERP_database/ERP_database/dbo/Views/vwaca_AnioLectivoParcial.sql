@@ -16,7 +16,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[28] 4[33] 2[20] 3) )"
+         Configuration = "(H (1[40] 4[22] 2[20] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -86,11 +86,11 @@ Begin DesignProperties =
             Begin Extent = 
                Top = 7
                Left = 48
-               Bottom = 252
+               Bottom = 303
                Right = 293
             End
             DisplayFlags = 280
-            TopColumn = 1
+            TopColumn = 5
          End
          Begin Table = "aca_Catalogo"
             Begin Extent = 
@@ -150,6 +150,8 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivoParcial';
+
+
 
 
 

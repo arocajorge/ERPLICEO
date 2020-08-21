@@ -1,7 +1,8 @@
 ﻿CREATE VIEW dbo.vwaca_AnioLectivoConductaEquivalencia
 AS
 SELECT dbo.aca_AnioLectivoConductaEquivalencia.IdEmpresa, dbo.aca_AnioLectivoConductaEquivalencia.IdAnio, dbo.aca_AnioLectivoConductaEquivalencia.Secuencia, dbo.aca_AnioLectivoConductaEquivalencia.Letra, 
-                  dbo.aca_AnioLectivoConductaEquivalencia.Calificacion, dbo.aca_AnioLectivo.Descripcion
+                  dbo.aca_AnioLectivoConductaEquivalencia.Calificacion, dbo.aca_AnioLectivo.Descripcion, dbo.aca_AnioLectivoConductaEquivalencia.IngresaMotivo, dbo.aca_AnioLectivoConductaEquivalencia.IngresaProfesor, 
+                  dbo.aca_AnioLectivoConductaEquivalencia.IngresaInspector
 FROM     dbo.aca_AnioLectivoConductaEquivalencia INNER JOIN
                   dbo.aca_AnioLectivo ON dbo.aca_AnioLectivoConductaEquivalencia.IdEmpresa = dbo.aca_AnioLectivo.IdEmpresa AND dbo.aca_AnioLectivoConductaEquivalencia.IdAnio = dbo.aca_AnioLectivo.IdAnio
 GO
@@ -80,16 +81,6 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_AnioLectivoConductaEquivalencia"
-            Begin Extent = 
-               Top = 7
-               Left = 48
-               Bottom = 227
-               Right = 292
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
          Begin Table = "aca_AnioLectivo"
             Begin Extent = 
                Top = 7
@@ -99,6 +90,16 @@ Begin DesignProperties =
             End
             DisplayFlags = 280
             TopColumn = 0
+         End
+         Begin Table = "aca_AnioLectivoConductaEquivalencia"
+            Begin Extent = 
+               Top = 7
+               Left = 48
+               Bottom = 227
+               Right = 292
+            End
+            DisplayFlags = 280
+            TopColumn = 2
          End
       End
    End
@@ -123,14 +124,14 @@ Begin DesignProperties =
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -138,4 +139,6 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivoConductaEquivalencia';
+
+
 

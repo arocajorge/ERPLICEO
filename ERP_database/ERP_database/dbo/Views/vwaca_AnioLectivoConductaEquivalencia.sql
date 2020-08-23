@@ -1,8 +1,8 @@
 ﻿CREATE VIEW dbo.vwaca_AnioLectivoConductaEquivalencia
 AS
 SELECT dbo.aca_AnioLectivoConductaEquivalencia.IdEmpresa, dbo.aca_AnioLectivoConductaEquivalencia.IdAnio, dbo.aca_AnioLectivoConductaEquivalencia.Secuencia, dbo.aca_AnioLectivoConductaEquivalencia.Letra, 
-                  dbo.aca_AnioLectivoConductaEquivalencia.Calificacion, dbo.aca_AnioLectivo.Descripcion, dbo.aca_AnioLectivoConductaEquivalencia.IngresaMotivo, dbo.aca_AnioLectivoConductaEquivalencia.IngresaProfesor, 
-                  dbo.aca_AnioLectivoConductaEquivalencia.IngresaInspector
+                  dbo.aca_AnioLectivoConductaEquivalencia.Calificacion, dbo.aca_AnioLectivo.Descripcion, dbo.aca_AnioLectivoConductaEquivalencia.Equivalencia, dbo.aca_AnioLectivoConductaEquivalencia.DescripcionEquivalencia, 
+                  dbo.aca_AnioLectivoConductaEquivalencia.IngresaMotivo, dbo.aca_AnioLectivoConductaEquivalencia.IngresaProfesor, dbo.aca_AnioLectivoConductaEquivalencia.IngresaInspector
 FROM     dbo.aca_AnioLectivoConductaEquivalencia INNER JOIN
                   dbo.aca_AnioLectivo ON dbo.aca_AnioLectivoConductaEquivalencia.IdEmpresa = dbo.aca_AnioLectivo.IdEmpresa AND dbo.aca_AnioLectivoConductaEquivalencia.IdAnio = dbo.aca_AnioLectivo.IdAnio
 GO
@@ -15,7 +15,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+         Configuration = "(H (1[41] 4[29] 2[12] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -81,16 +81,6 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_AnioLectivo"
-            Begin Extent = 
-               Top = 7
-               Left = 340
-               Bottom = 170
-               Right = 585
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
          Begin Table = "aca_AnioLectivoConductaEquivalencia"
             Begin Extent = 
                Top = 7
@@ -100,6 +90,16 @@ Begin DesignProperties =
             End
             DisplayFlags = 280
             TopColumn = 2
+         End
+         Begin Table = "aca_AnioLectivo"
+            Begin Extent = 
+               Top = 7
+               Left = 340
+               Bottom = 170
+               Right = 585
+            End
+            DisplayFlags = 280
+            TopColumn = 0
          End
       End
    End
@@ -139,6 +139,8 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivoConductaEquivalencia';
+
+
 
 
 

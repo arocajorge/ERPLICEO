@@ -2,9 +2,10 @@
 AS
 SELECT m.IdEmpresa, m.IdMatricula, al.Codigo, m.IdAlumno, pa.IdPersona, pa.pe_nombreCompleto, pa.pe_cedulaRuc, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, sn.NomSede, a.Descripcion, sn.NomNivel, sn.OrdenNivel, 
                   nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.NomParalelo, cp.OrdenParalelo, a.BloquearMatricula, m.IdPersonaF, m.IdPersonaR, m.IdPlantilla, m.Fecha, m.Observacion, m.IdMecanismo, m.IdEmpresa_rol, 
-                  m.IdEmpleado, CASE WHEN r.IdRetiro IS NULL THEN CAST(0 AS BIT) ELSE CAST(1 AS BIT) END AS EsRetirado
+                  m.IdEmpleado, CASE WHEN r.IdRetiro IS NULL THEN CAST(0 AS BIT) ELSE CAST(1 AS BIT) END AS EsRetirado, dbo.aca_Plantilla.NomPlantilla
 FROM     dbo.aca_Matricula AS m INNER JOIN
-                  dbo.aca_AnioLectivo AS a ON m.IdEmpresa = a.IdEmpresa AND m.IdAnio = a.IdAnio LEFT OUTER JOIN
+                  dbo.aca_AnioLectivo AS a ON m.IdEmpresa = a.IdEmpresa AND m.IdAnio = a.IdAnio INNER JOIN
+                  dbo.aca_Plantilla ON m.IdEmpresa = dbo.aca_Plantilla.IdEmpresa AND m.IdAnio = dbo.aca_Plantilla.IdAnio AND m.IdPlantilla = dbo.aca_Plantilla.IdPlantilla LEFT OUTER JOIN
                   dbo.tb_persona AS pa INNER JOIN
                   dbo.aca_Alumno AS al ON pa.IdPersona = al.IdPersona ON m.IdEmpresa = al.IdEmpresa AND m.IdAlumno = al.IdAlumno LEFT OUTER JOIN
                   dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn RIGHT OUTER JOIN
@@ -36,6 +37,16 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
                Left = 633
                Bottom = 338
                Right = 877
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "aca_Plantilla"
+            Begin Extent = 
+               Top = 245
+               Left = 1145
+               Bottom = 408
+               Right = 1390
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -103,6 +114,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula';
+
+
 
 
 
@@ -189,20 +202,20 @@ Begin DesignProperties =
       Begin Tables = 
          Begin Table = "m"
             Begin Extent = 
-               Top = 7
-               Left = 48
-               Bottom = 181
-               Right = 293
+               Top = 3
+               Left = 41
+               Bottom = 177
+               Right = 286
             End
             DisplayFlags = 280
             TopColumn = 14
          End
          Begin Table = "a"
             Begin Extent = 
-               Top = 7
-               Left = 341
-               Bottom = 170
-               Right = 624
+               Top = 3
+               Left = 407
+               Bottom = 166
+               Right = 690
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -257,6 +270,8 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula';
+
+
 
 
 

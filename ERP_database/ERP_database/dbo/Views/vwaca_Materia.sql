@@ -1,12 +1,16 @@
 ﻿CREATE VIEW dbo.vwaca_Materia
 AS
 SELECT dbo.aca_Materia.IdEmpresa, dbo.aca_Materia.IdMateria, dbo.aca_Materia.IdMateriaArea, dbo.aca_Materia.IdMateriaGrupo, dbo.aca_Materia.OrdenMateria, dbo.aca_MateriaArea.OrdenMateriaArea, 
-                  dbo.aca_MateriaGrupo.OrdenMateriaGrupo, dbo.aca_Materia.NomMateria, dbo.aca_MateriaArea.NomMateriaArea, dbo.aca_MateriaGrupo.NomMateriaGrupo, dbo.aca_Materia.EsObligatorio, dbo.aca_Materia.Estado
+                  dbo.aca_MateriaGrupo.OrdenMateriaGrupo, dbo.aca_Materia.NomMateria, dbo.aca_MateriaArea.NomMateriaArea, dbo.aca_MateriaGrupo.NomMateriaGrupo, dbo.aca_Materia.EsObligatorio, dbo.aca_Materia.Estado, 
+                  dbo.aca_Materia.IdCatalogoTipoCalificacion, dbo.aca_Catalogo.NomCatalogo
 FROM     dbo.aca_Materia LEFT OUTER JOIN
+                  dbo.aca_Catalogo ON dbo.aca_Materia.IdCatalogoTipoCalificacion = dbo.aca_Catalogo.IdCatalogo LEFT OUTER JOIN
                   dbo.aca_MateriaArea ON dbo.aca_Materia.IdEmpresa = dbo.aca_MateriaArea.IdEmpresa AND dbo.aca_Materia.IdMateriaArea = dbo.aca_MateriaArea.IdMateriaArea LEFT OUTER JOIN
                   dbo.aca_MateriaGrupo ON dbo.aca_Materia.IdEmpresa = dbo.aca_MateriaGrupo.IdEmpresa AND dbo.aca_Materia.IdMateriaGrupo = dbo.aca_MateriaGrupo.IdMateriaGrupo
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Materia';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Materia';
+
+
 
 
 GO
@@ -15,7 +19,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[21] 4[46] 2[8] 3) )"
+         Configuration = "(H (1[38] 4[30] 2[8] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -85,8 +89,18 @@ Begin DesignProperties =
             Begin Extent = 
                Top = 7
                Left = 48
-               Bottom = 236
+               Bottom = 279
                Right = 293
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "aca_MateriaArea"
+            Begin Extent = 
+               Top = 116
+               Left = 877
+               Bottom = 279
+               Right = 1122
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -101,12 +115,12 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_MateriaArea"
+         Begin Table = "aca_Catalogo"
             Begin Extent = 
-               Top = 116
-               Left = 877
-               Bottom = 279
-               Right = 1122
+               Top = 141
+               Left = 471
+               Bottom = 304
+               Right = 716
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -144,7 +158,25 @@ Begin DesignProperties =
          NewValue = 1170
          SortType = 1356
          SortOrder = 1416
-         GroupBy = 1350
+  ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Materia';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'       GroupBy = 1350
          Filter = 1356
          Or = 1350
          Or = 1350
@@ -153,16 +185,4 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Materia';
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -1,13 +1,23 @@
-﻿CREATE VIEW dbo.vwaca_AnioLectivo_Curso_Materia
+﻿CREATE VIEW dbo.vwaca_MatriculaCalificacionCualitativa
 AS
-SELECT dbo.aca_AnioLectivo_Curso_Materia.IdEmpresa, dbo.aca_AnioLectivo_Curso_Materia.IdAnio, dbo.aca_AnioLectivo_Curso_Materia.IdSede, dbo.aca_AnioLectivo_Curso_Materia.IdNivel, dbo.aca_AnioLectivo_Curso_Materia.IdJornada, 
-                  dbo.aca_AnioLectivo_Curso_Materia.IdCurso, dbo.aca_AnioLectivo_Curso_Materia.IdMateria, dbo.aca_Materia.IdMateriaGrupo, dbo.aca_Materia.IdMateriaArea, dbo.aca_AnioLectivo_Curso_Materia.NomMateria, 
-                  dbo.aca_AnioLectivo_Curso_Materia.NomMateriaArea, dbo.aca_AnioLectivo_Curso_Materia.NomMateriaGrupo, dbo.aca_AnioLectivo_Curso_Materia.EsObligatorio, dbo.aca_AnioLectivo_Curso_Materia.OrdenMateria, 
-                  dbo.aca_AnioLectivo_Curso_Materia.OrdenMateriaGrupo, dbo.aca_AnioLectivo_Curso_Materia.OrdenMateriaArea, dbo.aca_AnioLectivo_Curso_Materia.IdCatalogoTipoCalificacion
-FROM     dbo.aca_AnioLectivo_Curso_Materia INNER JOIN
-                  dbo.aca_Materia ON dbo.aca_AnioLectivo_Curso_Materia.IdEmpresa = dbo.aca_Materia.IdEmpresa AND dbo.aca_AnioLectivo_Curso_Materia.IdMateria = dbo.aca_Materia.IdMateria
+SELECT dbo.aca_MatriculaCalificacionCualitativa.IdEmpresa, dbo.aca_MatriculaCalificacionCualitativa.IdMatricula, dbo.aca_Matricula.IdAnio, dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, 
+                  dbo.aca_Matricula.IdCurso, dbo.aca_Matricula.IdParalelo, dbo.aca_MatriculaCalificacionCualitativa.IdMateria, dbo.aca_MatriculaCalificacionCualitativa.IdCatalogoParcial, dbo.aca_MatriculaCalificacionCualitativa.IdProfesor, 
+                  dbo.aca_Matricula.IdAlumno, dbo.aca_Alumno.Codigo, dbo.tb_persona.pe_nombreCompleto, dbo.aca_MatriculaCalificacionCualitativa.IdCalificacionCualitativa
+FROM     dbo.aca_MatriculaCalificacionCualitativa INNER JOIN
+                  dbo.aca_Matricula ON dbo.aca_MatriculaCalificacionCualitativa.IdEmpresa = dbo.aca_Matricula.IdEmpresa AND dbo.aca_MatriculaCalificacionCualitativa.IdMatricula = dbo.aca_Matricula.IdMatricula INNER JOIN
+                  dbo.aca_Alumno ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_Matricula.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
+                  dbo.tb_persona ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Curso_Materia';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacionCualitativa';
+
+
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'1350
+         Or = 1350
+      End
+   End
+End
+', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacionCualitativa';
 
 
 GO
@@ -16,7 +26,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+         Configuration = "(H (1[27] 4[35] 2[20] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -82,22 +92,42 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_AnioLectivo_Curso_Materia"
-            Begin Extent = 
-               Top = 7
-               Left = 48
-               Bottom = 311
-               Right = 292
-            End
-            DisplayFlags = 280
-            TopColumn = 4
-         End
-         Begin Table = "aca_Materia"
+         Begin Table = "aca_MatriculaCalificacionCualitativa"
             Begin Extent = 
                Top = 0
-               Left = 461
-               Bottom = 216
-               Right = 706
+               Left = 48
+               Bottom = 247
+               Right = 320
+            End
+            DisplayFlags = 280
+            TopColumn = 3
+         End
+         Begin Table = "aca_Matricula"
+            Begin Extent = 
+               Top = 7
+               Left = 368
+               Bottom = 294
+               Right = 613
+            End
+            DisplayFlags = 280
+            TopColumn = 1
+         End
+         Begin Table = "aca_Alumno"
+            Begin Extent = 
+               Top = 7
+               Left = 661
+               Bottom = 170
+               Right = 906
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "tb_persona"
+            Begin Extent = 
+               Top = 7
+               Left = 954
+               Bottom = 170
+               Right = 1228
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -118,7 +148,7 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 1200
-         Width = 1200
+         Width = 1380
       End
    End
    Begin CriteriaPane = 
@@ -134,12 +164,5 @@ Begin DesignProperties =
          GroupBy = 1350
          Filter = 1356
          Or = 1350
-         Or = 1350
-         Or = 1350
-      End
-   End
-End
-', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Curso_Materia';
-
-
+         Or = ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacionCualitativa';
 

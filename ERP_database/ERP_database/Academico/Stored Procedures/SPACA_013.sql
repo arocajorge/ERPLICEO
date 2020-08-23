@@ -7,7 +7,8 @@
 @IdJornada int,
 @IdCurso int,
 @IdParalelo int,
-@IdParcial int
+@IdParcial int,
+@IdAlumno decimal
 )
 AS
 SELECT mp.IdEmpresa, mp.IdMatricula, mp.IdMateria, mp.IdCatalogoParcial, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, 
@@ -61,6 +62,7 @@ and m.IdNivel = case when @IdNivel = 0 then m.IdNivel else @IdNivel end
 and m.IdJornada = case when @IdJornada = 0 then m.IdJornada else @IdJornada end
 and m.IdCurso = case when @IdCurso = 0 then m.IdCurso else @IdCurso end
 and m.IdParalelo = case when @IdParalelo = 0 then m.IdParalelo else @IdParalelo end
+and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
 and not exists(
 	select f.IdEmpresa from aca_AlumnoRetiro as f
 	where f.IdEmpresa = mp.IdEmpresa

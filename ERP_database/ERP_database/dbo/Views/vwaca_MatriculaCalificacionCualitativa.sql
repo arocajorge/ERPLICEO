@@ -2,22 +2,85 @@
 AS
 SELECT dbo.aca_MatriculaCalificacionCualitativa.IdEmpresa, dbo.aca_MatriculaCalificacionCualitativa.IdMatricula, dbo.aca_Matricula.IdAnio, dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, 
                   dbo.aca_Matricula.IdCurso, dbo.aca_Matricula.IdParalelo, dbo.aca_MatriculaCalificacionCualitativa.IdMateria, dbo.aca_MatriculaCalificacionCualitativa.IdCatalogoParcial, dbo.aca_MatriculaCalificacionCualitativa.IdProfesor, 
-                  dbo.aca_Matricula.IdAlumno, dbo.aca_Alumno.Codigo, dbo.tb_persona.pe_nombreCompleto, dbo.aca_MatriculaCalificacionCualitativa.IdCalificacionCualitativa
+                  dbo.aca_Matricula.IdAlumno, dbo.aca_Alumno.Codigo, dbo.tb_persona.pe_nombreCompleto, dbo.aca_MatriculaCalificacionCualitativa.IdCalificacionCualitativa, dbo.aca_MatriculaCalificacionCualitativa.Conducta, 
+                  dbo.aca_MatriculaCalificacionCualitativa.MotivoConducta, dbo.aca_AnioLectivoCalificacionCualitativa.Codigo AS CodigoCalificacion, dbo.aca_AnioLectivoCalificacionCualitativa.DescripcionCorta, 
+                  dbo.aca_AnioLectivoConductaEquivalencia.Letra
 FROM     dbo.aca_MatriculaCalificacionCualitativa INNER JOIN
                   dbo.aca_Matricula ON dbo.aca_MatriculaCalificacionCualitativa.IdEmpresa = dbo.aca_Matricula.IdEmpresa AND dbo.aca_MatriculaCalificacionCualitativa.IdMatricula = dbo.aca_Matricula.IdMatricula INNER JOIN
                   dbo.aca_Alumno ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_Matricula.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
-                  dbo.tb_persona ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona
+                  dbo.tb_persona ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona LEFT OUTER JOIN
+                  dbo.aca_AnioLectivoConductaEquivalencia ON dbo.aca_Matricula.IdAnio = dbo.aca_AnioLectivoConductaEquivalencia.IdAnio AND 
+                  dbo.aca_MatriculaCalificacionCualitativa.IdEmpresa = dbo.aca_AnioLectivoConductaEquivalencia.IdEmpresa AND 
+                  dbo.aca_MatriculaCalificacionCualitativa.Conducta = dbo.aca_AnioLectivoConductaEquivalencia.Secuencia LEFT OUTER JOIN
+                  dbo.aca_AnioLectivoCalificacionCualitativa ON dbo.aca_Matricula.IdAnio = dbo.aca_AnioLectivoCalificacionCualitativa.IdAnio AND 
+                  dbo.aca_MatriculaCalificacionCualitativa.IdEmpresa = dbo.aca_AnioLectivoCalificacionCualitativa.IdEmpresa AND 
+                  dbo.aca_MatriculaCalificacionCualitativa.IdCalificacionCualitativa = dbo.aca_AnioLectivoCalificacionCualitativa.IdCalificacionCualitativa LEFT OUTER JOIN
+                  dbo.aca_AnioLectivoConductaEquivalencia AS aca_AnioLectivoConductaEquivalencia_1 ON dbo.aca_Matricula.IdAnio = aca_AnioLectivoConductaEquivalencia_1.IdAnio AND 
+                  dbo.aca_MatriculaCalificacionCualitativa.IdEmpresa = aca_AnioLectivoConductaEquivalencia_1.IdEmpresa AND dbo.aca_MatriculaCalificacionCualitativa.Conducta = aca_AnioLectivoConductaEquivalencia_1.Secuencia
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacionCualitativa';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'1350
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'            Left = 806
+               Bottom = 414
+               Right = 1062
+            End
+            DisplayFlags = 280
+            TopColumn = 2
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+      Begin ColumnWidths = 21
+         Width = 284
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1380
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 1440
+         Alias = 900
+         Table = 1176
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1356
+         SortOrder = 1416
+         GroupBy = 1350
+         Filter = 1356
+         Or = 1350
+         Or = 1350
          Or = 1350
       End
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacionCualitativa';
+
+
 
 
 GO
@@ -26,7 +89,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[27] 4[35] 2[20] 3) )"
+         Configuration = "(H (1[54] 4[9] 2[20] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -104,10 +167,10 @@ Begin DesignProperties =
          End
          Begin Table = "aca_Matricula"
             Begin Extent = 
-               Top = 7
-               Left = 368
-               Bottom = 294
-               Right = 613
+               Top = 0
+               Left = 470
+               Bottom = 287
+               Right = 715
             End
             DisplayFlags = 280
             TopColumn = 1
@@ -132,37 +195,30 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-      End
-   End
-   Begin SQLPane = 
-   End
-   Begin DataPane = 
-      Begin ParameterDefaults = ""
-      End
-      Begin ColumnWidths = 9
-         Width = 284
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1380
-      End
-   End
-   Begin CriteriaPane = 
-      Begin ColumnWidths = 11
-         Column = 1440
-         Alias = 900
-         Table = 1176
-         Output = 720
-         Append = 1400
-         NewValue = 1170
-         SortType = 1356
-         SortOrder = 1416
-         GroupBy = 1350
-         Filter = 1356
-         Or = 1350
-         Or = ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacionCualitativa';
+         Begin Table = "aca_AnioLectivoConductaEquivalencia_1"
+            Begin Extent = 
+               Top = 148
+               Left = 839
+               Bottom = 311
+               Right = 1095
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "aca_AnioLectivoCalificacionCualitativa"
+            Begin Extent = 
+               Top = 222
+               Left = 337
+               Bottom = 424
+               Right = 592
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "aca_AnioLectivoConductaEquivalencia"
+            Begin Extent = 
+               Top = 251
+   ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacionCualitativa';
+
+
 

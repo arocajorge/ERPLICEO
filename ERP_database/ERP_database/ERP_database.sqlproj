@@ -1399,6 +1399,7 @@
     <Build Include="dbo\Views\vwaca_MatriculaCalificacionCualitativa.sql" />
     <Build Include="dbo\Views\vwaca_AnioLectivo_Paralelo_Profesor_CalificacionesCualitativas.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_016.sql" />
+    <Build Include="Academico\Stored Procedures\SPACA_013_MatriculaCalificacionCualitativa.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

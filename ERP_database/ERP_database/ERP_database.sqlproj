@@ -1405,6 +1405,7 @@
     <Build Include="Academico\Views\VWACA_019.sql" />
     <Build Include="Academico\Views\VWACA_018.sql" />
     <Build Include="Academico\Views\VWACA_017.sql" />
+    <Build Include="Academico\Views\VWFAC_009.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

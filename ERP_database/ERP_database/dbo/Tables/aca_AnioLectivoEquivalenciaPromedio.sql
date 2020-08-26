@@ -14,9 +14,11 @@
     [IdUsuarioAnulacion]     VARCHAR (200)   NULL,
     [FechaAnulacion]         DATETIME        NULL,
     [MotivoAnulacion]        VARCHAR (MAX)   NULL,
-    CONSTRAINT [PK_aca_AnioLectivoEquivalenciaPromedio_1] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdEquivalenciaPromedio] ASC),
+    CONSTRAINT [PK_aca_AnioLectivoEquivalenciaPromedio_1] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdEquivalenciaPromedio] ASC, [IdAnio] ASC),
     CONSTRAINT [FK_aca_AnioLectivoEquivalenciaPromedio_aca_AnioLectivo] FOREIGN KEY ([IdEmpresa], [IdAnio]) REFERENCES [dbo].[aca_AnioLectivo] ([IdEmpresa], [IdAnio])
 );
+
+
 
 
 

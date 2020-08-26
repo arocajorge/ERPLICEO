@@ -33,9 +33,10 @@
     [PromedioFinal]             NUMERIC (18, 2) NULL,
     [IdEquivalenciaPromedioPF]  INT             NULL,
     CONSTRAINT [PK_aca_MatriculaCalificacion] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdMatricula] ASC, [IdMateria] ASC),
-    CONSTRAINT [FK_aca_MatriculaCalificacion_aca_AnioLectivoEquivalenciaPromedio] FOREIGN KEY ([IdEmpresa], [IdEquivalenciaPromedioPF]) REFERENCES [dbo].[aca_AnioLectivoEquivalenciaPromedio] ([IdEmpresa], [IdEquivalenciaPromedio]),
     CONSTRAINT [FK_aca_MatriculaCalificacion_aca_Matricula] FOREIGN KEY ([IdEmpresa], [IdMatricula]) REFERENCES [dbo].[aca_Matricula] ([IdEmpresa], [IdMatricula])
 );
+
+
 
 
 

@@ -83,10 +83,10 @@ Begin DesignProperties =
       Begin Tables = 
          Begin Table = "aca_AnioLectivo"
             Begin Extent = 
-               Top = 7
-               Left = 48
-               Bottom = 170
-               Right = 331
+               Top = 1
+               Left = 26
+               Bottom = 164
+               Right = 309
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -94,9 +94,9 @@ Begin DesignProperties =
          Begin Table = "aca_AnioLectivoEquivalenciaPromedio"
             Begin Extent = 
                Top = 0
-               Left = 488
+               Left = 407
                Bottom = 303
-               Right = 744
+               Right = 706
             End
             DisplayFlags = 280
             TopColumn = 5
@@ -139,4 +139,6 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivoEquivalenciaPromedio';
+
+
 

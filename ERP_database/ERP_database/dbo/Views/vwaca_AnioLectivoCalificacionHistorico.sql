@@ -3,7 +3,7 @@ AS
 SELECT dbo.aca_AnioLectivoCalificacionHistorico.IdEmpresa, dbo.aca_AnioLectivoCalificacionHistorico.IdAnio, dbo.aca_AnioLectivo.Descripcion, dbo.aca_AnioLectivoCalificacionHistorico.IdAlumno, dbo.tb_persona.pe_nombreCompleto, 
                   dbo.aca_AnioLectivoCalificacionHistorico.IdCurso, dbo.aca_AnioLectivoCalificacionHistorico.Promedio, dbo.aca_AnioLectivoCalificacionHistorico.IdEquivalenciaPromedio, dbo.aca_AnioLectivoCalificacionHistorico.Conducta, 
                   dbo.aca_AnioLectivoCalificacionHistorico.SecuenciaConducta, dbo.aca_AnioLectivoConductaEquivalencia.Letra, dbo.aca_NivelAcademico.NomNivel, dbo.aca_Curso.NomCurso, 
-                  dbo.aca_AnioLectivoCalificacionHistorico.AntiguaInstitucion, dbo.aca_AnioLectivoCalificacionHistorico.IdNivel, dbo.aca_AnioLectivoEquivalenciaPromedio.Codigo
+                  dbo.aca_AnioLectivoCalificacionHistorico.AntiguaInstitucion, dbo.aca_AnioLectivoCalificacionHistorico.IdNivel, dbo.aca_AnioLectivoEquivalenciaPromedio.Codigo, dbo.aca_AnioLectivoCalificacionHistorico.IdMatricula
 FROM     dbo.aca_AnioLectivoCalificacionHistorico INNER JOIN
                   dbo.aca_AnioLectivo ON dbo.aca_AnioLectivoCalificacionHistorico.IdEmpresa = dbo.aca_AnioLectivo.IdEmpresa AND dbo.aca_AnioLectivoCalificacionHistorico.IdAnio = dbo.aca_AnioLectivo.IdAnio INNER JOIN
                   dbo.aca_Alumno ON dbo.aca_AnioLectivoCalificacionHistorico.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_AnioLectivoCalificacionHistorico.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN

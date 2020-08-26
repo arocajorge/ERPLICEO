@@ -2,6 +2,7 @@
     [IdEmpresa]              INT             NOT NULL,
     [IdAnio]                 INT             NOT NULL,
     [IdAlumno]               NUMERIC (18)    NOT NULL,
+    [IdMatricula]            NUMERIC (18)    NULL,
     [IdNivel]                INT             NOT NULL,
     [IdCurso]                INT             NOT NULL,
     [AntiguaInstitucion]     VARCHAR (500)   NOT NULL,
@@ -17,6 +18,8 @@
     CONSTRAINT [FK_aca_AnioLectivoCalificacionHistorico_aca_Curso] FOREIGN KEY ([IdEmpresa], [IdCurso]) REFERENCES [dbo].[aca_Curso] ([IdEmpresa], [IdCurso]),
     CONSTRAINT [FK_aca_AnioLectivoCalificacionHistorico_aca_NivelAcademico] FOREIGN KEY ([IdEmpresa], [IdNivel]) REFERENCES [dbo].[aca_NivelAcademico] ([IdEmpresa], [IdNivel])
 );
+
+
 
 
 

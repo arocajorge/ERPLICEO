@@ -33,11 +33,11 @@ FROM     dbo.tb_persona AS pa INNER JOIN
                   p.IdProfesor = cp.IdProfesorInspector AND p.IdEmpresa = cp.IdEmpresa AND p.IdEmpresa = cp.IdEmpresa
 where ma.IdEmpresa = @IdEmpresa 
 and m.IdAnio = @IdAnio
-and m.IdSede = case when @IdSede = 0 then m.IdSede else @IdSede end
-and m.IdNivel = case when @IdNivel = 0 then m.IdNivel else @IdNivel end
-and m.IdJornada = case when @IdJornada = 0 then m.IdJornada else @IdJornada end
-and m.IdCurso = case when @IdCurso = 0 then m.IdCurso else @IdCurso end
-and m.IdParalelo = case when @IdParalelo = 0 then m.IdParalelo else @IdParalelo end
+and m.IdSede = @IdSede
+and m.IdNivel = @IdNivel
+and m.IdJornada = @IdJornada
+and m.IdCurso = @IdCurso
+and m.IdParalelo = @IdParalelo
 and not exists(
 	select f.IdEmpresa from aca_AlumnoRetiro as f
 	where f.IdEmpresa = ma.IdEmpresa

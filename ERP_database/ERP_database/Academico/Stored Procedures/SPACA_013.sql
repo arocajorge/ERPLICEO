@@ -8,7 +8,8 @@
 @IdCurso int,
 @IdParalelo int,
 @IdParcial int,
-@IdAlumno decimal
+@IdAlumno decimal,
+@MostrarRetirados bit
 )
 AS
 SELECT mp.IdEmpresa, mp.IdMatricula, mp.IdMateria, mp.IdCatalogoParcial, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, 
@@ -37,7 +38,7 @@ FROM     dbo.aca_MatriculaConducta AS mc RIGHT OUTER JOIN
 				  LEFT OUTER JOIN aca_Profesor AS pro ON cp.IdEmpresa = pro.IdEmpresa and cp.IdProfesorTutor = pro.IdProfesor
 				  LEFT OUTER JOIN tb_persona as pp on pp.IdPersona = pro.IdPersona
 				  LEFT OUTER JOIN tb_persona as pre on pre.IdPersona = m.IdPersonaR
-					LEFT JOIN
+				  LEFT JOIN
 				  dbo.aca_AnioLectivoConductaEquivalencia AS EquivM ON m.IdEmpresa = EquivM.IdEmpresa AND m.IdAnio = EquivM.IdAnio 
 				  AND EquivM.Secuencia = 
 				  CASE 
@@ -54,6 +55,12 @@ FROM     dbo.aca_MatriculaConducta AS mc RIGHT OUTER JOIN
 							end
 						end
 				  END
+				  LEFT JOIN	
+					(
+					select r.IdEmpresa, r.IdMatricula 
+					from aca_AlumnoRetiro as r
+					where r.Estado = 1
+					) as ret on m.IdEmpresa =ret.IdEmpresa and m.IdMatricula = ret.IdMatricula
 where mp.IdEmpresa = @IdEmpresa 
 and m.IdAnio = @IdAnio
 and mp.IdCatalogoParcial = @IdParcial
@@ -63,9 +70,4 @@ and m.IdJornada = case when @IdJornada = 0 then m.IdJornada else @IdJornada end
 and m.IdCurso = case when @IdCurso = 0 then m.IdCurso else @IdCurso end
 and m.IdParalelo = case when @IdParalelo = 0 then m.IdParalelo else @IdParalelo end
 and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
-and not exists(
-	select f.IdEmpresa from aca_AlumnoRetiro as f
-	where f.IdEmpresa = mp.IdEmpresa
-	and f.IdMatricula = mp.IdMatricula
-	and f.Estado = 1
-)
+and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end

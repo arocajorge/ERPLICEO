@@ -1410,6 +1410,9 @@
     <Build Include="Academico\Stored Procedures\SPACA_020.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_022.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_024.sql" />
+    <Build Include="Academico\Stored Procedures\SPACA_027.sql" />
+    <Build Include="Academico\Stored Procedures\SPACA_026.sql" />
+    <Build Include="Academico\Stored Procedures\SPACA_025.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

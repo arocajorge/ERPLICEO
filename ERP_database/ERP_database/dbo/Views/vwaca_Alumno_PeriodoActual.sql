@@ -3,7 +3,7 @@ AS
 SELECT a.IdEmpresa, a.Codigo, a.IdAlumno, e.IdMatricula, b.pe_nombreCompleto AS NombreAlumno, b.pe_cedulaRuc, c.pe_nombreCompleto AS NombreRepresentante, c.Correo AS CorreoRepresentante, 
                   d.pe_nombreCompleto AS NombreEmiteFactura, d.Correo AS CorreoEmiteFactura, c.Celular AS CelularRepresentante, d.Celular AS CelularEmiteFactura, c.Telefono AS TelefonoRepresentante, d.Telefono AS TelefonoEmiteFactura, 
                   e.IdAnio, e.IdSede, e.IdNivel, e.IdJornada, e.IdCurso, e.IdParalelo, sn.NomSede, sn.NomNivel, nj.NomJornada, jc.NomCurso, cp.NomParalelo, ISNULL(g.Saldo, 0) AS Saldo, ISNULL(g.SaldoProntoPago, 0) AS SaldoProntoPago, 
-                  ISNULL(g.CantDeudas, 0) AS CantDeudas, j.NomPlantillaTipo
+                  ISNULL(g.CantDeudas, 0) AS CantDeudas, j.NomPlantillaTipo, nj.OrdenJornada, sn.OrdenNivel, jc.OrdenCurso, cp.OrdenParalelo
 FROM     dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn RIGHT OUTER JOIN
                   dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel RIGHT OUTER JOIN
                   dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
@@ -37,6 +37,26 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'End
+         Begin Table = "d"
+            Begin Extent = 
+               Top = 7
+               Left = 632
+               Bottom = 170
+               Right = 876
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "e"
+            Begin Extent = 
+               Top = 1351
+               Left = 48
+               Bottom = 1514
+               Right = 293
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
          Begin Table = "f"
             Begin Extent = 
                Top = 1519
@@ -77,26 +97,6 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "c"
-            Begin Extent = 
-               Top = 7
-               Left = 340
-               Bottom = 170
-               Right = 584
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "d"
-            Begin Extent = 
-               Top = 7
-               Left = 632
-               Bottom = 170
-               Right = 876
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
       End
    End
    Begin SQLPane = 
@@ -120,14 +120,14 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'End
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 2748
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -137,13 +137,15 @@ End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Alumno_PeriodoActual';
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[18] 4[35] 2[29] 3) )"
+         Configuration = "(H (1[48] 4[6] 2[29] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -205,7 +207,7 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = 0
+         Top = -360
          Left = 0
       End
       Begin Tables = 
@@ -217,7 +219,7 @@ Begin DesignProperties =
                Right = 292
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 3
          End
          Begin Table = "nj"
             Begin Extent = 
@@ -227,27 +229,27 @@ Begin DesignProperties =
                Right = 292
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 3
          End
          Begin Table = "jc"
             Begin Extent = 
-               Top = 343
-               Left = 48
-               Bottom = 506
-               Right = 292
+               Top = 187
+               Left = 391
+               Bottom = 350
+               Right = 635
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 4
          End
          Begin Table = "cp"
             Begin Extent = 
-               Top = 511
-               Left = 48
-               Bottom = 674
-               Right = 292
+               Top = 398
+               Left = 34
+               Bottom = 561
+               Right = 278
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 8
          End
          Begin Table = "a"
             Begin Extent = 
@@ -269,14 +271,16 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "e"
+         Begin Table = "c"
             Begin Extent = 
-               Top = 1351
-               Left = 48
-               Bottom = 1514
-               Right = 293
+               Top = 7
+               Left = 340
+               Bottom = 170
+               Right = 584
             End
             DisplayFlags = 280
             TopColumn = 0
          ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Alumno_PeriodoActual';
+
+
 

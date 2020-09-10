@@ -4,8 +4,12 @@
     [Asunto]                     VARCHAR (1000) NOT NULL,
     [Cuerpo]                     VARCHAR (MAX)  NOT NULL,
     [ApareceSeguimientoCobranza] BIT            NULL,
+    [CantidadIni]                INT            NULL,
+    [CantidadFin]                INT            NULL,
     CONSTRAINT [PK_tb_ColaCorreoCodigo] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [Codigo] ASC)
 );
+
+
 
 
 

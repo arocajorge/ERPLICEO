@@ -145,8 +145,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
         public ActionResult Nuevo(ro_prestamo_Info model)
         {
             model.lst_detalle = Lis_ro_prestamo_detalle_lst.get_list(model.IdTransaccionSession);
-            if (!validar(model))
+            if (!validar(model, ref mensaje))
             {
+                ViewBag.mensaje = mensaje;
                 cargar_combos();
                 return View(model);
             }
@@ -197,16 +198,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
 
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
-
-            #region Validacion Periodo
             ViewBag.MostrarBoton = true;
-            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.RRHH, 0, ref mensaje))
-            {
-                ViewBag.mensaje = mensaje;
-                ViewBag.MostrarBoton = false;
-            }
-            #endregion
-
             return View(model);
         }
 
@@ -229,8 +221,9 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 cargar_combos();
                 return View(model);
             }
-            if (!validar(model))
+            if (!validar(model, ref mensaje))
             {
+                ViewBag.mensaje = mensaje;
                 cargar_combos();
                 return View(model);
             }
@@ -263,15 +256,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 return RedirectToAction("Index");
             model.lst_detalle = bus_detalle.get_list(IdEmpresa, IdPrestamo);
             Lis_ro_prestamo_detalle_lst.set_list(model.lst_detalle,model.IdTransaccionSession);
-
-            #region Validacion Periodo
             ViewBag.MostrarBoton = true;
-            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.RRHH, 0, ref mensaje))
-            {
-                ViewBag.mensaje = mensaje;
-                ViewBag.MostrarBoton = false;
-            }
-            #endregion
 
             cargar_combos();
             return View(model);
@@ -390,33 +375,34 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             ViewBag.lst_catalogo = bus_catalogo.get_list_x_tipo(16, false);
         }
 
-        private bool validar(ro_prestamo_Info model)
+        private bool validar(ro_prestamo_Info model, ref string msg)
         {
             bool bandera = true;
             if (model.descuento_quincena && model.Fecha_PriPago.Day > 15)
             {
-                ViewBag.mensaje = "La fecha del primer pago debe estar entre el [01 al 15] de cada mes";
+                msg = "La fecha del primer pago debe estar entre el [01 al 15] de cada mes";
                 bandera = false;
             }
 
             if (model.descuento_men_quin && model.Fecha_PriPago.Day != 15 && model.descuento_men_quin && model.Fecha_PriPago.Day != 30)
             {
-                ViewBag.mensaje = "La fecha del primer pago debe ser [15 o 30] de cada mes";
+                msg = "La fecha del primer pago debe ser [15 o 30] de cada mes";
                 bandera = false;
 
             }
             if (model.MontoSol == 0 | model.MontoSol < 0)
             {
-                ViewBag.mensaje = "El monto del prestamo debe ser mayor a cero";
+                msg = "El monto del prestamo debe ser mayor a cero";
                 bandera = false;
 
             }
             if (model.NumCuotas == 0 | model.NumCuotas < 0)
             {
-                ViewBag.mensaje = "El n'umerode cuota debe ser mayor a cero";
+                msg = "El n'umerode cuota debe ser mayor a cero";
                 bandera = false;
 
             }
+
             return bandera;
         }
         #endregion

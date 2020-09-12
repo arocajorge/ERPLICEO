@@ -194,6 +194,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
             model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.IdUsuario = SessionFixed.IdUsuario;
+
             if (!bus_novedad.guardarDB(model))
             {
                 cargar_combos(model.IdNomina_Tipo);
@@ -222,15 +223,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             cargar_combos(model.IdNomina_Tipo);
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
-
-            #region Validacion Periodo
             ViewBag.MostrarBoton = true;
-            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.RRHH, Convert.ToInt32(model.IdSucursal), ref mensaje))
-            {
-                ViewBag.mensaje = mensaje;
-                ViewBag.MostrarBoton = false;
-            }
-            #endregion
 
             return View(model);
         }
@@ -272,6 +265,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             }
             model.IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
             model.IdUsuarioUltMod = SessionFixed.IdUsuario;
+
             if (!bus_novedad.modificarDB(model))
             {
                 cargar_combos(model.IdNomina_Tipo);
@@ -290,14 +284,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             model.lst_novedad_det = bus_novedad_detalle_bus.get_list(IdEmpresa, IdEmpleado, IdNovedad);
             ro_empleado_novedad_det_lst.set_list(model.lst_novedad_det, model.IdTransaccionSession);
 
-            #region Validacion Periodo
             ViewBag.MostrarBoton = true;
-            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha, cl_enumeradores.eModulo.RRHH, Convert.ToInt32(model.IdSucursal), ref mensaje))
-            {
-                ViewBag.mensaje = mensaje;
-                ViewBag.MostrarBoton = false;
-            }
-            #endregion
 
             cargar_combos(model.IdNomina_Tipo);
             return View(model);

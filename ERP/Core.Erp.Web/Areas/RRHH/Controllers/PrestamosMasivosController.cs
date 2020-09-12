@@ -184,14 +184,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             model.lst_detalle = bus_prestamo_masivo_det.get_list(IdEmpresa, IdSucursal, IdCarga);
             ListaDetalle.set_list(model.lst_detalle, model.IdTransaccionSession);
 
-            #region Validacion Periodo
             ViewBag.MostrarBoton = true;
-            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.Fecha_PriPago, cl_enumeradores.eModulo.RRHH, 0, ref mensaje))
-            {
-                ViewBag.mensaje = mensaje;
-                ViewBag.MostrarBoton = false;
-            }
-            #endregion
             return View(model);
         }
         [HttpPost]

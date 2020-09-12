@@ -133,14 +133,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             model.detalle = bus_novedad_detalle_bus.get_list(IdEmpresa,  IdCarga);
             detalle.set_list(model.detalle);
 
-            #region Validacion Periodo
             ViewBag.MostrarBoton = true;
-            if (!bus_periodo.ValidarFechaTransaccion(IdEmpresa, model.FechaCarga, cl_enumeradores.eModulo.RRHH, 0, ref mensaje))
-            {
-                ViewBag.mensaje = mensaje;
-                ViewBag.MostrarBoton = false;
-            }
-            #endregion
 
             cargar_combos();
             return View(model);

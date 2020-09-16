@@ -10,8 +10,8 @@
 )
 AS
 SELECT mc.IdEmpresa, mc.IdMateria, mc.IdProfesor, c.IdAnio, c.IdSede, c.IdNivel, c.IdJornada, c.IdCurso, c.IdParalelo, a.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, 
-                  jc.OrdenCurso, cp.CodigoParalelo, cp.NomParalelo, cp.OrdenParalelo, pp.pe_nombreCompleto NombreProfesor, cm.NomMateria, cm.OrdenMateria,ROUND(AVG( ISNULL(mc.PromedioFinalQ1,0)),2) as Quim1, ROUND(AVG( ISNULL(mc.ExamenQ1,0)),2) as EXQuim1, ROUND(AVG(ISNULL(mc.PromedioFinalQ2,0)),2) as Quim2, ROUND(AVG( ISNULL(mc.ExamenQ2,0)),2) as EXQuim2
-FROM     dbo.aca_MatriculaCalificacion AS mc INNER JOIN
+                  jc.OrdenCurso, cp.CodigoParalelo, cp.NomParalelo, cp.OrdenParalelo, pp.pe_nombreCompleto NombreProfesor, cm.NomMateria, cm.OrdenMateria,dbo.BankersRounding(AVG(mc.PromedioFinalQ1),2) as Quim1, dbo.BankersRounding(AVG( mc.ExamenQ1),2) as EXQuim1, dbo.BankersRounding(AVG(mc.PromedioFinalQ2),2) as Quim2, dbo.BankersRounding(AVG(mc.ExamenQ2),2) as EXQuim2
+FROM     dbo.aca_MatriculaCalificacion AS mc inner JOIN
                   dbo.aca_Matricula AS c ON mc.IdEmpresa = c.IdEmpresa AND mc.IdMatricula = c.IdMatricula INNER JOIN
                   dbo.aca_AnioLectivo AS a ON c.IdAnio = a.IdAnio AND c.IdEmpresa = a.IdEmpresa 
 				  LEFT OUTER JOIN aca_Profesor pro on pro.IdEmpresa=mc.IdEmpresa and pro.IdProfesor=mc.IdProfesor
@@ -33,6 +33,7 @@ and c.IdJornada = @IdJornada
 and c.IdCurso = @IdCurso
 and c.IdParalelo = @IdParalelo
 and a.Estado = 1
+--and case when @IdCatalogoQuimestre = 6 then mc.PromedioFinalQ1 else mc.PromedioFinalQ2 end is not null
 
 GROUP BY mc.IdEmpresa, mc.IdMateria, mc.IdProfesor, c.IdAnio, c.IdSede, c.IdNivel, c.IdJornada, c.IdCurso, c.IdParalelo, a.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, 
-                  jc.OrdenCurso, cp.CodigoParalelo, cp.NomParalelo, cp.OrdenParalelo, pp.pe_nombreCompleto, cm.NomMateria, cm.OrdenMateria, ISNULL(mc.PromedioQ1,0), ISNULL(mc.PromedioQ2,0)
+                  jc.OrdenCurso, cp.CodigoParalelo, cp.NomParalelo, cp.OrdenParalelo, pp.pe_nombreCompleto, cm.NomMateria, cm.OrdenMateria

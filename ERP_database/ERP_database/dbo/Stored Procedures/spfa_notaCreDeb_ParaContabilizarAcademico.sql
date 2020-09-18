@@ -1,4 +1,5 @@
-﻿CREATE PROCEDURE [dbo].[spfa_notaCreDeb_ParaContabilizarAcademico]
+﻿
+CREATE PROCEDURE [dbo].[spfa_notaCreDeb_ParaContabilizarAcademico]
 (
 @IdEmpresa int,
 @IdSucursal int,
@@ -8,7 +9,7 @@
 AS
 SELECT isnull(ROW_NUMBER() OVER(ORDER BY ndnc.IdEmpresa),0) IdRow, ndnc.IdEmpresa, ndnc.IdSucursal, ndnc.IdBodega, ndnc.IdNota, cruce.secuencia, cruce.Valor_Aplicado, cruce.IdEmpresa_fac_nd_doc_mod, cruce.IdSucursal_fac_nd_doc_mod, cruce.IdBodega_fac_nd_doc_mod, 
                   cruce.IdCbteVta_fac_nd_doc_mod, cruce.vt_tipoDoc, ndnc.Serie1 + '-' + ndnc.Serie2 + '-' + ndnc.NumNota_Impresa AS NumNota_Impresa, ndnc.CreDeb, ncnd_resumen.SubtotalConDscto, ncnd_resumen.ValorIVA, ncnd_resumen.Total, 
-                  f.vt_serie1 + '-' + f.vt_serie2 + '-' + f.vt_NumFactura AS vt_NumFactura, ISNULL(ParamF.IdCtaCbleHaber, tn.IdCtaCble) AS IdCtaCbleHaber, ISNULL(ndnc.IdCtaCble_TipoNota, tn.IdCtaCbleCXC) AS IdCtaCbleDebe, ndnc.no_fecha, 
+                  f.vt_serie1 + '-' + f.vt_serie2 + '-' + f.vt_NumFactura AS vt_NumFactura, ISNULL(ParamF.IdCtaCbleDebe, tn.IdCtaCble) AS IdCtaCbleHaber,  tn.IdCtaCbleCXC AS IdCtaCbleDebe, ndnc.no_fecha, 
                   ndnc.sc_observacion, cp.pe_nombreCompleto AS NomCliente, ap.pe_nombreCompleto AS NomAlumno
 FROM     dbo.fa_TipoNota AS tn INNER JOIN
                   dbo.fa_notaCreDeb_resumen AS ncnd_resumen INNER JOIN

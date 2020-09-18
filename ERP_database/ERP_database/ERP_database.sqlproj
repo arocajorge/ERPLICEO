@@ -1421,6 +1421,8 @@
     <Build Include="Academico\Stored Procedures\SPACA_029.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_029_SinPromedios.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_029_PromediosBajos.sql" />
+    <Build Include="Academico\Stored Procedures\SPACA_030.sql" />
+    <Build Include="Academico\Stored Procedures\SPACA_014_MatriculaCalificacionCualitativa.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

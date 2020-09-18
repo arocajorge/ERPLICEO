@@ -1,5 +1,5 @@
 ﻿
-CREATE PROCEDURE [Academico].[SPACA_028_PromediosBajos]
+create PROCEDURE [Academico].[SPACA_029_SinPromedios]
 (
 @IdEmpresa int,
 @IdAnio int,
@@ -7,7 +7,8 @@ CREATE PROCEDURE [Academico].[SPACA_028_PromediosBajos]
 @IdNivel int,
 @IdJornada int,
 @IdCurso int,
-@IdParalelo int
+@IdParalelo int,
+@IdMateria int
 )
 AS
 SELECT mc.IdEmpresa, mc.IdMatricula, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, a.Codigo, p.pe_nombreCompleto, mc.IdMateria, cm.NomMateria, cm.OrdenMateriaGrupo, cm.OrdenMateria, 
@@ -32,4 +33,5 @@ and m.IdNivel = @IdNivel
 and m.IdJornada = @IdJornada
 and m.IdCurso = @IdCurso
 and m.IdParalelo = @IdParalelo
+and mc.IdMateria = @IdMateria
 and a.Estado = 1

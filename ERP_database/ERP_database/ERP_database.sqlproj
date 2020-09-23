@@ -1425,12 +1425,13 @@
     <Build Include="Academico\Stored Procedures\SPACA_014_MatriculaCalificacionCualitativa.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_032.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_031.sql" />
-    <Build Include="dbo\Tables\aca_AnioLetivo_Curso_Paralelo_Dece.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_029_Promedios.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_028_Supletorio.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_028_SinExamen.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_028_PromedioXSexo.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_028_PromedioConducta.sql" />
+    <Build Include="dbo\Tables\aca_AnioLectivo_Curso_Paralelo_Dece.sql" />
+    <Build Include="dbo\Views\vwaca_AnioLectivo_Curso_Paralelo_Dece.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

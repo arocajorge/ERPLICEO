@@ -1422,7 +1422,6 @@
     <Build Include="Academico\Stored Procedures\SPACA_029_SinPromedios.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_029_PromediosBajos.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_030.sql" />
-    <Build Include="Academico\Stored Procedures\SPACA_014_MatriculaCalificacionCualitativa.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_032.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_031.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_029_Promedios.sql" />

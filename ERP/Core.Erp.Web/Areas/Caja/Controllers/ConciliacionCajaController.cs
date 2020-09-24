@@ -336,10 +336,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
                     }
                 }
             }
-            if (!bus_periodo.ValidarFechaTransaccion(i_validar.IdEmpresa, i_validar.Fecha_fin, cl_enumeradores.eModulo.CAJA, Convert.ToInt32(SessionFixed.IdSucursal), ref msg))
-            {
-                return false;
-            }
+
             return true;
         }
         #endregion

@@ -23,6 +23,7 @@ namespace Core.Erp.Bus.Contabilidad
         tb_sucursal_Data data_sucursal = new tb_sucursal_Data();
         tb_sucursal_Info info_sucursal = new tb_sucursal_Info();
         #endregion
+
         public ats_Info get_info(int IdEmpresa, int IdPeriodo, int IdSucursal, int[] IntArray)
         {
             try

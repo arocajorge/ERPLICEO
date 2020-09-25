@@ -626,11 +626,115 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             }
         }
 
+        private byte[] GetPagoProvPB(ba_Archivo_Transferencia_Info info, string NombreArchivo)
+        {
+            try
+            {
+                System.IO.File.Delete(rutafile + NombreArchivo + ".txt");
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(rutafile + NombreArchivo + ".txt", true))
+                {
+                    var ListaA = info.Lst_det.Where(v => v.Valor > 0).GroupBy(q => new { q.num_cta_acreditacion, q.Secuencial_reg_x_proceso, q.pe_cedulaRuc, q.CodigoLegalBanco, q.IdTipoCta_acreditacion_cat, q.IdTipoDocumento, q.Nom_Beneficiario, q.pr_correo, q.pr_direccion }).Select(q => new
+                    {
+                        num_cta_acreditacion = q.Key.num_cta_acreditacion,
+                        Secuencial_reg_x_proceso = q.Key.Secuencial_reg_x_proceso,
+                        pe_cedulaRuc = q.Key.pe_cedulaRuc,
+                        CodigoLegalBanco = q.Key.CodigoLegalBanco,
+                        IdTipoCta_acreditacion_cat = q.Key.IdTipoCta_acreditacion_cat,
+                        IdTipoDocumento = q.Key.IdTipoDocumento,
+                        Nom_Beneficiario = q.Key.Nom_Beneficiario,
+                        pr_correo = q.Key.pr_correo,
+                        pr_direccion = q.Key.pr_direccion,
+                        Valor = q.Sum(g => g.Valor)
+                    }).ToList();
+
+                    var banco = bus_banco_cuenta.get_info(info.IdEmpresa, info.IdBanco);
+                    //foreach (var item in info.Lst_det.Where(v => v.Valor > 0).ToList())
+                    foreach (var item in ListaA)
+                    {
+                        string linea = "";
+                        double valor = Convert.ToDouble(item.Valor);
+                        double valorEntero = Math.Floor(valor);
+                        double valorDecimal = Convert.ToDouble((valor - valorEntero).ToString("N2")) * 100;
+
+                        linea += "PA\t";
+                        linea += string.IsNullOrEmpty(banco.ba_Num_Cuenta) ? "" : banco.ba_Num_Cuenta.PadLeft(11, '0') + "\t";
+                        linea += "\t";//Secuencial desde 1 solo aplica para pago en ventanilla
+                        linea += "\t";//COMPROBANTE DE PAGO
+                        linea += (string.IsNullOrEmpty(item.num_cta_acreditacion) ? item.pe_cedulaRuc.Trim() : item.num_cta_acreditacion.Trim()) + "\t";
+                        linea += "USD\t";
+                        linea += (valorEntero.ToString() + valorDecimal.ToString().PadLeft(2, '0')).PadLeft(13, '0') + "\t";
+                        linea += (string.IsNullOrEmpty(item.num_cta_acreditacion) ? "EFE" : "CTA") + "\t";
+                        linea += (string.IsNullOrEmpty(item.num_cta_acreditacion) ? "0036" : item.CodigoLegalBanco.ToString().PadLeft(4, '0')) + "\t";
+                        linea += (
+                            (
+                            string.IsNullOrEmpty(item.num_cta_acreditacion
+                            ) 
+                            || 
+                            string.IsNullOrEmpty(item.IdTipoCta_acreditacion_cat)
+                            ) ? "" : 
+                            (item.IdTipoCta_acreditacion_cat.Trim() == "COR") ? "CTE" : item.IdTipoCta_acreditacion_cat) + "\t";
+                        linea += string.IsNullOrEmpty(item.num_cta_acreditacion) ? "" : item.num_cta_acreditacion.PadLeft(11, '0') + "\t";
+                        linea += (item.IdTipoDocumento == "CED" ? "C" : (item.IdTipoDocumento == "RUC" ? "R" : "P")) + "\t";
+                        linea += item.pe_cedulaRuc.Trim() + "\t";
+                        linea += (string.IsNullOrEmpty(item.Nom_Beneficiario) ? "" : (item.Nom_Beneficiario.Length > 40 ? item.Nom_Beneficiario.Substring(0, 40) : item.Nom_Beneficiario.Trim())) + "\t";
+                        linea += (string.IsNullOrEmpty(item.pr_direccion) ? "" : (item.pr_direccion.Length > 40 ? item.pr_direccion.Substring(0, 40) : item.pr_direccion.Trim())) + "\t";
+                        linea += "\t";//Ciudad
+                        linea += "\t";//Telefono
+                        linea += "\t";//Localidad
+                        var Referencia = string.Empty;
+                        foreach (var refe in info.Lst_det.Where(q => q.pe_cedulaRuc == item.pe_cedulaRuc).ToList())
+                        {
+                            if (!string.IsNullOrEmpty(refe.Referencia))
+                                Referencia += ((string.IsNullOrEmpty(refe.Referencia) ? "" : "/") + refe.Referencia);
+                        }
+                        linea += (string.IsNullOrEmpty(Referencia) ? "" : (Referencia.Length > 200 ? Referencia.Substring(0, 200) : Referencia.Trim())) + "\t";
+                        //linea += (string.IsNullOrEmpty(item.Referencia) ? "" : (item.Referencia.Length > 200 ? item.Referencia.Substring(0, 200) : item.Referencia.Trim())) + "\t";
+                        linea += "|" + (string.IsNullOrEmpty(item.pr_correo) ? "" : (item.pr_correo.Trim().Length > 100 ? item.pr_correo.Trim().Substring(0, 100) : item.pr_correo.Trim())) + "\t";//Ref adicional
+
+                        file.WriteLine(linea);
+                    }
+                }
+                byte[] filebyte = System.IO.File.ReadAllBytes(rutafile + NombreArchivo + ".txt");
+                return filebyte;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public byte[] GetArchivo(ba_Archivo_Transferencia_Info info, string nombre_file)
         {
             try
             {
-                return GetMulticash(info, nombre_file);
+                var proceso = bus_procesos_bancarios.get_info(info.IdEmpresa, info.IdProceso_bancario);
+                if (proceso != null)
+                {
+                    switch (proceso.IdBanco)
+                    {
+                        case 4:
+                            switch (proceso.IdProceso_bancario_tipo)
+                            {
+                                case "MULTI_CASH":
+                                    return GetMulticash(info, nombre_file);
+                                    break;
+                            }
+                            break;
+                        case 16:
+                            switch (proceso.IdProceso_bancario_tipo)
+                            {
+                                case "PAGOPROVPB":
+                                    break;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                    return GetMulticash(info, nombre_file);
 
             }
             catch (Exception)

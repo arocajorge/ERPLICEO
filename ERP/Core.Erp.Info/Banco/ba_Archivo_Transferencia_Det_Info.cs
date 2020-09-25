@@ -41,6 +41,7 @@ namespace Core.Erp.Info.Banco
         public int? IdEmpresa_cxp { get; set; }
         public int? IdTipoCbte_cxp { get; set; }
         public decimal? IdCbteCble_cxp { get; set; }
+        public string pr_telefonos { get; set; }
         #endregion
 
     }

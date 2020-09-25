@@ -35,3 +35,7 @@ and m.IdCurso = @IdCurso
 and m.IdParalelo = @IdParalelo
 and mc.IdMateria = @IdMateria
 and a.Estado = 1
+AND NOT EXISTS(
+SELECT f.IdEmpresa FROM aca_AlumnoRetiro AS F
+where mc.IdEmpresa = f.IdEmpresa and m.IdMatricula = f.IdMatricula and f.Estado = 1
+)

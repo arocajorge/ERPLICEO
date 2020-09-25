@@ -1,5 +1,5 @@
 ﻿
-create PROCEDURE [Academico].[SPACA_028_ConductaBaja]
+CREATE PROCEDURE [Academico].[SPACA_028_ConductaBaja]
 (
 @IdEmpresa int,
 @IdAnio int,
@@ -29,3 +29,7 @@ and mat.IdJornada = @IdJornada
 and mat.IdCurso = @IdCurso
 and mat.IdParalelo = @IdParalelo
 and al.Estado = 1
+AND NOT EXISTS(
+SELECT f.IdEmpresa FROM aca_AlumnoRetiro AS F
+where mco.IdEmpresa = f.IdEmpresa and mat.IdMatricula = f.IdMatricula and f.Estado = 1
+)

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Core.Erp.Info.Contabilidad.ATS;
 using Core.Erp.Info.Contabilidad.ATS.ATS_Info;
 using Core.Erp.Data.General;
+using System.Xml;
+using System.ServiceModel;
 
 namespace Core.Erp.Data.Contabilidad
 {
@@ -356,7 +358,7 @@ namespace Core.Erp.Data.Contabilidad
                     return;
                 FechaInicio = FechaInicio.Date;
                 FechaFin = FechaFin.Date;
-
+                /*
                 WSFiladelfiaATS.WsSegaEcErpClient ClienteWS = new WSFiladelfiaATS.WsSegaEcErpClient();
                 var lst = ClienteWS.vw_importacion_ats_fixed(1, FechaInicio, FechaFin, "fixed", "785469");
                 if (lst == null)
@@ -365,10 +367,6 @@ namespace Core.Erp.Data.Contabilidad
                                  where fac.fe_factura >= FechaInicio
                                  && fac.fe_factura <= FechaFin
                                  && ((fac.cedulaRuc).Length > 9)
-                                 /*group fac by new
-                                 {
-                                     ID = fac.nu_ced_ruc.Trim()
-                                 } into g*/
                                  select new ATS_ventas_eventos
                                  {
                                      IdEmpresa = IdEmpresa,
@@ -407,7 +405,7 @@ namespace Core.Erp.Data.Contabilidad
                     Context.SaveChanges();
 
                     Context.SPATS_MigrarEventos();
-                }
+                }*/
             }
             catch (Exception ex)
             {
@@ -417,14 +415,16 @@ namespace Core.Erp.Data.Contabilidad
 
         private void Migrar_ats_Tecnologico(int IdEmpresa, string Ruc, DateTime FechaInicio, DateTime FechaFin, int IdPeriodo, int IdSucursal)
         {
+            /*
             try
             {
                 if (IdEmpresa != 3)
                     return;
                 FechaInicio = FechaInicio.Date;
                 FechaFin = FechaFin.Date;
-
+                
                 WSTecnologicoATS.WsSegaEcErpClient ClienteWS = new WSTecnologicoATS.WsSegaEcErpClient();
+                
                 var lst = ClienteWS.vw_importacion_ats_fixed(1, FechaInicio, FechaFin, "fixed", "fixed2020*");
                 if (lst == null)
                     return;
@@ -432,10 +432,6 @@ namespace Core.Erp.Data.Contabilidad
                                  where fac.fe_factura >= FechaInicio
                                  && fac.fe_factura <= FechaFin
                                  && ((fac.cedulaRuc).Length > 9)
-                                 /*group fac by new
-                                 {
-                                     ID = fac.nu_ced_ruc.Trim()
-                                 } into g*/
                                  select new ATS_ventas_eventos
                                  {
                                      IdEmpresa = IdEmpresa,
@@ -480,6 +476,7 @@ namespace Core.Erp.Data.Contabilidad
             {
 
             }
+    */
         }
     }
 }

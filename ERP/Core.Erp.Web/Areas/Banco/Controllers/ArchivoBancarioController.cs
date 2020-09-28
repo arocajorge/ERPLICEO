@@ -631,9 +631,10 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             try
             {
                 System.IO.File.Delete(rutafile + NombreArchivo + ".txt");
+                int Secuencia = 1;
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(rutafile + NombreArchivo + ".txt", true))
                 {
-                    var ListaA = info.Lst_det.Where(v => v.Valor > 0).GroupBy(q => new { q.num_cta_acreditacion, q.Secuencial_reg_x_proceso, q.pe_cedulaRuc, q.CodigoLegalBanco, q.IdTipoCta_acreditacion_cat, q.IdTipoDocumento, q.Nom_Beneficiario, q.pr_correo, q.pr_direccion }).Select(q => new
+                    var ListaA = info.Lst_det.Where(v => v.Valor > 0).GroupBy(q => new { q.num_cta_acreditacion, q.Secuencial_reg_x_proceso, q.pe_cedulaRuc, q.CodigoLegalBanco, q.IdTipoCta_acreditacion_cat, q.IdTipoDocumento, q.Nom_Beneficiario, q.pr_correo, q.pr_direccion, q.pr_telefonos }).Select(q => new
                     {
                         num_cta_acreditacion = q.Key.num_cta_acreditacion,
                         Secuencial_reg_x_proceso = q.Key.Secuencial_reg_x_proceso,
@@ -644,6 +645,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                         Nom_Beneficiario = q.Key.Nom_Beneficiario,
                         pr_correo = q.Key.pr_correo,
                         pr_direccion = q.Key.pr_direccion,
+                        pr_telefonos = q.Key.pr_telefonos,
                         Valor = q.Sum(g => g.Valor)
                     }).ToList();
 
@@ -658,7 +660,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 
                         linea += "PA\t";
                         linea += string.IsNullOrEmpty(banco.ba_Num_Cuenta) ? "" : banco.ba_Num_Cuenta.PadLeft(11, '0') + "\t";
-                        linea += "\t";//Secuencial desde 1 solo aplica para pago en ventanilla
+                        linea += (Secuencia++).ToString()+ "\t";//Secuencial desde 1 solo aplica para pago en ventanilla
                         linea += "\t";//COMPROBANTE DE PAGO
                         linea += (string.IsNullOrEmpty(item.num_cta_acreditacion) ? item.pe_cedulaRuc.Trim() : item.num_cta_acreditacion.Trim()) + "\t";
                         linea += "USD\t";
@@ -679,7 +681,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                         linea += (string.IsNullOrEmpty(item.Nom_Beneficiario) ? "" : (item.Nom_Beneficiario.Length > 40 ? item.Nom_Beneficiario.Substring(0, 40) : item.Nom_Beneficiario.Trim())) + "\t";
                         linea += (string.IsNullOrEmpty(item.pr_direccion) ? "" : (item.pr_direccion.Length > 40 ? item.pr_direccion.Substring(0, 40) : item.pr_direccion.Trim())) + "\t";
                         linea += "\t";//Ciudad
-                        linea += "\t";//Telefono
+                        linea += (string.IsNullOrEmpty(item.pr_telefonos) ? "" : item.pr_telefonos.Trim()) + "\t";//Telefono
                         linea += "\t";//Localidad
                         var Referencia = string.Empty;
                         foreach (var refe in info.Lst_det.Where(q => q.pe_cedulaRuc == item.pe_cedulaRuc).ToList())
@@ -726,6 +728,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                             switch (proceso.IdProceso_bancario_tipo)
                             {
                                 case "PAGOPROVPB":
+                                    return GetPagoProvPB(info, nombre_file);
                                     break;
                             }
                             break;
@@ -733,8 +736,8 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                             break;
                     }
                 }
-
                     return GetMulticash(info, nombre_file);
+                
 
             }
             catch (Exception)

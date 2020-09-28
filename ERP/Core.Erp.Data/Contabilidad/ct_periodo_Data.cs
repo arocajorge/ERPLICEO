@@ -343,7 +343,7 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "No existen parámetros para el módulo de compras";
                                 return false;
                             }
-
+                            /*
                             var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : param.DiasTransaccionesAFuturo));
                             var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
 
@@ -358,6 +358,7 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de compras";
                                 return false;
                             }
+                            */
                         }
                         CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "COMP" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
                         if (CierreModulo != null)
@@ -378,7 +379,7 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "No existen parámetros para el módulo de activo fijo";
                                 return false;
                             }
-
+                            /*
                             var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : param.DiasTransaccionesAFuturo));
                             var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
 
@@ -393,6 +394,7 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de activo fijo";
                                 return false;
                             }
+                            */
                         }
                         CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "ACTF" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
                         if (CierreModulo != null)
@@ -413,7 +415,7 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "No existen parámetros para el módulo de importación";
                                 return false;
                             }
-
+                            /*
                             var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : (param.DiasTransaccionesAFuturo==null ? 0 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
                             var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
 
@@ -422,6 +424,7 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "La fecha de la transacción no está permitida por los parámetros del módulo de recursos humanos";
                                 return false;
                             }
+                            */
                         }
                         CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "ROL" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
                         if (CierreModulo != null)
@@ -442,7 +445,7 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "No existen parámetros para el módulo de importación";
                                 return false;
                             }
-
+                            /*
                             var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : (param.DiasTransaccionesAFuturo == null ? 0 : Convert.ToInt32(param.DiasTransaccionesAFuturo))));
                             var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
 
@@ -470,7 +473,7 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "No existen parámetros para el módulo de contabilidad";
                                 return false;
                             }
-
+                            /*
                             var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : param.DiasTransaccionesAFuturo));
                             var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
 
@@ -485,6 +488,7 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de contabilidad";
                                 return false;
                             }
+                            */
                         }
                         CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "CONTA" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
                         if (CierreModulo != null)
@@ -505,7 +509,7 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "No existen parámetros para el módulo de caja";
                                 return false;
                             }
-
+                            /*
                             var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : param.DiasTransaccionesAFuturo));
                             var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
 
@@ -520,6 +524,7 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de caja";
                                 return false;
                             }
+                            */
                         }
                         CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "CAJ" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
                         if (CierreModulo != null)
@@ -540,7 +545,7 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "No existen parámetros para el módulo de bancos";
                                 return false;
                             }
-
+                            /*
                             var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : param.DiasTransaccionesAFuturo));
                             var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
 
@@ -555,6 +560,7 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de bancos";
                                 return false;
                             }
+                            */
                         }
                         CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "BAN" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
                         if (CierreModulo != null)
@@ -575,7 +581,7 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "No existen parámetros para el módulo de cuentas por cobrar";
                                 return false;
                             }
-
+                            /*
                             var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : param.DiasTransaccionesAFuturo));
                             var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
 
@@ -590,6 +596,7 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de cuentas por cobrar";
                                 return false;
                             }
+                            */
                         }
                         CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "CXC" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
                         if (CierreModulo != null)
@@ -610,7 +617,7 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "No existen parámetros para el módulo de cuentas por pagar";
                                 return false;
                             }
-
+                            /*
                             var FechaFutura = DateTime.Now.AddDays((param == null ? 0 : param.DiasTransaccionesAFuturo));
                             var FechaPasada = DateTime.Now.AddDays(-(param == null ? 0 : (param.DiasTransaccionesAPasado == null ? 99999 : Convert.ToInt32(param.DiasTransaccionesAPasado))));
 
@@ -625,6 +632,7 @@ namespace Core.Erp.Data.Contabilidad
                                 mensaje = "La fecha de la transacción es superior a la fecha permitida por los parámetros del módulo de cuentas por pagar";
                                 return false;
                             }
+                            */
                         }
                         CierreModulo = db_conta.ct_CierrePorModuloPorSucursal.Where(q => q.IdEmpresa == IdEmpresa && q.IdSucursal == IdSucursal && q.CodModulo == "CXP" && q.Cerrado).OrderByDescending(q => q.FechaFin).FirstOrDefault();
                         if (CierreModulo != null)

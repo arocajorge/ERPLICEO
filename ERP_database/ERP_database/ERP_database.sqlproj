@@ -1433,6 +1433,7 @@
     <Build Include="dbo\Views\vwaca_AnioLectivo_Curso_Paralelo_Dece.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_028_DECE.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_033.sql" />
+    <Build Include="Academico\Stored Procedures\SPACA_034.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

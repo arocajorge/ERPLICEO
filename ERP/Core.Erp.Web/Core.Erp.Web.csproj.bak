@@ -47,33 +47,34 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Charts.v17.2.Core, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.CodeParser.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Data.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.DataAccess.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.ExpressApp.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Office.v17.2.Core, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Pdf.v17.2.Core, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Persistent.Base.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.PivotGrid.v17.2.Core, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Printing.v17.2.Core, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.RichEdit.v17.2.Core, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.RichEdit.v17.2.Export, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Sparkline.v17.2.Core, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Utils.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.ASPxPivotGrid.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.ASPxThemes.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.ASPxTreeList.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.Mvc5.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.Resources.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Xpo.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraBars.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraCharts.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraEditors.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraGauges.v17.2.Core, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraReports.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraReports.v17.2.Web, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Charts.v19.1.Core, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.CodeParser.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Data.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.DataAccess.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.ExpressApp.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Office.v19.1.Core, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Pdf.v19.1.Core, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Persistent.Base.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.PivotGrid.v19.1.Core, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v19.1.Core, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.RichEdit.v19.1.Core, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.RichEdit.v19.1.Export, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Sparkline.v19.1.Core, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxPivotGrid.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxThemes.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxTreeList.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.Mvc5.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.Resources.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpo.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraBars.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraGauges.v19.1.Core, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v19.1.Web.WebForms, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v19.1.Web, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="ExcelDataReader, Version=3.4.2.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
       <HintPath>..\packages\ExcelDataReader.3.4.2\lib\net45\ExcelDataReader.dll</HintPath>
     </Reference>
@@ -117,13 +118,12 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -443,7 +443,10 @@
     <Compile Include="Areas\Reportes\Views\RRHHReportes\PivotGridDataOutputDemosHelper.cs" />
     <Compile Include="Areas\RRHH\Controllers\ActaFiniquitoController.cs" />
     <Compile Include="Areas\RRHH\Controllers\AjusteBeneficiosSocialesController.cs" />
+    <Compile Include="Areas\RRHH\Controllers\AjusteImpuestoRentaController.cs" />
+    <Compile Include="Areas\RRHH\Controllers\AjusteImpuestoRenta_OIController.cs" />
     <Compile Include="Areas\RRHH\Controllers\AjustesAnticipoController.cs" />
+    <Compile Include="Areas\RRHH\Controllers\AnticipoDeBeneficiosController.cs" />
     <Compile Include="Areas\RRHH\Controllers\ArchivosActualizacionSueldoController.cs" />
     <Compile Include="Areas\RRHH\Controllers\ArchivosTransferenciasController.cs" />
     <Compile Include="Areas\RRHH\Controllers\AreaController.cs" />
@@ -657,11 +660,35 @@
     <Compile Include="Reportes\Banco\BAN_011_Rpt.Designer.cs">
       <DependentUpon>BAN_011_Rpt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Banco\BAN_015_cta_bancaria_iglesia.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Banco\BAN_015_cta_bancaria_iglesia.Designer.cs">
+      <DependentUpon>BAN_015_cta_bancaria_iglesia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Banco\BAN_015_cta_bancaria_liceo.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Banco\BAN_015_cta_bancaria_liceo.Designer.cs">
+      <DependentUpon>BAN_015_cta_bancaria_liceo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\Banco\BAN_012_cta_bancaria.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reportes\Banco\BAN_012_cta_bancaria.Designer.cs">
       <DependentUpon>BAN_012_cta_bancaria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Banco\BAN_015_iglesia_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Banco\BAN_015_iglesia_Rpt.Designer.cs">
+      <DependentUpon>BAN_015_iglesia_Rpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Banco\BAN_015_liceo_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\Banco\BAN_015_liceo_Rpt.Designer.cs">
+      <DependentUpon>BAN_015_liceo_Rpt.cs</DependentUpon>
     </Compile>
     <Compile Include="Reportes\Banco\BAN_012_Rpt.cs">
       <SubType>Component</SubType>
@@ -986,6 +1013,12 @@
     </Compile>
     <Compile Include="Reportes\CuentasPorPagar\CXP_016_Rpt.Designer.cs">
       <DependentUpon>CXP_016_Rpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\CuentasPorPagar\CXP_017_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\CuentasPorPagar\CXP_017_Rpt.Designer.cs">
+      <DependentUpon>CXP_017_Rpt.cs</DependentUpon>
     </Compile>
     <Compile Include="Reportes\Facturacion\FAC_001_Rpt.cs">
       <SubType>Component</SubType>
@@ -1472,6 +1505,18 @@
     </Compile>
     <Compile Include="Reportes\RRHH\ROL_028_Rpt.Designer.cs">
       <DependentUpon>ROL_028_Rpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\RRHH\ROL_029_OI_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\RRHH\ROL_029_OI_Rpt.Designer.cs">
+      <DependentUpon>ROL_029_OI_Rpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\RRHH\ROL_029_Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\RRHH\ROL_029_Rpt.Designer.cs">
+      <DependentUpon>ROL_029_Rpt.cs</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -10183,7 +10228,6 @@
     <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\Modificar.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\Anular.cshtml" />
     <Content Include="Areas\CuentasPorPagar\Views\ConciliacionAnticipoProveedor\_CmbProveedor_readonly.cshtml" />
-    <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_006.cshtml" />
     <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_004.cshtml" />
     <Content Include="Areas\Contabilidad\Views\CierreAnual\Index.cshtml" />
     <Content Include="Areas\Contabilidad\Views\CierreAnual\Nuevo.cshtml" />
@@ -10211,7 +10255,30 @@
     <Content Include="Areas\RRHH\Views\PrestamosMasivos\Anular.cshtml" />
     <Content Include="Areas\RRHH\Views\DescargaDescuentoFacturacion\Nuevo.cshtml" />
     <Content Include="Areas\RRHH\Views\DescargaDescuentoFacturacion\_GridViewPartial_DescuentosEmpleado.cshtml" />
+    <Content Include="Areas\Reportes\Views\BancoReportes\BAN_015.cshtml" />
+    <Content Include="Areas\RRHH\Views\EmpleadoPorRubro\_CmbDivision.cshtml" />
+    <Content Include="Areas\RRHH\Views\EmpleadoPorRubro\_CmbArea.cshtml" />
+    <Content Include="Areas\RRHH\Views\AnticipoDeBeneficios\Index.cshtml" />
+    <Content Include="Areas\RRHH\Views\AnticipoDeBeneficios\_GridViewPartial_anticipo.cshtml" />
+    <Content Include="Areas\RRHH\Views\AnticipoDeBeneficios\Nuevo.cshtml" />
+    <Content Include="Areas\RRHH\Views\AnticipoDeBeneficios\_CmbEmpleado_anticipo.cshtml" />
+    <Content Include="Areas\RRHH\Views\AnticipoDeBeneficios\Modificar.cshtml" />
+    <Content Include="Areas\RRHH\Views\AnticipoDeBeneficios\Anular.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\Index.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\_GridViewPartial_ajuste.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\Nuevo.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\_GridViewPartial_ajuste_det.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\_CmbEmpleado.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta_OI\_CmbEmpleado.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta_OI\Nuevo.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta_OI\_GridViewPartial_AjusteImpuestoRenta_OI.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\Modificar.cshtml" />
+    <Content Include="Areas\Reportes\Views\RRHHReportes\ROL_029.cshtml" />
+    <Content Include="Areas\RRHH\Views\AjusteImpuestoRenta\Anular.cshtml" />
+    <Content Include="Areas\Reportes\Views\CuentasPorPagarReportes\CXP_017.cshtml" />
+    <Content Include="Areas\Reportes\Views\ContabilidadReportes\CONTA_006.cshtml" />
     <None Include="Properties\PublishProfiles\p1.pubxml" />
+    <None Include="Properties\PublishProfiles\perfil.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Areas\CuentasPorPagar\Views\Proveedor\Anular.cshtml" />
     <Content Include="Areas\RRHH\Views\HorasExtras\Index.cshtml" />
@@ -10402,8 +10469,20 @@
     <EmbeddedResource Include="Reportes\Banco\BAN_011_Rpt.resx">
       <DependentUpon>BAN_011_Rpt.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Banco\BAN_015_cta_bancaria_iglesia.resx">
+      <DependentUpon>BAN_015_cta_bancaria_iglesia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Banco\BAN_015_cta_bancaria_liceo.resx">
+      <DependentUpon>BAN_015_cta_bancaria_liceo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Banco\BAN_012_cta_bancaria.resx">
       <DependentUpon>BAN_012_cta_bancaria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Banco\BAN_015_iglesia_Rpt.resx">
+      <DependentUpon>BAN_015_iglesia_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Banco\BAN_015_liceo_Rpt.resx">
+      <DependentUpon>BAN_015_liceo_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Banco\BAN_012_Rpt.resx">
       <DependentUpon>BAN_012_Rpt.cs</DependentUpon>
@@ -10566,6 +10645,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\CuentasPorPagar\CXP_016_Rpt.resx">
       <DependentUpon>CXP_016_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\CuentasPorPagar\CXP_017_Rpt.resx">
+      <DependentUpon>CXP_017_Rpt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Facturacion\FAC_001_Rpt.resx">
       <DependentUpon>FAC_001_Rpt.cs</DependentUpon>
@@ -10810,9 +10892,12 @@
     <EmbeddedResource Include="Reportes\RRHH\ROL_028_Rpt.resx">
       <DependentUpon>ROL_028_Rpt.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
+    <EmbeddedResource Include="Reportes\RRHH\ROL_029_OI_Rpt.resx">
+      <DependentUpon>ROL_029_OI_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\RRHH\ROL_029_Rpt.resx">
+      <DependentUpon>ROL_029_Rpt.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="VBIDE">
@@ -10840,7 +10925,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>27043</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

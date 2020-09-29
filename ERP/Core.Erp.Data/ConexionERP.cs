@@ -18,7 +18,7 @@ namespace Core.Erp.Data
 
             //string user = "sa";
             //string ip = "localhost";
-            //string password = "admin*2016";            
+            //string password = "admin*2016";
             //string InitialCatalog = "DBERP_ACADEMICO";
 
             return "data source=" + ip + ";initial catalog=" + InitialCatalog + ";user id=" + user + ";password=" + password + ";MultipleActiveResultSets=True;";

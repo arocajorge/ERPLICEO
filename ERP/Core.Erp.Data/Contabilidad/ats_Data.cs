@@ -8,6 +8,10 @@ using Core.Erp.Info.Contabilidad.ATS.ATS_Info;
 using Core.Erp.Data.General;
 using System.Xml;
 using System.ServiceModel;
+using System.Net.Http;
+using System.Net;
+using Newtonsoft.Json;
+using Core.Erp.Info.Contabilidad;
 
 namespace Core.Erp.Data.Contabilidad
 {
@@ -358,40 +362,46 @@ namespace Core.Erp.Data.Contabilidad
                     return;
                 FechaInicio = FechaInicio.Date;
                 FechaFin = FechaFin.Date;
-                /*
-                WSFiladelfiaATS.WsSegaEcErpClient ClienteWS = new WSFiladelfiaATS.WsSegaEcErpClient();
-                var lst = ClienteWS.vw_importacion_ats_fixed(1, FechaInicio, FechaFin, "fixed", "785469");
-                if (lst == null)
-                    return;
-                var queryLinq = (from fac in lst
-                                 where fac.fe_factura >= FechaInicio
-                                 && fac.fe_factura <= FechaFin
-                                 && ((fac.cedulaRuc).Length > 9)
-                                 select new ATS_ventas_eventos
-                                 {
-                                     IdEmpresa = IdEmpresa,
-                                     IdPeriodo = IdPeriodo,
-                                     idCliente = fac.cedulaRuc.Trim(),//g.Key.ID,
-                                     parteRel = "NO",
-                                     DenoCli = "",
-                                     tipoComprobante = "18",
-                                     tipoEm = "F",
-                                     numeroComprobantes = 1,//g.Count(),
-                                     baseNoGraIva = 0,
-                                     baseImponible = Convert.ToDecimal(fac.valorBaseIva),
-                                     baseImpGrav = 0, //g.Sum(q=> q.subtotal ?? 0),
-                                     montoIva = 0,//g.Sum(q => q.v_iva ?? 0),
-                                     montoIce = 0,
-                                     valorRetIva = 0,
-                                     valorRetRenta = 0,
-                                     formaPago = "01",
-                                     codEstab = "001",
-                                     ventasEstab = Convert.ToDecimal(fac.valorBaseIva),//g.Sum(q => q.subtotal ?? 0),
-                                     IdSucursal = 1,
-                                     tpIdCliente = fac.cedulaRuc.Length == 13 ? "04" : fac.cedulaRuc.Length == 10 ? "05" : "0",//g.Key.ID.Length == 13 ? "04" : g.Key.ID.Length == 10 ? "05" : "0",
-                                     tipoCliente = fac.cedulaRuc.Length == 13 ? "02" : fac.cedulaRuc.Length == 10 ? "01" : "0",//g.Key.ID.Length == 13 ? "02" : g.Key.ID.Length == 10 ? "01" : "0"
-                                 }).ToList();
-
+                
+                List<ATS_ventas_eventos> Lista = new List<ATS_ventas_eventos>();
+                string id_url = "http://www.ciudaddefiladelfia.com/WsConsultaFacturas/api/Ats/Facturas?empresa=1&desde=" + FechaInicio.Day.ToString("00") + "/" + FechaInicio.Month.ToString("00") + "/" + FechaInicio.Year.ToString() + "&hasta=" + FechaFin.Day.ToString("00") + "/" + FechaFin.Month.ToString("00") + "/" + FechaFin.Year.ToString() + "&usuario=fixed&password=785469";
+                WebRequest requst = WebRequest.Create(id_url);
+                requst.Method = "GET";
+                HttpWebResponse response = requst.GetResponse() as HttpWebResponse;
+                var encod = ASCIIEncoding.ASCII;
+                using (var readchat = new System.IO.StreamReader(response.GetResponseStream(), encod))
+                {
+                    string chatresult = readchat.ReadToEnd();
+                    var json = JsonConvert.DeserializeObject<List<FacturasTecnologico_Info>>(chatresult);
+                    int Secuencia = 1;
+                    foreach (var item in json)
+                    {
+                        Lista.Add(new ATS_ventas_eventos
+                        {
+                            IdEmpresa = IdEmpresa,
+                            IdPeriodo = IdPeriodo,
+                            idCliente = item.cedulaRuc.Trim(),//g.Key.ID,
+                            parteRel = "NO",
+                            DenoCli = "",
+                            tipoComprobante = "18",
+                            tipoEm = "F",
+                            numeroComprobantes = 1,//g.Count(),
+                            baseNoGraIva = 0,
+                            baseImponible = Convert.ToDecimal(item.valorBaseIva),
+                            baseImpGrav = 0, //g.Sum(q=> q.subtotal ?? 0),
+                            montoIva = 0,//g.Sum(q => q.v_iva ?? 0),
+                            montoIce = 0,
+                            valorRetIva = 0,
+                            valorRetRenta = 0,
+                            formaPago = "01",
+                            codEstab = "001",
+                            ventasEstab = Convert.ToDecimal(item.valorBaseIva),//g.Sum(q => q.subtotal ?? 0),
+                            IdSucursal = 1,
+                            tpIdCliente = item.cedulaRuc.Length == 13 ? "04" : item.cedulaRuc.Length == 10 ? "05" : "0",//g.Key.ID.Length == 13 ? "04" : g.Key.ID.Length == 10 ? "05" : "0",
+                            tipoCliente = item.cedulaRuc.Length == 13 ? "02" : item.cedulaRuc.Length == 10 ? "01" : "0",//g.Key.ID.Length == 13 ? "02" : g.Key.ID.Length == 10 ? "01" : "0"
+                        });
+                    }
+                }
 
                 using (Entities_contabilidad Context = new Entities_contabilidad())
                 {
@@ -399,74 +409,9 @@ namespace Core.Erp.Data.Contabilidad
                     Context.ATS_ventas_eventos.RemoveRange(lst_ccg);
 
                     int Secuencia = Context.ATS_ventas.Count() == 0 ? 1 : (Context.ATS_ventas.Max(q => q.Secuencia) + 1);
-                    queryLinq.ForEach(q => q.Secuencia = Secuencia++);
+                    Lista.ForEach(q => q.Secuencia = Secuencia++);
                     Context.ATS_ventas_eventos.RemoveRange(Context.ATS_ventas_eventos.ToList());
-                    Context.ATS_ventas_eventos.AddRange(queryLinq);
-                    Context.SaveChanges();
-
-                    Context.SPATS_MigrarEventos();
-                }*/
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
-
-        private void Migrar_ats_Tecnologico(int IdEmpresa, string Ruc, DateTime FechaInicio, DateTime FechaFin, int IdPeriodo, int IdSucursal)
-        {
-            /*
-            try
-            {
-                if (IdEmpresa != 3)
-                    return;
-                FechaInicio = FechaInicio.Date;
-                FechaFin = FechaFin.Date;
-                
-                WSTecnologicoATS.WsSegaEcErpClient ClienteWS = new WSTecnologicoATS.WsSegaEcErpClient();
-                
-                var lst = ClienteWS.vw_importacion_ats_fixed(1, FechaInicio, FechaFin, "fixed", "fixed2020*");
-                if (lst == null)
-                    return;
-                var queryLinq = (from fac in lst
-                                 where fac.fe_factura >= FechaInicio
-                                 && fac.fe_factura <= FechaFin
-                                 && ((fac.cedulaRuc).Length > 9)
-                                 select new ATS_ventas_eventos
-                                 {
-                                     IdEmpresa = IdEmpresa,
-                                     IdPeriodo = IdPeriodo,
-                                     idCliente = fac.cedulaRuc.Trim(),//g.Key.ID,
-                                     parteRel = "NO",
-                                     DenoCli = "",
-                                     tipoComprobante = "18",
-                                     tipoEm = "F",
-                                     numeroComprobantes = 1,//g.Count(),
-                                     baseNoGraIva = 0,
-                                     baseImponible = Convert.ToDecimal(fac.valorBaseIva),
-                                     baseImpGrav = 0, //g.Sum(q=> q.subtotal ?? 0),
-                                     montoIva = 0,//g.Sum(q => q.v_iva ?? 0),
-                                     montoIce = 0,
-                                     valorRetIva = 0,
-                                     valorRetRenta = 0,
-                                     formaPago = "01",
-                                     codEstab = "001",
-                                     ventasEstab = Convert.ToDecimal(fac.valorBaseIva),//g.Sum(q => q.subtotal ?? 0),
-                                     IdSucursal = 1,
-                                     tpIdCliente = fac.cedulaRuc.Length == 13 ? "04" : fac.cedulaRuc.Length == 10 ? "05" : "0",//g.Key.ID.Length == 13 ? "04" : g.Key.ID.Length == 10 ? "05" : "0",
-                                     tipoCliente = fac.cedulaRuc.Length == 13 ? "02" : fac.cedulaRuc.Length == 10 ? "01" : "0",//g.Key.ID.Length == 13 ? "02" : g.Key.ID.Length == 10 ? "01" : "0"
-                                 }).ToList();
-
-
-                using (Entities_contabilidad Context = new Entities_contabilidad())
-                {
-                    var lst_ccg = Context.ATS_ventas_eventos.ToList();
-                    Context.ATS_ventas_eventos.RemoveRange(lst_ccg);
-
-                    int Secuencia = Context.ATS_ventas.Count() == 0 ? 1 : (Context.ATS_ventas.Max(q => q.Secuencia) + 1);
-                    queryLinq.ForEach(q => q.Secuencia = Secuencia++);
-                    Context.ATS_ventas_eventos.RemoveRange(Context.ATS_ventas_eventos.ToList());
-                    Context.ATS_ventas_eventos.AddRange(queryLinq);
+                    Context.ATS_ventas_eventos.AddRange(Lista);
                     Context.SaveChanges();
 
                     Context.SPATS_MigrarEventos();
@@ -476,7 +421,77 @@ namespace Core.Erp.Data.Contabilidad
             {
 
             }
-    */
+        }
+
+        private void Migrar_ats_Tecnologico(int IdEmpresa, string Ruc, DateTime FechaInicio, DateTime FechaFin, int IdPeriodo, int IdSucursal)
+        {
+
+            try
+            {
+                if (IdEmpresa != 3)
+                    return;
+                FechaInicio = FechaInicio.Date;
+                FechaFin = FechaFin.Date;
+
+                List<ATS_ventas_eventos> Lista = new List<ATS_ventas_eventos>();
+                string id_url = "https://www.tecnologicoliceocristiano.edu.ec/WsConsultaFacturas/api/Ats/Facturas?empresa=1&desde="+FechaInicio.Day.ToString("00")+"/"+FechaInicio.Month.ToString("00")+"/"+FechaInicio.Year.ToString()+ "&hasta=" + FechaFin.Day.ToString("00") + "/" + FechaFin.Month.ToString("00") + "/" + FechaFin.Year.ToString() + "&usuario=fixed&password=fixed2020*";
+                WebRequest requst = WebRequest.Create(id_url);
+                requst.Method = "GET";
+                HttpWebResponse response = requst.GetResponse() as HttpWebResponse;
+                var encod = ASCIIEncoding.ASCII;
+                using (var readchat = new System.IO.StreamReader(response.GetResponseStream(), encod))
+                {
+                    string chatresult = readchat.ReadToEnd();
+                    var json = JsonConvert.DeserializeObject<List<FacturasTecnologico_Info>>(chatresult);
+                    int Secuencia = 1;
+                    foreach (var item in json)
+                    {
+                        Lista.Add(new ATS_ventas_eventos
+                        {
+                            IdEmpresa = IdEmpresa,
+                            IdPeriodo = IdPeriodo,
+                            idCliente = item.cedulaRuc.Trim(),//g.Key.ID,
+                            parteRel = "NO",
+                            DenoCli = "",
+                            tipoComprobante = "18",
+                            tipoEm = "F",
+                            numeroComprobantes = 1,//g.Count(),
+                            baseNoGraIva = 0,
+                            baseImponible = Convert.ToDecimal(item.valorBaseIva),
+                            baseImpGrav = 0, //g.Sum(q=> q.subtotal ?? 0),
+                            montoIva = 0,//g.Sum(q => q.v_iva ?? 0),
+                            montoIce = 0,
+                            valorRetIva = 0,
+                            valorRetRenta = 0,
+                            formaPago = "01",
+                            codEstab = "001",
+                            ventasEstab = Convert.ToDecimal(item.valorBaseIva),//g.Sum(q => q.subtotal ?? 0),
+                            IdSucursal = 1,
+                            tpIdCliente = item.cedulaRuc.Length == 13 ? "04" : item.cedulaRuc.Length == 10 ? "05" : "0",//g.Key.ID.Length == 13 ? "04" : g.Key.ID.Length == 10 ? "05" : "0",
+                            tipoCliente = item.cedulaRuc.Length == 13 ? "02" : item.cedulaRuc.Length == 10 ? "01" : "0",//g.Key.ID.Length == 13 ? "02" : g.Key.ID.Length == 10 ? "01" : "0"
+                        });
+                    }
+                }
+
+                using (Entities_contabilidad Context = new Entities_contabilidad())
+                {
+                    var lst_ccg = Context.ATS_ventas_eventos.ToList();
+                    Context.ATS_ventas_eventos.RemoveRange(lst_ccg);
+
+                    int Secuencia = Context.ATS_ventas.Count() == 0 ? 1 : (Context.ATS_ventas.Max(q => q.Secuencia) + 1);
+                    Lista.ForEach(q => q.Secuencia = Secuencia++);
+                    Context.ATS_ventas_eventos.RemoveRange(Context.ATS_ventas_eventos.ToList());
+                    Context.ATS_ventas_eventos.AddRange(Lista);
+                    Context.SaveChanges();
+
+                    Context.SPATS_MigrarEventos();
+                }
+                
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }

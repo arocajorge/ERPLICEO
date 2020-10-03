@@ -1,7 +1,4 @@
-﻿
-
-
-CREATE PROCEDURE [Academico].[SPACA_014]
+﻿CREATE PROCEDURE [Academico].[SPACA_014]
 (
 @IdEmpresa int,
 @IdAnio int,
@@ -16,25 +13,29 @@ CREATE PROCEDURE [Academico].[SPACA_014]
 AS
 SELECT mc.IdEmpresa, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, mc.IdMatricula, mc.IdMateria, 
 dbo.aca_AnioLectivo_Curso_Materia.NomMateria, dbo.aca_AnioLectivo_Curso_Materia.NomMateriaArea, dbo.aca_AnioLectivo_Curso_Materia.NomMateriaGrupo, 
-                  dbo.aca_AnioLectivo_Curso_Materia.EsObligatorio, dbo.aca_AnioLectivo_Curso_Materia.OrdenMateriaArea, dbo.aca_AnioLectivo_Curso_Materia.OrdenMateriaGrupo, dbo.aca_AnioLectivo_Curso_Materia.OrdenMateria, 
+                  dbo.aca_AnioLectivo_Curso_Materia.EsObligatorio, dbo.aca_AnioLectivo_Curso_Materia.OrdenMateriaArea, dbo.aca_AnioLectivo_Curso_Materia.OrdenMateriaGrupo, dbo.aca_AnioLectivo_Curso_Materia.OrdenMateria, dbo.aca_AnioLectivo_Curso_Materia.IdCatalogoTipoCalificacion,
 alu.Codigo, p.pe_nombreCompleto, AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, 
                   nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo, cp.NomParalelo, cp.OrdenParalelo, 
-				  				  pins.pe_nombreCompleto as NombreInspector, pre.pe_nombreCompleto as NombreRepresentante,
-				  mc.CalificacionP1, ep1.Codigo AS EquivalenciaPromedioP1,
-				  mc.CalificacionP2, ep2.Codigo AS EquivalenciaPromedioP2,
-				  mc.CalificacionP3, ep3.Codigo AS EquivalenciaPromedioP3,
-				  mc.PromedioQ1, 
-				  mc.ExamenQ1, epEQ1.Codigo AS EquivalenciaPromedioEQ1,
-				  mc.PromedioFinalQ1, epQ1.Codigo AS EquivalenciaPromedioQ1,
-				  mc.CalificacionP4, ep4.Codigo AS EquivalenciaPromedioP4,
-                  mc.CalificacionP5, ep5.Codigo AS EquivalenciaPromedioP5,
-				  mc.CalificacionP6, ep6.Codigo AS EquivalenciaPromedioP6,
-				  mc.PromedioQ2, 
-				  mc.ExamenQ2, epEQ2.Codigo AS EquivalenciaPromedioEQ2,
-				  mc.PromedioFinalQ2, epQ2.Codigo AS EquivalenciaPromedioQ2,
-				  round(cast(((isnull(mc.PromedioFinalQ1,0)+isnull(mc.PromedioFinalQ2,0))/2) as float),2) as PromedioQuimestralFinal, 
-				  mc.ExamenMejoramiento, mc.CampoMejoramiento, mc.ExamenSupletorio, mc.ExamenRemedial, mc.ExamenGracia, 
-				  mc.PromedioFinal, mc.IdEquivalenciaPromedioPF, epPF.Codigo AS EquivalenciaPromedioPF
+					pins.pe_nombreCompleto as NombreInspector, pre.pe_nombreCompleto as NombreRepresentante,
+				  cast(mc.CalificacionP1 as varchar) CalificacionP1, ep1.Codigo AS EquivalenciaPromedioP1,
+				  cast(mc.CalificacionP2 as varchar) CalificacionP2, ep2.Codigo AS EquivalenciaPromedioP2,
+				  cast(mc.CalificacionP3 as varchar) CalificacionP3, ep3.Codigo AS EquivalenciaPromedioP3,
+				  cast(mc.PromedioQ1 as varchar) PromedioQ1, 
+				  cast(mc.ExamenQ1 as varchar) ExamenQ1, epEQ1.Codigo AS EquivalenciaPromedioEQ1,
+				  cast(mc.PromedioFinalQ1 as varchar) PromedioFinalQ1, epQ1.Codigo AS EquivalenciaPromedioQ1,
+				  cast(mc.CalificacionP4 as varchar) CalificacionP4, ep4.Codigo AS EquivalenciaPromedioP4,
+                  cast(mc.CalificacionP5 as varchar) CalificacionP5, ep5.Codigo AS EquivalenciaPromedioP5,
+				  cast(mc.CalificacionP6 as varchar) CalificacionP6, ep6.Codigo AS EquivalenciaPromedioP6,
+				  cast(mc.PromedioQ2 as varchar) PromedioQ2, 
+				  cast(mc.ExamenQ2 as varchar) ExamenQ2, epEQ2.Codigo AS EquivalenciaPromedioEQ2,
+				  cast(mc.PromedioFinalQ2 as varchar) PromedioFinalQ2, epQ2.Codigo AS EquivalenciaPromedioQ2,
+				  cast((round(cast(((isnull(mc.PromedioFinalQ1,0)+isnull(mc.PromedioFinalQ2,0))/2) as float),2)) as varchar) as PromedioQuimestralFinal, 
+				  cast(mc.ExamenMejoramiento as varchar) ExamenMejoramiento, 
+				  cast(mc.CampoMejoramiento as varchar) CampoMejoramiento, 
+				  cast(mc.ExamenSupletorio as varchar) ExamenSupletorio, 
+				  cast(mc.ExamenRemedial as varchar) ExamenRemedial, 
+				  cast(mc.ExamenGracia as varchar) ExamenGracia, 
+				  cast(mc.PromedioFinal as varchar) PromedioFinal, mc.IdEquivalenciaPromedioPF, epPF.Codigo AS EquivalenciaPromedioPF
 FROM     dbo.aca_MatriculaCalificacion AS mc INNER JOIN
                   dbo.aca_Matricula AS m ON mc.IdEmpresa = m.IdEmpresa AND mc.IdMatricula = m.IdMatricula INNER JOIN
                   dbo.aca_Alumno AS alu ON m.IdEmpresa = alu.IdEmpresa AND m.IdAlumno = alu.IdAlumno INNER JOIN
@@ -83,22 +84,22 @@ UNION ALL
 
 --- CALIFICACIONES CUALITATIVAS  
 select a.IdEmpresa, a.IdAnio, a.IdSede, a.IdNivel, a.IdJornada, a.IdCurso, a.IdParalelo, a.IdAlumno, a.IdMatricula, a.IdMateria, 
-a.NomMateria, a.NomMateriaArea, a.NomMateriaGrupo, a.EsObligatorio, a.OrdenMateriaArea, a.OrdenMateriaGrupo, a.OrdenMateria,
+a.NomMateria, a.NomMateriaArea, a.NomMateriaGrupo, a.EsObligatorio, a.OrdenMateriaArea, a.OrdenMateriaGrupo, a.OrdenMateria,a.IdCatalogoTipoCalificacion,
 a.Codigo, a.NombreAlumno, a.Descripcion,a.NomSede, a.NomNivel, a.OrdenNivel, a.NomJornada, 
 a.OrdenJornada, a.NomCurso, a.OrdenCurso, a.CodigoParalelo, a.NomParalelo, a.OrdenParalelo, 
 a.NombreInspector, a.NombreRepresentante,
-max(a.CalificacionP1) CalificacionP1, null EquivalenciaP1,
-max(a.CalificacionP2) CalificacionP2, null EquivalenciaP2,
-max(a.CalificacionP3) CalificacionP3, null EquivalenciaP3,
+cast(max(a.CalificacionP1) as varchar) CalificacionP1, null EquivalenciaP1,
+cast(max(a.CalificacionP2) as varchar) CalificacionP2, null EquivalenciaP2,
+cast(max(a.CalificacionP3) as varchar) CalificacionP3, null EquivalenciaP3,
 null PromedioQ1, null ExamenQ1, null EquivalenciaPromedioEQ1, null PromedioFinalQ1, null EquivalenciaPromedioQ1,
-max(a.CalificacionP4) CalificacionP4,null EquivalenciaP4, 
-max(a.CalificacionP5) CalificacionP5, null EquivalenciaP5, 
-max(a.CalificacionP6) CalificacionP6, null EquivalenciaP6,
+cast(max(a.CalificacionP4) as varchar) CalificacionP4,null EquivalenciaP4, 
+cast(max(a.CalificacionP5) as varchar) CalificacionP5, null EquivalenciaP5, 
+cast(max(a.CalificacionP6) as varchar) CalificacionP6, null EquivalenciaP6,
 null PromedioQ2, null ExamenQ2, null EquivalenciaPromedioEQ2, null PromedioFinalQ2, null EquivalenciaPromedioQ2,
 null PromedioQuimestralFinal, null ExamenMejoramiento, null CampoMejoramiento, null ExamenSupletorio, null ExamenRemedial, null ExamenGracia, 
 null PromedioFinal, null IdEquivalenciaPromedioPF, null EquivalenciaPromedioPF
 from(
-SELECT a.IdEmpresa, a.IdMatricula, a.IdMateria, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, MC.NomMateria, MC.NomMateriaArea, MC.NomMateriaGrupo, MC.EsObligatorio, MC.OrdenMateria, 
+SELECT a.IdEmpresa, a.IdMatricula, a.IdMateria, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, MC.NomMateria, MC.NomMateriaArea, MC.NomMateriaGrupo, MC.EsObligatorio, MC.OrdenMateria, MC.IdCatalogoTipoCalificacion,
                   MC.OrdenMateriaGrupo, MC.OrdenMateriaArea, alu.Codigo, p.pe_nombreCompleto NombreAlumno, AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo, 
                   cp.NomParalelo, cp.OrdenParalelo, pins.pe_nombreCompleto AS NombreInspector, pre.pe_nombreCompleto NombreRepresentante,
 				  CASE WHEN IdCatalogoParcial = 28 THEN acc.Codigo END AS CalificacionP1, 
@@ -144,7 +145,7 @@ and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.
 ) a
 group by
 a.IdEmpresa, a.IdAnio, a.IdSede, a.IdNivel, a.IdJornada, a.IdCurso, a.IdParalelo, a.IdAlumno, a.IdMatricula, a.IdMateria, 
-a.NomMateria, a.NomMateriaArea, a.NomMateriaGrupo, a.EsObligatorio, a.OrdenMateriaArea, a.OrdenMateriaGrupo, a.OrdenMateria,
+a.NomMateria, a.NomMateriaArea, a.NomMateriaGrupo, a.EsObligatorio, a.OrdenMateriaArea, a.OrdenMateriaGrupo, a.OrdenMateria, a.IdCatalogoTipoCalificacion,
 a.Codigo, a.NombreAlumno, a.Descripcion,a.NomSede, a.NomNivel, a.OrdenNivel, a.NomJornada, 
 a.OrdenJornada, a.NomCurso, a.OrdenCurso, a.CodigoParalelo, a.NomParalelo, a.OrdenParalelo, a.NombreInspector, a.NombreRepresentante
 -----------------

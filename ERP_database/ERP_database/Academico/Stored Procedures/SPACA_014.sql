@@ -74,8 +74,8 @@ where mc.IdEmpresa = @IdEmpresa
 and m.IdAnio = @IdAnio
 and m.IdSede = @IdSede
 and m.IdJornada = @IdJornada
-and m.IdNivel = case when @IdNivel = 0 then m.IdNivel else @IdNivel end
-and m.IdCurso = case when @IdCurso = 0 then m.IdCurso else @IdCurso end
+and m.IdNivel = @IdNivel
+and m.IdCurso = @IdCurso
 and m.IdParalelo = case when @IdParalelo = 0 then m.IdParalelo else @IdParalelo end
 and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
 and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
@@ -91,13 +91,15 @@ a.NombreInspector, a.NombreRepresentante,
 cast(max(a.CalificacionP1) as varchar) CalificacionP1, null EquivalenciaP1,
 cast(max(a.CalificacionP2) as varchar) CalificacionP2, null EquivalenciaP2,
 cast(max(a.CalificacionP3) as varchar) CalificacionP3, null EquivalenciaP3,
-null PromedioQ1, null ExamenQ1, null EquivalenciaPromedioEQ1, null PromedioFinalQ1, null EquivalenciaPromedioQ1,
+null PromedioQ1, null ExamenQ1, null EquivalenciaPromedioEQ1, 
+cast(max(a.PromedioFinalQ1) as varchar) PromedioFinalQ1, null EquivalenciaPromedioQ1,
 cast(max(a.CalificacionP4) as varchar) CalificacionP4,null EquivalenciaP4, 
 cast(max(a.CalificacionP5) as varchar) CalificacionP5, null EquivalenciaP5, 
 cast(max(a.CalificacionP6) as varchar) CalificacionP6, null EquivalenciaP6,
-null PromedioQ2, null ExamenQ2, null EquivalenciaPromedioEQ2, null PromedioFinalQ2, null EquivalenciaPromedioQ2,
+null PromedioQ2, null ExamenQ2, null EquivalenciaPromedioEQ2, 
+cast(max(a.PromedioFinalQ2) as varchar) PromedioFinalQ2, null EquivalenciaPromedioQ2,
 null PromedioQuimestralFinal, null ExamenMejoramiento, null CampoMejoramiento, null ExamenSupletorio, null ExamenRemedial, null ExamenGracia, 
-null PromedioFinal, null IdEquivalenciaPromedioPF, null EquivalenciaPromedioPF
+cast(max(a.PromedioFinal) as varchar) PromedioFinal, null IdEquivalenciaPromedioPF, null EquivalenciaPromedioPF
 from(
 SELECT a.IdEmpresa, a.IdMatricula, a.IdMateria, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, MC.NomMateria, MC.NomMateriaArea, MC.NomMateriaGrupo, MC.EsObligatorio, MC.OrdenMateria, MC.IdCatalogoTipoCalificacion,
                   MC.OrdenMateriaGrupo, MC.OrdenMateriaArea, alu.Codigo, p.pe_nombreCompleto NombreAlumno, AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo, 
@@ -107,7 +109,10 @@ SELECT a.IdEmpresa, a.IdMatricula, a.IdMateria, m.IdAnio, m.IdSede, m.IdNivel, m
                   CASE WHEN IdCatalogoParcial = 30 THEN acc.Codigo END AS CalificacionP3, 
 				  CASE WHEN IdCatalogoParcial = 31 THEN acc.Codigo END AS CalificacionP4, 
 				  CASE WHEN IdCatalogoParcial = 32 THEN acc.Codigo END AS CalificacionP5, 
-                  CASE WHEN IdCatalogoParcial = 33 THEN acc.Codigo END AS CalificacionP6
+                  CASE WHEN IdCatalogoParcial = 33 THEN acc.Codigo END AS CalificacionP6,
+				  pq1.Codigo as PromedioFinalQ1,
+				  pq2.Codigo as PromedioFinalQ2,
+				  pf.Codigo as PromedioFinal
 FROM     dbo.aca_MatriculaCalificacionCualitativa AS a INNER JOIN
                   dbo.aca_Matricula AS m ON m.IdEmpresa = a.IdEmpresa AND m.IdMatricula = a.IdMatricula INNER JOIN
                   dbo.aca_Alumno AS alu ON m.IdEmpresa = alu.IdEmpresa AND m.IdAlumno = alu.IdAlumno INNER JOIN
@@ -132,13 +137,17 @@ LEFT JOIN
 					from aca_AlumnoRetiro as r
 					where r.Estado = 1
 					) as ret on m.IdEmpresa =ret.IdEmpresa and m.IdMatricula = ret.IdMatricula
+left join aca_MatriculaCalificacionCualitativaPromedio pr on pr.IdEmpresa = a.IdEmpresa and pr.IdMatricula=a.IdMatricula and pr.IdMateria=a.IdMateria
+left join aca_AnioLectivoCalificacionCualitativa pq1 on pq1.IdEmpresa=pr.IdEmpresa and pq1.IdAnio=m.IdAnio and pq1.IdCalificacionCualitativa=pr.IdCalificacionCualitativaQ1
+left join aca_AnioLectivoCalificacionCualitativa pq2 on pq2.IdEmpresa=pr.IdEmpresa and pq2.IdAnio=m.IdAnio and pq2.IdCalificacionCualitativa=pr.IdCalificacionCualitativaQ2
+left join aca_AnioLectivoCalificacionCualitativa pf on pf.IdEmpresa=pr.IdEmpresa and pf.IdAnio=m.IdAnio and pf.IdCalificacionCualitativa=pr.IdCalificacionCualitativaFinal
 --WHERE  (a.IdEmpresa = 1) AND (m.IdAnio = 1) AND (m.IdSede = 1) AND (m.IdNivel = 4) AND (m.IdJornada = 1) AND (m.IdCurso = 7) AND (m.IdParalelo = 1)
 where mc.IdEmpresa = @IdEmpresa 
 and m.IdAnio = @IdAnio
 and m.IdSede = @IdSede
 and m.IdJornada = @IdJornada
-and m.IdNivel = case when @IdNivel = 0 then m.IdNivel else @IdNivel end
-and m.IdCurso = case when @IdCurso = 0 then m.IdCurso else @IdCurso end
+and m.IdNivel = @IdNivel
+and m.IdCurso = @IdCurso
 and m.IdParalelo = case when @IdParalelo = 0 then m.IdParalelo else @IdParalelo end
 and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
 and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end

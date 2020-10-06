@@ -1434,6 +1434,12 @@
     <Build Include="Academico\Stored Procedures\SPACA_028_DECE.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_033.sql" />
     <Build Include="Academico\Stored Procedures\SPACA_034.sql" />
+    <Build Include="dbo\Tables\aca_Tematica.sql" />
+    <Build Include="dbo\Tables\aca_MatriculaCalificacionParticipacion.sql" />
+    <Build Include="dbo\Tables\aca_MatriculaCalificacionCualitativaPromedio.sql" />
+    <Build Include="dbo\Tables\aca_CampoAccion.sql" />
+    <Build Include="dbo\Tables\aca_AnioLectivo_Tematica.sql" />
+    <Build Include="dbo\Views\vwaca_Tematica.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

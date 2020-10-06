@@ -11,7 +11,7 @@
     [CalificacionP3]        NUMERIC (18, 2) NULL,
     [CalificacionP4]        NUMERIC (18, 2) NULL,
     [PromedioQ2]            NUMERIC (18, 2) NULL,
-    [PromedioFinal]         NCHAR (10)      NULL,
+    [PromedioFinal]         NUMERIC (18, 2) NULL,
     [IdUsuarioCreacion]     VARCHAR (200)   NULL,
     [FechaCreacion]         DATETIME        NULL,
     [IdUsuarioModificacion] VARCHAR (200)   NULL,
@@ -25,6 +25,8 @@
     CONSTRAINT [FK_aca_MatriculaCalificacionParticipacion_aca_Profesor] FOREIGN KEY ([IdEmpresa], [IdProfesor]) REFERENCES [dbo].[aca_Profesor] ([IdEmpresa], [IdProfesor]),
     CONSTRAINT [FK_aca_MatriculaCalificacionParticipacion_aca_Tematica] FOREIGN KEY ([IdEmpresa], [IdTematica]) REFERENCES [dbo].[aca_Tematica] ([IdEmpresa], [IdTematica])
 );
+
+
 
 
 

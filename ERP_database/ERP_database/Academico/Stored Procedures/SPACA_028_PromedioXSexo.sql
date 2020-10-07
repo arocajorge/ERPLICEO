@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [Academico].[SPACA_028_PromedioXSexo]
+﻿CREATE PROCEDURE [Academico].[SPACA_028_PromedioXSexo]
 (
 @IdEmpresa int,
 @IdAnio int,
@@ -11,7 +10,7 @@ CREATE PROCEDURE [Academico].[SPACA_028_PromedioXSexo]
 )
 AS
 SELECT A.IdEmpresa, A.Sexo, SUM(A.CantQ1) CantQ1,SUM(A.CantQ2) CantQ2, 
-AVG(A.PromedioFinalQ1) PromedioFinalQ1, SUM(A.PromedioFinalQ2) PromedioFinalQ2
+dbo.BankersRounding(AVG(A.PromedioFinalQ1),2) PromedioFinalQ1, dbo.BankersRounding(avg(A.PromedioFinalQ2),2) PromedioFinalQ2
 FROM (
 select a.IdEmpresa, a.IdMatricula, a.IdAlumno, a.IdAnio, a.IdSede, a.IdNivel, a.IdJornada, a.IdCurso, a.IdParalelo,
 case when c.pe_sexo = 'SEXO_FEM' THEN 'Mujer' else 'Hombre' end as Sexo, 

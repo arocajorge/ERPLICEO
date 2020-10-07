@@ -5,6 +5,9 @@
     [NomSede]               VARCHAR (500) NOT NULL,
     [Direccion]             VARCHAR (MAX) NULL,
     [NombreRector]          VARCHAR (500) NULL,
+    [TelefonoRector]        VARCHAR (50)  NULL,
+    [CelularRector]         VARCHAR (50)  NULL,
+    [CorreoRector]          VARCHAR (200) NULL,
     [NombreSecretaria]      VARCHAR (500) NULL,
     [Estado]                BIT           NOT NULL,
     [IdUsuarioCreacion]     VARCHAR (200) NULL,
@@ -17,4 +20,6 @@
     CONSTRAINT [PK_aca_Sede] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdSede] ASC),
     CONSTRAINT [FK_aca_Sede_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])
 );
+
+
 

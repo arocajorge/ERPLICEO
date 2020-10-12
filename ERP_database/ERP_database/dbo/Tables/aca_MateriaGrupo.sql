@@ -3,6 +3,7 @@
     [IdMateriaGrupo]        INT           NOT NULL,
     [NomMateriaGrupo]       VARCHAR (500) NOT NULL,
     [OrdenMateriaGrupo]     INT           NOT NULL,
+    [PromediarGrupo]        BIT           NULL,
     [Estado]                BIT           NOT NULL,
     [IdUsuarioCreacion]     VARCHAR (200) NULL,
     [FechaCreacion]         DATETIME      NULL,
@@ -13,4 +14,6 @@
     [MotivoAnulacion]       VARCHAR (MAX) NULL,
     CONSTRAINT [PK_aca_MateriaGrupo] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdMateriaGrupo] ASC)
 );
+
+
 

@@ -3,7 +3,8 @@ AS
 SELECT dbo.aca_AnioLectivo_Curso_Materia.IdEmpresa, dbo.aca_AnioLectivo_Curso_Materia.IdAnio, dbo.aca_AnioLectivo_Curso_Materia.IdSede, dbo.aca_AnioLectivo_Curso_Materia.IdNivel, dbo.aca_AnioLectivo_Curso_Materia.IdJornada, 
                   dbo.aca_AnioLectivo_Curso_Materia.IdCurso, dbo.aca_AnioLectivo_Curso_Materia.IdMateria, dbo.aca_Materia.IdMateriaGrupo, dbo.aca_Materia.IdMateriaArea, dbo.aca_AnioLectivo_Curso_Materia.NomMateria, 
                   dbo.aca_AnioLectivo_Curso_Materia.NomMateriaArea, dbo.aca_AnioLectivo_Curso_Materia.NomMateriaGrupo, dbo.aca_AnioLectivo_Curso_Materia.EsObligatorio, dbo.aca_AnioLectivo_Curso_Materia.OrdenMateria, 
-                  dbo.aca_AnioLectivo_Curso_Materia.OrdenMateriaGrupo, dbo.aca_AnioLectivo_Curso_Materia.OrdenMateriaArea, dbo.aca_AnioLectivo_Curso_Materia.IdCatalogoTipoCalificacion
+                  dbo.aca_AnioLectivo_Curso_Materia.OrdenMateriaGrupo, dbo.aca_AnioLectivo_Curso_Materia.OrdenMateriaArea, dbo.aca_AnioLectivo_Curso_Materia.IdCatalogoTipoCalificacion, 
+                  dbo.aca_AnioLectivo_Curso_Materia.PromediarGrupo
 FROM     dbo.aca_AnioLectivo_Curso_Materia INNER JOIN
                   dbo.aca_Materia ON dbo.aca_AnioLectivo_Curso_Materia.IdEmpresa = dbo.aca_Materia.IdEmpresa AND dbo.aca_AnioLectivo_Curso_Materia.IdMateria = dbo.aca_Materia.IdMateria
 GO
@@ -90,7 +91,7 @@ Begin DesignProperties =
                Right = 292
             End
             DisplayFlags = 280
-            TopColumn = 4
+            TopColumn = 6
          End
          Begin Table = "aca_Materia"
             Begin Extent = 
@@ -140,6 +141,8 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Curso_Materia';
+
+
 
 
 

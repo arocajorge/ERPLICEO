@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [Academico].[SPACA_033]
+﻿CREATE PROCEDURE [Academico].[SPACA_033]
 (
 @IdEmpresa int,
 @IdAnio int,
@@ -29,7 +28,7 @@ pp.pe_nombreCompleto as NombreProfesor,
 				  mc.PromedioQ2, 
 				  mc.ExamenQ2, epEQ2.Codigo AS EquivalenciaPromedioEQ2,
 				  mc.PromedioFinalQ2, epQ2.Codigo AS EquivalenciaPromedioQ2,
-				  round(cast(((isnull(mc.PromedioFinalQ1,0)+isnull(mc.PromedioFinalQ2,0))/2) as float),2) as PromedioQuimestralFinal, 
+				  round(cast(((mc.PromedioFinalQ1 + mc.PromedioFinalQ2)/2) as float),2) as PromedioQuimestralFinal, 
 				  mc.ExamenMejoramiento, mc.CampoMejoramiento, mc.ExamenSupletorio, mc.ExamenRemedial, mc.ExamenGracia, 
 				  mc.PromedioFinal, mc.IdEquivalenciaPromedioPF, epPF.Codigo AS EquivalenciaPromedioPF
 FROM     dbo.aca_MatriculaCalificacion AS mc INNER JOIN

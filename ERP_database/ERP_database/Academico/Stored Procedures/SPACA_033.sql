@@ -28,7 +28,9 @@ pp.pe_nombreCompleto as NombreProfesor,
 				  mc.PromedioQ2, 
 				  mc.ExamenQ2, epEQ2.Codigo AS EquivalenciaPromedioEQ2,
 				  mc.PromedioFinalQ2, epQ2.Codigo AS EquivalenciaPromedioQ2,
-				  round(cast(((mc.PromedioFinalQ1 + mc.PromedioFinalQ2)/2) as float),2) as PromedioQuimestralFinal, 
+				  mc.PromedioQuimestres as PromedioQuimestres_PF,
+				  case when (mc.ExamenMejoramiento is not null) then mc.PromedioFinal
+					else  mc.PromedioQuimestres end as Promedio_PR, 
 				  mc.ExamenMejoramiento, mc.CampoMejoramiento, mc.ExamenSupletorio, mc.ExamenRemedial, mc.ExamenGracia, 
 				  mc.PromedioFinal, mc.IdEquivalenciaPromedioPF, epPF.Codigo AS EquivalenciaPromedioPF
 FROM     dbo.aca_MatriculaCalificacion AS mc INNER JOIN
@@ -90,7 +92,7 @@ max(a.CalificacionP4) CalificacionP4,null EquivalenciaP4,
 max(a.CalificacionP5) CalificacionP5, null EquivalenciaP5, 
 max(a.CalificacionP6) CalificacionP6, null EquivalenciaP6,
 null PromedioQ2, null ExamenQ2, null EquivalenciaPromedioEQ2, null PromedioFinalQ2, null EquivalenciaPromedioQ2,
-null PromedioQuimestralFinal, null ExamenMejoramiento, null CampoMejoramiento, null ExamenSupletorio, null ExamenRemedial, null ExamenGracia, 
+null PromedioQuimestralFinal, null PromedioMejoramiento, null ExamenMejoramiento, null CampoMejoramiento, null ExamenSupletorio, null ExamenRemedial, null ExamenGracia, 
 null PromedioFinal, null IdEquivalenciaPromedioPF, null EquivalenciaPromedioPF
 from(
 SELECT a.IdEmpresa, a.IdMatricula, a.IdMateria, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, MC.NomMateria, MC.NomMateriaArea, MC.NomMateriaGrupo, MC.EsObligatorio, MC.OrdenMateria, 

@@ -29,6 +29,7 @@
     [IdEquivalenciaPromedioQ2]  INT             NULL,
     [CausaQ2]                   VARCHAR (MAX)   NULL,
     [ResolucionQ2]              VARCHAR (MAX)   NULL,
+    [PromedioQuimestres]        NUMERIC (18, 2) NULL,
     [ExamenMejoramiento]        NUMERIC (18, 2) NULL,
     [CampoMejoramiento]         VARCHAR (50)    NULL,
     [ExamenSupletorio]          NUMERIC (18, 2) NULL,
@@ -39,6 +40,8 @@
     CONSTRAINT [PK_aca_MatriculaCalificacion] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdMatricula] ASC, [IdMateria] ASC),
     CONSTRAINT [FK_aca_MatriculaCalificacion_aca_Matricula] FOREIGN KEY ([IdEmpresa], [IdMatricula]) REFERENCES [dbo].[aca_Matricula] ([IdEmpresa], [IdMatricula])
 );
+
+
 
 
 

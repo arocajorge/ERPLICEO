@@ -30,7 +30,9 @@ cast(dbo.BankersRounding((mc.PromedioQ2*0.80),2) as varchar) PorcentajePromedioQ
 cast(dbo.BankersRounding((mc.ExamenQ2 * 0.20),2) as varchar) PorcentajeExamenQ2,
 cast(mc.ExamenQ2 as varchar) ExamenQ2, epEQ2.Codigo AS EquivalenciaPromedioEQ2,
 cast(mc.PromedioFinalQ2 as varchar) PromedioFinalQ2, epQ2.Codigo AS EquivalenciaPromedioQ2,
-cast((round(cast(((isnull(mc.PromedioFinalQ1,0)+isnull(mc.PromedioFinalQ2,0))/2) as float),2)) as varchar) as PromedioQuimestralFinal, 
+cast(mc.PromedioQuimestres as varchar) as PromedioQuimestres_PF, 
+case when (mc.ExamenMejoramiento is not null) then cast(mc.PromedioFinal as varchar)
+else  cast(mc.PromedioQuimestres as varchar) end as Promedio_PR, 
 cast(mc.ExamenMejoramiento as varchar) ExamenMejoramiento, 
 cast(mc.CampoMejoramiento as varchar) CampoMejoramiento, 
 cast(mc.ExamenSupletorio as varchar) ExamenSupletorio, 
@@ -98,7 +100,7 @@ cast(max(a.CalificacionP5) as varchar) CalificacionP5, null EquivalenciaP5,
 cast(max(a.CalificacionP6) as varchar) CalificacionP6, null EquivalenciaP6,
 null PorcentajePromedioQ2, null PorcentajeExamenQ2,null ExamenQ2, null EquivalenciaPromedioEQ2, 
 cast(max(a.PromedioFinalQ2) as varchar) PromedioFinalQ2, null EquivalenciaPromedioQ2,
-null PromedioQuimestralFinal, null ExamenMejoramiento, null CampoMejoramiento, null ExamenSupletorio, null ExamenRemedial, null ExamenGracia, 
+null PromedioQuimestres_PF, null Promedio_PR, null ExamenMejoramiento, null CampoMejoramiento, null ExamenSupletorio, null ExamenRemedial, null ExamenGracia, 
 cast(max(a.PromedioFinal) as varchar) PromedioFinal, null IdEquivalenciaPromedioPF, null EquivalenciaPromedioPF
 from(
 SELECT a.IdEmpresa, a.IdMatricula, a.IdMateria, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, MC.NomMateria, 

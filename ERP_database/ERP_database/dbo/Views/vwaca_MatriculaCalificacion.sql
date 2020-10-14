@@ -2,7 +2,7 @@
 AS
 SELECT mc.IdEmpresa, mc.IdMatricula, m.IdAlumno, a.Codigo, per.pe_nombreCompleto AS pe_nombreCompletoAlumno, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, mc.IdMateria, mc.IdProfesor, pprof.pe_nombreCompleto, 
                   mc.CalificacionP1, mc.CalificacionP2, mc.CalificacionP3, mc.PromedioQ1, mc.ExamenQ1, mc.PromedioFinalQ1, mc.CausaQ1, mc.ResolucionQ1, mc.CalificacionP4, mc.CalificacionP5, mc.CalificacionP6, mc.PromedioQ2, mc.ExamenQ2, 
-                  mc.PromedioFinalQ2, mc.CausaQ2, mc.ResolucionQ2, mc.ExamenMejoramiento, mc.CampoMejoramiento, mc.ExamenSupletorio, mc.ExamenRemedial, mc.ExamenGracia, mc.PromedioFinal, equiv.Descripcion, 
+                  mc.PromedioFinalQ2, mc.CausaQ2, mc.ResolucionQ2, mc.PromedioQuimestres, mc.ExamenMejoramiento, mc.CampoMejoramiento, mc.ExamenSupletorio, mc.ExamenRemedial, mc.ExamenGracia, mc.PromedioFinal, equiv.Descripcion, 
                   equiv.Codigo AS CodigoEquivalencia, mc.IdEquivalenciaPromedioP1, mc.IdEquivalenciaPromedioP2, mc.IdEquivalenciaPromedioP3, mc.IdEquivalenciaPromedioEQ1, mc.IdEquivalenciaPromedioQ1, mc.IdEquivalenciaPromedioP4, 
                   mc.IdEquivalenciaPromedioP5, mc.IdEquivalenciaPromedioP6, mc.IdEquivalenciaPromedioEQ2, mc.IdEquivalenciaPromedioQ2, mc.IdEquivalenciaPromedioPF
 FROM     dbo.tb_persona AS pprof INNER JOIN
@@ -104,7 +104,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[22] 4[39] 2[26] 3) )"
+         Configuration = "(H (1[32] 4[30] 2[26] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -239,6 +239,8 @@ Begin DesignProperties =
             End
             DisplayFlags = 280
             TopColumn = ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_MatriculaCalificacion';
+
+
 
 
 

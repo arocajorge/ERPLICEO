@@ -1,4 +1,5 @@
-﻿CREATE PROCEDURE [Academico].[SPACA_013]
+﻿
+CREATE PROCEDURE [Academico].[SPACA_013]
 (
 @IdEmpresa int,
 @IdAnio int,
@@ -14,10 +15,10 @@
 AS
 SELECT mp.IdEmpresa, mp.IdMatricula, mp.IdMateria, mp.IdCatalogoParcial, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, 
                   jc.OrdenCurso, cp.CodigoParalelo, cp.NomParalelo, cp.OrdenParalelo, m.IdAlumno, p.pe_nombreCompleto AS NombreAlumno, a.Codigo AS CodigoAlumno, p.pe_cedulaRuc, cm.NomMateria, cm.NomMateriaArea, cm.NomMateriaGrupo, 
-                  cm.EsObligatorio, cm.OrdenMateria, cm.OrdenMateriaGrupo, cm.OrdenMateriaArea, c.NomCatalogo, AN.Descripcion, mp.Calificacion1, mp.Calificacion2, mp.Calificacion3, mp.Calificacion4, mp.Remedial1, mp.Remedial2, mp.Evaluacion, 
+                  cm.EsObligatorio, cm.OrdenMateria, cm.OrdenMateriaGrupo, cm.OrdenMateriaArea,ct.NomCatalogoTipo, c.NomCatalogo, AN.Descripcion, mp.Calificacion1, mp.Calificacion2, mp.Calificacion3, mp.Calificacion4, mp.Remedial1, mp.Remedial2, mp.Evaluacion, 
                   equiv.Letra, equiv.Calificacion, mp.MotivoCalificacion, mp.AccionRemedial, 
                   CASE WHEN mp.IdCatalogoParcial = 28 THEN prom.CalificacionP1 WHEN mp.IdCatalogoParcial = 29 THEN prom.CalificacionP2 WHEN mp.IdCatalogoParcial = 30 THEN prom.CalificacionP3 WHEN mp.IdCatalogoParcial = 31 THEN prom.CalificacionP4
-                   WHEN mp.IdCatalogoParcial = 32 THEN prom.CalificacionP5 WHEN mp.IdCatalogoParcial = 33 THEN prom.CalificacionP6 END AS PromedioParcial,
+                   WHEN mp.IdCatalogoParcial = 32 THEN prom.CalificacionP5 WHEN mp.IdCatalogoParcial = 33 THEN prom.CalificacionP6 END AS PromedioParcial,EP.Codigo CodigoEquivalenciaPromedio,
 EquivM.Secuencia as SecuenciaPromedioConducta, EquivM.Letra as LetraPromedioConducta, cp.IdProfesorTutor,pp.pe_nombreCompleto as NombreTutor, pre.pe_nombreCompleto as NombreRepresentante
 FROM     dbo.aca_MatriculaConducta AS mc RIGHT OUTER JOIN
                   dbo.aca_AnioLectivo_Curso_Materia AS cm INNER JOIN
@@ -29,7 +30,12 @@ FROM     dbo.aca_MatriculaConducta AS mc RIGHT OUTER JOIN
                   dbo.aca_MatriculaCalificacion AS prom ON mp.IdEmpresa = prom.IdEmpresa AND mp.IdMatricula = prom.IdMatricula AND mp.IdMateria = prom.IdMateria LEFT OUTER JOIN
                   dbo.aca_AnioLectivoConductaEquivalencia AS equiv ON m.IdEmpresa = equiv.IdEmpresa AND m.IdAnio = equiv.IdAnio AND mp.Conducta = equiv.Secuencia LEFT OUTER JOIN
                   dbo.aca_AnioLectivo AS AN ON m.IdEmpresa = AN.IdEmpresa AND m.IdAnio = AN.IdAnio LEFT OUTER JOIN
+                  dbo.aca_AnioLectivoEquivalenciaPromedio AS EP ON m.IdEmpresa = EP.IdEmpresa AND m.IdAnio = EP.IdAnio AND 
+                  EP.IdEquivalenciaPromedio = CASE WHEN mp.IdCatalogoParcial = 28 THEN prom.IdEquivalenciaPromedioP1 ELSE CASE WHEN mp.IdCatalogoParcial = 29 THEN prom.IdEquivalenciaPromedioP2 ELSE CASE WHEN mp.IdCatalogoParcial = 30
+                   THEN prom.IdEquivalenciaPromedioP3 ELSE CASE WHEN mp.IdCatalogoParcial = 31 THEN prom.IdEquivalenciaPromedioP4 ELSE CASE WHEN mp.IdCatalogoParcial = 32 THEN prom.IdEquivalenciaPromedioP5 ELSE CASE WHEN mp.IdCatalogoParcial
+                   = 33 THEN prom.IdEquivalenciaPromedioP6 ELSE NULL END END END END END END LEFT OUTER JOIN
                   dbo.aca_Catalogo AS c ON mp.IdCatalogoParcial = c.IdCatalogo LEFT OUTER JOIN
+                  dbo.aca_CatalogoTipo AS ct ON c.IdCatalogoTipo = ct.IdCatalogoTipo LEFT OUTER JOIN
                   dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn RIGHT OUTER JOIN
                   dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel RIGHT OUTER JOIN
                   dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN

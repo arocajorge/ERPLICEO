@@ -40,7 +40,7 @@ and m.IdSede = @IdSede
 and m.IdNivel = @IdNivel
 and m.IdJornada = @IdJornada
 and m.IdCurso = @IdCurso
-and m.IdParalelo = case when @IdParalelo = 0 then m.IdParalelo else @IdParalelo end
+and m.IdParalelo = @IdParalelo
 and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
 and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
 ---PROMEDIO MATERIAS CUALITATIVAS--
@@ -99,7 +99,7 @@ and m.IdSede = @IdSede
 and m.IdJornada = @IdJornada
 and m.IdNivel = @IdNivel
 and m.IdCurso = @IdCurso
-and m.IdParalelo = case when @IdParalelo = 0 then m.IdParalelo else @IdParalelo end
+and m.IdParalelo = @IdParalelo
 and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
 and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
 ) a
@@ -151,7 +151,7 @@ and m.IdSede = @IdSede
 and m.IdNivel = @IdNivel
 and m.IdJornada = @IdJornada
 and m.IdCurso = @IdCurso
-and m.IdParalelo = case when @IdParalelo = 0 then m.IdParalelo else @IdParalelo end
+and m.IdParalelo = @IdParalelo
 and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
 and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
 and cm.PromediarGrupo = 0
@@ -189,7 +189,45 @@ and m.IdSede = @IdSede
 and m.IdNivel = @IdNivel
 and m.IdJornada = @IdJornada
 and m.IdCurso = @IdCurso
-and m.IdParalelo = case when @IdParalelo = 0 then m.IdParalelo else @IdParalelo end
+and m.IdParalelo = @IdParalelo
+and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
+and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
+and cm.PromediarGrupo = 0
+and cm.IdCatalogoTipoCalificacion=40
+)
+---PROMEDIO DE LOS 2 QUIMESTRES---
+UNION ALL 
+(
+SELECT mc.IdEmpresa, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno,  mc.IdMatricula,mc.IdMateria, 
+CM.NomMateria,CM.NomMateriaGrupo,CM.OrdenMateria, CM.OrdenMateriaGrupo, CM.PromediarGrupo,CM.IdCatalogoTipoCalificacion,
+alu.Codigo, p.pe_nombreCompleto, AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, 
+nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo, cp.NomParalelo, cp.OrdenParalelo, 
+CAST(mc.PromedioQuimestres as varchar) Calificacion, CAST(mc.PromedioQuimestres AS numeric(18,2)) AS CalificacionNumerica, 'PROMEDIO' as Columna, 3 OrdenColumna
+FROM     dbo.aca_MatriculaCalificacion AS mc INNER JOIN
+dbo.aca_Matricula AS m ON mc.IdEmpresa = m.IdEmpresa AND mc.IdMatricula = m.IdMatricula INNER JOIN
+dbo.aca_Alumno AS alu ON m.IdEmpresa = alu.IdEmpresa AND m.IdAlumno = alu.IdAlumno INNER JOIN
+dbo.tb_persona AS p ON alu.IdPersona = p.IdPersona INNER JOIN
+dbo.aca_AnioLectivo_Curso_Materia CM ON m.IdEmpresa = CM.IdEmpresa AND m.IdAnio = CM.IdAnio AND m.IdSede = CM.IdSede AND 
+m.IdNivel = CM.IdNivel AND m.IdJornada = CM.IdJornada AND m.IdCurso = CM.IdCurso AND 
+mc.IdMateria = CM.IdMateria 
+LEFT OUTER JOIN
+dbo.aca_AnioLectivo AS AN ON m.IdEmpresa = AN.IdEmpresa AND m.IdAnio = AN.IdAnio LEFT OUTER JOIN
+dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn RIGHT OUTER JOIN
+dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel RIGHT OUTER JOIN
+dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
+dbo.aca_AnioLectivo_Curso_Paralelo AS cp ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND jc.IdCurso = cp.IdCurso ON 
+m.IdEmpresa = cp.IdEmpresa AND m.IdAnio = cp.IdAnio AND m.IdSede = cp.IdSede AND m.IdNivel = cp.IdNivel AND m.IdJornada = cp.IdJornada AND m.IdCurso = cp.IdCurso AND m.IdParalelo = cp.IdParalelo 
+LEFT OUTER JOIN
+    (SELECT IdEmpresa, IdMatricula
+    FROM      dbo.aca_AlumnoRetiro AS r
+    WHERE   (Estado = 1)) AS ret ON m.IdEmpresa = ret.IdEmpresa AND m.IdMatricula = ret.IdMatricula
+where mc.IdEmpresa = @IdEmpresa 
+and m.IdAnio = @IdAnio
+and m.IdSede = @IdSede
+and m.IdNivel = @IdNivel
+and m.IdJornada = @IdJornada
+and m.IdCurso = @IdCurso
+and m.IdParalelo = @IdParalelo
 and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
 and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
 and cm.PromediarGrupo = 0
@@ -212,7 +250,7 @@ else case when mc.ExamenRemedial >0then CAST(mc.ExamenRemedial as numeric(18,2))
 else case when mc.ExamenSupletorio>0 then CAST(mc.ExamenSupletorio as numeric(18,2)) else null end
 end 
 end CalificacionNumerica,
-'EXAMEN SUPLETORIO' as Columna, 3 OrdenColumna
+'SUPLETORIO' as Columna, 4 OrdenColumna
 FROM     dbo.aca_MatriculaCalificacion AS mc INNER JOIN
 dbo.aca_Matricula AS m ON mc.IdEmpresa = m.IdEmpresa AND mc.IdMatricula = m.IdMatricula INNER JOIN
 dbo.aca_Alumno AS alu ON m.IdEmpresa = alu.IdEmpresa AND m.IdAlumno = alu.IdAlumno INNER JOIN
@@ -237,20 +275,20 @@ and m.IdSede = @IdSede
 and m.IdNivel = @IdNivel
 and m.IdJornada = @IdJornada
 and m.IdCurso = @IdCurso
-and m.IdParalelo = case when @IdParalelo = 0 then m.IdParalelo else @IdParalelo end
+and m.IdParalelo = @IdParalelo
 and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
 and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
 and cm.PromediarGrupo = 0
 and cm.IdCatalogoTipoCalificacion=40
 )
--- PROMEDIO DE MATERIAS QUE NO SE PROMEDIAN
+-- PROMEDIO FINAL DE MATERIAS QUE NO SE PROMEDIAN
 UNION ALL 
 (
 SELECT mc.IdEmpresa, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno,  mc.IdMatricula,mc.IdMateria, 
 CM.NomMateria,CM.NomMateriaGrupo,CM.OrdenMateria, CM.OrdenMateriaGrupo, CM.PromediarGrupo,CM.IdCatalogoTipoCalificacion,
 alu.Codigo, p.pe_nombreCompleto, AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, 
 nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo, cp.NomParalelo, cp.OrdenParalelo, 
-CAST(mc.PromedioFinal as varchar) Calificacion, CAST(mc.PromedioFinal AS numeric(18,2)) AS CalificacionNumerica, 'PROMEDIO' as Columna, 4 OrdenColumna
+CAST(mc.PromedioFinal as varchar) Calificacion, CAST(mc.PromedioFinal AS numeric(18,2)) AS CalificacionNumerica, 'PROMEDIO FINAL' as Columna, 5 OrdenColumna
 FROM     dbo.aca_MatriculaCalificacion AS mc INNER JOIN
 dbo.aca_Matricula AS m ON mc.IdEmpresa = m.IdEmpresa AND mc.IdMatricula = m.IdMatricula INNER JOIN
 dbo.aca_Alumno AS alu ON m.IdEmpresa = alu.IdEmpresa AND m.IdAlumno = alu.IdAlumno INNER JOIN
@@ -275,7 +313,7 @@ and m.IdSede = @IdSede
 and m.IdNivel = @IdNivel
 and m.IdJornada = @IdJornada
 and m.IdCurso = @IdCurso
-and m.IdParalelo = case when @IdParalelo = 0 then m.IdParalelo else @IdParalelo end
+and m.IdParalelo = @IdParalelo
 and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
 and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
 and cm.PromediarGrupo = 0
@@ -289,7 +327,7 @@ and cm.IdCatalogoTipoCalificacion=40
 UNION ALL
 (
 SELECT mc.IdEmpresa, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, mc.IdMatricula, mc.IdMateria,cm.NomMateria,
-'OPTATIVAS  INDIVIDUAL' MateriaGrupo, cm.OrdenMateria, 99 OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCalificacion,alu.Codigo, p.pe_nombreCompleto NombreAlumno,
+cm.NomMateriaGrupo, cm.OrdenMateria, cm.OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCalificacion,alu.Codigo, p.pe_nombreCompleto NombreAlumno,
 AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo, 
 cp.NomParalelo, cp.OrdenParalelo, CAST(mc.PromedioFinalQ1 as varchar) Calificacion,
 PromedioFinalQ1 as CalificacionNumerica,
@@ -318,7 +356,7 @@ and m.IdSede = @IdSede
 and m.IdJornada = @IdJornada
 and m.IdNivel = @IdNivel
 and m.IdCurso = @IdCurso
-and m.IdParalelo = case when @IdParalelo = 0 then m.IdParalelo else @IdParalelo end
+and m.IdParalelo = @IdParalelo
 and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
 and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
 and cm.PromediarGrupo = 1
@@ -328,7 +366,7 @@ and cm.IdCatalogoTipoCalificacion=40
 UNION ALL
 (
 SELECT mc.IdEmpresa, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, mc.IdMatricula, mc.IdMateria,cm.NomMateria,
-'OPTATIVAS  INDIVIDUAL' MateriaGrupo, cm.OrdenMateria, 99 OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCalificacion,alu.Codigo, p.pe_nombreCompleto NombreAlumno,
+cm.NomMateriaGrupo, cm.OrdenMateria, cm.OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCalificacion,alu.Codigo, p.pe_nombreCompleto NombreAlumno,
 AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo, 
 cp.NomParalelo, cp.OrdenParalelo, CAST(mc.PromedioFinalQ2 as varchar) Calificacion,
 PromedioFinalQ2 as CalificacionNumerica,
@@ -357,30 +395,21 @@ and m.IdSede = @IdSede
 and m.IdJornada = @IdJornada
 and m.IdNivel = @IdNivel
 and m.IdCurso = @IdCurso
-and m.IdParalelo = case when @IdParalelo = 0 then m.IdParalelo else @IdParalelo end
+and m.IdParalelo = @IdParalelo
 and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
 and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
 and cm.PromediarGrupo = 1
 and cm.IdCatalogoTipoCalificacion=40
 )
----SUPLETORIO---
+---PROMEDIOS DE LOS 2 QUIMESTRES---
 UNION ALL
 (
 SELECT mc.IdEmpresa, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, mc.IdMatricula, mc.IdMateria,cm.NomMateria,
-'OPTATIVAS  INDIVIDUAL' MateriaGrupo, cm.OrdenMateria, 99 OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCalificacion,alu.Codigo, p.pe_nombreCompleto NombreAlumno,
+cm.NomMateriaGrupo, cm.OrdenMateria, cm.OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCalificacion,alu.Codigo, p.pe_nombreCompleto NombreAlumno,
 AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo, 
-cp.NomParalelo, cp.OrdenParalelo,
-CASE WHEN (mc.ExamenGracia>0) then CAST(mc.ExamenGracia as varchar)
-else  case when (mc.ExamenRemedial>0) then CAST(mc.ExamenRemedial as varchar)
-	else case when mc.ExamenSupletorio!= null then CAST(mc.ExamenSupletorio as varchar) else null end
-	end 
-end Calificacion,
-CASE WHEN mc.ExamenGracia>0 then CAST(mc.ExamenGracia as numeric(18,2))
-else case when mc.ExamenRemedial >0then CAST(mc.ExamenRemedial as numeric(18,2))
-else case when mc.ExamenSupletorio>0 then CAST(mc.ExamenSupletorio as numeric(18,2)) else null end
-end 
-end CalificacionNumerica,
-'EXAMEN SUPLETORIO' as Columna, 3 OrdenColumna
+cp.NomParalelo, cp.OrdenParalelo, CAST(mc.PromedioQuimestres as varchar) Calificacion,
+PromedioQuimestres as CalificacionNumerica,
+'PROMEDIO' as Columna, 2 OrdenColumna
 FROM     dbo.aca_MatriculaCalificacion AS mc INNER JOIN
 dbo.aca_Matricula AS m ON mc.IdEmpresa = m.IdEmpresa AND mc.IdMatricula = m.IdMatricula INNER JOIN
 dbo.aca_Alumno AS alu ON m.IdEmpresa = alu.IdEmpresa AND m.IdAlumno = alu.IdAlumno INNER JOIN
@@ -405,7 +434,55 @@ and m.IdSede = @IdSede
 and m.IdJornada = @IdJornada
 and m.IdNivel = @IdNivel
 and m.IdCurso = @IdCurso
-and m.IdParalelo = case when @IdParalelo = 0 then m.IdParalelo else @IdParalelo end
+and m.IdParalelo = @IdParalelo
+and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
+and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
+and cm.PromediarGrupo = 1
+and cm.IdCatalogoTipoCalificacion=40
+)
+---SUPLETORIO---
+UNION ALL
+(
+SELECT mc.IdEmpresa, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, mc.IdMatricula, mc.IdMateria,cm.NomMateria,
+cm.NomMateriaGrupo, cm.OrdenMateria, cm.OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCalificacion,alu.Codigo, p.pe_nombreCompleto NombreAlumno,
+AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo, 
+cp.NomParalelo, cp.OrdenParalelo,
+CASE WHEN (mc.ExamenGracia>=0) then CAST(mc.ExamenGracia as varchar)
+else  case when (mc.ExamenRemedial>=0) then CAST(mc.ExamenRemedial as varchar)
+	else case when mc.ExamenSupletorio>=0 then CAST(mc.ExamenSupletorio as varchar) else null end
+	end 
+end Calificacion,
+CASE WHEN mc.ExamenGracia>=0 then CAST(mc.ExamenGracia as numeric(18,2))
+else case when mc.ExamenRemedial >=0then CAST(mc.ExamenRemedial as numeric(18,2))
+else case when mc.ExamenSupletorio>=0 then CAST(mc.ExamenSupletorio as numeric(18,2)) else null end
+end 
+end CalificacionNumerica,
+'SUPLETORIO' as Columna, 3 OrdenColumna
+FROM     dbo.aca_MatriculaCalificacion AS mc INNER JOIN
+dbo.aca_Matricula AS m ON mc.IdEmpresa = m.IdEmpresa AND mc.IdMatricula = m.IdMatricula INNER JOIN
+dbo.aca_Alumno AS alu ON m.IdEmpresa = alu.IdEmpresa AND m.IdAlumno = alu.IdAlumno INNER JOIN
+dbo.tb_persona AS p ON alu.IdPersona = p.IdPersona INNER JOIN
+dbo.aca_AnioLectivo_Curso_Materia CM ON m.IdEmpresa = CM.IdEmpresa AND m.IdAnio = CM.IdAnio AND m.IdSede = CM.IdSede AND 
+m.IdNivel = CM.IdNivel AND m.IdJornada = CM.IdJornada AND m.IdCurso = CM.IdCurso AND 
+mc.IdMateria = CM.IdMateria 
+LEFT OUTER JOIN
+dbo.aca_AnioLectivo AS AN ON m.IdEmpresa = AN.IdEmpresa AND m.IdAnio = AN.IdAnio LEFT OUTER JOIN
+dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn RIGHT OUTER JOIN
+dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel RIGHT OUTER JOIN
+dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
+dbo.aca_AnioLectivo_Curso_Paralelo AS cp ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND jc.IdCurso = cp.IdCurso ON 
+m.IdEmpresa = cp.IdEmpresa AND m.IdAnio = cp.IdAnio AND m.IdSede = cp.IdSede AND m.IdNivel = cp.IdNivel AND m.IdJornada = cp.IdJornada AND m.IdCurso = cp.IdCurso AND m.IdParalelo = cp.IdParalelo 
+LEFT OUTER JOIN
+    (SELECT IdEmpresa, IdMatricula
+    FROM      dbo.aca_AlumnoRetiro AS r
+    WHERE   (Estado = 1)) AS ret ON m.IdEmpresa = ret.IdEmpresa AND m.IdMatricula = ret.IdMatricula
+where mc.IdEmpresa = @IdEmpresa 
+and m.IdAnio = @IdAnio
+and m.IdSede = @IdSede
+and m.IdJornada = @IdJornada
+and m.IdNivel = @IdNivel
+and m.IdCurso = @IdCurso
+and m.IdParalelo = @IdParalelo
 and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
 and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
 and cm.PromediarGrupo = 1
@@ -416,7 +493,7 @@ and cm.IdCatalogoTipoCalificacion=40
 UNION ALL
 (
 SELECT mc.IdEmpresa, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, mc.IdMatricula, mc.IdMateria,cm.NomMateria,
-'OPTATIVAS INDIVIDUAL' NomMateriaGrupo, cm.OrdenMateria, 99 OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCalificacion,alu.Codigo, p.pe_nombreCompleto NombreAlumno,
+cm.NomMateriaGrupo, cm.OrdenMateria, cm.OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCalificacion,alu.Codigo, p.pe_nombreCompleto NombreAlumno,
 AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo, 
 cp.NomParalelo, cp.OrdenParalelo, CAST(mc.PromedioFinal as varchar) Calificacion,
 mc.PromedioFinal as CalificacionNumerica,
@@ -445,7 +522,7 @@ and m.IdSede = @IdSede
 and m.IdJornada = @IdJornada
 and m.IdNivel = @IdNivel
 and m.IdCurso = @IdCurso
-and m.IdParalelo = case when @IdParalelo = 0 then m.IdParalelo else @IdParalelo end
+and m.IdParalelo = @IdParalelo
 and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
 and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
 and cm.PromediarGrupo = 1
@@ -454,6 +531,217 @@ and cm.IdCatalogoTipoCalificacion=40
 
 --------------MATERIA PROMEDIADA---
 ---I QUIMESTRE---
+UNION ALL
+(
+SELECT mc.IdEmpresa, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, mc.IdMatricula, null IdMateria,
+'OPTATIVA' NomMateria, cm.NomMateriaGrupo, 999 OrdenMateria, cm.OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCalificacion,alu.Codigo, p.pe_nombreCompleto NombreAlumno,
+AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo, 
+cp.NomParalelo, cp.OrdenParalelo, null Calificacion, null CalificacionNumerica, 'I QUIMESTRE' Columna, 1 OrdenColuma
+FROM     dbo.aca_MatriculaCalificacion AS mc INNER JOIN
+    dbo.aca_Matricula AS m ON mc.IdEmpresa = m.IdEmpresa AND mc.IdMatricula = m.IdMatricula INNER JOIN
+    dbo.aca_Alumno AS alu ON m.IdEmpresa = alu.IdEmpresa AND m.IdAlumno = alu.IdAlumno INNER JOIN
+    dbo.tb_persona AS p ON alu.IdPersona = p.IdPersona INNER JOIN
+    dbo.aca_AnioLectivo_Curso_Materia AS cm ON m.IdEmpresa = cm.IdEmpresa AND m.IdAnio = cm.IdAnio AND m.IdSede = cm.IdSede AND 
+    m.IdNivel = cm.IdNivel AND m.IdJornada = cm.IdJornada AND m.IdCurso = cm.IdCurso AND 
+    mc.IdMateria = cm.IdMateria 
+LEFT OUTER JOIN
+    dbo.aca_AnioLectivo AS AN ON m.IdEmpresa = AN.IdEmpresa AND m.IdAnio = AN.IdAnio LEFT OUTER JOIN
+    dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn RIGHT OUTER JOIN
+    dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel RIGHT OUTER JOIN
+    dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
+    dbo.aca_AnioLectivo_Curso_Paralelo AS cp ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND jc.IdCurso = cp.IdCurso ON 
+    m.IdEmpresa = cp.IdEmpresa AND m.IdAnio = cp.IdAnio AND m.IdSede = cp.IdSede AND m.IdNivel = cp.IdNivel AND m.IdJornada = cp.IdJornada AND m.IdCurso = cp.IdCurso AND m.IdParalelo = cp.IdParalelo
+	LEFT JOIN	
+	(
+	select r.IdEmpresa, r.IdMatricula 
+	from aca_AlumnoRetiro as r
+	where r.Estado = 1
+	) as ret on m.IdEmpresa =ret.IdEmpresa and m.IdMatricula = ret.IdMatricula
+where mc.IdEmpresa = @IdEmpresa 
+and m.IdAnio = @IdAnio
+and m.IdSede = @IdSede
+and m.IdJornada = @IdJornada
+and m.IdNivel = @IdNivel
+and m.IdCurso = @IdCurso
+and m.IdParalelo = @IdParalelo
+and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
+and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
+and cm.PromediarGrupo = 1
+and cm.IdCatalogoTipoCalificacion=40
+group by
+mc.IdEmpresa, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, mc.IdMatricula, cm.NomMateriaGrupo, cm.OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCalificacion,alu.Codigo, p.pe_nombreCompleto,
+AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo,
+cp.NomParalelo, cp.OrdenParalelo
+)
+UNION ALL
+(
+SELECT mc.IdEmpresa, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, mc.IdMatricula, null IdMateria,
+'OPTATIVA' NomMateria, cm.NomMateriaGrupo, 999 OrdenMateria, cm.OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCalificacion,alu.Codigo, p.pe_nombreCompleto NombreAlumno,
+AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo, 
+cp.NomParalelo, cp.OrdenParalelo, null Calificacion, null CalificacionNumerica, 'II QUIMESTRE' Columna, 2 OrdenColuma
+FROM     dbo.aca_MatriculaCalificacion AS mc INNER JOIN
+    dbo.aca_Matricula AS m ON mc.IdEmpresa = m.IdEmpresa AND mc.IdMatricula = m.IdMatricula INNER JOIN
+    dbo.aca_Alumno AS alu ON m.IdEmpresa = alu.IdEmpresa AND m.IdAlumno = alu.IdAlumno INNER JOIN
+    dbo.tb_persona AS p ON alu.IdPersona = p.IdPersona INNER JOIN
+    dbo.aca_AnioLectivo_Curso_Materia AS cm ON m.IdEmpresa = cm.IdEmpresa AND m.IdAnio = cm.IdAnio AND m.IdSede = cm.IdSede AND 
+    m.IdNivel = cm.IdNivel AND m.IdJornada = cm.IdJornada AND m.IdCurso = cm.IdCurso AND 
+    mc.IdMateria = cm.IdMateria 
+LEFT OUTER JOIN
+    dbo.aca_AnioLectivo AS AN ON m.IdEmpresa = AN.IdEmpresa AND m.IdAnio = AN.IdAnio LEFT OUTER JOIN
+    dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn RIGHT OUTER JOIN
+    dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel RIGHT OUTER JOIN
+    dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
+    dbo.aca_AnioLectivo_Curso_Paralelo AS cp ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND jc.IdCurso = cp.IdCurso ON 
+    m.IdEmpresa = cp.IdEmpresa AND m.IdAnio = cp.IdAnio AND m.IdSede = cp.IdSede AND m.IdNivel = cp.IdNivel AND m.IdJornada = cp.IdJornada AND m.IdCurso = cp.IdCurso AND m.IdParalelo = cp.IdParalelo
+	LEFT JOIN	
+	(
+	select r.IdEmpresa, r.IdMatricula 
+	from aca_AlumnoRetiro as r
+	where r.Estado = 1
+	) as ret on m.IdEmpresa =ret.IdEmpresa and m.IdMatricula = ret.IdMatricula
+where mc.IdEmpresa = @IdEmpresa 
+and m.IdAnio = @IdAnio
+and m.IdSede = @IdSede
+and m.IdJornada = @IdJornada
+and m.IdNivel = @IdNivel
+and m.IdCurso = @IdCurso
+and m.IdParalelo = @IdParalelo
+and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
+and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
+and cm.PromediarGrupo = 1
+and cm.IdCatalogoTipoCalificacion=40
+group by
+mc.IdEmpresa, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, mc.IdMatricula, cm.NomMateriaGrupo, cm.OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCalificacion,alu.Codigo, p.pe_nombreCompleto,
+AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo,
+cp.NomParalelo, cp.OrdenParalelo
+)
+UNION ALL
+(
+SELECT mc.IdEmpresa, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, mc.IdMatricula, null IdMateria,
+'OPTATIVA' NomMateria, cm.NomMateriaGrupo, 999 OrdenMateria, cm.OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCalificacion,alu.Codigo, p.pe_nombreCompleto NombreAlumno,
+AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo, 
+cp.NomParalelo, cp.OrdenParalelo, null Calificacion, null CalificacionNumerica, 'PROMEDIO' Columna, 3 OrdenColuma
+FROM     dbo.aca_MatriculaCalificacion AS mc INNER JOIN
+    dbo.aca_Matricula AS m ON mc.IdEmpresa = m.IdEmpresa AND mc.IdMatricula = m.IdMatricula INNER JOIN
+    dbo.aca_Alumno AS alu ON m.IdEmpresa = alu.IdEmpresa AND m.IdAlumno = alu.IdAlumno INNER JOIN
+    dbo.tb_persona AS p ON alu.IdPersona = p.IdPersona INNER JOIN
+    dbo.aca_AnioLectivo_Curso_Materia AS cm ON m.IdEmpresa = cm.IdEmpresa AND m.IdAnio = cm.IdAnio AND m.IdSede = cm.IdSede AND 
+    m.IdNivel = cm.IdNivel AND m.IdJornada = cm.IdJornada AND m.IdCurso = cm.IdCurso AND 
+    mc.IdMateria = cm.IdMateria 
+LEFT OUTER JOIN
+    dbo.aca_AnioLectivo AS AN ON m.IdEmpresa = AN.IdEmpresa AND m.IdAnio = AN.IdAnio LEFT OUTER JOIN
+    dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn RIGHT OUTER JOIN
+    dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel RIGHT OUTER JOIN
+    dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
+    dbo.aca_AnioLectivo_Curso_Paralelo AS cp ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND jc.IdCurso = cp.IdCurso ON 
+    m.IdEmpresa = cp.IdEmpresa AND m.IdAnio = cp.IdAnio AND m.IdSede = cp.IdSede AND m.IdNivel = cp.IdNivel AND m.IdJornada = cp.IdJornada AND m.IdCurso = cp.IdCurso AND m.IdParalelo = cp.IdParalelo
+	LEFT JOIN	
+	(
+	select r.IdEmpresa, r.IdMatricula 
+	from aca_AlumnoRetiro as r
+	where r.Estado = 1
+	) as ret on m.IdEmpresa =ret.IdEmpresa and m.IdMatricula = ret.IdMatricula
+where mc.IdEmpresa = @IdEmpresa 
+and m.IdAnio = @IdAnio
+and m.IdSede = @IdSede
+and m.IdJornada = @IdJornada
+and m.IdNivel = @IdNivel
+and m.IdCurso = @IdCurso
+and m.IdParalelo = @IdParalelo
+and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
+and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
+and cm.PromediarGrupo = 1
+and cm.IdCatalogoTipoCalificacion=40
+group by
+mc.IdEmpresa, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, mc.IdMatricula, cm.NomMateriaGrupo, cm.OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCalificacion,alu.Codigo, p.pe_nombreCompleto,
+AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo,
+cp.NomParalelo, cp.OrdenParalelo
+)
+UNION ALL
+(
+SELECT mc.IdEmpresa, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, mc.IdMatricula, null IdMateria,
+'OPTATIVA' NomMateria, cm.NomMateriaGrupo, 999 OrdenMateria, cm.OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCalificacion,alu.Codigo, p.pe_nombreCompleto NombreAlumno,
+AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo, 
+cp.NomParalelo, cp.OrdenParalelo, null Calificacion, null CalificacionNumerica, 'SUPLETORIO' Columna, 4 OrdenColuma
+FROM     dbo.aca_MatriculaCalificacion AS mc INNER JOIN
+    dbo.aca_Matricula AS m ON mc.IdEmpresa = m.IdEmpresa AND mc.IdMatricula = m.IdMatricula INNER JOIN
+    dbo.aca_Alumno AS alu ON m.IdEmpresa = alu.IdEmpresa AND m.IdAlumno = alu.IdAlumno INNER JOIN
+    dbo.tb_persona AS p ON alu.IdPersona = p.IdPersona INNER JOIN
+    dbo.aca_AnioLectivo_Curso_Materia AS cm ON m.IdEmpresa = cm.IdEmpresa AND m.IdAnio = cm.IdAnio AND m.IdSede = cm.IdSede AND 
+    m.IdNivel = cm.IdNivel AND m.IdJornada = cm.IdJornada AND m.IdCurso = cm.IdCurso AND 
+    mc.IdMateria = cm.IdMateria 
+LEFT OUTER JOIN
+    dbo.aca_AnioLectivo AS AN ON m.IdEmpresa = AN.IdEmpresa AND m.IdAnio = AN.IdAnio LEFT OUTER JOIN
+    dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn RIGHT OUTER JOIN
+    dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel RIGHT OUTER JOIN
+    dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
+    dbo.aca_AnioLectivo_Curso_Paralelo AS cp ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND jc.IdCurso = cp.IdCurso ON 
+    m.IdEmpresa = cp.IdEmpresa AND m.IdAnio = cp.IdAnio AND m.IdSede = cp.IdSede AND m.IdNivel = cp.IdNivel AND m.IdJornada = cp.IdJornada AND m.IdCurso = cp.IdCurso AND m.IdParalelo = cp.IdParalelo
+	LEFT JOIN	
+	(
+	select r.IdEmpresa, r.IdMatricula 
+	from aca_AlumnoRetiro as r
+	where r.Estado = 1
+	) as ret on m.IdEmpresa =ret.IdEmpresa and m.IdMatricula = ret.IdMatricula
+where mc.IdEmpresa = @IdEmpresa 
+and m.IdAnio = @IdAnio
+and m.IdSede = @IdSede
+and m.IdJornada = @IdJornada
+and m.IdNivel = @IdNivel
+and m.IdCurso = @IdCurso
+and m.IdParalelo = @IdParalelo
+and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
+and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
+and cm.PromediarGrupo = 1
+and cm.IdCatalogoTipoCalificacion=40
+group by
+mc.IdEmpresa, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, mc.IdMatricula, cm.NomMateriaGrupo, cm.OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCalificacion,alu.Codigo, p.pe_nombreCompleto,
+AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo,
+cp.NomParalelo, cp.OrdenParalelo
+)
+UNION ALL
+(
+SELECT mc.IdEmpresa, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, mc.IdMatricula, null IdMateria,
+'OPTATIVA' NomMateria, cm.NomMateriaGrupo, 999 OrdenMateria, cm.OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCalificacion,alu.Codigo, p.pe_nombreCompleto NombreAlumno,
+AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo, 
+cp.NomParalelo, cp.OrdenParalelo, null Calificacion, null CalificacionNumerica, 'PROMEDIO FINAL' Columna, 5 OrdenColuma
+FROM     dbo.aca_MatriculaCalificacion AS mc INNER JOIN
+    dbo.aca_Matricula AS m ON mc.IdEmpresa = m.IdEmpresa AND mc.IdMatricula = m.IdMatricula INNER JOIN
+    dbo.aca_Alumno AS alu ON m.IdEmpresa = alu.IdEmpresa AND m.IdAlumno = alu.IdAlumno INNER JOIN
+    dbo.tb_persona AS p ON alu.IdPersona = p.IdPersona INNER JOIN
+    dbo.aca_AnioLectivo_Curso_Materia AS cm ON m.IdEmpresa = cm.IdEmpresa AND m.IdAnio = cm.IdAnio AND m.IdSede = cm.IdSede AND 
+    m.IdNivel = cm.IdNivel AND m.IdJornada = cm.IdJornada AND m.IdCurso = cm.IdCurso AND 
+    mc.IdMateria = cm.IdMateria 
+LEFT OUTER JOIN
+    dbo.aca_AnioLectivo AS AN ON m.IdEmpresa = AN.IdEmpresa AND m.IdAnio = AN.IdAnio LEFT OUTER JOIN
+    dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn RIGHT OUTER JOIN
+    dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel RIGHT OUTER JOIN
+    dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
+    dbo.aca_AnioLectivo_Curso_Paralelo AS cp ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND jc.IdCurso = cp.IdCurso ON 
+    m.IdEmpresa = cp.IdEmpresa AND m.IdAnio = cp.IdAnio AND m.IdSede = cp.IdSede AND m.IdNivel = cp.IdNivel AND m.IdJornada = cp.IdJornada AND m.IdCurso = cp.IdCurso AND m.IdParalelo = cp.IdParalelo
+	LEFT JOIN	
+	(
+	select r.IdEmpresa, r.IdMatricula 
+	from aca_AlumnoRetiro as r
+	where r.Estado = 1
+	) as ret on m.IdEmpresa =ret.IdEmpresa and m.IdMatricula = ret.IdMatricula
+where mc.IdEmpresa = @IdEmpresa 
+and m.IdAnio = @IdAnio
+and m.IdSede = @IdSede
+and m.IdJornada = @IdJornada
+and m.IdNivel = @IdNivel
+and m.IdCurso = @IdCurso
+and m.IdParalelo = @IdParalelo
+and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
+and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
+and cm.PromediarGrupo = 1
+and cm.IdCatalogoTipoCalificacion=40
+group by
+mc.IdEmpresa, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdAlumno, mc.IdMatricula, cm.NomMateriaGrupo, cm.OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCalificacion,alu.Codigo, p.pe_nombreCompleto,
+AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo,
+cp.NomParalelo, cp.OrdenParalelo
+)
+/*
 UNION ALL 
 (
 select 
@@ -494,7 +782,7 @@ and m.IdSede = @IdSede
 and m.IdJornada = @IdJornada
 and m.IdNivel = @IdNivel
 and m.IdCurso = @IdCurso
-and m.IdParalelo = case when @IdParalelo = 0 then m.IdParalelo else @IdParalelo end
+and m.IdParalelo = @IdParalelo
 and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
 and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
 and cm.PromediarGrupo = 1
@@ -547,7 +835,7 @@ and m.IdSede = @IdSede
 and m.IdJornada = @IdJornada
 and m.IdNivel = @IdNivel
 and m.IdCurso = @IdCurso
-and m.IdParalelo = case when @IdParalelo = 0 then m.IdParalelo else @IdParalelo end
+and m.IdParalelo = @IdParalelo
 and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
 and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
 and cm.PromediarGrupo = 1
@@ -600,7 +888,7 @@ and m.IdSede = @IdSede
 and m.IdJornada = @IdJornada
 and m.IdNivel = @IdNivel
 and m.IdCurso = @IdCurso
-and m.IdParalelo = case when @IdParalelo = 0 then m.IdParalelo else @IdParalelo end
+and m.IdParalelo = @IdParalelo
 and m.IdAlumno = case when @IdAlumno = 0 then m.IdAlumno else @IdAlumno end
 and isnull(ret.IdMatricula,0) = case when @MostrarRetirados = 1 then isnull(ret.IdMatricula,0) else 0 end
 and cm.PromediarGrupo = 1
@@ -611,4 +899,4 @@ cm.NomMateriaGrupo, cm.OrdenMateriaGrupo, cm.PromediarGrupo,cm.IdCatalogoTipoCal
 AN.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.CodigoParalelo, 
 cp.NomParalelo, cp.OrdenParalelo
 )a
-)
+)*/

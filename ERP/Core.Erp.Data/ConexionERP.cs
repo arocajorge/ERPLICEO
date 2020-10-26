@@ -11,15 +11,28 @@ namespace Core.Erp.Data
 
         public static string GetConnectionString()
         {
-        //    string user = "sa";
-        //    string ip = @"192.168.25.29\SQL2014";
-        //    string password = "Sysadm753";
-        //    string InitialCatalog = "DBERP";
+            string ip = string.Empty;
+            string password = string.Empty;
+            string user = string.Empty;
+            string InitialCatalog = string.Empty;
 
-            string user = "sa";
-            string ip = "localhost";
-            string password = "admin*2016";
-            string InitialCatalog = "DBERP_ACADEMICO";
+            string Cadena = "LOCAL";
+
+            switch (Cadena)
+            {
+                case "LOCAL":
+                    ip = @"localhost";
+                    password = "admin*2016";
+                    user = "sa";
+                    InitialCatalog = "DBERP_ACADEMICO";
+                    break;
+                case "LICEO":
+                    ip = @"192.168.25.29\SQL2014";
+                    password = "Sysadm753";
+                    user = "sa";
+                    InitialCatalog = "DBERP";
+                    break;
+            }
 
             return "data source=" + ip + ";initial catalog=" + InitialCatalog + ";user id=" + user + ";password=" + password + ";MultipleActiveResultSets=True;";
         }

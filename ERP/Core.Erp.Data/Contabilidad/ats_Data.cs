@@ -236,11 +236,10 @@ namespace Core.Erp.Data.Contabilidad
                 {
                     var Entity = Conexion_ats.vw_importacion_ats_fixed.Where(v => v.RUC_LCG == Ruc && v.fe_factura >= FechaInicio.Date && v.fe_factura <= FechaFin.Date).ToList();
 
-                    if(Entity!=null)
+                    if (Entity!=null)
                     {
                         Entity.ForEach(item =>
                         {
-
                             ATS_ventas ventas = new ATS_ventas
                             {
                                 IdEmpresa=IdEmpresa,
@@ -305,33 +304,40 @@ namespace Core.Erp.Data.Contabilidad
                                      && fac.fecha <= FechaFin1
                                      && fac.bd_est == 1
                                      && ((fac.nu_ced_ruc).Length > 9)
-                                     /*group fac by new
+                                     group fac by new
                                      {
                                          ID = fac.nu_ced_ruc.Trim()
-                                     } into g*/
+                                     } into g
                                      select new ATS_ventas_eventos
                                      {
                                          IdEmpresa = IdEmpresa,
-                                         IdPeriodo = IdPeriodo,                                         
-                                         idCliente = fac.nu_ced_ruc.Trim(),//g.Key.ID,
+                                         IdPeriodo = IdPeriodo,
+                                         //idCliente = fac.nu_ced_ruc.Trim(),//g.Key.ID,
+                                         idCliente = g.Key.ID,
                                          parteRel = "NO",
                                          DenoCli = "",
                                          tipoComprobante = "18",
                                          tipoEm = "F",
-                                         numeroComprobantes = 1,//g.Count(),
+                                         //numeroComprobantes = 1,//g.Count(),
+                                         numeroComprobantes = g.Count(),
                                          baseNoGraIva = 0,
                                          baseImponible = 0,
-                                         baseImpGrav = fac.subtotal ?? 0, //g.Sum(q=> q.subtotal ?? 0),
-                                         montoIva = fac.v_iva ?? 0,//g.Sum(q => q.v_iva ?? 0),
+                                         //baseImpGrav = fac.subtotal ?? 0, //g.Sum(q=> q.subtotal ?? 0),
+                                         baseImpGrav = g.Sum(q=> q.subtotal ?? 0),
+                                         //montoIva = fac.v_iva ?? 0,//g.Sum(q => q.v_iva ?? 0),
+                                         montoIva = g.Sum(q => q.v_iva ?? 0),
                                          montoIce = 0,
                                          valorRetIva = 0,
                                          valorRetRenta = 0,
                                          formaPago = "01",
                                          codEstab = "001",
-                                         ventasEstab = fac.subtotal?? 0,//g.Sum(q => q.subtotal ?? 0),
+                                         //ventasEstab = fac.subtotal?? 0,//g.Sum(q => q.subtotal ?? 0),
+                                         ventasEstab = g.Sum(q => q.subtotal ?? 0),
                                          IdSucursal = 8,
-                                         tpIdCliente = fac.nu_ced_ruc.Length == 13 ? "04" : fac.nu_ced_ruc.Length == 10 ? "05" : "0",//g.Key.ID.Length == 13 ? "04" : g.Key.ID.Length == 10 ? "05" : "0",
-                                         tipoCliente = fac.nu_ced_ruc.Length == 13 ? "02" : fac.nu_ced_ruc.Length == 10 ? "01" : "0",//g.Key.ID.Length == 13 ? "02" : g.Key.ID.Length == 10 ? "01" : "0"
+                                         //tpIdCliente = fac.nu_ced_ruc.Length == 13 ? "04" : fac.nu_ced_ruc.Length == 10 ? "05" : "0",//g.Key.ID.Length == 13 ? "04" : g.Key.ID.Length == 10 ? "05" : "0",
+                                         //tipoCliente = fac.nu_ced_ruc.Length == 13 ? "02" : fac.nu_ced_ruc.Length == 10 ? "01" : "0",//g.Key.ID.Length == 13 ? "02" : g.Key.ID.Length == 10 ? "01" : "0"
+                                         tpIdCliente = g.Key.ID.Length == 13 ? "04" : g.Key.ID.Length == 10 ? "05" : "0",
+                                         tipoCliente = g.Key.ID.Length == 13 ? "02" : g.Key.ID.Length == 10 ? "01" : "0"
                                      }).ToList();
                 
                 using (Entities_contabilidad Context = new Entities_contabilidad())
@@ -374,6 +380,7 @@ namespace Core.Erp.Data.Contabilidad
                     string chatresult = readchat.ReadToEnd();
                     var json = JsonConvert.DeserializeObject<List<FacturasTecnologico_Info>>(chatresult);
                     int Secuencia = 1;
+
                     foreach (var item in json)
                     {
                         Lista.Add(new ATS_ventas_eventos
@@ -409,9 +416,39 @@ namespace Core.Erp.Data.Contabilidad
                     Context.ATS_ventas_eventos.RemoveRange(lst_ccg);
 
                     int Secuencia = Context.ATS_ventas.Count() == 0 ? 1 : (Context.ATS_ventas.Max(q => q.Secuencia) + 1);
-                    Lista.ForEach(q => q.Secuencia = Secuencia++);
+
+                    var ListaAgrupada = Lista.GroupBy(q => new
+                    {
+                        q.IdEmpresa,
+                        q.idCliente
+                    }).Select(g => new ATS_ventas_eventos
+                    {
+                        IdEmpresa = IdEmpresa,
+                        IdPeriodo = IdPeriodo,
+                        idCliente = g.Key.idCliente,
+                        parteRel = "NO",
+                        DenoCli = "",
+                        tipoComprobante = "18",
+                        tipoEm = "F",
+                        numeroComprobantes = g.Count(),
+                        baseNoGraIva = 0,
+                        baseImponible = g.Sum(q => q.baseImponible),
+                        baseImpGrav = g.Sum(q=> q.baseImpGrav),
+                        montoIva = g.Sum(q => q.montoIva),
+                        montoIce = 0,
+                        valorRetIva = 0,
+                        valorRetRenta = 0,
+                        formaPago = "01",
+                        codEstab = "001",
+                        ventasEstab = g.Sum(q => q.ventasEstab),
+                        IdSucursal = 1,
+                        tpIdCliente = g.Key.idCliente.Length == 13 ? "04" : g.Key.idCliente.Length == 10 ? "05" : "0",
+                        tipoCliente = g.Key.idCliente.Length == 13 ? "02" : g.Key.idCliente.Length == 10 ? "01" : "0"
+                    }).ToList();
+
+                    ListaAgrupada.ForEach(q => q.Secuencia = Secuencia++);
                     Context.ATS_ventas_eventos.RemoveRange(Context.ATS_ventas_eventos.ToList());
-                    Context.ATS_ventas_eventos.AddRange(Lista);
+                    Context.ATS_ventas_eventos.AddRange(ListaAgrupada);
                     Context.SaveChanges();
 
                     Context.SPATS_MigrarEventos();
@@ -478,10 +515,39 @@ namespace Core.Erp.Data.Contabilidad
                     var lst_ccg = Context.ATS_ventas_eventos.ToList();
                     Context.ATS_ventas_eventos.RemoveRange(lst_ccg);
 
+                    var ListaAgrupada = Lista.GroupBy(q => new
+                    {
+                        q.IdEmpresa,
+                        q.idCliente
+                    }).Select(g => new ATS_ventas_eventos
+                    {
+                        IdEmpresa = IdEmpresa,
+                        IdPeriodo = IdPeriodo,
+                        idCliente = g.Key.idCliente,
+                        parteRel = "NO",
+                        DenoCli = "",
+                        tipoComprobante = "18",
+                        tipoEm = "F",
+                        numeroComprobantes = g.Count(),
+                        baseNoGraIva = 0,
+                        baseImponible = g.Sum(q => q.baseImponible),
+                        baseImpGrav = g.Sum(q => q.baseImpGrav),
+                        montoIva = g.Sum(q => q.montoIva),
+                        montoIce = 0,
+                        valorRetIva = 0,
+                        valorRetRenta = 0,
+                        formaPago = "01",
+                        codEstab = "001",
+                        ventasEstab = g.Sum(q => q.ventasEstab),
+                        IdSucursal = 1,
+                        tpIdCliente = g.Key.idCliente.Length == 13 ? "04" : g.Key.idCliente.Length == 10 ? "05" : "0",
+                        tipoCliente = g.Key.idCliente.Length == 13 ? "02" : g.Key.idCliente.Length == 10 ? "01" : "0"
+                    }).ToList();
+
                     int Secuencia = Context.ATS_ventas.Count() == 0 ? 1 : (Context.ATS_ventas.Max(q => q.Secuencia) + 1);
-                    Lista.ForEach(q => q.Secuencia = Secuencia++);
+                    ListaAgrupada.ForEach(q => q.Secuencia = Secuencia++);
                     Context.ATS_ventas_eventos.RemoveRange(Context.ATS_ventas_eventos.ToList());
-                    Context.ATS_ventas_eventos.AddRange(Lista);
+                    Context.ATS_ventas_eventos.AddRange(ListaAgrupada);
                     Context.SaveChanges();
 
                     Context.SPATS_MigrarEventos();

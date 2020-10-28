@@ -31,6 +31,7 @@ namespace Core.Erp.Data.Reportes.RRHH
                              && IdNominaTipoLiquiIni <= q.IdNominaTipoLiqui && q.IdNominaTipoLiqui <= IdNominaTipoLiquiFin
                              && fecha_ini <= q.FechaPago
                              && q.FechaPago <= fecha_fin
+                             && q.EstadoPago =="PEN" && (q.em_status != "EST_LIQ" && q.em_status!= "EST_PLQ")
                              select new ROL_019_Info
                              {
                                  IdEmpresa = q.IdEmpresa,

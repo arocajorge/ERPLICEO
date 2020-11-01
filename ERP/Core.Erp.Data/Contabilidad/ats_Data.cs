@@ -41,7 +41,7 @@ namespace Core.Erp.Data.Contabilidad
 
                     Context.generarATS(IdEmpresa, IdPeriodo, IdSucursalInicio, IdSucursalFin);
 
-                    Migrar_ats(empresa_info.IdEmpresa,empresa_info.em_ruc, perido_info.pe_FechaIni, perido_info.pe_FechaFin, IdPeriodo);
+                    //Migrar_ats(empresa_info.IdEmpresa,empresa_info.em_ruc, perido_info.pe_FechaIni, perido_info.pe_FechaFin, IdPeriodo);
                     if(IntArray != null && IntArray.Where(q=>q == 8).Count() > 0 && IdEmpresa == 2)
                         Migrar_ats_CCG(empresa_info.IdEmpresa, empresa_info.em_ruc, perido_info.pe_FechaIni, perido_info.pe_FechaFin, IdPeriodo, 8);
 
@@ -50,7 +50,7 @@ namespace Core.Erp.Data.Contabilidad
 
                     if (IdEmpresa == 3)
                         Migrar_ats_Tecnologico(empresa_info.IdEmpresa, empresa_info.em_ruc, perido_info.pe_FechaIni, perido_info.pe_FechaFin, IdPeriodo, 1);
-
+                    
                     info.lst_compras = (from q in Context.ATS_compras
                                         where q.IdEmpresa==IdEmpresa
                                         && q.IdPeriodo==IdPeriodo
@@ -91,7 +91,7 @@ namespace Core.Erp.Data.Contabilidad
                                  secModificado=q.secModificado,
                                  autModificado=q.autModificado
                              }).ToList();
-
+                             
 
 
 
@@ -126,7 +126,11 @@ namespace Core.Erp.Data.Contabilidad
                                             DenoCli=v.DenoCli
                                         }).ToList();
 
+                    var LSTAd = info.lst_ventas.Where(q => q.idCliente == "0921451514").ToList();
+                    if (true)
+                    {
 
+                    }
                     info.lst_retenciones = (from r in Context.ATS_retenciones
                                        where r.IdEmpresa == IdEmpresa
                                        && r.IdPeriodo == IdPeriodo
@@ -226,7 +230,7 @@ namespace Core.Erp.Data.Contabilidad
         }
 
 
-        private void Migrar_ats(int IdEmpresa, string Ruc, DateTime FechaInicio, DateTime FechaFin,int IdPeriodo)
+        /*private void Migrar_ats(int IdEmpresa, string Ruc, DateTime FechaInicio, DateTime FechaFin,int IdPeriodo)
         {
             try
             {
@@ -286,7 +290,7 @@ namespace Core.Erp.Data.Contabilidad
 
             }
 
-        }
+        }*/
 
         private void Migrar_ats_CCG(int IdEmpresa, string Ruc, DateTime FechaInicio, DateTime FechaFin, int IdPeriodo, int IdSucursal)
         {

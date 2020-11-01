@@ -24,7 +24,7 @@ namespace Core.Erp.Data
                     ip = @"localhost";
                     password = "admin*2016";
                     user = "sa";
-                    InitialCatalog = "DBERP";
+                    InitialCatalog = "DBERP_ACADEMICO";
                     break;
                 case "LICEO":
                     ip = @"192.168.25.29\SQL2014";

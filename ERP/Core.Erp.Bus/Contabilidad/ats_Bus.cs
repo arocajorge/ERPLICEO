@@ -56,7 +56,9 @@ namespace Core.Erp.Bus.Contabilidad
                 
                 ats.TipoIDInformante = ivaTypeTipoIDInformante.R;
                 ats.codigoOperativo = codigoOperativoType.IVA;
-                ats.totalVentas = info_ats.lst_ventas.Sum(v=>v.ventasEstab);
+                decimal TotalFact = info_ats.lst_ventas.Where(q => q.tipoComprobante == "18").Sum(v => v.ventasEstab);
+                decimal TotalNC = info_ats.lst_ventas.Where(q => q.tipoComprobante == "04").Sum(v => v.ventasEstab);
+                ats.totalVentas = Math.Round(TotalFact - TotalNC, 2, MidpointRounding.AwayFromZero);
                 #endregion
 
                 #region listado de compras
@@ -285,7 +287,7 @@ namespace Core.Erp.Bus.Contabilidad
                              }
 
                              vent.DenoCli = cl_funciones.QuitartildesEspaciosPuntos(vent.DenoCli);
-                             det_ventas.tipoComprobante = "18";
+                             det_ventas.tipoComprobante = vent.tipoComprobante;
                              det_ventas.tipoEmision = tipoEmisionType.F;
                              det_ventas.numeroComprobantes = vent.numeroComprobantes.ToString();
                              det_ventas.baseNoGraIva = vent.baseNoGraIva;
@@ -297,8 +299,11 @@ namespace Core.Erp.Bus.Contabilidad
                              det_ventas.valorRetRenta = vent.valorRetRenta.ToString("n2");
                              det_ventas.montoIceSpecified = true;
                              det_ventas.formasDePago = null;
-                             string[] AFormaPago = { "20" };
-                             det_ventas.formasDePago = AFormaPago;
+                             if (det_ventas.tipoComprobante == "18")
+                             {
+                                 string[] AFormaPago = { "20" };
+                                 det_ventas.formasDePago = AFormaPago;
+                             }
 
                              ats.ventas.Add(det_ventas);
                          }
@@ -323,26 +328,27 @@ namespace Core.Erp.Bus.Contabilidad
                 {
                     if (info_ats.lst_ventas.Count() > 0)
                     {
-                       
                         ats.ventasEstablecimiento = new List<ventaEst>();
 
-                         var vtas = info_ats.lst_ventas.GroupBy(x => x.codEstab)
-                        .Select(x => new
-                        {
-                            codEstab = x.Key,
-                            ventasEstab = x.Sum(y => y.ventasEstab)
-                        }).ToList();
+                        var vtas = info_ats.lst_ventas.GroupBy(x => x.codEstab)
+                       .Select(x => new
+                       {
+                           codEstab = x.Key,
+                           ventasEstab = x.Sum(y => y.ventasEstab)
+                       }).ToList();
 
                         foreach (var item in vtas)
                         {
                             ventaEst vtas_esta = new ventaEst();
                             vtas_esta.codEstab = item.codEstab;
                             vtas_esta.ventasEstab = item.ventasEstab;
+                            var Ventas = (info_ats.lst_ventas.Where(y => y.tipoComprobante == "18").Sum(v => v.ventasEstab));
+                            var NC = info_ats.lst_ventas.Where(y => y.tipoComprobante == "04").Sum(v => v.ventasEstab);
+                            vtas_esta.ventasEstab = Ventas - NC;
+
                             vtas_esta.ivaComp = Convert.ToDecimal("0.00");
                             ats.ventasEstablecimiento.Add(vtas_esta);
                         }
-
-
                     }
                 }
                 #endregion

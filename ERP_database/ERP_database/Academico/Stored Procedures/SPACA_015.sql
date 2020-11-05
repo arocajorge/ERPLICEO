@@ -12,7 +12,7 @@ AS
 
 SELECT m.IdEmpresa, m.IdMatricula, m.IdAlumno, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, m.IdPlantilla, dbo.aca_Plantilla.NomPlantilla, al.Codigo AS CodigoAlumno, pa.pe_nombreCompleto AS NombreAlumno, 
                   pa.pe_cedulaRuc AS IdentificacionAlumno, pa.pe_fechaNacimiento AS FechaNacAlumno, sn.NomSede, a.Descripcion AS NomAnioLectivo, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, 
-                  cp.NomParalelo, cp.OrdenParalelo, pr.pe_cedulaRuc, pr.pe_nombreCompleto, f.Direccion, isnull(f.Celular,'') Celular, isnull(pr.pe_telfono_Contacto,'') pe_telfono_Contacto, pro.Descripcion
+                  cp.NomParalelo, cp.OrdenParalelo, pr.pe_cedulaRuc, pr.pe_nombreCompleto, f.Direccion, isnull(f.Celular,'') Celular,isnull(f.Correo,'') Correo, isnull(pr.pe_telfono_Contacto,'') pe_telfono_Contacto, pro.Descripcion
 FROM     dbo.tb_persona AS pr INNER JOIN
                   dbo.aca_Familia AS f ON pr.IdPersona = f.IdPersona and f.Estado=1 LEFT OUTER JOIN
                   dbo.tb_profesion AS pro ON pr.IdProfesion = pro.IdProfesion RIGHT OUTER JOIN

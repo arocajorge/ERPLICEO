@@ -16,7 +16,7 @@ namespace Core.Erp.Data
             string user = string.Empty;
             string InitialCatalog = string.Empty;
 
-            string Cadena = "LOCAL";
+            string Cadena = "LICEO";
 
             switch (Cadena)
             {

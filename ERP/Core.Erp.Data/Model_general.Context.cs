@@ -26,7 +26,6 @@ namespace Core.Erp.Data
         }
     
         public DbSet<tb_banco> tb_banco { get; set; }
-        public DbSet<tb_banco_procesos_bancarios_x_empresa> tb_banco_procesos_bancarios_x_empresa { get; set; }
         public DbSet<tb_bodega> tb_bodega { get; set; }
         public DbSet<tb_Catalogo> tb_Catalogo { get; set; }
         public DbSet<tb_CatalogoTipo> tb_CatalogoTipo { get; set; }
@@ -73,5 +72,6 @@ namespace Core.Erp.Data
         public DbSet<tb_GrupoEtnico> tb_GrupoEtnico { get; set; }
         public DbSet<tb_profesion> tb_profesion { get; set; }
         public DbSet<tb_Religion> tb_Religion { get; set; }
+        public DbSet<tb_banco_procesos_bancarios_x_empresa> tb_banco_procesos_bancarios_x_empresa { get; set; }
     }
 }

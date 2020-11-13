@@ -40,6 +40,7 @@ namespace Core.Erp.Data
         public System.DateTime em_fechaInicioActividad { get; set; }
         public string cod_entidad_dinardap { get; set; }
         public string em_Email { get; set; }
+        public Nullable<bool> TieneAcademico { get; set; }
     
         public virtual ICollection<tb_sis_Documento_Tipo_x_Empresa> tb_sis_Documento_Tipo_x_Empresa { get; set; }
         public virtual ICollection<tb_sis_reporte_x_seg_usuario> tb_sis_reporte_x_seg_usuario { get; set; }

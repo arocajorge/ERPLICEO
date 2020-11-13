@@ -34,5 +34,6 @@ namespace Core.Erp.Info.General
 
         public string Descripcion { get; set; }
         public bool EstadoBool { get; set; }
+        public string TipoFiltro { get; set; }
     }
 }

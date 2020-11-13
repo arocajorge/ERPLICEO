@@ -16,8 +16,8 @@ namespace Core.Erp.Data
     {
         public tb_banco()
         {
-            this.tb_banco_procesos_bancarios_x_empresa = new HashSet<tb_banco_procesos_bancarios_x_empresa>();
             this.tb_persona = new HashSet<tb_persona>();
+            this.tb_banco_procesos_bancarios_x_empresa = new HashSet<tb_banco_procesos_bancarios_x_empresa>();
         }
     
         public int IdBanco { get; set; }
@@ -26,7 +26,7 @@ namespace Core.Erp.Data
         public string CodigoLegal { get; set; }
         public bool TieneFormatoTransferencia { get; set; }
     
-        public virtual ICollection<tb_banco_procesos_bancarios_x_empresa> tb_banco_procesos_bancarios_x_empresa { get; set; }
         public virtual ICollection<tb_persona> tb_persona { get; set; }
+        public virtual ICollection<tb_banco_procesos_bancarios_x_empresa> tb_banco_procesos_bancarios_x_empresa { get; set; }
     }
 }

@@ -143,17 +143,22 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             }
             return true;
         }
-        private void cargar_combos()
-        {
-            int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            
-            var lst_cuenta_bancarias = bus_cuentas_bancarias.get_list(IdEmpresa, Convert.ToInt32(SessionFixed.IdSucursal), false);
+        private void cargar_combos(ba_Archivo_Transferencia_Info model)
+        {            
+            var lst_cuenta_bancarias = bus_cuentas_bancarias.get_list(model.IdEmpresa, Convert.ToInt32(SessionFixed.IdSucursal), false);
             ViewBag.lst_cuenta_bancarias = lst_cuenta_bancarias;
 
-            var lst_proceso = bus_procesos_bancarios.get_list(IdEmpresa, false);
+            int IdBancoFinanciero = 0;
+            var Banco = bus_banco_cuenta.get_info(model.IdEmpresa, model.IdBanco);
+            if (Banco != null)
+            {
+                IdBancoFinanciero = Banco.IdBanco_Financiero;
+            }
+
+            var lst_proceso = bus_procesos_bancarios.get_list(model.IdEmpresa, IdBancoFinanciero);
             ViewBag.lst_proceso = lst_proceso;
 
-            var lst_sucursal = bus_sucursal.GetList(IdEmpresa, SessionFixed.IdUsuario, false);
+            var lst_sucursal = bus_sucursal.GetList(model.IdEmpresa, SessionFixed.IdUsuario, false);
             ViewBag.lst_sucursal = lst_sucursal;
             
         }
@@ -197,7 +202,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             };
             List_det.set_list(model.Lst_det, model.IdTransaccionSession);
             List_flujo.set_list(model.Lst_Flujo, model.IdTransaccionSession);
-            cargar_combos();
+            cargar_combos(model);
             return View(model);
         }
         [HttpPost]
@@ -209,12 +214,12 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             if (!validar(model, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
-                cargar_combos();
+                cargar_combos(model);
                 return View(model);
             }
             if (!bus_archivo.GuardarDB(model))
             {
-                cargar_combos();
+                cargar_combos(model);
                 return View(model);
             }
             return RedirectToAction("Modificar", new { IdEmpresa = model.IdEmpresa, IdArchivo = model.IdArchivo, Exito = true });
@@ -236,7 +241,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 
             model.Lst_Flujo = bus_archivo_flujo.GetList(model.IdEmpresa, model.IdArchivo);
             List_flujo.set_list(model.Lst_Flujo, model.IdTransaccionSession);
-            cargar_combos();
+            cargar_combos(model);
             model.cb_Valor = model.Lst_det.Sum(q => q.Valor);
             if (Exito)
                 ViewBag.MensajeSuccess = MensajeSuccess;
@@ -252,13 +257,13 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             if (!validar(model,ref mensaje))
             {
                 ViewBag.mensaje = mensaje;
-                cargar_combos();
+                cargar_combos(model);
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 return View(model);
             }
             if (!bus_archivo.ModificarDB(model))
             {
-                cargar_combos();
+                cargar_combos(model);
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
                 return View(model);
             }
@@ -278,7 +283,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 
             model.Lst_Flujo = bus_archivo_flujo.GetList(model.IdEmpresa, model.IdArchivo);
             List_flujo.set_list(model.Lst_Flujo, model.IdTransaccionSession);
-            cargar_combos();
+            cargar_combos(model);
             model.cb_Valor = model.Lst_det.Sum(q => q.Valor);
 
             #region Validacion Periodo CXC
@@ -289,7 +294,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 ViewBag.MostrarBoton = false;
             }
             #endregion
-            cargar_combos();
+            cargar_combos(model);
             model.cb_Valor = model.Lst_det.Sum(q => q.Valor);
             return View(model);
         }
@@ -299,7 +304,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             model.IdUsuarioUltAnu = SessionFixed.IdUsuario;
             if (!bus_archivo.AnularDB(model))
             {
-                cargar_combos();
+                cargar_combos(model);
                 return View(model);
             }
             return RedirectToAction("Index");
@@ -324,7 +329,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
 
             model.Lst_Flujo = bus_archivo_flujo.GetList(model.IdEmpresa, model.IdArchivo);
             List_flujo.set_list(model.Lst_Flujo, model.IdTransaccionSession);
-            cargar_combos();
+            cargar_combos(model);
             #region Validacion Periodo Banco
             ViewBag.MostrarBoton = true;
             if (!bus_periodo.ValidarFechaTransaccion(model.IdEmpresa, model.Fecha, cl_enumeradores.eModulo.BANCO, model.IdSucursal, ref mensaje))
@@ -348,7 +353,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             if (Math.Round(model.Lst_diario.Sum(q=> q.dc_Valor),2,MidpointRounding.AwayFromZero) != 0)
             {
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
-                cargar_combos();
+                cargar_combos(model);
                 ViewBag.mensaje = "El diario se encuentra descuadrado";
                 return View(model);
             }
@@ -356,7 +361,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             if (!bus_archivo.ContabilizarDB(model))
             {
                 SessionFixed.IdTransaccionSessionActual = model.IdTransaccionSession.ToString();
-                cargar_combos();
+                cargar_combos(model);
                 ViewBag.mensaje = "No se ha podido contabilizar el archivo bancario";
                 return View(model);
             }
@@ -417,9 +422,24 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
         }
         #endregion
         #region Json
-        public JsonResult GetListPorCruzar(int IdEmpresa = 0, decimal IdTransaccionSession = 0, int IdSucursal = 0)
+        public JsonResult GetListPorCruzar(int IdEmpresa = 0, decimal IdTransaccionSession = 0, int IdSucursal = 0, int IdProceso = 0)
         {
             var lst = bus_archivo_det.get_list_con_saldo(IdEmpresa, 0, "PROVEE", 0, "APRO", SessionFixed.IdUsuario ?? " ", IdSucursal, false);
+
+            var proceso = bus_procesos_bancarios.get_info(IdEmpresa, IdProceso);
+            if (proceso != null)
+            {
+                switch (proceso.TipoFiltro)
+                {
+                    case "IGUAL":
+                        lst = lst.Where(q => q.IdBanco_acreditacion == proceso.IdBanco).ToList();
+                        break;
+                    case "DISTINTO":
+                        lst = lst.Where(q => q.IdBanco_acreditacion != proceso.IdBanco).ToList();
+                        break;
+                }
+            }
+
             Lst_det_op.set_list(lst, IdTransaccionSession);
             return Json(lst, JsonRequestBehavior.AllowGet);
         }
@@ -626,7 +646,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             }
         }
 
-        private byte[] GetPagoProvPB(ba_Archivo_Transferencia_Info info, string NombreArchivo)
+       private byte[] GetPagoProvPB(ba_Archivo_Transferencia_Info info, string NombreArchivo)
         {
             try
             {
@@ -706,6 +726,144 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                 throw;
             }
         }
+       private byte[] GetTranDisPAC(ba_Archivo_Transferencia_Info info, string NombreArchivo)
+        {
+            try
+            {
+                System.IO.File.Delete(rutafile + NombreArchivo + ".txt");
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(rutafile + NombreArchivo + ".txt", true))
+                {
+                    var ListaA = info.Lst_det.Where(v => v.Valor > 0).GroupBy(q => new { q.num_cta_acreditacion, q.Secuencial_reg_x_proceso, q.pe_cedulaRuc, q.CodigoLegalBanco, q.IdTipoCta_acreditacion_cat, q.IdTipoDocumento, q.Nom_Beneficiario, q.pr_correo, q.pr_direccion, q.pr_telefonos }).Select(q => new
+                    {
+                        num_cta_acreditacion = q.Key.num_cta_acreditacion,
+                        Secuencial_reg_x_proceso = q.Key.Secuencial_reg_x_proceso,
+                        pe_cedulaRuc = q.Key.pe_cedulaRuc,
+                        CodigoLegalBanco = q.Key.CodigoLegalBanco,
+                        IdTipoCta_acreditacion_cat = q.Key.IdTipoCta_acreditacion_cat,
+                        IdTipoDocumento = q.Key.IdTipoDocumento,
+                        Nom_Beneficiario = q.Key.Nom_Beneficiario,
+                        pr_correo = q.Key.pr_correo,
+                        pr_direccion = q.Key.pr_direccion,
+                        pr_telefonos = q.Key.pr_telefonos,
+                        Valor = q.Sum(g => g.Valor)
+                    }).ToList();
+
+                    var banco = bus_banco_cuenta.get_info(info.IdEmpresa, info.IdBanco);
+                    foreach (var item in ListaA)
+                    {
+                        string linea = "";
+                        double valor = Convert.ToDouble(item.Valor);
+                        double valorEntero = Math.Floor(valor);
+                        double valorDecimal = Convert.ToDouble((valor - valorEntero).ToString("N2")) * 100;
+
+                        linea += "1";
+                        linea += "OCP";
+                        linea += "RU";
+                        linea += (item.IdTipoCta_acreditacion_cat.Trim() == "COR" ? "00" : (item.IdTipoCta_acreditacion_cat.Trim() == "AHO") ? "10" : "XX");
+                        linea +=  ("").PadLeft(8,' ');//NUMERO DE CUENTA NO APLICA
+                        linea += (valorEntero.ToString() + valorDecimal.ToString("00")).PadLeft(15, '0');
+                        linea += item.pe_cedulaRuc.PadRight(15, ' ');
+                        var Referencia = string.Empty;
+                        foreach (var refe in info.Lst_det.Where(q => q.pe_cedulaRuc == item.pe_cedulaRuc).ToList())
+                        {
+                            if (!string.IsNullOrEmpty(refe.Referencia))
+                                Referencia += ((string.IsNullOrEmpty(refe.Referencia) ? "" : "/") + refe.Referencia);
+                        }
+                        linea += (string.IsNullOrEmpty(Referencia) ? "" : (Referencia.Length > 20 ? Referencia.Substring(0, 20) : Referencia.Trim()));
+                        linea += "CU";
+                        linea += "USD";
+                        linea += (string.IsNullOrEmpty(item.Nom_Beneficiario) ? "" : (item.Nom_Beneficiario.Length > 30 ? item.Nom_Beneficiario.Substring(0, 30) : item.Nom_Beneficiario.Trim())).PadRight(30,' ');
+                        linea += "  ";
+                        linea += "  ";
+                        linea += (item.IdTipoDocumento == "CED" ? "C" : (item.IdTipoDocumento == "RUC" ? "R" : "P"));
+                        linea += item.pe_cedulaRuc.Trim().PadRight(14,' ');
+                        linea += (string.IsNullOrEmpty(item.pr_telefonos) ? "" : (item.pr_telefonos.Length > 10 ? item.pr_telefonos.Substring(0, 10) : Referencia.Trim())).PadRight(10,' ');
+                        linea += ("").PadRight(1,' ');
+                        linea += ("").PadRight(14, ' ');
+                        linea += ("").PadRight(30, ' ');
+                        linea += ("").PadRight(6, ' ');
+                        linea += item.CodigoLegalBanco.PadLeft(2, '0');
+                        linea += item.num_cta_acreditacion.PadRight(20, ' ');
+                     
+                        file.WriteLine(linea);
+                    }
+                }
+                byte[] filebyte = System.IO.File.ReadAllBytes(rutafile + NombreArchivo + ".txt");
+                return filebyte;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        private byte[] GetTranMisPAC(ba_Archivo_Transferencia_Info info, string NombreArchivo)
+        {
+            try
+            {
+                System.IO.File.Delete(rutafile + NombreArchivo + ".txt");
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(rutafile + NombreArchivo + ".txt", true))
+                {
+                    var ListaA = info.Lst_det.Where(v => v.Valor > 0).GroupBy(q => new { q.num_cta_acreditacion, q.Secuencial_reg_x_proceso, q.pe_cedulaRuc, q.CodigoLegalBanco, q.IdTipoCta_acreditacion_cat, q.IdTipoDocumento, q.Nom_Beneficiario, q.pr_correo, q.pr_direccion, q.pr_telefonos }).Select(q => new
+                    {
+                        num_cta_acreditacion = q.Key.num_cta_acreditacion,
+                        Secuencial_reg_x_proceso = q.Key.Secuencial_reg_x_proceso,
+                        pe_cedulaRuc = q.Key.pe_cedulaRuc,
+                        CodigoLegalBanco = q.Key.CodigoLegalBanco,
+                        IdTipoCta_acreditacion_cat = q.Key.IdTipoCta_acreditacion_cat,
+                        IdTipoDocumento = q.Key.IdTipoDocumento,
+                        Nom_Beneficiario = q.Key.Nom_Beneficiario,
+                        pr_correo = q.Key.pr_correo,
+                        pr_direccion = q.Key.pr_direccion,
+                        pr_telefonos = q.Key.pr_telefonos,
+                        Valor = q.Sum(g => g.Valor)
+                    }).ToList();
+
+                    var banco = bus_banco_cuenta.get_info(info.IdEmpresa, info.IdBanco);
+                    foreach (var item in ListaA)
+                    {
+                        string linea = "";
+                        double valor = Convert.ToDouble(item.Valor);
+                        double valorEntero = Math.Floor(valor);
+                        double valorDecimal = Convert.ToDouble((valor - valorEntero).ToString("N2")) * 100;
+
+                        linea += "1";
+                        linea += "OCP";
+                        linea += "PR";
+                        linea += (item.IdTipoCta_acreditacion_cat.Trim() == "COR" ? "00" : (item.IdTipoCta_acreditacion_cat.Trim() == "AHO") ? "10" : "XX");
+                        linea += item.num_cta_acreditacion.PadLeft(8, ' ');//NUMERO DE CUENTA NO APLICA
+                        linea += (valorEntero.ToString() + valorDecimal.ToString("00")).PadLeft(15, '0');
+                        linea += item.pe_cedulaRuc.PadRight(15, ' ');
+                        var Referencia = string.Empty;
+                        foreach (var refe in info.Lst_det.Where(q => q.pe_cedulaRuc == item.pe_cedulaRuc).ToList())
+                        {
+                            if (!string.IsNullOrEmpty(refe.Referencia))
+                                Referencia += ((string.IsNullOrEmpty(refe.Referencia) ? "" : "/") + refe.Referencia);
+                        }
+                        linea += (string.IsNullOrEmpty(Referencia) ? "" : (Referencia.Length > 20 ? Referencia.Substring(0, 20) : Referencia.Trim()));
+                        linea += "CU";
+                        linea += "USD";
+                        linea += (string.IsNullOrEmpty(item.Nom_Beneficiario) ? "" : (item.Nom_Beneficiario.Length > 30 ? item.Nom_Beneficiario.Substring(0, 30) : item.Nom_Beneficiario.Trim())).PadRight(30, ' ');
+                        linea += "  ";
+                        linea += "  ";
+                        linea += (item.IdTipoDocumento == "CED" ? "C" : (item.IdTipoDocumento == "RUC" ? "R" : "P"));
+                        linea += item.pe_cedulaRuc.Trim().PadRight(14, ' ');
+                        linea += (string.IsNullOrEmpty(item.pr_telefonos) ? "" : (item.pr_telefonos.Length > 10 ? item.pr_telefonos.Substring(0, 10) : Referencia.Trim())).PadRight(10, ' ');
+
+                        file.WriteLine(linea);
+                    }
+                }
+                byte[] filebyte = System.IO.File.ReadAllBytes(rutafile + NombreArchivo + ".txt");
+                return filebyte;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
         public byte[] GetArchivo(ba_Archivo_Transferencia_Info info, string nombre_file)
         {
@@ -729,6 +887,17 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                             {
                                 case "PAGOPROVPB":
                                     return GetPagoProvPB(info, nombre_file);
+                                    break;
+                            }
+                            break;
+                        case 11:
+                            switch (proceso.IdProceso_bancario_tipo)
+                            {
+                                case "TRANINTERPAC":
+                                    return GetTranDisPAC(info, nombre_file);
+                                    break;
+                                case "TRANMISPAC":
+                                    return GetTranMisPAC(info, nombre_file);
                                     break;
                             }
                             break;

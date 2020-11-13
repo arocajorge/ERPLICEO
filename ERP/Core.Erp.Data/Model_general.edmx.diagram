@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="2c704904d89445798a8f6a1aacf9107a" Name="Diagram1" ZoomLevel="72">
         <EntityTypeShape EntityType="Model_general.tb_banco" Width="1.5" PointX="0.75" PointY="7.125" />
-        <EntityTypeShape EntityType="Model_general.tb_banco_procesos_bancarios_x_empresa" Width="1.5" PointX="3" PointY="14.5" />
         <EntityTypeShape EntityType="Model_general.tb_bodega" Width="1.5" PointX="15.25" PointY="12.375" />
         <EntityTypeShape EntityType="Model_general.tb_Catalogo" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="Model_general.tb_CatalogoTipo" Width="1.5" PointX="1.5" PointY="19.75" />
@@ -34,7 +33,6 @@
         <EntityTypeShape EntityType="Model_general.vwtb_pais" Width="1.5" PointX="18.75" PointY="5.375" />
         <EntityTypeShape EntityType="Model_general.vwtb_parroquia" Width="1.5" PointX="18.75" PointY="8.375" />
         <EntityTypeShape EntityType="Model_general.vwtb_provincia" Width="1.5" PointX="18.75" PointY="10.375" />
-        <AssociationConnector Association="Model_general.FK_tb_banco_procesos_bancarios_x_empresa_tb_banco" />
         <AssociationConnector Association="Model_general.FK_tb_persona_tb_banco" />
         <AssociationConnector Association="Model_general.FK_tb_Catalogo_tb_CatalogoTipo" />
         <AssociationConnector Association="Model_general.FK_tb_persona_tb_Catalogo" />
@@ -86,6 +84,8 @@
         <AssociationConnector Association="Model_general.FK_tb_persona_tb_GrupoEtnico" />
         <AssociationConnector Association="Model_general.FK_tb_persona_tb_profesion" />
         <AssociationConnector Association="Model_general.FK_tb_persona_tb_Religion" />
+        <EntityTypeShape EntityType="Model_general.tb_banco_procesos_bancarios_x_empresa" Width="1.5" PointX="3" PointY="24" />
+        <AssociationConnector Association="Model_general.FK_tb_banco_procesos_bancarios_x_empresa_tb_banco" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

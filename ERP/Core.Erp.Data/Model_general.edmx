@@ -35,6 +35,9 @@
           <Property Name="Fecha_UltAnu" Type="datetime" />
           <Property Name="MotivoAnulacion" Type="varchar" MaxLength="100" />
           <Property Name="NombreProceso" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Academico" Type="bit" />
+          <Property Name="ERP" Type="bit" />
+          <Property Name="TipoFiltro" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tb_bodega">
           <Key>
@@ -165,6 +168,7 @@
           <Property Name="em_fechaInicioActividad" Type="date" Nullable="false" />
           <Property Name="cod_entidad_dinardap" Type="varchar" MaxLength="50" />
           <Property Name="em_Email" Type="varchar" MaxLength="300" />
+          <Property Name="TieneAcademico" Type="bit" />
         </EntityType>
         <EntityType Name="tb_GrupoEtnico">
           <Key>
@@ -1429,7 +1433,6 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.vwtb_comprobantes_no_aut
       <Schema Namespace="Model_general" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="Entities_general" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tb_banco" EntityType="Model_general.tb_banco" />
-          <EntitySet Name="tb_banco_procesos_bancarios_x_empresa" EntityType="Model_general.tb_banco_procesos_bancarios_x_empresa" />
           <EntitySet Name="tb_bodega" EntityType="Model_general.tb_bodega" />
           <EntitySet Name="tb_Catalogo" EntityType="Model_general.tb_Catalogo" />
           <EntitySet Name="tb_CatalogoTipo" EntityType="Model_general.tb_CatalogoTipo" />
@@ -1457,10 +1460,6 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.vwtb_comprobantes_no_aut
           <EntitySet Name="vwtb_pais" EntityType="Model_general.vwtb_pais" />
           <EntitySet Name="vwtb_parroquia" EntityType="Model_general.vwtb_parroquia" />
           <EntitySet Name="vwtb_provincia" EntityType="Model_general.vwtb_provincia" />
-          <AssociationSet Name="FK_tb_banco_procesos_bancarios_x_empresa_tb_banco" Association="Model_general.FK_tb_banco_procesos_bancarios_x_empresa_tb_banco">
-            <End Role="tb_banco" EntitySet="tb_banco" />
-            <End Role="tb_banco_procesos_bancarios_x_empresa" EntitySet="tb_banco_procesos_bancarios_x_empresa" />
-          </AssociationSet>
           <AssociationSet Name="FK_tb_persona_tb_banco" Association="Model_general.FK_tb_persona_tb_banco">
             <End Role="tb_banco" EntitySet="tb_banco" />
             <End Role="tb_persona" EntitySet="tb_persona" />
@@ -1612,6 +1611,11 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.vwtb_comprobantes_no_aut
             <End Role="tb_Religion" EntitySet="tb_Religion" />
             <End Role="tb_persona" EntitySet="tb_persona" />
           </AssociationSet>
+          <EntitySet Name="tb_banco_procesos_bancarios_x_empresa" EntityType="Model_general.tb_banco_procesos_bancarios_x_empresa" />
+          <AssociationSet Name="FK_tb_banco_procesos_bancarios_x_empresa_tb_banco" Association="Model_general.FK_tb_banco_procesos_bancarios_x_empresa_tb_banco">
+            <End Role="tb_banco" EntitySet="tb_banco" />
+            <End Role="tb_banco_procesos_bancarios_x_empresa" EntitySet="tb_banco_procesos_bancarios_x_empresa" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="tb_banco">
           <Key>
@@ -1622,30 +1626,8 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.vwtb_comprobantes_no_aut
           <Property Name="Estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="CodigoLegal" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="TieneFormatoTransferencia" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="tb_banco_procesos_bancarios_x_empresa" Relationship="Model_general.FK_tb_banco_procesos_bancarios_x_empresa_tb_banco" FromRole="tb_banco" ToRole="tb_banco_procesos_bancarios_x_empresa" />
           <NavigationProperty Name="tb_persona" Relationship="Model_general.FK_tb_persona_tb_banco" FromRole="tb_banco" ToRole="tb_persona" />
-        </EntityType>
-        <EntityType Name="tb_banco_procesos_bancarios_x_empresa">
-          <Key>
-            <PropertyRef Name="IdEmpresa" />
-            <PropertyRef Name="IdProceso" />
-          </Key>
-          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
-          <Property Name="IdProceso" Type="Int32" Nullable="false" />
-          <Property Name="IdProceso_bancario_tipo" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="IdBanco" Type="Int32" Nullable="false" />
-          <Property Name="Codigo_Empresa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdTipoNota" Type="Int32" />
-          <Property Name="Se_contabiliza" Type="Boolean" />
-          <Property Name="estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_Transaccion" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltModi" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
-          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
-          <Property Name="MotivoAnulacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="NombreProceso" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tb_banco" Relationship="Model_general.FK_tb_banco_procesos_bancarios_x_empresa_tb_banco" FromRole="tb_banco_procesos_bancarios_x_empresa" ToRole="tb_banco" />
+          <NavigationProperty Name="tb_banco_procesos_bancarios_x_empresa" Relationship="Model_general.FK_tb_banco_procesos_bancarios_x_empresa_tb_banco" FromRole="tb_banco" ToRole="tb_banco_procesos_bancarios_x_empresa" />
         </EntityType>
         <EntityType Name="tb_bodega">
           <Key>
@@ -2074,18 +2056,6 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.vwtb_comprobantes_no_aut
           </Key>
           <Property Name="IdProvincia" Type="Int32" Nullable="false" />
         </EntityType>
-        <Association Name="FK_tb_banco_procesos_bancarios_x_empresa_tb_banco">
-          <End Type="Model_general.tb_banco" Role="tb_banco" Multiplicity="1" />
-          <End Type="Model_general.tb_banco_procesos_bancarios_x_empresa" Role="tb_banco_procesos_bancarios_x_empresa" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tb_banco">
-              <PropertyRef Name="IdBanco" />
-            </Principal>
-            <Dependent Role="tb_banco_procesos_bancarios_x_empresa">
-              <PropertyRef Name="IdBanco" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tb_persona_tb_banco">
           <End Type="Model_general.tb_banco" Role="tb_banco" Multiplicity="0..1" />
           <End Type="Model_general.tb_persona" Role="tb_persona" Multiplicity="*" />
@@ -2478,6 +2448,7 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.vwtb_comprobantes_no_aut
           <NavigationProperty Name="tb_sis_reporte_x_seg_usuario" Relationship="Model_general.FK_tb_sis_reporte_x_seg_usuario_tb_empresa" FromRole="tb_empresa" ToRole="tb_sis_reporte_x_seg_usuario" />
           <NavigationProperty Name="tb_sis_reporte_x_tb_empresa" Relationship="Model_general.FK_tb_sis_reporte_x_tb_empresa_tb_empresa" FromRole="tb_empresa" ToRole="tb_sis_reporte_x_tb_empresa" />
           <NavigationProperty Name="tb_sucursal" Relationship="Model_general.FK_tb_sucursal_tb_empresa" FromRole="tb_empresa" ToRole="tb_sucursal" />
+          <Property Name="TieneAcademico" Type="Boolean" />
         </EntityType>
         <Association Name="FK_tb_sis_Documento_Tipo_x_Empresa_tb_empresa">
           <End Type="Model_general.tb_empresa" Role="tb_empresa" Multiplicity="1" />
@@ -2813,6 +2784,43 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.vwtb_comprobantes_no_aut
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tb_banco_procesos_bancarios_x_empresa">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="IdProceso" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdProceso" Type="Int32" Nullable="false" />
+          <Property Name="IdProceso_bancario_tipo" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IdBanco" Type="Int32" Nullable="false" />
+          <Property Name="Codigo_Empresa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoNota" Type="Int32" />
+          <Property Name="Se_contabiliza" Type="Boolean" />
+          <Property Name="estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Transaccion" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltModi" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltMod" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuarioUltAnu" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_UltAnu" Type="DateTime" Precision="3" />
+          <Property Name="MotivoAnulacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NombreProceso" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Academico" Type="Boolean" />
+          <Property Name="ERP" Type="Boolean" />
+          <Property Name="TipoFiltro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_banco" Relationship="Model_general.FK_tb_banco_procesos_bancarios_x_empresa_tb_banco" FromRole="tb_banco_procesos_bancarios_x_empresa" ToRole="tb_banco" />
+        </EntityType>
+        <Association Name="FK_tb_banco_procesos_bancarios_x_empresa_tb_banco">
+          <End Type="Model_general.tb_banco" Role="tb_banco" Multiplicity="1" />
+          <End Type="Model_general.tb_banco_procesos_bancarios_x_empresa" Role="tb_banco_procesos_bancarios_x_empresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_banco">
+              <PropertyRef Name="IdBanco" />
+            </Principal>
+            <Dependent Role="tb_banco_procesos_bancarios_x_empresa">
+              <PropertyRef Name="IdBanco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2827,27 +2835,6 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.vwtb_comprobantes_no_aut
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="ba_descripcion" ColumnName="ba_descripcion" />
                 <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tb_banco_procesos_bancarios_x_empresa">
-            <EntityTypeMapping TypeName="Model_general.tb_banco_procesos_bancarios_x_empresa">
-              <MappingFragment StoreEntitySet="tb_banco_procesos_bancarios_x_empresa">
-                <ScalarProperty Name="NombreProceso" ColumnName="NombreProceso" />
-                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
-                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
-                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
-                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
-                <ScalarProperty Name="IdUsuarioUltModi" ColumnName="IdUsuarioUltModi" />
-                <ScalarProperty Name="Fecha_Transaccion" ColumnName="Fecha_Transaccion" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="Se_contabiliza" ColumnName="Se_contabiliza" />
-                <ScalarProperty Name="IdTipoNota" ColumnName="IdTipoNota" />
-                <ScalarProperty Name="Codigo_Empresa" ColumnName="Codigo_Empresa" />
-                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
-                <ScalarProperty Name="IdProceso_bancario_tipo" ColumnName="IdProceso_bancario_tipo" />
-                <ScalarProperty Name="IdProceso" ColumnName="IdProceso" />
-                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3352,6 +3339,7 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.vwtb_comprobantes_no_aut
           <EntitySetMapping Name="tb_empresa">
             <EntityTypeMapping TypeName="Model_general.tb_empresa">
               <MappingFragment StoreEntitySet="tb_empresa">
+                <ScalarProperty Name="TieneAcademico" ColumnName="TieneAcademico" />
                 <ScalarProperty Name="em_Email" ColumnName="em_Email" />
                 <ScalarProperty Name="cod_entidad_dinardap" ColumnName="cod_entidad_dinardap" />
                 <ScalarProperty Name="em_fechaInicioActividad" ColumnName="em_fechaInicioActividad" />
@@ -3533,6 +3521,30 @@ advertencia 6002: La tabla o vista 'DBERP_ACADEMICO.web.vwtb_comprobantes_no_aut
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="NomReligion" ColumnName="NomReligion" />
                 <ScalarProperty Name="IdReligion" ColumnName="IdReligion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_banco_procesos_bancarios_x_empresa">
+            <EntityTypeMapping TypeName="Model_general.tb_banco_procesos_bancarios_x_empresa">
+              <MappingFragment StoreEntitySet="tb_banco_procesos_bancarios_x_empresa">
+                <ScalarProperty Name="TipoFiltro" ColumnName="TipoFiltro" />
+                <ScalarProperty Name="ERP" ColumnName="ERP" />
+                <ScalarProperty Name="Academico" ColumnName="Academico" />
+                <ScalarProperty Name="NombreProceso" ColumnName="NombreProceso" />
+                <ScalarProperty Name="MotivoAnulacion" ColumnName="MotivoAnulacion" />
+                <ScalarProperty Name="Fecha_UltAnu" ColumnName="Fecha_UltAnu" />
+                <ScalarProperty Name="IdUsuarioUltAnu" ColumnName="IdUsuarioUltAnu" />
+                <ScalarProperty Name="Fecha_UltMod" ColumnName="Fecha_UltMod" />
+                <ScalarProperty Name="IdUsuarioUltModi" ColumnName="IdUsuarioUltModi" />
+                <ScalarProperty Name="Fecha_Transaccion" ColumnName="Fecha_Transaccion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="Se_contabiliza" ColumnName="Se_contabiliza" />
+                <ScalarProperty Name="IdTipoNota" ColumnName="IdTipoNota" />
+                <ScalarProperty Name="Codigo_Empresa" ColumnName="Codigo_Empresa" />
+                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
+                <ScalarProperty Name="IdProceso_bancario_tipo" ColumnName="IdProceso_bancario_tipo" />
+                <ScalarProperty Name="IdProceso" ColumnName="IdProceso" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

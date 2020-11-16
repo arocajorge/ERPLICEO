@@ -31,7 +31,7 @@ namespace Core.Erp.Data.RRHH
                                      IdNomina_TipoLiqui = q.IdNomina_TipoLiqui,
                                      DescripcionProcesoNomina=q.DescripcionProcesoNomina,
                                      Estado = q.Estado,
-                                     Descripcion=p.Descripcion,
+                                     Descripcion= p.Descripcion,
 
                                      EstadoBool = q.Estado == "A" ? true : false
 

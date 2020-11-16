@@ -9,7 +9,7 @@ namespace Core.Erp.Data.Reportes.RRHH
 {
     public class ROL_019_Data
     {
-        public List<ROL_019_Info> get_list(int IdEmpresa, int IdSucursal, int IdNominaTipoLiqui, DateTime fecha_ini, DateTime fecha_fin)
+        public List<ROL_019_Info> get_list(int IdEmpresa, int IdSucursal, int IdNomina, int IdTipoNomina, DateTime fecha_ini, DateTime fecha_fin)
         {
             try
             {
@@ -17,8 +17,8 @@ namespace Core.Erp.Data.Reportes.RRHH
                 int IdSucursalIni = IdSucursal;
                 int IdSucursalFin = IdSucursal == 0 ? 9999 : IdSucursal;
 
-                int IdNominaTipoLiquiIni = IdNominaTipoLiqui;
-                int IdNominaTipoLiquiFin = IdNominaTipoLiqui == 0 ? 9999 : IdNominaTipoLiqui;
+                //int IdNominaTipoLiquiIni = IdNominaTipoLiqui;
+                //int IdNominaTipoLiquiFin = IdNominaTipoLiqui == 0 ? 9999 : IdNominaTipoLiqui;
 
                 fecha_fin = Convert.ToDateTime(fecha_fin.ToShortDateString());
                 fecha_ini = Convert.ToDateTime(fecha_ini.ToShortDateString());
@@ -28,7 +28,8 @@ namespace Core.Erp.Data.Reportes.RRHH
                     Lista = (from q in Context.VWROL_019
                              where q.IdEmpresa == IdEmpresa
                              && IdSucursalIni <= q.IdSucursal && q.IdSucursal <= IdSucursalFin
-                             && IdNominaTipoLiquiIni <= q.IdNominaTipoLiqui && q.IdNominaTipoLiqui <= IdNominaTipoLiquiFin
+                             && q.IdNomina == IdNomina
+                             && q.IdNominaTipoLiqui == IdTipoNomina
                              && fecha_ini <= q.FechaPago
                              && q.FechaPago <= fecha_fin
                              && q.EstadoPago =="PEN" && (q.em_status != "EST_LIQ" && q.em_status!= "EST_PLQ")

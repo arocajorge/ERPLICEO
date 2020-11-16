@@ -55,7 +55,7 @@ namespace Core.Erp.Data.Reportes.Contabilidad
                 }
                 return Lista;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

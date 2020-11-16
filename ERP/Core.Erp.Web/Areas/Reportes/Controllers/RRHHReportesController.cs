@@ -954,7 +954,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             {
                 IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                 IdSucursal = 0,
-                IdNominaTipoLiqui = 0
+                IdNomina = 0,
+                IdTipoNomina = 0,
             };
             ROL_019_Rpt report = new ROL_019_Rpt();
             #region Cargo diseño desde base
@@ -968,7 +969,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa == 0 ? Convert.ToInt32(SessionFixed.IdEmpresa) : model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal;
-            report.p_IdNominaTipoLiqui.Value = model.IdNominaTipoLiqui;
+            report.p_IdNomina.Value = model.IdNomina;
+            report.p_IdTipoNomina.Value = model.IdTipoNomina;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             cargar_combos(Convert.ToInt32(SessionFixed.IdEmpresa));
@@ -992,7 +994,8 @@ namespace Core.Erp.Web.Areas.Reportes.Controllers
             #endregion
             report.p_IdEmpresa.Value = model.IdEmpresa == 0 ? Convert.ToInt32(SessionFixed.IdEmpresa) : model.IdEmpresa;
             report.p_IdSucursal.Value = model.IdSucursal == 0 ? Convert.ToInt32(SessionFixed.IdSucursal) : model.IdSucursal;
-            report.p_IdNominaTipoLiqui.Value = model.IdNominaTipoLiqui;
+            report.p_IdNomina.Value = model.IdNomina;
+            report.p_IdTipoNomina.Value = model.IdTipoNomina;
             report.p_fecha_ini.Value = model.fecha_ini;
             report.p_fecha_fin.Value = model.fecha_fin;
             cargar_combos(Convert.ToInt32(SessionFixed.IdEmpresa));

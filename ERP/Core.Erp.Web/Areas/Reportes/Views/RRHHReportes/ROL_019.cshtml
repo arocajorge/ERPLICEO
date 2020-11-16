@@ -38,13 +38,27 @@
                             @Html.ValidationMessageFor(q => q.IdSucursal, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="IdNomina_Tipo">Nómina*</label>
+                            @Html.DropDownListFor(q => q.IdNomina, new SelectList(ViewBag.lst_nomina, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control", @id = "IdNomina_Tipo" })
+                            @Html.ValidationMessageFor(q => q.IdNomina, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                     <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="IdNomina_TipoLiqui">Tipo liquidación de nómina*</label>
+                            @Html.DropDownListFor(q => q.IdTipoNomina, new SelectList(ViewBag.lst_nomina_tipo, "IdNomina_TipoLiqui", "DescripcionProcesoNomina"), new { @class = "form-control", @id = "IdNomina_TipoLiqui" })
+                            @Html.ValidationMessageFor(q => q.IdTipoNomina, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    @*<div class="col-md-3">
                         <div class="form-group">
                             <label for="IdNominaTipoLiqui">Tipo de nómina</label>
                             @Html.DropDownListFor(q => q.IdNominaTipoLiqui, new SelectList(ViewBag.lst_nomina_tipo, "IdNomina_Tipo", "Descripcion"), new { @class = "form-control" })
                             @Html.ValidationMessageFor(q => q.IdNominaTipoLiqui, "", new { @class = "text-danger" })
                         </div>
-                    </div>
+                    </div>*@
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="">Fecha inicio*</label>
@@ -119,3 +133,40 @@
                     </div>
 
 }
+
+<script>
+    $(function () {
+        cargar_tipo_liquidacion_nomina();
+    });
+
+    $("#IdNomina_Tipo").change(function () {
+        cargar_tipo_liquidacion_nomina();
+    });
+
+    function cargar_tipo_liquidacion_nomina() {
+        $("#IdNomina_TipoLiqui").empty();
+                var datos = {
+                    IdNomina: $("#IdNomina_Tipo").val()
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: JSON.stringify(datos),
+                    url: '@Url.Action("get_lst_nomina_tipo_liq", "NominaTipoLiquidacion", new { Area = "RRHH" })',
+                    async: false,
+                    bDeferRender: true,
+                    bProcessing: true,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+
+                        $.each(data, function (i, row) {
+                            $("#IdNomina_TipoLiqui").append("<option value=" + row.IdNomina_TipoLiqui + ">" + row.DescripcionProcesoNomina + "</option>");
+                        });
+                        $("#IdNomina_TipoLiqui").val(2);
+                    },
+                    error: function (error) {
+                    }
+                });
+    };
+</script>

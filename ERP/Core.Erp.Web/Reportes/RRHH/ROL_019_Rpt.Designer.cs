@@ -45,7 +45,7 @@
             this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             this.p_IdEmpresa = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_IdSucursal = new DevExpress.XtraReports.Parameters.Parameter();
-            this.p_IdNominaTipoLiqui = new DevExpress.XtraReports.Parameters.Parameter();
+            this.p_IdNomina = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_fecha_ini = new DevExpress.XtraReports.Parameters.Parameter();
             this.p_fecha_fin = new DevExpress.XtraReports.Parameters.Parameter();
             this.PageHeader = new DevExpress.XtraReports.UI.PageHeaderBand();
@@ -89,6 +89,7 @@
             this.xrTableRow6 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell14 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell15 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.p_IdTipoNomina = new DevExpress.XtraReports.Parameters.Parameter();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).BeginInit();
@@ -222,10 +223,10 @@
             this.p_IdSucursal.Name = "p_IdSucursal";
             this.p_IdSucursal.Visible = false;
             // 
-            // p_IdNominaTipoLiqui
+            // p_IdNomina
             // 
-            this.p_IdNominaTipoLiqui.Name = "p_IdNominaTipoLiqui";
-            this.p_IdNominaTipoLiqui.Visible = false;
+            this.p_IdNomina.Name = "p_IdNomina";
+            this.p_IdNomina.Visible = false;
             // 
             // p_fecha_ini
             // 
@@ -672,6 +673,11 @@
             this.xrTableCell15.TextFormatString = "{0:n2}";
             this.xrTableCell15.Weight = 0.67466105799352072D;
             // 
+            // p_IdTipoNomina
+            // 
+            this.p_IdTipoNomina.Name = "p_IdTipoNomina";
+            this.p_IdTipoNomina.Visible = false;
+            // 
             // ROL_019_Rpt
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -693,10 +699,11 @@
             this.Parameters.AddRange(new DevExpress.XtraReports.Parameters.Parameter[] {
             this.p_IdEmpresa,
             this.p_IdSucursal,
-            this.p_IdNominaTipoLiqui,
+            this.p_IdNomina,
             this.p_fecha_ini,
-            this.p_fecha_fin});
-            this.Version = "17.2";
+            this.p_fecha_fin,
+            this.p_IdTipoNomina});
+            this.Version = "20.1";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.ROL_019_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
@@ -718,7 +725,7 @@
         private DevExpress.DataAccess.ObjectBinding.ObjectDataSource objectDataSource1;
         public DevExpress.XtraReports.Parameters.Parameter p_IdEmpresa;
         public DevExpress.XtraReports.Parameters.Parameter p_IdSucursal;
-        public DevExpress.XtraReports.Parameters.Parameter p_IdNominaTipoLiqui;
+        public DevExpress.XtraReports.Parameters.Parameter p_IdNomina;
         public DevExpress.XtraReports.Parameters.Parameter p_fecha_ini;
         public DevExpress.XtraReports.Parameters.Parameter p_fecha_fin;
         private DevExpress.XtraReports.UI.PageHeaderBand PageHeader;
@@ -770,5 +777,6 @@
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow6;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell14;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell15;
+        public DevExpress.XtraReports.Parameters.Parameter p_IdTipoNomina;
     }
 }

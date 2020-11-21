@@ -769,7 +769,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                             if (!string.IsNullOrEmpty(refe.Referencia))
                                 Referencia += ((string.IsNullOrEmpty(refe.Referencia) ? "" : "/") + refe.Referencia);
                         }
-                        linea += (string.IsNullOrEmpty(Referencia) ? "" : (Referencia.Length > 20 ? Referencia.Substring(0, 20) : Referencia.Trim()));
+                        linea += (string.IsNullOrEmpty(Referencia) ? "" : (Referencia.Length > 20 ? Referencia.Substring(0, 20) : Referencia.Trim())).PadRight(20,' ');
                         linea += "CU";
                         linea += "USD";
                         linea += (string.IsNullOrEmpty(item.Nom_Beneficiario) ? "" : (item.Nom_Beneficiario.Length > 30 ? item.Nom_Beneficiario.Substring(0, 30) : item.Nom_Beneficiario.Trim())).PadRight(30,' ');
@@ -841,7 +841,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
                             if (!string.IsNullOrEmpty(refe.Referencia))
                                 Referencia += ((string.IsNullOrEmpty(refe.Referencia) ? "" : "/") + refe.Referencia);
                         }
-                        linea += (string.IsNullOrEmpty(Referencia) ? "" : (Referencia.Length > 20 ? Referencia.Substring(0, 20) : Referencia.Trim()));
+                        linea += (string.IsNullOrEmpty(Referencia) ? "" : (Referencia.Length > 20 ? Referencia.Substring(0, 20) : Referencia.Trim())).PadRight(20,' ');
                         linea += "CU";
                         linea += "USD";
                         linea += (string.IsNullOrEmpty(item.Nom_Beneficiario) ? "" : (item.Nom_Beneficiario.Length > 30 ? item.Nom_Beneficiario.Substring(0, 30) : item.Nom_Beneficiario.Trim())).PadRight(30, ' ');

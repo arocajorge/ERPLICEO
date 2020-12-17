@@ -134,7 +134,8 @@ namespace Core.Erp.Data.Banco
                                  IdPersona = q.IdPersona,
                                  IdEmpresa_cxp = q.IdEmpresa_cxp,
                                  IdTipoCbte_cxp = q.IdTipoCbte_cxp,
-                                 IdCbteCble_cxp = q.IdCbteCble_cxp
+                                 IdCbteCble_cxp = q.IdCbteCble_cxp,
+                                 IdBanco_acreditacion = q.IdBanco
                              }).ToList();
                 }
                 return Lista;

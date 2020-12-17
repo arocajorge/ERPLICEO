@@ -10,6 +10,9 @@
     [IdUsuarioAnulacion]    VARCHAR (200) NULL,
     [FechaAnulacion]        DATETIME      NULL,
     [MotivoAnulacion]       VARCHAR (MAX) NULL,
+    [EsBeca]                BIT           NULL,
     CONSTRAINT [PK_aca_PlantillaTipo] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdTipoPlantilla] ASC)
 );
+
+
 

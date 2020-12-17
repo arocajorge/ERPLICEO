@@ -1077,6 +1077,8 @@ namespace Core.Erp.Data.Caja
                 if (info.IdEstadoCierre == cl_enumeradores.eEstadoCierreCaja.EST_CIE_CER.ToString())
                 {
                     Secuencia = 1;
+                    var lst_det_Ing_Caja = Context.cp_conciliacion_Caja_det_Ing_Caja.Where(q => q.IdEmpresa == info.IdEmpresa && q.IdConciliacion_Caja == info.IdConciliacion_Caja).ToList();
+                    Context.cp_conciliacion_Caja_det_Ing_Caja.RemoveRange(lst_det_Ing_Caja);
                     double saldo_egresos = info.Total_fact_vale;
                     foreach (var item in info.lst_det_ing)
                     {

@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[aca_MatriculaCalificacionParticipacion] (
     [IdEmpresa]             INT             NOT NULL,
+    [IdMatricula]           NUMERIC (18)    NOT NULL,
     [IdAlumno]              NUMERIC (18)    NOT NULL,
-    [IdMatricula]           NUMERIC (18)    NULL,
     [IdTematica]            INT             NOT NULL,
     [IdCampoAccion]         INT             NOT NULL,
     [IdProfesor]            NUMERIC (18)    NULL,
@@ -16,7 +16,7 @@
     [FechaCreacion]         DATETIME        NULL,
     [IdUsuarioModificacion] VARCHAR (200)   NULL,
     [FechaModificacion]     DATETIME        NULL,
-    CONSTRAINT [PK_aca_MatriculaCalificacionParticipacion_1] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdAlumno] ASC),
+    CONSTRAINT [PK_aca_MatriculaCalificacionParticipacion] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdMatricula] ASC),
     CONSTRAINT [FK_aca_MatriculaCalificacionParticipacion_aca_Alumno] FOREIGN KEY ([IdEmpresa], [IdAlumno]) REFERENCES [dbo].[aca_Alumno] ([IdEmpresa], [IdAlumno]),
     CONSTRAINT [FK_aca_MatriculaCalificacionParticipacion_aca_Alumno1] FOREIGN KEY ([IdEmpresa], [IdAlumno]) REFERENCES [dbo].[aca_Alumno] ([IdEmpresa], [IdAlumno]),
     CONSTRAINT [FK_aca_MatriculaCalificacionParticipacion_aca_CampoAccion] FOREIGN KEY ([IdEmpresa], [IdCampoAccion]) REFERENCES [dbo].[aca_CampoAccion] ([IdEmpresa], [IdCampoAccion]),
@@ -25,6 +25,8 @@
     CONSTRAINT [FK_aca_MatriculaCalificacionParticipacion_aca_Profesor] FOREIGN KEY ([IdEmpresa], [IdProfesor]) REFERENCES [dbo].[aca_Profesor] ([IdEmpresa], [IdProfesor]),
     CONSTRAINT [FK_aca_MatriculaCalificacionParticipacion_aca_Tematica] FOREIGN KEY ([IdEmpresa], [IdTematica]) REFERENCES [dbo].[aca_Tematica] ([IdEmpresa], [IdTematica])
 );
+
+
 
 
 

@@ -1443,6 +1443,7 @@
     <Build Include="dbo\Tables\cxc_Pagare.sql" />
     <Build Include="dbo\Tables\cxc_Convenio_Det.sql" />
     <Build Include="dbo\Tables\cxc_Convenio.sql" />
+    <Build Include="dbo\Tables\aca_parametro.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\1.- Permisos Admin.sql" />

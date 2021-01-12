@@ -86,6 +86,7 @@
     [AnioVehiculo_Padre]                   INT           NULL,
     [CasaPropia_Padre]                     BIT           NOT NULL,
     [EstaFallecido_Padre]                  BIT           NOT NULL,
+    [IdProfesion_Padre]                    INT           NULL,
     [Naturaleza_Madre]                     VARCHAR (25)  NOT NULL,
     [IdTipoDocumento_Madre]                VARCHAR (25)  NOT NULL,
     [CedulaRuc_Madre]                      VARCHAR (50)  NOT NULL,
@@ -126,6 +127,7 @@
     [AnioVehiculo_Madre]                   INT           NULL,
     [CasaPropia_Madre]                     BIT           NOT NULL,
     [EstaFallecido_Madre]                  BIT           NOT NULL,
+    [IdProfesion_Madre]                    INT           NULL,
     [Naturaleza_Representante]             VARCHAR (25)  NOT NULL,
     [IdTipoDocumento_Representante]        VARCHAR (25)  NOT NULL,
     [CedulaRuc_Representante]              VARCHAR (50)  NOT NULL,
@@ -166,6 +168,7 @@
     [AnioVehiculo_Representante]           INT           NULL,
     [CasaPropia_Representante]             BIT           NOT NULL,
     [EstaFallecido_Representante]          BIT           NOT NULL,
+    [IdProfesion_Representante]            INT           NULL,
     [SueldoPadre]                          FLOAT (53)    NOT NULL,
     [SueldoMadre]                          FLOAT (53)    NOT NULL,
     [OtroIngresoPadre]                     FLOAT (53)    NOT NULL,
@@ -177,6 +180,8 @@
     [GastoArriendo]                        FLOAT (53)    NOT NULL,
     [GastoPrestamo]                        FLOAT (53)    NOT NULL,
     [OtroGasto]                            FLOAT (53)    NOT NULL,
+    [IdCatalogoESTADM]                     INT           NOT NULL,
+    [Estado]                               BIT           NOT NULL,
     [IdUsuarioCreacion]                    VARCHAR (200) NULL,
     [FechaCreacion]                        DATETIME      NULL,
     [IdUsuarioModificacion]                VARCHAR (200) NULL,
@@ -184,14 +189,12 @@
     [IdUsuarioAnulacion]                   VARCHAR (200) NULL,
     [FechaAnulacion]                       DATETIME      NULL,
     [MotivoAnulacion]                      VARCHAR (MAX) NULL,
-    [IdProfesion_Padre]                    INT           NULL,
-    [IdProfesion_Madre]                    INT           NULL,
-    [IdProfesion_Representante]            INT           NULL,
     CONSTRAINT [PK_aca_Admision] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdAdmision] ASC),
     CONSTRAINT [FK_aca_Admision_aca_AnioLectivo] FOREIGN KEY ([IdEmpresa], [IdAnio]) REFERENCES [dbo].[aca_AnioLectivo] ([IdEmpresa], [IdAnio]),
     CONSTRAINT [FK_aca_Admision_aca_Catalogo] FOREIGN KEY ([IdCatalogoPAREN_Padre]) REFERENCES [dbo].[aca_Catalogo] ([IdCatalogo]),
     CONSTRAINT [FK_aca_Admision_aca_Catalogo1] FOREIGN KEY ([IdCatalogoPAREN_Madre]) REFERENCES [dbo].[aca_Catalogo] ([IdCatalogo]),
     CONSTRAINT [FK_aca_Admision_aca_Catalogo2] FOREIGN KEY ([IdCatalogoPAREN_Representante]) REFERENCES [dbo].[aca_Catalogo] ([IdCatalogo]),
+    CONSTRAINT [FK_aca_Admision_aca_Catalogo3] FOREIGN KEY ([IdCatalogoESTADM]) REFERENCES [dbo].[aca_Catalogo] ([IdCatalogo]),
     CONSTRAINT [FK_aca_Admision_aca_CatalogoFicha] FOREIGN KEY ([IdCatalogoFichaTipoViv_Aspirante]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
     CONSTRAINT [FK_aca_Admision_aca_CatalogoFicha1] FOREIGN KEY ([IdCatalogoFichaViv_Aspirante]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
     CONSTRAINT [FK_aca_Admision_aca_CatalogoFicha10] FOREIGN KEY ([IdCatalogoFichaInst_Representante]) REFERENCES [dbo].[aca_CatalogoFicha] ([IdCatalogoFicha]),
@@ -257,6 +260,10 @@
     CONSTRAINT [FK_aca_Admision_tb_Religion1] FOREIGN KEY ([IdReligion_Padre]) REFERENCES [dbo].[tb_Religion] ([IdReligion]),
     CONSTRAINT [FK_aca_Admision_tb_Religion2] FOREIGN KEY ([IdReligion_Representante]) REFERENCES [dbo].[tb_Religion] ([IdReligion])
 );
+
+
+
+
 
 
 

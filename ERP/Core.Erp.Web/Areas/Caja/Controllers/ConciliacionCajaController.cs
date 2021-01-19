@@ -181,6 +181,7 @@ namespace Core.Erp.Web.Areas.Caja.Controllers
             }
 
             model.IdUsuario = SessionFixed.IdUsuario;
+            model.IdUsuarioCreacion = SessionFixed.IdUsuario;
             if (!bus_conciliacion.guardarDB(model))
             {
                 ViewBag.mensaje = "No se ha podido guardar el registro";

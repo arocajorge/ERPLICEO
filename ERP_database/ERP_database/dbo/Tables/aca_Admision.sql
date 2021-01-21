@@ -24,7 +24,7 @@
     [NumeroCarnetConadis_Aspirante]        VARCHAR (200) NULL,
     [IdGrupoEtnico_Aspirante]              INT           NULL,
     [IdReligion_Aspirante]                 INT           NULL,
-    [AsisteCentroCristiano_Aspirante]      BIT           NULL,
+    [AsisteCentroCristiano_Aspirante]      BIT           NOT NULL,
     [LugarNacimiento_Aspirante]            VARCHAR (300) NULL,
     [IdPais_Aspirante]                     VARCHAR (10)  NULL,
     [Cod_Region_Aspirante]                 VARCHAR (10)  NULL,
@@ -46,6 +46,10 @@
     [OtroMotivoIngreso_Aspirante]          VARCHAR (MAX) NULL,
     [OtroInformacionInst_Aspirante]        VARCHAR (MAX) NULL,
     [OtroFinanciamiento_Aspirante]         VARCHAR (MAX) NULL,
+    [Dificultad_Lectura]                   BIT           NOT NULL,
+    [Dificultad_Escritura]                 BIT           NOT NULL,
+    [Dificultad_Matematicas]               BIT           NOT NULL,
+    [AceptaTerminos]                       BIT           NOT NULL,
     [Naturaleza_Padre]                     VARCHAR (25)  NOT NULL,
     [IdTipoDocumento_Padre]                VARCHAR (25)  NOT NULL,
     [CedulaRuc_Padre]                      VARCHAR (50)  NOT NULL,
@@ -260,6 +264,8 @@
     CONSTRAINT [FK_aca_Admision_tb_Religion1] FOREIGN KEY ([IdReligion_Padre]) REFERENCES [dbo].[tb_Religion] ([IdReligion]),
     CONSTRAINT [FK_aca_Admision_tb_Religion2] FOREIGN KEY ([IdReligion_Representante]) REFERENCES [dbo].[tb_Religion] ([IdReligion])
 );
+
+
 
 
 

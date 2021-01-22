@@ -17,9 +17,12 @@
     [IdMenu]                      INT            NULL,
     [IPUsuario]                   VARCHAR (1000) NULL,
     [IPImpresora]                 VARCHAR (1000) NULL,
+    [ManejaAdmision]              BIT            NULL,
     CONSTRAINT [PK_seg_usuario] PRIMARY KEY CLUSTERED ([IdUsuario] ASC),
     CONSTRAINT [FK_seg_usuario_seg_Menu] FOREIGN KEY ([IdMenu]) REFERENCES [dbo].[seg_Menu] ([IdMenu])
 );
+
+
 
 
 

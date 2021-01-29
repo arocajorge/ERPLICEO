@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[aca_Admision] (
     [IdEmpresa]                            INT           NOT NULL,
-    [IdAdmision]                           DECIMAL (18)  NOT NULL,
+    [IdAdmision]                           NUMERIC (18)  NOT NULL,
     [IdSede]                               INT           NOT NULL,
     [IdAnio]                               INT           NOT NULL,
     [IdJornada]                            INT           NOT NULL,
@@ -205,9 +205,12 @@
     [FechaCreacion]                        DATETIME      NULL,
     [IdUsuarioModificacion]                VARCHAR (200) NULL,
     [FechaModificacion]                    DATETIME      NULL,
+    [IdUsuarioRevision]                    VARCHAR (200) NULL,
+    [FechaRevision]                        DATETIME      NULL,
     [IdUsuarioAnulacion]                   VARCHAR (200) NULL,
     [FechaAnulacion]                       DATETIME      NULL,
     [MotivoAnulacion]                      VARCHAR (MAX) NULL,
+    [FechaPreMatriculacion]                DATETIME      NULL,
     CONSTRAINT [PK_aca_Admision] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdAdmision] ASC),
     CONSTRAINT [FK_aca_Admision_aca_AnioLectivo] FOREIGN KEY ([IdEmpresa], [IdAnio]) REFERENCES [dbo].[aca_AnioLectivo] ([IdEmpresa], [IdAnio]),
     CONSTRAINT [FK_aca_Admision_aca_Catalogo] FOREIGN KEY ([IdCatalogoPAREN_Padre]) REFERENCES [dbo].[aca_Catalogo] ([IdCatalogo]),
@@ -291,6 +294,8 @@
     CONSTRAINT [FK_aca_Admision_tb_Religion1] FOREIGN KEY ([IdReligion_Padre]) REFERENCES [dbo].[tb_Religion] ([IdReligion]),
     CONSTRAINT [FK_aca_Admision_tb_Religion2] FOREIGN KEY ([IdReligion_Representante]) REFERENCES [dbo].[tb_Religion] ([IdReligion])
 );
+
+
 
 
 

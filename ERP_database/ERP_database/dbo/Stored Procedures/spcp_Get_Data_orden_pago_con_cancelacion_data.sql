@@ -1,4 +1,5 @@
-﻿--exec [dbo].[spcp_Get_Data_orden_pago_con_cancelacion_data] 1,1,999999,'PROVEE',1,999999,'APRO','admin',1,0
+﻿
+--exec [dbo].[spcp_Get_Data_orden_pago_con_cancelacion_data] 1,1,999999,'PROVEE',1,999999,'APRO','admin',1,0
 CREATE PROCEDURE [dbo].[spcp_Get_Data_orden_pago_con_cancelacion_data]
 (
 @IdEmpresa int,
@@ -128,6 +129,21 @@ AND cp_orden_pago_con_cancelacion_data.IdPersona = B.IdPersona
 AND cp_orden_pago_con_cancelacion_data.IdEntidad = B.IdEntidad
 AND (B.IdTipoCta_acreditacion_cat IS NULL OR B.num_cta_acreditacion IS NULL OR B.IdBanco_acreditacion IS NULL)
 END
+
+update cp_orden_pago_con_cancelacion_data set IdBanco = A.IdBanco_acreditacion
+FROM(
+select a.IdEmpresa, a.IdTipoCbte_cxp, A.IdCbteCble_cxp, b.IdBanco_acreditacion
+from cp_orden_pago_con_cancelacion_data as a join
+vwtb_persona_beneficiario AS B on a.IdEmpresa = B.IdEmpresa
+AND a.IdTipoPersona = B.IdTipo_Persona
+AND a.IdPersona = B.IdPersona
+AND a.IdEntidad = B.IdEntidad
+where IdUsuario = @IdUsuario
+) A
+WHERE cp_orden_pago_con_cancelacion_data.IdEmpresa = A.IdEmpresa
+AND cp_orden_pago_con_cancelacion_data.IdTipoCbte_cxp = A.IdTipoCbte_cxp
+AND cp_orden_pago_con_cancelacion_data.IdCbteCble_cxp = A.IdCbteCble_cxp
+ 
 
 SELECT ISNULL(ROW_NUMBER() OVER (ORDER BY IdUsuario),0) AS IdRow, IdUsuario, IdEmpresa, IdTipo_op, Referencia, Referencia2, IdOrdenPago, Secuencia_OP, IdTipoPersona, IdPersona, IdEntidad, Fecha_OP, Fecha_Fa_Prov, Fecha_Venc_Fac_Prov, Observacion, Nom_Beneficiario, Girar_Cheque_a, 
                   Valor_a_pagar, Valor_estimado_a_pagar_OP, Total_cancelado_OP, Saldo_x_Pagar_OP, IdEstadoAprobacion, IdFormaPago, Fecha_Pago, IdCtaCble, IdCentroCosto, IdSubCentro_Costo, Cbte_cxp, Estado, Nom_Beneficiario_2, 

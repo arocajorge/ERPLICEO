@@ -492,7 +492,7 @@ and EntidadRegulatoria.ro_rdep_det.Id_Rdep = @IdErdp
 
 --  ACTUALIZANDO BASE IMPONIBLE
 
-UPDATE EntidadRegulatoria.ro_rdep_det set BaseImponibleGravada=(ISNULL( Sueldo,0)+isnull(IngresoVarios,0)+isnull(IngresoPorOtrosEmpleaodres,0))-(isnull(AportePErsonal,0)+isnull(IessPorOtrosEmpleadores,0)+isnull(GastoVivienda,0)+isnull(GastoAlimentacion,0)+isnull(GastoVestimenta,0)+isnull(GastoEucacion,0)+isnull(GastoSalud,0)+isnull(ExoneraionPorDiscapacidad,0)+isnull(ExoneracionPorTerceraEdad,0))+(isnull(ImpuestoRentaCausado,0))
+UPDATE EntidadRegulatoria.ro_rdep_det set BaseImponibleGravada=(ISNULL( Sueldo,0)+isnull(IngresoVarios,0)+isnull(IngresoPorOtrosEmpleaodres,0))-(isnull(AportePErsonal,0)+isnull(IessPorOtrosEmpleadores,0)+isnull(GastoVivienda,0)+isnull(GastoAlimentacion,0)+isnull(GastoVestimenta,0)+isnull(GastoEucacion,0)+isnull(GastoSalud,0)+isnull(ExoneraionPorDiscapacidad,0)+isnull(ExoneracionPorTerceraEdad,0))-- +(isnull(ImpuestoRentaCausado,0))
 where EntidadRegulatoria.ro_rdep_det.Id_Rdep=@IdErdp and EntidadRegulatoria.ro_rdep_det.IdEmpresa=@IdEmpresa
 
 -- actualizando impuesto renta causado

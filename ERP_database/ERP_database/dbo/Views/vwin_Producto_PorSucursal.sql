@@ -1,16 +1,18 @@
-﻿CREATE VIEW dbo.vwin_Producto_PorSucursal
-AS
-SELECT        dbo.in_producto_x_tb_bodega.IdEmpresa, dbo.in_producto_x_tb_bodega.IdSucursal, dbo.in_producto_x_tb_bodega.IdProducto, dbo.in_Producto.pr_descripcion, dbo.in_categorias.ca_Categoria, 
+﻿CREATE VIEW vwin_Producto_PorSucursal
+as
+
+SELECT  dbo.in_producto_x_tb_bodega.IdEmpresa, dbo.in_producto_x_tb_bodega.IdSucursal, dbo.in_producto_x_tb_bodega.IdProducto, dbo.in_Producto.pr_descripcion, dbo.in_categorias.ca_Categoria, 
                          SUM(ISNULL(dbo.in_movi_inve_detalle.dm_cantidad, 0)) AS Stock, dbo.in_Producto.precio_1, dbo.in_ProductoTipo.tp_ManejaInven
-FROM            dbo.in_ProductoTipo INNER JOIN
-                         dbo.in_Producto ON dbo.in_ProductoTipo.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_ProductoTipo.IdProductoTipo = dbo.in_Producto.IdProductoTipo RIGHT OUTER JOIN
-                         dbo.in_producto_x_tb_bodega ON dbo.in_Producto.IdEmpresa = dbo.in_producto_x_tb_bodega.IdEmpresa AND dbo.in_Producto.IdProducto = dbo.in_producto_x_tb_bodega.IdProducto LEFT OUTER JOIN
-                         dbo.in_movi_inve_detalle ON dbo.in_producto_x_tb_bodega.IdEmpresa = dbo.in_movi_inve_detalle.IdEmpresa AND dbo.in_producto_x_tb_bodega.IdSucursal = dbo.in_movi_inve_detalle.IdSucursal AND 
-                         dbo.in_producto_x_tb_bodega.IdBodega = dbo.in_movi_inve_detalle.IdBodega AND dbo.in_producto_x_tb_bodega.IdProducto = dbo.in_movi_inve_detalle.IdProducto LEFT OUTER JOIN
-                         dbo.in_categorias ON dbo.in_Producto.IdEmpresa = dbo.in_categorias.IdEmpresa AND dbo.in_Producto.IdCategoria = dbo.in_categorias.IdCategoria
+FROM            dbo.in_ProductoTipo (NOLOCK) 
+                       INNER JOIN dbo.in_Producto (NOLOCK) ON dbo.in_ProductoTipo.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.in_ProductoTipo.IdProductoTipo = dbo.in_Producto.IdProductoTipo 
+                       RIGHT OUTER JOIN dbo.in_producto_x_tb_bodega (NOLOCK) ON dbo.in_Producto.IdEmpresa = dbo.in_producto_x_tb_bodega.IdEmpresa AND dbo.in_Producto.IdProducto = dbo.in_producto_x_tb_bodega.IdProducto 
+                       LEFT OUTER JOIN dbo.in_movi_inve_detalle (NOLOCK) ON dbo.in_producto_x_tb_bodega.IdEmpresa = dbo.in_movi_inve_detalle.IdEmpresa AND dbo.in_producto_x_tb_bodega.IdSucursal = dbo.in_movi_inve_detalle.IdSucursal AND 
+                         dbo.in_producto_x_tb_bodega.IdBodega = dbo.in_movi_inve_detalle.IdBodega AND dbo.in_producto_x_tb_bodega.IdProducto = dbo.in_movi_inve_detalle.IdProducto 
+                         LEFT OUTER JOIN dbo.in_categorias (NOLOCK) ON dbo.in_Producto.IdEmpresa = dbo.in_categorias.IdEmpresa AND dbo.in_Producto.IdCategoria = dbo.in_categorias.IdCategoria
 WHERE        (dbo.in_Producto.Estado = 'A') AND (dbo.in_producto_x_tb_bodega.IdBodega = 1)
-GROUP BY dbo.in_Producto.pr_descripcion, dbo.in_categorias.ca_Categoria, dbo.in_producto_x_tb_bodega.IdEmpresa, dbo.in_producto_x_tb_bodega.IdSucursal, dbo.in_producto_x_tb_bodega.IdProducto, dbo.in_Producto.precio_1, 
-                         dbo.in_ProductoTipo.tp_ManejaInven
+AND (dbo.in_categorias.ca_Categoria<>'BAR')--27/10/2020 by Acueva
+GROUP BY dbo.in_Producto.pr_descripcion, dbo.in_categorias.ca_Categoria, dbo.in_producto_x_tb_bodega.IdEmpresa,
+	dbo.in_producto_x_tb_bodega.IdSucursal, dbo.in_producto_x_tb_bodega.IdProducto,dbo.in_Producto.precio_1, dbo.in_ProductoTipo.tp_ManejaInven
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwin_Producto_PorSucursal';
 

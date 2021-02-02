@@ -12,10 +12,10 @@ CREATE procedure [web].[SPROL_027]
 @FechaInicio date,
 @FechaFin date
 as
-
+-- exec web.[SPROL_027] 5,1,999,1,1,999,1,999,'01/12/2019','30/11/2020'
 BEGIN
 
-select a.IdEmpresa, a.IdSucursal, a.Nomina, a.Area, a.pe_nombre, a.pe_apellido,a.pe_cedulaRuc, a.em_codigo, a.IdEmpleado,a.pe_nombreCompleto,ROUND( sum(a.Valor),2)Valor, 0 Descuento,ROUND( sum( a.Valor),2)Total,
+select a.IdEmpresa, a.IdSucursal, a.Nomina, a.Area, a.pe_nombre, a.pe_apellido,a.pe_cedulaRuc, a.em_codigo, a.IdEmpleado,a.pe_nombreCompleto ,ROUND( sum(a.Valor),2)Valor, 0 Descuento,ROUND( sum( a.Valor),2)Total,
        a.IdDepartamento, IdDivision,a.IdArea,a.de_descripcion,a.Su_Descripcion
  from (
 SELECT        dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpresa, dbo.ro_rol_detalle_x_rubro_acumulado.IdRol, dbo.ro_rol_detalle_x_rubro_acumulado.IdEmpleado, dbo.ro_rol_detalle_x_rubro_acumulado.IdRubro, 
@@ -50,9 +50,7 @@ and ro_empleado.IdArea<=@IdAreaFin
 
 and ro_rol.IdSucursal>=@IdSucursalIni
 and ro_rol.IdSucursal<=@IdSucursalFin
-
-
-
+and ro_empleado.em_status not in('EST_LIQ','EST_PLQ') -- by Acueva 30/11/2020
 		)a	
 		
 		group by a.IdEmpresa, a.IdSucursal, a.Nomina, a.Area, a.pe_nombre, a.pe_apellido,a.pe_cedulaRuc, a.em_codigo, a.IdEmpleado,a.pe_nombreCompleto,

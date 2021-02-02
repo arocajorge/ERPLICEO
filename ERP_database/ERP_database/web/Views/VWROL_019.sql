@@ -1,18 +1,19 @@
-﻿CREATE VIEW web.VWROL_019
-AS
-SELECT dbo.ro_prestamo.IdEmpresa, dbo.ro_prestamo.IdPrestamo, dbo.ro_prestamo.IdEmpleado, dbo.ro_prestamo.IdRubro, dbo.ro_prestamo_detalle.NumCuota, dbo.ro_prestamo_detalle.SaldoInicial, dbo.ro_prestamo_detalle.TotalCuota, 
-                  dbo.ro_prestamo_detalle.Saldo, dbo.ro_prestamo_detalle.FechaPago, dbo.ro_prestamo_detalle.EstadoPago, dbo.ro_prestamo_detalle.Estado, dbo.ro_prestamo_detalle.Observacion_det, dbo.ro_prestamo_detalle.IdNominaTipoLiqui, 
-                  dbo.ro_empleado.em_codigo, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.tb_persona.pe_cedulaRuc, dbo.ro_empleado.IdSucursal, dbo.tb_sucursal.Su_Descripcion, dbo.ro_area.Descripcion, dbo.ro_contrato.IdNomina, 
-                  dbo.ro_Nomina_Tipo.Descripcion AS Nomina, dbo.ro_empleado.IdArea, dbo.ro_empleado.IdDivision, dbo.ro_rubro_tipo.ru_descripcion, dbo.ro_empleado.em_status
-FROM     dbo.ro_prestamo INNER JOIN
-                  dbo.ro_prestamo_detalle ON dbo.ro_prestamo.IdEmpresa = dbo.ro_prestamo_detalle.IdEmpresa AND dbo.ro_prestamo.IdPrestamo = dbo.ro_prestamo_detalle.IdPrestamo INNER JOIN
-                  dbo.ro_empleado ON dbo.ro_prestamo.IdEmpresa = dbo.ro_empleado.IdEmpresa AND dbo.ro_prestamo.IdEmpleado = dbo.ro_empleado.IdEmpleado INNER JOIN
-                  dbo.tb_persona ON dbo.ro_empleado.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
-                  dbo.tb_sucursal ON dbo.ro_empleado.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.ro_empleado.IdSucursal = dbo.tb_sucursal.IdSucursal INNER JOIN
-                  dbo.ro_area ON dbo.ro_prestamo.IdEmpresa = dbo.ro_area.IdEmpresa AND dbo.ro_empleado.IdArea = dbo.ro_area.IdArea INNER JOIN
-                  dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado INNER JOIN
-                  dbo.ro_Nomina_Tipo ON dbo.ro_contrato.IdEmpresa = dbo.ro_Nomina_Tipo.IdEmpresa AND dbo.ro_contrato.IdNomina = dbo.ro_Nomina_Tipo.IdNomina_Tipo INNER JOIN
-                  dbo.ro_rubro_tipo ON dbo.ro_prestamo.IdEmpresa = dbo.ro_rubro_tipo.IdEmpresa AND dbo.ro_prestamo.IdRubro = dbo.ro_rubro_tipo.IdRubro
+﻿CREATE view [web].[VWROL_019]
+as
+SELECT        dbo.ro_prestamo.IdEmpresa, dbo.ro_prestamo.IdPrestamo, dbo.ro_prestamo.IdEmpleado, dbo.ro_prestamo.IdRubro, dbo.ro_prestamo_detalle.NumCuota, dbo.ro_prestamo_detalle.SaldoInicial, 
+                         dbo.ro_prestamo_detalle.TotalCuota, dbo.ro_prestamo_detalle.Saldo, dbo.ro_prestamo_detalle.FechaPago, dbo.ro_prestamo_detalle.EstadoPago, dbo.ro_prestamo_detalle.Estado, 
+                         dbo.ro_prestamo_detalle.Observacion_det, dbo.ro_prestamo_detalle.IdNominaTipoLiqui, dbo.ro_empleado.em_codigo, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.tb_persona.pe_cedulaRuc, 
+                         dbo.ro_empleado.IdSucursal, dbo.tb_sucursal.Su_Descripcion, dbo.ro_area.Descripcion, dbo.ro_contrato.IdNomina, dbo.ro_Nomina_Tipo.Descripcion AS Nomina, dbo.ro_empleado.IdArea, 
+                         dbo.ro_empleado.IdDivision, dbo.ro_rubro_tipo.ru_descripcion, dbo.ro_empleado.em_status
+FROM            dbo.ro_prestamo INNER JOIN
+                         dbo.ro_prestamo_detalle ON dbo.ro_prestamo.IdEmpresa = dbo.ro_prestamo_detalle.IdEmpresa AND dbo.ro_prestamo.IdPrestamo = dbo.ro_prestamo_detalle.IdPrestamo
+						 and ro_prestamo_detalle.Estado=1 and ro_prestamo.Estado=1 INNER JOIN dbo.ro_empleado ON dbo.ro_prestamo.IdEmpresa = dbo.ro_empleado.IdEmpresa AND dbo.ro_prestamo.IdEmpleado = dbo.ro_empleado.IdEmpleado INNER JOIN
+                         dbo.tb_persona ON dbo.ro_empleado.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
+                         dbo.tb_sucursal ON dbo.ro_empleado.IdEmpresa = dbo.tb_sucursal.IdEmpresa AND dbo.ro_empleado.IdSucursal = dbo.tb_sucursal.IdSucursal INNER JOIN
+                         dbo.ro_area ON dbo.ro_prestamo.IdEmpresa = dbo.ro_area.IdEmpresa AND dbo.ro_empleado.IdArea = dbo.ro_area.IdArea INNER JOIN
+                         dbo.ro_contrato ON dbo.ro_empleado.IdEmpresa = dbo.ro_contrato.IdEmpresa AND dbo.ro_empleado.IdEmpleado = dbo.ro_contrato.IdEmpleado INNER JOIN
+                         dbo.ro_Nomina_Tipo ON dbo.ro_contrato.IdEmpresa = dbo.ro_Nomina_Tipo.IdEmpresa AND dbo.ro_contrato.IdNomina = dbo.ro_Nomina_Tipo.IdNomina_Tipo INNER JOIN
+                         dbo.ro_rubro_tipo ON dbo.ro_prestamo.IdEmpresa = dbo.ro_rubro_tipo.IdEmpresa AND dbo.ro_prestamo.IdRubro = dbo.ro_rubro_tipo.IdRubro
 
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'web', @level1type = N'VIEW', @level1name = N'VWROL_019';

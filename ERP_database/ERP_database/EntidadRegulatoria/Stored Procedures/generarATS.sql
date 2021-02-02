@@ -1,4 +1,4 @@
-﻿--exec [EntidadRegulatoria].[generarATS] 2,201905,1,8
+﻿--exec [EntidadRegulatoria].[generarATS] 1,202008,1,8
 CREATE  PROCEDURE [EntidadRegulatoria].[generarATS]
 @idempresa int,
 @idPeriodo int,
@@ -97,7 +97,7 @@ ventas.pe_cedulaRuc,						ventas.parteRel,									ventas.tipoCliente,										
 ventas.tipoEmtipoComprobante,				ventas.tipoEm,										count(ventas.IdCbteVta),											sum(ventas.baseNoGraIva),
 sum(ventas.baseImponible),					sum(ventas.baseImpGrav),							SUM(ventas.montoIva),												sum(ventas.montoIce),
 isnull(sum(cobros.valorRetIva),0.00),		isnull(sum(cobros.valorRetRenta),0.00),				ventas.IdFormaPago,													ventas.vt_serie1,
-SUM(ventas.baseImponible+ventas.baseImpGrav),							isnull(sum(ventas.montoIva),0.00),ventas.IdSucursal
+SUM(ventas.baseImponible+ventas.baseImpGrav),isnull(sum(ventas.montoIva),0.00),ventas.IdSucursal
 
 
 from(
@@ -197,7 +197,7 @@ cobro_x_retencion.IdCliente,cobro_x_retencion.IdCbte_vta_nota
 
 select 
 
-@idempresa,									@idPeriodo,											ROW_NUMBER()OVER (ORDER BY ventas.IdEmpresa),						ventas.tpIdCliente,
+@idempresa,									@idPeriodo,											7000+ ROW_NUMBER()OVER (ORDER BY ventas.IdEmpresa),						ventas.tpIdCliente,
 ventas.pe_cedulaRuc,						ventas.parteRel,									ventas.tipoCliente,													ventas.pe_nombreCompleto,
 ventas.tipoEmtipoComprobante,				ventas.tipoEm,										count(ventas.IdNota),											sum(ventas.baseNoGraIva),
 sum(ventas.baseImponible),					sum(ventas.baseImpGrav),							SUM(ventas.montoIva),												sum(ventas.montoIce),
@@ -226,6 +226,7 @@ CASe when fac_det.IdCod_Impuesto_Iva='IVA12' then SUM( fac_det.sc_subtotal) else
 sum(fac_det.sc_iva)montoIva,
 0.00 montoIce,
 fac.Serie1,
+--ISNULL(fac.Serie1,'001') AS Serie1, -- by Acueva 1/12/2020 se analiza el caso segun el punto de la empresa y sucrusal, es un dato variante
 fac.Serie2,
 fac.NumNota_Impresa,
 f_pago.IdFormaPago
@@ -239,7 +240,7 @@ FROM            dbo.fa_notaCreDeb AS fac INNER JOIN
 						  where  fac.no_fecha between @fecha_inicio and @fecha_fin
 						 and  fac.Estado='A' 
 						 AND FAC.NaturalezaNota = 'SRI'
-						 and fac.no_fecha between @fecha_inicio and @fecha_fin
+						 --and fac.no_fecha between @fecha_inicio and @fecha_fin -- aqui estaba repetido
 						-- and per.IdTipoDocumento!='PAS'
 						 and fac.IdEmpresa = @idempresa
 						  and fac.IdSucursal>=@IdSucursalInicio

@@ -19,7 +19,7 @@ BEGIN
 --set @idempresa =1
 --set @idnomina_tipo =1
 --set @idnomina_Tipo_liq =2
---set @idperiodo =201901
+-- set @idperiodo =202101
 
 declare 
 @FechaInicio date,
@@ -64,7 +64,7 @@ and nc.IdNomina_Tipo=@idnomina_tipo
 and IdNomina_TipoLiqui=@idnomina_Tipo_liq
 --and per.pe_nombreCompleto like '%ACEVEDO%'
 AND nc.IdJornada is not null
-and CAST(cast( year(nc.Fecha) as varchar(4))+ RIGHT('00'+CAST(MONTH(nc.Fecha) AS VARCHAR(2)),2) AS INT) = @idperiodo
+and CAST(cast( year(nc.Fecha) as varchar(4))+ RIGHT('00'+CAST(MONTH(nc.Fecha) AS VARCHAR(2)),2) AS INT) =@idperiodo
 and nc.Estado = 'A'
  union all 
 

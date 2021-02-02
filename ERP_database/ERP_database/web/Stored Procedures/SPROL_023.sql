@@ -1,4 +1,4 @@
-﻿--exec [web].[SPROL_023] 5,1,1,1,2,201901,1,1,1,1,2,2
+﻿--exec [web].[SPROL_023] 5,1,1,1,2,201901,1,1,1,1,2,2              exec [web].[SPROL_023] 2,1,8,1,2,202010,1,9999,1,9999,1,9999
 CREATE PROCEDURE [web].[SPROL_023]
 (
 @IdEmpresa int,
@@ -407,7 +407,8 @@ ro_cargo.ca_descripcion as NombreCargo,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'ANTICIPO' THEN VALOR ELSE 0 END AS ANTICIPO,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'DECIMOC' THEN VALOR ELSE 0 END AS DECIMOC,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'DECIMOT' THEN VALOR ELSE 0 END AS DECIMOT,
-				case when  (select SUM( d.Valor) from ro_rol_detalle d where  d.IdEmpresa=ro_rol_detalle.IdEmpresa AND d.IdRol=ro_rol.IdRol and ro_rol_detalle.IdEmpleado=d.IdEmpleado and d.IdRubro=ro_rubros_calculados.IdRubro_fondo_reserva and d.Valor>0) is not null then  CASE WHEN ro_rubro_tipo.IdRubro = ro_rubros_calculados.IdRubro_fondo_reserva /*ro_rubro_tipo.rub_aplica_IESS=1*/ THEN  VALOR/**(0.0833)*/  ELSE 0 END ELSE 0 END AS FRESERVA,
+				--case when  (select SUM( d.Valor) from ro_rol_detalle d where  d.IdEmpresa=ro_rol_detalle.IdEmpresa AND d.IdRol=ro_rol.IdRol and ro_rol_detalle.IdEmpleado=d.IdEmpleado and d.IdRubro=ro_rubros_calculados.IdRubro_fondo_reserva and d.Valor>0) is not null then  CASE WHEN ro_rubro_tipo.IdRubro = ro_rubros_calculados.IdRubro_fondo_reserva /*ro_rubro_tipo.rub_aplica_IESS=1*/ THEN  VALOR/**(0.0833)*/  ELSE 0 END ELSE 0 END AS FRESERVA, -- asi estaba <23/112020
+				  Case when (Select SUM(d.Valor) from ro_rol_detalle d where  d.IdEmpresa=ro_rol_detalle.IdEmpresa AND d.IdRol=ro_rol.IdRol and ro_rol_detalle.IdEmpleado=d.IdEmpleado and d.IdRubro=ro_rubros_calculados.IdRubro_fondo_reserva and d.Valor>0) is not null then  CASE WHEN ro_rubro_tipo.IdRubro = ro_rubros_calculados.IdRubro_fondo_reserva  THEN (select SUM(isnull(d.Valor,0)) from ro_rol_detalle d inner join ro_rubro_tipo r on d.IdEmpresa=r.IdEmpresa and  d.IdRubro=r.IdRubro where d.IdEmpresa=ro_rol.IdEmpresa and d.IdRol=ro_rol.IdRol and d.IdEmpleado=ro_rol_detalle.IdEmpleado and r.rub_grupo='FND_RSVA')  ELSE 0 END ELSE 0 END AS FRESERVA, --aqui 23/11/2020
 				  --case when ( select SUM( d.Valor) from ro_rol_detalle d where  d.IdEmpresa=ro_rol_detalle.IdEmpresa AND d.IdRol=ro_rol.IdRol and ro_rol_detalle.IdEmpleado=d.IdEmpleado and d.IdRubro=ro_rubros_calculados.IdRubro_fondo_reserva and d.Valor>0) is not null then  CASE WHEN ro_rubro_tipo.rub_aplica_IESS=1 THEN  VALOR*(0.0833)  ELSE 0 END ELSE 0 END AS FRESERVA,
 				  CASE WHEN ro_contrato.IdNomina=1 THEN CASE WHEN ro_rubro_tipo.rub_aplica_IESS = 1 THEN  VALOR*(ro_rol.PorAportePersonal) ELSE 0 END ELSE 0 END AS IESS,
 				  CASE WHEN ro_catalogo.CodCatalogo = 'PRESTAMO' THEN VALOR ELSE 0 END AS PRESTAMO,

@@ -266,8 +266,7 @@
     CONSTRAINT [FK_aca_Admision_tb_GrupoEtnico] FOREIGN KEY ([IdGrupoEtnico_Aspirante]) REFERENCES [dbo].[tb_GrupoEtnico] ([IdGrupoEtnico]),
     CONSTRAINT [FK_aca_Admision_tb_GrupoEtnico1] FOREIGN KEY ([IdGrupoEtnico_Padre]) REFERENCES [dbo].[tb_GrupoEtnico] ([IdGrupoEtnico]),
     CONSTRAINT [FK_aca_Admision_tb_GrupoEtnico2] FOREIGN KEY ([IdGrupoEtnico_Madre]) REFERENCES [dbo].[tb_GrupoEtnico] ([IdGrupoEtnico]),
-    CONSTRAINT [FK_aca_Admision_tb_GrupoEtnico3] FOREIGN KEY ([IdReligion_Madre]) REFERENCES [dbo].[tb_GrupoEtnico] ([IdGrupoEtnico]),
-    CONSTRAINT [FK_aca_Admision_tb_GrupoEtnico4] FOREIGN KEY ([IdGrupoEtnico_Representante]) REFERENCES [dbo].[tb_GrupoEtnico] ([IdGrupoEtnico]),
+    CONSTRAINT [FK_aca_Admision_tb_GrupoEtnico3] FOREIGN KEY ([IdGrupoEtnico_Representante]) REFERENCES [dbo].[tb_GrupoEtnico] ([IdGrupoEtnico]),
     CONSTRAINT [FK_aca_Admision_tb_pais] FOREIGN KEY ([IdPais_Aspirante]) REFERENCES [dbo].[tb_pais] ([IdPais]),
     CONSTRAINT [FK_aca_Admision_tb_pais1] FOREIGN KEY ([IdPais_Padre]) REFERENCES [dbo].[tb_pais] ([IdPais]),
     CONSTRAINT [FK_aca_Admision_tb_pais2] FOREIGN KEY ([IdPais_Madre]) REFERENCES [dbo].[tb_pais] ([IdPais]),
@@ -292,8 +291,11 @@
     CONSTRAINT [FK_aca_Admision_tb_region3] FOREIGN KEY ([Cod_Region_Representante]) REFERENCES [dbo].[tb_region] ([Cod_Region]),
     CONSTRAINT [FK_aca_Admision_tb_Religion] FOREIGN KEY ([IdReligion_Aspirante]) REFERENCES [dbo].[tb_Religion] ([IdReligion]),
     CONSTRAINT [FK_aca_Admision_tb_Religion1] FOREIGN KEY ([IdReligion_Padre]) REFERENCES [dbo].[tb_Religion] ([IdReligion]),
-    CONSTRAINT [FK_aca_Admision_tb_Religion2] FOREIGN KEY ([IdReligion_Representante]) REFERENCES [dbo].[tb_Religion] ([IdReligion])
+    CONSTRAINT [FK_aca_Admision_tb_Religion2] FOREIGN KEY ([IdReligion_Representante]) REFERENCES [dbo].[tb_Religion] ([IdReligion]),
+    CONSTRAINT [FK_aca_Admision_tb_Religion3] FOREIGN KEY ([IdReligion_Madre]) REFERENCES [dbo].[tb_Religion] ([IdReligion])
 );
+
+
 
 
 

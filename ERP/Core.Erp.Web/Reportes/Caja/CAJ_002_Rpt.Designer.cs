@@ -118,7 +118,6 @@
             this.xrPageInfo2 = new DevExpress.XtraReports.UI.XRPageInfo();
             this.ReportHeader = new DevExpress.XtraReports.UI.ReportHeaderBand();
             this.subreport_vales_no_conciliados = new DevExpress.XtraReports.UI.XRSubreport();
-            this.SubReporte_ingresos = new DevExpress.XtraReports.UI.XRSubreport();
             this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
@@ -1023,27 +1022,18 @@
             // 
             this.ReportHeader.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.subreport_vales_no_conciliados,
-            this.SubReporte_ingresos,
             this.xrTable2,
             this.xrTable1});
-            this.ReportHeader.HeightF = 213F;
+            this.ReportHeader.HeightF = 178.8333F;
             this.ReportHeader.Name = "ReportHeader";
             // 
             // subreport_vales_no_conciliados
             // 
-            this.subreport_vales_no_conciliados.LocationFloat = new DevExpress.Utils.PointFloat(0F, 175.4167F);
+            this.subreport_vales_no_conciliados.LocationFloat = new DevExpress.Utils.PointFloat(0F, 138.75F);
             this.subreport_vales_no_conciliados.Name = "subreport_vales_no_conciliados";
             this.subreport_vales_no_conciliados.ReportSource = new Core.Erp.Web.Reportes.Caja.CAJ_002_ValesNoConciliados_Rpt();
             this.subreport_vales_no_conciliados.SizeF = new System.Drawing.SizeF(1093F, 23F);
             this.subreport_vales_no_conciliados.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.subreport_vales_no_conciliados_BeforePrint);
-            // 
-            // SubReporte_ingresos
-            // 
-            this.SubReporte_ingresos.LocationFloat = new DevExpress.Utils.PointFloat(0F, 136.5416F);
-            this.SubReporte_ingresos.Name = "SubReporte_ingresos";
-            this.SubReporte_ingresos.ReportSource = new Core.Erp.Web.Reportes.Caja.CAJ_002_ingresos_Rpt();
-            this.SubReporte_ingresos.SizeF = new System.Drawing.SizeF(1093F, 20F);
-            this.SubReporte_ingresos.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.SubReporte_ingresos_BeforePrint);
             // 
             // objectDataSource1
             // 
@@ -1071,7 +1061,7 @@
             this.Parameters.AddRange(new DevExpress.XtraReports.Parameters.Parameter[] {
             this.p_IdEmpresa,
             this.p_IdConciliacionCaja});
-            this.Version = "19.1";
+            this.Version = "20.1";
             this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.CAJ_002_Rpt_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).EndInit();
@@ -1135,7 +1125,6 @@
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow9;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell41;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell42;
-        private DevExpress.XtraReports.UI.XRSubreport SubReporte_ingresos;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell34;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell38;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow4;

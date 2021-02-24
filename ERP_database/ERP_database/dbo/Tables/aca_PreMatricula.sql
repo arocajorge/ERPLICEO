@@ -31,7 +31,7 @@
     [IdEmpresa_rol]         INT             NULL,
     [IdEmpleado]            NUMERIC (18)    NULL,
     [EsPatrocinado]         BIT             NULL,
-    CONSTRAINT [PK_aca_PreMatricula] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdPreMatricula] ASC, [IdAdmision] ASC),
+    CONSTRAINT [PK_aca_PreMatricula_1] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdPreMatricula] ASC),
     CONSTRAINT [FK_aca_PreMatricula_aca_Admision] FOREIGN KEY ([IdEmpresa], [IdAdmision]) REFERENCES [dbo].[aca_Admision] ([IdEmpresa], [IdAdmision]),
     CONSTRAINT [FK_aca_PreMatricula_aca_Alumno] FOREIGN KEY ([IdEmpresa], [IdAlumno]) REFERENCES [dbo].[aca_Alumno] ([IdEmpresa], [IdAlumno]),
     CONSTRAINT [FK_aca_PreMatricula_aca_AnioLectivo_Curso_Paralelo] FOREIGN KEY ([IdEmpresa], [IdAnio], [IdSede], [IdNivel], [IdJornada], [IdCurso], [IdParalelo]) REFERENCES [dbo].[aca_AnioLectivo_Curso_Paralelo] ([IdEmpresa], [IdAnio], [IdSede], [IdNivel], [IdJornada], [IdCurso], [IdParalelo]),
@@ -43,6 +43,8 @@
     CONSTRAINT [FK_aca_PreMatricula_tb_persona1] FOREIGN KEY ([IdPersonaR]) REFERENCES [dbo].[tb_persona] ([IdPersona]),
     CONSTRAINT [FK_aca_PreMatricula_tb_sucursal] FOREIGN KEY ([IdEmpresa], [IdSucursal]) REFERENCES [dbo].[tb_sucursal] ([IdEmpresa], [IdSucursal])
 );
+
+
 
 
 

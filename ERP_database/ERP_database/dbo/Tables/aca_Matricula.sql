@@ -26,14 +26,18 @@
     [IdEmpresa_rol]         INT           NULL,
     [IdEmpleado]            NUMERIC (18)  NULL,
     [EsPatrocinado]         BIT           NULL,
+    [IdPreMatricula]        NUMERIC (18)  NULL,
     CONSTRAINT [PK_aca_Matricula] PRIMARY KEY CLUSTERED ([IdEmpresa] ASC, [IdMatricula] ASC),
     CONSTRAINT [FK_aca_Matricula_aca_alumno] FOREIGN KEY ([IdEmpresa], [IdAlumno]) REFERENCES [dbo].[aca_Alumno] ([IdEmpresa], [IdAlumno]),
     CONSTRAINT [FK_aca_Matricula_aca_AnioLectivo_Curso_Paralelo] FOREIGN KEY ([IdEmpresa], [IdAnio], [IdSede], [IdNivel], [IdJornada], [IdCurso], [IdParalelo]) REFERENCES [dbo].[aca_AnioLectivo_Curso_Paralelo] ([IdEmpresa], [IdAnio], [IdSede], [IdNivel], [IdJornada], [IdCurso], [IdParalelo]),
     CONSTRAINT [FK_aca_Matricula_aca_Catalogo] FOREIGN KEY ([IdCatalogoESTMAT]) REFERENCES [dbo].[aca_Catalogo] ([IdCatalogo]),
     CONSTRAINT [FK_aca_Matricula_aca_MecanismoDePago] FOREIGN KEY ([IdEmpresa], [IdMecanismo]) REFERENCES [dbo].[aca_MecanismoDePago] ([IdEmpresa], [IdMecanismo]),
     CONSTRAINT [FK_aca_Matricula_aca_Plantilla] FOREIGN KEY ([IdEmpresa], [IdAnio], [IdPlantilla]) REFERENCES [dbo].[aca_Plantilla] ([IdEmpresa], [IdAnio], [IdPlantilla]),
+    CONSTRAINT [FK_aca_Matricula_aca_PreMatricula] FOREIGN KEY ([IdEmpresa], [IdPreMatricula]) REFERENCES [dbo].[aca_PreMatricula] ([IdEmpresa], [IdPreMatricula]),
     CONSTRAINT [FK_aca_Matricula_ro_empleado] FOREIGN KEY ([IdEmpresa_rol], [IdEmpleado]) REFERENCES [dbo].[ro_empleado] ([IdEmpresa], [IdEmpleado])
 );
+
+
 
 
 

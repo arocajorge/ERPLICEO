@@ -30,7 +30,7 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> FechaAnulacion { get; set; }
         public string MotivoAnulacion { get; set; }
     
-        public virtual ro_empleado ro_empleado { get; set; }
         public virtual ro_rubro_tipo ro_rubro_tipo { get; set; }
+        public virtual ro_empleado ro_empleado { get; set; }
     }
 }

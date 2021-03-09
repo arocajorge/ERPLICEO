@@ -304,6 +304,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                 cargar_combos();
                 ro_empleado_Info info = new ro_empleado_Info
                 {
+                    IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa),
                     IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession),
                     em_fechaIngaRol = DateTime.Now,
                     em_fechaSalida = DateTime.Now,
@@ -382,7 +383,8 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
             {
                 cargar_combos();
                 ro_empleado_Info info = new ro_empleado_Info();
-                info = bus_empleado.get_info(GetIdEmpresa(), IdEmpleado);
+                var IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
+                info = bus_empleado.get_info(IdEmpresa, IdEmpleado);
 
                 info.IdTransaccionSession = Convert.ToDecimal(SessionFixed.IdTransaccionSession);
                 info.lst_empleado_area = bus_empleado_x_division_x_area.GetList(info.IdEmpresa, info.IdEmpleado);

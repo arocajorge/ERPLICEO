@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Core.Erp.Info.RRHH;
 using Core.Erp.Info.Helps;
 using Core.Erp.Data.General;
+using System.Data.SqlClient;
 
 namespace Core.Erp.Data.RRHH
 {
@@ -229,6 +230,109 @@ namespace Core.Erp.Data.RRHH
             {
                 ro_empleado_Info info_ = new ro_empleado_Info();
 
+                using (SqlConnection connection = new SqlConnection(ConexionERP.GetConnectionString()))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand("", connection);
+                    command.CommandText = "SELECT e.IdEmpresa, e.IdEmpleado_Supervisor, e.IdPersona, e.IdSucursal, e.IdTipoEmpleado, e.em_codigo, e.Codigo_Biometrico, e.em_lugarNacimiento, e.em_CarnetIees, e.em_cedulaMil, e.em_fechaSalida, e.em_fechaIngaRol, e.em_tipoCta, "
+                    + " e.em_NumCta, e.em_estado, e.IdCodSectorial, e.IdDepartamento, e.IdTipoSangre, e.IdCargo, e.IdCtaCble_Emplea, e.IdCiudad, e.em_mail, e.IdTipoLicencia, e.IdBanco, e.IdArea, e.IdDivision, e.por_discapacidad, e.carnet_conadis, "
+                    + " e.talla_pant, e.talla_camisa, e.talla_zapato, e.em_status, e.IdCondicionDiscapacidadSRI, e.IdTipoIdentDiscapacitadoSustitutoSRI, e.IdentDiscapacitadoSustitutoSRI, e.IdAplicaConvenioDobleImposicionSRI, e.IdTipoResidenciaSRI, "
+                    + " e.IdTipoSistemaSalarioNetoSRI, e.es_AcreditaHorasExtras, e.IdTipoAnticipo, e.ValorAnticipo, e.CodigoSectorial, e.em_AnticipoSueldo, e.Marca_Biometrico, e.IdHorario, p.pe_Naturaleza, p.pe_nombre, p.IdTipoDocumento, p.pe_cedulaRuc, "
+                    + " p.pe_correo, s.Su_Descripcion, de.de_descripcion, c.ca_descripcion, di.Descripcion, e.IdEmpleado, p.pe_apellido, e.Tiene_ingresos_compartidos, e.Pago_por_horas, e.Valor_horas_vespertina, "
+                    + " e.Valor_horas_matutino, e.Valor_maximo_horas_vesp, e.Valor_maximo_horas_mat, e.Valor_horas_brigada, e.GozaMasDeQuinceDiasVaciones, e.DiasVacaciones, e.IdEmpleadoPAdre, e.Valor_hora_adicionales, "
+                    + " e.Valor_hora_control_salida, e.CodCatalogo_Ubicacion, e.IdCtaCble_x_pagar_empleado, e.IdSucursalContabilizacion, e.Direccion, e.Telefono, e.Celular, e.CodCatalogoSexo, e.CodCatalogoEstadoCivil, e.FechaNacimiento "
+                    + " FROM     dbo.tb_persona AS p INNER JOIN "
+                    + " dbo.ro_empleado AS e ON p.IdPersona = e.IdPersona INNER JOIN "
+                    + " dbo.ro_cargo AS c ON e.IdEmpresa = c.IdEmpresa AND e.IdCargo = c.IdCargo AND e.IdEmpresa = c.IdEmpresa AND e.IdCargo = c.IdCargo INNER JOIN "
+                    + " dbo.ro_Departamento AS de ON e.IdEmpresa = de.IdEmpresa AND e.IdDepartamento = de.IdDepartamento AND e.IdEmpresa = de.IdEmpresa AND e.IdDepartamento = de.IdDepartamento INNER JOIN "
+                    + " dbo.tb_sucursal AS s ON e.IdEmpresa = s.IdEmpresa AND e.IdSucursal = s.IdSucursal AND e.IdEmpresa = s.IdEmpresa AND e.IdSucursal = s.IdSucursal INNER JOIN "
+                    + " dbo.ro_Division AS di ON e.IdEmpresa = di.IdEmpresa AND e.IdDivision = di.IdDivision "
+                    + " WHERE e.IdEmpresa = " + IdEmpresa.ToString() + "and e.IdEmpleado = " + IdEmpleado.ToString();
+                    var ResultValue = command.ExecuteScalar();
+
+                    if (ResultValue == null)
+                        return null;
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        info_ = new ro_empleado_Info
+                        {
+                            IdEmpresa = Convert.ToInt32(reader["IdEmpresa"]),
+                            IdEmpleado = Convert.ToDecimal(reader["IdEmpleado"]),
+                            IdEmpleado_Supervisor = string.IsNullOrEmpty(reader["IdEmpleado_Supervisor"].ToString()) ? (decimal?)null : Convert.ToDecimal(reader["IdEmpleado_Supervisor"]),
+                            IdPersona = Convert.ToDecimal(reader["IdPersona"]),
+                            IdSucursal = Convert.ToInt32(reader["IdSucursal"]),
+                            IdTipoEmpleado = string.IsNullOrEmpty(reader["IdTipoEmpleado"].ToString()) ? null : reader["IdTipoEmpleado"].ToString(),
+                            em_codigo = string.IsNullOrEmpty(reader["em_codigo"].ToString()) ? null : reader["em_codigo"].ToString(),
+                            Codigo_Biometrico = string.IsNullOrEmpty(reader["Codigo_Biometrico"].ToString()) ? null : reader["Codigo_Biometrico"].ToString(),
+                            em_lugarNacimiento = string.IsNullOrEmpty(reader["em_lugarNacimiento"].ToString()) ? null : reader["em_lugarNacimiento"].ToString(),
+                            em_CarnetIees = string.IsNullOrEmpty(reader["em_CarnetIees"].ToString()) ? null : reader["em_CarnetIees"].ToString(),
+                            em_cedulaMil = string.IsNullOrEmpty(reader["em_cedulaMil"].ToString()) ? null : reader["em_cedulaMil"].ToString(),
+                            em_fechaIngaRol = string.IsNullOrEmpty(reader["em_fechaIngaRol"].ToString()) ? (DateTime?)null : Convert.ToDateTime(reader["em_fechaIngaRol"]),
+                            em_tipoCta = string.IsNullOrEmpty(reader["em_tipoCta"].ToString()) ? null : reader["em_tipoCta"].ToString(),
+                            em_NumCta = string.IsNullOrEmpty(reader["em_NumCta"].ToString()) ? null : reader["em_NumCta"].ToString(),
+                            em_estado = string.IsNullOrEmpty(reader["em_estado"].ToString()) ? null : reader["em_estado"].ToString(),
+                            IdCodSectorial = string.IsNullOrEmpty(reader["IdCodSectorial"].ToString()) ? (int?)null : Convert.ToInt32(reader["IdCodSectorial"]),
+                            IdDepartamento = Convert.ToInt32(reader["IdDepartamento"]),
+                            IdTipoSangre = string.IsNullOrEmpty(reader["IdTipoSangre"].ToString()) ? null : reader["IdTipoSangre"].ToString(),
+                            IdCargo = string.IsNullOrEmpty(reader["IdCargo"].ToString()) ? (int?)null : Convert.ToInt32(reader["IdCargo"]),
+                            IdCtaCble_Emplea = string.IsNullOrEmpty(reader["IdCtaCble_Emplea"].ToString()) ? null : reader["IdCtaCble_Emplea"].ToString(),
+                            IdCiudad = string.IsNullOrEmpty(reader["IdCiudad"].ToString()) ? null : reader["IdCiudad"].ToString(),
+                            em_mail = string.IsNullOrEmpty(reader["em_mail"].ToString()) ? null : reader["em_mail"].ToString(),
+                            IdTipoLicencia = string.IsNullOrEmpty(reader["IdTipoLicencia"].ToString()) ? null : reader["IdTipoLicencia"].ToString(),
+                            IdBanco = string.IsNullOrEmpty(reader["IdBanco"].ToString()) ? (int?)null : Convert.ToInt32(reader["IdBanco"]),
+                            IdArea = string.IsNullOrEmpty(reader["IdArea"].ToString()) ? (int?)null : Convert.ToInt32(reader["IdArea"]),
+                            IdDivision = string.IsNullOrEmpty(reader["IdDivision"].ToString()) ? (int?)null : Convert.ToInt32(reader["IdDivision"]),
+                            por_discapacidad = Convert.ToDouble(reader["por_discapacidad"]),
+                            carnet_conadis = string.IsNullOrEmpty(reader["carnet_conadis"].ToString()) ? null : reader["carnet_conadis"].ToString(),
+                            talla_pant = string.IsNullOrEmpty(reader["talla_pant"].ToString()) ? (double?)null : Convert.ToDouble(reader["talla_pant"]),
+                            talla_camisa = string.IsNullOrEmpty(reader["talla_camisa"].ToString()) ? null : reader["talla_camisa"].ToString(),
+                            talla_zapato = string.IsNullOrEmpty(reader["talla_zapato"].ToString()) ? (double?)null : Convert.ToDouble(reader["talla_zapato"]),
+                            em_status = string.IsNullOrEmpty(reader["em_status"].ToString()) ? null : reader["em_status"].ToString(),
+                            IdCondicionDiscapacidadSRI = string.IsNullOrEmpty(reader["IdCondicionDiscapacidadSRI"].ToString()) ? null : reader["IdCondicionDiscapacidadSRI"].ToString(),
+                            IdTipoIdentDiscapacitadoSustitutoSRI = string.IsNullOrEmpty(reader["IdTipoIdentDiscapacitadoSustitutoSRI"].ToString()) ? null : reader["IdTipoIdentDiscapacitadoSustitutoSRI"].ToString(),
+                            IdentDiscapacitadoSustitutoSRI = string.IsNullOrEmpty(reader["IdentDiscapacitadoSustitutoSRI"].ToString()) ? null : reader["IdentDiscapacitadoSustitutoSRI"].ToString(),
+                            IdAplicaConvenioDobleImposicionSRI = string.IsNullOrEmpty(reader["IdAplicaConvenioDobleImposicionSRI"].ToString()) ? null : reader["IdAplicaConvenioDobleImposicionSRI"].ToString(),
+                            IdTipoResidenciaSRI = string.IsNullOrEmpty(reader["IdTipoResidenciaSRI"].ToString()) ? null : reader["IdTipoResidenciaSRI"].ToString(),
+                            IdTipoSistemaSalarioNetoSRI = string.IsNullOrEmpty(reader["IdTipoSistemaSalarioNetoSRI"].ToString()) ? null : reader["IdTipoSistemaSalarioNetoSRI"].ToString(),
+                            es_AcreditaHorasExtras = string.IsNullOrEmpty(reader["es_AcreditaHorasExtras"].ToString()) ? false : Convert.ToBoolean(reader["es_AcreditaHorasExtras"]),
+                            IdTipoAnticipo = string.IsNullOrEmpty(reader["IdTipoAnticipo"].ToString()) ? null : reader["IdTipoAnticipo"].ToString(),
+                            ValorAnticipo = string.IsNullOrEmpty(reader["ValorAnticipo"].ToString()) ? (double?)null : Convert.ToDouble(reader["ValorAnticipo"]),
+                            CodigoSectorial = string.IsNullOrEmpty(reader["CodigoSectorial"].ToString()) ? null : reader["CodigoSectorial"].ToString(),
+                            em_AnticipoSueldo = string.IsNullOrEmpty(reader["em_AnticipoSueldo"].ToString()) ? (double?)null : Convert.ToDouble(reader["em_AnticipoSueldo"]),
+                            Marca_Biometrico = string.IsNullOrEmpty(reader["Marca_Biometrico"].ToString()) ? false : Convert.ToBoolean(reader["Marca_Biometrico"]),
+                            IdHorario = string.IsNullOrEmpty(reader["IdHorario"].ToString()) ? (int?)null : Convert.ToInt32(reader["IdHorario"]),
+                            Tiene_ingresos_compartidos = string.IsNullOrEmpty(reader["Tiene_ingresos_compartidos"].ToString()) ? false : Convert.ToBoolean(reader["Tiene_ingresos_compartidos"]),
+                            pe_cedulaRuc = string.IsNullOrEmpty(reader["pe_cedulaRuc"].ToString()) ? null : reader["pe_cedulaRuc"].ToString(),
+                            pe_nombre = string.IsNullOrEmpty(reader["pe_nombre"].ToString()) ? null : reader["pe_nombre"].ToString(),
+                            pe_apellido = string.IsNullOrEmpty(reader["pe_apellido"].ToString()) ? null : reader["pe_apellido"].ToString(),
+                            pe_sexo = string.IsNullOrEmpty(reader["CodCatalogoSexo"].ToString()) ? null : reader["CodCatalogoSexo"].ToString(),
+                            IdEstadoCivil = string.IsNullOrEmpty(reader["CodCatalogoEstadoCivil"].ToString()) ? null : reader["CodCatalogoEstadoCivil"].ToString(),
+                            pe_direccion = string.IsNullOrEmpty(reader["Direccion"].ToString()) ? null : reader["Direccion"].ToString(),
+                            pe_telfono_Contacto = string.IsNullOrEmpty(reader["Telefono"].ToString()) ? null : reader["Telefono"].ToString(),
+                            pe_celular = string.IsNullOrEmpty(reader["Celular"].ToString()) ? null : reader["Celular"].ToString(),
+                            IdTipoDocumento = string.IsNullOrEmpty(reader["IdTipoDocumento"].ToString()) ? null : reader["IdTipoDocumento"].ToString(),
+                            pe_correo = string.IsNullOrEmpty(reader["pe_correo"].ToString()) ? null : reader["pe_correo"].ToString(),
+                            pe_fechaNacimiento = string.IsNullOrEmpty(reader["FechaNacimiento"].ToString()) ? (DateTime?)null : Convert.ToDateTime(reader["FechaNacimiento"]),
+                            Pago_por_horas = string.IsNullOrEmpty(reader["Pago_por_horas"].ToString()) ? false : Convert.ToBoolean(reader["Pago_por_horas"]),
+                            Valor_horas_vespertina = string.IsNullOrEmpty(reader["Valor_horas_vespertina"].ToString()) ? (double?)null : Convert.ToDouble(reader["Valor_horas_vespertina"]),
+                            Valor_horas_matutino = string.IsNullOrEmpty(reader["Valor_horas_matutino"].ToString()) ? (double?)null : Convert.ToDouble(reader["Valor_horas_matutino"]),
+                            Valor_horas_brigada = string.IsNullOrEmpty(reader["Valor_horas_brigada"].ToString()) ? (double?)null : Convert.ToDouble(reader["Valor_horas_brigada"]),
+                            Valor_hora_adicionales = string.IsNullOrEmpty(reader["Valor_hora_adicionales"].ToString()) ? (double?)null : Convert.ToDouble(reader["Valor_hora_adicionales"]),
+                            Valor_hora_control_salida = string.IsNullOrEmpty(reader["Valor_hora_control_salida"].ToString()) ? (double?)null : Convert.ToDouble(reader["Valor_hora_control_salida"]),
+                            Valor_maximo_horas_mat = string.IsNullOrEmpty(reader["Valor_maximo_horas_mat"].ToString()) ? (double?)null : Convert.ToDouble(reader["Valor_maximo_horas_mat"]),
+                            Valor_maximo_horas_vesp = string.IsNullOrEmpty(reader["Valor_maximo_horas_vesp"].ToString()) ? (double?)null : Convert.ToDouble(reader["Valor_maximo_horas_vesp"]),
+                            DiasVacaciones = Convert.ToDouble(reader["DiasVacaciones"]),
+                            GozaMasDeQuinceDiasVaciones = string.IsNullOrEmpty(reader["GozaMasDeQuinceDiasVaciones"].ToString()) ? false : Convert.ToBoolean(reader["GozaMasDeQuinceDiasVaciones"]),
+                            CodCatalogo_Ubicacion = string.IsNullOrEmpty(reader["CodCatalogo_Ubicacion"].ToString()) ? null : reader["CodCatalogo_Ubicacion"].ToString(),
+                            IdCtaCble_x_pagar_empleado = string.IsNullOrEmpty(reader["IdCtaCble_x_pagar_empleado"].ToString()) ? null : reader["IdCtaCble_x_pagar_empleado"].ToString(),
+                            IdSucursalContabilizacion = string.IsNullOrEmpty(reader["IdSucursalContabilizacion"].ToString()) ? (int?)null : Convert.ToInt32(reader["IdSucursalContabilizacion"]),
+                        };
+                    }
+                }
+                /*
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
                     vwro_empleado_datos_generales info = Context.vwro_empleado_datos_generales.FirstOrDefault(q => q.IdEmpresa == IdEmpresa && q.IdEmpleado == IdEmpleado);
@@ -309,7 +413,7 @@ namespace Core.Erp.Data.RRHH
                         IdSucursalContabilizacion = info.IdSucursalContabilizacion
                     };
                 }
-
+                */
                 return info_;
             }
             catch (Exception)
@@ -416,7 +520,14 @@ namespace Core.Erp.Data.RRHH
                         GozaMasDeQuinceDiasVaciones = info.GozaMasDeQuinceDiasVaciones,
                         CodCatalogo_Ubicacion = info.CodCatalogo_Ubicacion,
                         IdCtaCble_x_pagar_empleado=info.IdCtaCble_x_pagar_empleado,
-                        IdSucursalContabilizacion = info.IdSucursalContabilizacion
+                        IdSucursalContabilizacion = info.IdSucursalContabilizacion,
+
+                        FechaNacimiento=info.pe_fechaNacimiento,
+                        Direccion=info.pe_direccion,
+                        CodCatalogoEstadoCivil = info.IdEstadoCivil,
+                        CodCatalogoSexo=info.pe_sexo,
+                        Telefono=info.pe_telfono_Contacto,
+                        Celular=info.pe_celular
                         
                     };
                     Context.ro_empleado.Add(Entity);
@@ -590,6 +701,13 @@ namespace Core.Erp.Data.RRHH
                         Entity.CodCatalogo_Ubicacion = info.CodCatalogo_Ubicacion;
                         Entity.IdCtaCble_x_pagar_empleado = info.IdCtaCble_x_pagar_empleado;
                         Entity.IdSucursalContabilizacion = info.IdSucursalContabilizacion;
+
+                        Entity.FechaNacimiento = info.pe_fechaNacimiento;
+                        Entity.Direccion = info.pe_direccion;
+                        Entity.CodCatalogoEstadoCivil = info.IdEstadoCivil;
+                        Entity.CodCatalogoSexo = info.pe_sexo;
+                        Entity.Telefono = info.pe_telfono_Contacto;
+                        Entity.Celular = info.pe_celular;
 
                     var lst_delete = Context.ro_empleado_x_division_x_area.Where(v => v.IdEmpresa == info.IdEmpresa && v.IdEmpleado == info.IdEmpleado);
                     Context.ro_empleado_x_division_x_area.RemoveRange(lst_delete);

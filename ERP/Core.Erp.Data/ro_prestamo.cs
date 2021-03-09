@@ -56,8 +56,8 @@ namespace Core.Erp.Data
     
         public virtual ro_catalogo ro_catalogo { get; set; }
         public virtual ICollection<ro_prestamo_detalle> ro_prestamo_detalle { get; set; }
-        public virtual ro_empleado ro_empleado { get; set; }
         public virtual ro_rubro_tipo ro_rubro_tipo { get; set; }
         public virtual ICollection<ro_PrestamoMasivo_Det> ro_PrestamoMasivo_Det { get; set; }
+        public virtual ro_empleado ro_empleado { get; set; }
     }
 }

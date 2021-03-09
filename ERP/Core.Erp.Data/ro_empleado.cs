@@ -17,6 +17,8 @@ namespace Core.Erp.Data
         public ro_empleado()
         {
             this.ro_Acta_Finiquito = new HashSet<ro_Acta_Finiquito>();
+            this.ro_AjusteImpuestoRentaDet = new HashSet<ro_AjusteImpuestoRentaDet>();
+            this.ro_AjusteImpuestoRentaDetOI = new HashSet<ro_AjusteImpuestoRentaDetOI>();
             this.ro_archivos_bancos_generacion_x_empleado = new HashSet<ro_archivos_bancos_generacion_x_empleado>();
             this.ro_cargaFamiliar = new HashSet<ro_cargaFamiliar>();
             this.ro_contrato = new HashSet<ro_contrato>();
@@ -27,7 +29,10 @@ namespace Core.Erp.Data
             this.ro_empleado11 = new HashSet<ro_empleado>();
             this.ro_empleado_x_division_x_area = new HashSet<ro_empleado_x_division_x_area>();
             this.ro_empleado_x_jornada = new HashSet<ro_empleado_x_jornada>();
+            this.ro_empleado_x_ro_rubro = new HashSet<ro_empleado_x_ro_rubro>();
+            this.ro_empleado_x_rubro_acumulado = new HashSet<ro_empleado_x_rubro_acumulado>();
             this.ro_empleado_x_titulos = new HashSet<ro_empleado_x_titulos>();
+            this.ro_EmpleadoAnticipoBeneficio = new HashSet<ro_EmpleadoAnticipoBeneficio>();
             this.ro_EmpleadoNovedadCargaMasiva_det = new HashSet<ro_EmpleadoNovedadCargaMasiva_det>();
             this.ro_Historico_Liquidacion_Vacaciones = new HashSet<ro_Historico_Liquidacion_Vacaciones>();
             this.ro_historico_vacaciones_x_empleado = new HashSet<ro_historico_vacaciones_x_empleado>();
@@ -40,17 +45,12 @@ namespace Core.Erp.Data
             this.ro_permiso_x_empleado = new HashSet<ro_permiso_x_empleado>();
             this.ro_permiso_x_empleado1 = new HashSet<ro_permiso_x_empleado>();
             this.ro_prestamo = new HashSet<ro_prestamo>();
+            this.ro_PrestamoMasivo_Det = new HashSet<ro_PrestamoMasivo_Det>();
             this.ro_rdep_det = new HashSet<ro_rdep_det>();
+            this.ro_rol_detalle = new HashSet<ro_rol_detalle>();
             this.ro_rol_detalle_x_rubro_acumulado = new HashSet<ro_rol_detalle_x_rubro_acumulado>();
             this.ro_SancionesPorMarcaciones_det = new HashSet<ro_SancionesPorMarcaciones_det>();
             this.ro_Solicitud_Vacaciones_x_empleado = new HashSet<ro_Solicitud_Vacaciones_x_empleado>();
-            this.ro_rol_detalle = new HashSet<ro_rol_detalle>();
-            this.ro_PrestamoMasivo_Det = new HashSet<ro_PrestamoMasivo_Det>();
-            this.ro_empleado_x_ro_rubro = new HashSet<ro_empleado_x_ro_rubro>();
-            this.ro_empleado_x_rubro_acumulado = new HashSet<ro_empleado_x_rubro_acumulado>();
-            this.ro_EmpleadoAnticipoBeneficio = new HashSet<ro_EmpleadoAnticipoBeneficio>();
-            this.ro_AjusteImpuestoRentaDetOI = new HashSet<ro_AjusteImpuestoRentaDetOI>();
-            this.ro_AjusteImpuestoRentaDet = new HashSet<ro_AjusteImpuestoRentaDet>();
         }
     
         public int IdEmpresa { get; set; }
@@ -121,8 +121,16 @@ namespace Core.Erp.Data
         public string CodCatalogo_Ubicacion { get; set; }
         public string IdCtaCble_x_pagar_empleado { get; set; }
         public Nullable<int> IdSucursalContabilizacion { get; set; }
+        public string Direccion { get; set; }
+        public string Telefono { get; set; }
+        public string Celular { get; set; }
+        public string CodCatalogoSexo { get; set; }
+        public string CodCatalogoEstadoCivil { get; set; }
+        public Nullable<System.DateTime> FechaNacimiento { get; set; }
     
         public virtual ICollection<ro_Acta_Finiquito> ro_Acta_Finiquito { get; set; }
+        public virtual ICollection<ro_AjusteImpuestoRentaDet> ro_AjusteImpuestoRentaDet { get; set; }
+        public virtual ICollection<ro_AjusteImpuestoRentaDetOI> ro_AjusteImpuestoRentaDetOI { get; set; }
         public virtual ICollection<ro_archivos_bancos_generacion_x_empleado> ro_archivos_bancos_generacion_x_empleado { get; set; }
         public virtual ICollection<ro_cargaFamiliar> ro_cargaFamiliar { get; set; }
         public virtual ICollection<ro_contrato> ro_contrato { get; set; }
@@ -135,7 +143,10 @@ namespace Core.Erp.Data
         public virtual ro_empleado ro_empleado3 { get; set; }
         public virtual ICollection<ro_empleado_x_division_x_area> ro_empleado_x_division_x_area { get; set; }
         public virtual ICollection<ro_empleado_x_jornada> ro_empleado_x_jornada { get; set; }
+        public virtual ICollection<ro_empleado_x_ro_rubro> ro_empleado_x_ro_rubro { get; set; }
+        public virtual ICollection<ro_empleado_x_rubro_acumulado> ro_empleado_x_rubro_acumulado { get; set; }
         public virtual ICollection<ro_empleado_x_titulos> ro_empleado_x_titulos { get; set; }
+        public virtual ICollection<ro_EmpleadoAnticipoBeneficio> ro_EmpleadoAnticipoBeneficio { get; set; }
         public virtual ro_EmpleadoFoto ro_EmpleadoFoto { get; set; }
         public virtual ICollection<ro_EmpleadoNovedadCargaMasiva_det> ro_EmpleadoNovedadCargaMasiva_det { get; set; }
         public virtual ICollection<ro_Historico_Liquidacion_Vacaciones> ro_Historico_Liquidacion_Vacaciones { get; set; }
@@ -149,16 +160,11 @@ namespace Core.Erp.Data
         public virtual ICollection<ro_permiso_x_empleado> ro_permiso_x_empleado { get; set; }
         public virtual ICollection<ro_permiso_x_empleado> ro_permiso_x_empleado1 { get; set; }
         public virtual ICollection<ro_prestamo> ro_prestamo { get; set; }
+        public virtual ICollection<ro_PrestamoMasivo_Det> ro_PrestamoMasivo_Det { get; set; }
         public virtual ICollection<ro_rdep_det> ro_rdep_det { get; set; }
+        public virtual ICollection<ro_rol_detalle> ro_rol_detalle { get; set; }
         public virtual ICollection<ro_rol_detalle_x_rubro_acumulado> ro_rol_detalle_x_rubro_acumulado { get; set; }
         public virtual ICollection<ro_SancionesPorMarcaciones_det> ro_SancionesPorMarcaciones_det { get; set; }
         public virtual ICollection<ro_Solicitud_Vacaciones_x_empleado> ro_Solicitud_Vacaciones_x_empleado { get; set; }
-        public virtual ICollection<ro_rol_detalle> ro_rol_detalle { get; set; }
-        public virtual ICollection<ro_PrestamoMasivo_Det> ro_PrestamoMasivo_Det { get; set; }
-        public virtual ICollection<ro_empleado_x_ro_rubro> ro_empleado_x_ro_rubro { get; set; }
-        public virtual ICollection<ro_empleado_x_rubro_acumulado> ro_empleado_x_rubro_acumulado { get; set; }
-        public virtual ICollection<ro_EmpleadoAnticipoBeneficio> ro_EmpleadoAnticipoBeneficio { get; set; }
-        public virtual ICollection<ro_AjusteImpuestoRentaDetOI> ro_AjusteImpuestoRentaDetOI { get; set; }
-        public virtual ICollection<ro_AjusteImpuestoRentaDet> ro_AjusteImpuestoRentaDet { get; set; }
     }
 }

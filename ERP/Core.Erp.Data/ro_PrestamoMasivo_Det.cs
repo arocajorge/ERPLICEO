@@ -24,9 +24,9 @@ namespace Core.Erp.Data
         public double Monto { get; set; }
         public int NumCuotas { get; set; }
     
-        public virtual ro_empleado ro_empleado { get; set; }
         public virtual ro_prestamo ro_prestamo { get; set; }
         public virtual ro_PrestamoMasivo ro_PrestamoMasivo { get; set; }
         public virtual ro_rubro_tipo ro_rubro_tipo { get; set; }
+        public virtual ro_empleado ro_empleado { get; set; }
     }
 }

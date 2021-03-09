@@ -24,7 +24,7 @@ namespace Core.Erp.Data
         public Nullable<System.DateTime> Fec_Inicio_Acumulacion { get; set; }
         public Nullable<System.DateTime> Fec_Fin_Acumulacion { get; set; }
     
-        public virtual ro_empleado ro_empleado { get; set; }
         public virtual ro_rubro_tipo ro_rubro_tipo { get; set; }
+        public virtual ro_empleado ro_empleado { get; set; }
     }
 }

@@ -26,8 +26,8 @@ namespace Core.Erp.Data
         public Nullable<bool> IngresosCompartidos { get; set; }
         public Nullable<bool> PagoHora { get; set; }
     
-        public virtual ro_empleado ro_empleado { get; set; }
         public virtual ro_rol ro_rol { get; set; }
         public virtual ro_rubro_tipo ro_rubro_tipo { get; set; }
+        public virtual ro_empleado ro_empleado { get; set; }
     }
 }

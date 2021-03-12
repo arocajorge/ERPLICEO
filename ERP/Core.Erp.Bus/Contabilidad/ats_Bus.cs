@@ -105,6 +105,7 @@ namespace Core.Erp.Bus.Contabilidad
                            comp_det.totbasesImpReembSpecified = true;
                            pagoExterior item_pago = new pagoExterior();
                            item_pago.pagoLocExt = (comp.pagoLocExt == "LOC") ? pagoLocExtType.Item01 : pagoLocExtType.Item02;
+                           item_pago.tipoRegi = "01"; item_pago.paisEfecPagoGen = "NA"; //by aCUEVA 11/03/2021
                            item_pago.paisEfecPago = (item_pago.pagoLocExt == pagoLocExtType.Item01) ? "NA" : (comp.pagoLocExt != null || comp.pagoLocExt != "") ? comp.pagoLocExt : "NA";
                            item_pago.aplicConvDobTrib = aplicConvDobTribType.NA;
                            item_pago.pagExtSujRetNorLeg = aplicConvDobTribType.NA;

@@ -82,6 +82,7 @@ namespace Core.Erp.Data.Contabilidad
                                  montoIce=q.montoIce,
                                  montoIva=q.montoIva,
                                  pagoLocExt=q.pagoLocExt,
+                                 tipoRegi="01", paisEfecPagoGen="NA",
                                  denopago=q.denopago,
                                  paisEfecPago=q.paisEfecPago,
                                  formaPago=q.formaPago,

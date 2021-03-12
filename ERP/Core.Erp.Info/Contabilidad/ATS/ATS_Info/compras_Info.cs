@@ -41,5 +41,8 @@ namespace Core.Erp.Info.Contabilidad.ATS.ATS_Info
         public string ptoEmiModificado { get; set; }
         public string secModificado { get; set; }
         public string autModificado { get; set; }
+
+        public string tipoRegi { get; set; } // by acueva 11/03/2021 OJO se debe actualizar el modelo contabilidad compras
+        public string paisEfecPagoGen { get; set; } // by acueva 11/03/2021 OJO se debe actualizar el modelo contabilidad compras
     }
 }

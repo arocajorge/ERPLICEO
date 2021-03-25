@@ -9,8 +9,8 @@
     [Naturaleza_Aspirante]                 VARCHAR (25)  NOT NULL,
     [IdTipoDocumento_Aspirante]            VARCHAR (25)  NOT NULL,
     [CedulaRuc_Aspirante]                  VARCHAR (50)  NOT NULL,
-    [Nombres_Aspirante]                    VARCHAR (100) NULL,
-    [Apellidos_Aspirante]                  VARCHAR (100) NULL,
+    [Nombres_Aspirante]                    VARCHAR (100) NOT NULL,
+    [Apellidos_Aspirante]                  VARCHAR (100) NOT NULL,
     [NombreCompleto_Aspirante]             VARCHAR (200) NOT NULL,
     [Direccion_Aspirante]                  VARCHAR (150) NULL,
     [Telefono_Aspirante]                   VARCHAR (50)  NULL,
@@ -50,9 +50,9 @@
     [Dificultad_Escritura]                 BIT           NOT NULL,
     [Dificultad_Matematicas]               BIT           NOT NULL,
     [AceptaTerminos]                       BIT           NOT NULL,
-    [Naturaleza_Padre]                     VARCHAR (25)  NOT NULL,
-    [IdTipoDocumento_Padre]                VARCHAR (25)  NOT NULL,
-    [CedulaRuc_Padre]                      VARCHAR (50)  NOT NULL,
+    [Naturaleza_Padre]                     VARCHAR (25)  NULL,
+    [IdTipoDocumento_Padre]                VARCHAR (25)  NULL,
+    [CedulaRuc_Padre]                      VARCHAR (50)  NULL,
     [Nombres_Padre]                        VARCHAR (100) NULL,
     [Apellidos_Padre]                      VARCHAR (100) NULL,
     [NombreCompleto_Padre]                 VARCHAR (200) NOT NULL,
@@ -96,9 +96,9 @@
     [IdTipoCredito_Padre]                  VARCHAR (20)  NULL,
     [IdCiudad_Padre_Fact]                  VARCHAR (25)  NULL,
     [IdParroquia_Padre_Fact]               VARCHAR (25)  NULL,
-    [Naturaleza_Madre]                     VARCHAR (25)  NOT NULL,
-    [IdTipoDocumento_Madre]                VARCHAR (25)  NOT NULL,
-    [CedulaRuc_Madre]                      VARCHAR (50)  NOT NULL,
+    [Naturaleza_Madre]                     VARCHAR (25)  NULL,
+    [IdTipoDocumento_Madre]                VARCHAR (25)  NULL,
+    [CedulaRuc_Madre]                      VARCHAR (50)  NULL,
     [Nombres_Madre]                        VARCHAR (100) NULL,
     [Apellidos_Madre]                      VARCHAR (100) NULL,
     [NombreCompleto_Madre]                 VARCHAR (200) NOT NULL,
@@ -145,8 +145,8 @@
     [Naturaleza_Representante]             VARCHAR (25)  NOT NULL,
     [IdTipoDocumento_Representante]        VARCHAR (25)  NOT NULL,
     [CedulaRuc_Representante]              VARCHAR (50)  NOT NULL,
-    [Nombres_Representante]                VARCHAR (100) NULL,
-    [Apellidos_Representante]              VARCHAR (100) NULL,
+    [Nombres_Representante]                VARCHAR (100) NOT NULL,
+    [Apellidos_Representante]              VARCHAR (100) NOT NULL,
     [NombreCompleto_Representante]         VARCHAR (200) NOT NULL,
     [RazonSocial_Representante]            VARCHAR (150) NULL,
     [Direccion_Representante]              VARCHAR (150) NULL,
@@ -294,6 +294,8 @@
     CONSTRAINT [FK_aca_Admision_tb_Religion2] FOREIGN KEY ([IdReligion_Representante]) REFERENCES [dbo].[tb_Religion] ([IdReligion]),
     CONSTRAINT [FK_aca_Admision_tb_Religion3] FOREIGN KEY ([IdReligion_Madre]) REFERENCES [dbo].[tb_Religion] ([IdReligion])
 );
+
+
 
 
 

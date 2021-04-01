@@ -188,7 +188,7 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                     string mensaje = "";
                     ro_historico_vacaciones_x_empleado_Info info_historico = null;
                     lst_vacaciones = ro_historico_vacaciones_x_empleado_Info_list.get_list();
-                    info_historico = lst_vacaciones.Where(v => v.IdVacacion == info.IdVacacion).FirstOrDefault();
+                    info_historico = lst_vacaciones.FirstOrDefault();
                     info.Dias_a_disfrutar = Convert.ToInt32((info.Fecha_Hasta - info.Fecha_Desde).TotalDays)+1;
                     info.Dias_q_Corresponde = info_historico.DiasGanado;
                     info.Dias_pendiente = info_historico.DiasGanado - info.Dias_a_disfrutar;

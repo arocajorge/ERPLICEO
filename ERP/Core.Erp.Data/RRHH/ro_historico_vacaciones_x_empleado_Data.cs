@@ -157,7 +157,7 @@ namespace Core.Erp.Data.RRHH
                     var consultar = from q in contex.ro_historico_vacaciones_x_empleado
                                     where q.IdEmpleado == IdEmpleado &&
                                     q.IdEmpresa == IdEmpresa
-                                    && q.DiasTomados>=q.DiasTomados
+                                    && q.DiasGanado>=q.DiasTomados
                                     orderby q.FechaIni ascending
                                     select q;
                     foreach (var item in consultar)

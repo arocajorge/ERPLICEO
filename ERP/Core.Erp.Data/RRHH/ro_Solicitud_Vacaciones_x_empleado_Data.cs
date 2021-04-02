@@ -240,7 +240,9 @@ namespace Core.Erp.Data.RRHH
 
 
                     #region Historico
-                    var lst_det = Context.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado.Where(v=>v.IdEmpresa_sol==info.IdEmpresa && v.IdSolicitud==info.IdSolicitud && v.IdEmpresa_sol==info.IdEmpleado);
+                    var lst_det = Context.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado.Where(v=>v.IdEmpresa_sol==info.IdEmpresa 
+                    && v.IdSolicitud==info.IdSolicitud 
+                    && v.IdEmpleado_sol==info.IdEmpleado);
                     Context.ro_Solicitud_Vacaciones_x_empleado_x_historico_vacaciones_x_empleado.RemoveRange(lst_det);
                     foreach (var item in info.lst_vacaciones)
                     {

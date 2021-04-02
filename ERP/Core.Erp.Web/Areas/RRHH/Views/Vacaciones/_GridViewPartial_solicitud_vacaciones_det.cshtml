@@ -8,6 +8,18 @@
         settings.KeyFieldName = "IdSolicitud";
 
 
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+
+        settings.SettingsContextMenu.Enabled = true;
+        settings.SettingsBehavior.EnableCustomizationWindow = true;
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
         //Configuracion responsive
         settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
         settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
@@ -15,31 +27,10 @@
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 500;
 
-        //Configuración para que la grilla no muestre texto completo
-        settings.SettingsBehavior.AllowEllipsisInText = true;
-        settings.SettingsResizing.ColumnResizeMode = ColumnResizeMode.NextColumn;
-        settings.Width = Unit.Percentage(100);
-
-        settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Hidden;
-        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
-        settings.Settings.VerticalScrollableHeight = 400;
-        settings.SettingsPager.Visible = true;
-        settings.SettingsPager.PageSize = 10;
-        settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
-        settings.SettingsPager.AlwaysShowPager = true;
+        //Funcion para inicializar fila al presionar nuevo
 
 
-        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
-        settings.Settings.ShowFilterRow = true;
-        settings.Settings.ShowHeaderFilterButton = true;
-        settings.SettingsBehavior.AllowSelectByRowClick = true;
 
-
-        settings.SettingsExport.EnableClientSideExportAPI = true;
-        settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
-        
-
-       
 
         settings.Columns.Add("IdPeriodo_Inicio", "Periodo inicio").Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Columns.Add("IdPeriodo_Fin", "Periodo hasta").Width = System.Web.UI.WebControls.Unit.Percentage(10);

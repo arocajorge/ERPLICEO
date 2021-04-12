@@ -39,38 +39,38 @@ cast(mc.ExamenSupletorio as varchar) ExamenSupletorio,
 cast(mc.ExamenRemedial as varchar) ExamenRemedial, 
 cast(mc.ExamenGracia as varchar) ExamenGracia, 
 cast(mc.PromedioFinal as varchar) PromedioFinal, mc.IdEquivalenciaPromedioPF, epPF.Codigo AS EquivalenciaPromedioPF
-FROM     dbo.aca_MatriculaCalificacion AS mc INNER JOIN
-    dbo.aca_Matricula AS m ON mc.IdEmpresa = m.IdEmpresa AND mc.IdMatricula = m.IdMatricula INNER JOIN
-    dbo.aca_Alumno AS alu ON m.IdEmpresa = alu.IdEmpresa AND m.IdAlumno = alu.IdAlumno INNER JOIN
-    dbo.tb_persona AS p ON alu.IdPersona = p.IdPersona INNER JOIN
-    dbo.aca_AnioLectivo_Curso_Materia AS cm ON m.IdEmpresa = cm.IdEmpresa AND m.IdAnio = cm.IdAnio AND m.IdSede = cm.IdSede AND 
+FROM     dbo.aca_MatriculaCalificacion AS mc with (nolock) INNER JOIN
+    dbo.aca_Matricula AS m with (nolock) ON mc.IdEmpresa = m.IdEmpresa AND mc.IdMatricula = m.IdMatricula INNER JOIN
+    dbo.aca_Alumno AS alu with (nolock) ON m.IdEmpresa = alu.IdEmpresa AND m.IdAlumno = alu.IdAlumno INNER JOIN
+    dbo.tb_persona AS p with (nolock) ON alu.IdPersona = p.IdPersona INNER JOIN
+    dbo.aca_AnioLectivo_Curso_Materia AS cm with (nolock) ON m.IdEmpresa = cm.IdEmpresa AND m.IdAnio = cm.IdAnio AND m.IdSede = cm.IdSede AND 
     m.IdNivel = cm.IdNivel AND m.IdJornada = cm.IdJornada AND m.IdCurso = cm.IdCurso AND 
     mc.IdMateria = cm.IdMateria 
-	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS ep1 ON m.IdAnio = ep1.IdAnio AND mc.IdEmpresa = ep1.IdEmpresa AND mc.IdEquivalenciaPromedioP1 = ep1.IdEquivalenciaPromedio 
-	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS ep2 ON m.IdAnio = ep2.IdAnio AND mc.IdEmpresa = ep2.IdEmpresa AND mc.IdEquivalenciaPromedioP2 = ep2.IdEquivalenciaPromedio 
-	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS ep3 ON m.IdAnio = ep3.IdAnio AND mc.IdEmpresa = ep3.IdEmpresa AND mc.IdEquivalenciaPromedioP3 = ep3.IdEquivalenciaPromedio 
-	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS epEQ1 ON m.IdAnio = epEQ1.IdAnio AND mc.IdEmpresa = epEQ1.IdEmpresa AND mc.IdEquivalenciaPromedioEQ1 = epEQ1.IdEquivalenciaPromedio 
-	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS epQ1 ON m.IdAnio = epQ1.IdAnio AND mc.IdEmpresa = epQ1.IdEmpresa AND mc.IdEquivalenciaPromedioQ1 = epQ1.IdEquivalenciaPromedio 
-	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS ep4 ON m.IdAnio = ep4.IdAnio AND mc.IdEmpresa = ep4.IdEmpresa AND mc.IdEquivalenciaPromedioP4 = ep4.IdEquivalenciaPromedio 
-	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS ep5 ON m.IdAnio = ep5.IdAnio AND mc.IdEmpresa = ep5.IdEmpresa AND mc.IdEquivalenciaPromedioP5 = ep5.IdEquivalenciaPromedio 
-	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS ep6 ON m.IdAnio = ep6.IdAnio AND mc.IdEmpresa = ep6.IdEmpresa AND mc.IdEquivalenciaPromedioP6 = ep6.IdEquivalenciaPromedio 
-	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS epEQ2 ON m.IdAnio = epEQ2.IdAnio AND mc.IdEmpresa = epEQ2.IdEmpresa AND mc.IdEquivalenciaPromedioEQ2 = epEQ2.IdEquivalenciaPromedio 
-	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS epQ2 ON m.IdAnio = epQ2.IdAnio AND mc.IdEmpresa = epQ2.IdEmpresa AND mc.IdEquivalenciaPromedioQ2 = epQ2.IdEquivalenciaPromedio 
-	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS epPF ON m.IdAnio = epPF.IdAnio AND mc.IdEmpresa = epPF.IdEmpresa AND mc.IdEquivalenciaPromedioPF = epPF.IdEquivalenciaPromedio
+	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS ep1 with (nolock) ON m.IdAnio = ep1.IdAnio AND mc.IdEmpresa = ep1.IdEmpresa AND mc.IdEquivalenciaPromedioP1 = ep1.IdEquivalenciaPromedio 
+	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS ep2 with (nolock) ON m.IdAnio = ep2.IdAnio AND mc.IdEmpresa = ep2.IdEmpresa AND mc.IdEquivalenciaPromedioP2 = ep2.IdEquivalenciaPromedio 
+	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS ep3 with (nolock) ON m.IdAnio = ep3.IdAnio AND mc.IdEmpresa = ep3.IdEmpresa AND mc.IdEquivalenciaPromedioP3 = ep3.IdEquivalenciaPromedio 
+	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS epEQ1 with (nolock) ON m.IdAnio = epEQ1.IdAnio AND mc.IdEmpresa = epEQ1.IdEmpresa AND mc.IdEquivalenciaPromedioEQ1 = epEQ1.IdEquivalenciaPromedio 
+	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS epQ1 with (nolock) ON m.IdAnio = epQ1.IdAnio AND mc.IdEmpresa = epQ1.IdEmpresa AND mc.IdEquivalenciaPromedioQ1 = epQ1.IdEquivalenciaPromedio 
+	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS ep4 with (nolock) ON m.IdAnio = ep4.IdAnio AND mc.IdEmpresa = ep4.IdEmpresa AND mc.IdEquivalenciaPromedioP4 = ep4.IdEquivalenciaPromedio 
+	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS ep5 with (nolock) ON m.IdAnio = ep5.IdAnio AND mc.IdEmpresa = ep5.IdEmpresa AND mc.IdEquivalenciaPromedioP5 = ep5.IdEquivalenciaPromedio 
+	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS ep6 with (nolock) ON m.IdAnio = ep6.IdAnio AND mc.IdEmpresa = ep6.IdEmpresa AND mc.IdEquivalenciaPromedioP6 = ep6.IdEquivalenciaPromedio 
+	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS epEQ2 with (nolock) ON m.IdAnio = epEQ2.IdAnio AND mc.IdEmpresa = epEQ2.IdEmpresa AND mc.IdEquivalenciaPromedioEQ2 = epEQ2.IdEquivalenciaPromedio 
+	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS epQ2 with (nolock) ON m.IdAnio = epQ2.IdAnio AND mc.IdEmpresa = epQ2.IdEmpresa AND mc.IdEquivalenciaPromedioQ2 = epQ2.IdEquivalenciaPromedio 
+	LEFT OUTER JOIN dbo.aca_AnioLectivoEquivalenciaPromedio AS epPF with (nolock) ON m.IdAnio = epPF.IdAnio AND mc.IdEmpresa = epPF.IdEmpresa AND mc.IdEquivalenciaPromedioPF = epPF.IdEquivalenciaPromedio
 	LEFT OUTER JOIN
     dbo.aca_AnioLectivo AS AN ON m.IdEmpresa = AN.IdEmpresa AND m.IdAnio = AN.IdAnio LEFT OUTER JOIN
-    dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn RIGHT OUTER JOIN
-    dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel RIGHT OUTER JOIN
-    dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
-    dbo.aca_AnioLectivo_Curso_Paralelo AS cp ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND jc.IdCurso = cp.IdCurso ON 
+    dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn with (nolock) RIGHT OUTER JOIN
+    dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj with (nolock) ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel RIGHT OUTER JOIN
+    dbo.aca_AnioLectivo_Jornada_Curso AS jc with (nolock) ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
+    dbo.aca_AnioLectivo_Curso_Paralelo AS cp with (nolock) ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND jc.IdCurso = cp.IdCurso ON 
     m.IdEmpresa = cp.IdEmpresa AND m.IdAnio = cp.IdAnio AND m.IdSede = cp.IdSede AND m.IdNivel = cp.IdNivel AND m.IdJornada = cp.IdJornada AND m.IdCurso = cp.IdCurso AND m.IdParalelo = cp.IdParalelo
-	LEFT OUTER JOIN aca_Profesor AS pro ON cp.IdEmpresa = pro.IdEmpresa and cp.IdProfesorInspector = pro.IdProfesor
-	LEFT OUTER JOIN tb_persona as pins on pins.IdPersona = pro.IdPersona
-	LEFT OUTER JOIN tb_persona as pre on pre.IdPersona = m.IdPersonaR
+	LEFT OUTER JOIN aca_Profesor AS pro with (nolock) ON cp.IdEmpresa = pro.IdEmpresa and cp.IdProfesorInspector = pro.IdProfesor
+	LEFT OUTER JOIN tb_persona as pins with (nolock) on pins.IdPersona = pro.IdPersona
+	LEFT OUTER JOIN tb_persona as pre with (nolock) on pre.IdPersona = m.IdPersonaR
 	LEFT JOIN	
 	(
 	select r.IdEmpresa, r.IdMatricula 
-	from aca_AlumnoRetiro as r
+	from aca_AlumnoRetiro as r with (nolock) 
 	where r.Estado = 1
 	) as ret on m.IdEmpresa =ret.IdEmpresa and m.IdMatricula = ret.IdMatricula
 where mc.IdEmpresa = @IdEmpresa 
@@ -117,28 +117,28 @@ CASE WHEN IdCatalogoParcial = 33 THEN acc.Codigo END AS CalificacionP6,
 pq1.Codigo as PromedioFinalQ1,
 pq2.Codigo as PromedioFinalQ2,
 pf.Codigo as PromedioFinal
-FROM     dbo.aca_MatriculaCalificacionCualitativa AS a INNER JOIN
-	dbo.aca_Matricula AS m ON m.IdEmpresa = a.IdEmpresa AND m.IdMatricula = a.IdMatricula INNER JOIN
-	dbo.aca_Alumno AS alu ON m.IdEmpresa = alu.IdEmpresa AND m.IdAlumno = alu.IdAlumno INNER JOIN
-	dbo.tb_persona AS p ON alu.IdPersona = p.IdPersona LEFT OUTER JOIN
-	dbo.aca_AnioLectivoCalificacionCualitativa AS acc ON acc.IdEmpresa = a.IdEmpresa AND acc.IdAnio = m.IdAnio AND acc.IdCalificacionCualitativa = a.IdCalificacionCualitativa LEFT OUTER JOIN
-	dbo.aca_AnioLectivo AS AN ON m.IdEmpresa = AN.IdEmpresa AND m.IdAnio = AN.IdAnio LEFT OUTER JOIN
-	dbo.aca_AnioLectivo_Curso_Paralelo AS cp RIGHT OUTER JOIN
-	dbo.aca_AnioLectivo_Jornada_Curso AS jc LEFT OUTER JOIN
-	dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn INNER JOIN
-	dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel ON jc.IdJornada = nj.IdJornada AND jc.IdEmpresa = nj.IdEmpresa AND 
+FROM     dbo.aca_MatriculaCalificacionCualitativa AS a with (nolock) INNER JOIN
+	dbo.aca_Matricula AS m with (nolock) ON m.IdEmpresa = a.IdEmpresa AND m.IdMatricula = a.IdMatricula INNER JOIN
+	dbo.aca_Alumno AS alu with (nolock) ON m.IdEmpresa = alu.IdEmpresa AND m.IdAlumno = alu.IdAlumno INNER JOIN
+	dbo.tb_persona AS p with (nolock) ON alu.IdPersona = p.IdPersona LEFT OUTER JOIN
+	dbo.aca_AnioLectivoCalificacionCualitativa AS acc with (nolock) ON acc.IdEmpresa = a.IdEmpresa AND acc.IdAnio = m.IdAnio AND acc.IdCalificacionCualitativa = a.IdCalificacionCualitativa LEFT OUTER JOIN
+	dbo.aca_AnioLectivo AS AN with (nolock) ON m.IdEmpresa = AN.IdEmpresa AND m.IdAnio = AN.IdAnio LEFT OUTER JOIN
+	dbo.aca_AnioLectivo_Curso_Paralelo AS cp with (nolock) RIGHT OUTER JOIN
+	dbo.aca_AnioLectivo_Jornada_Curso AS jc with (nolock) LEFT OUTER JOIN
+	dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn with (nolock) INNER JOIN
+	dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj with (nolock) ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel ON jc.IdJornada = nj.IdJornada AND jc.IdEmpresa = nj.IdEmpresa AND 
 	jc.IdAnio = nj.IdAnio AND jc.IdSede = nj.IdSede AND jc.IdNivel = nj.IdNivel LEFT OUTER JOIN
-	dbo.aca_AnioLectivo_Curso_Materia AS MC ON jc.IdEmpresa = MC.IdEmpresa AND jc.IdAnio = MC.IdAnio AND jc.IdSede = MC.IdSede AND jc.IdNivel = MC.IdNivel AND jc.IdJornada = MC.IdJornada AND jc.IdCurso = MC.IdCurso ON 
+	dbo.aca_AnioLectivo_Curso_Materia AS MC with (nolock) ON jc.IdEmpresa = MC.IdEmpresa AND jc.IdAnio = MC.IdAnio AND jc.IdSede = MC.IdSede AND jc.IdNivel = MC.IdNivel AND jc.IdJornada = MC.IdJornada AND jc.IdCurso = MC.IdCurso ON 
 	cp.IdEmpresa = jc.IdEmpresa AND cp.IdAnio = jc.IdAnio AND cp.IdSede = jc.IdSede AND cp.IdNivel = jc.IdNivel AND cp.IdJornada = jc.IdJornada ON m.IdEmpresa = MC.IdEmpresa AND m.IdAnio = MC.IdAnio AND m.IdSede = MC.IdSede AND 
 	m.IdNivel = MC.IdNivel AND m.IdJornada = MC.IdJornada AND m.IdCurso = MC.IdCurso AND a.IdMateria = MC.IdMateria AND m.IdEmpresa = sn.IdEmpresa AND m.IdAnio = sn.IdAnio AND m.IdSede = sn.IdSede AND m.IdNivel = sn.IdNivel AND
 	m.IdEmpresa = cp.IdEmpresa AND m.IdAnio = cp.IdAnio AND m.IdSede = cp.IdSede AND m.IdNivel = cp.IdNivel AND m.IdJornada = cp.IdJornada AND m.IdCurso = cp.IdCurso AND m.IdParalelo = cp.IdParalelo
-LEFT OUTER JOIN aca_Profesor AS pro ON cp.IdEmpresa = pro.IdEmpresa and cp.IdProfesorInspector = pro.IdProfesor
-	LEFT OUTER JOIN tb_persona as pins on pins.IdPersona = pro.IdPersona
-	LEFT OUTER JOIN tb_persona as pre on pre.IdPersona = m.IdPersonaR
+LEFT OUTER JOIN aca_Profesor AS pro with (nolock) ON cp.IdEmpresa = pro.IdEmpresa and cp.IdProfesorInspector = pro.IdProfesor
+	LEFT OUTER JOIN tb_persona as pins with (nolock) on pins.IdPersona = pro.IdPersona
+	LEFT OUTER JOIN tb_persona as pre with (nolock) on pre.IdPersona = m.IdPersonaR
 LEFT JOIN	
 	(
 	select r.IdEmpresa, r.IdMatricula 
-	from aca_AlumnoRetiro as r
+	from aca_AlumnoRetiro as r with (nolock) 
 	where r.Estado = 1
 	) as ret on m.IdEmpresa =ret.IdEmpresa and m.IdMatricula = ret.IdMatricula
 left join aca_MatriculaCalificacionCualitativaPromedio pr on pr.IdEmpresa = a.IdEmpresa and pr.IdMatricula=a.IdMatricula and pr.IdMateria=a.IdMateria

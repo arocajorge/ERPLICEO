@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [Academico].[SPACA_031]
+﻿CREATE PROCEDURE [Academico].[SPACA_031]
 (
 @IdEmpresa int,
 @IdAnio int,
@@ -16,22 +15,22 @@ SELECT mc.IdEmpresa, mc.IdMatricula, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada,
 				  equivq2.Secuencia AS SecuenciaQ2, equivq2.Letra AS LetraQ2, mc.MotivoPromedioFinalQ2,
 				  equivf.Secuencia AS SecuenciaPF, equivf.Letra AS LetraPF, mc.MotivoPromedioFinal,
 				  cp.IdProfesorInspector, dbo.tb_persona.pe_nombreCompleto AS NombreInspector
-FROM     dbo.aca_MatriculaConducta AS mc LEFT OUTER JOIN
-                  dbo.tb_persona RIGHT OUTER JOIN
-                  dbo.aca_Profesor AS pro ON dbo.tb_persona.IdPersona = pro.IdPersona RIGHT OUTER JOIN
-                  dbo.aca_AnioLectivo_Curso_Paralelo AS cp ON pro.IdEmpresa = cp.IdEmpresa AND pro.IdProfesor = cp.IdProfesorInspector RIGHT OUTER JOIN
-                  dbo.aca_AnioLectivo INNER JOIN
-                  dbo.aca_Alumno AS a INNER JOIN
-                  dbo.aca_Matricula AS m ON a.IdEmpresa = m.IdEmpresa AND a.IdAlumno = m.IdAlumno INNER JOIN
-                  dbo.tb_persona AS p ON a.IdPersona = p.IdPersona ON dbo.aca_AnioLectivo.IdEmpresa = m.IdEmpresa AND dbo.aca_AnioLectivo.IdAnio = m.IdAnio ON cp.IdEmpresa = m.IdEmpresa AND cp.IdAnio = m.IdAnio AND 
+FROM     dbo.aca_MatriculaConducta AS mc with (nolock) LEFT OUTER JOIN
+                  dbo.tb_persona with (nolock) RIGHT OUTER JOIN
+                  dbo.aca_Profesor AS pro with (nolock) ON dbo.tb_persona.IdPersona = pro.IdPersona RIGHT OUTER JOIN
+                  dbo.aca_AnioLectivo_Curso_Paralelo AS cp with (nolock) ON pro.IdEmpresa = cp.IdEmpresa AND pro.IdProfesor = cp.IdProfesorInspector RIGHT OUTER JOIN
+                  dbo.aca_AnioLectivo with (nolock) INNER JOIN
+                  dbo.aca_Alumno AS a with (nolock) INNER JOIN
+                  dbo.aca_Matricula AS m with (nolock) ON a.IdEmpresa = m.IdEmpresa AND a.IdAlumno = m.IdAlumno INNER JOIN
+                  dbo.tb_persona AS p with (nolock) ON a.IdPersona = p.IdPersona ON dbo.aca_AnioLectivo.IdEmpresa = m.IdEmpresa AND dbo.aca_AnioLectivo.IdAnio = m.IdAnio ON cp.IdEmpresa = m.IdEmpresa AND cp.IdAnio = m.IdAnio AND 
                   cp.IdSede = m.IdSede AND cp.IdNivel = m.IdNivel AND cp.IdJornada = m.IdJornada AND cp.IdCurso = m.IdCurso AND cp.IdParalelo = m.IdParalelo ON mc.IdEmpresa = m.IdEmpresa AND mc.IdMatricula = m.IdMatricula LEFT OUTER JOIN
-                  dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn RIGHT OUTER JOIN
-                  dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel RIGHT OUTER JOIN
-                  dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada ON cp.IdEmpresa = jc.IdEmpresa AND 
+                  dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn with (nolock) RIGHT OUTER JOIN
+                  dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj with (nolock) ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel RIGHT OUTER JOIN
+                  dbo.aca_AnioLectivo_Jornada_Curso AS jc with (nolock) ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada ON cp.IdEmpresa = jc.IdEmpresa AND 
                   cp.IdAnio = jc.IdAnio AND cp.IdSede = jc.IdSede AND cp.IdNivel = jc.IdNivel AND cp.IdJornada = jc.IdJornada AND cp.IdCurso = jc.IdCurso LEFT OUTER JOIN
-				  dbo.aca_AnioLectivoConductaEquivalencia AS equivq1 ON equivq1.IdEmpresa = mc.IdEmpresa AND equivq1.IdAnio = m.IdAnio AND equivq1.Secuencia = mc.SecuenciaPromedioFinalQ1 LEFT OUTER JOIN
-                  dbo.aca_AnioLectivoConductaEquivalencia AS equivq2 ON equivq2.IdEmpresa = mc.IdEmpresa AND equivq2.IdAnio = m.IdAnio AND equivq2.Secuencia = mc.SecuenciaPromedioFinalQ2 LEFT OUTER JOIN
-                  dbo.aca_AnioLectivoConductaEquivalencia AS equivf ON equivf.IdEmpresa = mc.IdEmpresa AND equivf.IdAnio = m.IdAnio AND equivf.Secuencia = mc.SecuenciaPromedioFinal
+				  dbo.aca_AnioLectivoConductaEquivalencia AS equivq1 with (nolock) ON equivq1.IdEmpresa = mc.IdEmpresa AND equivq1.IdAnio = m.IdAnio AND equivq1.Secuencia = mc.SecuenciaPromedioFinalQ1 LEFT OUTER JOIN
+                  dbo.aca_AnioLectivoConductaEquivalencia AS equivq2 with (nolock) ON equivq2.IdEmpresa = mc.IdEmpresa AND equivq2.IdAnio = m.IdAnio AND equivq2.Secuencia = mc.SecuenciaPromedioFinalQ2 LEFT OUTER JOIN
+                  dbo.aca_AnioLectivoConductaEquivalencia AS equivf with (nolock) ON equivf.IdEmpresa = mc.IdEmpresa AND equivf.IdAnio = m.IdAnio AND equivf.Secuencia = mc.SecuenciaPromedioFinal
 
 where mc.IdEmpresa = @IdEmpresa 
 and m.IdAnio = @IdAnio

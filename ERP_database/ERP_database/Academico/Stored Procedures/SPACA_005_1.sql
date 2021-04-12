@@ -30,29 +30,29 @@ SELECT dbo.aca_SocioEconomico.IdEmpresa, dbo.aca_SocioEconomico.IdSocioEconomico
 				  IngresoMensualMadre,VehiculoPropioMadre,MarcaMadre,ModeloMadre, AnioVehiculoMadre,
 				  NomRepresentante,DireccionRepresentante,NomEstadoCivilRepresentante,CelularRepresentante,ProfesionRepresentante, NomInstruccionRepresentante,CorreoRepresentante,EmpresaTrabajoRepresentante,DireccionTrabajoRepresentante,TelefonoTrabajoRepresentante,CargoTrabajoRepresentante,AniosServicioRepresentante,
 				  IngresoMensualRepresentante,VehiculoPropioRepresentante,MarcaRepresentante,ModeloRepresentante, AnioVehiculoRepresentante, Calificacion.Conducta, Calificacion.Promedio
-FROM     dbo.aca_SocioEconomico INNER JOIN
-                  dbo.aca_Alumno ON dbo.aca_SocioEconomico.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_SocioEconomico.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
-                  dbo.tb_persona AS PersonaAlumno ON dbo.aca_Alumno.IdPersona = PersonaAlumno.IdPersona LEFT OUTER JOIN
-                  dbo.tb_provincia ON dbo.aca_Alumno.IdProvincia = dbo.tb_provincia.IdProvincia LEFT OUTER JOIN
-                  dbo.tb_ciudad ON dbo.aca_Alumno.IdCiudad = dbo.tb_ciudad.IdCiudad LEFT OUTER JOIN
-                  dbo.tb_Catalogo AS CatalogoSexo ON PersonaAlumno.pe_sexo = CatalogoSexo.CodCatalogo LEFT OUTER JOIN
-                  dbo.tb_parroquia ON dbo.aca_Alumno.IdParroquia = dbo.tb_parroquia.IdParroquia LEFT OUTER JOIN
-                  dbo.aca_CatalogoFicha AS ViveCon ON dbo.aca_SocioEconomico.IdCatalogoFichaVive = ViveCon.IdCatalogoFicha LEFT OUTER JOIN
-                  dbo.aca_CatalogoFicha AS FinanciaEstudios ON dbo.aca_SocioEconomico.IdCatalogoFichaFin = FinanciaEstudios.IdCatalogoFicha LEFT OUTER JOIN
-                  dbo.aca_CatalogoFicha AS InformacionInstitucion ON dbo.aca_SocioEconomico.IdCatalogoFichaIns = InformacionInstitucion.IdCatalogoFicha LEFT OUTER JOIN
-                  dbo.aca_CatalogoFicha AS MotivoIngreso ON dbo.aca_SocioEconomico.IdCatalogoFichaMot = MotivoIngreso.IdCatalogoFicha LEFT OUTER JOIN
-                  dbo.aca_CatalogoFicha AS Agua ON dbo.aca_SocioEconomico.IdCatalogoFichaAg = Agua.IdCatalogoFicha LEFT OUTER JOIN
-                  dbo.aca_CatalogoFicha AS TenenciaVivienda ON dbo.aca_SocioEconomico.IdCatalogoFichaTVi = TenenciaVivienda.IdCatalogoFicha LEFT OUTER JOIN
-                  dbo.aca_CatalogoFicha AS TipoVivienda ON dbo.aca_SocioEconomico.IdCatalogoFichaVi = TipoVivienda.IdCatalogoFicha LEFT OUTER JOIN
-                  dbo.tb_Catalogo AS CatalogoDiscapacidad ON PersonaAlumno.CodCatalogoCONADIS = CatalogoSexo.CodCatalogo
+FROM     dbo.aca_SocioEconomico with (nolock) INNER JOIN
+                  dbo.aca_Alumno with (nolock) ON dbo.aca_SocioEconomico.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_SocioEconomico.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
+                  dbo.tb_persona AS PersonaAlumno with (nolock) ON dbo.aca_Alumno.IdPersona = PersonaAlumno.IdPersona LEFT OUTER JOIN
+                  dbo.tb_provincia with (nolock) ON dbo.aca_Alumno.IdProvincia = dbo.tb_provincia.IdProvincia LEFT OUTER JOIN
+                  dbo.tb_ciudad with (nolock) ON dbo.aca_Alumno.IdCiudad = dbo.tb_ciudad.IdCiudad LEFT OUTER JOIN
+                  dbo.tb_Catalogo AS CatalogoSexo with (nolock) ON PersonaAlumno.pe_sexo = CatalogoSexo.CodCatalogo LEFT OUTER JOIN
+                  dbo.tb_parroquia with (nolock) ON dbo.aca_Alumno.IdParroquia = dbo.tb_parroquia.IdParroquia LEFT OUTER JOIN
+                  dbo.aca_CatalogoFicha AS ViveCon with (nolock) ON dbo.aca_SocioEconomico.IdCatalogoFichaVive = ViveCon.IdCatalogoFicha LEFT OUTER JOIN
+                  dbo.aca_CatalogoFicha AS FinanciaEstudios with (nolock) ON dbo.aca_SocioEconomico.IdCatalogoFichaFin = FinanciaEstudios.IdCatalogoFicha LEFT OUTER JOIN
+                  dbo.aca_CatalogoFicha AS InformacionInstitucion with (nolock) ON dbo.aca_SocioEconomico.IdCatalogoFichaIns = InformacionInstitucion.IdCatalogoFicha LEFT OUTER JOIN
+                  dbo.aca_CatalogoFicha AS MotivoIngreso with (nolock) ON dbo.aca_SocioEconomico.IdCatalogoFichaMot = MotivoIngreso.IdCatalogoFicha LEFT OUTER JOIN
+                  dbo.aca_CatalogoFicha AS Agua with (nolock) ON dbo.aca_SocioEconomico.IdCatalogoFichaAg = Agua.IdCatalogoFicha LEFT OUTER JOIN
+                  dbo.aca_CatalogoFicha AS TenenciaVivienda with (nolock) ON dbo.aca_SocioEconomico.IdCatalogoFichaTVi = TenenciaVivienda.IdCatalogoFicha LEFT OUTER JOIN
+                  dbo.aca_CatalogoFicha AS TipoVivienda with (nolock) ON dbo.aca_SocioEconomico.IdCatalogoFichaVi = TipoVivienda.IdCatalogoFicha LEFT OUTER JOIN
+                  dbo.tb_Catalogo AS CatalogoDiscapacidad with (nolock) ON PersonaAlumno.CodCatalogoCONADIS = CatalogoSexo.CodCatalogo
 				  ----MATRICULA---
 				  inner join
 				  (
-				  select m.IdEmpresa, m.IdAlumno, m.IdAnio, a.Descripcion, n.NomNivel,j.NomJornada, c.NomCurso from aca_Matricula m 
-				  inner join aca_AnioLectivo a on m.IdAnio=a.IdAnio
-				  inner join aca_NivelAcademico n on m.IdNivel=n.IdNivel
-				  inner join aca_Jornada j on m.IdJornada=j.IdJornada
-				  inner join aca_Curso c on m.IdCurso=c.IdCurso
+				  select m.IdEmpresa, m.IdAlumno, m.IdAnio, a.Descripcion, n.NomNivel,j.NomJornada, c.NomCurso from aca_Matricula m with (nolock) 
+				  inner join aca_AnioLectivo a with (nolock) on m.IdAnio=a.IdAnio
+				  inner join aca_NivelAcademico n with (nolock) on m.IdNivel=n.IdNivel
+				  inner join aca_Jornada j with (nolock) on m.IdJornada=j.IdJornada
+				  inner join aca_Curso c with (nolock) on m.IdCurso=c.IdCurso
 				  where m.IdEmpresa=@IdEmpresa and m.IdAlumno=@IdAlumno and m.IdAnio=@IdAnioActual
 				  )matricula on matricula.IdEmpresa=@IdEmpresa and matricula.IdAlumno =@IdAlumno and matricula.IdAnio=@IdAnioActual
 				  ------PADRE------
@@ -64,13 +64,13 @@ FROM     dbo.aca_SocioEconomico INNER JOIN
 					f.Correo as CorreoPadre, CASE WHEN f.VehiculoPropio = 1 THEN 'SI' ELSE 'NO' END AS VehiculoPropioPadre, f.Marca as MarcaPadre, f.Modelo as ModeloPadre, p.pe_cedulaRuc as pe_cedulaRucPadre, 
 					dbo.tb_profesion.Descripcion as ProfesionPadre, f.Celular as CelularPadre, f.IngresoMensual IngresoMensualPadre, f.AnioVehiculo as AnioVehiculoPadre, 
 					ISNULL(dbo.aca_SocioEconomico.OtroIngresoPadre,0) AS OtrosIngresosPadre, tb_profesion.Descripcion as NomProfesionPadre
-					FROM     dbo.aca_Familia AS f INNER JOIN
-					dbo.tb_persona AS p ON f.IdPersona = p.IdPersona LEFT JOIN
-					dbo.aca_SocioEconomico ON f.IdEmpresa = dbo.aca_SocioEconomico.IdEmpresa AND f.IdAlumno = dbo.aca_SocioEconomico.IdAlumno LEFT OUTER JOIN
-					dbo.aca_Catalogo AS c ON f.IdCatalogoPAREN = c.IdCatalogo LEFT OUTER JOIN
-					dbo.tb_Catalogo ON p.IdEstadoCivil = dbo.tb_Catalogo.CodCatalogo LEFT OUTER JOIN
-					dbo.tb_profesion ON p.IdProfesion = dbo.tb_profesion.IdProfesion LEFT OUTER JOIN
-					dbo.aca_CatalogoFicha ON f.IdCatalogoFichaInst = dbo.aca_CatalogoFicha.IdCatalogoFicha
+					FROM     dbo.aca_Familia AS f with (nolock) INNER JOIN
+					dbo.tb_persona AS p with (nolock) ON f.IdPersona = p.IdPersona LEFT JOIN
+					dbo.aca_SocioEconomico with (nolock) ON f.IdEmpresa = dbo.aca_SocioEconomico.IdEmpresa AND f.IdAlumno = dbo.aca_SocioEconomico.IdAlumno LEFT OUTER JOIN
+					dbo.aca_Catalogo AS c with (nolock) ON f.IdCatalogoPAREN = c.IdCatalogo LEFT OUTER JOIN
+					dbo.tb_Catalogo with (nolock) ON p.IdEstadoCivil = dbo.tb_Catalogo.CodCatalogo LEFT OUTER JOIN
+					dbo.tb_profesion with (nolock) ON p.IdProfesion = dbo.tb_profesion.IdProfesion LEFT OUTER JOIN
+					dbo.aca_CatalogoFicha with (nolock) ON f.IdCatalogoFichaInst = dbo.aca_CatalogoFicha.IdCatalogoFicha
 					WHERE f.IdEmpresa = @IdEmpresa and f.IdAlumno = @IdAlumno and f.IdCatalogoPAREN=10
 					--f.IdEmpresa = 1 and f.IdAlumno = 3932 and f.IdCatalogoPAREN=10
 				  ) 
@@ -84,13 +84,13 @@ FROM     dbo.aca_SocioEconomico INNER JOIN
 					f.Correo as CorreoMadre, CASE WHEN f.VehiculoPropio = 1 THEN 'SI' ELSE 'NO' END AS VehiculoPropioMadre, f.Marca as MarcaMadre, f.Modelo as ModeloMadre, p.pe_cedulaRuc as pe_cedulaRucMadre, 
 					dbo.tb_profesion.Descripcion as ProfesionMadre, f.Celular as CelularMadre, f.IngresoMensual IngresoMensualMadre, f.AnioVehiculo as AnioVehiculoMadre, 
 					ISNULL(dbo.aca_SocioEconomico.OtroIngresoMadre,0) AS OtrosIngresosMadre, tb_profesion.Descripcion as NomProfesionMadre
-					FROM     dbo.aca_Familia AS f INNER JOIN
-					dbo.tb_persona AS p ON f.IdPersona = p.IdPersona LEFT JOIN
-					dbo.aca_SocioEconomico ON f.IdEmpresa = dbo.aca_SocioEconomico.IdEmpresa AND f.IdAlumno = dbo.aca_SocioEconomico.IdAlumno LEFT OUTER JOIN
-					dbo.aca_Catalogo AS c ON f.IdCatalogoPAREN = c.IdCatalogo LEFT OUTER JOIN
-					dbo.tb_Catalogo ON p.IdEstadoCivil = dbo.tb_Catalogo.CodCatalogo LEFT OUTER JOIN
-					dbo.tb_profesion ON p.IdProfesion = dbo.tb_profesion.IdProfesion LEFT OUTER JOIN
-					dbo.aca_CatalogoFicha ON f.IdCatalogoFichaInst = dbo.aca_CatalogoFicha.IdCatalogoFicha
+					FROM     dbo.aca_Familia AS f with (nolock) INNER JOIN
+					dbo.tb_persona AS p with (nolock) ON f.IdPersona = p.IdPersona LEFT JOIN
+					dbo.aca_SocioEconomico with (nolock) ON f.IdEmpresa = dbo.aca_SocioEconomico.IdEmpresa AND f.IdAlumno = dbo.aca_SocioEconomico.IdAlumno LEFT OUTER JOIN
+					dbo.aca_Catalogo AS c with (nolock) ON f.IdCatalogoPAREN = c.IdCatalogo LEFT OUTER JOIN
+					dbo.tb_Catalogo with (nolock) ON p.IdEstadoCivil = dbo.tb_Catalogo.CodCatalogo LEFT OUTER JOIN
+					dbo.tb_profesion with (nolock) ON p.IdProfesion = dbo.tb_profesion.IdProfesion LEFT OUTER JOIN
+					dbo.aca_CatalogoFicha with (nolock) ON f.IdCatalogoFichaInst = dbo.aca_CatalogoFicha.IdCatalogoFicha
 					WHERE f.IdEmpresa = @IdEmpresa and f.IdAlumno = @IdAlumno and f.IdCatalogoPAREN=11
 					--f.IdEmpresa = 1 and f.IdAlumno = 4605 and f.IdCatalogoPAREN=11
 				  ) 
@@ -104,20 +104,20 @@ FROM     dbo.aca_SocioEconomico INNER JOIN
 					f.Correo as CorreoRepresentante, CASE WHEN f.VehiculoPropio = 1 THEN 'SI' ELSE 'NO' END AS VehiculoPropioRepresentante, f.Marca as MarcaRepresentante, f.Modelo as ModeloRepresentante, p.pe_cedulaRuc as pe_cedulaRucRepresentante, 
 					dbo.tb_profesion.Descripcion as ProfesionRepresentante, f.Celular as CelularRepresentante, f.IngresoMensual IngresoMensualRepresentante, f.AnioVehiculo as AnioVehiculoRepresentante, 
 					CASE WHEN F.IdCatalogoPAREN = 11 THEN  ISNULL(dbo.aca_SocioEconomico.OtroIngresoPadre,0) WHEN F.IdCatalogoPAREN = 10 THEN ISNULL(dbo.aca_SocioEconomico.OtroIngresoMadre,0) ELSE 0 END AS OtrosIngresosRepresentante, tb_profesion.Descripcion as NomProfesionRepresentante
-					FROM     dbo.aca_Familia AS f INNER JOIN
-					dbo.tb_persona AS p ON f.IdPersona = p.IdPersona LEFT JOIN
-					dbo.aca_SocioEconomico ON f.IdEmpresa = dbo.aca_SocioEconomico.IdEmpresa AND f.IdAlumno = dbo.aca_SocioEconomico.IdAlumno LEFT OUTER JOIN
-					dbo.aca_Catalogo AS c ON f.IdCatalogoPAREN = c.IdCatalogo LEFT OUTER JOIN
-					dbo.tb_Catalogo ON p.IdEstadoCivil = dbo.tb_Catalogo.CodCatalogo LEFT OUTER JOIN
-					dbo.tb_profesion ON p.IdProfesion = dbo.tb_profesion.IdProfesion LEFT OUTER JOIN
-					dbo.aca_CatalogoFicha ON f.IdCatalogoFichaInst = dbo.aca_CatalogoFicha.IdCatalogoFicha
+					FROM     dbo.aca_Familia AS f with (nolock) INNER JOIN
+					dbo.tb_persona AS p with (nolock) ON f.IdPersona = p.IdPersona LEFT JOIN
+					dbo.aca_SocioEconomico with (nolock) ON f.IdEmpresa = dbo.aca_SocioEconomico.IdEmpresa AND f.IdAlumno = dbo.aca_SocioEconomico.IdAlumno LEFT OUTER JOIN
+					dbo.aca_Catalogo AS c with (nolock) ON f.IdCatalogoPAREN = c.IdCatalogo LEFT OUTER JOIN
+					dbo.tb_Catalogo with (nolock) ON p.IdEstadoCivil = dbo.tb_Catalogo.CodCatalogo LEFT OUTER JOIN
+					dbo.tb_profesion with (nolock) ON p.IdProfesion = dbo.tb_profesion.IdProfesion LEFT OUTER JOIN
+					dbo.aca_CatalogoFicha with (nolock) ON f.IdCatalogoFichaInst = dbo.aca_CatalogoFicha.IdCatalogoFicha
 					WHERE f.IdEmpresa = @IdEmpresa and f.IdAlumno = @IdAlumno AND F.EsRepresentante = 1
 					--f.IdEmpresa = 1 and f.IdAlumno = 4605 and f.EsRepresentante=1
 				  ) 
 				  Representante on aca_Alumno.IdEmpresa = Representante.IdEmpresa and aca_Alumno.IdAlumno = Representante.IdAlumno left join
 				  (
 					  select a.IdEmpresa, a.IdAlumno, a.IdAnio, a.Conducta, a.Promedio
-					  from aca_AnioLectivoCalificacionHistorico as a inner join aca_AnioLectivo as b
+					  from aca_AnioLectivoCalificacionHistorico as a with (nolock) inner join aca_AnioLectivo as b with (nolock) 
 					  on a.IdEmpresa = b.IdEmpresa and a.IdAnio = b.IdAnio
 					  where a.IdEmpresa = @IdEmpresa and a.IdAlumno = @IdAlumno and a.IdAnio = @IdAnioAnterior
 				  ) Calificacion on aca_Alumno.IdEmpresa = Calificacion.IdEmpresa and aca_Alumno.IdAlumno = Calificacion.IdAlumno 

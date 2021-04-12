@@ -1,4 +1,5 @@
-﻿CREATE PROCEDURE [Academico].[SPACA_020]
+﻿
+CREATE PROCEDURE [Academico].[SPACA_020]
 (
 @IdEmpresa int,
 @IdAnio int,
@@ -16,29 +17,29 @@ SELECT m.IdEmpresa, m.IdMatricula, al.Codigo, m.IdAlumno, pa.IdPersona, pa.pe_no
                   prep.pe_nombreCompleto AS NombreLegal, m.Fecha, m.IdPersonaF, dbo.tb_persona.pe_cedulaRuc AS CedulaFactura, dbo.tb_persona.pe_nombreCompleto AS NombreFactura, 
 				  case when ret.IdMatricula is not null then cast(1 as bit) else cast(0 as bit) end as EsRetirado,
 				case when ret.IdMatricula is not null THEN 'RETIRADO' else 'ACTIVO' end as EsRetiradoString, pension.Total
-FROM     dbo.aca_Matricula AS m INNER JOIN
-                  dbo.aca_AnioLectivo AS a ON m.IdEmpresa = a.IdEmpresa AND m.IdAnio = a.IdAnio 
+FROM     dbo.aca_Matricula AS m with (nolock) INNER JOIN
+                  dbo.aca_AnioLectivo AS a with (nolock) ON m.IdEmpresa = a.IdEmpresa AND m.IdAnio = a.IdAnio 
 				  INNER JOIN
                   (
 				  select pla.IdEmpresa, pla.IdPlantilla, pla.IdAnio, pru.IdRubro, pru.Total
-					from aca_Plantilla pla 
-					inner join aca_Plantilla_Rubro pru on pru.IdEmpresa = pla.IdEmpresa and pru.IdPlantilla = pla.IdPlantilla and pru.IdRubro=2
+					from aca_Plantilla pla with (nolock) 
+					inner join aca_Plantilla_Rubro pru with (nolock) on pru.IdEmpresa = pla.IdEmpresa and pru.IdPlantilla = pla.IdPlantilla and pru.IdRubro=2
 				  ) as pension
 				  on pension.IdEmpresa = m.IdEmpresa and pension.IdPlantilla=m.IdPlantilla and pension.IdAnio=m.IdAnio
 				  LEFT OUTER JOIN
-                  dbo.tb_persona ON m.IdPersonaF = dbo.tb_persona.IdPersona LEFT OUTER JOIN
-                  dbo.tb_persona AS prep ON m.IdPersonaR = prep.IdPersona LEFT OUTER JOIN
-                  dbo.tb_persona AS pa INNER JOIN
-                  dbo.aca_Alumno AS al ON pa.IdPersona = al.IdPersona ON m.IdEmpresa = al.IdEmpresa AND m.IdAlumno = al.IdAlumno LEFT OUTER JOIN
-                  dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn RIGHT OUTER JOIN
-                  dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel RIGHT OUTER JOIN
-                  dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
-                  dbo.aca_AnioLectivo_Curso_Paralelo AS cp ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND jc.IdCurso = cp.IdCurso ON 
+                  dbo.tb_persona with (nolock) ON m.IdPersonaF = dbo.tb_persona.IdPersona LEFT OUTER JOIN
+                  dbo.tb_persona AS prep with (nolock) ON m.IdPersonaR = prep.IdPersona LEFT OUTER JOIN
+                  dbo.tb_persona AS pa with (nolock) INNER JOIN
+                  dbo.aca_Alumno AS al with (nolock) ON pa.IdPersona = al.IdPersona ON m.IdEmpresa = al.IdEmpresa AND m.IdAlumno = al.IdAlumno LEFT OUTER JOIN
+                  dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn with (nolock) RIGHT OUTER JOIN
+                  dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj with (nolock) ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel RIGHT OUTER JOIN
+                  dbo.aca_AnioLectivo_Jornada_Curso AS jc with (nolock) ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
+                  dbo.aca_AnioLectivo_Curso_Paralelo AS cp with (nolock) ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND jc.IdCurso = cp.IdCurso ON 
                   m.IdEmpresa = cp.IdEmpresa AND m.IdAnio = cp.IdAnio AND m.IdSede = cp.IdSede AND m.IdNivel = cp.IdNivel AND m.IdJornada = cp.IdJornada AND m.IdCurso = cp.IdCurso AND m.IdParalelo = cp.IdParalelo 
 				  left join
 		(
 		select r.IdEmpresa, r.IdMatricula 
-		from aca_AlumnoRetiro as r
+		from aca_AlumnoRetiro as r with (nolock) 
 		where r.Estado = 1
 		) as ret on m.IdEmpresa =ret.IdEmpresa and m.IdMatricula = ret.IdMatricula
 where m.IdEmpresa = @IdEmpresa 

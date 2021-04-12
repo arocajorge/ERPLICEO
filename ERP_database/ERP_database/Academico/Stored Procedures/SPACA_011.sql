@@ -36,14 +36,14 @@ MC.IdEmpresa, MC.IdMatricula, M.IdAlumno, P.pe_nombreCompleto, A.LugarNacimiento
                   ELSE CASE WHEN (MC.CampoMejoramiento = 'Q1') THEN ROUND(((MC.ExamenMejoramiento + MC.PromedioFinalQ2) / 2), 2) 
                   ELSE CASE WHEN (MC.CampoMejoramiento = 'Q2') THEN ROUND(((MC.PromedioFinalQ1 + MC.ExamenMejoramiento) / 2), 2) 
                   END END END AS PromedioQuimestral, MC.ExamenSupletorio, MC.ExamenRemedial, MC.ExamenGracia, MC.PromedioFinal
-FROM     dbo.aca_MatriculaCalificacion AS MC INNER JOIN
-                  dbo.aca_Matricula AS M ON MC.IdEmpresa = M.IdEmpresa AND MC.IdMatricula = M.IdMatricula INNER JOIN
-                  dbo.aca_Alumno AS A ON M.IdEmpresa = A.IdEmpresa AND M.IdAlumno = A.IdAlumno INNER JOIN
-                  dbo.tb_persona AS P ON A.IdPersona = P.IdPersona INNER JOIN
-                  dbo.aca_Familia AS F ON M.IdEmpresa = F.IdEmpresa AND M.IdAlumno = F.IdAlumno AND M.IdPersonaR = F.IdPersona AND F.EsRepresentante = 1 INNER JOIN
-                  dbo.aca_Catalogo AS C ON F.IdCatalogoPAREN = C.IdCatalogo INNER JOIN
-                  dbo.tb_persona AS P_1 ON M.IdPersonaR = P_1.IdPersona INNER JOIN
-                  dbo.aca_AnioLectivo_Curso_Materia AS CM ON M.IdEmpresa = CM.IdEmpresa AND M.IdAnio = CM.IdAnio AND M.IdSede = CM.IdSede AND M.IdNivel = CM.IdNivel AND M.IdJornada = CM.IdJornada AND M.IdCurso = CM.IdCurso AND 
+FROM     dbo.aca_MatriculaCalificacion AS MC with (nolock) INNER JOIN
+                  dbo.aca_Matricula AS M with (nolock) ON MC.IdEmpresa = M.IdEmpresa AND MC.IdMatricula = M.IdMatricula INNER JOIN
+                  dbo.aca_Alumno AS A with (nolock) ON M.IdEmpresa = A.IdEmpresa AND M.IdAlumno = A.IdAlumno INNER JOIN
+                  dbo.tb_persona AS P with (nolock) ON A.IdPersona = P.IdPersona INNER JOIN
+                  dbo.aca_Familia AS F with (nolock) ON M.IdEmpresa = F.IdEmpresa AND M.IdAlumno = F.IdAlumno AND M.IdPersonaR = F.IdPersona AND F.EsRepresentante = 1 INNER JOIN
+                  dbo.aca_Catalogo AS C with (nolock) ON F.IdCatalogoPAREN = C.IdCatalogo INNER JOIN
+                  dbo.tb_persona AS P_1 with (nolock) ON M.IdPersonaR = P_1.IdPersona INNER JOIN
+                  dbo.aca_AnioLectivo_Curso_Materia AS CM with (nolock) ON M.IdEmpresa = CM.IdEmpresa AND M.IdAnio = CM.IdAnio AND M.IdSede = CM.IdSede AND M.IdNivel = CM.IdNivel AND M.IdJornada = CM.IdJornada AND M.IdCurso = CM.IdCurso AND 
                   MC.IdMateria = CM.IdMateria AND MC.IdEmpresa = CM.IdEmpresa
 WHERE  MC.IdEmpresa=@IdEmpresa
 and M.IdAnio = @IdAnio

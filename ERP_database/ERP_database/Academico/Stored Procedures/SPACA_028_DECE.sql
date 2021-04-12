@@ -1,5 +1,4 @@
-﻿
-create PROCEDURE [Academico].[SPACA_028_DECE]
+﻿CREATE PROCEDURE [Academico].[SPACA_028_DECE]
 (
 @IdEmpresa int,
 @IdAnio int,
@@ -15,7 +14,7 @@ SELECT IdEmpresa, IdAnio, IdSede, IdNivel, IdJornada, IdCurso, IdParalelo,
 case when @IdCatalogoParcialTipo = 6 then ObservacionQ1 else
 case when @IdCatalogoParcialTipo = 7 then ObservacionQ2 else null end
 end as ObservacionDECE
-FROM     dbo.aca_AnioLectivo_Curso_Paralelo_Dece AS d
+FROM     dbo.aca_AnioLectivo_Curso_Paralelo_Dece AS d with (nolock) 
 where d.IdEmpresa= @IdEmpresa 
 and d.IdAnio = @IdAnio
 and d.IdSede = @IdSede

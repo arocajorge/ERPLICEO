@@ -1,15 +1,13 @@
 ﻿CREATE VIEW dbo.vwaca_Alumno
 AS
-SELECT dbo.aca_Alumno.IdEmpresa, dbo.aca_Alumno.IdAlumno, dbo.aca_Alumno.Codigo, dbo.aca_Alumno.IdPersona, dbo.tb_persona.pe_Naturaleza, dbo.tb_persona.pe_nombreCompleto, dbo.tb_persona.pe_apellido, 
-                  dbo.tb_persona.pe_nombre, dbo.tb_persona.IdTipoDocumento, dbo.tb_persona.pe_cedulaRuc, dbo.aca_Alumno.Direccion, dbo.aca_Alumno.Celular, dbo.aca_Alumno.Correo, dbo.tb_persona.pe_sexo, dbo.tb_persona.pe_fechaNacimiento, 
-                  dbo.tb_persona.CodCatalogoSangre, dbo.tb_persona.CodCatalogoCONADIS, dbo.tb_persona.PorcentajeDiscapacidad, dbo.tb_persona.NumeroCarnetConadis, dbo.aca_Alumno.Estado, dbo.aca_Alumno.IdCatalogoESTMAT, 
-                  dbo.aca_Alumno.IdCurso, dbo.aca_Alumno.IdCatalogoESTALU, dbo.tb_persona.pe_telfono_Contacto, aca_Catalogo_1.NomCatalogo AS NomCatalogoESTMAT, dbo.aca_Catalogo.NomCatalogo AS NomCatalogoESTALU, 
-                  dbo.aca_Alumno.FechaIngreso, dbo.aca_Alumno.LugarNacimiento, dbo.aca_Alumno.IdPais, dbo.aca_Alumno.Cod_Region, dbo.aca_Alumno.IdProvincia, dbo.aca_Alumno.IdCiudad, dbo.aca_Alumno.IdParroquia, dbo.aca_Alumno.Sector, 
-                  dbo.tb_persona.IdReligion, dbo.tb_persona.AsisteCentroCristiano, dbo.tb_persona.IdGrupoEtnico, dbo.aca_Alumno.Dificultad_Lectura, dbo.aca_Alumno.Dificultad_Escritura, dbo.aca_Alumno.Dificultad_Matematicas
-FROM     dbo.aca_Alumno INNER JOIN
-                  dbo.tb_persona ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona LEFT OUTER JOIN
-                  dbo.aca_Catalogo ON dbo.aca_Alumno.IdCatalogoESTALU = dbo.aca_Catalogo.IdCatalogo LEFT OUTER JOIN
-                  dbo.aca_Catalogo AS aca_Catalogo_1 ON dbo.aca_Alumno.IdCatalogoESTMAT = aca_Catalogo_1.IdCatalogo
+SELECT a.IdEmpresa, a.IdAlumno, a.Codigo, a.IdPersona, p.pe_Naturaleza, p.pe_nombreCompleto, p.pe_apellido, p.pe_nombre, p.IdTipoDocumento, p.pe_cedulaRuc, a.Direccion, a.Celular, a.Correo, p.pe_sexo, p.pe_fechaNacimiento, 
+                  p.CodCatalogoSangre, p.CodCatalogoCONADIS, p.PorcentajeDiscapacidad, p.NumeroCarnetConadis, a.Estado, a.IdCatalogoESTMAT, a.IdCurso, a.IdCatalogoESTALU, p.pe_telfono_Contacto, 
+                  aca_Catalogo_1.NomCatalogo AS NomCatalogoESTMAT, c.NomCatalogo AS NomCatalogoESTALU, a.FechaIngreso, a.LugarNacimiento, a.IdPais, a.Cod_Region, a.IdProvincia, a.IdCiudad, a.IdParroquia, a.Sector, p.IdReligion, 
+                  p.AsisteCentroCristiano, p.IdGrupoEtnico, a.Dificultad_Lectura, a.Dificultad_Escritura, a.Dificultad_Matematicas
+FROM     dbo.aca_Alumno AS a WITH (nolock) INNER JOIN
+                  dbo.tb_persona AS p WITH (nolock) ON a.IdPersona = p.IdPersona LEFT OUTER JOIN
+                  dbo.aca_Catalogo AS c WITH (nolock) ON a.IdCatalogoESTALU = c.IdCatalogo LEFT OUTER JOIN
+                  dbo.aca_Catalogo AS aca_Catalogo_1 WITH (nolock) ON a.IdCatalogoESTMAT = aca_Catalogo_1.IdCatalogo
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_alumno';
 
@@ -22,7 +20,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[60] 4[2] 2[21] 3) )"
+         Configuration = "(H (1[46] 4[6] 2[33] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -88,7 +86,7 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_Alumno"
+         Begin Table = "a"
             Begin Extent = 
                Top = 7
                Left = 55
@@ -98,7 +96,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 4
          End
-         Begin Table = "tb_persona"
+         Begin Table = "p"
             Begin Extent = 
                Top = 0
                Left = 451
@@ -108,7 +106,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 28
          End
-         Begin Table = "aca_Catalogo"
+         Begin Table = "c"
             Begin Extent = 
                Top = 51
                Left = 907
@@ -120,10 +118,10 @@ Begin DesignProperties =
          End
          Begin Table = "aca_Catalogo_1"
             Begin Extent = 
-               Top = 181
-               Left = 525
-               Bottom = 344
-               Right = 770
+               Top = 218
+               Left = 789
+               Bottom = 381
+               Right = 1034
             End
             DisplayFlags = 280
             TopColumn = 2
@@ -135,7 +133,7 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 38
+      Begin ColumnWidths = 41
          Width = 284
          Width = 1200
          Width = 1200
@@ -161,7 +159,10 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 1200
-     ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Alumno';
+         Width = 1200
+         W', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Alumno';
+
+
 
 
 
@@ -177,7 +178,9 @@ Begin DesignProperties =
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'    Width = 1200
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'idth = 1200
+         Width = 1200
+         Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -211,6 +214,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'    Width 
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Alumno';
+
+
 
 
 

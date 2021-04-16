@@ -1,9 +1,8 @@
 ﻿CREATE VIEW dbo.vwaca_AlumnoDocumento
 AS
-SELECT dbo.aca_AlumnoDocumento.IdEmpresa, dbo.aca_AlumnoDocumento.IdAlumno, dbo.aca_AlumnoDocumento.IdDocumento, dbo.aca_Documento.NomDocumento, dbo.aca_AlumnoDocumento.EnArchivo, 
-                  dbo.aca_Documento.OrdenDocumento, dbo.aca_AlumnoDocumento.Secuencia
-FROM     dbo.aca_AlumnoDocumento INNER JOIN
-                  dbo.aca_Documento ON dbo.aca_AlumnoDocumento.IdEmpresa = dbo.aca_Documento.IdEmpresa AND dbo.aca_AlumnoDocumento.IdDocumento = dbo.aca_Documento.IdDocumento
+SELECT alu_d.IdEmpresa, alu_d.IdAlumno, alu_d.IdDocumento, d.NomDocumento, alu_d.EnArchivo, d.OrdenDocumento, alu_d.Secuencia
+FROM     dbo.aca_AlumnoDocumento AS alu_d WITH (nolock) INNER JOIN
+                  dbo.aca_Documento AS d WITH (nolock) ON alu_d.IdEmpresa = d.IdEmpresa AND alu_d.IdDocumento = d.IdDocumento
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AlumnoDocumento';
 
@@ -80,7 +79,7 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_AlumnoDocumento"
+         Begin Table = "alu_d"
             Begin Extent = 
                Top = 7
                Left = 48
@@ -90,7 +89,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_Documento"
+         Begin Table = "d"
             Begin Extent = 
                Top = 7
                Left = 340
@@ -138,6 +137,8 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AlumnoDocumento';
+
+
 
 
 

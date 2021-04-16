@@ -4,20 +4,20 @@ SELECT TOP (100) PERCENT CursoMateria.IdEmpresa, CursoMateria.IdAnio, CursoMater
                   dbo.aca_AnioLectivo.FechaDesde, dbo.aca_AnioLectivo.FechaHasta, SedeNivel.NomSede, SedeNivel.NomNivel, NivelJornada.NomJornada, NivelJornada.OrdenJornada, JornadaCurso.NomCurso, JornadaCurso.OrdenCurso, 
                   CursoMateria.NomMateria, CursoMateria.NomMateriaArea, CursoMateria.NomMateriaGrupo, CursoMateria.OrdenMateria, CursoMateria.OrdenMateriaGrupo, CursoMateria.OrdenMateriaArea, CursoMateria.EsObligatorio, 
                   SedeNivel.OrdenNivel
-FROM     dbo.aca_AnioLectivo_Sede_NivelAcademico AS SedeNivel INNER JOIN
-                  dbo.aca_AnioLectivo_NivelAcademico_Jornada AS NivelJornada INNER JOIN
-                  dbo.aca_AnioLectivo_Curso_Materia AS CursoMateria INNER JOIN
-                  dbo.aca_AnioLectivo_Jornada_Curso AS JornadaCurso ON CursoMateria.IdEmpresa = JornadaCurso.IdEmpresa AND CursoMateria.IdAnio = JornadaCurso.IdAnio AND CursoMateria.IdSede = JornadaCurso.IdSede AND 
+FROM     dbo.aca_AnioLectivo_Sede_NivelAcademico AS SedeNivel WITH (nolock) INNER JOIN
+                  dbo.aca_AnioLectivo_NivelAcademico_Jornada AS NivelJornada WITH (nolock) INNER JOIN
+                  dbo.aca_AnioLectivo_Curso_Materia AS CursoMateria WITH (nolock) INNER JOIN
+                  dbo.aca_AnioLectivo_Jornada_Curso AS JornadaCurso WITH (nolock) ON CursoMateria.IdEmpresa = JornadaCurso.IdEmpresa AND CursoMateria.IdAnio = JornadaCurso.IdAnio AND CursoMateria.IdSede = JornadaCurso.IdSede AND 
                   CursoMateria.IdNivel = JornadaCurso.IdNivel AND CursoMateria.IdJornada = JornadaCurso.IdJornada AND CursoMateria.IdCurso = JornadaCurso.IdCurso ON NivelJornada.IdEmpresa = JornadaCurso.IdEmpresa AND 
                   NivelJornada.IdAnio = JornadaCurso.IdAnio AND NivelJornada.IdSede = JornadaCurso.IdSede AND NivelJornada.IdNivel = JornadaCurso.IdNivel AND NivelJornada.IdJornada = JornadaCurso.IdJornada ON 
                   SedeNivel.IdEmpresa = NivelJornada.IdEmpresa AND SedeNivel.IdAnio = NivelJornada.IdAnio AND SedeNivel.IdSede = NivelJornada.IdSede AND SedeNivel.IdNivel = NivelJornada.IdNivel INNER JOIN
-                  dbo.aca_AnioLectivo ON SedeNivel.IdEmpresa = dbo.aca_AnioLectivo.IdEmpresa AND SedeNivel.IdAnio = dbo.aca_AnioLectivo.IdAnio
+                  dbo.aca_AnioLectivo WITH (nolock) ON SedeNivel.IdEmpresa = dbo.aca_AnioLectivo.IdEmpresa AND SedeNivel.IdAnio = dbo.aca_AnioLectivo.IdAnio
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_004';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'h = 1200
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'th = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -52,13 +52,15 @@ End
 ', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_004';
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[45] 4[0] 2[11] 3) )"
+         Configuration = "(H (1[25] 4[25] 3[25] 2) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -195,5 +197,7 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 1200
-         Widt', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_004';
+         Wid', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_004';
+
+
 

@@ -1,26 +1,26 @@
 ﻿CREATE VIEW Academico.VWACA_010
 AS
-SELECT ROW_NUMBER() OVER(PARTITION BY dbo.aca_Matricula.IdEmpresa, dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdAnio, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, dbo.aca_Matricula.IdCurso, dbo.aca_Matricula.IdParalelo, dbo.aca_MatriculaCalificacionParcial.IdCatalogoParcial, dbo.aca_Materia.IdMateria ORDER BY dbo.tb_persona.pe_nombreCompleto ) AS RowNumber,
-dbo.aca_MatriculaCalificacionParcial.IdEmpresa, dbo.aca_MatriculaCalificacionParcial.IdMatricula, dbo.aca_Matricula.IdAnio, dbo.aca_Matricula.IdSede, dbo.aca_Matricula.IdNivel, dbo.aca_Matricula.IdJornada, dbo.aca_Matricula.IdCurso, 
-                  dbo.aca_Matricula.IdParalelo, dbo.aca_MatriculaCalificacionParcial.IdMateria, dbo.aca_Materia.NomMateria, dbo.aca_MatriculaCalificacionParcial.IdCatalogoParcial, dbo.aca_Catalogo.NomCatalogo, 
-                  dbo.aca_MatriculaCalificacionParcial.IdProfesor, tb_persona_1.pe_nombreCompleto AS Profesor, dbo.aca_Matricula.IdAlumno, dbo.aca_Alumno.IdPersona, dbo.tb_persona.pe_nombreCompleto AS Alumno, 
-                  dbo.aca_MatriculaCalificacionParcial.Calificacion1, dbo.aca_MatriculaCalificacionParcial.Calificacion2, dbo.aca_MatriculaCalificacionParcial.Calificacion3, dbo.aca_MatriculaCalificacionParcial.Calificacion4, 
-                  dbo.aca_MatriculaCalificacionParcial.Evaluacion, dbo.aca_MatriculaCalificacionParcial.Remedial1, dbo.aca_MatriculaCalificacionParcial.Remedial2, dbo.aca_MatriculaCalificacionParcial.Conducta, 
-                  dbo.aca_MatriculaCalificacionParcial.MotivoCalificacion, dbo.aca_MatriculaCalificacionParcial.MotivoConducta, dbo.aca_MatriculaCalificacionParcial.AccionRemedial, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomNivel, 
-                  dbo.vwaca_AnioLectivo_Curso_Paralelo.NomJornada, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomCurso, dbo.vwaca_AnioLectivo_Curso_Paralelo.NomParalelo, dbo.aca_Alumno.Codigo
-FROM     dbo.aca_Materia INNER JOIN
-                  dbo.aca_Catalogo INNER JOIN
-                  dbo.aca_MatriculaCalificacionParcial ON dbo.aca_Catalogo.IdCatalogo = dbo.aca_MatriculaCalificacionParcial.IdCatalogoParcial ON dbo.aca_Materia.IdEmpresa = dbo.aca_MatriculaCalificacionParcial.IdEmpresa AND 
-                  dbo.aca_Materia.IdMateria = dbo.aca_MatriculaCalificacionParcial.IdMateria INNER JOIN
-                  dbo.aca_Matricula ON dbo.aca_MatriculaCalificacionParcial.IdEmpresa = dbo.aca_Matricula.IdEmpresa AND dbo.aca_MatriculaCalificacionParcial.IdMatricula = dbo.aca_Matricula.IdMatricula INNER JOIN
-                  dbo.tb_persona INNER JOIN
-                  dbo.aca_Alumno ON dbo.tb_persona.IdPersona = dbo.aca_Alumno.IdPersona ON dbo.aca_Matricula.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_Matricula.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
-                  dbo.aca_Profesor ON dbo.aca_MatriculaCalificacionParcial.IdEmpresa = dbo.aca_Profesor.IdEmpresa AND dbo.aca_MatriculaCalificacionParcial.IdProfesor = dbo.aca_Profesor.IdProfesor INNER JOIN
-                  dbo.tb_persona AS tb_persona_1 ON dbo.aca_Profesor.IdPersona = tb_persona_1.IdPersona INNER JOIN
-                  dbo.vwaca_AnioLectivo_Curso_Paralelo ON dbo.aca_Matricula.IdEmpresa = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdEmpresa AND dbo.aca_Matricula.IdAnio = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdAnio AND 
-                  dbo.aca_Matricula.IdSede = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdSede AND dbo.aca_Matricula.IdNivel = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdNivel AND 
-                  dbo.aca_Matricula.IdJornada = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdJornada AND dbo.aca_Matricula.IdCurso = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdCurso AND 
-                  dbo.aca_Matricula.IdParalelo = dbo.vwaca_AnioLectivo_Curso_Paralelo.IdParalelo
+SELECT ROW_NUMBER() OVER (PARTITION BY m.IdEmpresa, m.IdSede, m.IdAnio, m.IdNivel, m.IdJornada, m.IdCurso, 
+                  m.IdParalelo, mc.IdCatalogoParcial, ma.IdMateria
+ORDER BY p.pe_nombreCompleto) AS RowNumber, m.IdEmpresa, m.IdMatricula, m.IdAnio, m.IdSede, m.IdNivel, m.IdJornada, m.IdCurso, m.IdParalelo, mc.IdMateria, ma.NomMateria, mc.IdCatalogoParcial, c.NomCatalogo, mc.IdProfesor, pe1.pe_nombreCompleto AS Profesor, m.IdAlumno, 
+                  alu.IdPersona, p.pe_nombreCompleto AS Alumno, mc.Calificacion1, mc.Calificacion2, mc.Calificacion3, mc.Calificacion4, mc.Evaluacion, mc.Remedial1, mc.Remedial2, mc.Conducta, mc.MotivoCalificacion, mc.MotivoConducta, 
+                  mc.AccionRemedial, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, jc.OrdenCurso, cp.NomParalelo, cp.OrdenParalelo, alu.Codigo
+FROM     dbo.aca_Matricula AS m WITH (nolock) LEFT OUTER JOIN
+                  dbo.aca_Alumno AS alu WITH (nolock) ON alu.IdEmpresa = m.IdEmpresa AND alu.IdAlumno = m.IdAlumno LEFT OUTER JOIN
+                  dbo.tb_persona AS p WITH (nolock) ON p.IdPersona = alu.IdPersona LEFT OUTER JOIN
+                  dbo.aca_AlumnoRetiro AS ar WITH (nolock) ON m.IdEmpresa = ar.IdEmpresa AND m.IdMatricula = ar.IdMatricula AND ar.Estado = 1 INNER JOIN
+                  dbo.aca_MatriculaCalificacionParcial AS mc WITH (nolock) ON m.IdEmpresa = mc.IdEmpresa AND m.IdMatricula = mc.IdMatricula LEFT OUTER JOIN
+                  dbo.aca_Materia AS ma WITH (nolock) ON ma.IdEmpresa = mc.IdEmpresa AND ma.IdMateria = mc.IdMateria LEFT OUTER JOIN
+                  dbo.aca_AnioLectivo_Curso_Paralelo AS cp WITH (nolock) ON m.IdEmpresa = cp.IdEmpresa AND m.IdAnio = cp.IdAnio AND m.IdSede = cp.IdSede AND m.IdNivel = cp.IdNivel AND m.IdJornada = cp.IdJornada AND 
+                  m.IdCurso = cp.IdCurso AND m.IdParalelo = cp.IdParalelo LEFT OUTER JOIN
+                  dbo.aca_AnioLectivo_Jornada_Curso AS jc WITH (nolock) ON m.IdEmpresa = jc.IdEmpresa AND m.IdAnio = jc.IdAnio AND m.IdSede = jc.IdSede AND m.IdNivel = jc.IdNivel AND m.IdJornada = jc.IdJornada AND 
+                  m.IdCurso = jc.IdCurso LEFT OUTER JOIN
+                  dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj WITH (nolock) ON m.IdEmpresa = nj.IdEmpresa AND m.IdAnio = nj.IdAnio AND m.IdSede = nj.IdSede AND m.IdNivel = nj.IdNivel AND m.IdJornada = nj.IdJornada LEFT OUTER JOIN
+                  dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn WITH (nolock) ON m.IdEmpresa = sn.IdEmpresa AND m.IdAnio = sn.IdAnio AND m.IdSede = sn.IdSede AND m.IdNivel = sn.IdNivel LEFT OUTER JOIN
+                  dbo.aca_AnioLectivo AS a WITH (nolock) ON m.IdEmpresa = a.IdEmpresa AND m.IdAnio = a.IdAnio LEFT OUTER JOIN
+                  dbo.aca_Catalogo AS c WITH (nolock) ON c.IdCatalogo = mc.IdCatalogoParcial LEFT OUTER JOIN
+                  dbo.aca_Profesor AS pro WITH (nolock) ON mc.IdEmpresa = pro.IdEmpresa AND mc.IdProfesor = pro.IdProfesor LEFT OUTER JOIN
+                  dbo.tb_persona AS pe1 WITH (nolock) ON pro.IdPersona = pe1.IdPersona
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_010';
 

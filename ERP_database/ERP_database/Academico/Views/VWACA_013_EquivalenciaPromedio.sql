@@ -1,7 +1,7 @@
 ﻿CREATE VIEW Academico.VWACA_013_EquivalenciaPromedio
 AS
 SELECT IdEmpresa, IdEquivalenciaPromedio, IdAnio, Descripcion, Codigo, ValorMinimo, ValorMaximo
-FROM     dbo.aca_AnioLectivoEquivalenciaPromedio
+FROM     dbo.aca_AnioLectivoEquivalenciaPromedio WITH (nolock)
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_013_EquivalenciaPromedio';
 
@@ -111,14 +111,14 @@ Begin DesignProperties =
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -126,4 +126,6 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWACA_013_EquivalenciaPromedio';
+
+
 

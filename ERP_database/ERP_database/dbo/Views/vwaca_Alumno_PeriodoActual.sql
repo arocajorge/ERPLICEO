@@ -4,75 +4,45 @@ SELECT a.IdEmpresa, a.Codigo, a.IdAlumno, e.IdMatricula, b.pe_nombreCompleto AS 
                   d.pe_nombreCompleto AS NombreEmiteFactura, d.Correo AS CorreoEmiteFactura, c.Celular AS CelularRepresentante, d.Celular AS CelularEmiteFactura, c.Telefono AS TelefonoRepresentante, d.Telefono AS TelefonoEmiteFactura, 
                   e.IdAnio, e.IdSede, e.IdNivel, e.IdJornada, e.IdCurso, e.IdParalelo, sn.NomSede, sn.NomNivel, nj.NomJornada, jc.NomCurso, cp.NomParalelo, ISNULL(g.Saldo, 0) AS Saldo, ISNULL(g.SaldoProntoPago, 0) AS SaldoProntoPago, 
                   ISNULL(g.CantDeudas, 0) AS CantDeudas, j.NomPlantillaTipo, nj.OrdenJornada, sn.OrdenNivel, jc.OrdenCurso, cp.OrdenParalelo
-FROM     dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn RIGHT OUTER JOIN
-                  dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel RIGHT OUTER JOIN
-                  dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
-                  dbo.aca_AnioLectivo_Curso_Paralelo AS cp ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND 
+FROM     dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn WITH (nolock) RIGHT OUTER JOIN
+                  dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj WITH (nolock) ON sn.IdEmpresa = nj.IdEmpresa AND sn.IdAnio = nj.IdAnio AND sn.IdSede = nj.IdSede AND sn.IdNivel = nj.IdNivel RIGHT OUTER JOIN
+                  dbo.aca_AnioLectivo_Jornada_Curso AS jc WITH (nolock) ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
+                  dbo.aca_AnioLectivo_Curso_Paralelo AS cp WITH (nolock) ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND 
                   jc.IdCurso = cp.IdCurso RIGHT OUTER JOIN
-                  dbo.aca_Alumno AS a INNER JOIN
-                  dbo.tb_persona AS b ON a.IdPersona = b.IdPersona LEFT OUTER JOIN
+                  dbo.aca_Alumno AS a WITH (nolock) INNER JOIN
+                  dbo.tb_persona AS b WITH (nolock) ON a.IdPersona = b.IdPersona LEFT OUTER JOIN
                       (SELECT xx.IdEmpresa, xx.IdAlumno, xx.Telefono, xx.Celular, xx.Correo, xxx.pe_nombreCompleto
-                       FROM      dbo.aca_Familia AS xx LEFT OUTER JOIN
-                                         dbo.tb_persona AS xxx ON xx.IdPersona = xxx.IdPersona
+                       FROM      dbo.aca_Familia AS xx WITH (nolock) LEFT OUTER JOIN
+                                         dbo.tb_persona AS xxx WITH (nolock) ON xx.IdPersona = xxx.IdPersona
                        WHERE   (xx.EsRepresentante = 1) AND (xx.Estado = 1)) AS c ON a.IdEmpresa = c.IdEmpresa AND a.IdAlumno = c.IdAlumno LEFT OUTER JOIN
                       (SELECT xx.IdEmpresa, xx.IdAlumno, xx.Telefono, xx.Celular, xx.Correo, xxx.pe_nombreCompleto
-                       FROM      dbo.aca_Familia AS xx LEFT OUTER JOIN
-                                         dbo.tb_persona AS xxx ON xx.IdPersona = xxx.IdPersona
+                       FROM      dbo.aca_Familia AS xx WITH (nolock) LEFT OUTER JOIN
+                                         dbo.tb_persona AS xxx WITH (nolock) ON xx.IdPersona = xxx.IdPersona
                        WHERE   (xx.SeFactura = 1) AND (xx.Estado = 1)) AS d ON a.IdEmpresa = d.IdEmpresa AND a.IdAlumno = d.IdAlumno INNER JOIN
-                  dbo.aca_Matricula AS e ON a.IdEmpresa = e.IdEmpresa AND a.IdAlumno = e.IdAlumno INNER JOIN
-                  dbo.aca_AnioLectivo AS f ON e.IdEmpresa = f.IdEmpresa AND e.IdAnio = f.IdAnio ON cp.IdEmpresa = e.IdEmpresa AND cp.IdAnio = e.IdAnio AND cp.IdSede = e.IdSede AND cp.IdNivel = e.IdNivel AND cp.IdJornada = e.IdJornada AND 
-                  cp.IdCurso = e.IdCurso AND cp.IdParalelo = e.IdParalelo LEFT OUTER JOIN
+                  dbo.aca_Matricula AS e WITH (nolock) ON a.IdEmpresa = e.IdEmpresa AND a.IdAlumno = e.IdAlumno INNER JOIN
+                  dbo.aca_AnioLectivo AS f WITH (nolock) ON e.IdEmpresa = f.IdEmpresa AND e.IdAnio = f.IdAnio ON cp.IdEmpresa = e.IdEmpresa AND cp.IdAnio = e.IdAnio AND cp.IdSede = e.IdSede AND cp.IdNivel = e.IdNivel AND 
+                  cp.IdJornada = e.IdJornada AND cp.IdCurso = e.IdCurso AND cp.IdParalelo = e.IdParalelo LEFT OUTER JOIN
                       (SELECT IdEmpresa, IdAlumno, SUM(Saldo) AS Saldo, SUM(ValorProntoPago - TotalxCobrado) AS SaldoProntoPago, COUNT(*) AS CantDeudas
-                       FROM      dbo.vwcxc_cartera_x_cobrar AS xy
+                       FROM      dbo.vwcxc_cartera_x_cobrar AS xy WITH (nolock)
                        GROUP BY IdEmpresa, IdAlumno) AS g ON g.IdEmpresa = a.IdEmpresa AND g.IdAlumno = a.IdAlumno LEFT OUTER JOIN
                   dbo.aca_Plantilla AS i ON e.IdEmpresa = i.IdEmpresa AND e.IdAnio = i.IdAnio AND e.IdPlantilla = i.IdPlantilla LEFT OUTER JOIN
                   dbo.aca_PlantillaTipo AS j ON i.IdEmpresa = j.IdEmpresa AND i.IdTipoPlantilla = j.IdTipoPlantilla
 WHERE  (f.EnCurso = 1) AND (f.Estado = 1) AND (a.Estado = 1) AND (NOT EXISTS
                       (SELECT IdEmpresa
-                       FROM      dbo.aca_AlumnoRetiro AS xx
+                       FROM      dbo.aca_AlumnoRetiro AS xx WITH (nolock)
                        WHERE   (e.IdEmpresa = IdEmpresa) AND (e.IdMatricula = IdMatricula) AND (Estado = 1)))
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Alumno_PeriodoActual';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'End
-         Begin Table = "d"
-            Begin Extent = 
-               Top = 7
-               Left = 632
-               Bottom = 170
-               Right = 876
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "e"
-            Begin Extent = 
-               Top = 1351
-               Left = 48
-               Bottom = 1514
-               Right = 293
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'   End
          Begin Table = "f"
             Begin Extent = 
                Top = 1519
                Left = 48
                Bottom = 1682
                Right = 331
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "g"
-            Begin Extent = 
-               Top = 1687
-               Left = 48
-               Bottom = 1850
-               Right = 292
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -97,6 +67,36 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'End
             DisplayFlags = 280
             TopColumn = 0
          End
+         Begin Table = "c"
+            Begin Extent = 
+               Top = 367
+               Left = 326
+               Bottom = 530
+               Right = 570
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "d"
+            Begin Extent = 
+               Top = 367
+               Left = 618
+               Bottom = 530
+               Right = 862
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "g"
+            Begin Extent = 
+               Top = 367
+               Left = 910
+               Bottom = 530
+               Right = 1154
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
       End
    End
    Begin SQLPane = 
@@ -104,8 +104,9 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'End
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 9
+      Begin ColumnWidths = 10
          Width = 284
+         Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -135,6 +136,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'End
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Alumno_PeriodoActual';
+
+
 
 
 
@@ -271,16 +274,18 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "c"
+         Begin Table = "e"
             Begin Extent = 
-               Top = 7
-               Left = 340
-               Bottom = 170
-               Right = 584
+               Top = 1351
+               Left = 48
+               Bottom = 1514
+               Right = 293
             End
             DisplayFlags = 280
             TopColumn = 0
-         ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Alumno_PeriodoActual';
+      ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Alumno_PeriodoActual';
+
+
 
 
 

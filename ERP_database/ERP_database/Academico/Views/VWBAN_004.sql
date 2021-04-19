@@ -3,12 +3,12 @@ AS
 SELECT dbo.ba_ArchivoRecaudacionDet.IdEmpresa, dbo.ba_ArchivoRecaudacionDet.IdArchivo, dbo.ba_ArchivoRecaudacionDet.Secuencia, dbo.ba_Banco_Cuenta.ba_Num_Cuenta, dbo.ba_Banco_Cuenta.ba_descripcion, 
                   dbo.tb_banco_procesos_bancarios_x_empresa.NombreProceso, dbo.ba_ArchivoRecaudacionDet.IdAlumno, dbo.aca_Alumno.Codigo, dbo.tb_persona.pe_cedulaRuc, dbo.tb_persona.pe_nombreCompleto, 
                   dbo.ba_ArchivoRecaudacionDet.Valor, dbo.ba_ArchivoRecaudacionDet.ValorProntoPago, dbo.ba_ArchivoRecaudacion.Fecha, dbo.ba_ArchivoRecaudacion.Observacion, dbo.ba_ArchivoRecaudacion.Estado
-FROM     dbo.ba_ArchivoRecaudacionDet INNER JOIN
-                  dbo.ba_ArchivoRecaudacion ON dbo.ba_ArchivoRecaudacionDet.IdEmpresa = dbo.ba_ArchivoRecaudacion.IdEmpresa AND dbo.ba_ArchivoRecaudacionDet.IdArchivo = dbo.ba_ArchivoRecaudacion.IdArchivo INNER JOIN
-                  dbo.aca_Alumno ON dbo.ba_ArchivoRecaudacionDet.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.ba_ArchivoRecaudacionDet.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
-                  dbo.tb_persona ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona LEFT OUTER JOIN
-                  dbo.ba_Banco_Cuenta ON dbo.ba_ArchivoRecaudacion.IdEmpresa = dbo.ba_Banco_Cuenta.IdEmpresa AND dbo.ba_ArchivoRecaudacion.IdBanco = dbo.ba_Banco_Cuenta.IdBanco LEFT OUTER JOIN
-                  dbo.tb_banco_procesos_bancarios_x_empresa ON dbo.ba_ArchivoRecaudacion.IdEmpresa = dbo.tb_banco_procesos_bancarios_x_empresa.IdEmpresa AND 
+FROM     dbo.ba_ArchivoRecaudacionDet WITH (nolock) INNER JOIN
+                  dbo.ba_ArchivoRecaudacion WITH (nolock) ON dbo.ba_ArchivoRecaudacionDet.IdEmpresa = dbo.ba_ArchivoRecaudacion.IdEmpresa AND dbo.ba_ArchivoRecaudacionDet.IdArchivo = dbo.ba_ArchivoRecaudacion.IdArchivo INNER JOIN
+                  dbo.aca_Alumno WITH (nolock) ON dbo.ba_ArchivoRecaudacionDet.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.ba_ArchivoRecaudacionDet.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
+                  dbo.tb_persona WITH (nolock) ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona LEFT OUTER JOIN
+                  dbo.ba_Banco_Cuenta WITH (nolock) ON dbo.ba_ArchivoRecaudacion.IdEmpresa = dbo.ba_Banco_Cuenta.IdEmpresa AND dbo.ba_ArchivoRecaudacion.IdBanco = dbo.ba_Banco_Cuenta.IdBanco LEFT OUTER JOIN
+                  dbo.tb_banco_procesos_bancarios_x_empresa WITH (nolock) ON dbo.ba_ArchivoRecaudacion.IdEmpresa = dbo.tb_banco_procesos_bancarios_x_empresa.IdEmpresa AND 
                   dbo.ba_ArchivoRecaudacion.IdProceso_bancario = dbo.tb_banco_procesos_bancarios_x_empresa.IdProceso
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWBAN_004';
@@ -25,20 +25,27 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
          Width = 1200
          Width = 1200
          Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
       End
    End
    Begin CriteriaPane = 
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -46,6 +53,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWBAN_004';
+
+
 
 
 
@@ -189,8 +198,9 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 9
-', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWBAN_004';
+      Begin ColumnWidths = 16', @level0type = N'SCHEMA', @level0name = N'Academico', @level1type = N'VIEW', @level1name = N'VWBAN_004';
+
+
 
 
 

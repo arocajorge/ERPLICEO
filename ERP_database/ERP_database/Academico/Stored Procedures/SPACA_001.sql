@@ -26,7 +26,7 @@ set @IdAnioAnterior = isnull(@IdAnioAnterior,0)
 
 SELECT m.IdEmpresa, m.IdMatricula, m.Codigo AS CodigoMatricula, m.IdAlumno, SedeNivel.NomSede, SedeNivel.NomNivel, dbo.aca_AnioLectivo.Descripcion AS NomAnio, a.Codigo AS CodigoAlumno, p.pe_nombre, p.pe_apellido, 
                   CASE WHEN p.pe_sexo = 'SEXO_MAS' THEN 'MASCULINO' ELSE 'FEMENINO' END AS pe_sexo, Pais.Nacionalidad, a.Direccion, Jornada.NomJornada, Curso.NomCurso, Paralelo.NomParalelo, Paralelo.CodigoParalelo, 
-                  p.pe_fechaNacimiento, a.LugarNacimiento, a.Celular, a.Correo, m.Fecha, dbo.aca_Plantilla.NomPlantilla, cali.AntiguaInstitucion,cali.Conducta, cali.Promedio, 
+                  p.pe_fechaNacimiento, a.LugarNacimiento, a.Celular, a.Correo, m.Fecha, dbo.aca_Plantilla.NomPlantilla, cali.AntiguaInstitucion,cali.Letra, cali.Conducta, cali.Promedio, 
 				  case when isnull(doc.CantidadTotal,0) > 0 and isnull(doc.CantidadTotal,0) - isnull(doc.CantidadEntregados,0) = 0 then 'SI' ELSE 'NO' end DocumentosCompletos, sc.NomVivienda, sc.NomTipoVivienda, sc.NomAgua, sc.TieneElectricidad, sc.NomGrupoEtnico,
 				  sc.TieneHermanos, sc.TieneConadis, sc.NomConadis, sc.NomViveCon, sc.CantidadHermanos, sc.TotalGastos, m.Observacion, PadreMadre.Titulo, PadreMadre.NomFamiliar, PadreMadre.NomEstadoCivil, PadreMadre.Direccion as DireccionFamiliar,
 				  PadreMadre.NomInstruccion, PadreMadre.EmpresaTrabajo, PadreMadre.Correo as CorreoFamiliar, PadreMadre.VehiculoPropio, PadreMadre.Marca, PadreMadre.Modelo, PadreMadre.AnioVehiculo, PadreMadre.pe_cedulaRuc as CedulaRucFamiliar,
@@ -47,12 +47,13 @@ FROM     dbo.aca_Plantilla with (nolock) INNER JOIN
                   m.IdJornada = Paralelo.IdJornada AND m.IdCurso = Paralelo.IdCurso AND m.IdParalelo = Paralelo.IdParalelo LEFT OUTER JOIN
                   dbo.tb_pais AS Pais with (nolock) ON a.IdPais = Pais.IdPais LEFT JOIN
 				  (
-					  select a.IdEmpresa, a.IdAlumno, a.AntiguaInstitucion, a.Conducta, a.Promedio, b.NomNivel NivelProcedencia
+					  select a.IdEmpresa, a.IdAlumno, a.AntiguaInstitucion, a.Conducta, CE.Letra, a.Promedio, b.NomNivel NivelProcedencia
 					  from [dbo].[aca_AnioLectivoCalificacionHistorico] as a with (nolock) LEFT JOIN
 					  aca_AnioLectivo_Sede_NivelAcademico AS B with (nolock) ON a.IdEmpresa = b.IdEmpresa
-					  and a.IdAnio = b.IdAnio and a.IdNivel = b.IdNivel 
+					  and a.IdAnio = b.IdAnio and a.IdNivel = b.IdNivel LEFT JOIN
+					  aca_AnioLectivoConductaEquivalencia CE ON CE.IdEmpresa= a.IdEmpresa and CE.IdAnio=a.IdAnio and CE.Secuencia=a.SecuenciaConducta
 					  where a.IdEmpresa = @IdEmpresa and a.IdAlumno = @IdAlumno and a.IdAnio = @IdAnioAnterior
-					  group by a.IdEmpresa, a.IdAlumno, a.AntiguaInstitucion, a.Conducta, a.Promedio, b.NomNivel
+					  group by a.IdEmpresa, a.IdAlumno, a.AntiguaInstitucion, a.Conducta, CE.Letra, a.Promedio, b.NomNivel
 				  ) Cali on a.IdEmpresa = Cali.IdEmpresa and a.IdAlumno = Cali.IdAlumno LEFT JOIN
 				  (
 					select A.IdEmpresa, A.IdAlumno, SUM(A.CantidadEntregados) CantidadEntregados, SUM(A.CantidadTotal) CantidadTotal from(

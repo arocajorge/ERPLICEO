@@ -1,16 +1,12 @@
 ﻿CREATE VIEW dbo.vwaca_Familia
 AS
-SELECT dbo.aca_Familia.IdEmpresa, dbo.aca_Familia.IdAlumno, dbo.aca_Familia.IdCatalogoPAREN, dbo.aca_Catalogo.NomCatalogo, dbo.aca_Familia.IdPersona, dbo.tb_persona.pe_Naturaleza, dbo.tb_persona.IdTipoDocumento, 
-                  dbo.tb_persona.pe_cedulaRuc, dbo.tb_persona.pe_apellido, dbo.tb_persona.pe_nombre, dbo.tb_persona.pe_nombreCompleto, dbo.aca_Familia.Direccion, dbo.aca_Familia.Celular, dbo.aca_Familia.Correo, dbo.aca_Familia.SeFactura, 
-                  dbo.tb_persona.pe_sexo, dbo.tb_persona.IdEstadoCivil, dbo.tb_persona.pe_fechaNacimiento, dbo.tb_persona.CodCatalogoSangre, dbo.tb_persona.CodCatalogoCONADIS, dbo.tb_persona.PorcentajeDiscapacidad, 
-                  dbo.tb_persona.NumeroCarnetConadis, dbo.tb_persona.pe_telfono_Contacto, dbo.aca_Familia.Secuencia, dbo.aca_Familia.EsRepresentante, dbo.tb_persona.pe_razonSocial, dbo.tb_persona.IdProfesion, 
-                  dbo.aca_Familia.IdCatalogoFichaInst, dbo.aca_Familia.EmpresaTrabajo, dbo.aca_Familia.DireccionTrabajo, dbo.aca_Familia.TelefonoTrabajo, dbo.aca_Familia.CargoTrabajo, dbo.aca_Familia.AniosServicio, 
-                  dbo.aca_Familia.IngresoMensual, dbo.aca_Familia.VehiculoPropio, dbo.aca_Familia.Marca, dbo.aca_Familia.Modelo, dbo.aca_Familia.CasaPropia, dbo.aca_Familia.AnioVehiculo, dbo.tb_persona.IdReligion, 
-                  dbo.tb_persona.AsisteCentroCristiano, dbo.aca_Familia.EstaFallecido, dbo.tb_persona.IdGrupoEtnico, dbo.aca_Familia.IdPais, dbo.aca_Familia.Cod_Region, dbo.aca_Familia.IdProvincia, dbo.aca_Familia.IdCiudad, 
-                  dbo.aca_Familia.IdParroquia, dbo.aca_Familia.Sector, dbo.aca_Familia.Estado, dbo.aca_Familia.Telefono
-FROM     dbo.tb_persona INNER JOIN
-                  dbo.aca_Familia ON dbo.tb_persona.IdPersona = dbo.aca_Familia.IdPersona LEFT OUTER JOIN
-                  dbo.aca_Catalogo ON dbo.aca_Familia.IdCatalogoPAREN = dbo.aca_Catalogo.IdCatalogo
+SELECT f.IdEmpresa, f.IdAlumno, f.IdCatalogoPAREN, c.NomCatalogo, f.IdPersona, p.pe_Naturaleza, p.IdTipoDocumento, p.pe_cedulaRuc, p.pe_apellido, p.pe_nombre, p.pe_nombreCompleto, f.Direccion, f.Celular, f.Correo, f.SeFactura, p.pe_sexo, 
+                  p.IdEstadoCivil, p.pe_fechaNacimiento, p.CodCatalogoSangre, p.CodCatalogoCONADIS, p.PorcentajeDiscapacidad, p.NumeroCarnetConadis, p.pe_telfono_Contacto, f.Secuencia, f.EsRepresentante, p.pe_razonSocial, p.IdProfesion, 
+                  f.IdCatalogoFichaInst, f.EmpresaTrabajo, f.DireccionTrabajo, f.TelefonoTrabajo, f.CargoTrabajo, f.AniosServicio, f.IngresoMensual, f.VehiculoPropio, f.Marca, f.Modelo, f.CasaPropia, f.AnioVehiculo, p.IdReligion, p.AsisteCentroCristiano, 
+                  f.EstaFallecido, p.IdGrupoEtnico, f.IdPais, f.Cod_Region, f.IdProvincia, f.IdCiudad, f.IdParroquia, f.Sector, f.Estado, f.Telefono
+FROM     dbo.tb_persona AS p WITH (nolock) INNER JOIN
+                  dbo.aca_Familia AS f WITH (nolock) ON p.IdPersona = f.IdPersona LEFT OUTER JOIN
+                  dbo.aca_Catalogo AS c WITH (nolock) ON f.IdCatalogoPAREN = c.IdCatalogo
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Familia';
 
@@ -23,7 +19,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[53] 4[9] 2[20] 3) )"
+         Configuration = "(H (1[54] 4[9] 2[29] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -89,7 +85,7 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "tb_persona"
+         Begin Table = "p"
             Begin Extent = 
                Top = 140
                Left = 724
@@ -99,7 +95,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 26
          End
-         Begin Table = "aca_Familia"
+         Begin Table = "f"
             Begin Extent = 
                Top = 7
                Left = 48
@@ -109,7 +105,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 4
          End
-         Begin Table = "aca_Catalogo"
+         Begin Table = "c"
             Begin Extent = 
                Top = 0
                Left = 568
@@ -163,7 +159,11 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 1200
-         Width = 1200', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Familia';
+         Width = 1200
+         Width = 1200
+     ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Familia';
+
+
 
 
 
@@ -183,9 +183,7 @@ Begin DesignProperties =
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
-         Width = 1200
-         Width = 1200
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'    Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -212,6 +210,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Familia';
+
+
 
 
 

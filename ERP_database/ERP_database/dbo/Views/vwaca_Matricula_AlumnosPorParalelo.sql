@@ -1,15 +1,16 @@
-﻿CREATE VIEW [dbo].[vwaca_Matricula_AlumnosPorParalelo]
+﻿CREATE VIEW dbo.vwaca_Matricula_AlumnosPorParalelo
 AS
-SELECT a.IdEmpresa, a.IdAnio, a.IdSede, a.IdNivel, a.IdJornada, a.IdCurso, a.IdParalelo, a.IdMatricula, a.IdAlumno, b.Codigo, p.pe_cedulaRuc, p.pe_nombreCompleto, a.Fecha, 
-CASE WHEN r.IdRetiro is null THEN CAST(0 AS BIT) ELSE CAST(1 AS BIT) END AS EsRetirado,
-CASE WHEN r.IdRetiro is null THEN '' ELSE 'RETIRADO' END AS EsRetiradoString
-FROM     dbo.aca_Matricula AS a INNER JOIN
-                  dbo.aca_Alumno AS b ON a.IdEmpresa = b.IdEmpresa AND a.IdAlumno = b.IdAlumno INNER JOIN
-                  dbo.tb_persona AS p ON b.IdPersona = p.IdPersona left join
-				  aca_AlumnoRetiro AS r on a.IdEmpresa = r.IdEmpresa and a.IdMatricula = r.IdMatricula 
-WHERE  (b.Estado = 1) and isnull(r.Estado,1) = 1
+SELECT a.IdEmpresa, a.IdAnio, a.IdSede, a.IdNivel, a.IdJornada, a.IdCurso, a.IdParalelo, a.IdMatricula, a.IdAlumno, b.Codigo, p.pe_cedulaRuc, p.pe_nombreCompleto, a.Fecha, CASE WHEN r.IdRetiro IS NULL THEN CAST(0 AS BIT) 
+                  ELSE CAST(1 AS BIT) END AS EsRetirado, CASE WHEN r.IdRetiro IS NULL THEN '' ELSE 'RETIRADO' END AS EsRetiradoString
+FROM     dbo.aca_Matricula AS a WITH (nolock) INNER JOIN
+                  dbo.aca_Alumno AS b WITH (nolock) ON a.IdEmpresa = b.IdEmpresa AND a.IdAlumno = b.IdAlumno INNER JOIN
+                  dbo.tb_persona AS p WITH (nolock) ON b.IdPersona = p.IdPersona LEFT OUTER JOIN
+                  dbo.aca_AlumnoRetiro AS r WITH (nolock) ON a.IdEmpresa = r.IdEmpresa AND a.IdMatricula = r.IdMatricula
+WHERE  (b.Estado = 1) AND (ISNULL(r.Estado, 1) = 1)
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula_AlumnosPorParalelo';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula_AlumnosPorParalelo';
+
+
 
 
 GO
@@ -114,6 +115,16 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
+         Begin Table = "r"
+            Begin Extent = 
+               Top = 511
+               Left = 48
+               Bottom = 674
+               Right = 292
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
       End
    End
    Begin SQLPane = 
@@ -142,14 +153,20 @@ Begin DesignProperties =
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+     ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula_AlumnosPorParalelo';
+
+
+
+
+GO
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'    Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350

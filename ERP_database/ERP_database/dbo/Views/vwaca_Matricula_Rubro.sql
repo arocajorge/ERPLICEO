@@ -1,27 +1,18 @@
 ﻿CREATE VIEW dbo.vwaca_Matricula_Rubro
 AS
-SELECT dbo.aca_Matricula_Rubro.IdEmpresa, dbo.aca_Matricula_Rubro.IdMatricula, dbo.aca_Matricula_Rubro.IdPeriodo, dbo.aca_AnioLectivo_Periodo.FechaDesde, dbo.aca_Matricula_Rubro.IdRubro, dbo.aca_AnioLectivo_Rubro.NomRubro, 
-                  dbo.aca_Matricula_Rubro.IdProducto, dbo.aca_Matricula_Rubro.Subtotal, dbo.aca_Matricula_Rubro.IdCod_Impuesto_Iva, dbo.aca_Matricula_Rubro.Porcentaje, dbo.aca_Matricula_Rubro.ValorIVA, dbo.aca_Matricula_Rubro.Total, 
-                  dbo.in_Producto.pr_descripcion, dbo.aca_Matricula_Rubro.IdSucursal, dbo.aca_Matricula_Rubro.IdBodega, dbo.aca_Matricula_Rubro.IdCbteVta, dbo.aca_Matricula_Rubro.FechaFacturacion, dbo.aca_Matricula_Rubro.IdMecanismo, 
-                  dbo.aca_Matricula_Rubro.EnMatricula, dbo.aca_Matricula_Rubro.IdAnio, dbo.aca_Matricula_Rubro.IdPlantilla, dbo.aca_Matricula_Rubro.IdSede, dbo.aca_Matricula_Rubro.IdNivel, dbo.aca_Matricula_Rubro.IdJornada, 
-                  dbo.aca_Matricula_Rubro.IdCurso, dbo.aca_Matricula_Rubro.IdParalelo
-FROM     dbo.aca_AnioLectivo_Rubro INNER JOIN
-                  dbo.aca_AnioLectivo_Rubro_Periodo ON dbo.aca_AnioLectivo_Rubro.IdEmpresa = dbo.aca_AnioLectivo_Rubro_Periodo.IdEmpresa AND dbo.aca_AnioLectivo_Rubro.IdAnio = dbo.aca_AnioLectivo_Rubro_Periodo.IdAnio AND 
-                  dbo.aca_AnioLectivo_Rubro.IdRubro = dbo.aca_AnioLectivo_Rubro_Periodo.IdRubro INNER JOIN
-                  dbo.aca_AnioLectivo_Periodo ON dbo.aca_AnioLectivo_Rubro_Periodo.IdEmpresa = dbo.aca_AnioLectivo_Periodo.IdEmpresa AND dbo.aca_AnioLectivo_Rubro_Periodo.IdPeriodo = dbo.aca_AnioLectivo_Periodo.IdPeriodo INNER JOIN
-                  dbo.aca_Matricula_Rubro ON dbo.aca_AnioLectivo_Rubro_Periodo.IdEmpresa = dbo.aca_Matricula_Rubro.IdEmpresa AND dbo.aca_AnioLectivo_Rubro_Periodo.IdPeriodo = dbo.aca_Matricula_Rubro.IdPeriodo AND 
-                  dbo.aca_AnioLectivo_Rubro_Periodo.IdRubro = dbo.aca_Matricula_Rubro.IdRubro INNER JOIN
-                  dbo.in_Producto ON dbo.aca_Matricula_Rubro.IdEmpresa = dbo.in_Producto.IdEmpresa AND dbo.aca_Matricula_Rubro.IdProducto = dbo.in_Producto.IdProducto
+SELECT mr.IdEmpresa, mr.IdMatricula, mr.IdPeriodo, ap.FechaDesde, mr.IdRubro, ar.NomRubro, mr.IdProducto, mr.Subtotal, mr.IdCod_Impuesto_Iva, mr.Porcentaje, mr.ValorIVA, mr.Total, p.pr_descripcion, mr.IdSucursal, mr.IdBodega, 
+                  mr.IdCbteVta, mr.FechaFacturacion, mr.IdMecanismo, mr.EnMatricula, mr.IdAnio, mr.IdPlantilla, mr.IdSede, mr.IdNivel, mr.IdJornada, mr.IdCurso, mr.IdParalelo
+FROM     dbo.aca_AnioLectivo_Rubro AS ar WITH (nolock) INNER JOIN
+                  dbo.aca_AnioLectivo_Rubro_Periodo AS arp WITH (nolock) ON ar.IdEmpresa = arp.IdEmpresa AND ar.IdAnio = arp.IdAnio AND ar.IdRubro = arp.IdRubro INNER JOIN
+                  dbo.aca_AnioLectivo_Periodo AS ap WITH (nolock) ON arp.IdEmpresa = ap.IdEmpresa AND arp.IdPeriodo = ap.IdPeriodo INNER JOIN
+                  dbo.aca_Matricula_Rubro AS mr WITH (nolock) ON arp.IdEmpresa = mr.IdEmpresa AND arp.IdPeriodo = mr.IdPeriodo AND arp.IdRubro = mr.IdRubro INNER JOIN
+                  dbo.in_Producto AS p WITH (nolock) ON mr.IdEmpresa = p.IdEmpresa AND mr.IdProducto = p.IdProducto
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula_Rubro';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
-         Width = 1200
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -54,6 +45,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N' = 1200
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula_Rubro';
+
+
 
 
 
@@ -134,7 +127,7 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_AnioLectivo_Rubro"
+         Begin Table = "ar"
             Begin Extent = 
                Top = 0
                Left = 1078
@@ -144,7 +137,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_AnioLectivo_Rubro_Periodo"
+         Begin Table = "arp"
             Begin Extent = 
                Top = 0
                Left = 459
@@ -154,17 +147,17 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_AnioLectivo_Periodo"
+         Begin Table = "ap"
             Begin Extent = 
-               Top = 177
-               Left = 881
-               Bottom = 427
-               Right = 1126
+               Top = 144
+               Left = 743
+               Bottom = 394
+               Right = 988
             End
             DisplayFlags = 280
             TopColumn = 2
          End
-         Begin Table = "aca_Matricula_Rubro"
+         Begin Table = "mr"
             Begin Extent = 
                Top = 7
                Left = 54
@@ -174,7 +167,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 3
          End
-         Begin Table = "in_Producto"
+         Begin Table = "p"
             Begin Extent = 
                Top = 228
                Left = 401
@@ -203,7 +196,13 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 1200
-         Width', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula_Rubro';
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width =', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_Matricula_Rubro';
+
+
 
 
 

@@ -18,7 +18,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'        End
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'  End
          Begin Table = "n"
             Begin Extent = 
                Top = 0
@@ -111,6 +111,8 @@ End
 
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
@@ -179,8 +181,8 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = -120
-         Left = -311
+         Top = 0
+         Left = 0
       End
       Begin Tables = 
          Begin Table = "pp"
@@ -252,7 +254,9 @@ Begin DesignProperties =
             End
             DisplayFlags = 280
             TopColumn = 1
- ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Curso_Paralelo';
+       ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Curso_Paralelo';
+
+
 
 
 

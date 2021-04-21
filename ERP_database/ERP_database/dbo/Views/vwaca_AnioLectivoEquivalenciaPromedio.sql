@@ -1,10 +1,8 @@
 ﻿CREATE VIEW dbo.vwaca_AnioLectivoEquivalenciaPromedio
 AS
-SELECT dbo.aca_AnioLectivoEquivalenciaPromedio.IdEmpresa, dbo.aca_AnioLectivoEquivalenciaPromedio.IdEquivalenciaPromedio, dbo.aca_AnioLectivoEquivalenciaPromedio.IdAnio, dbo.aca_AnioLectivo.Descripcion AS DescripcionAnio, 
-                  dbo.aca_AnioLectivoEquivalenciaPromedio.Descripcion, dbo.aca_AnioLectivoEquivalenciaPromedio.Codigo, dbo.aca_AnioLectivoEquivalenciaPromedio.ValorMinimo, dbo.aca_AnioLectivoEquivalenciaPromedio.ValorMaximo, 
-                  dbo.aca_AnioLectivoEquivalenciaPromedio.Estado
-FROM     dbo.aca_AnioLectivo INNER JOIN
-                  dbo.aca_AnioLectivoEquivalenciaPromedio ON dbo.aca_AnioLectivo.IdEmpresa = dbo.aca_AnioLectivoEquivalenciaPromedio.IdEmpresa AND dbo.aca_AnioLectivo.IdAnio = dbo.aca_AnioLectivoEquivalenciaPromedio.IdAnio
+SELECT ep.IdEmpresa, ep.IdEquivalenciaPromedio, ep.IdAnio, a.Descripcion AS DescripcionAnio, ep.Descripcion, ep.Codigo, ep.ValorMinimo, ep.ValorMaximo, ep.Estado
+FROM     dbo.aca_AnioLectivo AS a WITH (nolock) INNER JOIN
+                  dbo.aca_AnioLectivoEquivalenciaPromedio AS ep WITH (nolock) ON a.IdEmpresa = ep.IdEmpresa AND a.IdAnio = ep.IdAnio
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivoEquivalenciaPromedio';
 
@@ -81,7 +79,7 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_AnioLectivo"
+         Begin Table = "a"
             Begin Extent = 
                Top = 1
                Left = 26
@@ -91,7 +89,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_AnioLectivoEquivalenciaPromedio"
+         Begin Table = "ep"
             Begin Extent = 
                Top = 0
                Left = 407
@@ -139,6 +137,8 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivoEquivalenciaPromedio';
+
+
 
 
 

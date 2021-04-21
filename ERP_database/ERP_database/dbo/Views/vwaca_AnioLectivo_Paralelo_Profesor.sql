@@ -1,17 +1,11 @@
 ﻿CREATE VIEW dbo.vwaca_AnioLectivo_Paralelo_Profesor
 AS
-SELECT dbo.aca_AnioLectivo_Paralelo_Profesor.IdEmpresa, dbo.aca_AnioLectivo_Paralelo_Profesor.IdAnio, dbo.aca_AnioLectivo_Paralelo_Profesor.IdSede, dbo.aca_AnioLectivo_Paralelo_Profesor.IdNivel, 
-                  dbo.aca_AnioLectivo_Paralelo_Profesor.IdJornada, dbo.aca_AnioLectivo_Paralelo_Profesor.IdCurso, dbo.aca_AnioLectivo_Paralelo_Profesor.IdMateria, dbo.aca_AnioLectivo_Paralelo_Profesor.IdParalelo, 
-                  dbo.aca_AnioLectivo_Paralelo_Profesor.IdProfesor, dbo.aca_Profesor.IdPersona, dbo.tb_persona.pe_nombreCompleto, dbo.aca_AnioLectivo_Curso_Materia.NomMateria, dbo.aca_Profesor.IdUsuario, 
-                  dbo.aca_AnioLectivo_Curso_Materia.IdCatalogoTipoCalificacion
-FROM     dbo.aca_AnioLectivo_Curso_Materia RIGHT OUTER JOIN
-                  dbo.tb_persona INNER JOIN
-                  dbo.aca_Profesor ON dbo.tb_persona.IdPersona = dbo.aca_Profesor.IdPersona RIGHT OUTER JOIN
-                  dbo.aca_AnioLectivo_Paralelo_Profesor ON dbo.aca_Profesor.IdEmpresa = dbo.aca_AnioLectivo_Paralelo_Profesor.IdEmpresa AND dbo.aca_Profesor.IdProfesor = dbo.aca_AnioLectivo_Paralelo_Profesor.IdProfesor ON 
-                  dbo.aca_AnioLectivo_Curso_Materia.IdEmpresa = dbo.aca_AnioLectivo_Paralelo_Profesor.IdEmpresa AND dbo.aca_AnioLectivo_Curso_Materia.IdAnio = dbo.aca_AnioLectivo_Paralelo_Profesor.IdAnio AND 
-                  dbo.aca_AnioLectivo_Curso_Materia.IdSede = dbo.aca_AnioLectivo_Paralelo_Profesor.IdSede AND dbo.aca_AnioLectivo_Curso_Materia.IdNivel = dbo.aca_AnioLectivo_Paralelo_Profesor.IdNivel AND 
-                  dbo.aca_AnioLectivo_Curso_Materia.IdJornada = dbo.aca_AnioLectivo_Paralelo_Profesor.IdJornada AND dbo.aca_AnioLectivo_Curso_Materia.IdCurso = dbo.aca_AnioLectivo_Paralelo_Profesor.IdCurso AND 
-                  dbo.aca_AnioLectivo_Curso_Materia.IdMateria = dbo.aca_AnioLectivo_Paralelo_Profesor.IdMateria
+SELECT pp.IdEmpresa, pp.IdAnio, pp.IdSede, pp.IdNivel, pp.IdJornada, pp.IdCurso, pp.IdMateria, pp.IdParalelo, pp.IdProfesor, pro.IdPersona, per.pe_nombreCompleto, cm.NomMateria, pro.IdUsuario, cm.IdCatalogoTipoCalificacion
+FROM     dbo.aca_AnioLectivo_Curso_Materia AS cm RIGHT OUTER JOIN
+                  dbo.tb_persona AS per WITH (nolock) INNER JOIN
+                  dbo.aca_Profesor AS pro WITH (nolock) ON per.IdPersona = pro.IdPersona RIGHT OUTER JOIN
+                  dbo.aca_AnioLectivo_Paralelo_Profesor AS pp WITH (nolock) ON pro.IdEmpresa = pp.IdEmpresa AND pro.IdProfesor = pp.IdProfesor ON cm.IdEmpresa = pp.IdEmpresa AND cm.IdAnio = pp.IdAnio AND cm.IdSede = pp.IdSede AND 
+                  cm.IdNivel = pp.IdNivel AND cm.IdJornada = pp.IdJornada AND cm.IdCurso = pp.IdCurso AND cm.IdMateria = pp.IdMateria
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Paralelo_Profesor';
 
@@ -24,7 +18,7 @@ Begin DesignProperties =
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[51] 4[3] 2[16] 3) )"
+         Configuration = "(H (1[52] 4[3] 2[32] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -90,7 +84,17 @@ Begin DesignProperties =
          Left = -270
       End
       Begin Tables = 
-         Begin Table = "tb_persona"
+         Begin Table = "cm"
+            Begin Extent = 
+               Top = 0
+               Left = 717
+               Bottom = 329
+               Right = 961
+            End
+            DisplayFlags = 280
+            TopColumn = 4
+         End
+         Begin Table = "per"
             Begin Extent = 
                Top = 262
                Left = 1196
@@ -100,7 +104,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 1
          End
-         Begin Table = "aca_Profesor"
+         Begin Table = "pro"
             Begin Extent = 
                Top = 1
                Left = 1011
@@ -110,7 +114,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 2
          End
-         Begin Table = "aca_AnioLectivo_Paralelo_Profesor"
+         Begin Table = "pp"
             Begin Extent = 
                Top = 1
                Left = 368
@@ -119,16 +123,6 @@ Begin DesignProperties =
             End
             DisplayFlags = 280
             TopColumn = 0
-         End
-         Begin Table = "aca_AnioLectivo_Curso_Materia"
-            Begin Extent = 
-               Top = 0
-               Left = 717
-               Bottom = 329
-               Right = 961
-            End
-            DisplayFlags = 280
-            TopColumn = 4
          End
       End
    End
@@ -162,7 +156,11 @@ Begin DesignProperties =
          Table = 1176
          Output = 720
          Append = 1400
-', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Paralelo_Profesor';
+         NewValue = 1170
+         SortType = 1356
+         SortOrder = 1', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Paralelo_Profesor';
+
+
 
 
 
@@ -174,9 +172,7 @@ Begin DesignProperties =
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'         NewValue = 1170
-         SortType = 1356
-         SortOrder = 1416
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'416
          GroupBy = 1350
          Filter = 1356
          Or = 1350
@@ -186,6 +182,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'         N
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Paralelo_Profesor';
+
+
 
 
 

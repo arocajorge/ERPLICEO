@@ -1,32 +1,22 @@
 ﻿CREATE VIEW dbo.vwaca_AnioLectivoCalificacionHistorico
 AS
-SELECT dbo.aca_AnioLectivoCalificacionHistorico.IdEmpresa, dbo.aca_AnioLectivoCalificacionHistorico.IdAnio, dbo.aca_AnioLectivo.Descripcion, dbo.aca_AnioLectivoCalificacionHistorico.IdAlumno, dbo.tb_persona.pe_nombreCompleto, 
-                  dbo.aca_AnioLectivoCalificacionHistorico.IdCurso, dbo.aca_AnioLectivoCalificacionHistorico.Promedio, dbo.aca_AnioLectivoCalificacionHistorico.IdEquivalenciaPromedio, dbo.aca_AnioLectivoCalificacionHistorico.Conducta, 
-                  dbo.aca_AnioLectivoCalificacionHistorico.SecuenciaConducta, dbo.aca_AnioLectivoConductaEquivalencia.Letra, dbo.aca_NivelAcademico.NomNivel, dbo.aca_Curso.NomCurso, 
-                  dbo.aca_AnioLectivoCalificacionHistorico.AntiguaInstitucion, dbo.aca_AnioLectivoCalificacionHistorico.IdNivel, dbo.aca_AnioLectivoEquivalenciaPromedio.Codigo, dbo.aca_AnioLectivoCalificacionHistorico.IdMatricula
-FROM     dbo.aca_AnioLectivoCalificacionHistorico INNER JOIN
-                  dbo.aca_AnioLectivo ON dbo.aca_AnioLectivoCalificacionHistorico.IdEmpresa = dbo.aca_AnioLectivo.IdEmpresa AND dbo.aca_AnioLectivoCalificacionHistorico.IdAnio = dbo.aca_AnioLectivo.IdAnio INNER JOIN
-                  dbo.aca_Alumno ON dbo.aca_AnioLectivoCalificacionHistorico.IdEmpresa = dbo.aca_Alumno.IdEmpresa AND dbo.aca_AnioLectivoCalificacionHistorico.IdAlumno = dbo.aca_Alumno.IdAlumno INNER JOIN
-                  dbo.tb_persona ON dbo.aca_Alumno.IdPersona = dbo.tb_persona.IdPersona INNER JOIN
-                  dbo.aca_Curso ON dbo.aca_AnioLectivoCalificacionHistorico.IdEmpresa = dbo.aca_Curso.IdEmpresa AND dbo.aca_AnioLectivoCalificacionHistorico.IdCurso = dbo.aca_Curso.IdCurso INNER JOIN
-                  dbo.aca_NivelAcademico ON dbo.aca_AnioLectivoCalificacionHistorico.IdEmpresa = dbo.aca_NivelAcademico.IdEmpresa AND dbo.aca_AnioLectivoCalificacionHistorico.IdNivel = dbo.aca_NivelAcademico.IdNivel LEFT OUTER JOIN
-                  dbo.aca_AnioLectivoEquivalenciaPromedio ON dbo.aca_AnioLectivoCalificacionHistorico.IdEmpresa = dbo.aca_AnioLectivoEquivalenciaPromedio.IdEmpresa AND 
-                  dbo.aca_AnioLectivoCalificacionHistorico.IdAnio = dbo.aca_AnioLectivoEquivalenciaPromedio.IdAnio AND 
-                  dbo.aca_AnioLectivoCalificacionHistorico.IdEquivalenciaPromedio = dbo.aca_AnioLectivoEquivalenciaPromedio.IdEquivalenciaPromedio LEFT OUTER JOIN
-                  dbo.aca_AnioLectivoConductaEquivalencia ON dbo.aca_AnioLectivoCalificacionHistorico.IdEmpresa = dbo.aca_AnioLectivoConductaEquivalencia.IdEmpresa AND 
-                  dbo.aca_AnioLectivoCalificacionHistorico.IdAnio = dbo.aca_AnioLectivoConductaEquivalencia.IdAnio AND dbo.aca_AnioLectivoCalificacionHistorico.SecuenciaConducta = dbo.aca_AnioLectivoConductaEquivalencia.Secuencia
+SELECT ch.IdEmpresa, ch.IdAnio, a.Descripcion, ch.IdAlumno, p.pe_nombreCompleto, ch.IdCurso, ch.Promedio, ch.IdEquivalenciaPromedio, ch.Conducta, ch.SecuenciaConducta, ce.Letra, n.NomNivel, c.NomCurso, ch.AntiguaInstitucion, ch.IdNivel, 
+                  ep.Codigo, ch.IdMatricula
+FROM     dbo.aca_AnioLectivoCalificacionHistorico AS ch WITH (nolock) INNER JOIN
+                  dbo.aca_AnioLectivo AS a WITH (nolock) ON ch.IdEmpresa = a.IdEmpresa AND ch.IdAnio = a.IdAnio INNER JOIN
+                  dbo.aca_Alumno AS al WITH (nolock) ON ch.IdEmpresa = al.IdEmpresa AND ch.IdAlumno = al.IdAlumno INNER JOIN
+                  dbo.tb_persona AS p WITH (nolock) ON al.IdPersona = p.IdPersona INNER JOIN
+                  dbo.aca_Curso AS c WITH (nolock) ON ch.IdEmpresa = c.IdEmpresa AND ch.IdCurso = c.IdCurso INNER JOIN
+                  dbo.aca_NivelAcademico AS n WITH (nolock) ON ch.IdEmpresa = n.IdEmpresa AND ch.IdNivel = n.IdNivel LEFT OUTER JOIN
+                  dbo.aca_AnioLectivoEquivalenciaPromedio AS ep WITH (nolock) ON ch.IdEmpresa = ep.IdEmpresa AND ch.IdAnio = ep.IdAnio AND ch.IdEquivalenciaPromedio = ep.IdEquivalenciaPromedio LEFT OUTER JOIN
+                  dbo.aca_AnioLectivoConductaEquivalencia AS ce WITH (nolock) ON ch.IdEmpresa = ce.IdEmpresa AND ch.IdAnio = ce.IdAnio AND ch.SecuenciaConducta = ce.Secuencia
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivoCalificacionHistorico';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'= 368
-               Right = 1111
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
-         Begin Table = "aca_AnioLectivoConductaEquivalencia"
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'd
+         Begin Table = "ce"
             Begin Extent = 
                Top = 46
                Left = 724
@@ -43,8 +33,10 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'= 368
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 16
+      Begin ColumnWidths = 18
          Width = 284
+         Width = 1200
+         Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -91,13 +83,15 @@ End
 
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[48] 4[28] 2[7] 3) )"
+         Configuration = "(H (1[50] 4[8] 2[28] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -163,7 +157,7 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_AnioLectivoCalificacionHistorico"
+         Begin Table = "ch"
             Begin Extent = 
                Top = 25
                Left = 272
@@ -173,7 +167,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_AnioLectivo"
+         Begin Table = "a"
             Begin Extent = 
                Top = 7
                Left = 7
@@ -183,17 +177,17 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_Alumno"
+         Begin Table = "al"
             Begin Extent = 
-               Top = 2
-               Left = 689
-               Bottom = 165
-               Right = 934
+               Top = 0
+               Left = 550
+               Bottom = 163
+               Right = 795
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "tb_persona"
+         Begin Table = "p"
             Begin Extent = 
                Top = 0
                Left = 1103
@@ -203,7 +197,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_Curso"
+         Begin Table = "c"
             Begin Extent = 
                Top = 271
                Left = 0
@@ -213,7 +207,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_NivelAcademico"
+         Begin Table = "n"
             Begin Extent = 
                Top = 209
                Left = 1286
@@ -223,11 +217,18 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_AnioLectivoEquivalenciaPromedio"
+         Begin Table = "ep"
             Begin Extent = 
                Top = 173
                Left = 746
-               Bottom ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivoCalificacionHistorico';
+               Bottom = 368
+               Right = 1111
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         En', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivoCalificacionHistorico';
+
+
 
 
 

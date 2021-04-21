@@ -1,9 +1,9 @@
 ﻿CREATE VIEW dbo.vwaca_AnioLectivo_Periodo
 AS
-SELECT dbo.aca_AnioLectivo_Periodo.IdEmpresa, dbo.aca_AnioLectivo_Periodo.IdAnio, dbo.aca_AnioLectivo.Descripcion, COUNT(dbo.aca_AnioLectivo_Periodo.IdPeriodo) AS NumPeriodos
-FROM     dbo.aca_AnioLectivo_Periodo INNER JOIN
-                  dbo.aca_AnioLectivo ON dbo.aca_AnioLectivo_Periodo.IdEmpresa = dbo.aca_AnioLectivo.IdEmpresa AND dbo.aca_AnioLectivo_Periodo.IdAnio = dbo.aca_AnioLectivo.IdAnio
-GROUP BY dbo.aca_AnioLectivo_Periodo.IdEmpresa, dbo.aca_AnioLectivo_Periodo.IdAnio, dbo.aca_AnioLectivo.Descripcion
+SELECT ap.IdEmpresa, ap.IdAnio, a.Descripcion, COUNT(ap.IdPeriodo) AS NumPeriodos
+FROM     dbo.aca_AnioLectivo_Periodo AS ap WITH (nolock) INNER JOIN
+                  dbo.aca_AnioLectivo AS a WITH (nolock) ON ap.IdEmpresa = a.IdEmpresa AND ap.IdAnio = a.IdAnio
+GROUP BY ap.IdEmpresa, ap.IdAnio, a.Descripcion
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Periodo';
 
@@ -80,7 +80,7 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_AnioLectivo_Periodo"
+         Begin Table = "ap"
             Begin Extent = 
                Top = 7
                Left = 48
@@ -90,7 +90,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_AnioLectivo"
+         Begin Table = "a"
             Begin Extent = 
                Top = 7
                Left = 341
@@ -139,4 +139,6 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Periodo';
+
+
 

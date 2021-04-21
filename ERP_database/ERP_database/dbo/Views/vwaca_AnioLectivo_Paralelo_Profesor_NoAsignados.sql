@@ -1,12 +1,9 @@
 ﻿CREATE VIEW dbo.vwaca_AnioLectivo_Paralelo_Profesor_NoAsignados
 AS
-SELECT aca_AnioLectivo_Curso_Materia.IdEmpresa, aca_AnioLectivo_Curso_Materia.IdAnio, aca_AnioLectivo_Curso_Materia.IdSede, aca_AnioLectivo_Curso_Materia.IdNivel, aca_AnioLectivo_Curso_Materia.IdJornada, 
-                  aca_AnioLectivo_Curso_Materia.IdCurso, dbo.aca_AnioLectivo_Curso_Paralelo.IdParalelo, aca_AnioLectivo_Curso_Materia.IdMateria, aca_AnioLectivo_Curso_Materia.NomMateria, 
-                  aca_AnioLectivo_Curso_Materia.IdCatalogoTipoCalificacion
-FROM     dbo.aca_AnioLectivo_Curso_Materia AS aca_AnioLectivo_Curso_Materia INNER JOIN
-                  dbo.aca_AnioLectivo_Curso_Paralelo ON aca_AnioLectivo_Curso_Materia.IdEmpresa = dbo.aca_AnioLectivo_Curso_Paralelo.IdEmpresa AND aca_AnioLectivo_Curso_Materia.IdAnio = dbo.aca_AnioLectivo_Curso_Paralelo.IdAnio AND 
-                  aca_AnioLectivo_Curso_Materia.IdSede = dbo.aca_AnioLectivo_Curso_Paralelo.IdSede AND aca_AnioLectivo_Curso_Materia.IdNivel = dbo.aca_AnioLectivo_Curso_Paralelo.IdNivel AND 
-                  aca_AnioLectivo_Curso_Materia.IdJornada = dbo.aca_AnioLectivo_Curso_Paralelo.IdJornada AND aca_AnioLectivo_Curso_Materia.IdCurso = dbo.aca_AnioLectivo_Curso_Paralelo.IdCurso
+SELECT cm.IdEmpresa, cm.IdAnio, cm.IdSede, cm.IdNivel, cm.IdJornada, cm.IdCurso, cp.IdParalelo, cm.IdMateria, cm.NomMateria, cm.IdCatalogoTipoCalificacion
+FROM     dbo.aca_AnioLectivo_Curso_Materia AS cm WITH (nolock) INNER JOIN
+                  dbo.aca_AnioLectivo_Curso_Paralelo AS cp WITH (nolock) ON cm.IdEmpresa = cp.IdEmpresa AND cm.IdAnio = cp.IdAnio AND cm.IdSede = cp.IdSede AND cm.IdNivel = cp.IdNivel AND cm.IdJornada = cp.IdJornada AND 
+                  cm.IdCurso = cp.IdCurso
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Paralelo_Profesor_NoAsignados';
 
@@ -83,7 +80,7 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_AnioLectivo_Curso_Materia"
+         Begin Table = "cm"
             Begin Extent = 
                Top = 6
                Left = 396
@@ -93,7 +90,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_AnioLectivo_Curso_Paralelo"
+         Begin Table = "cp"
             Begin Extent = 
                Top = 5
                Left = 57
@@ -145,6 +142,8 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Paralelo_Profesor_NoAsignados';
+
+
 
 
 

@@ -1,9 +1,8 @@
 ﻿CREATE VIEW dbo.vwaca_AnioLectivo_Rubro
 AS
-SELECT dbo.aca_AnioLectivo_Rubro.IdEmpresa, dbo.aca_AnioLectivo_Rubro.IdAnio, dbo.aca_AnioLectivo.Descripcion, dbo.aca_AnioLectivo_Rubro.IdRubro, dbo.aca_AnioLectivo_Rubro.NomRubro, dbo.aca_AnioLectivo_Rubro.IdProducto, 
-                  dbo.aca_AnioLectivo_Rubro.Subtotal, dbo.aca_AnioLectivo_Rubro.IdCod_Impuesto_Iva, dbo.aca_AnioLectivo_Rubro.Porcentaje, dbo.aca_AnioLectivo_Rubro.ValorIVA, dbo.aca_AnioLectivo_Rubro.Total
-FROM     dbo.aca_AnioLectivo_Rubro INNER JOIN
-                  dbo.aca_AnioLectivo ON dbo.aca_AnioLectivo_Rubro.IdEmpresa = dbo.aca_AnioLectivo.IdEmpresa AND dbo.aca_AnioLectivo_Rubro.IdAnio = dbo.aca_AnioLectivo.IdAnio
+SELECT ar.IdEmpresa, ar.IdAnio, a.Descripcion, ar.IdRubro, ar.NomRubro, ar.IdProducto, ar.Subtotal, ar.IdCod_Impuesto_Iva, ar.Porcentaje, ar.ValorIVA, ar.Total
+FROM     dbo.aca_AnioLectivo_Rubro AS ar WITH (nolock) INNER JOIN
+                  dbo.aca_AnioLectivo AS a WITH (nolock) ON ar.IdEmpresa = a.IdEmpresa AND ar.IdAnio = a.IdAnio
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Rubro';
 
@@ -80,7 +79,7 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_AnioLectivo_Rubro"
+         Begin Table = "ar"
             Begin Extent = 
                Top = 7
                Left = 48
@@ -90,7 +89,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_AnioLectivo"
+         Begin Table = "a"
             Begin Extent = 
                Top = 0
                Left = 478
@@ -126,14 +125,14 @@ Begin DesignProperties =
       Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
-         SortOrder = 1410
+         SortType = 1356
+         SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -141,4 +140,6 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Rubro';
+
+
 

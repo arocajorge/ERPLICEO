@@ -1,11 +1,9 @@
 ﻿CREATE VIEW dbo.vwaca_AnioLectivoParcial
 AS
-SELECT dbo.aca_AnioLectivoParcial.IdEmpresa, dbo.aca_AnioLectivoParcial.IdAnio, dbo.aca_AnioLectivoParcial.IdSede, dbo.aca_AnioLectivoParcial.IdCatalogoParcial, dbo.aca_Catalogo.NomCatalogo, dbo.aca_AnioLectivoParcial.FechaInicio, 
-                  dbo.aca_AnioLectivoParcial.FechaFin, dbo.aca_AnioLectivoParcial.Orden, dbo.aca_AnioLectivoParcial.EsExamen, dbo.aca_Catalogo.IdCatalogoTipo, dbo.aca_CatalogoTipo.NomCatalogoTipo, 
-                  dbo.aca_AnioLectivoParcial.ValidaEstadoAlumno
-FROM     dbo.aca_AnioLectivoParcial INNER JOIN
-                  dbo.aca_Catalogo ON dbo.aca_AnioLectivoParcial.IdCatalogoParcial = dbo.aca_Catalogo.IdCatalogo INNER JOIN
-                  dbo.aca_CatalogoTipo ON dbo.aca_Catalogo.IdCatalogoTipo = dbo.aca_CatalogoTipo.IdCatalogoTipo
+SELECT p.IdEmpresa, p.IdAnio, p.IdSede, p.IdCatalogoParcial, c.NomCatalogo, p.FechaInicio, p.FechaFin, p.Orden, p.EsExamen, c.IdCatalogoTipo, ct.NomCatalogoTipo, p.ValidaEstadoAlumno
+FROM     dbo.aca_AnioLectivoParcial AS p WITH (nolock) INNER JOIN
+                  dbo.aca_Catalogo AS c WITH (nolock) ON p.IdCatalogoParcial = c.IdCatalogo INNER JOIN
+                  dbo.aca_CatalogoTipo AS ct WITH (nolock) ON c.IdCatalogoTipo = ct.IdCatalogoTipo
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivoParcial';
 
@@ -82,7 +80,7 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_AnioLectivoParcial"
+         Begin Table = "p"
             Begin Extent = 
                Top = 7
                Left = 48
@@ -92,7 +90,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 5
          End
-         Begin Table = "aca_Catalogo"
+         Begin Table = "c"
             Begin Extent = 
                Top = 19
                Left = 427
@@ -102,7 +100,7 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_CatalogoTipo"
+         Begin Table = "ct"
             Begin Extent = 
                Top = 7
                Left = 720
@@ -150,6 +148,8 @@ Begin DesignProperties =
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivoParcial';
+
+
 
 
 

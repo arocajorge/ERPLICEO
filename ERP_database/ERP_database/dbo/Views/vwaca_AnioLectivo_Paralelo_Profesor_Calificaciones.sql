@@ -2,15 +2,15 @@
 AS
 SELECT mc.IdEmpresa, mc.IdMatricula, mc.IdMateria, mc.IdProfesor, c.IdAnio, c.IdSede, c.IdNivel, c.IdJornada, c.IdCurso, c.IdParalelo, a.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, 
                   jc.OrdenCurso, cp.CodigoParalelo, cp.NomParalelo, cp.OrdenParalelo, cp.IdProfesorTutor, cp.IdProfesorInspector, cm.NomMateria, cm.EsObligatorio, cm.OrdenMateria
-FROM     dbo.aca_MatriculaCalificacion AS mc INNER JOIN
-                  dbo.aca_Matricula AS c ON mc.IdEmpresa = c.IdEmpresa AND mc.IdMatricula = c.IdMatricula INNER JOIN
-                  dbo.aca_AnioLectivo AS a ON c.IdAnio = a.IdAnio AND c.IdEmpresa = a.IdEmpresa INNER JOIN
-                  dbo.aca_AnioLectivo_Curso_Materia AS cm ON c.IdEmpresa = cm.IdEmpresa AND c.IdAnio = cm.IdAnio AND c.IdSede = cm.IdSede AND c.IdNivel = cm.IdNivel AND c.IdJornada = cm.IdJornada AND c.IdCurso = cm.IdCurso AND 
-                  mc.IdMateria = cm.IdMateria LEFT OUTER JOIN
-                  dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj LEFT OUTER JOIN
-                  dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn ON nj.IdEmpresa = sn.IdEmpresa AND nj.IdAnio = sn.IdAnio AND nj.IdSede = sn.IdSede AND nj.IdNivel = sn.IdNivel RIGHT OUTER JOIN
-                  dbo.aca_AnioLectivo_Jornada_Curso AS jc ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
-                  dbo.aca_AnioLectivo_Curso_Paralelo AS cp ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND jc.IdCurso = cp.IdCurso ON 
+FROM     dbo.aca_MatriculaCalificacion AS mc WITH (nolock) INNER JOIN
+                  dbo.aca_Matricula AS c WITH (nolock) ON mc.IdEmpresa = c.IdEmpresa AND mc.IdMatricula = c.IdMatricula INNER JOIN
+                  dbo.aca_AnioLectivo AS a WITH (nolock) ON c.IdAnio = a.IdAnio AND c.IdEmpresa = a.IdEmpresa INNER JOIN
+                  dbo.aca_AnioLectivo_Curso_Materia AS cm WITH (nolock) ON c.IdEmpresa = cm.IdEmpresa AND c.IdAnio = cm.IdAnio AND c.IdSede = cm.IdSede AND c.IdNivel = cm.IdNivel AND c.IdJornada = cm.IdJornada AND c.IdCurso = cm.IdCurso AND
+                   mc.IdMateria = cm.IdMateria LEFT OUTER JOIN
+                  dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj WITH (nolock) LEFT OUTER JOIN
+                  dbo.aca_AnioLectivo_Sede_NivelAcademico AS sn WITH (nolock) ON nj.IdEmpresa = sn.IdEmpresa AND nj.IdAnio = sn.IdAnio AND nj.IdSede = sn.IdSede AND nj.IdNivel = sn.IdNivel RIGHT OUTER JOIN
+                  dbo.aca_AnioLectivo_Jornada_Curso AS jc WITH (nolock) ON nj.IdEmpresa = jc.IdEmpresa AND nj.IdAnio = jc.IdAnio AND nj.IdSede = jc.IdSede AND nj.IdNivel = jc.IdNivel AND nj.IdJornada = jc.IdJornada RIGHT OUTER JOIN
+                  dbo.aca_AnioLectivo_Curso_Paralelo AS cp WITH (nolock) ON jc.IdEmpresa = cp.IdEmpresa AND jc.IdAnio = cp.IdAnio AND jc.IdSede = cp.IdSede AND jc.IdNivel = cp.IdNivel AND jc.IdJornada = cp.IdJornada AND jc.IdCurso = cp.IdCurso ON 
                   c.IdEmpresa = cp.IdEmpresa AND c.IdAnio = cp.IdAnio AND c.IdSede = cp.IdSede AND c.IdNivel = cp.IdNivel AND c.IdJornada = cp.IdJornada AND c.IdCurso = cp.IdCurso AND c.IdParalelo = cp.IdParalelo
 GROUP BY mc.IdEmpresa, mc.IdMatricula, mc.IdMateria, mc.IdProfesor, c.IdAnio, c.IdSede, c.IdNivel, c.IdJornada, c.IdCurso, c.IdParalelo, a.Descripcion, sn.NomSede, sn.NomNivel, sn.OrdenNivel, nj.NomJornada, nj.OrdenJornada, jc.NomCurso, 
                   jc.OrdenCurso, cp.CodigoParalelo, cp.NomParalelo, cp.OrdenParalelo, cp.IdProfesorTutor, cp.IdProfesorInspector, cm.NomMateria, cm.OrdenMateria, cm.EsObligatorio
@@ -19,17 +19,16 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @leve
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'0
-         End
-         Begin Table = "cm"
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'         End
+         Begin Table = "cp"
             Begin Extent = 
-               Top = 464
-               Left = 648
-               Bottom = 627
-               Right = 892
+               Top = 242
+               Left = 1143
+               Bottom = 482
+               Right = 1387
             End
             DisplayFlags = 280
-            TopColumn = 0
+            TopColumn = 3
          End
       End
    End
@@ -38,8 +37,19 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'0
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 16
+      Begin ColumnWidths = 27
          Width = 284
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 1200
          Width = 1200
          Width = 1200
          Width = 1200
@@ -78,13 +88,15 @@ End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Paralelo_Profesor_Calificaciones';
 
 
+
+
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane1', @value = N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[50] 4[20] 2[12] 3) )"
+         Configuration = "(H (1[51] 4[1] 2[31] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -150,56 +162,6 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "sn"
-            Begin Extent = 
-               Top = 27
-               Left = 759
-               Bottom = 242
-               Right = 1003
-            End
-            DisplayFlags = 280
-            TopColumn = 1
-         End
-         Begin Table = "nj"
-            Begin Extent = 
-               Top = 254
-               Left = 765
-               Bottom = 464
-               Right = 1009
-            End
-            DisplayFlags = 280
-            TopColumn = 1
-         End
-         Begin Table = "jc"
-            Begin Extent = 
-               Top = 7
-               Left = 1130
-               Bottom = 224
-               Right = 1374
-            End
-            DisplayFlags = 280
-            TopColumn = 2
-         End
-         Begin Table = "cp"
-            Begin Extent = 
-               Top = 242
-               Left = 1143
-               Bottom = 482
-               Right = 1387
-            End
-            DisplayFlags = 280
-            TopColumn = 3
-         End
-         Begin Table = "a"
-            Begin Extent = 
-               Top = 311
-               Left = 62
-               Bottom = 474
-               Right = 307
-            End
-            DisplayFlags = 280
-            TopColumn = 0
-         End
          Begin Table = "mc"
             Begin Extent = 
                Top = 247
@@ -218,5 +180,58 @@ Begin DesignProperties =
                Right = 600
             End
             DisplayFlags = 280
-            TopColumn = ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Paralelo_Profesor_Calificaciones';
+            TopColumn = 0
+         End
+         Begin Table = "a"
+            Begin Extent = 
+               Top = 311
+               Left = 62
+               Bottom = 474
+               Right = 307
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "cm"
+            Begin Extent = 
+               Top = 464
+               Left = 648
+               Bottom = 627
+               Right = 892
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "nj"
+            Begin Extent = 
+               Top = 254
+               Left = 765
+               Bottom = 464
+               Right = 1009
+            End
+            DisplayFlags = 280
+            TopColumn = 1
+         End
+         Begin Table = "sn"
+            Begin Extent = 
+               Top = 27
+               Left = 759
+               Bottom = 242
+               Right = 1003
+            End
+            DisplayFlags = 280
+            TopColumn = 1
+         End
+         Begin Table = "jc"
+            Begin Extent = 
+               Top = 7
+               Left = 1130
+               Bottom = 224
+               Right = 1374
+            End
+            DisplayFlags = 280
+            TopColumn = 2
+', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Paralelo_Profesor_Calificaciones';
+
+
 

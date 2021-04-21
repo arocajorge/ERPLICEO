@@ -1,28 +1,18 @@
 ﻿CREATE VIEW dbo.vwaca_AnioLectivo_Jornada_Curso
 AS
-SELECT dbo.aca_AnioLectivo_Jornada_Curso.IdEmpresa, dbo.aca_AnioLectivo_Jornada_Curso.IdAnio, dbo.aca_AnioLectivo.Descripcion, dbo.aca_AnioLectivo_Jornada_Curso.IdSede, dbo.aca_Sede.NomSede, 
-                  dbo.aca_AnioLectivo_Jornada_Curso.IdNivel, dbo.aca_NivelAcademico.NomNivel, dbo.aca_AnioLectivo_Jornada_Curso.IdJornada, dbo.aca_AnioLectivo_NivelAcademico_Jornada.NomJornada, 
-                  dbo.aca_AnioLectivo_Jornada_Curso.IdCurso, dbo.aca_AnioLectivo_Jornada_Curso.NomCurso, dbo.aca_AnioLectivo_Jornada_Curso.OrdenCurso, CAST(dbo.aca_Sede.IdSede AS varchar) 
-                  + '-' + dbo.aca_NivelAcademico.NomNivel + '-' + dbo.aca_AnioLectivo_NivelAcademico_Jornada.NomJornada + '-' + dbo.aca_AnioLectivo_Jornada_Curso.NomCurso AS ComboCurso, dbo.aca_AnioLectivo.BloquearMatricula
-FROM     dbo.aca_AnioLectivo_Jornada_Curso INNER JOIN
-                  dbo.aca_Sede ON dbo.aca_AnioLectivo_Jornada_Curso.IdEmpresa = dbo.aca_Sede.IdEmpresa AND dbo.aca_AnioLectivo_Jornada_Curso.IdSede = dbo.aca_Sede.IdSede INNER JOIN
-                  dbo.aca_NivelAcademico ON dbo.aca_AnioLectivo_Jornada_Curso.IdEmpresa = dbo.aca_NivelAcademico.IdEmpresa AND dbo.aca_AnioLectivo_Jornada_Curso.IdNivel = dbo.aca_NivelAcademico.IdNivel INNER JOIN
-                  dbo.aca_AnioLectivo ON dbo.aca_AnioLectivo_Jornada_Curso.IdEmpresa = dbo.aca_AnioLectivo.IdEmpresa AND dbo.aca_AnioLectivo_Jornada_Curso.IdAnio = dbo.aca_AnioLectivo.IdAnio INNER JOIN
-                  dbo.aca_AnioLectivo_NivelAcademico_Jornada ON dbo.aca_AnioLectivo_Jornada_Curso.IdEmpresa = dbo.aca_AnioLectivo_NivelAcademico_Jornada.IdEmpresa AND 
-                  dbo.aca_AnioLectivo_Jornada_Curso.IdAnio = dbo.aca_AnioLectivo_NivelAcademico_Jornada.IdAnio AND dbo.aca_AnioLectivo_Jornada_Curso.IdSede = dbo.aca_AnioLectivo_NivelAcademico_Jornada.IdSede AND 
-                  dbo.aca_AnioLectivo_Jornada_Curso.IdNivel = dbo.aca_AnioLectivo_NivelAcademico_Jornada.IdNivel AND dbo.aca_AnioLectivo_Jornada_Curso.IdJornada = dbo.aca_AnioLectivo_NivelAcademico_Jornada.IdJornada
+SELECT jc.IdEmpresa, jc.IdAnio, a.Descripcion, jc.IdSede, s.NomSede, jc.IdNivel, n.NomNivel, jc.IdJornada, nj.NomJornada, jc.IdCurso, jc.NomCurso, jc.OrdenCurso, CAST(s.IdSede AS varchar) 
+                  + '-' + n.NomNivel + '-' + nj.NomJornada + '-' + jc.NomCurso AS ComboCurso, a.BloquearMatricula
+FROM     dbo.aca_AnioLectivo_Jornada_Curso AS jc WITH (nolock) INNER JOIN
+                  dbo.aca_Sede AS s WITH (nolock) ON jc.IdEmpresa = s.IdEmpresa AND jc.IdSede = s.IdSede INNER JOIN
+                  dbo.aca_NivelAcademico AS n WITH (nolock) ON jc.IdEmpresa = n.IdEmpresa AND jc.IdNivel = n.IdNivel INNER JOIN
+                  dbo.aca_AnioLectivo AS a WITH (nolock) ON jc.IdEmpresa = a.IdEmpresa AND jc.IdAnio = a.IdAnio INNER JOIN
+                  dbo.aca_AnioLectivo_NivelAcademico_Jornada AS nj WITH (nolock) ON jc.IdEmpresa = nj.IdEmpresa AND jc.IdAnio = nj.IdAnio AND jc.IdSede = nj.IdSede AND jc.IdNivel = nj.IdNivel AND jc.IdJornada = nj.IdJornada
 GO
 EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Jornada_Curso';
 
 
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
-         Width = 1200
-         Width = 1200
-         Width = 4092
-         Width = 1200
-      End
-   End
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'nd
    Begin CriteriaPane = 
       Begin ColumnWidths = 11
          Column = 1440
@@ -42,6 +32,8 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'
    End
 End
 ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Jornada_Curso';
+
+
 
 
 
@@ -140,11 +132,11 @@ Begin DesignProperties =
    End
    Begin DiagramPane = 
       Begin Origin = 
-         Top = -120
+         Top = 0
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "aca_AnioLectivo_Jornada_Curso"
+         Begin Table = "jc"
             Begin Extent = 
                Top = 65
                Left = 105
@@ -154,37 +146,37 @@ Begin DesignProperties =
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_Sede"
+         Begin Table = "s"
             Begin Extent = 
-               Top = 426
-               Left = 1188
-               Bottom = 589
-               Right = 1433
+               Top = 289
+               Left = 819
+               Bottom = 452
+               Right = 1064
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_NivelAcademico"
+         Begin Table = "n"
             Begin Extent = 
-               Top = 223
-               Left = 1191
-               Bottom = 386
-               Right = 1436
+               Top = 56
+               Left = 540
+               Bottom = 219
+               Right = 785
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "aca_AnioLectivo"
+         Begin Table = "a"
             Begin Extent = 
-               Top = 408
-               Left = 463
-               Bottom = 677
-               Right = 708
+               Top = 236
+               Left = 439
+               Bottom = 505
+               Right = 684
             End
             DisplayFlags = 280
             TopColumn = 2
          End
-         Begin Table = "aca_AnioLectivo_NivelAcademico_Jornada"
+         Begin Table = "nj"
             Begin Extent = 
                Top = 0
                Left = 768
@@ -212,7 +204,15 @@ Begin DesignProperties =
          Width = 1200
          Width = 1200
          Width = 1200
-         Width = 1200', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Jornada_Curso';
+         Width = 1200
+         Width = 1200
+         Width = 1200
+         Width = 4092
+         Width = 1200
+      End
+   E', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'vwaca_AnioLectivo_Jornada_Curso';
+
+
 
 
 

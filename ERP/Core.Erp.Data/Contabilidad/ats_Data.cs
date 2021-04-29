@@ -82,7 +82,7 @@ namespace Core.Erp.Data.Contabilidad
                                  montoIce=q.montoIce,
                                  montoIva=q.montoIva,
                                  pagoLocExt=q.pagoLocExt,
-                                 tipoRegi="01", paisEfecPagoGen="NA",
+                                // tipoRegi="01", paisEfecPagoGen="NA", // 29/04/2021 by Acueva, no iva en el original
                                  denopago=q.denopago,
                                  paisEfecPago=q.paisEfecPago,
                                  formaPago=q.formaPago,

@@ -32,10 +32,10 @@ namespace Core.Erp.Info.Contabilidad.ATS
 
         private pagoLocExtType pagoLocExtField;
 
-        // private tipoRegiType tipoRegiField;
-        private string tipoRegiField;
+        private tipoRegiType tipoRegiField;
+       // private string tipoRegiField;
 
-      //  private bool tipoRegiFieldSpecified;
+        private bool tipoRegiFieldSpecified;
 
         private string paisEfecPagoGenField;
 
@@ -67,19 +67,7 @@ namespace Core.Erp.Info.Contabilidad.ATS
         }
 
         /// <comentarios/>
-        //public tipoRegiType tipoRegi
-        //{
-        //    get
-        //    {
-        //        return this.tipoRegiField;
-        //    }
-        //    set
-        //    {
-        //        this.tipoRegiField = value;
-        //    }
-        //}
-
-        public string tipoRegi
+        public tipoRegiType tipoRegi
         {
             get
             {
@@ -91,20 +79,32 @@ namespace Core.Erp.Info.Contabilidad.ATS
             }
         }
 
-
-        /// <comentarios/>
-        //[System.Xml.Serialization.XmlIgnoreAttribute()]
-        //public bool tipoRegiSpecified
+        //public string tipoRegi
         //{
         //    get
         //    {
-        //        return this.tipoRegiFieldSpecified;
+        //        return this.tipoRegiField;
         //    }
         //    set
         //    {
-        //        this.tipoRegiFieldSpecified = value;
+        //        this.tipoRegiField = value;
         //    }
         //}
+
+
+        /// <comentarios/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool tipoRegiSpecified
+        {
+            get
+            {
+                return this.tipoRegiFieldSpecified;
+            }
+            set
+            {
+                this.tipoRegiFieldSpecified = value;
+            }
+        }
 
         /// <comentarios/>
         public string paisEfecPagoGen
@@ -188,7 +188,7 @@ namespace Core.Erp.Info.Contabilidad.ATS
         public aplicConvDobTribType pagoRegFis
         {
             get
-            {
+            {// registro fiscal usando para compras del exterior. asi esta activo
                 return this.pagoRegFisField;
             }
             set
@@ -199,18 +199,18 @@ namespace Core.Erp.Info.Contabilidad.ATS
 
 
         /// <comentarios/>
-        //[System.Xml.Serialization.XmlIgnoreAttribute()]
-        //public bool pagoRegFisSpecified
-        //{
-        //    get
-        //    {
-        //        return this.pagoRegFisFieldSpecified;
-        //    }
-        //    set
-        //    {
-        //        this.pagoRegFisFieldSpecified = value;
-        //    }
-        //}
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool pagoRegFisSpecified
+        {
+            get
+            {// registro fiscal usando para compras del exterior. asi esta activo
+                return this.pagoRegFisFieldSpecified;
+            }
+            set
+            {
+                this.pagoRegFisFieldSpecified = value;
+            }
+        }
     }
 
 

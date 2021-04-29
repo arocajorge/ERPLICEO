@@ -51,7 +51,9 @@ namespace Core.Erp.Web.Areas.Contabilidad.Controllers
             string xml = "";
             iva ats = new iva();
             int IdEmpresa = Convert.ToInt32(SessionFixed.IdEmpresa);
-            ats = bus_ats.get_ats(IdEmpresa, model.IdPeriodo, model.IdSucursal, model.IntArray);
+            int IdSucursal = Convert.ToInt32(SessionFixed.IdSucursal);
+           // ats = bus_ats.get_ats(IdEmpresa, model.IdPeriodo, model.IdSucursal, model.IntArray); // x q biene vacio en el model IdSucursal
+            ats = bus_ats.get_ats(IdEmpresa, model.IdPeriodo, IdSucursal, model.IntArray);// by Acueva 2021-04-29
             var ms = new MemoryStream();
             var xw = XmlWriter.Create(ms);
 

@@ -8,6 +8,7 @@ namespace Core.Erp.Data.RRHH
 {
    public class ro_periodo_Data
     {
+        public int ffin, anio, mes;
         public List<ro_periodo_Info> get_list(int IdEmpresa, bool mostrar_anulados)
         {
             try
@@ -103,18 +104,39 @@ namespace Core.Erp.Data.RRHH
             try
             {
                 int ID = 1;
-
+                string result;
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
                     var lst = from q in Context.ro_periodo
                               where q.IdEmpresa == IdEmpresa
                               select q;
 
-                    if (lst.Count() > 0)
-                        ID = lst.Max(q => q.IdPeriodo) + 1;
-                }
+                    // if (lst.Count() > 0)
+                    //   ID = lst.Max(q => q.IdPeriodo) + 1;
+                    result = "";
+                    if ((ffin) == 15)
+                    {
+                        result = anio + digitos(mes) + "01";
+                        ID = Convert.ToInt32(result);// quincenas
+                    }
+                    if ((ffin) != 15)
+                    {
+                        result = anio + digitos(mes);
+                        ID = Convert.ToInt32(result);
+                        var lst2 = from q in Context.ro_periodo where q.IdEmpresa == IdEmpresa && q.IdPeriodo == ID select q;
+                        if (lst2.Count()<1 ) // null
+                        {
+                            ID = Convert.ToInt32(ID);// fin de mes
+                        }
+                        else
+                        {
+                            ID = lst.Max(q => q.IdPeriodo) + 1; // Bonos y demas Casos.
+                        }
 
-                return ID;
+                    }
+
+                    return ID;
+                }
             }
             catch (Exception)
             {
@@ -122,12 +144,35 @@ namespace Core.Erp.Data.RRHH
                 throw;
             }
         }
+        public string digitos( int numero)
+        {
+            string resultado="";
+            switch (numero)
+            {
+                case 1: resultado = "01"; break;
+                case 2: resultado = "02"; break;
+                case 3: resultado = "03"; break;
+                case 4: resultado = "04"; break;
+                case 5: resultado = "05"; break;
+                case 6: resultado = "06"; break;
+                case 7: resultado = "07"; break;
+                case 8: resultado = "08"; break;
+                case 9: resultado = "09"; break;
+                case 10: resultado = "10"; break;
+                case 11: resultado = "11"; break;
+                case 12: resultado = "12"; break;
+            }
+            return resultado;
+        }
         public bool guardarDB(ro_periodo_Info info)
         {
             try
             {
                 using (Entities_rrhh Context = new Entities_rrhh())
                 {
+                    ffin = info.pe_FechaFin.Date.Day;
+                    anio = Convert.ToInt32(info.pe_anio);
+                    mes = Convert.ToInt32(info.pe_mes);
                     ro_periodo Entity = new ro_periodo
                     {
                         IdEmpresa = info.IdEmpresa,

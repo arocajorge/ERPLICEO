@@ -49,5 +49,7 @@ namespace Core.Erp.Info.Reportes.CuentasPorPagar
         public string nom_punto_cargo_grupo { get; set; }
         public string NombreUsuario { get; set; }
         public string num_cta_acreditacion { get; set; }
+        public string Banco { get; set; } // by Acueva 20/05/2021
+        public string TipoCta { get; set; } // by Acueva 20/05/2021
     }
 }

@@ -29,5 +29,8 @@ namespace Core.Erp.Data
         public string Nombre { get; set; }
         public string GiradoA { get; set; }
         public string num_cta_acreditacion { get; set; }
+        public Nullable<int> IdBanco_acreditacion { get; set; }
+        public string Banco { get; set; }
+        public string TipoCta { get; set; }
     }
 }

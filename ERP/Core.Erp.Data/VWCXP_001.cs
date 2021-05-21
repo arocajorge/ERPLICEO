@@ -47,5 +47,7 @@ namespace Core.Erp.Data
         public string dc_Observacion { get; set; }
         public string NombreUsuario { get; set; }
         public string num_cta_acreditacion { get; set; }
+        public string Banco { get; set; }
+        public string TipoCta { get; set; }
     }
 }

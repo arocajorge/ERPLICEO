@@ -54,7 +54,9 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                  dc_Valor_Haber = q.dc_Valor_Haber,
                                  dc_Observacion = q.dc_Observacion,
                                  NombreUsuario = q.NombreUsuario,
-                                 num_cta_acreditacion = q.num_cta_acreditacion
+                                 num_cta_acreditacion = q.num_cta_acreditacion,
+                                 Banco=q.Banco, // by Acueva 2021/05/20
+                                 TipoCta=q.TipoCta  // by Acueva 2021/05/20
                              }).ToList();
                 }
                 return Lista;

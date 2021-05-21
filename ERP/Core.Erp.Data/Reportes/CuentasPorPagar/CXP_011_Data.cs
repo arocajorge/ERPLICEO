@@ -33,7 +33,10 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                         Valor = q.Valor,
                         Nombre = q.Nombre,
                         GiradoA = q.GiradoA,
-                        num_cta_acreditacion = q.num_cta_acreditacion
+                        num_cta_acreditacion = q.num_cta_acreditacion,
+                        Banco=q.Banco, // by Acueva 19/05/2021
+                        TipoCta =q.TipoCta // by Acueva 19/05/2021
+
                     }).ToList();
                 }
                 return Lista;

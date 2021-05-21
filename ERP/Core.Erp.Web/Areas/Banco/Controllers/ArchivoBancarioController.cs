@@ -154,7 +154,6 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             {
                 IdBancoFinanciero = Banco.IdBanco_Financiero;
             }
-
             var lst_proceso = bus_procesos_bancarios.get_list(model.IdEmpresa, IdBancoFinanciero);
             ViewBag.lst_proceso = lst_proceso;
 
@@ -211,6 +210,7 @@ namespace Core.Erp.Web.Areas.Banco.Controllers
             model.IdUsuario = SessionFixed.IdUsuario;
             model.Lst_det = List_det.get_list(model.IdTransaccionSession);
             model.Lst_Flujo = List_flujo.get_list(model.IdTransaccionSession);
+           
             if (!validar(model, ref mensaje))
             {
                 ViewBag.mensaje = mensaje;

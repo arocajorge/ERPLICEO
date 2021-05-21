@@ -23,5 +23,8 @@ namespace Core.Erp.Info.Reportes.CuentasPorPagar
         public string Nombre { get; set; }
         public string GiradoA { get; set; }
         public string num_cta_acreditacion { get; set; }
+        public int IdBanco_acreditacion { get; set; } // by acueva 19/05/2021
+        public string Banco { get; set; } // by acueva 19/05/2021
+        public string TipoCta { get; set; } // by acueva 19/05/2021
     }
 }

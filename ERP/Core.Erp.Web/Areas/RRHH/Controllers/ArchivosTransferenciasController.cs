@@ -369,10 +369,10 @@ namespace Core.Erp.Web.Areas.RRHH.Controllers
                                 linea += "C";
                             linea += item.em_NumCta.PadLeft(10, '0');
                             linea += (valorEntero.ToString() + valorDecimal.ToString().PadLeft(2,'0')).PadLeft(15, '0');
-                            
-                            linea += "EI";
-                            linea += "Y";
-                            linea += "01";
+                                linea += "EI";
+                                linea += "Y";
+                                linea += "01";
+
                             linea += cl_funciones.QuitarTildes(item.pe_apellido + item.pe_nombre);
                         }
                         file.WriteLine(linea);

@@ -90,7 +90,8 @@ namespace Core.Erp.Data.ActivoFijo
                 List<Af_Activo_fijo_Info> Lista = new List<Af_Activo_fijo_Info>();
                 using (Entities_activo_fijo Context = new Entities_activo_fijo())
                 {
-                    var lst = Context.vwAf_Activo_fijo.Where(q => q.IdEmpresa == IdEmpresa && q.Estado == (mostrar_anulados ? q.Estado : "A")).ToList();
+                    //var lst = Context.vwAf_Activo_fijo.Where(q => q.IdEmpresa == IdEmpresa && q.Estado == (mostrar_anulados ? q.Estado : "A")).ToList();
+                    var lst = Context.vwAf_Activo_fijo.Where(q => q.IdEmpresa == IdEmpresa && q.Estado == (mostrar_anulados ? q.Estado : "A")).OrderByDescending(q=>q.IdActivoFijo).ToList();
                     Lista.AddRange(lst.Select(q => new Af_Activo_fijo_Info
                     {
                         IdEmpresa = q.IdEmpresa,

@@ -14,15 +14,14 @@ namespace Core.Erp.Data
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    
+
     public partial class Entities_reportes : DbContext
     {
         public Entities_reportes()
             : base("name=Entities_reportes")
         {
         }
-    
-        public void SetComandTimeOut(int TimeOut)
+        public void SetCommandTimeOut(int TimeOut)
         {
             ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = TimeOut;
         }
@@ -126,12 +125,12 @@ namespace Core.Erp.Data
         public DbSet<VWCXP_009> VWCXP_009 { get; set; }
         public DbSet<VWFAC_018> VWFAC_018 { get; set; }
         public DbSet<VWROL_010> VWROL_010 { get; set; }
-        public DbSet<VWCXP_004> VWCXP_004 { get; set; }
         public DbSet<VWROL_029> VWROL_029 { get; set; }
         public DbSet<VWCXP_017> VWCXP_017 { get; set; }
         public DbSet<VWROL_019> VWROL_019 { get; set; }
         public DbSet<VWCXP_011> VWCXP_011 { get; set; }
         public DbSet<VWCXP_001> VWCXP_001 { get; set; }
+        public DbSet<VWCXP_004> VWCXP_004 { get; set; }
     
         public virtual ObjectResult<SPACTF_004_detalle_Result> SPACTF_004_detalle(Nullable<int> idEmpresa, Nullable<System.DateTime> fecha_corte, string idUsuario, Nullable<int> idActivoFijoTipo_ini, Nullable<int> idActivoFijoTipo_fin, Nullable<int> idCategoria_ini, Nullable<int> idCategoria_fin, string estado_Proceso)
         {

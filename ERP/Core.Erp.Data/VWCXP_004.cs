@@ -41,5 +41,7 @@ namespace Core.Erp.Data
         public string Su_Descripcion { get; set; }
         public string num_cta_acreditacion { get; set; }
         public string IdTipo_Persona { get; set; }
+        public string Banco { get; set; }
+        public string TipoCta { get; set; }
     }
 }

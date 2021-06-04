@@ -50,6 +50,8 @@ namespace Core.Erp.Data.Reportes.CuentasPorPagar
                                  Su_Descripcion = q.Su_Descripcion,
                                  num_cta_acreditacion = q.num_cta_acreditacion,
                                  IdTipo_Persona = q.IdTipo_Persona
+                                 ,Banco=q.Banco
+                                 ,TipoCta=q.TipoCta
                              }).ToList();
                 }
                 return Lista;

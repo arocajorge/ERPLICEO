@@ -14,14 +14,15 @@ namespace Core.Erp.Data
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-
+    
     public partial class Entities_cuentas_por_pagar : DbContext
     {
         public Entities_cuentas_por_pagar()
             : base("name=Entities_cuentas_por_pagar")
         {
         }
-    
+      
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
